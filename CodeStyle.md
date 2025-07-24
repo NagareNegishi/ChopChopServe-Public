@@ -81,7 +81,7 @@ if position.x > 200:
 Bad:
 if (position.x > 200):
 ```
-* Use operator names not symbols (````and/or/not```` instead of ```&&/||/!```)
+* Use operator names not symbols (````&&/||/!```` instead of ````and/or/not````)
 
 # Comments:
 * Comments/Doc-comments should begin with a space; commented out code should not:
@@ -92,7 +92,7 @@ if (position.x > 200):
 ```
 # Data Types:
 * Use double quotes, not single quotes, to reference Strings
-* Include the trailing ```.0``` in floats and integers.
+* Include the trailing ```.0``` in floats.
 * Separate any numbers with more than six digits using underscores: ```1_000_000_000```
 
 # Naming Conventions:
@@ -101,8 +101,6 @@ if (position.x > 200):
 * Use snake_case for variables and functions
   * Append an underscore at the start of private and virtual (abstract/overridden) variables/functions
 * Use CONSTANT_CASE for constants and enum constants
-* Method names should be verbs
-* Signal names should be past tense verbs
 
 # Script Layout:
 * While not a hard-and-fast rule, the following order is recommended:

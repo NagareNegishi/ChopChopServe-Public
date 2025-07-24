@@ -75,4 +75,4 @@
 
 # All files in the Assets directory
 # So Assets and all subdirectories must only contain files that are tracked by LFS
-Assets/** filter=lfs diff=lfs merge=lfs -text
+assets/** filter=lfs diff=lfs merge=lfs -text

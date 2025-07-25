@@ -4,7 +4,7 @@ const SPEED : float = 4
 
 var _direction : Vector3 = Vector3.FORWARD
 var _can_dash : bool = true
-var _dash_direction : Vector3 = Vector3.FORWARD
+var _dash_strength : float = 1.5
 var _angular_aceleration : float = 7
 
 
@@ -12,7 +12,7 @@ var _angular_aceleration : float = 7
 ## @param delta The times it takes per frame to render
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
-	if not is_on_floor():
+	if !is_on_floor():
 		velocity += get_gravity() * delta
 		
 	_inputs()
@@ -39,7 +39,7 @@ func _movement():
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 		
-	velocity.y = 0;
+	#velocity.y = 0;
 	move_and_slide()
 
 
@@ -52,7 +52,10 @@ func _on_dash_timer_timeout() -> void:
 func _dash():
 	_can_dash = false;
 	var tween = create_tween()
-	_dash_direction = position + _direction.normalized() * 1.5
+	
+	#If player moving it will launch in direction of movement, otherwise will do where players looking
+	var _dash_direction = position + (_direction  if _direction.length() != 0 else $Mesh.transform.basis.z).normalized() * _dash_strength
+	
 	tween.tween_property(self, "position", _dash_direction, 0.1)
 	$DashCooldown.start()
 

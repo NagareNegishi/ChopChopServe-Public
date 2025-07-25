@@ -3,25 +3,23 @@
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://Player/Player.tscn" id="1_w6hnu"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w6hnu"]
-size = Vector3(15, 0.1, 15)
+size = Vector3(15, 0.03, 15)
 
 [sub_resource type="BoxMesh" id="BoxMesh_w6hnu"]
-size = Vector3(15, 0.1, 15)
+size = Vector3(15, 0.05, 15)
 
 [node name="JohnoTestScene" type="Node3D"]
 
-[node name="Player" parent="." instance=ExtResource("1_w6hnu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.114008, 0)
-
-[node name="Platform" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.571771, 0)
+[node name="Platform" type="StaticBody3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Platform"]
 shape = SubResource("BoxShape3D_w6hnu")
-debug_color = Color(0.973368, 0, 0.43449, 0.42)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Platform"]
 mesh = SubResource("BoxMesh_w6hnu")
+
+[node name="Player" parent="." instance=ExtResource("1_w6hnu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.562044, 0)
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-4.37114e-08, -0.980271, 0.197657, 0, 0.197657, 0.980271, -1, 4.2849e-08, -8.63988e-09, 3.02675, 11.0971, -5.76367)

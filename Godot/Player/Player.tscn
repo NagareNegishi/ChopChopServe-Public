@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://ckxyscw51v3du"]
+
+[ext_resource type="Script" uid="uid://0wecred12v33" path="res://Player/player.gd" id="1_3qydi"]
+[ext_resource type="PackedScene" uid="uid://d2rfm5fkxeeic" path="res://Player/Frog.fbx" id="2_q3lat"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l2ndj"]
+radius = 0.524702
+height = 1.06912
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q3lat"]
+size = Vector3(2, 3, 3)
+
+[node name="Body" type="CharacterBody3D"]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
+script = ExtResource("1_3qydi")
+
+[node name="PlayerCollision" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_l2ndj")
+
+[node name="InteractCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.25, 0, 0, 0, 0.249979, -0.00325931, 0, 0.00325931, 0.249979, -0.845459, 0.0169285, 0)
+shape = SubResource("BoxShape3D_q3lat")
+
+[node name="Mesh" parent="." instance=ExtResource("2_q3lat")]
+transform = Transform3D(2.08685e-09, 0, -0.175, 0, 0.175, 0, 0.175, 0, 2.08685e-09, 0, -0.568662, 0)
+
+[node name="DashCooldown" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="timeout" from="DashCooldown" to="." method="_on_dash_timer_timeout"]

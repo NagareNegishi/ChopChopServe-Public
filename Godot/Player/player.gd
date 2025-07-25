@@ -8,6 +8,8 @@ var _dash_direction : Vector3 = Vector3.FORWARD
 var _angular_aceleration : float = 7
 
 
+## Functionailty that happens every frame
+## @param delta The times it takes per frame to render
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
@@ -18,10 +20,14 @@ func _physics_process(delta: float) -> void:
 	_rotate_player(delta)
 
 
+## Rotates player to the direction they are moving
+## @param delta The times it takes per frame to render
 func _rotate_player(delta: float):
-	$Mesh.rotation.y = lerp_angle($Mesh.rotation.y, atan2(_direction.x -0.25, _direction.z), delta * _angular_aceleration)
+	if(_direction.length() > 0):
+		$Mesh.rotation.y = lerp_angle($Mesh.rotation.y, atan2(_direction.x -0.25, _direction.z), delta * _angular_aceleration)
 
 
+## Hanles movement logic for player  
 func _movement():
 	var input_dir := Input.get_vector("Up", "Down", "Right", "Left")
 	_direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
@@ -37,6 +43,7 @@ func _movement():
 	move_and_slide()
 
 
+## Allows player to dash again after cooldown finshed
 func _on_dash_timer_timeout() -> void:
 	_can_dash = true;
 

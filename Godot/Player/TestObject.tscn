@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://bg5cia4ul22tj"]
+
+[ext_resource type="Script" uid="uid://bt3snqkr14fjp" path="res://Player/test_object.gd" id="1_4d5u0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2ctch"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4d5u0"]
+
+[node name="Area3D" type="Area3D"]
+script = ExtResource("1_4d5u0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_2ctch")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_4d5u0")
+skeleton = NodePath("../CollisionShape3D")

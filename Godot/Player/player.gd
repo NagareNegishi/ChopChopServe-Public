@@ -3,13 +3,17 @@ extends CharacterBody3D
 const SPEED : float = 4
 
 var _direction : Vector3 = Vector3.FORWARD
-var _can_dash : bool = true
 var _dash_strength : float = 1.5
 var _angular_aceleration : float = 7
+var _items_in_interactable_area = []
+var _closest_item = null
 
+var item_in_hand = null
+var can_dash : bool = true
 
 ## Functionailty that happens every frame
 ## @param delta The times it takes per frame to render
+## @return void
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if !is_on_floor():
@@ -22,13 +26,15 @@ func _physics_process(delta: float) -> void:
 
 ## Rotates player to the direction they are moving
 ## @param delta The times it takes per frame to render
+## @return void
 func _rotate_player(delta: float):
 	if(_direction.length() > 0):
 		$Mesh.rotation.y = lerp_angle($Mesh.rotation.y, atan2(_direction.x -0.25, _direction.z), delta * _angular_aceleration)
 
 
-## Hanles movement logic for player  
-func _movement():
+## Hanles movement logic for player
+## @return void
+func _movement() -> void:
 	var input_dir := Input.get_vector("Up", "Down", "Right", "Left")
 	_direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
@@ -44,13 +50,15 @@ func _movement():
 
 
 ## Allows player to dash again after cooldown finshed
+## @return void
 func _on_dash_timer_timeout() -> void:
-	_can_dash = true;
+	can_dash = true;
 
 
 ## Performs the dash and starts the dash cooldown
-func _dash():
-	_can_dash = false;
+## @return void
+func _dash() -> void:
+	can_dash = false;
 	var tween = create_tween()
 	
 	#If player moving it will launch in direction of movement, otherwise will do where players looking
@@ -61,27 +69,77 @@ func _dash():
 
 
 ## Handles all the inputs
-func _inputs():
-	if Input.is_action_pressed("Dash") && _can_dash:
+## @return void
+func _inputs() -> void:
+	if Input.is_action_just_pressed("Dash") && can_dash:
 		_dash()
 		
-	if Input.is_action_pressed("Interact"):
+	if Input.is_action_just_pressed("Interact"):
 		_interact()
 		
-	if Input.is_action_pressed("Throw"):
+	if Input.is_action_just_pressed("Throw"):
 		_throw()
 
 
 ## Handles when the player interacts
-func _interact():
-	print()
-
+## @return void
+func _interact() -> void:
+	if _closest_item == null || !_closest_item.has_method("interact"):
+		print("Not interactable!")
+		return
+	
+	_closest_item.interact()
+	setItemInHand(null);
 
 ## Handles the logic for when player throws item
-func _throw():
+## @return void
+func _throw() -> void:
 	print()
-
+	
 
 ## Handles logic when player uses an action
-func _action():
+## @return void
+func _action() -> void:
 	print()
+
+
+## Sets what item the player is holding
+## @return void
+func setItemInHand(item) -> void:
+	if(item == null):
+		push_error("item invalid")
+		return
+	item_in_hand = item
+
+
+## Adds area to _items_in_interactable_area
+## @param area the area3D that entered interactable range
+## @return void
+func _on_interact_area_area_entered(area: Area3D) -> void:
+	_items_in_interactable_area.append(area)
+
+
+## Erases area from _items_in_interactable_area 
+## @param area the area3D that left the interactable range
+## @return void
+func _on_interact_area_area_exited(area: Area3D) -> void:
+	_items_in_interactable_area.erase(area)
+
+
+## Finds the closest interactables is
+## @return void
+func _on_check_interactables_timeout() -> void:
+	if _items_in_interactable_area.size() <= 0:
+		return
+
+	var closest_item = _items_in_interactable_area[0]
+	var closest_distance = global_position.distance_to(closest_item.global_position)
+
+	#Loops through all items in range and finds closest one
+	for item in _items_in_interactable_area:
+		var distance = global_position.distance_to(item.global_position)
+		if distance < closest_distance:
+			closest_distance = distance
+			closest_item = item
+
+	_closest_item = closest_item

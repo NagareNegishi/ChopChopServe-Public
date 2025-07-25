@@ -33,6 +33,7 @@ one_shot = true
 
 [node name="CheckInteractables" type="Timer" parent="."]
 wait_time = 0.05
+one_shot = true
 autostart = true
 
 [connection signal="area_entered" from="Mesh/InteractArea" to="." method="_on_interact_area_area_entered"]

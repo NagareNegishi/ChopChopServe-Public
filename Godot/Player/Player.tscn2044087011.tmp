@@ -31,12 +31,6 @@ shape = SubResource("BoxShape3D_q3lat")
 wait_time = 2.0
 one_shot = true
 
-[node name="CheckInteractables" type="Timer" parent="."]
-wait_time = 0.05
-autostart = true
-
 [connection signal="area_entered" from="Mesh/InteractArea" to="." method="_on_interact_area_area_entered"]
 [connection signal="area_exited" from="Mesh/InteractArea" to="." method="_on_interact_area_area_exited"]
 [connection signal="timeout" from="DashCooldown" to="." method="_on_dash_timer_timeout"]
-[connection signal="timeout" from="CheckInteractables" to="." method="_on_check_interactables_timeout"]
-[connection signal="timeout" from="CheckInteractables" to="." method="_on_dash_timer_timeout"]

@@ -1,4 +1,4 @@
-extends CharacterBody3D
+class_name Player extends CharacterBody3D
 
 const SPEED : float = 4.0
 const ACCELERATION : float = 20.0
@@ -115,7 +115,7 @@ func pickup_item(item : AbstractPickup) -> bool:
 	if(item == null):
 		push_error("item invalid")
 		return false
-	
+	item.global_position = Vector3(0,0,0)
 	item.get_parent().remove_child(item)
 	item.turn_on_collision(false)
 	$Mesh/ItemPoint.add_child(item)
@@ -134,6 +134,7 @@ func drop_item() -> bool:
 	item_in_hand.turn_on_collision(true)
 	get_tree().get_current_scene().add_child(item_in_hand)
 	
+	item_in_hand.global_position = $Mesh/ItemPoint.global_position
 	item_in_hand = null
 	return true
 

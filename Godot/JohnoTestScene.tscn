@@ -29,4 +29,4 @@ transform = Transform3D(-4.37114e-08, -0.980271, 0.197657, 0, 0.197657, 0.980271
 transform = Transform3D(-4.37114e-08, -0.980271, 0.197657, 0, 0.197657, 0.980271, -1, 4.2849e-08, -8.63988e-09, 3.02675, 11.258, 0.158606)
 
 [node name="AbstractPickup" parent="." instance=ExtResource("2_3snpr")]
-transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0.182575, 0)
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -3.23996, 0.182575, 2.6545)

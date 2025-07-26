@@ -14,3 +14,7 @@ func _process(delta: float) -> void:
 func _on_interactable_component_interacted() -> void:
 	get_tree().get_current_scene().get_node("Player").pickup_item(self)
 	print("Pickup: Interacted")
+	
+func turn_on_collision(turn_on: bool) -> void:
+	$StaticBody3D/CollisionShape3D.disabled = !turn_on
+	$InteractableComponent/CollisionShape3D.disabled = !turn_on

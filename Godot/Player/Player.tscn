@@ -27,6 +27,9 @@ transform = Transform3D(-6.24448e-08, 0.0186246, 1.42845, 0, 1.42845, -0.0186246
 transform = Transform3D(1, -5.55112e-17, 3.55271e-15, 4.63175e-17, 1, 0, 3.55241e-15, 0, 1, 1.55263, 0, 0)
 shape = SubResource("BoxShape3D_q3lat")
 
+[node name="ItemPoint" type="Node3D" parent="Mesh"]
+transform = Transform3D(1, -7.2778e-10, -6.05382e-12, 7.2778e-10, 0.999861, 0.0166497, -6.07159e-12, -0.0166497, 0.999861, 1.3638e-07, 3.24767, 3.12001)
+
 [node name="DashCooldown" type="Timer" parent="."]
 wait_time = 0.45
 one_shot = true

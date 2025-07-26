@@ -6,12 +6,12 @@ const DECELERATION : float = 20.0
 const DASH_DURATION: float = 0.1 
 const DASH_STRENGTH : float = 10.5
 const ANGULAR_ACCELERATION : float = 7
-
+const ITEM_SCALING : float = 5.5
 
 var _direction : Vector3 = Vector3.FORWARD
 var _items_in_interactable_area = []
 var _closest_item : InteractableComponent = null
-var item_in_hand = null
+var item_in_hand : AbstractPickup = null
 var can_dash : bool = true
 
 ## Functionailty that happens every frame
@@ -88,9 +88,12 @@ func _inputs() -> void:
 ## Handles when the player interacts
 ## @return void
 func _interact() -> void:
+	if item_in_hand != null:
+		drop_item()
+		
 	if _closest_item == null || !_closest_item is InteractableComponent:
 		return
-	
+
 	_closest_item._interact()
 
 
@@ -108,15 +111,30 @@ func _action() -> void:
 
 ## Sets what item the player is holding
 ## @return bool if successfully picked up
-func pickup_item(item) -> bool:
+func pickup_item(item : AbstractPickup) -> bool:
 	if(item == null):
 		push_error("item invalid")
 		return false
 	
 	item.get_parent().remove_child(item)
-	add_child(item)
+	item.turn_on_collision(false)
+	$Mesh/ItemPoint.add_child(item)
+	item.scale *= ITEM_SCALING
 	item_in_hand = item
-	item.global_transform.origin = -global_transform.basis.z.normalized() * 100
+	
+	return true
+
+
+func drop_item() -> bool:
+	if(item_in_hand == null):
+		return false
+	
+	item_in_hand.scale *= 1 / ITEM_SCALING
+	item_in_hand.get_parent().remove_child(item_in_hand)
+	item_in_hand.turn_on_collision(true)
+	get_tree().get_current_scene().add_child(item_in_hand)
+	
+	item_in_hand = null
 	return true
 
 

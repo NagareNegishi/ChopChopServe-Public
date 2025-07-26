@@ -1,18 +1,21 @@
 extends CharacterBody3D
 
-const SPEED : float = 4
+const SPEED : float = 4.0
+const ACCELERATION : float = 20.0
+const DECELERATION : float = 20.0
+const DASH_DURATION: float = 0.1 
+const DASH_STRENGTH : float = 10.5
+const ANGULAR_ACCELERATION : float = 7
+
 
 var _direction : Vector3 = Vector3.FORWARD
-var _dash_strength : float = 1.5
-var _angular_aceleration : float = 7
 var _items_in_interactable_area = []
-var _closest_item = null
-
+var _closest_item : InteractableComponent = null
 var item_in_hand = null
 var can_dash : bool = true
 
 ## Functionailty that happens every frame
-## @param delta The times it takes per frame to render
+## @param delta the times it takes per frame to render
 ## @return void
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -20,7 +23,7 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 		
 	_inputs()
-	_movement()
+	_movement(delta)
 	_rotate_player(delta)
 
 
@@ -29,23 +32,23 @@ func _physics_process(delta: float) -> void:
 ## @return void
 func _rotate_player(delta: float):
 	if(_direction.length() > 0):
-		$Mesh.rotation.y = lerp_angle($Mesh.rotation.y, atan2(_direction.x -0.25, _direction.z), delta * _angular_aceleration)
+		$Mesh.rotation.y = lerp_angle($Mesh.rotation.y, atan2(_direction.x -0.25, _direction.z), delta * ANGULAR_ACCELERATION)
 
 
 ## Hanles movement logic for player
+## @param delta the delta from process physics
 ## @return void
-func _movement() -> void:
+func _movement(delta : float) -> void:
 	var input_dir := Input.get_vector("Up", "Down", "Right", "Left")
 	_direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
 	if _direction:
-		velocity.x = _direction.x * SPEED
-		velocity.z = _direction.z * SPEED
+		velocity.x = move_toward(velocity.x, _direction.x * SPEED, ACCELERATION * delta)
+		velocity.z = move_toward(velocity.z, _direction.z * SPEED, ACCELERATION * delta)
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
-		
-	#velocity.y = 0;
+		velocity.x = move_toward(velocity.x, 0, ACCELERATION * SPEED)
+		velocity.z = move_toward(velocity.z, 0, DECELERATION * SPEED)
+	
 	move_and_slide()
 
 
@@ -58,13 +61,14 @@ func _on_dash_timer_timeout() -> void:
 ## Performs the dash and starts the dash cooldown
 ## @return void
 func _dash() -> void:
-	can_dash = false;
-	var tween = create_tween()
+	can_dash = false
+	var tween = create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	
-	#If player moving it will launch in direction of movement, otherwise will do where players looking
-	var _dash_direction = position + (_direction  if _direction.length() != 0 else $Mesh.transform.basis.z).normalized() * _dash_strength
-	
-	tween.tween_property(self, "position", _dash_direction, 0.1)
+	# If player moving it will launch in direction of movement 
+	# otherwise will do where players looking
+	var _dash_direction = (_direction if _direction.length() != 0 else -$Mesh.transform.basis.z).normalized() 
+
+	tween.tween_property(self, "velocity", _dash_direction * DASH_STRENGTH, DASH_DURATION)
 	$DashCooldown.start()
 
 
@@ -84,12 +88,11 @@ func _inputs() -> void:
 ## Handles when the player interacts
 ## @return void
 func _interact() -> void:
-	if _closest_item == null || !_closest_item.has_method("interact"):
-		print("Not interactable!")
+	if _closest_item == null || !_closest_item is InteractableComponent:
 		return
 	
-	_closest_item.interact()
-	setItemInHand(null);
+	_closest_item._interact()
+
 
 ## Handles the logic for when player throws item
 ## @return void
@@ -104,18 +107,26 @@ func _action() -> void:
 
 
 ## Sets what item the player is holding
-## @return void
-func setItemInHand(item) -> void:
+## @return bool if successfully picked up
+func pickup_item(item) -> bool:
 	if(item == null):
 		push_error("item invalid")
-		return
+		return false
+	
+	item.get_parent().remove_child(item)
+	add_child(item)
 	item_in_hand = item
+	item.global_transform.origin = -global_transform.basis.z.normalized() * 100
+	return true
 
 
 ## Adds area to _items_in_interactable_area
 ## @param area the area3D that entered interactable range
 ## @return void
 func _on_interact_area_area_entered(area: Area3D) -> void:
+	if !area is InteractableComponent:
+		return
+	
 	_items_in_interactable_area.append(area)
 
 
@@ -130,6 +141,7 @@ func _on_interact_area_area_exited(area: Area3D) -> void:
 ## @return void
 func _on_check_interactables_timeout() -> void:
 	if _items_in_interactable_area.size() <= 0:
+		_closest_item = null
 		return
 
 	var closest_item = _items_in_interactable_area[0]

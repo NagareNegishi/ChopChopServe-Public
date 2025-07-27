@@ -2,10 +2,10 @@ class_name Player extends CharacterBody3D
 
 const SPEED : float = 4.0
 const ACCELERATION : float = 20.0
-const DECELERATION : float = 20.0
+const DECELERATION : float = 40.0
 const DASH_DURATION: float = 0.1 
 const DASH_STRENGTH : float = 10.5
-const ANGULAR_ACCELERATION : float = 7
+const ANGULAR_ACCELERATION : float = 9
 const ITEM_SCALING : float = 5.5
 
 var _direction : Vector3 = Vector3.FORWARD
@@ -32,7 +32,7 @@ func _physics_process(delta: float) -> void:
 ## @return void
 func _rotate_player(delta: float):
 	if(_direction.length() > 0):
-		$Mesh.rotation.y = lerp_angle($Mesh.rotation.y, atan2(_direction.x -0.25, _direction.z), delta * ANGULAR_ACCELERATION)
+		$Mesh.rotation.y = lerp_angle($Mesh.rotation.y, atan2(_direction.x, _direction.z), delta * ANGULAR_ACCELERATION)
 
 
 ## Hanles movement logic for player

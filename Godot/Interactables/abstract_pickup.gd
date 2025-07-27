@@ -18,3 +18,7 @@ func _on_interactable_component_interacted() -> void:
 func turn_on_collision(turn_on: bool) -> void:
 	$StaticBody3D/CollisionShape3D.disabled = !turn_on
 	$InteractableComponent/CollisionShape3D.disabled = !turn_on
+
+
+func _on_interactable_component_hovered(is_hovered: bool) -> void:
+	print(is_hovered)

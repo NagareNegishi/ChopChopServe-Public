@@ -21,4 +21,5 @@ mesh = SubResource("BoxMesh_l5jrx")
 
 [node name="InteractableComponent" parent="." instance=ExtResource("1_ybolb")]
 
+[connection signal="hovered" from="InteractableComponent" to="." method="_on_interactable_component_hovered"]
 [connection signal="interacted" from="InteractableComponent" to="." method="_on_interactable_component_interacted"]

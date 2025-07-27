@@ -94,7 +94,7 @@ func _interact() -> void:
 	if _closest_item == null || !_closest_item is InteractableComponent:
 		return
 
-	_closest_item._interact()
+	_closest_item.interact()
 
 
 ## Handles the logic for when player throws item
@@ -160,9 +160,11 @@ func _on_interact_area_area_exited(area: Area3D) -> void:
 ## @return void
 func _on_check_interactables_timeout() -> void:
 	if _items_in_interactable_area.size() <= 0:
+		if _closest_item != null:
+			_closest_item.hover(false)
 		_closest_item = null
 		return
-
+	
 	var closest_item = _items_in_interactable_area[0]
 	var closest_distance = global_position.distance_to(closest_item.global_position)
 
@@ -172,5 +174,8 @@ func _on_check_interactables_timeout() -> void:
 		if distance < closest_distance:
 			closest_distance = distance
 			closest_item = item
-
+	
+	if(_closest_item != closest_item):
+		closest_item.hover(true)
+	
 	_closest_item = closest_item

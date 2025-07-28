@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://b0jm70hdwp4ae"]
+
+[ext_resource type="PackedScene" uid="uid://d1iqitph17b80" path="res://Interactables/AbstractPickup.tscn" id="1_tyt0g"]
+[ext_resource type="Script" uid="uid://bb7kgn2eopyqm" path="res://Interactables/extinguisher.gd" id="2_6nuxd"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_tyt0g"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_6nuxd"]
+
+[node name="Extinguisher" instance=ExtResource("1_tyt0g")]
+script = ExtResource("2_6nuxd")
+
+[node name="CollisionShape3D" parent="StaticBody3D" index="0"]
+shape = SubResource("CylinderShape3D_tyt0g")
+
+[node name="MeshInstance3D" parent="." index="1"]
+mesh = SubResource("CylinderMesh_6nuxd")
+
+[node name="ExtinguishRange" type="RayCast3D" parent="." index="3"]
+transform = Transform3D(1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, 0, 0.846878, 0)
+target_position = Vector3(5, 0, 0)
+debug_shape_custom_color = Color(1, 0, 0, 1)

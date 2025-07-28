@@ -10,6 +10,7 @@
 [node name="AbstractPickup" type="Node3D"]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
 script = ExtResource("1_i3ohc")
+has_action = true
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 
@@ -21,5 +22,6 @@ mesh = SubResource("BoxMesh_l5jrx")
 
 [node name="InteractableComponent" parent="." instance=ExtResource("1_ybolb")]
 
+[connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]
 [connection signal="hovered" from="InteractableComponent" to="." method="_on_interactable_component_hovered"]
 [connection signal="interacted" from="InteractableComponent" to="." method="_on_interactable_component_interacted"]

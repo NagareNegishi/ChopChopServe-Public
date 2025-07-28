@@ -83,6 +83,12 @@ func _inputs() -> void:
 		
 	if Input.is_action_just_pressed("Throw"):
 		_throw()
+		
+	if Input.is_action_just_pressed("Action"):
+		_action(true)
+		
+	if Input.is_action_just_released("Action"):
+		_action(false)
 
 
 ## Handles when the player interacts
@@ -90,7 +96,7 @@ func _inputs() -> void:
 func _interact() -> void:
 	if item_in_hand != null:
 		drop_item()
-		
+	
 	if _closest_item == null || !_closest_item is InteractableComponent:
 		return
 
@@ -100,13 +106,18 @@ func _interact() -> void:
 ## Handles the logic for when player throws item
 ## @return void
 func _throw() -> void:
-	print()
+	if item_in_hand == null:
+		return
+	
+	print("Throw")
 	
 
 ## Handles logic when player uses an action
 ## @return void
-func _action() -> void:
-	print()
+func _action(is_active : bool) -> void:
+	if item_in_hand == null:
+		return
+	item_in_hand.get_node("InteractableComponent").action(is_active)
 
 
 ## Sets what item the player is holding

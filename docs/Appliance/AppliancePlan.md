@@ -1,5 +1,21 @@
 # Appliance Plan
 
+We need to decide collision layer:
+
+# Collision Layer Standard
+
+Example:
+
+- Layer 1 (bit 0): Placeable Surfaces (floors, tables, counters)
+- Layer 2 (bit 1): Appliances/Placeables
+- Layer 3 (bit 2): Players/Characters
+- Layer 4 (bit 3): Items/Ingredients
+- Layer 5 (bit 4): Walls/Obstacles
+- Layer 6 (bit 5): Interaction Zones
+
+
+
+
 Depending on how cooking mechanics are implemented, we may need to adjust the implementation.
 However, some requirement I can address now:
 

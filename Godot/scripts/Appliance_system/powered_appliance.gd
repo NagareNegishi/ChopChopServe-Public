@@ -24,9 +24,7 @@ enum Status {
 var current_status: Status = Status.IDLE
 var contents: Array[Node] = []
 var cook_timer: Timer
-
-
-var power: int = 1 # maybe define in subclass?
+var power: int = 1
 
 
 func _ready():
@@ -136,11 +134,16 @@ func stop_cook() -> bool:
 ## Perform cooking logic
 ## This method should be overridden in subclasses to implement specific cooking behavior
 func _cook() -> bool:
-    assert(false, "cook() must be implemented in " + get_class())
-    # if current_status != Status.COOKING:
-    #     assert(false, "Do not call cook() unless status is COOKING")
-    #     return false
-    # return true
+    if current_status != Status.COOKING:
+        assert(false, "Do not call cook() unless status is COOKING")
+        return false
+
+    for item in contents:
+        if item is Container:
+            item.cook(power)
+        elif item.has_method("cook"): ## Check the method name!!!!!!!!!!!!!!!!!!!!!!!!
+            item.cook(power)
+    return true
 
 
 ## Set the current status to broken

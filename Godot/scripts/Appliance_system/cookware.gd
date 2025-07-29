@@ -1,7 +1,7 @@
 ## Kitchen equipment class Container
 ## Used by PoweredAppliance, like a Pot, Pan, etc.
-## Container must be used by PoweredAppliance, it will not work alone
-class_name Container
+## Cookware must be used by PoweredAppliance, it will not work alone
+class_name Cookware
 extends Equipment
 
 

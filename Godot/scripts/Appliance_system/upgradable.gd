@@ -66,10 +66,10 @@ func request_upgrade(player_id: int) -> void:
 		push_warning("Player " + str(player_id) + " tried to upgrade at max level")
 		return
 	var cost = get_upgrade_cost()
-    var target = get_parent()
-    if not target:
-        push_error("Upgradable component must have a parent!")
-        return
+	var target = get_parent()
+	if not target:
+		push_error("Upgradable component must have a parent!")
+		return
 	upgrade_requested.emit(player_id, cost, target)
 
 
@@ -78,19 +78,19 @@ func request_upgrade(player_id: int) -> void:
 func upgrade() -> bool:
 	if not can_upgrade():
 		return false
-    var target = get_parent()
-    if not target:
-        push_error("Upgradable component must have a parent!")
-        return false
-    var new_value = upgrade_values[current_level]
-    match upgrade_mode:
-        UpgradeMode.ADD:
-            target.set(upgradable_property, target.get(upgradable_property) + new_value)
-        UpgradeMode.MULTIPLY:
-            target.set(upgradable_property, target.get(upgradable_property) * new_value)
-        UpgradeMode.SET:
-            target.set(upgradable_property, new_value)  # Works for ANY type
-    var final_value = target.get(upgradable_property)
-    upgrade_completed.emit(target, get_upgrade_cost(), upgradable_property, final_value)
-    current_level += 1
-    return true
+	var target = get_parent()
+	if not target:
+		push_error("Upgradable component must have a parent!")
+		return false
+	var new_value = upgrade_values[current_level]
+	match upgrade_mode:
+		UpgradeMode.ADD:
+			target.set(upgradable_property, target.get(upgradable_property) + new_value)
+		UpgradeMode.MULTIPLY:
+			target.set(upgradable_property, target.get(upgradable_property) * new_value)
+		UpgradeMode.SET:
+			target.set(upgradable_property, new_value)  # Works for ANY type
+	var final_value = target.get(upgradable_property)
+	upgrade_completed.emit(target, get_upgrade_cost(), upgradable_property, final_value)
+	current_level += 1
+	return true

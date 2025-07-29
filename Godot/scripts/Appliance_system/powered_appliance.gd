@@ -48,18 +48,18 @@ func put(item: Node) -> bool:
 ## Remove and return the last item from this appliance
 ## @return: The Node that was removed, or null if nothing to take
 func take() -> Node:
-	if contents.is_empty():
-		return null
-	return contents.pop_back()
+    if contents.is_empty():
+        return null
+    return contents.pop_back()
 
 
 ## Remove and return item at specific index
 ## @param index: Index of item to remove
 ## @return: The Node that was removed, or null if invalid index
 func take_at(index: int) -> Node:
-	if index < 0 or index >= contents.size():
-		return null
-	return contents.pop_at(index)
+    if index < 0 or index >= contents.size():
+        return null
+    return contents.pop_at(index)
 
 
 # ## Remove and return first item of specific type
@@ -95,10 +95,10 @@ func take_at(index: int) -> Node:
 ## @param item: The Node to test for acceptance
 ## @return: True if item can be placed, false otherwise
 func _can_accept(item: Node) -> bool:
-	if current_status == Status.BROKEN:
-		return false
-	if contents.size() >= capacity:
-		return false
+    if current_status == Status.BROKEN:
+        return false
+    if contents.size() >= capacity:
+        return false
 
     # may need to check null script, but it depends on how food are implemented!!!!!!!
 
@@ -143,6 +143,7 @@ func _cook() -> bool:
             item.cook(power)
         elif item.has_method("cook"): ## Check the method name!!!!!!!!!!!!!!!!!!!!!!!!
             item.cook(power)
+
     return true
 
 

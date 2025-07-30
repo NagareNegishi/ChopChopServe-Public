@@ -11,6 +11,8 @@ We will not have enough time to implement both ENet and WebSocket, we need to pi
 - ENet implementation is easier with rpc, but not browser compatible.
 - WebSocket implementation is more complex, but allows for browser compatibility. still requires a server to host the game. and everyone need to define or at least understand what communication protocol the class you are developing is using.
 
+**ENet first**
+
 example of ENet implementation:
 
 ```gdscript

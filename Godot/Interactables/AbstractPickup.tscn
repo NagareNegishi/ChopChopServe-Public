@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://d1iqitph17b80"]
+
+[ext_resource type="Script" uid="uid://b4us8bb8x12ya" path="res://Interactables/abstract_pickup.gd" id="1_i3ohc"]
+[ext_resource type="PackedScene" uid="uid://cy1s0o2ip2hob" path="res://Interactables/InteractableComponent.tscn" id="1_ybolb"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nsmwx"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_l5jrx"]
+
+[node name="AbstractPickup" type="Node3D"]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+script = ExtResource("1_i3ohc")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_nsmwx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_l5jrx")
+
+[node name="InteractableComponent" parent="." instance=ExtResource("1_ybolb")]
+
+[connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]
+[connection signal="hovered" from="InteractableComponent" to="." method="_on_interactable_component_hovered"]
+[connection signal="interacted" from="InteractableComponent" to="." method="_on_interactable_component_interacted"]

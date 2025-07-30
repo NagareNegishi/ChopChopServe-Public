@@ -10,7 +10,7 @@ curve = SubResource("Curve_1xyps")
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1pdhj"]
 emission_shape_scale = Vector3(0.5, 0.2, 0.5)
 emission_shape = 1
-emission_sphere_radius = 0.4
+emission_sphere_radius = 0.3
 gravity = Vector3(0, 0.5, 0)
 scale_curve = SubResource("CurveTexture_7i1q3")
 turbulence_enabled = true
@@ -28,14 +28,14 @@ radius = 0.075
 height = 0.125
 
 [sub_resource type="Gradient" id="Gradient_1xyps"]
-offsets = PackedFloat32Array(0, 0.491071, 1)
-colors = PackedColorArray(0, 0, 0, 1, 0.428571, 0.428571, 0.428571, 1, 0, 0, 100, 1)
+offsets = PackedFloat32Array(0, 0.544828, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.764326, 0.237407, 0.116672, 1, 1, 0.360784, 0, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_7i1q3"]
 gradient = SubResource("Gradient_1xyps")
 
 [sub_resource type="Curve" id="Curve_1pdhj"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.224719), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0.207547), 0.0, 0.0, 0, 0, Vector2(1, 0.0113207), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_y82fg"]
@@ -52,21 +52,25 @@ emission_ring_inner_radius = 0.0
 emission_ring_cone_angle = 90.0
 gravity = Vector3(0, 0.02, 0)
 scale_curve = SubResource("CurveTexture_y82fg")
+color = Color(0.812106, 0.0223844, 0.105908, 1)
 color_ramp = SubResource("GradientTexture1D_7i1q3")
 turbulence_noise_strength = 0.0
 turbulence_noise_scale = 0.0
 turbulence_noise_speed_random = 0.01
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xrkct"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1pdhj"]
 vertex_color_use_as_albedo = true
-albedo_color = Color(1, 0.427961, 0.122863, 0.8)
+albedo_color = Color(0.680027, 0.23468, 2.88785e-07, 1)
 emission_enabled = true
-emission = Color(1, 0.427451, 0.121569, 1)
-emission_energy_multiplier = 4.72
+emission = Color(1, 0.360784, 0, 1)
+emission_energy_multiplier = 1.95
 
-[sub_resource type="BoxMesh" id="BoxMesh_vuhl4"]
-material = SubResource("StandardMaterial3D_xrkct")
-size = Vector3(0.01, 0.01, 0.01)
+[sub_resource type="SphereMesh" id="SphereMesh_ebd1l"]
+material = SubResource("StandardMaterial3D_1pdhj")
+radius = 0.075
+height = 0.125
+radial_segments = 14
+rings = 5
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1xyps"]
 emission_shape = 1
@@ -117,7 +121,7 @@ height = 0.15
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00181669, -0.00144273, 0.000460327)
-amount = 20
+amount = 50
 lifetime = 2.0
 speed_scale = 0.5
 local_coords = true
@@ -134,7 +138,12 @@ speed_scale = 4.23
 local_coords = true
 trail_lifetime = 0.01
 process_material = SubResource("ParticleProcessMaterial_ebd1l")
-draw_pass_1 = SubResource("BoxMesh_vuhl4")
+draw_pass_1 = SubResource("SphereMesh_ebd1l")
+
+[node name="GPUParticlesAttractorSphere3D" type="GPUParticlesAttractorSphere3D" parent="Node3D/GPUParticles3D2"]
+transform = Transform3D(0.21405, 0, 0, 0, 0.311337, 0, 0, 0, 0.147002, 0.00459224, 0.0457513, 0.00122294)
+strength = 12.06
+radius = 0.05
 
 [node name="Text" type="Label3D" parent="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14551, -0.172861)

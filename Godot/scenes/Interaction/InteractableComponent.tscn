@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cy1s0o2ip2hob"]
 
-[ext_resource type="Script" uid="uid://4dhqggh2cr0d" path="res://Interactables/interactable_component.gd" id="1_iuwtt"]
+[ext_resource type="Script" uid="uid://4dhqggh2cr0d" path="res://scripts/Interaction/interactable_component.gd" id="1_iuwtt"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nugsi"]
 

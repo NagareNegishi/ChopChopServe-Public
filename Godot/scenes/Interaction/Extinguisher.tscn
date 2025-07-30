@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://b0jm70hdwp4ae"]
 
-[ext_resource type="PackedScene" uid="uid://d1iqitph17b80" path="res://Interactables/AbstractPickup.tscn" id="1_tyt0g"]
-[ext_resource type="Script" uid="uid://bb7kgn2eopyqm" path="res://Interactables/extinguisher.gd" id="2_6nuxd"]
+[ext_resource type="PackedScene" uid="uid://d1iqitph17b80" path="res://scenes/Interaction/AbstractPickup.tscn" id="1_tyt0g"]
+[ext_resource type="Script" uid="uid://bb7kgn2eopyqm" path="res://scripts/Interaction/extinguisher.gd" id="2_6nuxd"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_tyt0g"]
 

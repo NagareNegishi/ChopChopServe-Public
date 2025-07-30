@@ -1,4 +1,4 @@
-class_name AbstractPickup extends Node3D
+class_name AbstractPickup extends RigidBody3D
 
 @export var has_action : bool
 
@@ -6,7 +6,7 @@ class_name AbstractPickup extends Node3D
 ## Called when the node enters the scene tree for the first time.
 ## @return void
 func _ready() -> void:
-	pass # Replace with function body.
+	pass
 
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -27,7 +27,7 @@ func _on_interactable_component_interacted() -> void:
 ## @param turn_on boolean the sets the collsion on or off
 ## @return void
 func turn_on_collision(turn_on: bool) -> void:
-	$StaticBody3D/CollisionShape3D.disabled = !turn_on
+	$CollisionShape3D.disabled = !turn_on
 	$InteractableComponent/CollisionShape3D.disabled = !turn_on
 
 
@@ -44,3 +44,6 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 func _on_interactable_component_action_use(is_action: bool) -> void:
 	if has_action:
 		print("Action: " + str(is_action))
+	
+func turnOnPhysics(is_on : bool):
+	set_deferred("freeze", !is_on)

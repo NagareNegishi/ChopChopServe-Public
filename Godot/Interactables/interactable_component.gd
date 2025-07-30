@@ -6,26 +6,21 @@ signal action_use(is_action : bool)
 
 var can_be_interacted : bool = true
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	pass
-
-
-func interact():
-	#print("Component: Interacted")
+## Emits signal that this component has been interacted with
+## @return void
+func interact() -> void:
 	if can_be_interacted:
 		emit_signal("interacted")
 
-func action(in_use : bool):
+
+## Emits signal that the player has used action with this object
+## @return void
+func action(in_use : bool) -> void:
 	emit_signal("action_use", in_use)
 
 
+## Emits signal that the player is hovering over this object
+## @return void
 func hover(hovering : bool) -> void:
 	if can_be_interacted:
 		emit_signal("hovered", hovering)

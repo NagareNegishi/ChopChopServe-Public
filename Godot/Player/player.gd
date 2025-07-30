@@ -1,18 +1,28 @@
 class_name Player extends CharacterBody3D
 
 const SPEED : float = 4.0
-const ACCELERATION : float = 20.0
-const DECELERATION : float = 40.0
-const DASH_DURATION: float = 0.1 
-const DASH_STRENGTH : float = 10.5
-const ANGULAR_ACCELERATION : float = 9
+const ACCELERATION : float = 100
+const DECELERATION : float = 60
+const DASH_DURATION: float = 0.025
+const DASH_STRENGTH : float = 20
+const DASH_COOLDOWN : float = 0.2
+const ANGULAR_ACCELERATION : float = 15
+
 const ITEM_SCALING : float = 5.5
 
 var _direction : Vector3 = Vector3.FORWARD
 var _items_in_interactable_area = []
 var _closest_item : InteractableComponent = null
+
 var item_in_hand : AbstractPickup = null
 var can_dash : bool = true
+
+
+## Called when the node enters the scene tree for the first time.
+## @return void
+func _ready() -> void:
+	$DashCooldown.wait_time = DASH_COOLDOWN
+
 
 ## Functionailty that happens every frame
 ## @param delta the times it takes per frame to render
@@ -30,7 +40,7 @@ func _physics_process(delta: float) -> void:
 ## Rotates player to the direction they are moving
 ## @param delta The times it takes per frame to render
 ## @return void
-func _rotate_player(delta: float):
+func _rotate_player(delta: float) -> void:
 	if(_direction.length() > 0):
 		$Mesh.rotation.y = lerp_angle($Mesh.rotation.y, atan2(_direction.x, _direction.z), delta * ANGULAR_ACCELERATION)
 
@@ -84,6 +94,9 @@ func _inputs() -> void:
 	if Input.is_action_just_pressed("Throw"):
 		_throw()
 		
+	if Input.is_action_just_pressed("Sabotage"):
+		_sabotage()
+		
 	if Input.is_action_just_pressed("Action"):
 		_action(true)
 		
@@ -110,14 +123,22 @@ func _throw() -> void:
 		return
 	
 	print("Throw")
-	
+	drop_item()
+
 
 ## Handles logic when player uses an action
 ## @return void
 func _action(is_active : bool) -> void:
 	if item_in_hand == null:
 		return
+		
 	item_in_hand.get_node("InteractableComponent").action(is_active)
+
+
+## Handles what sabotage to call.
+## @return void
+func _sabotage() -> void:
+	print("Sabotage")
 
 
 ## Sets what item the player is holding
@@ -126,7 +147,9 @@ func pickup_item(item : AbstractPickup) -> bool:
 	if(item == null):
 		push_error("item invalid")
 		return false
+		
 	item.global_position = Vector3(0,0,0)
+	item.global_rotation = Vector3(0,0,0)
 	item.get_parent().remove_child(item)
 	item.turn_on_collision(false)
 	$Mesh/ItemPoint.add_child(item)
@@ -135,7 +158,8 @@ func pickup_item(item : AbstractPickup) -> bool:
 	
 	return true
 
-
+## drops item in hand in front of player
+## @return bool if dropped item succesfully
 func drop_item() -> bool:
 	if(item_in_hand == null):
 		return false
@@ -146,6 +170,9 @@ func drop_item() -> bool:
 	get_tree().get_current_scene().add_child(item_in_hand)
 	
 	item_in_hand.global_position = $Mesh/ItemPoint.global_position
+	item_in_hand.global_rotation = $Mesh/ItemPoint.global_rotation	
+	
+	_action(false)
 	item_in_hand = null
 	return true
 

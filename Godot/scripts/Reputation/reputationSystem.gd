@@ -1,7 +1,7 @@
 extends Node
 
+# what is the starting reputation??
 @export var total_reputation: float = 0.0
-# QUESTION: Is there a finite amount of reputation?
 
 # Gain new Reputation
 func add_reputation(gain_rep: float) -> void:
@@ -21,5 +21,7 @@ func get_reputation() -> float:
 
 # Check that you haven't lost all of your reputation
 func check_amount(new_rep: float) -> bool:
-    return total_reputation - new_rep >= 0
+    if total_reputation < 100 || total_reputation - new_rep >= 0:
+        return true
+    return false
     

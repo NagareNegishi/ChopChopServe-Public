@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://dpdrqqhoutpc3"]
+[gd_scene load_steps=42 format=3 uid="uid://dpdrqqhoutpc3"]
 
 [ext_resource type="Texture2D" uid="uid://bms4exvmlh2d8" path="res://hapy.jpg" id="1_7i1q3"]
 [ext_resource type="Texture2D" uid="uid://dmvcdmn62sl3d" path="res://sad-emoji.png" id="2_1pdhj"]
@@ -189,13 +189,23 @@ height = 0.1
 radial_segments = 10
 rings = 6
 
+[sub_resource type="Curve" id="Curve_vuhl4"]
+_data = [Vector2(0, 0.23854), 0.0, 0.0, 0, 0, Vector2(0.204, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ipp32"]
+curve = SubResource("Curve_vuhl4")
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1mcsc"]
+lifetime_randomness = 0.1
 emission_shape = 1
 emission_sphere_radius = 0.05
 direction = Vector3(0, 1, 0)
-spread = 7.5
+spread = 2.5
 initial_velocity_min = 3.0
 initial_velocity_max = 3.0
+scale_min = 0.5
+scale_curve = SubResource("CurveTexture_ipp32")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gd4sm"]
 albedo_color = Color(0.994467, 0.984356, 0.822992, 1)
@@ -204,8 +214,8 @@ roughness = 0.45
 
 [sub_resource type="SphereMesh" id="SphereMesh_xarlr"]
 material = SubResource("StandardMaterial3D_gd4sm")
-radius = 0.025
-height = 0.05
+radius = 0.03
+height = 0.06
 radial_segments = 10
 rings = 4
 
@@ -342,7 +352,7 @@ draw_pass_1 = SubResource("SphereMesh_o0yg1")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="Node3D7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.56222, 0, 0)
-amount = 25
+amount = 50
 lifetime = 0.4
 speed_scale = 0.8
 process_material = SubResource("ParticleProcessMaterial_1mcsc")

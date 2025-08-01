@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://b0jm70hdwp4ae"]
+[gd_scene load_steps=6 format=3 uid="uid://b0jm70hdwp4ae"]
 
 [ext_resource type="PackedScene" uid="uid://d1iqitph17b80" path="res://scenes/Interaction/AbstractPickup.tscn" id="1_tyt0g"]
 [ext_resource type="Script" uid="uid://bb7kgn2eopyqm" path="res://scripts/Interaction/extinguisher.gd" id="2_6nuxd"]
+[ext_resource type="Material" uid="uid://bofys8nkgycdw" path="res://materials/Extinguisher.tres" id="3_1v4j8"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_rne7s"]
 
@@ -17,6 +18,7 @@ target_position = Vector3(3, 0, 0)
 debug_shape_custom_color = Color(1, 0, 0, 1)
 
 [node name="MeshInstance3D" parent="." index="1"]
+material_override = ExtResource("3_1v4j8")
 mesh = SubResource("CylinderMesh_rne7s")
 
 [node name="CollisionShape3D" parent="." index="2"]

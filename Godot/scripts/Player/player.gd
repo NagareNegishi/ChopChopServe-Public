@@ -9,7 +9,7 @@ const DASH_COOLDOWN : float = 0.2
 const ANGULAR_ACCELERATION : float = 15
 const PUSH_FORCE : float = 0.3
 const ITEM_SCALING : float = 5.5
-const THROW_STRENGTH : float = 45
+const THROW_STRENGTH : float = 42
 
 var _direction : Vector3 = Vector3.FORWARD
 var _items_in_interactable_area = []

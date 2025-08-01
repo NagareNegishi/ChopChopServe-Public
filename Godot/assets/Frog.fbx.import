@@ -32,7 +32,26 @@ animation/trimming=true
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
-_subresources={}
+_subresources={
+"materials": {
+"BodyGreen.002": {
+"use_external/enabled": true,
+"use_external/path": "uid://d4heeyo73xso3"
+},
+"Eye.002": {
+"use_external/enabled": true,
+"use_external/path": "uid://ilaaueeb2r0x"
+},
+"Pants.001": {
+"use_external/enabled": true,
+"use_external/path": "uid://ilaaueeb2r0x"
+},
+"Shirt.001": {
+"use_external/enabled": true,
+"use_external/path": "uid://cq2k180yx7dln"
+}
+}
+}
 fbx/importer=0
 fbx/allow_geometry_helper_nodes=false
 fbx/embedded_image_handling=1

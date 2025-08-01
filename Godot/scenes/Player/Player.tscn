@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://ckxyscw51v3du"]
+[gd_scene load_steps=6 format=3 uid="uid://ckxyscw51v3du"]
 
 [ext_resource type="Script" uid="uid://0wecred12v33" path="res://scripts/Player/player.gd" id="1_3qydi"]
+[ext_resource type="PackedScene" uid="uid://bu4i2rvstrdvh" path="res://assets/hat.fbx" id="2_bvqhm"]
 [ext_resource type="PackedScene" uid="uid://d2rfm5fkxeeic" path="res://assets/Frog.fbx" id="2_q3lat"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l2ndj"]
@@ -13,6 +14,9 @@ size = Vector3(2.082, 3, 3)
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
 script = ExtResource("1_3qydi")
+
+[node name="hat" parent="." instance=ExtResource("2_bvqhm")]
+transform = Transform3D(0.155, 0, 0, 0, 0.155, 0, 0, 0, 0.155, 0, 0.358834, 0)
 
 [node name="PlayerCollision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_l2ndj")

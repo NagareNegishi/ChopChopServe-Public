@@ -1,0 +1,45 @@
+[gd_scene load_steps=2 format=3 uid="uid://c0dm7s16qpo82"]
+
+[ext_resource type="Script" uid="uid://ccfswi4egkeu8" path="res://UI/UIScript.gd" id="1_xcqpf"]
+
+[node name="UiRepTester" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xcqpf")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 281.0
+offset_bottom = 54.0
+
+[node name="ReputationNumber" type="Label" parent="."]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 5.0
+offset_right = 263.0
+offset_bottom = 47.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "Reputation: 0.000"
+
+[node name="AddRepButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 558.0
+offset_top = 167.0
+offset_right = 713.0
+offset_bottom = 206.0
+text = "Add Reputation"
+
+[node name="MinusRepButton" type="Button" parent="."]
+offset_left = 558.0
+offset_top = 215.0
+offset_right = 713.0
+offset_bottom = 254.0
+text = "Minus Reputation"
+
+[connection signal="pressed" from="AddRepButton" to="." method="_on_add_rep_button_pressed"]
+[connection signal="pressed" from="MinusRepButton" to="." method="_on_minus_rep_button_pressed"]

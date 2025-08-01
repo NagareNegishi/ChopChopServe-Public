@@ -1,6 +1,7 @@
 extends Node
 
-@export var total_currency: float = 0.0
+# Current starting currency is 200
+@export var total_currency: float = 200.0
 
 # Add more currency to the total
 func add_currency(more_currency : float) -> void:

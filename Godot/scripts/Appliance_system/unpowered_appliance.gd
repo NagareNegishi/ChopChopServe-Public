@@ -73,6 +73,7 @@ func _can_accept(item: Node) -> bool:
 
 
 ## Start action process, and unable further actions until it completes
+## Subclasses may wrap this method with intuitive name to implement specific action behavior
 ## @return: True if action started
 func start_action() -> bool:
     if current_status != Status.IDLE:

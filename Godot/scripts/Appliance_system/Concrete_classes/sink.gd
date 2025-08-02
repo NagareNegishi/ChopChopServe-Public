@@ -10,10 +10,13 @@ func _ready():
 	# action_interval = ???
 
 
+## Trigger the washing process
+## @return: True if washing started
 func wash() -> bool:
 	return start_action()
 
 
+## Perform action logic
 func _action() -> bool:
 	if current_status != Status.USING:
 		assert(false, "Do not call wash() unless status is USING")

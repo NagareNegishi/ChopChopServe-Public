@@ -31,6 +31,7 @@ size = Vector3(1, 0.647949, 0.87965)
 shape = SubResource("BoxShape3D_w6hnu")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Platform"]
+layers = 3
 mesh = SubResource("BoxMesh_w6hnu")
 
 [node name="Player" parent="." instance=ExtResource("1_w6hnu")]

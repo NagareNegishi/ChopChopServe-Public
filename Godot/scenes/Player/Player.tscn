@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://ckxyscw51v3du"]
+[gd_scene load_steps=7 format=3 uid="uid://ckxyscw51v3du"]
 
 [ext_resource type="Script" uid="uid://0wecred12v33" path="res://scripts/Player/player.gd" id="1_3qydi"]
 [ext_resource type="PackedScene" uid="uid://bu4i2rvstrdvh" path="res://assets/hat.fbx" id="2_bvqhm"]
 [ext_resource type="PackedScene" uid="uid://d2rfm5fkxeeic" path="res://assets/Frog.fbx" id="2_q3lat"]
+[ext_resource type="Texture2D" uid="uid://ds43xburqmhn0" path="res://assets/textures/CircleTexture.png" id="4_ved6o"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l2ndj"]
 radius = 0.524702
@@ -33,6 +34,14 @@ shape = SubResource("BoxShape3D_q3lat")
 
 [node name="ItemPoint" type="Node3D" parent="Mesh"]
 transform = Transform3D(1, -7.2778e-10, -6.05382e-12, 7.2778e-10, 0.999861, 0.0166497, -6.07159e-12, -0.0166497, 0.999861, 1.3638e-07, 3.24767, 3.12001)
+
+[node name="Decal" type="Decal" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00576666, -0.495518, 0)
+size = Vector3(1.4, 0.203, 1.4)
+texture_albedo = ExtResource("4_ved6o")
+emission_energy = 0.0
+upper_fade = 0.00226391
+cull_mask = 1048574
 
 [node name="DashCooldown" type="Timer" parent="."]
 wait_time = 0.2

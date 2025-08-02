@@ -23,12 +23,13 @@ var can_dash : bool = true
 ## @return void
 func _ready() -> void:
 	$DashCooldown.wait_time = DASH_COOLDOWN
-
+	$Decal.modulate = GlobalScript.playerColours.get(1)
 
 ## Functionailty that happens every frame
 ## @param delta the times it takes per frame to render
 ## @return void
 func _physics_process(delta: float) -> void:
+
 	# Add the gravity.
 	if !is_on_floor():
 		velocity += get_gravity() * delta
@@ -73,18 +74,17 @@ func _movement(delta : float) -> void:
 func _on_dash_timer_timeout() -> void:
 	can_dash = true;
 
-
 ## Performs the dash and starts the dash cooldown
 ## @return void
 func _dash() -> void:
 	can_dash = false
-	var tween = create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
+	var dash_tween = create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	
 	# If player moving it will launch in direction of movement 
 	# otherwise will do where players looking
 	var _dash_direction = (_direction if _direction.length() != 0 else -$Mesh.transform.basis.z).normalized() 
-
-	tween.tween_property(self, "velocity", _dash_direction * DASH_STRENGTH, DASH_DURATION)
+	
+	dash_tween.tween_property(self, "velocity", _dash_direction * DASH_STRENGTH, DASH_DURATION)
 	$DashCooldown.start()
 
 
@@ -228,3 +228,6 @@ func _on_check_interactables_timeout() -> void:
 		closest_item.hover(true)
 	
 	_closest_item = closest_item
+
+
+	

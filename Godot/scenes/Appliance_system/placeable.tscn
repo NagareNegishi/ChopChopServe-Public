@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cci8yswyvokg5"]
+
+[ext_resource type="Script" uid="uid://denxn65anovd7" path="res://scripts/Appliance_system/placeable.gd" id="1_j8wpf"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b5h1d"]
+
+[node name="Placeable" type="Node3D"]
+script = ExtResource("1_j8wpf")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_b5h1d")

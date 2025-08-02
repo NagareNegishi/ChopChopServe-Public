@@ -1,3 +1,28 @@
-[gd_scene format=3 uid="uid://bq3tty1sg5iju"]
+[gd_scene load_steps=6 format=3 uid="uid://bq3tty1sg5iju"]
+
+[ext_resource type="PackedScene" uid="uid://blyemcn62ue8n" path="res://assets/models/utensils/bowl.glb" id="1_fgskh"]
+[ext_resource type="PackedScene" uid="uid://bhsq8sdnincf0" path="res://assets/models/furniture/resizedbench2.glb" id="2_430fp"]
+[ext_resource type="PackedScene" uid="uid://bi7vf8fgvtlxj" path="res://assets/models/furniture/resizedwidebench.glb" id="3_upeev"]
+[ext_resource type="PackedScene" uid="uid://0ae4yas7y22m" path="res://assets/models/furniture/resizedtallbench.glb" id="4_iop1y"]
+[ext_resource type="PackedScene" uid="uid://hj3jnco5v7ne" path="res://assets/models/furniture/resizedsinklbench.glb" id="5_uvkb0"]
 
 [node name="Node3D" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.568439, 0)
+
+[node name="bowl" parent="." instance=ExtResource("1_fgskh")]
+transform = Transform3D(1.90578, 0, 0, 0, 1.90578, 0, 0, 0, 1.90578, 0.0294154, 2.0841, -1.13889)
+
+[node name="resizedbench2" parent="." instance=ExtResource("2_430fp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -0.568439, 1)
+
+[node name="resizedbench3" parent="." instance=ExtResource("2_430fp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -0.568439, 1)
+
+[node name="resizedwidebench" parent="." instance=ExtResource("3_upeev")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -0.568439, 1)
+
+[node name="resizedtallbench" parent="." instance=ExtResource("4_iop1y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, -0.568439, 1)
+
+[node name="resizedsinklbench" parent="." instance=ExtResource("5_uvkb0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, -0.568439, 1)

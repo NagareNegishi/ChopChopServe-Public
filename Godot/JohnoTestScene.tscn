@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bg2l1urkd7kjy"]
+[gd_scene load_steps=8 format=3 uid="uid://bg2l1urkd7kjy"]
 
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_w6hnu"]
 [ext_resource type="PackedScene" uid="uid://d1iqitph17b80" path="res://scenes/Interaction/AbstractPickup.tscn" id="2_3snpr"]
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="3_l1ni4"]
 [ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://scenes/Player/Controls.tscn" id="4_gs5vi"]
+[ext_resource type="PackedScene" uid="uid://cg3kcstu0k012" path="res://assets/models/decorations/table.glb" id="5_ikll6"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w6hnu"]
 size = Vector3(30, 0.03, 30)
@@ -41,3 +42,6 @@ transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0.394347, 0)
 [node name="Control" parent="CanvasLayer" instance=ExtResource("4_gs5vi")]
 grow_horizontal = 1
 grow_vertical = 0
+
+[node name="table" parent="." instance=ExtResource("5_ikll6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.27639, 0.50124, 0.0432205)

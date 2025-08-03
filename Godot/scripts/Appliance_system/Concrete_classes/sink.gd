@@ -23,7 +23,8 @@ func _action() -> bool:
 		return false
 	
 	for item in contents:
-		if item is Plate:
+		# if item is Plate:
+		if item.has_method("clean"):
 			item.clean()
 		else:
 			push_error("Sink can only clean plates, found: " + item.get_class())

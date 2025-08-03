@@ -30,8 +30,8 @@ func join_game(connection_info: String) -> bool:
     push_error("Must implement join_game")
     return false
 
-func disconnect():
-    push_error("Must implement disconnect")
+func leave_game():
+    push_error("Must implement leave_game")
 
 # Data transmission
 func send_to(player_id: int, data: Dictionary):

@@ -27,6 +27,10 @@ func create_game(max_players: int) -> bool:
     push_error("Must implement create_game")
     return false
 
+# Different implementations can parse connection_info differently:
+# ENetNetworkLayer: "127.0.0.1:7000"
+# WebSocketNetworkLayer: "wss://myserver.com:443/room/abc123"
+# SteamNetworkLayer: "steam:friend_id"
 func join_game(connection_info: String) -> bool:
     push_error("Must implement join_game")
     return false

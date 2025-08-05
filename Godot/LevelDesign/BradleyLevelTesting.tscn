@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c44hcv8a2u2hn"]
+[gd_scene load_steps=10 format=3 uid="uid://c44hcv8a2u2hn"]
 
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_h7rp5"]
 [ext_resource type="PackedScene" uid="uid://d1iqitph17b80" path="res://scenes/Interaction/AbstractPickup.tscn" id="2_g5i7f"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://scenes/Player/Controls.tscn" id="4_i07ny"]
 [ext_resource type="PackedScene" uid="uid://cg3kcstu0k012" path="res://assets/models/decorations/table.glb" id="5_djasm"]
 [ext_resource type="PackedScene" uid="uid://cebgjv1fjuura" path="res://assets/models/furniture/BasicBench.glb" id="6_iq522"]
+[ext_resource type="MeshLibrary" uid="uid://bc2c7fksdc6nh" path="res://LevelDesign/Tilemap.tres" id="7_ko35n"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w6hnu"]
 size = Vector3(30, 0.03, 30)
@@ -49,3 +50,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.27639, 0.50124, 0.0432205)
 
 [node name="BasicBench" parent="." instance=ExtResource("6_iq522")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.292911, 0.167872, 7.68916)
+
+[node name="GridMap" type="GridMap" parent="."]
+mesh_library = ExtResource("7_ko35n")
+cell_size = Vector3(1, 0.25, 0.5)
+metadata/_editor_floor_ = Vector3(0, 0, 0)

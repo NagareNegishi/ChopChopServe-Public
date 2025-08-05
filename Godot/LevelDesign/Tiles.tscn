@@ -1,0 +1,48 @@
+[gd_scene load_steps=12 format=3 uid="uid://buboxgutwg20q"]
+
+[ext_resource type="PackedScene" uid="uid://cebgjv1fjuura" path="res://assets/models/furniture/BasicBench.glb" id="1_ypcyp"]
+[ext_resource type="PackedScene" uid="uid://bfcd7r0eg4rhj" path="res://assets/models/furniture/BasicBenchFatDrawers.glb" id="2_57hm3"]
+[ext_resource type="PackedScene" uid="uid://d26yrf3ak7eac" path="res://assets/models/furniture/BasicBenchWideDrawers.glb" id="3_jvidw"]
+[ext_resource type="PackedScene" uid="uid://cirb3nw5e5ew8" path="res://assets/models/furniture/BenchSink.glb" id="4_n5eyu"]
+[ext_resource type="PackedScene" uid="uid://cei8gh8bvm3tv" path="res://assets/models/furniture/Blender.glb" id="5_w2mc8"]
+[ext_resource type="PackedScene" uid="uid://cigoc8uj0lt24" path="res://assets/models/furniture/DeepFryer.glb" id="6_vgkl0"]
+[ext_resource type="PackedScene" uid="uid://bffmstu34gple" path="res://assets/models/furniture/Fridge.glb" id="7_pp23w"]
+[ext_resource type="PackedScene" uid="uid://bey0owif1eh54" path="res://assets/models/furniture/Oven.glb" id="8_u07qb"]
+[ext_resource type="PackedScene" uid="uid://qvd6ou0kywpq" path="res://assets/models/furniture/Stove.glb" id="9_7binn"]
+[ext_resource type="PackedScene" uid="uid://c8q53mlq3v7xw" path="res://assets/models/furniture/StoveMulti.glb" id="10_ebqvf"]
+[ext_resource type="PackedScene" uid="uid://d3u4q0nmrcvnj" path="res://assets/models/furniture/trashcan.glb" id="11_7218b"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="BasicBench" parent="." instance=ExtResource("1_ypcyp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.003, 0, -0.003)
+
+[node name="BasicBenchFatDrawers" parent="." instance=ExtResource("2_57hm3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15287, 0.00619209)
+
+[node name="BasicBenchWideDrawers" parent="." instance=ExtResource("3_jvidw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.118476, 0)
+
+[node name="BenchSink" parent="." instance=ExtResource("4_n5eyu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.118264, 0)
+
+[node name="Blender" parent="." instance=ExtResource("5_w2mc8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.48906e-05, -0.107573, 1.94907e-05)
+
+[node name="DeepFryer" parent="." instance=ExtResource("6_vgkl0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.07288e-06, -0.131861, 0.112461)
+
+[node name="Fridge" parent="." instance=ExtResource("7_pp23w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0381655, -0.141743, -0.419329)
+
+[node name="Oven" parent="." instance=ExtResource("8_u07qb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0587699, -0.138734, -0.0316234)
+
+[node name="Stove" parent="." instance=ExtResource("9_7binn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.027951, 0)
+
+[node name="StoveMulti" parent="." instance=ExtResource("10_ebqvf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0155633, -0.0045521, 0.0241075)
+
+[node name="trashcan" parent="." instance=ExtResource("11_7218b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.127058, 0)

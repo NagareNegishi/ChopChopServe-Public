@@ -19,6 +19,8 @@ config/icon="res://icon.svg"
 
 GameServer="*res://scripts/Server.gd"
 GlobalScript="*res://global_script.gd"
+ReputationSystem="*res://scripts/Reputation/reputationSystem.gd"
+CurrencySystem="*res://scripts/Currency/currencySystem.gd"
 
 [display]
 

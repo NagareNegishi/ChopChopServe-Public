@@ -17,6 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+GameServer="*res://scripts/Server.gd"
 GlobalScript="*res://global_script.gd"
 
 [display]

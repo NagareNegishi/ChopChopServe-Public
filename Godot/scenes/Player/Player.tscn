@@ -41,7 +41,6 @@ size = Vector3(1.4, 0.203, 1.4)
 texture_albedo = ExtResource("4_ved6o")
 emission_energy = 0.0
 upper_fade = 0.00226391
-cull_mask = 1048574
 
 [node name="DashCooldown" type="Timer" parent="."]
 wait_time = 0.2

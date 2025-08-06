@@ -47,7 +47,7 @@ func _rotate_player(delta: float) -> void:
 		$Mesh.rotation.y = lerp_angle($Mesh.rotation.y, atan2(_direction.x, _direction.z), delta * ANGULAR_ACCELERATION)
 
 
-## Hanles movement logic for player
+## Handles movement logic for player
 ## @param delta the delta from process physics
 ## @return void
 func _movement(delta : float) -> void:

@@ -22,7 +22,7 @@ extends NetworkLayer
 # }
 
 @export var port: int = 7000
-@export var ip: String = "127.0.0.1"  # Default to localhost
+@export var ip: String = "127.0.0.1" # Default to localhost
 @export var max_clients: int = 3 ## Maximum players -1, as player 1 is the host
 
 var state: ConnectionState = ConnectionState.DISCONNECTED
@@ -46,18 +46,18 @@ func create_game(max_players: int) -> bool:
     if state != ConnectionState.DISCONNECTED:
         push_warning("Already connected or connecting")
         return false
-	if max_players <= 0:
+    if max_players <= 0:
         push_warning("Invalid max players")
         return false
-	if max_players > max_clients + 1: # +1 for the host
-		print("Max players clamped from %d to %d" % [max_players, max_clients + 1])
-		max_players = max_clients + 1
+    if max_players > max_clients + 1: # +1 for the host
+        print("Max players clamped from %d to %d" % [max_players, max_clients + 1])
+        max_players = max_clients + 1
 
     peer = ENetMultiplayerPeer.new()
     if peer.create_server(port, max_players - 1) == OK:
         multiplayer.multiplayer_peer = peer
         state = ConnectionState.HOST
-        my_id = 1  # Host is always ID 1
+        my_id = 1 # Host is always ID 1
         connected.emit()
         player_joined.emit(my_id)
         print("ENet server created on port %d, max players: %d" % [port, max_players])
@@ -77,9 +77,9 @@ func join_game(connection_info: String) -> bool:
         return false
     
     # Parse connection_info as "IP:PORT" or "IP"
-	var parts : Array = connection_info.split(":")
-    var target_ip : String = parts[0] if parts.size() > 0 else ip # localhost
-    var target_port : int = int(parts[1]) if parts.size() > 1 else port
+    var parts: Array = connection_info.split(":")
+    var target_ip: String = parts[0] if parts.size() > 0 else ip # localhost
+    var target_port: int = int(parts[1]) if parts.size() > 1 else port
 
     peer = ENetMultiplayerPeer.new()
     if peer.create_client(target_ip, target_port) == OK:
@@ -143,7 +143,7 @@ func _on_connection_failed():
 # Handle successful connection to server (client successfully joined)
 func _on_connected_to_server():
     print("Connected to server")
-    state = ConnectionState.CONNECTED  # Client is now connected
+    state = ConnectionState.CONNECTED # Client is now connected
     my_id = multiplayer.get_unique_id()
     connected.emit()
 
@@ -176,7 +176,7 @@ func broadcast_except(excluded_id: int, data: Dictionary):
 
 # Player info
 func get_my_id() -> int:
-	return my_id
+    return my_id
 
 func is_host() -> bool:
     return state == ConnectionState.HOST
@@ -195,10 +195,10 @@ func get_connection_info() -> String:
 ## Get the connected players (excluding itself)
 ## @return: Array of player IDs currently connected to the server
 func get_connected_players() -> Array[int]:
-	if not is_host():
-		push_warning("get_connected_players() should only be called by host")
-		return []
-	return multiplayer.get_peers()
+    if not is_host():
+        push_warning("get_connected_players() should only be called by host")
+        return []
+    return multiplayer.get_peers()
 
 
 ## Get the number of connected players (including host)
@@ -223,7 +223,7 @@ func kick_player(player_id: int) -> bool:
 
 ## Get the current connection state
 func get_connection_state() -> ConnectionState:
-	return state
+    return state
 
 # # Optional features, consider once the base functionality is implemented
 

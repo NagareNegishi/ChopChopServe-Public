@@ -3,6 +3,8 @@
     "[gdscript]": {
         "editor.insertSpaces": false,
         "editor.tabSize": 4,
-        "editor.detectIndentation": false
+        "editor.detectIndentation": false,
+        "editor.formatOnSave": false,
+        "editor.formatOnPaste": false
     }
 }

@@ -8,12 +8,15 @@ const FLOORS = 1
 const PLAYERS = 2
 const APPLIANCES = 4
 
-## Placeable objects can not be placed on those
+## Check collisions against these layers to prevent invalid placement
 @export var collision_mask: int = FLOORS + PLAYERS + APPLIANCES
-
+## Visual appearance of the placeable object
+@export var model_scene: PackedScene
 ## Physical dimensions of the placeable object
 @export var size: Vector3 = Vector3(1.0, 1.0, 1.0): set = set_size # automatically call set_size when changed
+
 var can_move: bool = true
+var model_instance: Node3D
 
 ## Reference to collision detection area
 @onready var collision_area: Area3D = $Area3D
@@ -33,6 +36,7 @@ func _ready():
 	collision_area.collision_layer = APPLIANCES
 	collision_area.area_entered.connect(_on_area_entered)
 	collision_area.area_exited.connect(_on_area_exited)
+	setup_model()
 
 
 ## Initialize collision shape based on size
@@ -41,6 +45,38 @@ func setup_collision():
 		var shape = BoxShape3D.new()
 		shape.size = size
 		collision_shape.shape = shape
+
+
+## Setup the model instance from the assigned PackedScene
+func setup_model():
+	if not model_scene:
+		push_warning("No model assigned to " + name)
+		return
+	if not model_scene.can_instantiate():
+		push_error("Cannot instantiate model scene for " + name)
+		return
+	model_instance = model_scene.instantiate()
+	if not model_instance:
+		push_error("Failed to instantiate model for " + name)
+		return
+	auto_size_to_model()
+	add_child(model_instance)
+	
+
+
+func auto_size_to_model():
+	if not model_instance:
+		return
+	for child in model_instance.get_children():
+		if child is MeshInstance3D:
+			var aabb = child.get_aabb()
+			print("AABB: ", aabb)
+			if aabb.size != Vector3.ZERO:
+				var model_scale = aabb.size / size
+				model_instance.scale = model_scale
+				size = aabb.size
+				return
+	print("No valid AABB found")
 
 
 ## Update size and automatically refresh collision shape
@@ -72,7 +108,7 @@ func remove_collision_layers(layers_to_remove: int):
 ## Get the bounding box of this placeable object
 ## @return: AABB representing the object's bounds in world space
 func get_bounds() -> AABB:
-	var bounds = AABB(global_position - size/2, size)
+	var bounds = AABB(global_position - size / 2, size)
 	return bounds
 
 
@@ -96,7 +132,7 @@ func is_locked() -> bool:
 ## @param target_position: World position to check
 ## @return: True if placement is valid
 func can_place_at(target_position: Vector3) -> bool:
-    # NOTE: if subclass call it frequently, consider make them class variable
+	# NOTE: if subclass call it frequently, consider make them class variable
 	var space_state: PhysicsDirectSpaceState3D = get_world_3d().direct_space_state # Get physics world
 	var query: PhysicsShapeQueryParameters3D = PhysicsShapeQueryParameters3D.new() # List of instructions
 	
@@ -159,7 +195,6 @@ func rotate_by(angle: float) -> bool:
 		rotation.y = old_angle
 		return false
 	return true
-
 
 
 ## Virtual method - override in subclasses

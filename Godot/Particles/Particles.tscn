@@ -1,7 +1,7 @@
 [gd_scene load_steps=42 format=3 uid="uid://dpdrqqhoutpc3"]
 
-[ext_resource type="Texture2D" uid="uid://bms4exvmlh2d8" path="res://hapy.jpg" id="1_7i1q3"]
-[ext_resource type="Texture2D" uid="uid://dmvcdmn62sl3d" path="res://sad-emoji.png" id="2_1pdhj"]
+[ext_resource type="Texture2D" uid="uid://bx6m3o5gtj1u3" path="res://Particles/hapy.jpg" id="1_l7qkd"]
+[ext_resource type="Texture2D" path="res://Particles/sad-emoji.png" id="2_cwed3"]
 
 [sub_resource type="Curve" id="Curve_1xyps"]
 _data = [Vector2(0, 0.348315), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -145,7 +145,7 @@ scale_curve = SubResource("CurveTexture_ebd1l")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y82fg"]
 vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("1_7i1q3")
+albedo_texture = ExtResource("1_l7qkd")
 billboard_mode = 1
 
 [sub_resource type="QuadMesh" id="QuadMesh_ebd1l"]
@@ -154,7 +154,7 @@ size = Vector2(0.1, 0.1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vuhl4"]
 vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("2_1pdhj")
+albedo_texture = ExtResource("2_cwed3")
 billboard_mode = 1
 
 [sub_resource type="QuadMesh" id="QuadMesh_ipp32"]

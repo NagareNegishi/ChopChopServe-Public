@@ -1,12 +1,12 @@
-class_name AbstractPickup extends Node3D
+class_name AbstractPickup extends RigidBody3D
 
 @export var has_action : bool
-
+var overlay = preload("res://materials/InteractOverlay.tres")
 
 ## Called when the node enters the scene tree for the first time.
 ## @return void
 func _ready() -> void:
-	pass # Replace with function body.
+	pass
 
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -20,6 +20,7 @@ func _process(_delta: float) -> void:
 ## @return void
 func _on_interactable_component_interacted() -> void:
 	GlobalScript.player.pickup_item(self)
+	$MeshInstance3D.material_overlay = null
 	print("Pickup: Interacted")
 
 
@@ -27,7 +28,7 @@ func _on_interactable_component_interacted() -> void:
 ## @param turn_on boolean the sets the collsion on or off
 ## @return void
 func turn_on_collision(turn_on: bool) -> void:
-	$StaticBody3D/CollisionShape3D.disabled = !turn_on
+	$CollisionShape3D.disabled = !turn_on
 	$InteractableComponent/CollisionShape3D.disabled = !turn_on
 
 
@@ -35,8 +36,7 @@ func turn_on_collision(turn_on: bool) -> void:
 ## @param is_hovered boolean that dicates if pickup is on or off
 ## @return void
 func _on_interactable_component_hovered(is_hovered: bool) -> void:
-	if is_hovered:
-		print("Hovered: " + str(self))
+		$MeshInstance3D.material_overlay = overlay if is_hovered else null
 
 ## Connected to signal: Called when player does action with this item in hand
 ## @param has_action if the player is using the action input
@@ -44,3 +44,6 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 func _on_interactable_component_action_use(is_action: bool) -> void:
 	if has_action:
 		print("Action: " + str(is_action))
+	
+func turnOnPhysics(is_on : bool):
+	set_deferred("freeze", !is_on)

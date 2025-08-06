@@ -7,8 +7,9 @@ const DASH_DURATION: float = 0.025
 const DASH_STRENGTH : float = 20
 const DASH_COOLDOWN : float = 0.2
 const ANGULAR_ACCELERATION : float = 15
-
+const PUSH_FORCE : float = 0.3
 const ITEM_SCALING : float = 5.5
+const THROW_STRENGTH : float = 42
 
 var _direction : Vector3 = Vector3.FORWARD
 var _items_in_interactable_area = []
@@ -22,12 +23,13 @@ var can_dash : bool = true
 ## @return void
 func _ready() -> void:
 	$DashCooldown.wait_time = DASH_COOLDOWN
-
+	$Decal.modulate = GlobalScript.playerColours.get(1)
 
 ## Functionailty that happens every frame
 ## @param delta the times it takes per frame to render
 ## @return void
 func _physics_process(delta: float) -> void:
+
 	# Add the gravity.
 	if !is_on_floor():
 		velocity += get_gravity() * delta
@@ -45,7 +47,7 @@ func _rotate_player(delta: float) -> void:
 		$Mesh.rotation.y = lerp_angle($Mesh.rotation.y, atan2(_direction.x, _direction.z), delta * ANGULAR_ACCELERATION)
 
 
-## Hanles movement logic for player
+## Handles movement logic for player
 ## @param delta the delta from process physics
 ## @return void
 func _movement(delta : float) -> void:
@@ -58,8 +60,13 @@ func _movement(delta : float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, ACCELERATION * SPEED)
 		velocity.z = move_toward(velocity.z, 0, DECELERATION * SPEED)
-	
+		
 	move_and_slide()
+	
+	for i in get_slide_collision_count():
+		var collider = get_slide_collision(i)
+		if collider.get_collider() is RigidBody3D:
+			collider.get_collider().apply_central_impulse(-collider.get_normal() * PUSH_FORCE)
 
 
 ## Allows player to dash again after cooldown finshed
@@ -67,18 +74,17 @@ func _movement(delta : float) -> void:
 func _on_dash_timer_timeout() -> void:
 	can_dash = true;
 
-
 ## Performs the dash and starts the dash cooldown
 ## @return void
 func _dash() -> void:
 	can_dash = false
-	var tween = create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
+	var dash_tween = create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	
 	# If player moving it will launch in direction of movement 
 	# otherwise will do where players looking
 	var _dash_direction = (_direction if _direction.length() != 0 else -$Mesh.transform.basis.z).normalized() 
-
-	tween.tween_property(self, "velocity", _dash_direction * DASH_STRENGTH, DASH_DURATION)
+	
+	dash_tween.tween_property(self, "velocity", _dash_direction * DASH_STRENGTH, DASH_DURATION)
 	$DashCooldown.start()
 
 
@@ -108,7 +114,7 @@ func _inputs() -> void:
 ## @return void
 func _interact() -> void:
 	if item_in_hand != null:
-		drop_item()
+		drop_item(false)
 	
 	if _closest_item == null || !_closest_item is InteractableComponent:
 		return
@@ -122,8 +128,8 @@ func _throw() -> void:
 	if item_in_hand == null:
 		return
 	
-	print("Throw")
-	drop_item()
+	drop_item(true)
+	
 
 
 ## Handles logic when player uses an action
@@ -152,6 +158,7 @@ func pickup_item(item : AbstractPickup) -> bool:
 	item.global_rotation = Vector3(0,0,0)
 	item.get_parent().remove_child(item)
 	item.turn_on_collision(false)
+	item.turnOnPhysics(false)
 	$Mesh/ItemPoint.add_child(item)
 	item.scale *= ITEM_SCALING
 	item_in_hand = item
@@ -160,7 +167,7 @@ func pickup_item(item : AbstractPickup) -> bool:
 
 ## drops item in hand in front of player
 ## @return bool if dropped item succesfully
-func drop_item() -> bool:
+func drop_item(is_throw : bool) -> bool:
 	if(item_in_hand == null):
 		return false
 	
@@ -169,11 +176,15 @@ func drop_item() -> bool:
 	item_in_hand.turn_on_collision(true)
 	get_tree().get_current_scene().add_child(item_in_hand)
 	
-	item_in_hand.global_position = $Mesh/ItemPoint.global_position
-	item_in_hand.global_rotation = $Mesh/ItemPoint.global_rotation	
+	item_in_hand.global_position = $Mesh/ItemPoint.global_position + $Mesh.global_transform.basis.z * 2
+	item_in_hand.global_rotation = $Mesh/ItemPoint.global_rotation
 	
 	_action(false)
+	item_in_hand.turnOnPhysics(true)
+	if is_throw:
+		item_in_hand.linear_velocity = $Mesh.global_transform.basis.z * THROW_STRENGTH
 	item_in_hand = null
+	
 	return true
 
 
@@ -217,3 +228,6 @@ func _on_check_interactables_timeout() -> void:
 		closest_item.hover(true)
 	
 	_closest_item = closest_item
+
+
+	

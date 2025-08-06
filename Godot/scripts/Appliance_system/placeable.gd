@@ -8,7 +8,7 @@ const FLOORS = 1
 const PLAYERS = 2
 const APPLIANCES = 4
 
-# Placeable objects can not be placed on those
+## Placeable objects can not be placed on those
 @export var collision_mask: int = FLOORS + PLAYERS + APPLIANCES
 
 ## Physical dimensions of the placeable object

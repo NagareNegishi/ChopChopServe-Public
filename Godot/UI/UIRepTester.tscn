@@ -1,0 +1,78 @@
+[gd_scene load_steps=2 format=3 uid="uid://c0dm7s16qpo82"]
+
+[ext_resource type="Script" uid="uid://ccfswi4egkeu8" path="res://UI/UIScript.gd" id="1_xcqpf"]
+
+[node name="UiRepTester" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xcqpf")
+
+[node name="Reputation" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 281.0
+offset_bottom = 54.0
+
+[node name="ReputationNumber" type="Label" parent="."]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 5.0
+offset_right = 263.0
+offset_bottom = 47.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "Reputation: 20.0"
+
+[node name="AddRepButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 60.6874
+offset_top = 185.807
+offset_right = 215.687
+offset_bottom = 224.807
+text = "Add Reputation"
+
+[node name="MinusRepButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 62.758
+offset_top = 240.582
+offset_right = 217.758
+offset_bottom = 279.582
+text = "Minus Reputation"
+
+[node name="Currency" type="ColorRect" parent="."]
+offset_left = 870.446
+offset_top = 0.27449
+offset_right = 1151.45
+offset_bottom = 54.2745
+
+[node name="CurrencyNumber" type="Label" parent="."]
+layout_mode = 0
+offset_left = 879.446
+offset_top = 5.27449
+offset_right = 1133.45
+offset_bottom = 47.2745
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "Currency: $ 200"
+
+[node name="AddCurButton" type="Button" parent="."]
+offset_left = 947.5
+offset_top = 144.0
+offset_right = 1102.5
+offset_bottom = 183.0
+text = "Add Currency"
+
+[node name="MinusCurButton" type="Button" parent="."]
+offset_left = 947.469
+offset_top = 202.56
+offset_right = 1102.47
+offset_bottom = 241.56
+text = "Minus Currency"
+
+[connection signal="pressed" from="AddRepButton" to="." method="_on_add_rep_button_pressed"]
+[connection signal="pressed" from="MinusRepButton" to="." method="_on_minus_rep_button_pressed"]
+[connection signal="pressed" from="AddCurButton" to="." method="_on_add_cur_button_pressed"]
+[connection signal="pressed" from="MinusCurButton" to="." method="_on_minus_cur_button_pressed"]

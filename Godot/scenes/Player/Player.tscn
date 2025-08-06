@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://ckxyscw51v3du"]
+[gd_scene load_steps=7 format=3 uid="uid://ckxyscw51v3du"]
 
 [ext_resource type="Script" uid="uid://0wecred12v33" path="res://scripts/Player/player.gd" id="1_3qydi"]
+[ext_resource type="PackedScene" uid="uid://bu4i2rvstrdvh" path="res://assets/hat.fbx" id="2_bvqhm"]
 [ext_resource type="PackedScene" uid="uid://d2rfm5fkxeeic" path="res://assets/Frog.fbx" id="2_q3lat"]
+[ext_resource type="Texture2D" uid="uid://ds43xburqmhn0" path="res://assets/textures/CircleTexture.png" id="4_ved6o"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l2ndj"]
 radius = 0.524702
@@ -14,6 +16,9 @@ size = Vector3(2.082, 3, 3)
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
 script = ExtResource("1_3qydi")
 
+[node name="hat" parent="." instance=ExtResource("2_bvqhm")]
+transform = Transform3D(0.155, 0, 0, 0, 0.155, 0, 0, 0, 0.155, 0, 0.358834, 0)
+
 [node name="PlayerCollision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_l2ndj")
 
@@ -21,7 +26,7 @@ shape = SubResource("CapsuleShape3D_l2ndj")
 transform = Transform3D(-7.64949e-09, 0, -0.175, 0, 0.175, 0, 0.175, 0, -7.64949e-09, 0, -0.568662, 0)
 
 [node name="InteractArea" type="Area3D" parent="Mesh"]
-transform = Transform3D(-6.24448e-08, 0.0186246, 1.42845, 0, 1.42845, -0.0186246, -1.42857, -8.14108e-10, -6.24396e-08, 2.11178e-07, 3.34623, 4.83119)
+transform = Transform3D(-1.16884e-07, 0.0186302, 2.3488, 0, 1.42888, -0.0306244, -2.674, -8.14351e-10, -1.02669e-07, -0.000434988, 3.34623, 6.77052)
 
 [node name="InteractCollision" type="CollisionShape3D" parent="Mesh/InteractArea"]
 transform = Transform3D(1, -5.55112e-17, 3.55271e-15, 4.63175e-17, 1, 0, 3.55241e-15, 0, 1, 1.55263, 0, 0)
@@ -29,6 +34,13 @@ shape = SubResource("BoxShape3D_q3lat")
 
 [node name="ItemPoint" type="Node3D" parent="Mesh"]
 transform = Transform3D(1, -7.2778e-10, -6.05382e-12, 7.2778e-10, 0.999861, 0.0166497, -6.07159e-12, -0.0166497, 0.999861, 1.3638e-07, 3.24767, 3.12001)
+
+[node name="Decal" type="Decal" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00576666, -0.495518, 0)
+size = Vector3(1.4, 0.203, 1.4)
+texture_albedo = ExtResource("4_ved6o")
+emission_energy = 0.0
+upper_fade = 0.00226391
 
 [node name="DashCooldown" type="Timer" parent="."]
 wait_time = 0.2

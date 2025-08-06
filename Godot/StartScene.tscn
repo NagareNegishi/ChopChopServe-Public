@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://bq3tty1sg5iju"]
 
-[ext_resource type="PackedScene" uid="uid://blyemcn62ue8n" path="res://assets/models/items/bowl.glb" id="1_fgskh"]
+[ext_resource type="PackedScene" uid="uid://d2rfm5fkxeeic" path="res://assets/Frog.fbx" id="1_xtwlf"]
 
 [node name="Node3D" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.568439, 0)
 
-[node name="bowl" parent="." instance=ExtResource("1_fgskh")]
-transform = Transform3D(1.90578, 0, 0, 0, 1.90578, 0, 0, 0, 1.90578, 0.0294154, 2.0841, -1.13889)
+[node name="Frog" parent="." instance=ExtResource("1_xtwlf")]
+transform = Transform3D(0.173981, 0, 0, 0, 0.256308, 0, 0, 0, 0.177563, 35.5628, -0.687372, -4.19041)

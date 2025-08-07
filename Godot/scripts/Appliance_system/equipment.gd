@@ -21,11 +21,21 @@ enum Status {
 
 var current_status: Status = Status.IDLE
 var contents: Array[Node] = []
+var interactable_component: InteractableComponent
 
 
 ## Setup the equipment
 func _ready():
 	super._ready()
+	setup_interactable()
+
+
+## Add interactable component to this equipment
+func setup_interactable():
+	interactable_component = InteractableComponent.new()
+	interactable_component.name = "InteractableComponent"
+	add_child(interactable_component)
+	# Connect signals if needed
 
 
 ## Place an item onto this appliance

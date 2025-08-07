@@ -20,7 +20,7 @@ func take() -> Node:
 	assert(false, "TrashCan does not support taking items")
 	return null
 
-func take_at(index: int) -> Node:
+func take_at(_index: int) -> Node:
 	assert(false, "TrashCan does not support taking items")
 	return null
 

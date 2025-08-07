@@ -19,11 +19,9 @@ const APPLIANCES = 4
 
 var can_move: bool = true
 var model_instance: Node3D
-
-## Reference to collision detection area
-@onready var collision_shape: CollisionShape3D = $CollisionShape3D  # For physics
-@onready var interaction_area: Area3D = $InteractionArea  # For detection
-@onready var interaction_shape: CollisionShape3D = $InteractionArea/CollisionShape3D
+var collision_shape: CollisionShape3D  # For physics
+var interaction_area: Area3D  # For detection
+var interaction_shape: CollisionShape3D
 
 
 ## Initialize the placeable with specific dimensions
@@ -36,6 +34,7 @@ func _init(width: float = 1.0, height: float = 1.0, depth: float = 1.0):
 
 ## Called when the node is added to the scene tree
 func _ready():
+	setup_children()
 	# physics setup
 	gravity_scale = 1.0
 	mass = 1.0
@@ -47,6 +46,26 @@ func _ready():
 	interaction_area.monitoring = true
 	interaction_area.area_entered.connect(_on_area_entered)
 	interaction_area.area_exited.connect(_on_area_exited)
+
+
+## Create required child nodes
+func setup_children():
+	if not has_node("CollisionShape3D"):
+		collision_shape = CollisionShape3D.new()
+		collision_shape.name = "CollisionShape3D"
+		add_child(collision_shape)
+	else:
+		collision_shape = $CollisionShape3D
+	if not has_node("InteractionArea"):
+		interaction_area = Area3D.new()
+		interaction_area.name = "InteractionArea"
+		add_child(interaction_area)
+		interaction_shape = CollisionShape3D.new()
+		interaction_shape.name = "CollisionShape3D"
+		interaction_area.add_child(interaction_shape)
+	else:
+		interaction_area = $InteractionArea
+		interaction_shape = $InteractionArea/CollisionShape3D
 
 
 ## Initialize collision shape based on size
@@ -65,7 +84,7 @@ func setup_collision():
 		interaction_shape.shape = interaction_box
 
 
-## Setup the model instance from the assigned PackedScene
+# Setup the model instance from the assigned PackedScene
 func setup_model():
 	if not model_scene:
 		push_warning("No model assigned to " + name)
@@ -158,7 +177,6 @@ func can_place_at(target_position: Vector3) -> bool:
 	# NOTE: if subclass call it frequently, consider make them class variable
 	var space_state: PhysicsDirectSpaceState3D = get_world_3d().direct_space_state # Get physics world
 	var query: PhysicsShapeQueryParameters3D = PhysicsShapeQueryParameters3D.new() # List of instructions
-	
 	# Reuse existing collision shape if available
 	if collision_shape and collision_shape.shape:
 		query.shape = collision_shape.shape
@@ -166,10 +184,8 @@ func can_place_at(target_position: Vector3) -> bool:
 		var box_shape: BoxShape3D = BoxShape3D.new()
 		box_shape.size = size
 		query.shape = box_shape
-	
 	query.transform.origin = target_position
 	query.collision_mask = collision_mask
-	
 	# Check for collisions on specified layers only
 	var collisions: Array[Dictionary] = space_state.intersect_shape(query)
 	return collisions.is_empty()

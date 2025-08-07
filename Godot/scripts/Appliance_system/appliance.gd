@@ -4,10 +4,17 @@
 class_name Appliance
 extends Placeable
 
+## Type of cooking style this appliance supports
+@export var cooking_style: ApplianceFactory.CookingStyle = ApplianceFactory.CookingStyle.NONE
+
+## Setup the appliance
+func _ready():
+	super._ready()
+
 ## Place an item onto this appliance
 ## @param item: The Node to place on this appliance
 ## @return: True if placement was successful, false otherwise
-func put(item: Node) -> bool:
+func put(_item: Node) -> bool:
 	assert(false, "put() must be implemented in " + get_class())
 	return false
 
@@ -22,6 +29,6 @@ func take() -> Node:
 ## Check if this appliance can accept the given item
 ## @param item: The Node to test for acceptance
 ## @return: True if item can be placed, false otherwise
-func _can_accept(item: Node) -> bool:
+func _can_accept(_item: Node) -> bool:
 	assert(false, "can_accept() must be implemented in " + get_class())
 	return false

@@ -1,7 +1,7 @@
 ## Base class for all placeable objects in the kitchen
 ## Handles positioning, size, and collision detection
 class_name Placeable
-extends Node3D
+extends RigidBody3D
 
 ## Collision layer constants for now!!!!!!!! we should define and share in some global file
 const FLOORS = 1
@@ -9,18 +9,21 @@ const PLAYERS = 2
 const APPLIANCES = 4
 
 ## Check collisions against these layers to prevent invalid placement
-@export var collision_mask: int = FLOORS + PLAYERS + APPLIANCES
+@export var collide_with: int = FLOORS + PLAYERS + APPLIANCES
 ## Visual appearance of the placeable object
 @export var model_scene: PackedScene
 ## Physical dimensions of the placeable object
 @export var size: Vector3 = Vector3(1.0, 1.0, 1.0): set = set_size # automatically call set_size when changed
+## Scale factor for interaction area size
+@export var interaction_scale: float = 1.0
 
 var can_move: bool = true
 var model_instance: Node3D
 
 ## Reference to collision detection area
-@onready var collision_area: Area3D = $Area3D
-@onready var collision_shape: CollisionShape3D = $Area3D/CollisionShape3D
+@onready var collision_shape: CollisionShape3D = $CollisionShape3D  # For physics
+@onready var interaction_area: Area3D = $InteractionArea  # For detection
+@onready var interaction_shape: CollisionShape3D = $InteractionArea/CollisionShape3D
 
 
 ## Initialize the placeable with specific dimensions
@@ -31,20 +34,35 @@ func _init(width: float = 1.0, height: float = 1.0, depth: float = 1.0):
 	size = Vector3(width, height, depth)
 
 
+## Called when the node is added to the scene tree
 func _ready():
+	# physics setup
+	gravity_scale = 1.0
+	mass = 1.0
+	lock_rotation = true
 	setup_collision()
-	collision_area.collision_layer = APPLIANCES
-	collision_area.area_entered.connect(_on_area_entered)
-	collision_area.area_exited.connect(_on_area_exited)
 	setup_model()
+	# Configure interaction area, no collide but detect overlaps
+	interaction_area.collision_layer = 0
+	interaction_area.monitoring = true
+	interaction_area.area_entered.connect(_on_area_entered)
+	interaction_area.area_exited.connect(_on_area_exited)
 
 
 ## Initialize collision shape based on size
 func setup_collision():
+	collision_layer = APPLIANCES
+	collision_mask = collide_with
+	# Setup physics collision shape
 	if collision_shape:
 		var shape = BoxShape3D.new()
 		shape.size = size
 		collision_shape.shape = shape
+	# Setup interaction area shape
+	if interaction_shape:
+		var interaction_box = BoxShape3D.new()
+		interaction_box.size = size * interaction_scale
+		interaction_shape.shape = interaction_box
 
 
 ## Setup the model instance from the assigned PackedScene
@@ -59,50 +77,53 @@ func setup_model():
 	if not model_instance:
 		push_error("Failed to instantiate model for " + name)
 		return
-	auto_size_to_model()
+	align_model()
 	add_child(model_instance)
-	
 
 
-func auto_size_to_model():
+## Align the model and Placeable
+## Placeable's size is defined by the model's AABB
+## but position is defined by the Placeable
+func align_model():
 	if not model_instance:
 		return
 	for child in model_instance.get_children():
 		if child is MeshInstance3D:
 			var aabb = child.get_aabb()
-			print("AABB: ", aabb)
 			if aabb.size != Vector3.ZERO:
-				var model_scale = aabb.size / size
-				model_instance.scale = model_scale
-				size = aabb.size
+				# Account for node scaling
+				var actual_size = aabb.size * child.scale
+				var aabb_center = aabb.get_center() * child.scale
+				set_size(actual_size)
+				model_instance.position = -aabb_center
 				return
-	print("No valid AABB found")
+	push_error("No valid AABB found")
 
 
 ## Update size and automatically refresh collision shape
 ## @param new_size: New dimensions for the placeable object
 func set_size(new_size: Vector3):
 	size = new_size
+	# Update physics collision shape
 	if collision_shape and collision_shape.shape:
 		collision_shape.shape.size = size
-
-
-## Update what layers this object checks for collisions when placing
-## @param new_mask: Bitmask of collision layers to check
-func set_collision_mask(new_mask: int):
-	collision_mask = new_mask
+	# Update interaction area shape
+	if interaction_shape and interaction_shape.shape:
+		interaction_shape.shape.size = size
 
 
 ## Add layers to the collision mask
 ## @param layers_to_add: Bitmask of layers to add
 func add_collision_layers(layers_to_add: int):
 	collision_mask |= layers_to_add
+	collide_with |= layers_to_add
 
 
 ## Remove layers from the collision mask
 ## @param layers_to_remove: Bitmask of layers to remove
 func remove_collision_layers(layers_to_remove: int):
 	collision_mask &= ~layers_to_remove
+	collide_with &= ~layers_to_remove
 
 
 ## Get the bounding box of this placeable object
@@ -115,11 +136,13 @@ func get_bounds() -> AABB:
 ## Lock the object in place (prevent movement and rotation)
 func lock():
 	can_move = false
+	freeze = true
 
 
 ## Unlock the object (allow movement and rotation)
 func unlock():
 	can_move = true
+	freeze = false
 
 
 ## Check if object is currently locked
@@ -157,7 +180,9 @@ func can_place_at(target_position: Vector3) -> bool:
 ## @return: True if placement was successful
 func place_at(target_position: Vector3) -> bool:
 	if can_place_at(target_position):
+		freeze = true
 		global_position = target_position
+		freeze = false
 		return true
 	return false
 
@@ -169,7 +194,9 @@ func move_to(target_position: Vector3) -> bool:
 	if not can_move:
 		return false
 	if can_place_at(target_position):
+		freeze = true
 		global_position = target_position
+		freeze = false
 		return true
 	return false
 

@@ -1,16 +1,22 @@
-[gd_scene load_steps=4 format=3 uid="uid://cci8yswyvokg5"]
+[gd_scene load_steps=5 format=3 uid="uid://cci8yswyvokg5"]
 
 [ext_resource type="Script" uid="uid://denxn65anovd7" path="res://scripts/Appliance_system/placeable.gd" id="1_j8wpf"]
 [ext_resource type="PackedScene" uid="uid://cebgjv1fjuura" path="res://assets/models/furniture/BasicBench.glb" id="2_4em8r"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_j8wpf"]
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_b5h1d"]
 
-[node name="Placeable" type="Node3D"]
+[node name="Placeable" type="RigidBody3D"]
 script = ExtResource("1_j8wpf")
 model_scene = ExtResource("2_4em8r")
 
-[node name="Area3D" type="Area3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_j8wpf")
+debug_color = Color(0.499556, 0.43392, 0.985267, 1)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+[node name="InteractionArea" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea"]
 shape = SubResource("BoxShape3D_b5h1d")
 debug_color = Color(0.890196, 0.0941176, 0.556863, 1)

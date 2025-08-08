@@ -10,7 +10,7 @@ radius = 0.524702
 height = 1.06912
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_q3lat"]
-size = Vector3(2.082, 3, 3)
+size = Vector3(2.74022, 3, 3)
 
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
@@ -29,7 +29,7 @@ transform = Transform3D(-7.64949e-09, 0, -0.175, 0, 0.175, 0, 0.175, 0, -7.64949
 transform = Transform3D(-1.16884e-07, 0.0186302, 2.3488, 0, 1.42888, -0.0306244, -2.674, -8.14351e-10, -1.02669e-07, -0.000434988, 3.34623, 6.77052)
 
 [node name="InteractCollision" type="CollisionShape3D" parent="Mesh/InteractArea"]
-transform = Transform3D(1, -5.55112e-17, 3.55271e-15, 4.63175e-17, 1, 0, 3.55241e-15, 0, 1, 1.55263, 0, 0)
+transform = Transform3D(0.999994, -5.5507e-17, 3.55326e-15, 4.63147e-17, 1, 0, 3.55293e-15, 0, 1, 1.22352, 0, 0)
 shape = SubResource("BoxShape3D_q3lat")
 
 [node name="ItemPoint" type="Node3D" parent="Mesh"]
@@ -41,6 +41,7 @@ size = Vector3(1.4, 0.203, 1.4)
 texture_albedo = ExtResource("4_ved6o")
 emission_energy = 0.0
 upper_fade = 0.00226391
+cull_mask = 1048574
 
 [node name="DashCooldown" type="Timer" parent="."]
 wait_time = 0.2

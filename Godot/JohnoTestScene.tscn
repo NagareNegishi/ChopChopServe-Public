@@ -1,11 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://bg2l1urkd7kjy"]
+[gd_scene load_steps=9 format=3 uid="uid://bg2l1urkd7kjy"]
 
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_w6hnu"]
 [ext_resource type="PackedScene" uid="uid://d1iqitph17b80" path="res://scenes/Interaction/AbstractPickup.tscn" id="2_3snpr"]
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="3_l1ni4"]
 [ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://scenes/Player/Controls.tscn" id="4_gs5vi"]
 [ext_resource type="PackedScene" uid="uid://dw2oh1yssb0mu" path="res://scenes/Interaction/Bowl.tscn" id="5_ikll6"]
-[ext_resource type="ArrayMesh" uid="uid://dxiy0w33cvciv" path="res://assets/models/furniture/resizedbench2_Cube_002.res" id="6_reo5o"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w6hnu"]
 size = Vector3(30, 0.03, 30)
@@ -19,9 +18,6 @@ ambient_light_energy = 1.5
 reflected_light_source = 1
 tonemap_mode = 2
 tonemap_exposure = 1.15
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_reo5o"]
-size = Vector3(1, 0.647949, 0.87965)
 
 [node name="JohnoTestScene" type="Node3D"]
 
@@ -63,39 +59,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.708075, 0.0235131, -0.6994
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_ikll6")
-
-[node name="TempBench" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.24723, 0.0542178, -3.9693)
-
-[node name="Resizedbench2Cube002" type="MeshInstance3D" parent="TempBench"]
-transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
-mesh = ExtResource("6_reo5o")
-skeleton = NodePath("../..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TempBench"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.286377, -0.000869751)
-shape = SubResource("BoxShape3D_reo5o")
-
-[node name="TempBench3" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.24723, 0.0542178, -1.96501)
-
-[node name="Resizedbench2Cube002" type="MeshInstance3D" parent="TempBench3"]
-transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0.671736)
-mesh = ExtResource("6_reo5o")
-skeleton = NodePath("../..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TempBench3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.286377, 0.667397)
-shape = SubResource("BoxShape3D_reo5o")
-
-[node name="TempBench2" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.31474, 0.0542178, -3.9693)
-
-[node name="Resizedbench2Cube002" type="MeshInstance3D" parent="TempBench2"]
-transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
-mesh = ExtResource("6_reo5o")
-skeleton = NodePath("../..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TempBench2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.286377, 0.00487328)
-shape = SubResource("BoxShape3D_reo5o")

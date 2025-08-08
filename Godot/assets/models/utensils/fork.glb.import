@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://brlw35p1niuln"
-path="res://.godot/imported/fork.glb-666b490402fee39373b3ac52486ac3c9.scn"
+valid=false
 
 [deps]
 
 source_file="res://assets/models/utensils/fork.glb"
-dest_files=["res://.godot/imported/fork.glb-666b490402fee39373b3ac52486ac3c9.scn"]
 
 [params]
 

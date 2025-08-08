@@ -100,9 +100,6 @@ func _inputs() -> void:
 	if Input.is_action_just_pressed("Throw"):
 		_throw()
 		
-	if Input.is_action_just_pressed("Sabotage"):
-		_sabotage()
-		
 	if Input.is_action_just_pressed("Action"):
 		_action(true)
 		
@@ -176,7 +173,7 @@ func drop_item(is_throw : bool) -> bool:
 	item_in_hand.turn_on_collision(true)
 	get_tree().get_current_scene().add_child(item_in_hand)
 	
-	item_in_hand.global_position = $Mesh/ItemPoint.global_position + $Mesh.global_transform.basis.z * 2
+	item_in_hand.global_position = $Mesh/ItemPoint.global_position + $Mesh.global_transform.basis.z * 2.5
 	item_in_hand.global_rotation = $Mesh/ItemPoint.global_rotation
 	
 	_action(false)

@@ -4,6 +4,7 @@ class_name Extinguisher extends AbstractPickup
 ## @return void
 func _ready() -> void:
 	$ExtinguishRange.enabled = false
+	$ExtinguishRange/GPUParticles3D.emitting = false
 
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -28,3 +29,4 @@ func _extingush() -> void:
 ## @return void
 func _on_interactable_component_action_use(is_action: bool) -> void:
 	$ExtinguishRange.enabled = true if is_action else false
+	$ExtinguishRange/GPUParticles3D.emitting = is_action

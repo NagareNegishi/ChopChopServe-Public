@@ -1,15 +1,16 @@
-class_name Player extends CharacterBody3D
+class_name Player 
+extends CharacterBody3D
 
 const SPEED : float = 4.0
 const ACCELERATION : float = 100
 const DECELERATION : float = 60
-const DASH_DURATION: float = 0.025
+const DASH_DURATION : float = 0.025
 const DASH_STRENGTH : float = 20
 const DASH_COOLDOWN : float = 0.2
 const ANGULAR_ACCELERATION : float = 15
 const PUSH_FORCE : float = 0.3
 const ITEM_SCALING : float = 5.5
-const THROW_STRENGTH : float = 42
+const THROW_STRENGTH : float = 40
 
 var _direction : Vector3 = Vector3.FORWARD
 var _items_in_interactable_area = []
@@ -115,7 +116,7 @@ func _interact() -> void:
 	
 	if _closest_item == null || !_closest_item is InteractableComponent:
 		return
-
+	 
 	_closest_item.interact()
 
 
@@ -136,12 +137,6 @@ func _action(is_active : bool) -> void:
 		return
 		
 	item_in_hand.get_node("InteractableComponent").action(is_active)
-
-
-## Handles what sabotage to call.
-## @return void
-func _sabotage() -> void:
-	print("Sabotage")
 
 
 ## Sets what item the player is holding

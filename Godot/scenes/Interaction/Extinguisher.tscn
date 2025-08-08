@@ -52,6 +52,7 @@ debug_shape_custom_color = Color(1, 0, 0, 1)
 [node name="GPUParticles3D" type="GPUParticles3D" parent="ExtinguishRange" index="0"]
 transform = Transform3D(-1.45559e-08, 0.333, -1.45559e-08, 0, -1.45559e-08, -0.333, -0.333, -1.45559e-08, 6.36258e-16, 0.238268, 0.473885, 0.00357192)
 material_override = ExtResource("3_2h5x0")
+emitting = false
 amount = 20
 lifetime = 0.3
 speed_scale = 0.8

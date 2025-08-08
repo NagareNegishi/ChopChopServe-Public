@@ -2,7 +2,7 @@ class_name Server extends Node
 
 var _services: Dictionary = {} # Contains all services that need to communicate
 var _restuarant_scene = preload("res://Restaurant/Restaurant.tscn")
-var _test_without_server = false # For running alternative scenes to main
+var _test_without_server = true # For running alternative scenes to main
 
 ## Adds service to dictionary of known services
 func register_service(service_name: String, service_instance):

@@ -1,7 +1,6 @@
-[gd_scene load_steps=42 format=3 uid="uid://dpdrqqhoutpc3"]
+[gd_scene load_steps=41 format=3 uid="uid://dpdrqqhoutpc3"]
 
 [ext_resource type="Texture2D" uid="uid://bx6m3o5gtj1u3" path="res://Particles/hapy.jpg" id="1_l7qkd"]
-[ext_resource type="Texture2D" path="res://Particles/sad-emoji.png" id="2_cwed3"]
 
 [sub_resource type="Curve" id="Curve_1xyps"]
 _data = [Vector2(0, 0.348315), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -79,20 +78,20 @@ rings = 5
 _data = [Vector2(0.252, 1), 0.0, 0.0, 0, 0, Vector2(0.644, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.393039), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_vuhl4"]
+[sub_resource type="CurveTexture" id="CurveTexture_yq25w"]
 curve = SubResource("Curve_xrkct")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ipp32"]
 emission_shape = 1
 emission_sphere_radius = 0.05
 gravity = Vector3(0, 0, 0)
-scale_curve = SubResource("CurveTexture_vuhl4")
+scale_curve = SubResource("CurveTexture_yq25w")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o0yg1"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l7qkd"]
 vertex_color_use_as_albedo = true
 
 [sub_resource type="SphereMesh" id="SphereMesh_qjoak"]
-material = SubResource("StandardMaterial3D_o0yg1")
+material = SubResource("StandardMaterial3D_l7qkd")
 radius = 0.025
 height = 0.05
 radial_segments = 6
@@ -154,7 +153,6 @@ size = Vector2(0.1, 0.1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vuhl4"]
 vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("2_cwed3")
 billboard_mode = 1
 
 [sub_resource type="QuadMesh" id="QuadMesh_ipp32"]

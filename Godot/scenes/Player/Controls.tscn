@@ -1,15 +1,15 @@
 [gd_scene load_steps=2 format=3 uid="uid://dg3km4t6mbwwg"]
 
-[ext_resource type="Texture2D" uid="uid://bcygavjgf4rcw" path="res://assets/textures/HUD_Mockup2.png" id="1_783u8"]
+[ext_resource type="Texture2D" uid="uid://55tfcxkvdmmu" path="res://assets/textures/HUD_Mockup2.png" id="1_783u8"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 63.0
+offset_left = 66.0
 offset_top = -655.0
-offset_right = 1215.0
+offset_right = 1218.0
 offset_bottom = -7.0
 grow_vertical = 0
 
@@ -72,6 +72,6 @@ Throw - L"
 vertical_alignment = 1
 
 [node name="HudMockup2" type="Sprite2D" parent="."]
-position = Vector2(515, 329)
-scale = Vector2(0.52247, 0.52247)
+position = Vector2(508.694, 327.875)
+scale = Vector2(0.52004, 0.52004)
 texture = ExtResource("1_783u8")

@@ -8,16 +8,16 @@ extends Node
 
 ## All cooking styles supported by Appliance and Food
 enum CookingStyle {
-    NONE,        # Bench - no cooking, just prep/storage
-    HEAT,        # Stove Top - direct heat cooking          ????may be redundant?????
-    BAKE,        # Oven
-    DEEP_FRY,    # Deep Fryer
-    PAN_FRY,     # Frying Pan
+	NONE,        # Bench - no cooking, just prep/storage
+	HEAT,        # Stove Top - direct heat cooking          ????may be redundant?????
+	BAKE,        # Oven
+	DEEP_FRY,    # Deep Fryer
+	PAN_FRY,     # Frying Pan
 	BOIL,        # Pot
-    BLEND,       # Blender - mixing/blending
-    FREEZE,      # Freezer - cooling/freezing
-    CUT,         # Cutting Board with Knife - chopping       we can rename it to chop
-    WHISK       # Whisk - mixing
+	BLEND,       # Blender - mixing/blending
+	FREEZE,      # Freezer - cooling/freezing
+	CUT,         # Cutting Board with Knife - chopping       we can rename it to chop
+	WHISK       # Whisk - mixing
 }
 
 # all concrete appliances must be in this folder

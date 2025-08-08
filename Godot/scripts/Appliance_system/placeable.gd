@@ -110,11 +110,10 @@ func align_model():
 		if child is MeshInstance3D:
 			var aabb = child.get_aabb()
 			if aabb.size != Vector3.ZERO:
-				# Account for node scaling
-				var actual_size = aabb.size * child.scale
-				var aabb_center = aabb.get_center() * child.scale
-				set_size(actual_size)
-				model_instance.position = -aabb_center
+				# Account for model's transform
+				var model_aabb = child.transform * aabb
+				set_size(model_aabb.size)
+				model_instance.position = -model_aabb.get_center()
 				return
 	push_error("No valid AABB found")
 

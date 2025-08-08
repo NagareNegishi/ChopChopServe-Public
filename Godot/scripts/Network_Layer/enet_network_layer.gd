@@ -1,26 +1,6 @@
 class_name ENetNetworkLayer
 extends NetworkLayer
 
-# those are in superclass NetworkLayer
-
-# # Events (emitted by implementations)
-# signal player_joined(id: int)
-# signal player_left(id: int)
-# signal connected()
-# signal disconnected()
-# signal data_received(from_id: int, data: Dictionary)
-
-# # signal connection_failed(reason: String)
-# # signal player_connection_lost(id: int, reason: String)
-# # signal network_error(error: String)
-
-# enum ConnectionState {
-#     DISCONNECTED,
-#     CONNECTING,
-#     CONNECTED,
-#     HOST
-# }
-
 @export var port: int = 7000
 @export var ip: String = "127.0.0.1" # Default to localhost
 @export var max_clients: int = 3 ## Maximum players -1, as player 1 is the host
@@ -30,6 +10,7 @@ var peer: ENetMultiplayerPeer
 var my_id: int = -1
 
 
+## Setup signals for player management
 func _ready():
     # Connect to Godot's built-in multiplayer signals
     multiplayer.peer_connected.connect(_on_peer_connected)
@@ -113,7 +94,7 @@ func leave_game():
         print("Left game and disconnected")
 
 
-# Handle peer connection (when someone joins)
+## Handle peer connection (when someone joins)
 func _on_peer_connected(id: int):
     print("Peer connected: %d" % id)
     if state == ConnectionState.HOST:
@@ -124,14 +105,14 @@ func _on_peer_connected(id: int):
         player_joined.emit(id)
 
 
-# Handle peer disconnection (when someone leaves)
+## Handle peer disconnection (when someone leaves)
 func _on_peer_disconnected(id: int):
     print("Peer disconnected: %d" % id)
     if state == ConnectionState.HOST:
         player_left.emit(id)
 
 
-# Handle connection failure (when join_game fails to connect)
+## Handle connection failure (when join_game fails to connect)
 func _on_connection_failed():
     print("Connection failed")
     state = ConnectionState.DISCONNECTED
@@ -140,7 +121,7 @@ func _on_connection_failed():
     my_id = -1
 
 
-# Handle successful connection to server (client successfully joined)
+## Handle successful connection to server (client successfully joined)
 func _on_connected_to_server():
     print("Connected to server")
     state = ConnectionState.CONNECTED # Client is now connected
@@ -148,7 +129,7 @@ func _on_connected_to_server():
     connected.emit()
 
 
-# Handle server disconnection (server went down unexpectedly)
+## Handle server disconnection (server went down unexpectedly)
 func _on_server_disconnected():
     print("Server disconnected unexpectedly")
     if state != ConnectionState.DISCONNECTED:
@@ -159,29 +140,88 @@ func _on_server_disconnected():
         my_id = -1
 
 
-# Data transmission
-func send_to(player_id: int, data: Dictionary):
-    push_error("Must implement send_to")
-
-func broadcast(data: Dictionary):
-    push_error("Must implement broadcast")
-
-# Selective transmission (very useful for games)
-func send_to_multiple(player_ids: Array[int], data: Dictionary):
-    push_error("Must implement send_to_multiple")
-
-func broadcast_except(excluded_id: int, data: Dictionary):
-    push_error("Must implement broadcast_except")
-
-
-# Player info
+## Get the ID of the current player
+## @return: The ID of the current player
 func get_my_id() -> int:
     return my_id
 
+
+## Check if the current player is the host
+## @return: True if the current player is the host, false otherwise
 func is_host() -> bool:
     return state == ConnectionState.HOST
 
-## ---------- Player management used by the host ------------
+
+## Get the current connection state
+## @return: The current connection state as a ConnectionState enum value
+func get_connection_state() -> ConnectionState:
+    return state
+
+
+# Data transmission, not necessarily for ENet, as RPCs is more intuitive for most use cases --------
+# this is for dynamic data transmission, and transition to the WebSocket
+
+## Send data to a specific player by their ID
+## @param player_id: The ID of the player to send data to
+## @param data: The data to send, as a Dictionary
+func send_to(player_id: int, data: Dictionary):
+    if state == ConnectionState.DISCONNECTED:
+        push_warning("Cannot send data: not connected")
+        return
+    if player_id == my_id:
+        # Sending to self
+        data_received.emit(my_id, data)
+        return
+    # Send to specific peer
+    _receive_data.rpc_id(player_id, data)
+
+
+## Broadcast data to all connected players, including self
+## @param data: The data to broadcast, as a Dictionary
+func broadcast(data: Dictionary):
+    if state == ConnectionState.DISCONNECTED:
+        push_warning("Cannot send data: not connected")
+        return
+    # Send to self
+    data_received.emit(my_id, data)
+    # Send to all other connected peers
+    _receive_data.rpc(data)
+
+
+## Selective transmission
+## Send data to multiple players by their IDs
+## @param player_ids: Array of player IDs to send data to
+## @param data: The data to send, as a Dictionary
+func send_to_multiple(player_ids: Array[int], data: Dictionary):
+    if state == ConnectionState.DISCONNECTED:
+        push_warning("Cannot send data: not connected")
+        return
+    for player_id in player_ids:
+        send_to(player_id, data)
+
+
+## Broadcast data to all players except the one with excluded_id
+## @param excluded_id: The ID of the player to exclude from the broadcast
+## @param data: The data to broadcast, as a Dictionary
+func broadcast_except(excluded_id: int, data: Dictionary):
+    if state == ConnectionState.DISCONNECTED:
+        push_warning("Cannot send data: not connected")
+        return
+    if my_id != excluded_id:
+        data_received.emit(my_id, data)
+    for peer_id in multiplayer.get_peers():
+        if peer_id != excluded_id:
+            _receive_data.rpc_id(peer_id, data)
+
+
+## Receive data from other players
+@rpc("any_peer", "call_remote", "reliable")
+func _receive_data(data: Dictionary):
+    var sender_id = multiplayer.get_remote_sender_id()
+    data_received.emit(sender_id, data)
+# --------------------------------------------------------------------------------------------------
+
+# ----------- Player management used by the host ---------------------------------------------------
 
 ## Get the connection info of the server
 ## @return: Connection info string
@@ -219,11 +259,9 @@ func kick_player(player_id: int) -> bool:
         return false
     return multiplayer.disconnect_peer(player_id) == OK
 
-## ---------- Player management used by the host ------------
+# --------------------------------------------------------------------------------------------------
 
-## Get the current connection state
-func get_connection_state() -> ConnectionState:
-    return state
+
 
 # # Optional features, consider once the base functionality is implemented
 

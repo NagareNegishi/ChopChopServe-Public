@@ -8,6 +8,12 @@ extends Appliance
 
 var contents: Array[Node] = []
 
+## Setup the model instance
+func _init():
+	super._init()
+	model_scene = preload("res://assets/models/furniture/BasicBench.glb")
+
+
 ## Setup the bench
 func _ready():
 	super._ready()

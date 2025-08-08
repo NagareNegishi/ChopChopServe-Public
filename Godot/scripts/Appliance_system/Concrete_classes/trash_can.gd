@@ -8,6 +8,12 @@ class_name TrashCan
 extends UnPoweredAppliance
 
 
+## Setup the model instance
+func _init():
+	super._init()
+	model_scene = preload("res://assets/models/furniture/trashcan.glb")
+
+
 func _ready():
 	super._ready()
 	# valid_classes = [Food]

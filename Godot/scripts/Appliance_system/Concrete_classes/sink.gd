@@ -3,6 +3,12 @@ class_name Sink
 extends UnPoweredAppliance
 
 
+## Setup the model instance
+func _init():
+	super._init()
+	model_scene = preload("res://assets/models/furniture/BenchSink.glb")
+
+
 func _ready():
 	super._ready()
 	# valid_classes = ???

@@ -8,13 +8,22 @@ extends UnPoweredAppliance
 
 var supply: Script ## Must be Food class
 
+
+## Setup the model instance
+func _init():
+	super._init()
+
+	# until model is ready !!!!!!!!!!!!!
+	model_scene = preload("res://assets/models/furniture/BasicBenchFatDrawers.glb")
+
+
 func _ready():
 	super._ready()
 	# valid_classes = [Food]
 	# capacity = 1000000 ## no limit on food crate
 	# action_interval = 0.1 ## maybe small amount to avoid rapidly taking items?
 
-	set_supply()
+	#set_supply()
 
 
 ## Set the supply script for the food crate
@@ -59,12 +68,3 @@ func take() -> Node:
 	status_changed.emit(current_status)
 	action_timer.start()
 	return supply.new()
-
-
-
-
-
-
-
-
-

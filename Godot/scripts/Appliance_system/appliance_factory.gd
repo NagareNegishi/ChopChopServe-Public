@@ -86,18 +86,84 @@ func print_book():
 
 
 
-## for test remove later
+# ## for test remove later
+# func spawn_test_appliance(appliance_type: String):
+# 	var appliance = create_appliance(appliance_type)
+# 	if appliance:
+# 		get_tree().current_scene.add_child(appliance)
+# 		appliance.global_position = Vector3(0, 0, 0)
+		
+# 		print("Spawned: ", appliance_type)
+# 	else:
+# 		print("Failed to spawn: ", appliance_type)
+
+
+## Spawn appliance in front of the player for testing
 func spawn_test_appliance(appliance_type: String):
 	var appliance = create_appliance(appliance_type)
-	if appliance:
+	if not appliance:
+		print("Failed to spawn: ", appliance_type)
+		return
+	
+	# Find the player node
+	var player = get_tree().get_first_node_in_group("player")
+	if not player:
+		player = get_tree().current_scene.get_node("Player")
+	if player:
+		# Get player's position and forward direction
+		var player_pos = player.global_position
+		var player_forward = -player.global_transform.basis.z
+		# Spawn distance in front of player
+		var spawn_distance = 2.0  # Adjust this value as needed
+		var spawn_position = player_pos + (player_forward * spawn_distance)
+		spawn_position.y = 1.0
+		get_tree().current_scene.add_child(appliance)
+		appliance.global_position = spawn_position
+		print("Spawned %s in front of player at: %s" % [appliance_type, spawn_position])
+	else:
 		get_tree().current_scene.add_child(appliance)
 		appliance.global_position = Vector3(0, 0, 0)
-		
-		print("Spawned: ", appliance_type)
-	else:
-		print("Failed to spawn: ", appliance_type)
+		print("Player not found! Spawned %s at origin" % appliance_type)
 
+
+const TEST_APPLIANCES = [
+	"bench",      # Numpad 1
+	"blender",    # Numpad 2
+	"food_crate", # Numpad 3
+	"freezer",    # Numpad 4
+	"fryer",      # Numpad 5
+	"oven",       # Numpad 6
+	"sink",       # Numpad 7
+	"stove",      # Numpad 8
+	"trash_can"   # Numpad 9
+]
 
 func _input(event):
-	if event is InputEventKey and event.pressed and event.keycode == KEY_P:
-		spawn_test_appliance("stove")
+	if event is InputEventKey and event.pressed:
+		var appliance_index = -1
+	
+		# Check for numpad keys 1-9
+		match event.keycode:
+			KEY_KP_1:
+				appliance_index = 0
+			KEY_KP_2:
+				appliance_index = 1
+			KEY_KP_3:
+				appliance_index = 2
+			KEY_KP_4:
+				appliance_index = 3
+			KEY_KP_5:
+				appliance_index = 4
+			KEY_KP_6:
+				appliance_index = 5
+			KEY_KP_7:
+				appliance_index = 6
+			KEY_KP_8:
+				appliance_index = 7
+			KEY_KP_9:
+				appliance_index = 8
+		
+		# Spawn the corresponding appliance
+		if appliance_index >= 0 and appliance_index < TEST_APPLIANCES.size():
+			spawn_test_appliance(TEST_APPLIANCES[appliance_index])
+			print("Numpad %d pressed - spawning %s" % [appliance_index + 1, TEST_APPLIANCES[appliance_index]])

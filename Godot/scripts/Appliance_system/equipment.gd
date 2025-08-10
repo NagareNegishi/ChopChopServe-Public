@@ -29,6 +29,24 @@ func _ready():
 	super._ready()
 
 
+## Perform action depend on what player is holding
+## @param _item: The Node Player is holding
+## @return: True if action is triggered, false otherwise
+func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
+	# If player has nothing: let them take self, return true
+	if not item:
+		GlobalScript.player.pickup_item(self as Node) # we need to sort it, Appliance is not AbstractPickup!!!!!!!!	
+		return true
+
+	# If item_in_hand exists but appliance can't accept it: do nothing, return false
+	if not _can_accept(item):
+		print("Equipment cannot accept item: ", item.get_class())
+		return false
+	# If item_in_hand exists and appliance can accept it: move from player to appliance, return true
+	put(item)
+	return true
+
+
 ## Place an item onto this appliance
 ## @param item: The Node to place on this appliance
 ## @return: True if placement was successful, false otherwise
@@ -36,6 +54,10 @@ func put(item: Node) -> bool:
 	if not _can_accept(item):
 		return false
 	contents.append(item)
+	# transfer item to appliance
+	if item.get_parent():
+		item.get_parent().remove_child(item)
+	add_child(item)
 	return true
 
 
@@ -44,23 +66,27 @@ func put(item: Node) -> bool:
 func take() -> Node:
 	if contents.is_empty():
 		return null
-	return contents.pop_back()
+	var item = contents.pop_back()
+	remove_child(item)
+	return item
 
 
-## Remove and return item at specific index
-## @param index: Index of item to remove
-## @return: The Node that was removed, or null if invalid index
-func take_at(index: int) -> Node:
-	if index < 0 or index >= contents.size():
-		return null
-	return contents.pop_at(index)
+# ## Remove and return item at specific index
+# ## @param index: Index of item to remove
+# ## @return: The Node that was removed, or null if invalid index
+# func take_at(index: int) -> Node:
+# 	if index < 0 or index >= contents.size():
+# 		return null
+# 	return contents.pop_at(index)
 
 
 ## Remove and return all items
 ## @return: Array of all items that were removed
 func take_all() -> Array[Node]:
-	var all_items = contents.duplicate()
-	contents.clear()
+	var all_items = contents
+	for item in all_items:
+		remove_child(item)
+	contents = []
 	return all_items
 
 
@@ -68,14 +94,16 @@ func take_all() -> Array[Node]:
 ## @param item: The Node to test for acceptance
 ## @return: True if item can be placed, false otherwise
 func _can_accept(item: Node) -> bool:
+	if not item:
+		print("Cannot accept item, item is null")
+		return false
 	if current_status == Status.BROKEN:
+		print("Cannot accept item, appliance is broken")
 		return false
 	if contents.size() >= capacity:
+		print("Cannot accept item, appliance is at full capacity")
 		return false
-
-	# may need to check null script, but it depends on how food are implemented!!!!!!!
-
-	return item.get_script() in valid_classes
+	return item.get_class() in valid_class_names or item.get_script() in valid_classes
 
 
 ## Perform cooking logic

@@ -48,6 +48,63 @@ func add_cookware(cookware_script_name: String):
 	cookware.position = Vector3(0, size.y * 0.1, 0)  # Slightly above bottom
 
 
+## Perform action depend on what player is holding
+## @param _item: The Node Player is holding
+## @return: True if action is triggered, false otherwise
+func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
+
+	# Let's ignore Blender and Freezer for now, all PoweredAppliance has 1 Cookware !!!!!!!!!
+
+	# If player has nothing: move item from appliance to player (if exists), return true
+	if not item:
+		var cookware = take()
+		if cookware:
+			cookware.finish_cook()
+			GlobalScript.player.pickup_item(cookware)
+			if contents.is_empty():
+				stop_cook()
+			return true
+		else:
+			print("No cookware to take from PoweredAppliance")
+			return false
+	# If player has clean empty plate: serve food from Cookware, return true
+	if item.is_class("Plate"):
+		return serve_to_plate(item)
+	# If item_in_hand exists but appliance can't accept it: do nothing, return false
+	if not _can_accept(item):
+		print("PoweredAppliance cannot accept item: ", item.get_class())
+		return false
+	# If item_in_hand exists and appliance can accept it: move from player to appliance, return true
+	put(item)
+	return true
+
+
+
+func serve_to_plate(plate: Node) -> bool: # Node should change to Plate when its ready!!!!!!!!
+	if contents.is_empty():
+		push_warning("Nothing to serve")
+		return false
+	if not plate:
+		push_warning("Cannot serve to null")
+		return false
+	if plate.has_method("is_ready"):
+		if not plate.is_ready():
+			push_warning("Cannot serve to non-ready plate") # maybe not empty? maybe dirty??
+			return false
+		var cookware = contents[0]
+		var dish = ApplianceFactory.match_menu_items(cookware.take_all())
+
+		stop_cook()
+		if plate.has_method("add_dish"):
+			plate.add_dish(dish)
+			print("Cookware served dish to plate: ", plate.name)
+			return true
+
+	push_warning("Plate does not provide required methods")
+	return false
+
+
+
 ## Place an item onto this appliance
 ## @param item: The Node to place on this appliance
 ## @return: True if placement was successful, false otherwise
@@ -55,6 +112,10 @@ func put(item: Node) -> bool:
 	if not _can_accept(item):
 		return false
 	contents.append(item)
+	# transfer item to appliance
+	if item.get_parent():
+		item.get_parent().remove_child(item)
+	add_child(item)
 	return true
 
 
@@ -63,25 +124,23 @@ func put(item: Node) -> bool:
 func take() -> Node:
 	if contents.is_empty():
 		return null
-	return contents.pop_back()
-
-
-## Remove and return item at specific index
-## @param index: Index of item to remove
-## @return: The Node that was removed, or null if invalid index
-func take_at(index: int) -> Node:
-	if index < 0 or index >= contents.size():
-		return null
-	return contents.pop_at(index)
+	var item = contents.pop_back()
+	remove_child(item)
+	return item
 
 
 ## Check if this appliance can accept the given item
 ## @param item: The Node to test for acceptance
 ## @return: True if item can be placed, false otherwise
 func _can_accept(item: Node) -> bool:
+	if not item:
+		print("Cannot accept item, item is null")
+		return false
 	if current_status == Status.BROKEN:
+		print("Cannot accept item, appliance is broken")
 		return false
 	if contents.size() >= capacity:
+		print("Cannot accept item, appliance is at full capacity")
 		return false
 	return item.get_class() in valid_class_names or item.get_script() in valid_classes
 
@@ -107,6 +166,9 @@ func stop_cook() -> bool:
 	if current_status != Status.COOKING:
 		push_warning("Cannot stop cooking unless appliance is cooking")
 		return false
+	for item in contents:
+		if item is Equipment:
+			item.finish_cook()
 	current_status = Status.IDLE
 	status_changed.emit(current_status)
 	cook_timer.stop()

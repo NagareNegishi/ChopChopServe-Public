@@ -14,7 +14,8 @@ enum Status {
 }
 
 @export var capacity: int = 4 ## Maximum number of items this appliance can hold
-@export var valid_classes: Array[Script] = [] ## Classes that can be placed in this appliance
+@export var valid_class_names: Array[String] = [] ## Class names that can be placed in (Recommended)
+@export var valid_classes: Array[Script] = [] ## Class scripts that can be placed in (Fallback)
 @export var action_interval: float = 1.0 ## action every ? seconds
 
 
@@ -39,6 +40,10 @@ func put(item: Node) -> bool:
 	if not _can_accept(item):
 		return false
 	contents.append(item)
+	# transfer item to appliance
+	if item.get_parent():
+		item.get_parent().remove_child(item)
+	add_child(item)
 	return true
 
 
@@ -47,30 +52,28 @@ func put(item: Node) -> bool:
 func take() -> Node:
 	if contents.is_empty():
 		return null
-	return contents.pop_back()
-
-
-## Remove and return item at specific index
-## @param index: Index of item to remove
-## @return: The Node that was removed, or null if invalid index
-func take_at(index: int) -> Node:
-	if index < 0 or index >= contents.size():
-		return null
-	return contents.pop_at(index)
+	var item = contents.pop_back()
+	remove_child(item)
+	return item
 
 
 ## Check if this appliance can accept the given item
 ## @param item: The Node to test for acceptance
 ## @return: True if item can be placed, false otherwise
 func _can_accept(item: Node) -> bool:
+	if not item:
+		print("Cannot accept item, item is null")
+		return false
 	if current_status == Status.BROKEN:
+		print("Cannot accept item, appliance is broken")
 		return false
 	if contents.size() >= capacity:
+		print("Cannot accept item, appliance is at full capacity")
 		return false
 
 	# may need to check null script, but it depends on how food are implemented!!!!!!!
 
-	return item.get_script() in valid_classes
+	return item.get_class() in valid_class_names or item.get_script() in valid_classes
 
 
 ## Start action process, and unable further actions until it completes

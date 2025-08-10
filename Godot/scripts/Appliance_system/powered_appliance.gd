@@ -1,5 +1,6 @@
 ## Powered kitchen appliances that can cook food and have operational status
 ## Examples: stove, oven, fryer, blender, freezer
+## If it has paired Cookware, it can only take one of that type (E.g. oven and pot)
 class_name PoweredAppliance
 extends Appliance
 
@@ -12,14 +13,10 @@ enum Status {
 	BROKEN
 }
 
-@export var capacity: int = 4 ## Maximum number of items this appliance can hold
-@export var valid_classes: Array[Script] = [] ## Classes that can be placed in this appliance
+@export var capacity: int = 1 ## Maximum number of items this appliance can hold
+@export var valid_class_names: Array[String] = [] ## Class names that can be placed in (Recommended)
+@export var valid_classes: Array[Script] = [] ## Class scripts that can be placed in (Fallback)
 @export var cook_interval: float = 1.0 ## Cook every ? seconds
-
-# maybe redundant
-# @export var accepts_equipment: bool = true ## Whether this appliance can accept equipment
-# @export var accepts_food: bool = true ## Whether this appliance can accept food directly
-
 
 var current_status: Status = Status.IDLE
 var contents: Array[Node] = []
@@ -35,6 +32,20 @@ func _ready():
 	cook_timer.wait_time = cook_interval
 	cook_timer.timeout.connect(_on_cook_timer_timeout)
 	add_child(cook_timer)
+
+
+## Add corresponding Cookware to the PoweredAppliance
+## @param cookware_script_name: The script name of the cookware to add
+func add_cookware(cookware_script_name: String):
+	var cookware = ApplianceFactory.create_appliance(cookware_script_name)
+	if not cookware:
+		push_error("Failed to create cookware: " + cookware_script_name)
+		return
+	add_child(cookware)
+	put(cookware)
+	# Position and size cookware relative to appliance
+	cookware.size = self.size * 0.6  # 60% of appliance size
+	cookware.position = Vector3(0, size.y * 0.1, 0)  # Slightly above bottom
 
 
 ## Place an item onto this appliance
@@ -64,35 +75,6 @@ func take_at(index: int) -> Node:
 	return contents.pop_at(index)
 
 
-# ## Remove and return first item of specific type
-# ## @param item_class: Script class to look for
-# ## @return: The Node that was removed, or null if not found
-# func take_by_type(item_class: Script) -> Node:
-# 	for i in range(contents.size()):
-# 		if contents[i].get_script() == item_class:
-# 			return contents.pop_at(i)
-# 	return null
-
-
-# ## Remove and return all items
-# ## @return: Array of all items that were removed
-# func take_all() -> Array[Node]:
-# 	var all_items = contents.duplicate()
-# 	contents.clear()
-# 	return all_items
-
-
-# ## Remove and return all items of specific type
-# ## @param item_class: Script class to look for
-# ## @return: Array of matching items that were removed
-# func take_all_by_type(item_class: Script) -> Array[Node]:
-# 	var matching_items: Array[Node] = []
-# 	for i in range(contents.size() - 1, -1, -1):  # Reverse to avoid index issues
-# 		if contents[i].get_script() == item_class:
-# 			matching_items.append(contents.pop_at(i))
-# 	return matching_items
-
-
 ## Check if this appliance can accept the given item
 ## @param item: The Node to test for acceptance
 ## @return: True if item can be placed, false otherwise
@@ -101,8 +83,7 @@ func _can_accept(item: Node) -> bool:
 		return false
 	if contents.size() >= capacity:
 		return false
-	# may need to check null script, but it depends on how food are implemented!!!!!!!
-	return item.get_script() in valid_classes
+	return item.get_class() in valid_class_names or item.get_script() in valid_classes
 
 
 ## Start cooking process

@@ -11,9 +11,12 @@ func _init():
 func _ready():
 	super._ready()
 	cooking_style = ApplianceFactory.CookingStyle.BAKE
-	# capacity = 4
-	# power = 1
+	valid_class_names = ["OvenTray"] # Only one OvenTray allowed
+	capacity = 1
+	power = 1
+	add_cookware("oven_tray")
 
 	# Maybe??
 	# valid_classes = [load("res://scripts/Appliance_system/Concrete_classes/cookware.gd")]
 	# cook_interval = 1.0
+

@@ -11,9 +11,9 @@ func _init():
 func _ready():
 	super._ready()
 	cooking_style = ApplianceFactory.CookingStyle.DEEP_FRY
-	# capacity = 4
-	# power = 1
-
+	valid_class_names = ["FryerBasket"] # Only one FryerBasket allowed
+	capacity = 1
+	power = 1
+	add_cookware("fryer_basket")
 	# Maybe??
-	# valid_classes = [load("res://scripts/Appliance_system/Concrete_classes/cookware.gd")]
 	# cook_interval = 1.0

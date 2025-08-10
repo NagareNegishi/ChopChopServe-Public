@@ -22,6 +22,7 @@ var model_instance: Node3D
 var collision_shape: CollisionShape3D  # For physics
 var interaction_area: Area3D  # For detection
 var interaction_shape: CollisionShape3D
+var initialized: bool = false
 
 
 ## Initialize the placeable with specific dimensions
@@ -46,6 +47,7 @@ func _ready():
 	interaction_area.monitoring = true
 	interaction_area.area_entered.connect(_on_area_entered)
 	interaction_area.area_exited.connect(_on_area_exited)
+	initialized = true
 
 
 ## Create required child nodes
@@ -96,14 +98,12 @@ func setup_model():
 	if not model_instance:
 		push_error("Failed to instantiate model for " + name)
 		return
-	align_model()
+	align_to_model()
 	add_child(model_instance)
 
 
-## Align the model and Placeable
-## Placeable's size is defined by the model's AABB
-## but position is defined by the Placeable
-func align_model():
+## Align the size of the Placeable to the model
+func align_to_model():
 	if not model_instance:
 		return
 	for child in model_instance.get_children():
@@ -118,6 +118,24 @@ func align_model():
 	push_error("No valid AABB found")
 
 
+## Resize the model to match the Placeable
+func resize_model():
+	if not model_instance:
+		return
+	# Get current model size
+	var current_size = Vector3.ZERO
+	for child in model_instance.get_children():
+		if child is MeshInstance3D:
+			var aabb = child.get_aabb()
+			current_size = (child.transform * aabb).size
+			break
+
+	if current_size != Vector3.ZERO:
+		var scale_factor = size / current_size
+		model_instance.scale = scale_factor
+		model_instance.position = Vector3.ZERO # Keep model centered
+
+
 ## Update size and automatically refresh collision shape
 ## @param new_size: New dimensions for the placeable object
 func set_size(new_size: Vector3):
@@ -128,6 +146,8 @@ func set_size(new_size: Vector3):
 	# Update interaction area shape
 	if interaction_shape and interaction_shape.shape:
 		interaction_shape.shape.size = size
+	if initialized:
+		resize_model()
 
 
 ## Add layers to the collision mask

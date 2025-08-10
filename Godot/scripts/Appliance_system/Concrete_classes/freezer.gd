@@ -11,8 +11,8 @@ func _init():
 func _ready():
 	super._ready()
 	cooking_style = ApplianceFactory.CookingStyle.FREEZE
-	# capacity = 4
-	# power = 1
+	capacity = 4
+	power = 1
 
 	# Maybe??
 	# valid_classes = [load("res://scripts/Appliance_system/Concrete_classes/cookware.gd")]

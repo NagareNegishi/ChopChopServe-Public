@@ -16,8 +16,7 @@ enum CookingStyle {
 	BOIL,        # Pot
 	BLEND,       # Blender - mixing/blending
 	FREEZE,      # Freezer - cooling/freezing
-	CUT,         # Cutting Board with Knife - chopping       we can rename it to chop
-	WHISK       # Whisk - mixing
+	CHOP         # Cutting Board with Knife - chopping
 }
 
 # all concrete appliances must be in this folder
@@ -134,7 +133,7 @@ const TEST_APPLIANCES = [
 	"fryer",      # Numpad 5
 	"oven",       # Numpad 6
 	"sink",       # Numpad 7
-	"stove",      # Numpad 8
+	"stove_with_pot",      # Numpad 8
 	"trash_can"   # Numpad 9
 ]
 

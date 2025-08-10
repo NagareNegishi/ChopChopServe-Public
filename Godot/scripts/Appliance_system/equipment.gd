@@ -17,7 +17,8 @@ enum Status {
 
 @export var coefficient: float = 1.0 ## Cooking efficiency modifier (1.0 = normal)
 @export var capacity: int = 1 ## Maximum number of items this appliance can hold / deal with
-@export var valid_classes: Array[Script] = [] ## Classes that can be placed in / use for
+@export var valid_class_names: Array[String] = [] ## Class names that can be placed in (Recommended)
+@export var valid_classes: Array[Script] = [] ## Class scripts that can be placed in (Fallback)
 
 var current_status: Status = Status.IDLE
 var contents: Array[Node] = []
@@ -27,11 +28,11 @@ var interactable_component: InteractableComponent
 ## Setup the equipment
 func _ready():
 	super._ready()
-	setup_interactable()
+	_setup_interactable()
 
 
 ## Add interactable component to this equipment
-func setup_interactable():
+func _setup_interactable():
 	interactable_component = InteractableComponent.new()
 	interactable_component.name = "InteractableComponent"
 	add_child(interactable_component)

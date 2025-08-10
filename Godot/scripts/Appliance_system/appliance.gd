@@ -6,10 +6,22 @@ extends Placeable
 
 ## Type of cooking style this appliance supports
 @export var cooking_style: ApplianceFactory.CookingStyle = ApplianceFactory.CookingStyle.NONE
+var interactable_component: InteractableComponent
+
 
 ## Setup the appliance
 func _ready():
 	super._ready()
+	_setup_interactable()
+
+
+## Add interactable component to this equipment
+func _setup_interactable():
+	interactable_component = InteractableComponent.new()
+	interactable_component.name = "InteractableComponent"
+	add_child(interactable_component)
+	# Connect signals if needed
+
 
 ## Place an item onto this appliance
 ## @param item: The Node to place on this appliance

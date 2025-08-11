@@ -21,6 +21,7 @@ enum CookingStyle {
 
 # all concrete appliances must be in this folder
 const PATH = "res://scripts/Appliance_system/Concrete_classes/"
+var base_scene: PackedScene = preload("res://scenes/Appliance_system/placeable.tscn")
 var book: Dictionary = {}
 
 
@@ -37,9 +38,10 @@ func create_appliance(type: String) -> Appliance:
 	if not book.has(type):
 		push_error("Appliance type '%s' not registered!" % type)
 		return null
-	var appliance = book[type].new()
-	if appliance is Appliance:
-		return appliance
+	var instance = base_scene.instantiate()
+	instance.set_script(book[type])
+	if instance is Appliance:
+		return instance
 	push_error("Registered type '%s' is not an Appliance!" % type)
 	return null
 

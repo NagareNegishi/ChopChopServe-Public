@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cci8yswyvokg5"]
+[gd_scene load_steps=6 format=3 uid="uid://cci8yswyvokg5"]
 
 [ext_resource type="Script" uid="uid://denxn65anovd7" path="res://scripts/Appliance_system/placeable.gd" id="1_j8wpf"]
 [ext_resource type="PackedScene" uid="uid://cebgjv1fjuura" path="res://assets/models/furniture/BasicBench.glb" id="2_4em8r"]
@@ -6,6 +6,17 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_j8wpf"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_b5h1d"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_4em8r"]
+properties/0/path = NodePath(".:rotation")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath(".:size")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath(".:position")
+properties/2/spawn = true
+properties/2/replication_mode = 2
 
 [node name="Placeable" type="RigidBody3D"]
 script = ExtResource("1_j8wpf")
@@ -20,3 +31,6 @@ debug_color = Color(0.499556, 0.43392, 0.985267, 1)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea"]
 shape = SubResource("BoxShape3D_b5h1d")
 debug_color = Color(0.890196, 0.0941176, 0.556863, 1)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_4em8r")

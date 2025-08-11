@@ -22,6 +22,7 @@ var model_instance: Node3D
 var collision_shape: CollisionShape3D  # For physics
 var interaction_area: Area3D  # For detection
 var interaction_shape: CollisionShape3D
+var multiplayer_sync: MultiplayerSynchronizer
 var initialized: bool = false
 
 
@@ -42,12 +43,15 @@ func _ready():
 	lock_rotation = true
 	setup_collision()
 	setup_model()
+	setup_multiplayer_sync()
 	# Configure interaction area, no collide but detect overlaps
 	interaction_area.collision_layer = 0
 	interaction_area.monitoring = true
 	interaction_area.area_entered.connect(_on_area_entered)
 	interaction_area.area_exited.connect(_on_area_exited)
 	initialized = true
+
+	print_sync_properties()
 
 
 ## Create required child nodes
@@ -68,6 +72,12 @@ func setup_children():
 	else:
 		interaction_area = $InteractionArea
 		interaction_shape = $InteractionArea/CollisionShape3D
+	if not has_node("MultiplayerSynchronizer"):
+		multiplayer_sync = MultiplayerSynchronizer.new()
+		multiplayer_sync.name = "MultiplayerSynchronizer"
+		add_child(multiplayer_sync)
+	else:
+		multiplayer_sync = $MultiplayerSynchronizer
 
 
 ## Initialize collision shape based on size
@@ -100,6 +110,17 @@ func setup_model():
 		return
 	align_to_model()
 	add_child(model_instance)
+
+
+## Setup multiplayer synchronization, if not already set up
+func setup_multiplayer_sync():
+	if multiplayer_sync:
+		if not multiplayer_sync.replication_config:
+			var config = SceneReplicationConfig.new()
+			config.add_property(NodePath(".:position")) 
+			config.add_property(NodePath(".:rotation"))
+			config.add_property(NodePath(".:size"))
+			multiplayer_sync.replication_config = config
 
 
 ## Align the size of the Placeable to the model
@@ -269,3 +290,15 @@ func _on_area_entered(_area: Area3D):
 ## @param area: The area that exited
 func _on_area_exited(_area: Area3D):
 	pass # Override in subclasses
+
+
+## Print the synchronized properties (For debugging)
+func print_sync_properties():
+	if multiplayer_sync and multiplayer_sync.replication_config:
+		var config = multiplayer_sync.replication_config
+		print("=== Configured Sync Properties ===")
+		var properties = config.get_properties()
+		print("Number of properties: ", properties.size())
+		for i in range(properties.size()):
+			var property = properties[i]
+			print("Property ", i, ": ", property)

@@ -158,6 +158,12 @@ func get_connection_state() -> ConnectionState:
     return state
 
 
+## Get the connected players (excluding itself)
+## @return: Array of player IDs currently connected to the server
+func get_connected_players() -> PackedInt32Array:
+    return multiplayer.get_peers()
+
+
 # Data transmission, not necessarily for ENet, as RPCs is more intuitive for most use cases --------
 # this is for dynamic data transmission, and transition to the WebSocket
 
@@ -230,15 +236,6 @@ func get_connection_info() -> String:
         push_warning("get_connection_info() should only be called by host")
         return ""
     return "%s:%d" % [ip, port]
-
-
-## Get the connected players (excluding itself)
-## @return: Array of player IDs currently connected to the server
-func get_connected_players() -> Array[int]:
-    if not is_host():
-        push_warning("get_connected_players() should only be called by host")
-        return []
-    return multiplayer.get_peers()
 
 
 ## Get the number of connected players (including host)

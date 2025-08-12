@@ -1,4 +1,4 @@
-class_name Extinguisher extends AbstractPickup
+class_name Extinguisher extends AbstractThrowable
 
 ## Called when the node enters the scene tree for the first time.
 ## @return void

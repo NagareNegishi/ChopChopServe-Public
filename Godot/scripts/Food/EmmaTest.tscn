@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://570x8w24exdp"]
+
+[ext_resource type="Script" uid="uid://cp0hc6tgnaw7f" path="res://scripts/Food/Ingredients/milk.gd" id="1_g27tf"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_g27tf"]
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_2o5jr"]
+albedo_color = Color(0.756517, 0.000442803, 0.756512, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_2sf7l"]
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_hnvyn"]
+albedo_color = Color(0, 1, 0, 1)
+
+[node name="EmmaTest" type="Node3D" node_paths=PackedStringArray("raw_mesh", "spoiled_mesh")]
+script = ExtResource("1_g27tf")
+raw_mesh = NodePath("rawMilk")
+spoiled_mesh = NodePath("spoiledMilk")
+
+[node name="rawMilk" type="MeshInstance3D" parent="."]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, -0.0304477, 0)
+mesh = SubResource("BoxMesh_g27tf")
+surface_material_override/0 = SubResource("ORMMaterial3D_2o5jr")
+
+[node name="spoiledMilk" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.562217, 0)
+mesh = SubResource("BoxMesh_2sf7l")
+surface_material_override/0 = SubResource("ORMMaterial3D_hnvyn")

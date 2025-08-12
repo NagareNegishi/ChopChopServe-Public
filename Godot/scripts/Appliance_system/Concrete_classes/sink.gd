@@ -11,7 +11,7 @@ func _init():
 
 func _ready():
 	super._ready()
-	# valid_classes = ???
+	# valid_classes = ??? only plate type
 	# capacity = ???
 	# action_interval = ???
 
@@ -34,5 +34,22 @@ func _action() -> bool:
 			item.clean()
 		else:
 			push_error("Sink can only clean plates, found: " + item.get_class())
-	
 	return true
+
+
+## Perform action depend on what player is holding
+## @param _item: The Node Player is holding
+## @return: True if action is triggered, false otherwise
+func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
+	# If player has nothing: move Plate from Sink to player (if exists), return true
+	if not item:
+		var plate = take()
+		if plate:
+			GlobalScript.player.pickup_item(plate)
+			return true
+		else:
+			print("No plate to take from Sink")
+			return false
+	# If player has empty plate: depend on if sink can accept it
+	return put(item)
+

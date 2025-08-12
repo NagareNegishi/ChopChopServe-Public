@@ -52,3 +52,10 @@ func _action() -> bool:
 			item.queue_free()
 	contents.clear()
 	return true
+
+
+## Perform action depend on what player is holding
+## @param _item: The Node Player is holding
+## @return: True if action is triggered, false otherwise
+func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
+	return throw(item)

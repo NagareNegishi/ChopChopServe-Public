@@ -68,3 +68,14 @@ func take() -> Node:
 	status_changed.emit(current_status)
 	action_timer.start()
 	return supply.new()
+
+
+## Perform action depend on what player is holding
+## @param _item: The Node Player is holding
+## @return: True if action is triggered, false otherwise
+func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
+	if not item:
+		var food = take()
+		GlobalScript.player.pickup_item(food)
+		return true
+	return false

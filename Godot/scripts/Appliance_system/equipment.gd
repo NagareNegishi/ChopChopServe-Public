@@ -36,14 +36,9 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 	if not item:
 		GlobalScript.player.pickup_item(self as Node) # we need to sort it, Appliance is not AbstractPickup!!!!!!!!	
 		return true
+	# If item_in_hand exists: depend on if equipment can accept it
+	return put(item)
 
-	# If item_in_hand exists but appliance can't accept it: do nothing, return false
-	if not _can_accept(item):
-		print("Equipment cannot accept item: ", item.get_class())
-		return false
-	# If item_in_hand exists and appliance can accept it: move from player to appliance, return true
-	put(item)
-	return true
 
 
 ## Place an item onto this appliance

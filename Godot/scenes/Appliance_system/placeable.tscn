@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://cci8yswyvokg5"]
 
 [ext_resource type="Script" uid="uid://denxn65anovd7" path="res://scripts/Appliance_system/placeable.gd" id="1_j8wpf"]
-[ext_resource type="PackedScene" uid="uid://cebgjv1fjuura" path="res://assets/models/furniture/BasicBench.glb" id="2_4em8r"]
+[ext_resource type="PackedScene" uid="uid://cebgjv1fjuura" path="res://assets/models/ignorelol/BasicBench.glb" id="2_4em8r"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_j8wpf"]
 

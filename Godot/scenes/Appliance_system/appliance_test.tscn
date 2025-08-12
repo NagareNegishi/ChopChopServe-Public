@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://d1iqitph17b80" path="res://scenes/Interaction/AbstractPickup.tscn" id="2_7lrxx"]
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="3_ycumx"]
 [ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://scenes/Player/Controls.tscn" id="4_b0ff5"]
-[ext_resource type="PackedScene" uid="uid://cg3kcstu0k012" path="res://assets/models/decorations/table.glb" id="5_xi6kc"]
+[ext_resource type="PackedScene" uid="uid://dxhfqm13c85ar" path="res://assets/models/decorations/table.glb" id="5_xi6kc"]
 [ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="6_1a031"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w6hnu"]

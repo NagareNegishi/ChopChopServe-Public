@@ -92,6 +92,7 @@ func serve_to_plate(plate: Node) -> bool: # Node should change to Plate when its
 			push_warning("Cannot serve to non-ready plate") # maybe not empty? maybe dirty??
 			return false
 		var cookware = contents[0]
+		# Method in MenuItem, takes Array and return subclass of MenuItem
 		var dish = ApplianceFactory.match_menu_items(cookware.take_all())
 
 		stop_cook()

@@ -1,3 +1,5 @@
+## leave it for future expansion, but we may not use it at this stage
+
 ## Kitchen equipment class Tool:
 ## Used with Appliance, like a Knife, Whisk, etc.
 ## Tool must be used by Player, it will not work alone

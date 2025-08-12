@@ -12,13 +12,12 @@ enum Status {
 	IDLE,
 	USING,
 	BROKEN
-	#, DIRTY ???
 }
 
 @export var coefficient: float = 1.0 ## Cooking efficiency modifier (1.0 = normal)
 @export var capacity: int = 1 ## Maximum number of items this appliance can hold / deal with
-@export var valid_class_names: Array[String] = [] ## Class names that can be placed in (Recommended)
-@export var valid_classes: Array[Script] = [] ## Class scripts that can be placed in (Fallback)
+@export var valid_food_names: Array[String] = [] ## Class names that can be placed in (Recommended)
+@export var valid_food: Array[Script] = [] ## Class scripts that can be placed in (Fallback)
 
 var current_status: Status = Status.IDLE
 var contents: Array[Node] = []
@@ -71,15 +70,6 @@ func take() -> Node:
 	return item
 
 
-# ## Remove and return item at specific index
-# ## @param index: Index of item to remove
-# ## @return: The Node that was removed, or null if invalid index
-# func take_at(index: int) -> Node:
-# 	if index < 0 or index >= contents.size():
-# 		return null
-# 	return contents.pop_at(index)
-
-
 ## Remove and return all items
 ## @return: Array of all items that were removed
 func take_all() -> Array[Node]:
@@ -103,7 +93,7 @@ func _can_accept(item: Node) -> bool:
 	if contents.size() >= capacity:
 		print("Cannot accept item, appliance is at full capacity")
 		return false
-	return item.get_class() in valid_class_names or item.get_script() in valid_classes
+	return item.get_class() in valid_food_names or item.get_script() in valid_food
 
 
 ## Perform cooking logic
@@ -125,6 +115,9 @@ func finish_cook() -> bool:
 		return false
 	current_status = Status.IDLE
 	status_changed.emit(current_status)
+	for item in contents:
+		if item is Food:
+			item.stopCooking()
 	return true
 
 

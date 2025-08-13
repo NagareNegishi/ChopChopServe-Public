@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://d1iqitph17b80" path="res://scenes/Interaction/AbstractPickup.tscn" id="1_tyt0g"]
 [ext_resource type="Script" uid="uid://bb7kgn2eopyqm" path="res://scripts/Interaction/extinguisher.gd" id="2_6nuxd"]
 [ext_resource type="ArrayMesh" uid="uid://ihjc0irkkye4" path="res://assets/models/items/fireExtishuger.tres" id="3_1v4j8"]
-[ext_resource type="Material" uid="uid://dixjtd4xhgsyq" path="res://materials/LightGrey.tres" id="3_2h5x0"]
+[ext_resource type="Material" uid="uid://cq2k180yx7dln" path="res://materials/Shirt.tres" id="3_2h5x0"]
 
 [sub_resource type="Curve" id="Curve_jekx7"]
 _data = [Vector2(0, 0.23854), 0.0, 0.0, 0, 0, Vector2(0.522167, 0.554717), 1.0446, 1.0446, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]

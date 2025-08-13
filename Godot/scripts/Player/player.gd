@@ -11,6 +11,7 @@ const ANGULAR_ACCELERATION : float = 15
 const PUSH_FORCE : float = 0.3
 const THROW_STRENGTH : float = 40
 
+var MOVE_PARTICLES_POOL = []
 var _direction : Vector3 = Vector3.FORWARD
 var _items_in_interactable_area = []
 var _closest_item : InteractableComponent = null
@@ -24,6 +25,10 @@ var can_dash : bool = true
 func _ready() -> void:
 	$DashCooldown.wait_time = DASH_COOLDOWN
 	$Decal.modulate = GlobalScript.playerColours.get(1)
+	
+	for i in range(10):
+		var particle = move_particle.instantiate()
+		MOVE_PARTICLES_POOL.append(particle)
 
 ## Functionailty that happens every frame
 ## @param delta the times it takes per frame to render
@@ -111,7 +116,7 @@ func _inputs() -> void:
 ## Handles when the player interacts
 ## @return void
 func _interact() -> void:
-	if item_in_hand != null:
+	if item_in_hand != null && _closest_item != null && _closest_item.is_pickup:
 		drop_item(false)
 	
 	if _closest_item == null || !_closest_item is InteractableComponent:
@@ -239,12 +244,31 @@ func _on_check_interactables_timeout() -> void:
 	_closest_item = closest_item
 
 
-	
-
-
 func _on_move_particles_timeout() -> void:
 	if velocity == Vector3.ZERO:
 		return
-	var move_particle_instance = move_particle.instantiate()
-	get_tree().get_current_scene().add_child(move_particle_instance)
-	move_particle_instance.global_transform = $Mesh/movePoint.global_transform
+	
+	var particle_ref : MoveParticles = null
+
+	for particle : MoveParticles in MOVE_PARTICLES_POOL:
+		if !particle.is_active:
+			particle_ref = particle
+			break
+
+	if particle_ref == null:
+		return
+
+	particle_ref.set_active(true)
+	
+	if particle_ref.get_parent() != get_tree().get_current_scene():
+		get_tree().get_current_scene().add_child(particle_ref)
+		
+	particle_ref.global_transform = $Mesh/movePoint.global_transform
+
+
+func remove_item() -> Node3D:
+	if(item_in_hand != null):
+		item_in_hand.scale = $Mesh/ItemPoint.global_transform.basis.get_scale() / item_in_hand.global_transform.basis.get_scale()
+		get_tree().get_current_scene().add_child(item_in_hand)
+	
+	return item_in_hand

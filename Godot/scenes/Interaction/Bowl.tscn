@@ -21,3 +21,4 @@ shape = SubResource("CylinderShape3D_1v4j8")
 
 [node name="InteractableComponent" parent="." index="2"]
 transform = Transform3D(0.333, 0, 0, 0, 0.333, 0, 0, 0, 0.333, 0, 0.0731264, 0)
+is_pickup = false

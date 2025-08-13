@@ -111,7 +111,7 @@ func finish_cook() -> bool:
 	current_status = Status.IDLE
 	status_changed.emit(current_status)
 	for item in contents:
-		if item is Food:
+		if item.has_method("stopCooking"):   #is Food:
 			item.stopCooking()
 	return true
 

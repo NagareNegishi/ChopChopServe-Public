@@ -32,6 +32,10 @@ window/stretch/mode="canvas_items"
 
 project/assembly_name="ChopChopServe"
 
+[filesystem]
+
+import/blender/enabled=false
+
 [input]
 
 Up={

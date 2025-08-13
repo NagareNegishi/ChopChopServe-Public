@@ -52,8 +52,6 @@ transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0.394347, 0)
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Control" parent="CanvasLayer" instance=ExtResource("4_07mic")]
-grow_horizontal = 1
-grow_vertical = 0
 
 [node name="table" parent="." instance=ExtResource("5_vs73y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 2)

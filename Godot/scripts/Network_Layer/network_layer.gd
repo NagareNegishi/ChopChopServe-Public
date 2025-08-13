@@ -65,11 +65,11 @@ func get_connection_info() -> String:
     push_error("Must implement get_connection_info")
     return ""
 
-# Player management used by the host
-func get_connected_players() -> Array[int]:
+func get_connected_players() -> PackedInt32Array:
     push_error("Must implement get_connected_players")
-    return []
+    return PackedInt32Array()
 
+# Player management used by the host
 func get_player_count() -> int:
     push_error("Must implement get_player_count")
     return 0

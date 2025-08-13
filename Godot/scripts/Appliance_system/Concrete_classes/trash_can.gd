@@ -8,6 +8,12 @@ class_name TrashCan
 extends UnPoweredAppliance
 
 
+## Setup the model instance
+func _init():
+	super._init()
+	model_scene = preload("res://assets/models/furniture/trashcan.glb")
+
+
 func _ready():
 	super._ready()
 	# valid_classes = [Food]
@@ -20,7 +26,7 @@ func take() -> Node:
 	assert(false, "TrashCan does not support taking items")
 	return null
 
-func take_at(index: int) -> Node:
+func take_at(_index: int) -> Node:
 	assert(false, "TrashCan does not support taking items")
 	return null
 
@@ -46,3 +52,10 @@ func _action() -> bool:
 			item.queue_free()
 	contents.clear()
 	return true
+
+
+## Perform action depend on what player is holding
+## @param _item: The Node Player is holding
+## @return: True if action is triggered, false otherwise
+func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
+	return throw(item)

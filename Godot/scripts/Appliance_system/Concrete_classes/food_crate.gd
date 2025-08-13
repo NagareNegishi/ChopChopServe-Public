@@ -8,13 +8,22 @@ extends UnPoweredAppliance
 
 var supply: Script ## Must be Food class
 
+
+## Setup the model instance
+func _init():
+	super._init()
+
+	# until model is ready !!!!!!!!!!!!!
+	model_scene = preload("res://assets/models/furniture/BasicBenchFatDrawers.glb")
+
+
 func _ready():
 	super._ready()
 	# valid_classes = [Food]
 	# capacity = 1000000 ## no limit on food crate
 	# action_interval = 0.1 ## maybe small amount to avoid rapidly taking items?
 
-	set_supply()
+	#set_supply()
 
 
 ## Set the supply script for the food crate
@@ -61,10 +70,12 @@ func take() -> Node:
 	return supply.new()
 
 
-
-
-
-
-
-
-
+## Perform action depend on what player is holding
+## @param _item: The Node Player is holding
+## @return: True if action is triggered, false otherwise
+func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
+	if not item:
+		var food = take()
+		GlobalScript.player.pickup_item(food)
+		return true
+	return false

@@ -3,6 +3,9 @@ class_name InteractableComponent extends Area3D
 signal interacted()
 signal hovered(is_hovered : bool)
 signal action_use(is_action : bool)
+signal toggle_collision(turn_on : bool)
+
+@export var is_pickup : bool
 
 var can_be_interacted : bool = true
 
@@ -24,3 +27,10 @@ func action(in_use : bool) -> void:
 func hover(hovering : bool) -> void:
 	if can_be_interacted:
 		emit_signal("hovered", hovering)
+
+
+## Allows to turn on & off the collision box for interaction events
+## @param turn_on boolean the sets the collsion on or off
+## @return void
+func turn_on_collision(turn_on: bool) -> void:
+	emit_signal("toggle_collision", turn_on)

@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://ckhue72bmvrjv"]
+
+[ext_resource type="Script" uid="uid://dghelyr4xevbv" path="res://UI/ui_progress.gd" id="1_gv6aw"]
+[ext_resource type="Texture2D" uid="uid://c3mgk1p8lanu4" path="res://assets/textures/LoadingBar.png" id="1_i6hdk"]
+[ext_resource type="Texture2D" uid="uid://b46lyu1335yn1" path="res://assets/textures/LoadingBarMiddle.png" id="2_a04ib"]
+
+[node name="UiProgress" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gv6aw")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -113.5
+offset_top = -17.0
+offset_right = 113.5
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 1.0
+step = 0.001
+texture_under = ExtResource("1_i6hdk")
+texture_over = ExtResource("1_i6hdk")
+texture_progress = ExtResource("2_a04ib")
+tint_progress = Color(2.35841e-06, 0.751594, 0.333757, 1)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.01
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

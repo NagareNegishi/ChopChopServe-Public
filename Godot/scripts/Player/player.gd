@@ -1,21 +1,22 @@
-class_name Player extends CharacterBody3D
+class_name Player 
+extends CharacterBody3D
 
 const SPEED : float = 4.0
 const ACCELERATION : float = 100
 const DECELERATION : float = 60
-const DASH_DURATION: float = 0.025
+const DASH_DURATION : float = 0.025
 const DASH_STRENGTH : float = 20
 const DASH_COOLDOWN : float = 0.2
 const ANGULAR_ACCELERATION : float = 15
 const PUSH_FORCE : float = 0.3
-const ITEM_SCALING : float = 5.5
-const THROW_STRENGTH : float = 42
+const THROW_STRENGTH : float = 40
 
+var MOVE_PARTICLES_POOL = []
 var _direction : Vector3 = Vector3.FORWARD
 var _items_in_interactable_area = []
 var _closest_item : InteractableComponent = null
-
-var item_in_hand : AbstractPickup = null
+var move_particle = preload("res://Particles/MoveParticles.tscn")
+var item_in_hand : Node3D = null
 var can_dash : bool = true
 
 
@@ -24,6 +25,10 @@ var can_dash : bool = true
 func _ready() -> void:
 	$DashCooldown.wait_time = DASH_COOLDOWN
 	$Decal.modulate = GlobalScript.playerColours.get(1)
+	
+	for i in range(10):
+		var particle = move_particle.instantiate()
+		MOVE_PARTICLES_POOL.append(particle)
 
 ## Functionailty that happens every frame
 ## @param delta the times it takes per frame to render
@@ -84,6 +89,7 @@ func _dash() -> void:
 	# otherwise will do where players looking
 	var _dash_direction = (_direction if _direction.length() != 0 else -$Mesh.transform.basis.z).normalized() 
 	
+	
 	dash_tween.tween_property(self, "velocity", _dash_direction * DASH_STRENGTH, DASH_DURATION)
 	$DashCooldown.start()
 
@@ -100,9 +106,6 @@ func _inputs() -> void:
 	if Input.is_action_just_pressed("Throw"):
 		_throw()
 		
-	if Input.is_action_just_pressed("Sabotage"):
-		_sabotage()
-		
 	if Input.is_action_just_pressed("Action"):
 		_action(true)
 		
@@ -113,19 +116,19 @@ func _inputs() -> void:
 ## Handles when the player interacts
 ## @return void
 func _interact() -> void:
-	if item_in_hand != null:
+	if item_in_hand != null || _closest_item != null && _closest_item.is_pickup:
 		drop_item(false)
 	
 	if _closest_item == null || !_closest_item is InteractableComponent:
 		return
-
+	 
 	_closest_item.interact()
 
 
 ## Handles the logic for when player throws item
 ## @return void
 func _throw() -> void:
-	if item_in_hand == null:
+	if item_in_hand == null || !item_in_hand is AbstractThrowable:
 		return
 	
 	drop_item(true)
@@ -141,26 +144,30 @@ func _action(is_active : bool) -> void:
 	item_in_hand.get_node("InteractableComponent").action(is_active)
 
 
-## Handles what sabotage to call.
-## @return void
-func _sabotage() -> void:
-	print("Sabotage")
-
-
 ## Sets what item the player is holding
 ## @return bool if successfully picked up
-func pickup_item(item : AbstractPickup) -> bool:
+func pickup_item(item : Node3D) -> bool:
 	if(item == null):
 		push_error("item invalid")
 		return false
-		
+	
+	if(!item.get_node("InteractableComponent").is_pickup):
+		push_error("not pickup")
+		return false
+	
 	item.global_position = Vector3(0,0,0)
 	item.global_rotation = Vector3(0,0,0)
 	item.get_parent().remove_child(item)
-	item.turn_on_collision(false)
-	item.turnOnPhysics(false)
+	
+	if item is AbstractThrowable:
+		item.turnOnPhysics(false)
+	
+	if item.has_node("InteractableComponent"):
+		item.get_node("InteractableComponent").turn_on_collision(false)
+	
+	var original_global_scale = item.global_transform.basis.get_scale()
 	$Mesh/ItemPoint.add_child(item)
-	item.scale *= ITEM_SCALING
+	item.scale = original_global_scale / $Mesh/ItemPoint.global_transform.basis.get_scale()
 	item_in_hand = item
 	
 	return true
@@ -171,18 +178,25 @@ func drop_item(is_throw : bool) -> bool:
 	if(item_in_hand == null):
 		return false
 	
-	item_in_hand.scale *= 1 / ITEM_SCALING
 	item_in_hand.get_parent().remove_child(item_in_hand)
-	item_in_hand.turn_on_collision(true)
+	if item_in_hand.has_node("InteractableComponent"):
+		item_in_hand.get_node("InteractableComponent").turn_on_collision(true)
+	
+	item_in_hand.scale = $Mesh/ItemPoint.global_transform.basis.get_scale() / item_in_hand.global_transform.basis.get_scale()
+	
 	get_tree().get_current_scene().add_child(item_in_hand)
 	
-	item_in_hand.global_position = $Mesh/ItemPoint.global_position + $Mesh.global_transform.basis.z * 2
+	item_in_hand.global_position = $Mesh/ItemPoint.global_position + $Mesh.global_transform.basis.z * 2.5
 	item_in_hand.global_rotation = $Mesh/ItemPoint.global_rotation
 	
 	_action(false)
-	item_in_hand.turnOnPhysics(true)
-	if is_throw:
+	
+	if item_in_hand is AbstractThrowable:
+		item_in_hand.turnOnPhysics(true)
+		
+	if is_throw && item_in_hand is AbstractThrowable:
 		item_in_hand.linear_velocity = $Mesh.global_transform.basis.z * THROW_STRENGTH
+		
 	item_in_hand = null
 	
 	return true
@@ -229,5 +243,44 @@ func _on_check_interactables_timeout() -> void:
 	
 	_closest_item = closest_item
 
+
+func _on_move_particles_timeout() -> void:
+	if velocity == Vector3.ZERO:
+		return
+	
+	var particle_ref : MoveParticles = null
+
+	for particle : MoveParticles in MOVE_PARTICLES_POOL:
+		if !particle.is_active:
+			particle_ref = particle
+			break
+
+	if particle_ref == null:
+		return
+
+	particle_ref.set_active(true)
+	
+	if particle_ref.get_parent() != get_tree().get_current_scene():
+		get_tree().get_current_scene().add_child(particle_ref)
+		
+	particle_ref.global_transform = $Mesh/movePoint.global_transform
+
+
+func remove_item() -> Node3D:
+	if(item_in_hand != null):
+		item_in_hand.scale = $Mesh/ItemPoint.global_transform.basis.get_scale() / item_in_hand.global_transform.basis.get_scale()
+		get_tree().get_current_scene().add_child(item_in_hand)
+	
+	return item_in_hand
+
+
+func draw_aim() -> void:
+	var vel : Vector3 = $Mesh.global_transform.basis.z
+	vel *= THROW_STRENGTH
+	
+	var tstep : float = 0.05
+	var start_pos = $Mesh/ItemPoint.global_position + $Mesh.global_transform.basis.z * 2.5
+	var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity", 9.8)
+	var drag : float = ProjectSettings.get_setting("physics/3d/default_linear_damp", 0.0)
 
 	

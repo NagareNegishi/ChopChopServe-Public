@@ -116,7 +116,7 @@ func _inputs() -> void:
 ## Handles when the player interacts
 ## @return void
 func _interact() -> void:
-	if item_in_hand != null && _closest_item != null && _closest_item.is_pickup:
+	if item_in_hand != null || _closest_item != null && _closest_item.is_pickup:
 		drop_item(false)
 	
 	if _closest_item == null || !_closest_item is InteractableComponent:
@@ -272,3 +272,15 @@ func remove_item() -> Node3D:
 		get_tree().get_current_scene().add_child(item_in_hand)
 	
 	return item_in_hand
+
+
+func draw_aim() -> void:
+	var vel : Vector3 = $Mesh.global_transform.basis.z
+	vel *= THROW_STRENGTH
+	
+	var tstep : float = 0.05
+	var start_pos = $Mesh/ItemPoint.global_position + $Mesh.global_transform.basis.z * 2.5
+	var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity", 9.8)
+	var drag : float = ProjectSettings.get_setting("physics/3d/default_linear_damp", 0.0)
+
+	

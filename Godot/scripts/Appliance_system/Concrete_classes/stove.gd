@@ -11,7 +11,7 @@ func _init():
 func _ready():
 	super._ready()
 	cooking_style = ApplianceFactory.CookingStyle.HEAT
-	valid_class_names = ["Pot", "FryingPan"] # Only one Pot or FryingPan allowed
+	valid_classes = ["Pot", "FryingPan"] # Only one Pot or FryingPan allowed
 	capacity = 1
 	power = 1
 

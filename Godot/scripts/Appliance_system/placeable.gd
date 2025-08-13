@@ -50,8 +50,10 @@ func _ready():
 	interaction_area.area_entered.connect(_on_area_entered)
 	interaction_area.area_exited.connect(_on_area_exited)
 	initialized = true
-
-	print_sync_properties()
+#----------------------------------------
+	lock()
+	# print_sync_properties()
+#----------------------------------------
 
 
 ## Create required child nodes

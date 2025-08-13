@@ -87,16 +87,7 @@ func print_book():
 
 
 
-# ## for test remove later
-# func spawn_test_appliance(appliance_type: String):
-# 	var appliance = create_appliance(appliance_type)
-# 	if appliance:
-# 		get_tree().current_scene.add_child(appliance)
-# 		appliance.global_position = Vector3(0, 0, 0)
-		
-# 		print("Spawned: ", appliance_type)
-# 	else:
-# 		print("Failed to spawn: ", appliance_type)
+
 
 
 ## Spawn appliance in front of the player for testing

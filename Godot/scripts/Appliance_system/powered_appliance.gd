@@ -14,8 +14,8 @@ enum Status {
 }
 
 @export var capacity: int = 1 ## Maximum number of items this appliance can hold
-@export var valid_class_names: Array[String] = [] ## Class names that can be placed in (Recommended)
-@export var valid_classes: Array[Script] = [] ## Class scripts that can be placed in (Fallback)
+@export var valid_classes: Array[String] = [] ## Class names that can be placed in (Recommended)
+# @export var valid_classes: Array[Script] = [] ## Class scripts that can be placed in (Fallback)
 @export var cook_interval: float = 1.0 ## Cook every ? seconds
 
 var current_status: Status = Status.IDLE
@@ -53,6 +53,13 @@ func add_cookware(cookware_script_name: String):
 ## @return: True if action is triggered, false otherwise
 func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
 
+
+#--------------------------------------------
+	print("Player is holding: ", item)
+	print("Player.item_in_hand: ", GlobalScript.player.item_in_hand)
+	print("Self: ", self.get_script().get_global_name())
+#--------------------------------------------
+
 	# Let's ignore Blender and Freezer for now, all PoweredAppliance has 1 Cookware !!!!!!!!!
 
 	# If player has nothing: move item from appliance to player (if exists), return true
@@ -61,6 +68,7 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 		if cookware:
 			cookware.finish_cook()
 			GlobalScript.player.pickup_item(cookware)
+			print("Player took: ", cookware.get_script().get_global_name(), ", from: ", self.get_script().get_global_name())
 			if contents.is_empty():
 				stop_cook()
 			return true
@@ -121,7 +129,7 @@ func take() -> Node:
 	if contents.is_empty():
 		return null
 	var item = contents.pop_back()
-	remove_child(item)
+	#remove_child(item)
 	return item
 
 
@@ -138,7 +146,10 @@ func _can_accept(item: Node) -> bool:
 	if contents.size() >= capacity:
 		print("Cannot accept item, appliance is at full capacity")
 		return false
-	return item.get_class() in valid_class_names or item.get_script() in valid_classes
+	if not item.get_script():
+		print("Cannot accept item, item has no script")
+		return false
+	return item.get_script().get_global_name() in valid_classes
 
 
 ## Start cooking process

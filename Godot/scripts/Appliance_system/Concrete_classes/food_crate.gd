@@ -25,24 +25,24 @@ func _ready():
 
 	#set_supply()
 
-
+#--------------------------------------------
 ## Set the supply script for the food crate
-func set_supply():
-	if valid_classes.is_empty():
-		assert(false, "FoodCrate must have at least one valid class in valid_classes array")
+# func set_supply():
+# 	if valid_classes.is_empty():
+# 		assert(false, "FoodCrate must have at least one valid class in valid_classes array")
 
-	for script in valid_classes:
-		if script != null: # is not get compile error
-			var instance = script.new()
-			# if instance is Food:
-			if instance.has_method("is_food"):
-				supply = script
-				instance.queue_free()
-				print("FoodCrate supply set to: ", supply)
-				return
-			instance.queue_free()
-	assert(false, "FoodCrate must have at least one valid class in valid_classes array")
-
+# 	for script in valid_classes:
+# 		if script != null: # is not get compile error
+# 			var instance = script.new()
+# 			# if instance is Food:
+# 			if instance.has_method("is_food"):
+# 				supply = script
+# 				instance.queue_free()
+# 				print("FoodCrate supply set to: ", supply)
+# 				return
+# 			instance.queue_free()
+# 	assert(false, "FoodCrate must have at least one valid class in valid_classes array")
+#--------------------------------------------
 
 ## Override unsupported methods to prevent misuse
 func put(_item: Node) -> bool:

@@ -16,8 +16,8 @@ enum Status {
 
 @export var coefficient: float = 1.0 ## Cooking efficiency modifier (1.0 = normal)
 @export var capacity: int = 1 ## Maximum number of items this appliance can hold / deal with
-@export var valid_food_names: Array[String] = [] ## Class names that can be placed in (Recommended)
-@export var valid_food: Array[Script] = [] ## Class scripts that can be placed in (Fallback)
+@export var valid_food: Array[String] = [] ## Class names that can be placed in (Recommended)
+# @export var valid_food: Array[Script] = [] ## Class scripts that can be placed in (Fallback)
 
 var current_status: Status = Status.IDLE
 var contents: Array[Node] = []
@@ -32,10 +32,32 @@ func _ready():
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
 func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
+	
+	
+#--------------------------------------------
+	print("Player is holding: ", item)
+	print("Player.item_in_hand: ", GlobalScript.player.item_in_hand)
+	print("Self: ", self.get_script().get_global_name())
+#--------------------------------------------
+
+
+
 	# If player has nothing: let them take self, return true
 	if not item:
-		GlobalScript.player.pickup_item(self as Node) # we need to sort it, Appliance is not AbstractPickup!!!!!!!!	
+		GlobalScript.player.pickup_item(self)
+		print("Player picked up equipment: ", self.get_script().get_global_name())
 		return true
+
+	# let player decide how to handle drop!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+	# # If item_in_hand is self: let them drop it, return true
+	# elif item == self:
+	# 	GlobalScript.player.drop_item(false)
+	# 	print("Player dropped equipment: ", self.get_script().get_global_name())
+	# 	return true
+
+
+
 	# If item_in_hand exists: depend on if equipment can accept it
 	return put(item)
 
@@ -88,7 +110,10 @@ func _can_accept(item: Node) -> bool:
 	if contents.size() >= capacity:
 		print("Cannot accept item, appliance is at full capacity")
 		return false
-	return item.get_class() in valid_food_names or item.get_script() in valid_food
+	if not item.get_script():
+		print("Cannot accept item, item has no script")
+		return false
+	return item.get_script().get_global_name() in valid_food
 
 
 ## Perform cooking logic

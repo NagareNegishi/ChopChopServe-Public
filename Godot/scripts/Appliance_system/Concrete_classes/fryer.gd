@@ -11,7 +11,7 @@ func _init():
 func _ready():
 	super._ready()
 	cooking_style = ApplianceFactory.CookingStyle.DEEP_FRY
-	valid_class_names = ["FryerBasket"] # Only one FryerBasket allowed
+	valid_classes = ["FryerBasket"] # Only one FryerBasket allowed
 	capacity = 1
 	power = 1
 	add_cookware("fryer_basket")

@@ -11,6 +11,6 @@ func _init():
 func _ready():
 	super._ready()
 	cooking_style = ApplianceFactory.CookingStyle.BOIL
-	valid_food_names = ["Fish"] # Confirm later!!!!!!!!!!!!!!
+	valid_food = ["Fish"] # Confirm later!!!!!!!!!!!!!!
 	capacity = 4
 	coefficient = 1.0

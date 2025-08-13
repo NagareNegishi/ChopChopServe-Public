@@ -15,12 +15,13 @@ func _ready():
 	_setup_interactable()
 
 
-## Add interactable component to this equipment
+## Add interactable component to this class
+## InteractableComponent is scene dependent, can not instantiate from script
 func _setup_interactable():
-	interactable_component = InteractableComponent.new()
-	interactable_component.name = "InteractableComponent"
+	var interactable_scene = preload("res://scenes/Interaction/InteractableComponent.tscn")
+	interactable_component = interactable_scene.instantiate()
 	add_child(interactable_component)
-	# Connect signals if needed
+	interactable_component.interacted.connect(_on_interactable_component_interacted)
 
 
 ## Perform action depend on what player is holding
@@ -54,3 +55,16 @@ func _can_accept(_item: Node) -> bool:
 	return false
 
 
+## Connect to singal: Called when interacted with and will make the player pick this item up
+## @return void
+func _on_interactable_component_interacted() -> void:
+	player_has(GlobalScript.player.item_in_hand)
+
+
+# Potentially use it in future
+# func _on_interactable_component_hovered(is_hovered: bool) -> void:
+# 	pass
+# func _on_interactable_component_action_use(is_action: bool) -> void:
+# 	pass
+# func _on_interactable_component_toggle_collision(turn_on: bool) -> void:
+# 	pass

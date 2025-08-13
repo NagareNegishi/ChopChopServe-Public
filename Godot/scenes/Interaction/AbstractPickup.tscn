@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://d1iqitph17b80"]
 
-[ext_resource type="Script" uid="uid://b4us8bb8x12ya" path="res://scripts/Interaction/abstract_pickup.gd" id="1_i3ohc"]
+[ext_resource type="Script" uid="uid://b4us8bb8x12ya" path="res://scripts/Interaction/abstract_throwable.gd" id="1_i3ohc"]
 [ext_resource type="PackedScene" uid="uid://cy1s0o2ip2hob" path="res://scenes/Interaction/InteractableComponent.tscn" id="1_ybolb"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_l5jrx"]
@@ -20,7 +20,9 @@ shape = SubResource("BoxShape3D_gvljy")
 
 [node name="InteractableComponent" parent="." instance=ExtResource("1_ybolb")]
 transform = Transform3D(0.333, 0, 0, 0, 0.333, 0, 0, 0, 0.333, 0, 0, 0)
+is_pickup = true
 
 [connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]
 [connection signal="hovered" from="InteractableComponent" to="." method="_on_interactable_component_hovered"]
 [connection signal="interacted" from="InteractableComponent" to="." method="_on_interactable_component_interacted"]
+[connection signal="toggle_collision" from="InteractableComponent" to="." method="_on_interactable_component_toggle_collision"]

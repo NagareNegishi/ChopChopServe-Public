@@ -1,4 +1,4 @@
-class_name AbstractPickup extends RigidBody3D
+class_name AbstractThrowable extends RigidBody3D
 
 @export var has_action : bool
 var overlay = preload("res://materials/InteractOverlay.tres")
@@ -24,14 +24,6 @@ func _on_interactable_component_interacted() -> void:
 	print("Pickup: Interacted")
 
 
-## Allows to turn on & off the collision box for interaction events
-## @param turn_on boolean the sets the collsion on or off
-## @return void
-func turn_on_collision(turn_on: bool) -> void:
-	$CollisionShape3D.disabled = !turn_on
-	$InteractableComponent/CollisionShape3D.disabled = !turn_on
-
-
 ## Connected to signal: Called when pickup is being hovered or unhovered
 ## @param is_hovered boolean that dicates if pickup is on or off
 ## @return void
@@ -47,3 +39,8 @@ func _on_interactable_component_action_use(is_action: bool) -> void:
 	
 func turnOnPhysics(is_on : bool):
 	set_deferred("freeze", !is_on)
+
+
+func _on_interactable_component_toggle_collision(turn_on: bool) -> void:
+	$CollisionShape3D.disabled = !turn_on
+	$InteractableComponent/CollisionShape3D.disabled = !turn_on

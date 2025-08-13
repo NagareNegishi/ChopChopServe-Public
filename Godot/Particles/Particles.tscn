@@ -1,6 +1,10 @@
-[gd_scene load_steps=41 format=3 uid="uid://dpdrqqhoutpc3"]
+
+[gd_scene load_steps=50 format=3 uid="uid://dpdrqqhoutpc3"]
 
 [ext_resource type="Texture2D" uid="uid://bx6m3o5gtj1u3" path="res://Particles/hapy.jpg" id="1_l7qkd"]
+[ext_resource type="Texture2D" uid="uid://uficg2hqqbnp" path="res://Particles/sad-emoji.png" id="2_cwed3"]
+[ext_resource type="Texture2D" uid="uid://24gc7h8nhp8p" path="res://Particles/Skull_and_Crossbones.svg.png" id="3_cwed3"]
+
 
 [sub_resource type="Curve" id="Curve_1xyps"]
 _data = [Vector2(0, 0.348315), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -139,25 +143,27 @@ spread = 20.0
 initial_velocity_min = 0.3
 initial_velocity_max = 0.6
 gravity = Vector3(0, -0.05, 0)
-scale_min = 0.0
+scale_min = 0.5
 scale_curve = SubResource("CurveTexture_ebd1l")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y82fg"]
 vertex_color_use_as_albedo = true
 albedo_texture = ExtResource("1_l7qkd")
 billboard_mode = 1
+billboard_keep_scale = true
 
 [sub_resource type="QuadMesh" id="QuadMesh_ebd1l"]
 material = SubResource("StandardMaterial3D_y82fg")
-size = Vector2(0.1, 0.1)
+size = Vector2(0.2, 0.2)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vuhl4"]
 vertex_color_use_as_albedo = true
 billboard_mode = 1
+billboard_keep_scale = true
 
 [sub_resource type="QuadMesh" id="QuadMesh_ipp32"]
 material = SubResource("StandardMaterial3D_vuhl4")
-size = Vector2(0.1, 0.1)
+size = Vector2(0.2, 0.2)
 
 [sub_resource type="Curve" id="Curve_ebd1l"]
 _data = [Vector2(0, 0.205335), 0.0, 0.0, 0, 0, Vector2(0.988399, 0.508752), 0.0, 0.0, 0, 0]
@@ -216,6 +222,39 @@ radius = 0.03
 height = 0.06
 radial_segments = 10
 rings = 4
+
+[sub_resource type="Curve" id="Curve_l7qkd"]
+_data = [Vector2(0, 0.41511), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_cwed3"]
+curve = SubResource("Curve_l7qkd")
+
+[sub_resource type="Curve" id="Curve_1x3w2"]
+_data = [Vector2(0.0687023, 0), 0.0, 0.0, 0, 0, Vector2(0.316794, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_7f1fg"]
+curve = SubResource("Curve_1x3w2")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1x3w2"]
+emission_shape = 2
+emission_sphere_radius = 0.1
+gravity = Vector3(0, 0.05, 0)
+scale_curve = SubResource("CurveTexture_cwed3")
+turbulence_enabled = true
+turbulence_influence_min = 0.0
+turbulence_influence_max = 0.05
+turbulence_influence_over_life = SubResource("CurveTexture_7f1fg")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2qv8e"]
+albedo_texture = ExtResource("3_cwed3")
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_7f1fg"]
+material = SubResource("StandardMaterial3D_2qv8e")
+size = Vector2(0.2, 0.2)
 
 [node name="Node3D" type="Node3D"]
 
@@ -291,6 +330,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.60664, 0.141365, -0.189272)
 text = "Fire Extinguisher foam"
 font_size = 18
 
+[node name="Text9" type="Label3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.9559, 0.141365, -0.189272)
+text = "Spoiled Food (Placeholder Image)"
+font_size = 18
+
 [node name="Node3D2" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.89968, 0, 0)
 
@@ -320,6 +364,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.00387, 0, 0)
 [node name="GPUParticles3D" type="GPUParticles3D" parent="Node3D4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.406495, 0, 0)
 amount = 5
+lifetime = 1.5
 explosiveness = 1.0
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_xrkct")
@@ -331,6 +376,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.61627, 0, 0)
 [node name="GPUParticles3D" type="GPUParticles3D" parent="Node3D5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.139812, 0, 0)
 amount = 5
+lifetime = 1.5
 explosiveness = 1.0
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_xrkct")
@@ -355,3 +401,13 @@ lifetime = 0.4
 speed_scale = 0.8
 process_material = SubResource("ParticleProcessMaterial_1mcsc")
 draw_pass_1 = SubResource("SphereMesh_xarlr")
+
+[node name="Node3D8" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.98547, 0, 0)
+
+[node name="GPUParticles3D3" type="GPUParticles3D" parent="Node3D8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0885296, 0, 0)
+lifetime = 3.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_1x3w2")
+draw_pass_1 = SubResource("QuadMesh_7f1fg")

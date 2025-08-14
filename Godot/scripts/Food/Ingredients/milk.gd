@@ -4,7 +4,6 @@ class_name Milk
 func _ready():
 	food_name = "Milk"
 	cook_time = 30
-	spoil_time=10
 	raw_mesh = $rawMilk
 	spoiled_mesh = $spoiledMilk
 	cooked_mesh = null

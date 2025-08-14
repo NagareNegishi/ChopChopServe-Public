@@ -1,4 +1,8 @@
-extends AbstractPickup
+##-----------------------------------------
+## Temporary replace it to make it compile
+## extends AbstractPickup
+extends AbstractThrowable
+##-----------------------------------------
 class_name Food
 
 

@@ -1,4 +1,4 @@
-extends AbstractPickup
+extends AbstractThrowable
 class_name Plate
 var preload_menuItems = preload("res://scripts/Food/MenuItems/menuItem.gd")
 

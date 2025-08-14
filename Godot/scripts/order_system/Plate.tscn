@@ -1,32 +1,23 @@
-[gd_scene load_steps=6 format=3 uid="uid://br76j8t76ne2x"]
+[gd_scene load_steps=5 format=3 uid="uid://br76j8t76ne2x"]
 
 [ext_resource type="Script" uid="uid://bum2q4u15bf5w" path="res://scripts/order_system/plate.gd" id="1_7vslu"]
 [ext_resource type="PackedScene" uid="uid://cy1s0o2ip2hob" path="res://scenes/Interaction/InteractableComponent.tscn" id="2_brnb6"]
+[ext_resource type="PackedScene" uid="uid://dbqvfbxstodt1" path="res://scripts/order_system/plate_mesh.tscn" id="2_njfe6"]
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_fchov"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_njfe6"]
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_fcfjo"]
-
-[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_7vslu"]
-albedo_color = Color(0.44899, 0.377289, 0.329452, 1)
-
-[node name="Plate_test_scene" type="Node3D"]
+[node name="Plate" type="RigidBody3D"]
 script = ExtResource("1_7vslu")
 
-[node name="Area3D" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.154416, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -0.0233127, 0.182234, -0.0405737)
+shape = SubResource("BoxShape3D_njfe6")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(3.03064, 0, 0, 0, 3.03064, 0, 0, 0, 3.03064, 0, 0, 0)
-shape = SubResource("CylinderShape3D_fchov")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(2.38007, 0, 0, 0, 0.128367, 0, 0, 0, 2.41108, 0, 0, 0)
-mesh = SubResource("CylinderMesh_fcfjo")
-surface_material_override/0 = SubResource("ORMMaterial3D_7vslu")
+[node name="PlateMesh" parent="." instance=ExtResource("2_njfe6")]
 
 [node name="InteractableComponent" parent="." instance=ExtResource("2_brnb6")]
-transform = Transform3D(3.35976, 0, 0, 0, 3.35976, 0, 0, 0, 3.35976, 0, 0, 0)
+transform = Transform3D(0.369291, 0, 0, 0, 0.369291, 0, 0, 0, 0.369291, 0, 0, 0)
+is_pickup = true
 
 [connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]
 [connection signal="hovered" from="InteractableComponent" to="." method="_on_interactable_component_hovered"]

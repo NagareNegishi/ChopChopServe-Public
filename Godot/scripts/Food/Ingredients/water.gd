@@ -12,3 +12,4 @@ func _ready():
 	chopped_mesh = null
 	add_to_group("Food")
 	previous_states = ["RAW","BOILED"]
+	on_state_change()

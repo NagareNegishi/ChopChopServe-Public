@@ -1,4 +1,4 @@
-extends AbstractPickup
+extends AbstractThrowable
 class_name Food
 
 
@@ -111,7 +111,6 @@ func setQuality():
 		quality = clamp(100 - (cook_time / burn_threshold) * 100, 0, 100)
 	else:
 		quality = 0
-
 
 # Changes the foodState of this item depending on what appliance is cooking it
 func changeState(appliance_type: applianceType) -> foodState:

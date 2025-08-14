@@ -93,9 +93,9 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 	if item.is_class("Plate"):
 		return serve_to_plate(item)
 	# If item_in_hand exists: depend on if appliance can accept it
-	return put(item)
-
-
+	var success = put(item)
+	GlobalScript.player.remove_item()
+	return success
 
 func serve_to_plate(plate: Node) -> bool: # Node should change to Plate when its ready!!!!!!!!
 	if contents.is_empty():
@@ -130,6 +130,12 @@ func put(item: Node) -> bool:
 	if not _can_accept(item):
 		return false
 	contents.append(item)
+	#--------------------------------------------
+	print("Put: ", item.get_script().get_global_name(), " onto: ", self.get_script().get_global_name())
+	print("Contents of ", self.get_script().get_global_name(), " are: ")
+	for content in contents:
+		print(" --- ", content.get_script().get_global_name())
+	#--------------------------------------------
 	# transfer item to appliance
 	if item.get_parent():
 		item.get_parent().remove_child(item)

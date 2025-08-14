@@ -124,7 +124,7 @@ const TEST_APPLIANCES = [
 	"food_crate", # Numpad 3
 	"freezer",    # Numpad 4
 	"fryer",      # Numpad 5
-	"oven",       # Numpad 6
+	"fryer_basket",       # Numpad 6
 	"sink",       # Numpad 7
 	"stove_with_pot",      # Numpad 8
 	"trash_can"   # Numpad 9

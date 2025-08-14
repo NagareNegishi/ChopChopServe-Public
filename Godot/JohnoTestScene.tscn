@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bg2l1urkd7kjy"]
+[gd_scene load_steps=24 format=3 uid="uid://bg2l1urkd7kjy"]
 
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_w6hnu"]
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="3_l1ni4"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://cjl0yhl53y46r" path="res://assets/models/items/choppingboard.glb" id="13_ak6bd"]
 [ext_resource type="PackedScene" uid="uid://dyyd5onvpbmsv" path="res://assets/models/NuFurniture/oven.glb" id="14_3rstc"]
 [ext_resource type="PackedScene" uid="uid://b7x0xycilg7vt" path="res://assets/models/NuFurniture/newblender.glb" id="15_uq20t"]
+[ext_resource type="PackedScene" uid="uid://d1iqitph17b80" path="res://scenes/Interaction/AbstractPickup.tscn" id="16_0ny5b"]
 [ext_resource type="PackedScene" uid="uid://b64oudiukwpwa" path="res://assets/models/NuFurniture/nufridge.glb" id="16_ciehn"]
 [ext_resource type="PackedScene" uid="uid://dythb8xw31t1c" path="res://assets/models/infrastructure/wall.glb" id="17_tg3k6"]
 
@@ -582,3 +583,6 @@ shape = SubResource("BoxShape3D_pk2le")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_ikll6")
+
+[node name="AbstractPickup" parent="." instance=ExtResource("16_0ny5b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.49325, 0.1815, 2.71952)

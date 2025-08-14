@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://ckhue72bmvrjv"]
 
 [ext_resource type="Script" uid="uid://dghelyr4xevbv" path="res://UI/ui_progress.gd" id="1_gv6aw"]
-[ext_resource type="Texture2D" uid="uid://c3mgk1p8lanu4" path="res://assets/textures/LoadingBar.png" id="1_i6hdk"]
-[ext_resource type="Texture2D" uid="uid://b46lyu1335yn1" path="res://assets/textures/LoadingBarMiddle.png" id="2_a04ib"]
+[ext_resource type="Texture2D" uid="uid://c3mgk1p8lanu4" path="res://assets/textures/misc/LoadingBar.png" id="1_i6hdk"]
+[ext_resource type="Texture2D" uid="uid://b46lyu1335yn1" path="res://assets/textures/misc/LoadingBarMiddle.png" id="2_a04ib"]
 
 [node name="UiProgress" type="Control"]
 layout_mode = 3

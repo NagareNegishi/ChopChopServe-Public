@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dg3km4t6mbwwg"]
 
-[ext_resource type="Texture2D" uid="uid://b5bvnec11so2t" path="res://assets/textures/HUD_Mockup2.png" id="1_783u8"]
+[ext_resource type="Texture2D" uid="uid://b5bvnec11so2t" path="res://assets/textures/misc/HUD_Mockup2.png" id="1_783u8"]
 [ext_resource type="Script" uid="uid://djull4qell3bf" path="res://scenes/Player/HUD.gd" id="1_v2k7p"]
 
 [node name="HUD" type="Control"]

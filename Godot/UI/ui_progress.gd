@@ -1,19 +1,25 @@
+@tool
+class_name CustomProgressBar
 extends Control
 
 signal finshed
+@export var current_progress : float = 0.0 : set = set_amount
 
 func set_amount(_amount : float):
 	$TextureProgressBar.value = clamp(_amount,0,1)
+	current_progress = $TextureProgressBar.value
 	_update_colour()
 
 
 func add_amount(_amount : float):
 	$TextureProgressBar.value += clamp(_amount,0,1)
+	current_progress = $TextureProgressBar.value
 	_update_colour()
 
 
 func remove_amount(_amount : float):
 	$TextureProgressBar.value -= clamp(_amount,0,1)
+	current_progress = $TextureProgressBar.value
 	_update_colour()
 
 func _update_colour():

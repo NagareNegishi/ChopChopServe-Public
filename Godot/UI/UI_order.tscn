@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3 uid="uid://tloru3qomb8r"]
+
+[ext_resource type="PackedScene" uid="uid://ckhue72bmvrjv" path="res://UI/UI_Progress.tscn" id="1_ib7mx"]
+[ext_resource type="Texture2D" uid="uid://chbbc8dxqfr1y" path="res://assets/textures/recipes/TomatoSoup.png" id="2_8cmx7"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UiProgress" parent="." instance=ExtResource("1_ib7mx")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+current_progress = 1.0
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TomatoSoup" type="Sprite2D" parent="Control"]
+scale = Vector2(0.143836, 0.143836)
+texture = ExtResource("2_8cmx7")
+offset = Vector2(0, -700)

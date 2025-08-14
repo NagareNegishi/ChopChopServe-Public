@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://0wecred12v33" path="res://scripts/Player/player.gd" id="1_3qydi"]
 [ext_resource type="PackedScene" uid="uid://bu4i2rvstrdvh" path="res://assets/hat.fbx" id="2_bvqhm"]
 [ext_resource type="PackedScene" uid="uid://d2rfm5fkxeeic" path="res://assets/Frog.fbx" id="2_q3lat"]
-[ext_resource type="Texture2D" uid="uid://ds43xburqmhn0" path="res://assets/textures/CircleTexture.png" id="4_ved6o"]
+[ext_resource type="Texture2D" uid="uid://ds43xburqmhn0" path="res://assets/textures/misc/CircleTexture.png" id="4_ved6o"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l2ndj"]
 radius = 0.524702

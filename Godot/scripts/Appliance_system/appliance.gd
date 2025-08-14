@@ -4,10 +4,37 @@
 class_name Appliance
 extends Placeable
 
+## Type of cooking style this appliance supports
+@export var cooking_style: ApplianceFactory.CookingStyle = ApplianceFactory.CookingStyle.NONE
+var interactable_component: InteractableComponent
+
+
+## Setup the appliance
+func _ready():
+	super._ready()
+	_setup_interactable()
+
+
+## Add interactable component to this equipment
+func _setup_interactable():
+	interactable_component = InteractableComponent.new()
+	interactable_component.name = "InteractableComponent"
+	add_child(interactable_component)
+	# Connect signals if needed
+
+
+## Perform action depend on what player is holding
+## @param _item: The Node Player is holding
+## @return: True if action is triggered, false otherwise
+func player_has(_item: Node) -> bool:
+	assert(false, "player_has() must be implemented in " + get_class())
+	return false
+
+
 ## Place an item onto this appliance
 ## @param item: The Node to place on this appliance
 ## @return: True if placement was successful, false otherwise
-func put(item: Node) -> bool:
+func put(_item: Node) -> bool:
 	assert(false, "put() must be implemented in " + get_class())
 	return false
 
@@ -22,6 +49,8 @@ func take() -> Node:
 ## Check if this appliance can accept the given item
 ## @param item: The Node to test for acceptance
 ## @return: True if item can be placed, false otherwise
-func _can_accept(item: Node) -> bool:
+func _can_accept(_item: Node) -> bool:
 	assert(false, "can_accept() must be implemented in " + get_class())
 	return false
+
+

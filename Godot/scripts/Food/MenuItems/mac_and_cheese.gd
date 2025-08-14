@@ -3,6 +3,7 @@ class_name MacAndCheese
 
 # Need to set ingredient list
 # Need to make sure that the state of ingredients matches the state of the ingredient in the array
+static var _auto_register = MenuItem.register(MacAndCheese)
 
 func _ready():
 	ingredients = ["Pasta", "Cheese"]

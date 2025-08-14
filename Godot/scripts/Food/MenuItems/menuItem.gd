@@ -15,51 +15,62 @@ var appliance : String = "Plate"
 
 static var subclasses = []
 
-static func register_subclass(subclass):
-	subclasses.append(subclass)
+static func register(subclass_class):
+	subclasses.append(subclass_class)
 
 static func get_subclasses() -> Array:
 	return subclasses
+
 
 # Needs to check if the list matches any of the MenuItems
 func match_menu_items(input_ingredients: Array):
 	for subclass in subclasses:
 		var instance = subclass.new()
 		if check_items(input_ingredients, instance.ingredients, instance):
-			return instance
+			return instance 
 	print("there is no menu item that contains these ingredients")
-	return "no match"
+	return null
 
 
-# This checks if the ingredient list passed matches the ingredient list we have
-func check_items(pass_ingredients: Array, required_ingredients: Array, food_instance:MenuItem) -> bool:
+	# This checks if the ingredient list passed matches the ingredient list we have
+func check_items(pass_ingredients: Array, required_ingredients: Array, food_instance: MenuItem) -> bool:
 	if pass_ingredients.size() != required_ingredients.size():
+		print("Size mismatch - returning false")
 		return false
 	
-	for passed in pass_ingredients:
-		var name = passed.food_name
-		if name == null:
-			print("in check items, the passed ingredient doesnt have a name")
-			return false
-		if !required_ingredients.has(name):
-			print("in check items, the required ingredients array doesnt contain the passed ingredient")
-			return false
-		if !check_states(passed, food_instance):
-			print("in check items, the passed ingredient doesnt have the correct previosu states")
-			return false
+	var required_counts = {}
+	for r in required_ingredients:
+		required_counts[r] = required_counts.get(r, 0) + 1
 	
+	var passed_counts = {}
+	for passed in pass_ingredients:
+		var ingredient_name = passed.food_name
+		passed_counts[ingredient_name] = passed_counts.get(ingredient_name, 0) + 1
+	
+	for passed in pass_ingredients:
+		var ingredient_name = passed.food_name
+		print("Checking ingredient: ", ingredient_name)
+		
+		if required_counts.get(ingredient_name, 0) == 0:
+			print("Ingredient not required or count exceeded: ", ingredient_name)
+			return false
+			
+		if !check_states(passed, food_instance):
+			print("States check failed for: ", ingredient_name)
+			return false
+			
+		required_counts[ingredient_name] -= 1 
 	return true
 
 
 func check_states(input_ingredient: Food, food_instance: MenuItem)->bool:
-	name = input_ingredient.food_name
+	var ingredient_name = input_ingredient.food_name
 	var input_states = input_ingredient.previous_states
-	var required_states = food_instance.ingredient_states[name]
+	var required_states = food_instance.ingredient_states[ingredient_name]
 	
-	for s in input_states:
-		if !required_states.has(s):
-			print("In check states, the required_state does n ot contain the state of the given ingredient")
+	# Check if the ingredient has been through ALL of the required states
+	for required_state in required_states:
+		if required_state not in input_states:
+			print("Missing required state: ", required_state)
 			return false
-	
-	print("In check states, the required_state has the ingredient states")
 	return true

@@ -3,7 +3,7 @@ class_name PumpkinSoup
 
 # Need to set ingredient list
 # Need to make sure that the state of ingredients matches the state of the ingredient in the array
-
+static var _auto_register = MenuItem.register(PumpkinSoup)
 func _ready():
 	ingredients = ["Pumpkin", "Water"]
 	
@@ -18,3 +18,5 @@ func _ready():
 	cooked_mesh_good = null
 	cooked_mesh_bad = null
 	cooked_mesh_burnt = null
+	
+	register(self)

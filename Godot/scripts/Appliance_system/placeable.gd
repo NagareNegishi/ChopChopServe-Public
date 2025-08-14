@@ -95,8 +95,8 @@ func setup_children():
 
 ## Initialize collision shape based on size
 func setup_collision():
-	collision_layer = APPLIANCES
-	collision_mask = collide_with
+	collision_layer = 1   #APPLIANCES     !!!! use floor until player sort collision layer!!!!
+	collision_mask = 1  #collide_with
 	# Setup physics collision shape
 	if collision_shape:
 		var shape = BoxShape3D.new()

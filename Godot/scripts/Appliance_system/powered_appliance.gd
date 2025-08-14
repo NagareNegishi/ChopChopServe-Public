@@ -17,13 +17,13 @@ enum Status {
 @export var valid_classes: Array[String] = [] ## Class names that can be placed in (Recommended)
 # @export var valid_classes: Array[Script] = [] ## Class scripts that can be placed in (Fallback)
 @export var cook_interval: float = 1.0 ## Cook every ? seconds
-@export var equipment_slots: Array[Vector3] = []  ## Where to place equipment
 
 
 var current_status: Status = Status.IDLE
 var contents: Array[Node] = []
 var cook_timer: Timer
 var power: int = 1
+var equipment_slots: Array[Vector3] = []  ## Where to place equipment
 
 
 ## Setup the PoweredAppliance
@@ -37,10 +37,12 @@ func _ready():
 	add_child(cook_timer)
 
 
-## Setup equipment slots - must be implemented by subclasses
+## Setup equipment slots, should be overridden by subclasses
+## Default implementation expect one Equipment slot in the center
 func setup_equipment_slots():
-	#assert(false, "setup_equipment_slots() must be implemented in " + get_class())
-	push_error("setup_equipment_slots() must be implemented in " + get_class())
+	var slot_position = Vector3(0.0, size.y * 0.5, 0.0)
+	equipment_slots.append(slot_position)
+
 
 ## Apply position and direction to equipment at given slot
 func position_equipment(equipment: Equipment, slot_index: int):
@@ -58,22 +60,18 @@ func add_cookware(cookware_script_name: String):
 	add_child(cookware)
 	put(cookware)
 	# Position and size cookware relative to appliance
-	cookware.size = self.size * 0.6  # 60% of appliance size
-	cookware.position = Vector3(0, size.y * 0.1, 0)  # Slightly above bottom
+	position_equipment(cookware, 0)
 
 
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
 func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
-
-
 #--------------------------------------------
 	print("Player is holding: ", item)
 	print("Player.item_in_hand: ", GlobalScript.player.item_in_hand)
 	print("Self: ", self.get_script().get_global_name())
 #--------------------------------------------
-
 	# Let's ignore Blender and Freezer for now, all PoweredAppliance has 1 Cookware !!!!!!!!!
 
 	# If player has nothing: move item from appliance to player (if exists), return true
@@ -81,6 +79,9 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 		var cookware = take()
 		if cookware:
 			cookware.finish_cook()
+			#-------------------------------------------------------------------
+			cookware.unlock() #unless player can sort out issue: blow away
+			#-------------------------------------------------------------------
 			GlobalScript.player.pickup_item(cookware)
 			print("Player took: ", cookware.get_script().get_global_name(), ", from: ", self.get_script().get_global_name())
 			if contents.is_empty():
@@ -94,8 +95,9 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 		return serve_to_plate(item)
 	# If item_in_hand exists: depend on if appliance can accept it
 	var success = put(item)
-	GlobalScript.player.remove_item()
+	# GlobalScript.player.remove_item()
 	return success
+
 
 func serve_to_plate(plate: Node) -> bool: # Node should change to Plate when its ready!!!!!!!!
 	if contents.is_empty():
@@ -137,9 +139,12 @@ func put(item: Node) -> bool:
 		print(" --- ", content.get_script().get_global_name())
 	#--------------------------------------------
 	# transfer item to appliance
-	if item.get_parent():
-		item.get_parent().remove_child(item)
+	# if item.get_parent():
+	# 	item.get_parent().remove_child(item)
+	GlobalScript.player.remove_item()
 	add_child(item)
+	position_equipment(item, contents.size() - 1)
+	item.lock()
 	return true
 
 
@@ -149,7 +154,7 @@ func take() -> Node:
 	if contents.is_empty():
 		return null
 	var item = contents.pop_back()
-	#remove_child(item)
+	remove_child(item)
 	return item
 
 

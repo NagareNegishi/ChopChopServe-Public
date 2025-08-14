@@ -13,6 +13,7 @@ signal cooking
 @export var burnt_mesh: MeshInstance3D
 @export var chopped_mesh: MeshInstance3D
 
+
 # This gets reset in the other methods it is just default
 var food_name = "Default_foodState"
 var spoil_time = 80 # Timer to food spoils
@@ -50,13 +51,15 @@ enum applianceType{
 	WHISK
 }
 
+
+
 func _process(delta):
-	if spoil_time >= 0:
-		spoil_ingredient(delta)
+	if spoil_time != null:
+		if spoil_time >= 0:
+			spoil_ingredient(delta)
 	
 	if is_cooking:
 		cook(current_appliance)
-
 
 func spoil_ingredient(delta : float):
 	spoil_time-=delta;

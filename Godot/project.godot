@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 GameServer="*res://scripts/Server.gd"
 GlobalScript="*res://global_script.gd"
+PreloadMenuSubclasses="*res://scripts/Food/preload_menu_subclasses.gd"
 ReputationSystem="*res://scripts/Reputation/reputationSystem.gd"
 CurrencySystem="*res://scripts/Currency/currencySystem.gd"
 GamePhases="*res://scripts/gamePhases.gd"
@@ -31,6 +32,10 @@ window/stretch/mode="canvas_items"
 [dotnet]
 
 project/assembly_name="ChopChopServe"
+
+[filesystem]
+
+import/blender/enabled=false
 
 [input]
 

@@ -3,7 +3,7 @@ class_name StrawberryIcecream
 
 # Need to set ingredient list
 # Need to make sure that the state of ingredients matches the state of the ingredient in the array
-
+static var _auto_register = MenuItem.register(StrawberryIcecream)
 func _ready():
 	ingredients = ["Vanilla Icecream", "Strawberry","Strawberry","Strawberry"]
 	

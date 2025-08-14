@@ -1,5 +1,5 @@
 extends MenuItem
-class_name MushrooomTaco
+class_name MushroomTaco
 
 # Need to set ingredient list
 # Need to make sure that the state of ingredients matches the state of the ingredient in the array
@@ -16,3 +16,5 @@ func _ready():
 	cooked_mesh_good = null
 	cooked_mesh_bad = null
 	cooked_mesh_burnt = null
+
+static var _auto_register = MenuItem.register(MushroomTaco)

@@ -13,8 +13,8 @@ dest_files=["res://.godot/imported/plate.glb-fd2ae1ab187ffdb5e37c4ed080cd314e.sc
 
 [params]
 
-nodes/root_type=""
-nodes/root_name=""
+nodes/root_type="MeshInstance3D"
+nodes/root_name="PlateMesh"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false

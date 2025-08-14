@@ -10,22 +10,21 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rr8t0"]
 albedo_color = Color(1.92523e-07, 0.250727, 0.364379, 1)
 
-[node name="testwaterEmma" type="Node3D"]
+[node name="Water" type="RigidBody3D"]
 script = ExtResource("1_4i87h")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(4.1, 0, 0, 0, 4.1, 0, 0, 0, 4.1, 0, 0, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0, 0)
 shape = SubResource("BoxShape3D_qn7od")
 
 [node name="raw" type="MeshInstance3D" parent="."]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 mesh = SubResource("BoxMesh_qv8io")
 surface_material_override/0 = SubResource("StandardMaterial3D_rr8t0")
 
 [node name="InteractableComponent" parent="." instance=ExtResource("2_ca5ka")]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0, 0)
+is_pickup = true
 
 [connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]
 [connection signal="hovered" from="InteractableComponent" to="." method="_on_interactable_component_hovered"]

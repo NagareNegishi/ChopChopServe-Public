@@ -17,6 +17,8 @@ enum Status {
 @export var valid_classes: Array[String] = [] ## Class names that can be placed in (Recommended)
 # @export var valid_classes: Array[Script] = [] ## Class scripts that can be placed in (Fallback)
 @export var cook_interval: float = 1.0 ## Cook every ? seconds
+@export var equipment_slots: Array[Vector3] = []  ## Where to place equipment
+
 
 var current_status: Status = Status.IDLE
 var contents: Array[Node] = []
@@ -27,11 +29,23 @@ var power: int = 1
 ## Setup the PoweredAppliance
 func _ready():
 	super._ready()
+	setup_equipment_slots()
 	# Create and configure timer
 	cook_timer = Timer.new()
 	cook_timer.wait_time = cook_interval
 	cook_timer.timeout.connect(_on_cook_timer_timeout)
 	add_child(cook_timer)
+
+
+## Setup equipment slots - must be implemented by subclasses
+func setup_equipment_slots():
+	#assert(false, "setup_equipment_slots() must be implemented in " + get_class())
+	push_error("setup_equipment_slots() must be implemented in " + get_class())
+
+## Apply position and direction to equipment at given slot
+func position_equipment(equipment: Equipment, slot_index: int):
+	equipment.position = equipment_slots[slot_index]
+	equipment.rotate_to_direction(equipment.default_facing)
 
 
 ## Add corresponding Cookware to the PoweredAppliance

@@ -4,10 +4,10 @@ class_name Placeable
 extends RigidBody3D
 
 enum Direction {
-    NORTH = 0,
-    EAST = 1,
-    SOUTH = 2,
-    WEST = 3
+	NORTH = 0,
+	EAST = 1,
+	SOUTH = 2,
+	WEST = 3
 }
 
 ## Collision layer constants for now!!!!!!!! we should define and share in some global file
@@ -295,12 +295,12 @@ func rotate_by(angle: float) -> bool:
 
 ## Rotate the placeable to face a specific direction
 func rotate_to_direction(new_direction: Direction) -> bool:
-    var target_angle = new_direction * PI/2
-    var angle_diff = target_angle - rotation.y
-    if rotate_by(angle_diff):
-        facing_direction = new_direction
-        return true
-    return false
+	var target_angle = new_direction * PI/2
+	var angle_diff = target_angle - rotation.y
+	if rotate_by(angle_diff):
+		facing_direction = new_direction
+		return true
+	return false
 
 
 ## Virtual method - override in subclasses

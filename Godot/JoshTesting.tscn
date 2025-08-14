@@ -1,0 +1,169 @@
+[gd_scene load_steps=7 format=3 uid="uid://cjt2csoo2vk7x"]
+
+[ext_resource type="Script" uid="uid://cng45cxblxbni" path="res://scripts/Building.gd" id="1_xam8e"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_gwqyj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tlalx"]
+albedo_color = Color(0.239216, 1, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xam8e"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xam8e"]
+albedo_color = Color(0.504812, 1, 0.655515, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qyb1j"]
+albedo_color = Color(1, 0, 1, 1)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="TestCube" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.04855, 0, 0)
+mesh = SubResource("BoxMesh_gwqyj")
+surface_material_override/0 = SubResource("StandardMaterial3D_tlalx")
+script = ExtResource("1_xam8e")
+
+[node name="Area3D" type="Area3D" parent="TestCube"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestCube/Area3D"]
+shape = SubResource("BoxShape3D_xam8e")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="TestCube"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestCube/RigidBody3D"]
+shape = SubResource("BoxShape3D_xam8e")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.115, 8.966, 3.776)
+
+[node name="TestCube2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.966147, 0.257993, 0, -0.176441, 0.660746, -0.729578, -0.188226, 0.704879, 0.683898, -3.10753, 0.321623, 1.47616)
+mesh = SubResource("BoxMesh_gwqyj")
+surface_material_override/0 = SubResource("StandardMaterial3D_xam8e")
+
+[node name="Area3D" type="Area3D" parent="TestCube2"]
+transform = Transform3D(0.99, 0, 0, 0, 0.99, 0, 0, 0, 0.99, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestCube2/Area3D"]
+shape = SubResource("BoxShape3D_xam8e")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="TestCube2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestCube2/RigidBody3D"]
+shape = SubResource("BoxShape3D_xam8e")
+
+[node name="TestCube4" type="MeshInstance3D" parent="."]
+transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, 0, -1, 3)
+mesh = SubResource("BoxMesh_gwqyj")
+surface_material_override/0 = SubResource("StandardMaterial3D_qyb1j")
+
+[node name="Area3D" type="Area3D" parent="TestCube4"]
+transform = Transform3D(0.99, 0, 0, 0, 0.99, 0, 0, 0, 0.99, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestCube4/Area3D"]
+shape = SubResource("BoxShape3D_xam8e")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="TestCube4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestCube4/RigidBody3D"]
+shape = SubResource("BoxShape3D_xam8e")
+
+[node name="TestCube6" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+mesh = SubResource("BoxMesh_gwqyj")
+surface_material_override/0 = SubResource("StandardMaterial3D_xam8e")
+
+[node name="Area3D" type="Area3D" parent="TestCube6"]
+transform = Transform3D(0.99, 0, 0, 0, 0.99, 0, 0, 0, 0.99, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestCube6/Area3D"]
+shape = SubResource("BoxShape3D_xam8e")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="TestCube6"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestCube6/RigidBody3D"]
+shape = SubResource("BoxShape3D_xam8e")
+
+[node name="TestCube7" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+mesh = SubResource("BoxMesh_gwqyj")
+surface_material_override/0 = SubResource("StandardMaterial3D_xam8e")
+
+[node name="Area3D" type="Area3D" parent="TestCube7"]
+transform = Transform3D(0.99, 0, 0, 0, 0.99, 0, 0, 0, 0.99, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestCube7/Area3D"]
+shape = SubResource("BoxShape3D_xam8e")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="TestCube7"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestCube7/RigidBody3D"]
+shape = SubResource("BoxShape3D_xam8e")
+
+[node name="TestCube8" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+mesh = SubResource("BoxMesh_gwqyj")
+surface_material_override/0 = SubResource("StandardMaterial3D_xam8e")
+
+[node name="Area3D" type="Area3D" parent="TestCube8"]
+transform = Transform3D(0.99, 0, 0, 0, 0.99, 0, 0, 0, 0.99, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestCube8/Area3D"]
+shape = SubResource("BoxShape3D_xam8e")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="TestCube8"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestCube8/RigidBody3D"]
+shape = SubResource("BoxShape3D_xam8e")
+
+[node name="TestCube5" type="MeshInstance3D" parent="."]
+transform = Transform3D(-2.18557e-07, 0, 1, 0, 1, 0, -5, 0, -4.37114e-08, 4, 0, 1)
+mesh = SubResource("BoxMesh_gwqyj")
+surface_material_override/0 = SubResource("StandardMaterial3D_xam8e")
+
+[node name="Area3D" type="Area3D" parent="TestCube5"]
+transform = Transform3D(0.99, 0, 0, 0, 0.99, 0, 0, 0, 0.99, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestCube5/Area3D"]
+shape = SubResource("BoxShape3D_xam8e")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="TestCube5"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestCube5/RigidBody3D"]
+shape = SubResource("BoxShape3D_xam8e")
+
+[node name="TestCube9" type="MeshInstance3D" parent="."]
+transform = Transform3D(-2.18557e-07, 0, 5.26422, 0, 1, 0, -5, 0, -2.30106e-07, -7.0954, 0, 4.3827)
+mesh = SubResource("BoxMesh_gwqyj")
+surface_material_override/0 = SubResource("StandardMaterial3D_xam8e")
+
+[node name="Area3D" type="Area3D" parent="TestCube9"]
+transform = Transform3D(0.99, 0, 0, 0, 0.99, 0, 0, 0, 0.99, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestCube9/Area3D"]
+shape = SubResource("BoxShape3D_xam8e")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="TestCube9"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestCube9/RigidBody3D"]
+shape = SubResource("BoxShape3D_xam8e")
+
+[node name="TestCube10" type="MeshInstance3D" parent="."]
+transform = Transform3D(-2.18557e-07, 0, 5.26422, 0, 1, 0, -5, 0, -2.30106e-07, 1, 3, -2)
+mesh = SubResource("BoxMesh_gwqyj")
+surface_material_override/0 = SubResource("StandardMaterial3D_xam8e")
+
+[node name="Area3D" type="Area3D" parent="TestCube10"]
+transform = Transform3D(0.99, 0, 0, 0, 0.99, 0, 0, 0, 0.99, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestCube10/Area3D"]
+shape = SubResource("BoxShape3D_xam8e")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="TestCube10"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestCube10/RigidBody3D"]
+shape = SubResource("BoxShape3D_xam8e")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.0871559, 0.996195, -1.18795e-08, -2.08501e-15, 1.19249e-08, 1, 0.996195, 0.0871559, -1.03932e-09, 0, 5.17022, 0)

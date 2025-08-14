@@ -1,3 +1,10 @@
 {
-    "godotTools.editorPath.godot4": "/Applications/Godot.app"
+    "godotTools.editorPath.godot4": "c:\\Users\\ryuio\\OneDrive - Victoria University of Wellington - STUDENT\\Desktop\\Godot_v4.4.1-stable_win64.exe\\Godot_v4.4.1-stable_win64.exe",
+    "[gdscript]": {
+        "editor.insertSpaces": false,
+        "editor.tabSize": 4,
+        "editor.detectIndentation": false,
+        "editor.formatOnSave": false,
+        "editor.formatOnPaste": false
+    }
 }

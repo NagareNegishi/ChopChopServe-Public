@@ -13,8 +13,8 @@ dest_files=["res://.godot/imported/TomatoSliced.1glb.glb-6e2f1fe7f66f300b7bf79d2
 
 [params]
 
-nodes/root_type=""
-nodes/root_name=""
+nodes/root_type="MeshInstance3D"
+nodes/root_name="ChoppedTomato"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false

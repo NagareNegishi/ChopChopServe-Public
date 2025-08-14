@@ -1,41 +1,27 @@
-[gd_scene load_steps=8 format=3 uid="uid://570x8w24exdp"]
+[gd_scene load_steps=6 format=3 uid="uid://dvn4ytv3ro6ec"]
 
 [ext_resource type="Script" uid="uid://hak4lspr1w83" path="res://scripts/Food/Ingredients/tomato.gd" id="1_lo8qe"]
 [ext_resource type="PackedScene" uid="uid://cy1s0o2ip2hob" path="res://scenes/Interaction/InteractableComponent.tscn" id="2_le8n0"]
+[ext_resource type="PackedScene" uid="uid://d1fw0ju7wc0cr" path="res://scripts/Food/IngredientScenes/raw_tomato.tscn" id="3_gqbnl"]
+[ext_resource type="PackedScene" uid="uid://c3fs67k164fl1" path="res://scripts/Food/IngredientScenes/chopped_tomato.tscn" id="4_a3k3o"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_g27tf"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_g27tf"]
-
-[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_2o5jr"]
-albedo_color = Color(0.756517, 0.000442803, 0.756512, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_2sf7l"]
-
-[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_hnvyn"]
-albedo_color = Color(0, 1, 0, 1)
-
-[node name="Tomato" type="Node3D"]
+[node name="Tomato" type="RigidBody3D"]
 script = ExtResource("1_lo8qe")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(4.17164, 0, 0, 0, 4.17164, 0, 0, 0, 4.17164, 0, 0, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0, 0)
 shape = SubResource("BoxShape3D_g27tf")
 
-[node name="raw" type="MeshInstance3D" parent="."]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, -0.0304477, 0)
-mesh = SubResource("BoxMesh_g27tf")
-surface_material_override/0 = SubResource("ORMMaterial3D_2o5jr")
+[node name="RawTomato" parent="." instance=ExtResource("3_gqbnl")]
 
-[node name="spoiled" type="MeshInstance3D" parent="."]
-transform = Transform3D(3.98783, 0, 0, 0, 3.98783, 0, 0, 0, 3.98783, 0, -0.0479527, 0)
-mesh = SubResource("BoxMesh_2sf7l")
-surface_material_override/0 = SubResource("ORMMaterial3D_hnvyn")
+[node name="ChoppedTomato" parent="." instance=ExtResource("4_a3k3o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0410221, -0.00245079, 0.0239362)
 
 [node name="InteractableComponent" parent="." instance=ExtResource("2_le8n0")]
-transform = Transform3D(7.00143, 0, 0, 0, 7.00143, 0, 0, 0, 7.00143, 0, 0, 0)
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0, 0)
+is_pickup = true
 
 [connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]
 [connection signal="hovered" from="InteractableComponent" to="." method="_on_interactable_component_hovered"]

@@ -20,7 +20,10 @@ func _process(_delta: float) -> void:
 ## @return void
 func _on_interactable_component_interacted() -> void:
 	GlobalScript.player.pickup_item(self)
-	$MeshInstance3D.material_overlay = null
+	for child in self.get_children():
+		if child is MeshInstance3D:
+			child.material_overlay = null
+	
 	print("Pickup: Interacted")
 
 
@@ -28,7 +31,10 @@ func _on_interactable_component_interacted() -> void:
 ## @param is_hovered boolean that dicates if pickup is on or off
 ## @return void
 func _on_interactable_component_hovered(is_hovered: bool) -> void:
-		$MeshInstance3D.material_overlay = overlay if is_hovered else null
+
+	for child in self.get_children():
+		if child is MeshInstance3D:
+			child.material_overlay = overlay if is_hovered else null
 
 ## Connected to signal: Called when player does action with this item in hand
 ## @param has_action if the player is using the action input
@@ -42,5 +48,7 @@ func turnOnPhysics(is_on : bool):
 
 
 func _on_interactable_component_toggle_collision(turn_on: bool) -> void:
-	$CollisionShape3D.disabled = !turn_on
+	for child in self.get_children():
+		if child is CollisionShape3D:
+			child.disabled = !turn_on
 	$InteractableComponent/CollisionShape3D.disabled = !turn_on

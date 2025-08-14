@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3fs67k164fl1"]
+
+[ext_resource type="PackedScene" uid="uid://dhhmujj8vs4a" path="res://assets/models/food/ingredients/processed/TomatoSliced.1glb.glb" id="1_xec7y"]
+
+[node name="ChoppedTomato" instance=ExtResource("1_xec7y")]

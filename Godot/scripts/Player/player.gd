@@ -81,24 +81,28 @@ func _on_dash_timer_timeout() -> void:
 
 ## Performs the dash and starts the dash cooldown
 ## @return void
-func _dash() -> void:
-	can_dash = false
+func _dash(is_forward : bool) -> void:
+	
 	var dash_tween = create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	
 	# If player moving it will launch in direction of movement 
 	# otherwise will do where players looking
-	var _dash_direction = (_direction if _direction.length() != 0 else -$Mesh.transform.basis.z).normalized() 
+	var _dash_direction = ($Mesh.transform.basis.z if is_forward
+	else -$Mesh.transform.basis.z).normalized() 
 	
+	dash_tween.tween_property(self, "velocity", _dash_direction * (DASH_STRENGTH 
+	if is_forward else DASH_STRENGTH / 2.5), DASH_DURATION)
 	
-	dash_tween.tween_property(self, "velocity", _dash_direction * DASH_STRENGTH, DASH_DURATION)
-	$DashCooldown.start()
+	if is_forward:
+		can_dash = false
+		$DashCooldown.start()
 
 
 ## Handles all the inputs
 ## @return void
 func _inputs() -> void:
 	if Input.is_action_just_pressed("Dash") && can_dash:
-		_dash()
+		_dash(true)
 		
 	if Input.is_action_just_pressed("Interact"):
 		_interact()
@@ -182,21 +186,23 @@ func drop_item(is_throw : bool) -> bool:
 	if item_in_hand.has_node("InteractableComponent"):
 		item_in_hand.get_node("InteractableComponent").turn_on_collision(true)
 	
-	item_in_hand.scale = $Mesh/ItemPoint.global_transform.basis.get_scale() / item_in_hand.global_transform.basis.get_scale()
+	item_in_hand.scale = ($Mesh/ItemPoint.global_transform.basis.get_scale() 
+	/ item_in_hand.global_transform.basis.get_scale())
 	
 	get_tree().get_current_scene().add_child(item_in_hand)
 	
 	item_in_hand.global_position = $Mesh/ItemPoint.global_position + $Mesh.global_transform.basis.z * 2.5
 	item_in_hand.global_rotation = $Mesh/ItemPoint.global_rotation
-	
+
 	_action(false)
-	
+
 	if item_in_hand is AbstractThrowable:
 		item_in_hand.turnOnPhysics(true)
-		
+
 	if is_throw && item_in_hand is AbstractThrowable:
 		item_in_hand.linear_velocity = $Mesh.global_transform.basis.z * THROW_STRENGTH
-		
+		_dash(false)
+
 	item_in_hand = null
 	
 	return true

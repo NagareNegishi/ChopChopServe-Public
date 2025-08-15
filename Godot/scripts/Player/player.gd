@@ -120,10 +120,10 @@ func _inputs() -> void:
 ## Handles when the player interacts
 ## @return void
 func _interact() -> void:
-	if item_in_hand != null || _closest_item != null && _closest_item.is_pickup:
+	if (item_in_hand != null && (_closest_item == null || _closest_item != null && _closest_item.is_pickup)):
 		drop_item(false)
 	
-	if _closest_item == null || !_closest_item is InteractableComponent:
+	if _closest_item == null:
 		return
 	 
 	_closest_item.interact()

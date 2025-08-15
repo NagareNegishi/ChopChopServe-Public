@@ -22,6 +22,7 @@ func _setup_interactable():
 	interactable_component = interactable_scene.instantiate()
 	add_child(interactable_component)
 	interactable_component.interacted.connect(_on_interactable_component_interacted)
+	interactable_component.toggle_collision.connect(_on_interactable_component_toggle_collision)
 
 
 ## Perform action depend on what player is holding
@@ -67,10 +68,8 @@ func _on_interactable_component_interacted() -> void:
 # func _on_interactable_component_action_use(is_action: bool) -> void:
 # 	pass
 
-# func _on_interactable_component_toggle_collision(turn_on: bool) -> void:
-# 	if turn_on:
-# 		collision_layer = 1
-# 		collision_mask = 1
-# 	else:
-# 		collision_layer = 0
-# 		collision_mask = 0
+func _on_interactable_component_toggle_collision(turn_on: bool) -> void:
+	for child in self.get_children():
+		if child is CollisionShape3D:
+			child.disabled = !turn_on
+	$InteractableComponent/CollisionShape3D.disabled = !turn_on

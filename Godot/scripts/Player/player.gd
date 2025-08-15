@@ -166,8 +166,8 @@ func pickup_item(item : Node3D) -> bool:
 	if item.get_parent():
 		item.get_parent().remove_child(item)
 #----------------------------------------------------------
-	if item is AbstractThrowable:
-		item.turnOnPhysics(false)
+	#if item is AbstractThrowable:
+a	item.turnOnPhysics(false)
 	
 	if item.has_node("InteractableComponent"):
 		item.get_node("InteractableComponent").turn_on_collision(false)
@@ -199,8 +199,8 @@ func drop_item(is_throw : bool) -> bool:
 
 	_action(false)
 
-	if item_in_hand is AbstractThrowable:
-		item_in_hand.turnOnPhysics(true)
+	#if item_in_hand is AbstractThrowable:
+	item_in_hand.turnOnPhysics(true)
 
 	if is_throw && item_in_hand is AbstractThrowable:
 		item_in_hand.linear_velocity = $Mesh.global_transform.basis.z * THROW_STRENGTH
@@ -276,11 +276,23 @@ func _on_move_particles_timeout() -> void:
 
 
 func remove_item() -> Node3D:
-	if(item_in_hand != null):
-		item_in_hand.scale = $Mesh/ItemPoint.global_transform.basis.get_scale() / item_in_hand.global_transform.basis.get_scale()
-		get_tree().get_current_scene().add_child(item_in_hand)
+	if item_in_hand == null:
+		return null
+		
+	item_in_hand.get_parent().remove_child(item_in_hand)
 	
-	return item_in_hand
+	item_in_hand.global_position = $Mesh/ItemPoint.global_position + $Mesh.global_transform.basis.z * 2.5
+	item_in_hand.global_rotation = $Mesh/ItemPoint.global_rotation
+	
+	get_tree().get_current_scene().add_child(item_in_hand)
+	
+	item_in_hand.scale = $Mesh/ItemPoint.global_transform.basis.get_scale() / item_in_hand.global_transform.basis.get_scale()
+	
+	var res = item_in_hand
+	item_in_hand = null
+	return res
+	
+	
 
 
 func draw_aim() -> void:

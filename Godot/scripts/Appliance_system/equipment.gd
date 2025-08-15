@@ -52,7 +52,7 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 		return true
 
 
-
+	
 	# If item_in_hand exists: depend on if equipment can accept it
 	return put(item)
 
@@ -64,6 +64,7 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 func put(item: Node) -> bool:
 	if not _can_accept(item):
 		return false
+	GlobalScript.player.remove_item()
 	contents.append(item)
 
 

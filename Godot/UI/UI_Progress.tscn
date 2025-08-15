@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ckhue72bmvrjv"]
 
-[ext_resource type="Script" uid="uid://dghelyr4xevbv" path="res://UI/ui_progress.gd" id="1_gv6aw"]
+[ext_resource type="Script" uid="uid://dghelyr4xevbv" path="res://scripts/UI/ui_progress.gd" id="1_gv6aw"]
 [ext_resource type="Texture2D" uid="uid://c3mgk1p8lanu4" path="res://assets/textures/misc/LoadingBar.png" id="1_i6hdk"]
 [ext_resource type="Texture2D" uid="uid://b46lyu1335yn1" path="res://assets/textures/misc/LoadingBarMiddle.png" id="2_a04ib"]
 
@@ -32,9 +32,3 @@ texture_under = ExtResource("1_i6hdk")
 texture_over = ExtResource("1_i6hdk")
 texture_progress = ExtResource("2_a04ib")
 tint_progress = Color(2.35841e-06, 0.751594, 0.333757, 1)
-
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.01
-autostart = true
-
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

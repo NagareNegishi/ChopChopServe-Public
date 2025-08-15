@@ -26,9 +26,6 @@ func _update_colour():
 	$TextureProgressBar.tint_progress = hsv_lerp("#fcff9c", "49de67", $TextureProgressBar.value - 0.3)
 	pass
 
-func _on_timer_timeout() -> void:
-	add_amount(0.01)
-
 #AI geenerated :(
 func hsv_lerp(color_a: Color, color_b: Color, t: float) -> Color:
 	# Convert both colors to HSV

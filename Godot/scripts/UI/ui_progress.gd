@@ -1,9 +1,9 @@
-@tool
+#@tool
 class_name CustomProgressBar
 extends Control
 
 signal finshed
-@export var current_progress : float = 0.0 : set = set_amount
+@export var current_progress : float = 0.0 #: set = set_amount
 
 func set_amount(_amount : float):
 	$TextureProgressBar.value = clamp(_amount,0,1)
@@ -23,7 +23,7 @@ func remove_amount(_amount : float):
 	_update_colour()
 
 func _update_colour():
-	$TextureProgressBar.tint_progress = hsv_lerp("#fcff9c", "49de67", $TextureProgressBar.value - 0.3)
+	$TextureProgressBar.tint_progress = hsv_lerp("f51505", "49de67", $TextureProgressBar.value)
 	pass
 
 #AI geenerated :(
@@ -56,3 +56,9 @@ func hsv_lerp(color_a: Color, color_b: Color, t: float) -> Color:
 func _check_progress():
 	if  $TextureProgressBar.value >= 1:
 		emit_signal("finshed")
+
+func _physics_process(delta: float) -> void:
+	if(current_progress <= 0):
+		set_amount(1)
+	
+	remove_amount(delta * 0.05)

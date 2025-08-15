@@ -14,8 +14,8 @@ enum Status {
 }
 
 @export var capacity: int = 4 ## Maximum number of items this appliance can hold
-@export var valid_class_names: Array[String] = [] ## Class names that can be placed in (Recommended)
-@export var valid_classes: Array[Script] = [] ## Class scripts that can be placed in (Fallback)
+@export var valid_classes: Array[String] = [] ## Class names that can be placed in (Recommended)
+# @export var valid_classes: Array[Script] = [] ## Class scripts that can be placed in (Fallback)
 @export var action_interval: float = 1.0 ## action every ? seconds
 
 
@@ -53,7 +53,7 @@ func take() -> Node:
 	if contents.is_empty():
 		return null
 	var item = contents.pop_back()
-	remove_child(item)
+	# remove_child(item)
 	return item
 
 
@@ -70,10 +70,10 @@ func _can_accept(item: Node) -> bool:
 	if contents.size() >= capacity:
 		print("Cannot accept item, appliance is at full capacity")
 		return false
-
-	# may need to check null script, but it depends on how food are implemented!!!!!!!
-
-	return item.get_class() in valid_class_names or item.get_script() in valid_classes
+	if not item.get_script():
+		print("Cannot accept item, item has no script")
+		return false
+	return item.get_script().get_global_name() in valid_classes
 
 
 ## Start action process, and unable further actions until it completes

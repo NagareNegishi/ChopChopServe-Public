@@ -6,42 +6,32 @@
 class_name FoodCrate
 extends UnPoweredAppliance
 
-var supply: Script ## Must be Food class
-
+var supply: PackedScene
+var food_directory: String = "res://scripts/Food/IngredientScenes/"
 
 ## Setup the model instance
 func _init():
 	super._init()
-
-	# until model is ready !!!!!!!!!!!!!
-	model_scene = preload("res://assets/models/furniture/BasicBenchFatDrawers.glb")
-
+	model_scene = preload("res://assets/models/NuFurniture/FoodCrater.glb")
 
 func _ready():
 	super._ready()
-	# valid_classes = [Food]
-	# capacity = 1000000 ## no limit on food crate
-	# action_interval = 0.1 ## maybe small amount to avoid rapidly taking items?
+	action_interval = 0.1 # small interval to avoid rapid item taking
+	
+	
+	#------------------------------------
+	set_supply("Tomato")
+	#------------------------------------
 
-	#set_supply()
 
-
-## Set the supply script for the food crate
-func set_supply():
-	if valid_classes.is_empty():
-		assert(false, "FoodCrate must have at least one valid class in valid_classes array")
-
-	for script in valid_classes:
-		if script != null: # is not get compile error
-			var instance = script.new()
-			# if instance is Food:
-			if instance.has_method("is_food"):
-				supply = script
-				instance.queue_free()
-				print("FoodCrate supply set to: ", supply)
-				return
-			instance.queue_free()
-	assert(false, "FoodCrate must have at least one valid class in valid_classes array")
+# Set the supply script for the food crate
+func set_supply(food_name: String):
+	var scene_path = food_directory + food_name + ".tscn"
+	supply = load(scene_path)
+	if supply and supply.can_instantiate():
+		print("FoodCrate supply set to: ", scene_path.get_file().get_basename())
+	else:
+		push_error("Failed to load or cannot instantiate scene: " + scene_path)
 
 
 ## Override unsupported methods to prevent misuse
@@ -67,7 +57,7 @@ func take() -> Node:
 	current_status = Status.USING
 	status_changed.emit(current_status)
 	action_timer.start()
-	return supply.new()
+	return supply.instantiate()
 
 
 ## Perform action depend on what player is holding
@@ -77,5 +67,7 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 	if not item:
 		var food = take()
 		GlobalScript.player.pickup_item(food)
+		print("Player took food from FoodCrate: ", food.get_script().get_global_name())
+		print("Player has: ", GlobalScript.player.item_in_hand.get_script().get_global_name())
 		return true
 	return false

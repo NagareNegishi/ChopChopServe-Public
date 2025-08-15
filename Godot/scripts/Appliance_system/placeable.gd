@@ -3,6 +3,13 @@
 class_name Placeable
 extends RigidBody3D
 
+enum Direction {
+	NORTH = 0,
+	EAST = 1,
+	SOUTH = 2,
+	WEST = 3
+}
+
 ## Collision layer constants for now!!!!!!!! we should define and share in some global file
 const FLOORS = 1
 const PLAYERS = 2
@@ -16,8 +23,11 @@ const APPLIANCES = 4
 @export var size: Vector3 = Vector3(1.0, 1.0, 1.0): set = set_size # automatically call set_size when changed
 ## Scale factor for interaction area size
 @export var interaction_scale: float = 1.0
+## Default facing direction
+@export var default_facing: Direction = Direction.NORTH
 
 var can_move: bool = true
+var facing_direction: Direction
 var model_instance: Node3D
 var collision_shape: CollisionShape3D  # For physics
 var interaction_area: Area3D  # For detection
@@ -36,6 +46,7 @@ func _init(width: float = 1.0, height: float = 1.0, depth: float = 1.0):
 
 ## Called when the node is added to the scene tree
 func _ready():
+	facing_direction = default_facing
 	setup_children()
 	# physics setup
 	gravity_scale = 1.0
@@ -50,8 +61,10 @@ func _ready():
 	interaction_area.area_entered.connect(_on_area_entered)
 	interaction_area.area_exited.connect(_on_area_exited)
 	initialized = true
-
-	print_sync_properties()
+#----------------------------------------
+	lock()
+	# print_sync_properties()
+#----------------------------------------
 
 
 ## Create required child nodes
@@ -82,8 +95,8 @@ func setup_children():
 
 ## Initialize collision shape based on size
 func setup_collision():
-	collision_layer = APPLIANCES
-	collision_mask = collide_with
+	collision_layer = 1   #APPLIANCES     !!!! use floor until player sort collision layer!!!!
+	collision_mask = 1  #collide_with
 	# Setup physics collision shape
 	if collision_shape:
 		var shape = BoxShape3D.new()
@@ -278,6 +291,16 @@ func rotate_by(angle: float) -> bool:
 		rotation.y = old_angle
 		return false
 	return true
+
+
+## Rotate the placeable to face a specific direction
+func rotate_to_direction(new_direction: Direction) -> bool:
+	var target_angle = new_direction * PI/2
+	var angle_diff = target_angle - rotation.y
+	if rotate_by(angle_diff):
+		facing_direction = new_direction
+		return true
+	return false
 
 
 ## Virtual method - override in subclasses

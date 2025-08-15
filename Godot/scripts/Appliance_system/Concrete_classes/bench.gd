@@ -18,6 +18,14 @@ func _init():
 func _ready():
 	super._ready()
 
+
+## Perform action depend on what player is holding
+## @param _item: The Node Player is holding
+## @return: True if action is triggered, false otherwise
+func player_has(_item: Node) -> bool:
+	return false
+
+
 ## Place an item onto this appliance
 ## @param item: The Node to place on this appliance
 ## @return: True if placement was successful, false otherwise

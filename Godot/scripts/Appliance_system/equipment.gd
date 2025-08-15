@@ -50,9 +50,6 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 		GlobalScript.player.drop_item(false)
 		print("Player dropped equipment: ", self.get_script().get_global_name())
 		return true
-
-
-
 	# If item_in_hand exists: depend on if equipment can accept it
 	return put(item)
 
@@ -65,15 +62,11 @@ func put(item: Node) -> bool:
 	if not _can_accept(item):
 		return false
 	contents.append(item)
-
-
 #--------------------------------------------
 	print("Put: ", item.get_script().get_global_name(), " onto: ", self.get_script().get_global_name())
 #--------------------------------------------
-
 	# transfer item to appliance
-	if item.get_parent():
-		item.get_parent().remove_child(item)
+	GlobalScript.player.remove_item()
 	add_child(item)
 	return true
 

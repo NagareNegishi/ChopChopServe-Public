@@ -66,5 +66,11 @@ func _on_interactable_component_interacted() -> void:
 # 	pass
 # func _on_interactable_component_action_use(is_action: bool) -> void:
 # 	pass
+
 # func _on_interactable_component_toggle_collision(turn_on: bool) -> void:
-# 	pass
+# 	if turn_on:
+# 		collision_layer = 1
+# 		collision_mask = 1
+# 	else:
+# 		collision_layer = 0
+# 		collision_mask = 0

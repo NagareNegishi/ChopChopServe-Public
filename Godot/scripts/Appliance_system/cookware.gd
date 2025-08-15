@@ -8,6 +8,7 @@ extends Equipment
 ## Setup the cookware
 func _ready():
 	super._ready()
+	interactable_component.is_pickup = true
 
 
 ## Place an item onto this appliance

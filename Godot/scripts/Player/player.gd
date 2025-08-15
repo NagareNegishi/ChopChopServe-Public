@@ -161,8 +161,11 @@ func pickup_item(item : Node3D) -> bool:
 	
 	item.global_position = Vector3(0,0,0)
 	item.global_rotation = Vector3(0,0,0)
-	item.get_parent().remove_child(item)
-	
+#----------------------------------------------------------
+# Added small change here
+	if item.get_parent():
+		item.get_parent().remove_child(item)
+#----------------------------------------------------------
 	if item is AbstractThrowable:
 		item.turnOnPhysics(false)
 	

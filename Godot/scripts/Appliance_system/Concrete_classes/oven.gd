@@ -11,7 +11,7 @@ func _init():
 func _ready():
 	super._ready()
 	cooking_style = ApplianceFactory.CookingStyle.BAKE
-	valid_class_names = ["OvenTray"] # Only one OvenTray allowed
+	valid_classes = ["OvenTray"] # Only one OvenTray allowed
 	capacity = 1
 	power = 1
 	add_cookware("oven_tray")

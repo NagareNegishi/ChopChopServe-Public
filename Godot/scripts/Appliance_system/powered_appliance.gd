@@ -18,7 +18,6 @@ enum Status {
 # @export var valid_classes: Array[Script] = [] ## Class scripts that can be placed in (Fallback)
 @export var cook_interval: float = 1.0 ## Cook every ? seconds
 
-
 var current_status: Status = Status.IDLE
 var contents: Array[Node] = []
 var cook_timer: Timer
@@ -57,7 +56,6 @@ func add_cookware(cookware_script_name: String):
 	if not cookware:
 		push_error("Failed to create cookware: " + cookware_script_name)
 		return
-	add_child(cookware)
 	put(cookware)
 	# Position and size cookware relative to appliance
 	position_equipment(cookware, 0)
@@ -72,16 +70,11 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 	print("Player.item_in_hand: ", GlobalScript.player.item_in_hand)
 	print("Self: ", self.get_script().get_global_name())
 #--------------------------------------------
-	# Let's ignore Blender and Freezer for now, all PoweredAppliance has 1 Cookware !!!!!!!!!
-
 	# If player has nothing: move item from appliance to player (if exists), return true
 	if not item:
 		var cookware = take()
 		if cookware:
 			cookware.finish_cook()
-			#-------------------------------------------------------------------
-			cookware.unlock() #unless player can sort out issue: blow away
-			#-------------------------------------------------------------------
 			GlobalScript.player.pickup_item(cookware)
 			print("Player took: ", cookware.get_script().get_global_name(), ", from: ", self.get_script().get_global_name())
 			if contents.is_empty():
@@ -139,8 +132,6 @@ func put(item: Node) -> bool:
 		print(" --- ", content.get_script().get_global_name())
 	#--------------------------------------------
 	# transfer item to appliance
-	# if item.get_parent():
-	# 	item.get_parent().remove_child(item)
 	GlobalScript.player.remove_item()
 	add_child(item)
 	position_equipment(item, contents.size() - 1)

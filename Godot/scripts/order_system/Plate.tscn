@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://br76j8t76ne2x"]
+[gd_scene load_steps=6 format=3 uid="uid://br76j8t76ne2x"]
 
 [ext_resource type="Script" uid="uid://bum2q4u15bf5w" path="res://scripts/order_system/plate.gd" id="1_7vslu"]
 [ext_resource type="PackedScene" uid="uid://cy1s0o2ip2hob" path="res://scenes/Interaction/InteractableComponent.tscn" id="2_brnb6"]
@@ -6,19 +6,30 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_njfe6"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_oio5h"]
+
 [node name="Plate" type="RigidBody3D"]
 script = ExtResource("1_7vslu")
+has_action = true
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00424956, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -0.0233127, 0.182234, -0.0405737)
 shape = SubResource("BoxShape3D_njfe6")
 
 [node name="PlateMesh" parent="." instance=ExtResource("2_njfe6")]
 
 [node name="InteractableComponent" parent="." instance=ExtResource("2_brnb6")]
-transform = Transform3D(0.369291, 0, 0, 0, 0.369291, 0, 0, 0, 0.369291, 0, 0, 0)
+transform = Transform3D(0.369291, 0, 0, 0, 0.369291, 0, 0, 0, 0.369291, 0, 0.130875, 0)
 is_pickup = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0.214179, 0)
+shape = SubResource("BoxShape3D_oio5h")
 
 [connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]
 [connection signal="hovered" from="InteractableComponent" to="." method="_on_interactable_component_hovered"]
 [connection signal="interacted" from="InteractableComponent" to="." method="_on_interactable_component_interacted"]
+[connection signal="toggle_collision" from="InteractableComponent" to="." method="_on_interactable_component_toggle_collision"]

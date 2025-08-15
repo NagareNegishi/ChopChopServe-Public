@@ -29,3 +29,4 @@ is_pickup = true
 [connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]
 [connection signal="hovered" from="InteractableComponent" to="." method="_on_interactable_component_hovered"]
 [connection signal="interacted" from="InteractableComponent" to="." method="_on_interactable_component_interacted"]
+[connection signal="toggle_collision" from="InteractableComponent" to="." method="_on_interactable_component_toggle_collision"]

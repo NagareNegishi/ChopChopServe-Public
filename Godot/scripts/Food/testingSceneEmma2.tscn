@@ -45,4 +45,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.448845, 0.0832666, 0.43148
 
 [node name="Plate" parent="." instance=ExtResource("4_bd52m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0177729, 0)
-has_action = true

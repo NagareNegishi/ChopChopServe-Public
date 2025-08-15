@@ -9,7 +9,7 @@ var has_menu_item: bool = false
 #var dish = DishEnum.new()
 var menu_instance
 const GRID_SIZE = 3
-const CELL_SIZE = 0.5
+const CELL_SIZE = 0.05
 var grid: Array = []
 
 
@@ -22,7 +22,7 @@ func _ready():
 		grid[i].resize(GRID_SIZE)
 		for j in range(GRID_SIZE):
 			grid[i][j]=null # Makes sure they all start out null
-	
+	freeze = true
 	print(grid)
 
 
@@ -44,19 +44,29 @@ func add_item(food_node) -> void:
 		print("plate full")
 		return
 	
-	grid[cell.x][cell.y] = food_node  # Note: using x for row, y for column
+	grid[cell.x][cell.y] = food_node
 	food_node.get_parent().remove_child(food_node)
 	add_child(food_node)
 	
-	food_node.scale = Vector3(0.15, 0.15, 0.15)
+	# Disable physics for items
+	if food_node is RigidBody3D:
+		food_node.freeze = true
+		food_node.gravity_scale = 0
 	
-	# Center the grid on the plate
-	# For a 3x3 grid, positions will be: -1, 0, 1 (multiplied by CELL_SIZE)
-	var x_offset = (cell.x - 1) * CELL_SIZE  # cell.x - (GRID_SIZE-1)/2
-	var z_offset = (cell.y - 1) * CELL_SIZE  # cell.y - (GRID_SIZE-1)/2
+	food_node.scale = Vector3(0.5, 0.5, 0.5)
 	
-	# Position relative to the plate's center
-	food_node.transform.origin = Vector3(x_offset, 0.2, z_offset)  # 0.2 = height above plate
+	var x_offset = (cell.x - 1) * CELL_SIZE
+	var z_offset = (cell.y - 1) * CELL_SIZE
+	
+	# Debug prints
+	print("Cell: ", cell)
+	print("Offsets - x: ", x_offset, ", z: ", z_offset)
+	print("Plate global position: ", global_transform.origin)
+	
+	# Try positioning at the plate's center first
+	food_node.transform.origin = Vector3(x_offset, 0.1, z_offset)  # Start with center
+	print("Food item local position: ", food_node.transform.origin)
+	print("Food item global position: ", food_node.global_transform.origin)
 	
 	check_plate()
 
@@ -119,13 +129,6 @@ func setup_menu_item_appearance(menuitem: MenuItem):
 	if menuitem.cooked_mesh_burnt != null:
 		menuitem.cooked_mesh_burnt.visible = false
 
-
-# Didnt work with the staticbody 3d as i couldnt get overlap checking to work with it
-# I dont think Area3D has the same functionality as staticbody3d so Ive just made it so it turns off
-# the collisions permenately
-func turn_on_collision(turn_on: bool) -> void:
-	#$Area3D.disabled = !turn_on
-	$InteractableComponent/CollisionShape3D.disabled = !turn_on
 
 # Makes it so when the player picks up the ingredient its collisions
 # dont stop it from moving correctly which is what the function above is supposed to do

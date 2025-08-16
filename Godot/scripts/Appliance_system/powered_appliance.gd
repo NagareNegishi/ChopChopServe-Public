@@ -61,63 +61,6 @@ func add_cookware(cookware_script_name: String):
 	position_equipment(cookware, 0)
 
 
-## Perform action depend on what player is holding
-## @param _item: The Node Player is holding
-## @return: True if action is triggered, false otherwise
-func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
-#--------------------------------------------
-	print("Player is holding: ", item)
-	print("Player.item_in_hand: ", GlobalScript.player.item_in_hand)
-	print("Self: ", self.get_script().get_global_name())
-#--------------------------------------------
-	# If player has nothing: move item from appliance to player (if exists), return true
-	if not item:
-		var cookware = take()
-		if cookware:
-			cookware.finish_cook()
-			GlobalScript.player.pickup_item(cookware)
-			print("Player took: ", cookware.get_script().get_global_name(), ", from: ", self.get_script().get_global_name())
-			if contents.is_empty():
-				stop_cook()
-			return true
-		else:
-			print("No cookware to take from PoweredAppliance")
-			return false
-	# If player has clean empty plate: serve food from Cookware, return true
-	if item.is_class("Plate"):
-		return serve_to_plate(item)
-	# If item_in_hand exists: depend on if appliance can accept it
-	var success = put(item)
-	# GlobalScript.player.remove_item()
-	return success
-
-
-func serve_to_plate(plate: Node) -> bool: # Node should change to Plate when its ready!!!!!!!!
-	if contents.is_empty():
-		push_warning("Nothing to serve")
-		return false
-	if not plate:
-		push_warning("Cannot serve to null")
-		return false
-	if plate.has_method("is_ready"):
-		if not plate.is_ready():
-			push_warning("Cannot serve to non-ready plate") # maybe not empty? maybe dirty??
-			return false
-		var cookware = contents[0]
-		# Method in MenuItem, takes Array and return subclass of MenuItem
-		var dish = ApplianceFactory.match_menu_items(cookware.take_all())
-
-		stop_cook()
-		if plate.has_method("add_dish"):
-			plate.add_dish(dish)
-			print("Cookware served dish to plate: ", plate.name)
-			return true
-
-	push_warning("Plate does not provide required methods")
-	return false
-
-
-
 ## Place an item onto this appliance
 ## @param item: The Node to place on this appliance
 ## @return: True if placement was successful, false otherwise
@@ -132,7 +75,7 @@ func put(item: Node) -> bool:
 		print(" --- ", content.get_script().get_global_name())
 	#--------------------------------------------
 	# transfer item to appliance
-	GlobalScript.player.remove_item()
+	GlobalScript.player.remove_item() # if we only put item from players hand
 	add_child(item)
 	position_equipment(item, contents.size() - 1)
 	item.lock()
@@ -145,6 +88,7 @@ func take() -> Node:
 	if contents.is_empty():
 		return null
 	var item = contents.pop_back()
+	item.unlock()
 	remove_child(item)
 	return item
 
@@ -214,6 +158,12 @@ func _cook() -> bool:
 	return true
 
 
+## Check if this equipment is empty
+## @return: True if equipment is empty, false otherwise
+func is_empty() -> bool:
+	return contents.is_empty()
+
+
 ## Set the current status to broken
 ## @return: True if status was changed, it will always true
 func broken() -> bool:
@@ -261,3 +211,56 @@ func _on_cook_timer_timeout():
 		_cook()
 	else:
 		cook_timer.stop()
+
+
+## Perform action depend on what player is holding
+## @param _item: The Node Player is holding
+## @return: True if action is triggered, false otherwise
+func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
+#--------------------------------------------
+	print("Player is holding: ", item)
+	print("Player.item_in_hand: ", GlobalScript.player.item_in_hand)
+	print("Self: ", self.get_script().get_global_name())
+#--------------------------------------------
+	# If player has nothing: move item from appliance to player (if exists), return true
+	if not item:
+		var cookware = take()
+		if cookware:
+			cookware.finish_cook()
+			GlobalScript.player.pickup_item(cookware)
+			print("Player took: ", cookware.get_script().get_global_name(), ", from: ", self.get_script().get_global_name())
+			if contents.is_empty():
+				stop_cook()
+			return true
+		else:
+			print("No cookware to take from PoweredAppliance")
+			return false
+	# If player has clean empty plate: serve food from Cookware, return true
+	if item is Plate:  ##or    .is_class("Plate"):
+		return serve_to_plate(item)
+	# If item_in_hand exists: depend on if appliance can accept it
+	return put(item)
+
+
+func serve_to_plate(plate: Plate) -> bool: # Node should change to Plate when its ready!!!!!!!!
+	if contents.is_empty():
+		push_warning("Nothing to serve")
+		return false
+	if not plate:  # could remove it later!!!!!!!!!!!!!!!!!!!!!!
+		push_warning("Cannot serve to null")
+		return false
+	if plate.has_method("is_ready"):
+		if not plate.is_ready():
+			push_warning("Cannot serve to non-ready plate") # maybe not empty? maybe dirty??
+			return false
+		var cookware = contents[0]
+
+		# Method in Plate, takes Array of Food
+		plate.add_list_items(cookware.take_all())
+
+		stop_cook()
+				print("Cookware :", cookware.get_script().get_global_name(), ", served to: ", plate.name)
+		return true
+
+	push_warning("Plate does not provide required methods")
+	return false

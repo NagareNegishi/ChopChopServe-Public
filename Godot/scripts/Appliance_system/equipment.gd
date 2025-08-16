@@ -28,33 +28,6 @@ func _ready():
 	super._ready()
 
 
-## Perform action depend on what player is holding
-## @param _item: The Node Player is holding
-## @return: True if action is triggered, false otherwise
-func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
-#--------------------------------------------
-	print("Player is holding: ", item)
-	print("Player.item_in_hand: ", GlobalScript.player.item_in_hand)
-	print("Self: ", self.get_script().get_global_name())
-#--------------------------------------------
-	# If player has nothing: let them take self, return true
-	if not item:
-		GlobalScript.player.pickup_item(self)
-		print("Player picked up equipment: ", self.get_script().get_global_name())
-		return true
-
-	# let player decide how to handle drop!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-	# If item_in_hand is self: let them drop it, return true
-	elif item == self:
-		GlobalScript.player.drop_item(false)
-		print("Player dropped equipment: ", self.get_script().get_global_name())
-		return true
-	# If item_in_hand exists: depend on if equipment can accept it
-	return put(item)
-
-
-
 ## Place an item onto this appliance
 ## @param item: The Node to place on this appliance
 ## @return: True if placement was successful, false otherwise
@@ -135,6 +108,12 @@ func finish_cook() -> bool:
 	return true
 
 
+## Check if this equipment is empty
+## @return: True if equipment is empty, false otherwise
+func is_empty() -> bool:
+	return contents.is_empty()
+
+
 ## Check if this equipment can be used
 ## @return: True if equipment can be used, false if broken
 func can_use() -> bool:
@@ -163,3 +142,29 @@ func _set_status(new_status: Status) -> bool:
 	current_status = new_status
 	status_changed.emit(new_status)
 	return true
+
+
+## Perform action depend on what player is holding
+## @param _item: The Node Player is holding
+## @return: True if action is triggered, false otherwise
+func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
+#--------------------------------------------
+	print("Player is holding: ", item)
+	print("Player.item_in_hand: ", GlobalScript.player.item_in_hand)
+	print("Self: ", self.get_script().get_global_name())
+#--------------------------------------------
+	# If player has nothing: let them take self, return true
+	if not item:
+		GlobalScript.player.pickup_item(self)
+		print("Player picked up equipment: ", self.get_script().get_global_name())
+		return true
+
+	# let player decide how to handle drop!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+	# If item_in_hand is self: let them drop it, return true
+	elif item == self:
+		GlobalScript.player.drop_item(false)
+		print("Player dropped equipment: ", self.get_script().get_global_name())
+		return true
+	# If item_in_hand exists: depend on if equipment can accept it
+	return put(item)

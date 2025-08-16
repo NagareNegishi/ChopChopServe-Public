@@ -43,12 +43,13 @@ func cook(power: int) -> bool:
 	elif current_status != Status.USING:
 		assert(false, "Do not call cook() unless status is USING")
 		return false
-
 	for food in contents:
-		if food.has_method("cook"): ## Check the method name!!!!!!!!!!!!!!!!!!!!!!!!
-			food.cook(power * coefficient, cooking_style)
-		else:
-			push_warning("Item " + food.name + " does not implement cook() method")
+		food.startCooking(power * coefficient, cooking_style)
+		#-----------------------------------------------------------------------
+		print(get_script().get_global_name(), " start cooking ", food.get_script().get_global_name(),
+		 " with power: ", power * coefficient, ", Style is: ",
+		ApplianceFactory.CookingStyle.keys()[cooking_style])
+		#----------------------------------------------------------------------
 	return true
 
 
@@ -65,9 +66,11 @@ func serve_to_plate(plate: Plate) -> bool: # Node should change to Plate when it
 	if contents.is_empty():
 		push_warning("Nothing to serve")
 		return false
+	#----------------------------------------------------------------------
 	if not plate:  # could remove it later!!!!!!!!!!!!!!!!!!!!!!
 		push_warning("Cannot serve to null")
 		return false
+	#----------------------------------------------------------------------
 	if plate.has_method("is_ready"):
 		if not plate.is_ready():
 			push_warning("Cannot serve to non-ready plate") # maybe not empty? maybe dirty??
@@ -76,7 +79,8 @@ func serve_to_plate(plate: Plate) -> bool: # Node should change to Plate when it
 		# Method in Plate, takes Array of Food
 		plate.add_list_items(take_all())
 		finish_cook()
+		#----------------------------------------------------------------------
 		print("Cookware :", get_script().get_global_name(), ", served to: ", plate.name)
-
+		#----------------------------------------------------------------------
 	push_warning("Plate does not provide required methods")
 	return false

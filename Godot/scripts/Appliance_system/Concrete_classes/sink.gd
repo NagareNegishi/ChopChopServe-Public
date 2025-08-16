@@ -9,11 +9,12 @@ func _init():
 	model_scene = preload("res://assets/models/furniture/BenchSink.glb")
 
 
+## Setup the sink properties
 func _ready():
 	super._ready()
-	# valid_classes = ??? only plate type
-	# capacity = ???
-	# action_interval = ???
+	valid_classes = ["Plate"]
+	capacity = 4
+	# action_interval = 1.0
 
 
 ## Trigger the washing process
@@ -46,6 +47,9 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 		var plate = take()
 		if plate:
 			GlobalScript.player.pickup_item(plate)
+			#----------------------------------------------------------------------
+			print("Player took: ", plate.get_script().get_global_name(), ", from: ", get_script().get_global_name())
+			#----------------------------------------------------------------------
 			return true
 		else:
 			print("No plate to take from Sink")

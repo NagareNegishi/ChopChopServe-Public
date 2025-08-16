@@ -67,7 +67,9 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 	if not item:
 		var food = take()
 		GlobalScript.player.pickup_item(food)
+		#----------------------------------------------------------------------
 		print("Player took food from FoodCrate: ", food.get_script().get_global_name())
 		print("Player has: ", GlobalScript.player.item_in_hand.get_script().get_global_name())
+		#----------------------------------------------------------------------
 		return true
 	return false

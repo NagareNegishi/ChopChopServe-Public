@@ -36,8 +36,6 @@ func find_next_free_cell() -> Vector2i:
 # Adds items to the plate and scales them so that they appear on the plate
 func add_item(food_node) -> void:
 	disable_collision(food_node)
-	food_items.append(food_node)
-	print("Ingredient on the plate: ", food_items)
 	
 	var cell = find_next_free_cell()
 	if cell.x == -1:
@@ -58,16 +56,8 @@ func add_item(food_node) -> void:
 	var x_offset = (cell.x - 1) * CELL_SIZE
 	var z_offset = (cell.y - 1) * CELL_SIZE
 	
-	# Debug prints
-	print("Cell: ", cell)
-	print("Offsets - x: ", x_offset, ", z: ", z_offset)
-	print("Plate global position: ", global_transform.origin)
-	
 	# Try positioning at the plate's center first
-	food_node.transform.origin = Vector3(x_offset, 0.1, z_offset)  # Start with center
-	print("Food item local position: ", food_node.transform.origin)
-	print("Food item global position: ", food_node.global_transform.origin)
-	
+	food_node.transform.origin = Vector3(x_offset, 0.05, z_offset)  # Start with center
 	check_plate()
 
 # This has been made so that we can add the different ingredients to the plate visually
@@ -77,7 +67,6 @@ func get_items():
 # This is so that if they make a mistake they have to bin the whole thing
 # We can change this later if you want them to be able to take off the top item
 func remove_all():
-	print("Removing all items from plate")
 	for i in range(GRID_SIZE):
 		for j in range(GRID_SIZE):
 			if grid[i][j] != null:
@@ -94,7 +83,6 @@ func check_plate():
 	if food_items.is_empty():
 		return 0
 	var menuitem = menu_instance.match_menu_items(food_items)
-	print("Menu item ==  ",menuitem)
 	if menuitem != null:
 		has_menu_item = true
 		display_menu_item(menuitem)
@@ -110,8 +98,8 @@ func display_menu_item(menuitem: MenuItem):
 	if menu_scene:
 		var menu_node = menu_scene.instantiate()
 		add_child(menu_node)
-		menu_node.transform.origin = Vector3(0, 0.2, 0)
-		menu_node.scale = Vector3(0.25, 0.25, 0.25)
+		menu_node.transform.origin = Vector3(0, 0.05, 0)
+		menu_node.scale = Vector3(0.7, 0.7, 0.7)
 	else:
 		print("Could not load scene for: ", menuitem.get_script().get_global_name())
 

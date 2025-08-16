@@ -14,7 +14,7 @@ size = Vector3(30, 0.05, 30)
 [node name="Node3D" type="Node3D"]
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-0.0101735, -0.999619, -0.0256536, -0.203644, -0.0230461, 0.978774, -0.978992, 0.0151818, -0.203332, 0.248633, 2.67403, -0.267748)
+transform = Transform3D(0.954067, -0.107162, 0.279772, -0.143861, 0.655263, 0.741576, -0.262793, -0.747761, 0.609748, 0.254422, 0.755146, 0.714502)
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-4.37114e-08, -0.980271, 0.197657, 0, 0.197657, 0.980271, -1, 4.2849e-08, -8.63987e-09, -2.43264, 0.703702, -5.76367)
@@ -44,4 +44,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.524685, -0.010083, -0.0814
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.448845, 0.0832666, 0.431482)
 
 [node name="Plate" parent="." instance=ExtResource("4_bd52m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0177729, 0)
+
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00354898, -0.013115, -0.000960737)

@@ -13,20 +13,24 @@ script = ExtResource("1_7vslu")
 has_action = true
 
 [node name="Area3D" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00424956, 0)
+
+transform = Transform3D(0.70416, 0, 0, 0, 0.70416, 0, 0, 0, 0.70416, 0, 0.0222136, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -0.0233127, 0.182234, -0.0405737)
 shape = SubResource("BoxShape3D_njfe6")
 
 [node name="PlateMesh" parent="." instance=ExtResource("2_njfe6")]
+transform = Transform3D(0.70416, 0, 0, 0, 0.70416, 0, 0, 0, 0.70416, 0, 0.0252059, 0)
 
 [node name="InteractableComponent" parent="." instance=ExtResource("2_brnb6")]
-transform = Transform3D(0.369291, 0, 0, 0, 0.369291, 0, 0, 0, 0.369291, 0, 0.130875, 0)
+
+transform = Transform3D(0.26004, 0, 0, 0, 0.26004, 0, 0, 0, 0.26004, 0, 0.117363, 0)
 is_pickup = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0.214179, 0)
+transform = Transform3D(0.281664, 0, 0, 0, 0.281664, 0, 0, 0, 0.281664, 0, 0.176022, 0)
+
 shape = SubResource("BoxShape3D_oio5h")
 
 [connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]

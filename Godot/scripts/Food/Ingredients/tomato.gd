@@ -11,7 +11,6 @@ func _ready():
 	cooked_mesh = $ChoppedTomato
 	burnt_mesh = null
 	chopped_mesh = null
-	state = foodState.COOKED
 	# Spoil time is 80 which is same as super class
 	# Cook time is 50 which is same as super class
 	# Can cook is true same as super class

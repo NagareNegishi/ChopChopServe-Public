@@ -80,12 +80,13 @@ func _can_accept(item: Node) -> bool:
 	if not item.get_script():
 		print("Cannot accept item, item has no script")
 		return false
-#--------------------------------------------
+	# item.get_script().get_global_name() in valid_food
+	#--------------------------------------------
 	var accepted = item.get_script().get_global_name() in valid_food
 	if not accepted:
 		print("Cannot accept : ", item.get_script().get_global_name())
-#--------------------------------------------
-	return accepted # item.get_script().get_global_name() in valid_food
+	return accepted
+	#--------------------------------------------
 
 
 ## Perform cooking logic
@@ -159,12 +160,12 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 #--------------------------------------------
 	print("Player is holding: ", item)
 	print("Player.item_in_hand: ", GlobalScript.player.item_in_hand)
-	print("Self: ", self.get_script().get_global_name())
+	print("Self: ", get_script().get_global_name())
 #--------------------------------------------
 	# If player has nothing: let them take self, return true
 	if not item:
 		GlobalScript.player.pickup_item(self)
-		print("Player picked up equipment: ", self.get_script().get_global_name())
+		print("Player picked up equipment: ", get_script().get_global_name())
 		return true
 
 	# let player decide how to handle drop!!!!!!!!!!!!!!!!!!!!!!!!!!

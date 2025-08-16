@@ -14,10 +14,7 @@ enum Status {
 }
 
 @export var capacity: int = 4 ## Maximum number of items this appliance can hold
-@export var valid_classes: Array[String] = [] ## Class names that can be placed in (Recommended)
-# @export var valid_classes: Array[Script] = [] ## Class scripts that can be placed in (Fallback)
 @export var action_interval: float = 1.0 ## action every ? seconds
-
 
 var current_status: Status = Status.IDLE
 var contents: Array[Node] = []
@@ -81,7 +78,7 @@ func _can_accept(item: Node) -> bool:
 	if not item.get_script():
 		print("Cannot accept item, item has no script")
 		return false
-	return item.get_script().get_global_name() in valid_classes
+	return true # Minimum requirement
 
 
 ## Start action process, and unable further actions until it completes
@@ -104,10 +101,6 @@ func start_action() -> bool:
 func _action() -> bool:
 	assert(false, "action() must be implemented in " + get_class())
 	return false
-	# if current_status != Status.USING:
-	#     assert(false, "Do not call action() unless status is USING")
-	#     return false
-
 
 
 ## Set the current status to broken

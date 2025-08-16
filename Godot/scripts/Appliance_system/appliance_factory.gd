@@ -121,7 +121,7 @@ func spawn_test_appliance(appliance_type: String):
 const TEST_APPLIANCES = [
 	"stove_with_pot",      # Numpad 1
 	"pot",    # Numpad 2
-	"freezer", # Numpad 3
+	"bench", # Numpad 3
 	"chopping_board",    # Numpad 4
 	"fryer",      # Numpad 5
 	"fryer_basket",       # Numpad 6

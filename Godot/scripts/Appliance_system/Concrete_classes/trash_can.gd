@@ -40,7 +40,7 @@ func throw(item: Node) -> bool:
 		#--------------------------------------------
 		return true
 	#--------------------------------------------
-	print("Can not throw away: ", item.get_script().get_global_name())
+	print("Can not throw away: ", item)
 	#--------------------------------------------
 	return false
 
@@ -64,15 +64,9 @@ func start_action() -> bool:
 ## @param item: The Node to test for acceptance
 ## @return: True if item can be placed, false otherwise
 func _can_accept(item: Node) -> bool:
-	if not item:
-		print("Cannot accept item, item is null")
+	var acceptable = super._can_accept(item)
+	if not acceptable:
 		return false
-	# if current_status == Status.BROKEN:  probably never broke? then i should override broken() later
-	# 	print("Cannot accept item, appliance is broken")
-	# 	return false
-	# if contents.size() >= capacity:
-	# 	print("Cannot accept item, appliance is at full capacity")
-	# 	return false
 	return item is Food
 
 

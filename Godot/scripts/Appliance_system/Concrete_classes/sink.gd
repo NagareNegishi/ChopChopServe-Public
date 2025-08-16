@@ -12,7 +12,6 @@ func _init():
 ## Setup the sink properties
 func _ready():
 	super._ready()
-	valid_classes = ["Plate"]
 	capacity = 4
 	# action_interval = 1.0
 
@@ -21,6 +20,16 @@ func _ready():
 ## @return: True if washing started
 func wash() -> bool:
 	return start_action()
+
+
+## Check if this appliance can accept the given item
+## @param item: The Node to test for acceptance
+## @return: True if item can be placed, false otherwise
+func _can_accept(item: Node) -> bool:
+	var acceptable = super._can_accept(item)
+	if not acceptable:
+		return false
+	return item is Plate
 
 
 ## Perform action logic

@@ -109,8 +109,13 @@ func _can_accept(item: Node) -> bool:
 	if not item.get_script():
 		print("Cannot accept item, item has no script")
 		return false
-	return item.get_script().get_global_name() in valid_classes
-
+	# return item.get_script().get_global_name() in valid_classes
+	#--------------------------------------------
+	var accepted = item.get_script().get_global_name() in valid_classes
+	if not accepted:
+		print("Cannot accept : ", item.get_script().get_global_name())
+	return accepted
+	#--------------------------------------------
 
 ## Start cooking process
 ## @return: True if cooking started
@@ -230,7 +235,7 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 #--------------------------------------------
 	print("Player is holding: ", item)
 	print("Player.item_in_hand: ", GlobalScript.player.item_in_hand)
-	print("Self: ", self.get_script().get_global_name())
+	print("Self: ", get_script().get_global_name())
 #--------------------------------------------
 	# If player has nothing: move item from appliance to player (if exists), return true
 	if not item:
@@ -239,7 +244,7 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 			cookware.finish_cook()
 			GlobalScript.player.pickup_item(cookware)
 			#----------------------------------------------------------------------
-			print("Player took: ", cookware.get_script().get_global_name(), ", from: ", self.get_script().get_global_name())
+			print("Player took: ", cookware.get_script().get_global_name(), ", from: ", get_script().get_global_name())
 			#----------------------------------------------------------------------
 			if contents.is_empty():
 				stop_cook()

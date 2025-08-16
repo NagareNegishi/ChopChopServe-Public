@@ -166,15 +166,16 @@ func pickup_item(item : Node3D) -> bool:
 	if item.get_parent():
 		item.get_parent().remove_child(item)
 #----------------------------------------------------------
-	#if item is AbstractThrowable:
-a	item.turnOnPhysics(false)
+	if item.has_method("turnOnPhysics"):
+		item.turnOnPhysics(false)
 	
 	if item.has_node("InteractableComponent"):
 		item.get_node("InteractableComponent").turn_on_collision(false)
 	
-	var original_global_scale = item.global_transform.basis.get_scale()
 	$Mesh/ItemPoint.add_child(item)
-	item.scale = original_global_scale / $Mesh/ItemPoint.global_transform.basis.get_scale()
+	call_deferred("_final_pickup", item)
+
+	
 	item_in_hand = item
 	
 	return true
@@ -189,18 +190,14 @@ func drop_item(is_throw : bool) -> bool:
 	if item_in_hand.has_node("InteractableComponent"):
 		item_in_hand.get_node("InteractableComponent").turn_on_collision(true)
 	
-	item_in_hand.scale = ($Mesh/ItemPoint.global_transform.basis.get_scale() 
-	/ item_in_hand.global_transform.basis.get_scale())
-	
 	get_tree().get_current_scene().add_child(item_in_hand)
+	call_deferred("_final_drop", item_in_hand)
 	
-	item_in_hand.global_position = $Mesh/ItemPoint.global_position + $Mesh.global_transform.basis.z * 2.5
-	item_in_hand.global_rotation = $Mesh/ItemPoint.global_rotation
 
 	_action(false)
 
-	#if item_in_hand is AbstractThrowable:
-	item_in_hand.turnOnPhysics(true)
+	if item_in_hand.has_method("turnOnPhysics"):
+		item_in_hand.turnOnPhysics(true)
 
 	if is_throw && item_in_hand is AbstractThrowable:
 		item_in_hand.linear_velocity = $Mesh.global_transform.basis.z * THROW_STRENGTH
@@ -293,15 +290,12 @@ func remove_item() -> Node3D:
 	return res
 	
 	
-
-
-func draw_aim() -> void:
-	var vel : Vector3 = $Mesh.global_transform.basis.z
-	vel *= THROW_STRENGTH
+func _final_pickup(item: Node3D) -> void:
+	var scale = Transform3D().basis.get_scale()
+	item.scale = scale / $Mesh/ItemPoint.global_transform.basis.get_scale()
 	
-	var tstep : float = 0.05
-	var start_pos = $Mesh/ItemPoint.global_position + $Mesh.global_transform.basis.z * 2.5
-	var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity", 9.8)
-	var drag : float = ProjectSettings.get_setting("physics/3d/default_linear_damp", 0.0)
-
-	
+func _final_drop(item: Node3D) -> void:
+	var scale = Transform3D().basis.get_scale()
+	item.scale = ($Mesh/ItemPoint.global_transform.basis.get_scale() / scale)
+	item.global_position = $Mesh/ItemPoint.global_position + $Mesh.global_transform.basis.z * 2.5
+	item.global_rotation = $Mesh/ItemPoint.global_rotation

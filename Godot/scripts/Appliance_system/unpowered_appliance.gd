@@ -41,8 +41,9 @@ func put(item: Node) -> bool:
 		return false
 	contents.append(item)
 	# transfer item to appliance
-	if item.get_parent():
-		item.get_parent().remove_child(item)
+	GlobalScript.player.remove_item() # if we only put item from players hand
+	# if item.get_parent():
+	# 	item.get_parent().remove_child(item)
 	add_child(item)
 	return true
 
@@ -53,7 +54,7 @@ func take() -> Node:
 	if contents.is_empty():
 		return null
 	var item = contents.pop_back()
-	# remove_child(item)
+	remove_child(item)
 	return item
 
 

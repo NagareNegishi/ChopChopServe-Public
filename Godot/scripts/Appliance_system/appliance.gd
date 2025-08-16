@@ -22,14 +22,7 @@ func _setup_interactable():
 	interactable_component = interactable_scene.instantiate()
 	add_child(interactable_component)
 	interactable_component.interacted.connect(_on_interactable_component_interacted)
-
-
-## Perform action depend on what player is holding
-## @param _item: The Node Player is holding
-## @return: True if action is triggered, false otherwise
-func player_has(_item: Node) -> bool:
-	assert(false, "player_has() must be implemented in " + get_class())
-	return false
+	interactable_component.toggle_collision.connect(_on_interactable_component_toggle_collision)
 
 
 ## Place an item onto this appliance
@@ -55,22 +48,35 @@ func _can_accept(_item: Node) -> bool:
 	return false
 
 
+## Perform action depend on what player is holding
+## @param _item: The Node Player is holding
+## @return: True if action is triggered, false otherwise
+func player_has(_item: Node) -> bool:
+	assert(false, "player_has() must be implemented in " + get_class())
+	return false
+
+
+## InteractableComponent Signal Handlers -----------------------------------------------------------
+
 ## Connect to singal: Called when interacted with and will make the player pick this item up
 ## @return void
 func _on_interactable_component_interacted() -> void:
 	player_has(GlobalScript.player.item_in_hand)
 
 
+## Let toggle collision
+## @param turn_on: Whether to enable or disable collision
+func _on_interactable_component_toggle_collision(turn_on: bool) -> void:
+	if turn_on:
+		collision_layer = 1
+		collision_mask = 1
+	else:
+		collision_layer = 0
+		collision_mask = 0
+
 # Potentially use it in future
 # func _on_interactable_component_hovered(is_hovered: bool) -> void:
 # 	pass
 # func _on_interactable_component_action_use(is_action: bool) -> void:
 # 	pass
-
-# func _on_interactable_component_toggle_collision(turn_on: bool) -> void:
-# 	if turn_on:
-# 		collision_layer = 1
-# 		collision_mask = 1
-# 	else:
-# 		collision_layer = 0
-# 		collision_mask = 0
+## -------------------------------------------------------------------------------------------------

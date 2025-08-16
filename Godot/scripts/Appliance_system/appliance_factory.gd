@@ -162,6 +162,6 @@ func _input(event):
 
 
 
-# mock to make serve_to_plate compile
-func match_menu_items(items: Array):
-	return null
+# # mock to make serve_to_plate compile
+# func match_menu_items(items: Array):
+# 	return null

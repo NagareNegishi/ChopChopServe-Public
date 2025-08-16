@@ -12,7 +12,9 @@ signal cooking
 @export var spoiled_mesh: MeshInstance3D
 @export var burnt_mesh: MeshInstance3D
 @export var chopped_mesh: MeshInstance3D
-
+@export var frozen_mesh: MeshInstance3D
+@export var mixed_mesh: MeshInstance3D
+@export var texture : Texture2D
 
 # This gets reset in the other methods it is just default
 var food_name = "Default_foodState"
@@ -20,39 +22,29 @@ var spoil_time = 80 # Timer to food spoils
 var state = foodState.RAW # Current state of the food item
 var cook_time = 50 # How long it takes to cook 
 var quality : int # Measures the quality of the food 
-var is_cooking = false
-var time_power = 0
-var current_appliance = null
-var burn_threshold = -(cook_time)
-var current_mesh = raw_mesh # this is the equivalent of them cooking it twice
-var previous_states = ["RAW"]
+var is_cooking = false # Decides whether or not it should be cooking the ingredient
+var time_power : int # How much power/time the appliance is giving/using for the ingredient to be cooked
+var current_appliance = null # What appliance is currently being used
+var burn_threshold = -(cook_time) # Burn threshold is 2x the time it takes to cook
+var current_mesh = raw_mesh # The mesh that is currently being shown  in the scene
+var previous_states = ["RAW"] # List of the previous states so that the plate knows 
+var is_cooked : bool = false
 
 # Different state on the on the food item
 enum foodState{
-	RAW,
-	COOKED,
-	CHOPPED,
-	BOILED,
-	MIXED,
-	FRIED,
-	BLENDED,
-	SPOILED,
-	BURNT
+	RAW, # Not cooked
+	BAKED, # cooked in the oven
+	CHOPPED, # cut up on the chopping board
+	FROZEN, # Cooled/freezed in the freezer
+	BOILED, # Boiled in the pot
+	MIXED, # Mixed items together in the blender or just mixed them
+	FRIED, # Fried in a pan Fried in the deep fryer
+	SPOILED, # Ingredient has gone off
+	BURNT # Overcooked
 }
 
-enum applianceType{
-	OVEN,
-	CHOPPING_BOARD,
-	POT,
-	PAN,
-	BOWL,
-	BLENDER,
-	FRYER,
-	WHISK
-}
-
-
-
+# This acts as the clock for the spoiling of the ingredient and also as a check to see if it 
+# The ingredient should be cooked or not
 func _process(delta):
 	if spoil_time != null:
 		if spoil_time >= 0:
@@ -61,35 +53,46 @@ func _process(delta):
 	if is_cooking:
 		cook(current_appliance)
 
+# Delta is passed from process which ticks over every second and therefore has the food spoil 
+# in like 50-100 seconds, these times are while we dont have the round times set up and also while
+# in testing, spoil times will be extended for actual cooking
 func spoil_ingredient(delta : float):
 	spoil_time-=delta;
-	if(spoil_time <= 0 && state != foodState.COOKED && state != foodState.SPOILED):
+	if(spoil_time <= 0 && !is_cooked && state != foodState.SPOILED):
 		state = foodState.SPOILED
+		#emit_signal("changed_food_state")
 		on_state_change()
 		previous_states.append(state)
 		quality = 0
 	
 
-# Called by the appliance to cook the food passing in the power/time to cook it and the
-# appliance type
-func cook(appliance_type: applianceType):
+# This is called by the process function, it has a count down for the amount of time left to cook 
+# and when it is cooked it will change the state of the food and also add its new state to the
+# list so that the plate knows if the ingredient has gone through all the necessary states to turn 
+# into a meal
+# We talked about emitting signals when things change to let the server know and thats why there are
+# signals but they currently do nothing as i dont think the server has been set up
+func cook(appliance_type: ApplianceFactory.CookingStyle):
 	cook_time -=  time_power
 	if(cook_time <= 0):
 		state = changeState(appliance_type);
 		previous_states.append(state)
-		emit_signal("changed_food_state")
+		is_cooked = true
+		#emit_signal("changed_food_state")
 		on_state_change()
-		emit_signal("cooked")
+		#emit_signal("cooked")
 	if(cook_time <= burn_threshold): # burn_threshold is 2 times the time it takes to cook it
 		state = foodState.BURNT
-		emit_signal("changed_food_state")
+		#emit_signal("changed_food_state")
 		on_state_change()
 
-func startCooking(time: int, appliance_type: applianceType):
+# Called by the appliance to cook the food passing in the power/time to cook it and the
+# cooking style as well as this will determine what it looks like
+func startCooking(time: int, appliance_type: ApplianceFactory.CookingStyle):
 	is_cooking = true;
 	time_power = time
 	current_appliance = appliance_type
-	emit_signal("cooking")
+	#emit_signal("cooking")
 
 
 # Lets either the appliance or the player tell the food to stop cooking when it 
@@ -100,9 +103,11 @@ func stopCooking():
 	current_appliance = null
 	setQuality()
 
+# For the appliance to set a new cooking time when new ingredients are added to the appliance so that
+# all the ingredients cook at the same time
 func set_cook_time(time: float):
 	cook_time = time
-
+# Lets the appliance get the cooking time of the ingredient
 func get_cook_time():
 	return cook_time
 
@@ -113,29 +118,30 @@ func setQuality():
 		quality = 0
 
 # Changes the foodState of this item depending on what appliance is cooking it
-func changeState(appliance_type: applianceType) -> foodState:
+func changeState(appliance_type: ApplianceFactory.CookingStyle) -> foodState:
 	match(appliance_type):
-		applianceType.OVEN , applianceType.PAN: # This is just saying either of these states return back cooked state
-			return foodState.COOKED
+		ApplianceFactory.CookingStyle.BAKE:
+			return foodState.BAKED
 			
-		applianceType.CHOPPING_BOARD:
+		ApplianceFactory.CookingStyle.CHOP:
 			return foodState.CHOPPED
 			
-		applianceType.BOWL , applianceType.WHISK:
+		ApplianceFactory.CookingStyle.BLEND:
 			return foodState.MIXED
 			
-		applianceType.POT:
+		ApplianceFactory.CookingStyle.BOIL:
 			return foodState.BOILED
-				
-		applianceType.BLENDER:
-			return foodState.BLENDED
 			
-		applianceType.FRYER:
+		ApplianceFactory.CookingStyle.BLEND:
+			return foodState.MIXED
+			
+		ApplianceFactory.CookingStyle.DEEP_FRY, ApplianceFactory.CookingStyle.PAN_FRY:
 			return foodState.FRIED
 		_:
 			return foodState.RAW # Default case
 			
 
+# Decides which mesh should be shown in the scene based on the state of the food
 func on_state_change():
 	if raw_mesh == null:
 		return # Meshes not yet initialized
@@ -147,11 +153,15 @@ func on_state_change():
 		burnt_mesh.visible = false
 	if chopped_mesh != null:
 		chopped_mesh.visible = false
+	if frozen_mesh != null:
+		frozen_mesh.visible = false
+	if mixed_mesh != null:
+		mixed_mesh.visible = false
 	
 	raw_mesh.visible = false
 	
 	match(state):
-		foodState.COOKED:
+		foodState.BAKED, foodState.BOILED, foodState.FRIED:
 			current_mesh = cooked_mesh
 			
 		foodState.SPOILED:
@@ -159,6 +169,16 @@ func on_state_change():
 			
 		foodState.CHOPPED:
 			current_mesh = chopped_mesh
+			
+		foodState.BURNT:
+			current_mesh = burnt_mesh
+			
+		foodState.FROZEN:
+			current_mesh = frozen_mesh
+			
+		foodState.MIXED:
+			current_mesh = mixed_mesh
+			
 		_:
 			current_mesh = raw_mesh
 	

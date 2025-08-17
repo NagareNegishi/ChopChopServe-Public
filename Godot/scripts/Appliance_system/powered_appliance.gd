@@ -69,8 +69,8 @@ func put(item: Node) -> bool:
 		return false
 	contents.append(item)
 	#--------------------------------------------
-	print("Put: ", item.get_script().get_global_name(), " onto: ", self.get_script().get_global_name())
-	print("Contents of ", self.get_script().get_global_name(), " are: ")
+	print("Put: ", item.get_script().get_global_name(), " onto: ", get_script().get_global_name())
+	print("Contents of ", get_script().get_global_name(), " are: ")
 	for content in contents:
 		print(" --- ", content.get_script().get_global_name())
 	#--------------------------------------------
@@ -109,8 +109,13 @@ func _can_accept(item: Node) -> bool:
 	if not item.get_script():
 		print("Cannot accept item, item has no script")
 		return false
-	return item.get_script().get_global_name() in valid_classes
-
+	# return item.get_script().get_global_name() in valid_classes
+	#--------------------------------------------
+	var accepted = item.get_script().get_global_name() in valid_classes
+	if not accepted:
+		print("Cannot accept : ", item.get_script().get_global_name())
+	return accepted
+	#--------------------------------------------
 
 ## Start cooking process
 ## @return: True if cooking started
@@ -123,6 +128,9 @@ func start_cook() -> bool:
 	current_status = Status.COOKING
 	status_changed.emit(current_status)
 	# cook_timer.start() let food handle the timer
+	#----------------------------------------------------------------------
+	print("start_cook() is called in: ", get_script().get_global_name())
+	#----------------------------------------------------------------------
 	_cook()
 	return true
 
@@ -139,6 +147,9 @@ func stop_cook() -> bool:
 	current_status = Status.IDLE
 	status_changed.emit(current_status)
 	cook_timer.stop()
+	#----------------------------------------------------------------------
+	print("stop_cook() is called in: ", get_script().get_global_name())
+	#----------------------------------------------------------------------
 	return true
 
 
@@ -151,10 +162,14 @@ func _cook() -> bool:
 
 	for item in contents:
 		if item is Cookware:
+			#----------------------------------------------------------------------
+			print("Cooking with: ", item.get_script().get_global_name())
+			#----------------------------------------------------------------------
 			item.cook(power)
-		elif item.has_method("cook"): ## Check the method name!!!!!!!!!!!!!!!!!!!!!!!!
-			item.cook(power, cooking_style)
 
+		# potentially need it for blender
+		# elif item.has_method("cook"): ## Check the method name!!!!!!!!!!!!!!!!!!!!!!!!
+		# 	item.cook(power, cooking_style)
 	return true
 
 
@@ -220,7 +235,7 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 #--------------------------------------------
 	print("Player is holding: ", item)
 	print("Player.item_in_hand: ", GlobalScript.player.item_in_hand)
-	print("Self: ", self.get_script().get_global_name())
+	print("Self: ", get_script().get_global_name())
 #--------------------------------------------
 	# If player has nothing: move item from appliance to player (if exists), return true
 	if not item:
@@ -228,7 +243,9 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 		if cookware:
 			cookware.finish_cook()
 			GlobalScript.player.pickup_item(cookware)
-			print("Player took: ", cookware.get_script().get_global_name(), ", from: ", self.get_script().get_global_name())
+			#----------------------------------------------------------------------
+			print("Player took: ", cookware.get_script().get_global_name(), ", from: ", get_script().get_global_name())
+			#----------------------------------------------------------------------
 			if contents.is_empty():
 				stop_cook()
 			return true
@@ -246,9 +263,11 @@ func serve_to_plate(plate: Plate) -> bool: # Node should change to Plate when it
 	if contents.is_empty():
 		push_warning("Nothing to serve")
 		return false
+	#----------------------------------------------------------------------
 	if not plate:  # could remove it later!!!!!!!!!!!!!!!!!!!!!!
 		push_warning("Cannot serve to null")
 		return false
+	#----------------------------------------------------------------------
 	if plate.has_method("is_ready"):
 		if not plate.is_ready():
 			push_warning("Cannot serve to non-ready plate") # maybe not empty? maybe dirty??
@@ -259,7 +278,9 @@ func serve_to_plate(plate: Plate) -> bool: # Node should change to Plate when it
 		plate.add_list_items(cookware.take_all())
 
 		stop_cook()
-				print("Cookware :", cookware.get_script().get_global_name(), ", served to: ", plate.name)
+		#----------------------------------------------------------------------
+		print("Cookware :", cookware.get_script().get_global_name(), ", served to: ", plate.name)
+		#----------------------------------------------------------------------
 		return true
 
 	push_warning("Plate does not provide required methods")

@@ -80,7 +80,13 @@ func _can_accept(item: Node) -> bool:
 	if not item.get_script():
 		print("Cannot accept item, item has no script")
 		return false
-	return item.get_script().get_global_name() in valid_food
+	# item.get_script().get_global_name() in valid_food
+	#--------------------------------------------
+	var accepted = item.get_script().get_global_name() in valid_food
+	if not accepted:
+		print("Cannot accept : ", item.get_script().get_global_name())
+	return accepted
+	#--------------------------------------------
 
 
 ## Perform cooking logic
@@ -103,8 +109,11 @@ func finish_cook() -> bool:
 	current_status = Status.IDLE
 	status_changed.emit(current_status)
 	for item in contents:
-		if item.has_method("stopCooking"):   #is Food:
-			item.stopCooking()
+		#if item.has_method("stopCooking"):   #is always Food:
+		item.stopCooking()
+	#----------------------------------------------------------------------
+		print("stopCooking() is called in: ", item.get_script().get_global_name())
+	#----------------------------------------------------------------------
 	return true
 
 
@@ -151,20 +160,21 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 #--------------------------------------------
 	print("Player is holding: ", item)
 	print("Player.item_in_hand: ", GlobalScript.player.item_in_hand)
-	print("Self: ", self.get_script().get_global_name())
+	print("Self: ", get_script().get_global_name())
 #--------------------------------------------
 	# If player has nothing: let them take self, return true
 	if not item:
 		GlobalScript.player.pickup_item(self)
-		print("Player picked up equipment: ", self.get_script().get_global_name())
+		print("Player picked up equipment: ", get_script().get_global_name())
 		return true
 
 	# let player decide how to handle drop!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 	# If item_in_hand is self: let them drop it, return true
-	elif item == self:
-		GlobalScript.player.drop_item(false)
-		print("Player dropped equipment: ", self.get_script().get_global_name())
-		return true
+	# elif item == self:
+	# 	GlobalScript.player.drop_item(false)
+	# 	print("Player dropped equipment: ", self.get_script().get_global_name())
+	# 	return true
+
+
 	# If item_in_hand exists: depend on if equipment can accept it
 	return put(item)

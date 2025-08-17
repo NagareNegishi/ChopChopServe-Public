@@ -4,7 +4,7 @@ extends Cookware
 ## Setup the model instance
 func _init():
 	super._init()
-	model_scene = preload("res://assets/models/furniture/StoveMulti.glb") # for test
+	model_scene = preload("res://assets/models/items/Johno'sPot.glb") # for test
 
 
 ## Setup the fryer properties
@@ -14,3 +14,20 @@ func _ready():
 	valid_food = ["Fish", "Tomato", "Water"] # Confirm later!!!!!!!!!!!!!!
 	capacity = 4
 	coefficient = 1.0
+
+
+
+
+func test():
+	var tom_path = "res://scripts/Food/IngredientScenes/Tomato.tscn"
+	var wat_path = "res://scripts/Food/IngredientScenes/Water.tscn"
+	var supply = load(tom_path)
+	var wat_supply = load(wat_path)
+	put(supply.instantiate())
+	put(supply.instantiate())
+	put(wat_supply.instantiate())
+	put(supply.instantiate())
+	put(supply.instantiate())
+	put(supply.instantiate())
+
+

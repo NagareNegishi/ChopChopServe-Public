@@ -33,6 +33,7 @@ enum UpgradeMode {
 var current_level: int = 0
 var max_level: int : get = get_max_level
 var target: Node
+var enabled: bool = false
 
 
 ## Initialize the component
@@ -40,7 +41,6 @@ func _ready():
 	target = get_parent()
 	if not target:
 		assert(false, "Upgradable component must have a parent.")
-	print("Upgradable component initialized for: ", target.get_script().get_global_name())
 
 
 ## Calculate maximum upgrade level
@@ -55,7 +55,7 @@ func get_max_level() -> int:
 ## Check if this component can be upgraded further
 ## @return: True if current level is less than maximum level
 func can_upgrade() -> bool:
-	return current_level < max_level
+	return enabled and current_level < max_level
 
 
 ## Check the cost for the next upgrade level
@@ -69,6 +69,9 @@ func get_upgrade_cost() -> int:
 ## Send upgrade request to authority from the player
 ## @param player_id: Which player (1-4) is requesting the upgrade
 func request_upgrade(player_id: int) -> void:
+	if not enabled:
+		assert(false, "Upgrade not enabled for: " + target.get_script().get_global_name())
+		return
 	if not can_upgrade():
 		#-----------------------------------------------------------------
 		push_warning("Player ", str(player_id), " tried to upgrade ", target.get_script().get_global_name(), " at max level")
@@ -94,3 +97,19 @@ func upgrade() -> bool:
 	upgrade_completed.emit(upgradable_property)
 	current_level += 1
 	return true
+
+# Something like this should happen with currency manager-----------------------
+
+# func connect_upgradable(upgradable: Upgradable):
+# 	upgradable.upgrade_requested.connect(_on_upgrade_requested)
+
+# func _on_upgrade_requested(player_id: int, cost: int):
+# 	# Validate money, permissions, etc.
+# 	if MoneyManager.has_enough_money(player_id, cost):
+# 		MoneyManager.deduct_money(player_id, cost)
+# 		# Find which upgradable sent the signal and upgrade it
+# 		var sender = # get signal sender somehow
+# 		sender.upgrade()
+# 	else:
+# 		# Send failure message to player
+# 		pass

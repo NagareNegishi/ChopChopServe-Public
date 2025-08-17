@@ -71,26 +71,26 @@ func enable_upgrade(type: String, values: Array, costs: Array[int]) -> bool:
 		"power":
 			power_upgradable.upgrade_values = values
 			power_upgradable.upgrade_costs = costs
-			power_upgradable.upgrade_requested.connect(
-				func(player_id, cost): _on_upgrade_requested(player_id, "power", cost)
-			)
-			power_upgradable.upgrade_completed.connect(_on_upgrade_completed)
+			power_upgradable.enabled = true
+			#-------------------------------------------------------------------
+			print("Power upgrade enabled for: ", get_script().get_global_name())
+			#-------------------------------------------------------------------
 			return true
 		"capacity":
 			capacity_upgradable.upgrade_values = values
 			capacity_upgradable.upgrade_costs = costs
-			capacity_upgradable.upgrade_requested.connect(
-				func(player_id, cost): _on_upgrade_requested(player_id, "capacity", cost)
-			)
-			capacity_upgradable.upgrade_completed.connect(_on_upgrade_completed)
+			capacity_upgradable.enabled = true
+			#-------------------------------------------------------------------
+			print("Capacity upgrade enabled for: ", get_script().get_global_name())
+			#-------------------------------------------------------------------
 			return true
 		"coefficient":
 			coefficient_upgradable.upgrade_values = values
 			coefficient_upgradable.upgrade_costs = costs
-			coefficient_upgradable.upgrade_requested.connect(
-				func(player_id, cost): _on_upgrade_requested(player_id, "coefficient", cost)
-			)
-			coefficient_upgradable.upgrade_completed.connect(_on_upgrade_completed)
+			coefficient_upgradable.enabled = true
+			#-------------------------------------------------------------------
+			print("Coefficient upgrade enabled for: ", get_script().get_global_name())
+			#-------------------------------------------------------------------
 			return true
 		_:
 			assert(false, "Unknown upgrade type: " + type)
@@ -169,13 +169,4 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 ## Trigger action, if subclass has action
 func _on_interactable_component_action_use(_is_action: bool) -> void:
 	print("Player used action on: ", get_script().get_global_name(), ", but, it does not have action.")
-## -------------------------------------------------------------------------------------------------
-
-
-## InteractableComponent Signal Handlers -----------------------------------------------------------
-func _on_upgrade_requested(player_id: int, property: String, cost: int):
-	push_error("Upgrade not configured")
-
-func _on_upgrade_completed(property: String):
-	print("Successfully upgraded ", property)
 ## -------------------------------------------------------------------------------------------------

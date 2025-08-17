@@ -18,9 +18,9 @@ func _ready():
 
 ## Override upgradable setup in concrete appliances
 func _setup_upgradable():
-    super._setup_upgradable()
-    enable_upgrade("coefficient", [0.2, 0.3, 0.5], [120, 220, 320])
-    enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
+	super._setup_upgradable()
+	enable_upgrade("coefficient", [0.2, 0.3, 0.5], [120, 220, 320])
+	enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
 
 
 
@@ -35,6 +35,9 @@ func test():
 	put(wat_supply.instantiate())
 	put(supply.instantiate())
 	put(supply.instantiate())
+	
+	var upgrade_success = capacity_upgradable.upgrade()
+
 	put(supply.instantiate())
 
 

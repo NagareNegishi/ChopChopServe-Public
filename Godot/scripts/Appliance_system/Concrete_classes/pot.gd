@@ -36,7 +36,7 @@ func test():
 	put(supply.instantiate())
 	put(supply.instantiate())
 	
-	var upgrade_success = capacity_upgradable.upgrade()
+	capacity_upgradable.upgrade()
 
 	put(supply.instantiate())
 

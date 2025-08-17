@@ -15,4 +15,5 @@ func test():
 	if pot:
 		pot.test()
 	start_cook()
+	inflammable_component.ignite()
 #----------------------------------------------------------------------

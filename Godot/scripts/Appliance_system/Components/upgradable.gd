@@ -4,7 +4,7 @@
 class_name Upgradable
 extends Node
 
-signal upgrade_requested(player_id: int, upgrade_cost: int) # from player
+signal upgrade_requested(player_id: int, upgrade_cost: int, upgradable: Upgradable) # from player
 signal upgrade_completed(upgradable_property: String) # from server
 
 enum UpgradeMode {
@@ -78,7 +78,7 @@ func request_upgrade(player_id: int) -> void:
 		#-----------------------------------------------------------------
 		return
 	var cost = get_upgrade_cost()
-	upgrade_requested.emit(player_id, cost)
+	upgrade_requested.emit(player_id, cost, self)
 
 
 ## Attempts to upgrade to the next level
@@ -100,16 +100,9 @@ func upgrade() -> bool:
 
 # Something like this should happen with currency manager-----------------------
 
-# func connect_upgradable(upgradable: Upgradable):
-# 	upgradable.upgrade_requested.connect(_on_upgrade_requested)
-
-# func _on_upgrade_requested(player_id: int, cost: int):
-# 	# Validate money, permissions, etc.
-# 	if MoneyManager.has_enough_money(player_id, cost):
-# 		MoneyManager.deduct_money(player_id, cost)
-# 		# Find which upgradable sent the signal and upgrade it
-# 		var sender = # get signal sender somehow
-# 		sender.upgrade()
-# 	else:
-# 		# Send failure message to player
-# 		pass
+# func _on_upgrade_requested(player_id: int, cost: int, upgradable: Upgradable):
+#     if MoneyManager.has_enough_money(player_id, cost):
+#         MoneyManager.deduct_money(player_id, cost)
+#         upgradable.upgrade()
+#     else:
+#         print("Not enough money!")

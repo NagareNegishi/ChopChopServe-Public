@@ -117,6 +117,7 @@ func _can_accept(item: Node) -> bool:
 	return accepted
 	#--------------------------------------------
 
+
 ## Start cooking process
 ## @return: True if cooking started
 func start_cook() -> bool:

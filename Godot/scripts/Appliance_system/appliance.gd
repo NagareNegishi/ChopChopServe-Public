@@ -7,13 +7,19 @@ extends Placeable
 ## Type of cooking style this appliance supports
 @export var cooking_style: ApplianceFactory.CookingStyle = ApplianceFactory.CookingStyle.NONE
 var interactable_component: InteractableComponent
+var highlight_component: ApplianceHighlight
 
 
 ## Setup the appliance
 func _ready():
 	super._ready()
 	_setup_interactable()
+	_setup_highlight()
 
+
+func _setup_highlight():
+	highlight_component = ApplianceHighlight.new()
+	add_child(highlight_component)
 
 ## Add interactable component to this class
 ## InteractableComponent is scene dependent, can not instantiate from script
@@ -23,6 +29,8 @@ func _setup_interactable():
 	add_child(interactable_component)
 	interactable_component.interacted.connect(_on_interactable_component_interacted)
 	interactable_component.toggle_collision.connect(_on_interactable_component_toggle_collision)
+	interactable_component.hovered.connect(_on_interactable_component_hovered)
+	interactable_component.action_use.connect(_on_interactable_component_action_use)
 
 
 ## Place an item onto this appliance
@@ -58,7 +66,7 @@ func player_has(_item: Node) -> bool:
 
 ## InteractableComponent Signal Handlers -----------------------------------------------------------
 
-## Connect to singal: Called when interacted with and will make the player pick this item up
+## Called when interacted with and will make the player pick this item up
 ## @return void
 func _on_interactable_component_interacted() -> void:
 	player_has(GlobalScript.player.item_in_hand)
@@ -74,9 +82,24 @@ func _on_interactable_component_toggle_collision(turn_on: bool) -> void:
 		collision_layer = 0
 		collision_mask = 0
 
-# Potentially use it in future
-# func _on_interactable_component_hovered(is_hovered: bool) -> void:
-# 	pass
-# func _on_interactable_component_action_use(is_action: bool) -> void:
-# 	pass
+
+
+func _on_interactable_component_hovered(is_hovered: bool) -> void:
+	if not is_hovered:
+		highlight_component.hide_feedback()
+		return
+	#---------------------------------------------------------------------------
+	print("Player has : ", GlobalScript.player.item_in_hand, ", hovered: ", get_script().get_global_name())
+
+	#---------------------------------------------------------------------------
+	if GlobalScript.player.item_in_hand:
+		var can_accept = _can_accept(GlobalScript.player.item_in_hand)
+		highlight_component.show_feedback(can_accept)
+		return
+	highlight_component.set_state(ApplianceHighlight.HighlightState.HOVER)
+
+
+
+func _on_interactable_component_action_use(is_action: bool) -> void:
+	pass
 ## -------------------------------------------------------------------------------------------------

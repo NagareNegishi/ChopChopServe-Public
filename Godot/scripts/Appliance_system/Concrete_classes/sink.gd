@@ -66,3 +66,9 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 	# If player has empty plate: depend on if sink can accept it
 	return put(item)
 
+
+## Override upgradable setup in concrete appliances
+func _setup_upgradable():
+    super._setup_upgradable()
+    enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
+

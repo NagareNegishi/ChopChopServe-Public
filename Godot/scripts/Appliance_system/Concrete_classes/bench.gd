@@ -13,7 +13,7 @@ func _init():
 ## Setup the bench
 func _ready():
 	super._ready()
-	#capacity = 4
+	capacity = 4
 
 
 ## Perform action depend on what player is holding
@@ -73,3 +73,9 @@ func start_action() -> bool:
 	assert(false, "Bench does not support starting actions")
 	return false
 #-------------------------------------------------------------------------------
+
+
+## Override upgradable setup in concrete appliances
+func _setup_upgradable():
+    super._setup_upgradable()
+    enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])

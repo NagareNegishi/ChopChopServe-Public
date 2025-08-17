@@ -72,10 +72,10 @@ func _can_accept(item: Node) -> bool:
 		print("Cannot accept item, item is null")
 		return false
 	if current_status == Status.BROKEN:
-		print("Cannot accept item, appliance is broken")
+		print("Cannot accept item: ", get_script().get_global_name(), " is broken")
 		return false
 	if contents.size() >= capacity:
-		print("Cannot accept item, appliance is at full capacity")
+		print("Cannot accept item: ", get_script().get_global_name(), " is at full capacity")
 		return false
 	if not item.get_script():
 		print("Cannot accept item, item has no script")

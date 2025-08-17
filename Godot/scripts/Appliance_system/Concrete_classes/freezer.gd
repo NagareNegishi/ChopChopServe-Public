@@ -17,5 +17,11 @@ func _ready():
 	add_cookware("pot")
 
 	# Maybe??
-	# valid_classes = [load("res://scripts/Appliance_system/Concrete_classes/cookware.gd")]
 	# cook_interval = 1.0
+
+
+## Override upgradable setup in concrete appliances
+func _setup_upgradable():
+    super._setup_upgradable()
+    enable_upgrade("power", [1, 1, 1], [100, 200, 300])
+    enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])

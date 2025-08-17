@@ -8,6 +8,9 @@ extends Placeable
 @export var cooking_style: ApplianceFactory.CookingStyle = ApplianceFactory.CookingStyle.NONE
 var interactable_component: InteractableComponent
 var highlight_component: ApplianceHighlight
+var power_upgradable: Upgradable
+var capacity_upgradable: Upgradable
+var coefficient_upgradable: Upgradable
 
 
 ## Setup the appliance
@@ -15,11 +18,8 @@ func _ready():
 	super._ready()
 	_setup_interactable()
 	_setup_highlight()
+	_setup_upgradable()
 
-
-func _setup_highlight():
-	highlight_component = ApplianceHighlight.new()
-	add_child(highlight_component)
 
 ## Add interactable component to this class
 ## InteractableComponent is scene dependent, can not instantiate from script
@@ -31,6 +31,70 @@ func _setup_interactable():
 	interactable_component.toggle_collision.connect(_on_interactable_component_toggle_collision)
 	interactable_component.hovered.connect(_on_interactable_component_hovered)
 	interactable_component.action_use.connect(_on_interactable_component_action_use)
+
+
+## Setup the highlight component
+func _setup_highlight():
+	highlight_component = ApplianceHighlight.new()
+	add_child(highlight_component)
+
+
+## Setup the upgradable components
+func _setup_upgradable():
+	# Create power upgradable
+	power_upgradable = Upgradable.new()
+	power_upgradable.upgradable_property = "power"
+	power_upgradable.upgrade_mode = Upgradable.UpgradeMode.ADD
+	add_child(power_upgradable)
+	# Create capacity upgradable
+	capacity_upgradable = Upgradable.new()
+	capacity_upgradable.upgradable_property = "capacity"
+	capacity_upgradable.upgrade_mode = Upgradable.UpgradeMode.ADD
+	add_child(capacity_upgradable)
+	# Create coefficient upgradable
+	coefficient_upgradable = Upgradable.new()
+	coefficient_upgradable.upgradable_property = "coefficient"
+	coefficient_upgradable.upgrade_mode = Upgradable.UpgradeMode.ADD
+	add_child(coefficient_upgradable)
+
+
+## Enable specific upgrade type
+## @param type: The type of upgrade to enable (e.g. "power", "capacity", "coefficient")
+## @param values: The array of values for the upgrade
+## @param costs: The array of costs for the upgrade
+## @return: True if the upgrade was enabled successfully, false otherwise
+func enable_upgrade(type: String, values: Array, costs: Array[int]) -> bool:
+	if values.size() != costs.size():
+		assert(false, "Values and costs arrays must have the same size.")
+		return false
+	match type:
+		"power":
+			power_upgradable.upgrade_values = values
+			power_upgradable.upgrade_costs = costs
+			power_upgradable.upgrade_requested.connect(
+				func(player_id, cost): _on_upgrade_requested(player_id, "power", cost)
+			)
+			power_upgradable.upgrade_completed.connect(_on_upgrade_completed)
+			return true
+		"capacity":
+			capacity_upgradable.upgrade_values = values
+			capacity_upgradable.upgrade_costs = costs
+			capacity_upgradable.upgrade_requested.connect(
+				func(player_id, cost): _on_upgrade_requested(player_id, "capacity", cost)
+			)
+			capacity_upgradable.upgrade_completed.connect(_on_upgrade_completed)
+			return true
+		"coefficient":
+			coefficient_upgradable.upgrade_values = values
+			coefficient_upgradable.upgrade_costs = costs
+			coefficient_upgradable.upgrade_requested.connect(
+				func(player_id, cost): _on_upgrade_requested(player_id, "coefficient", cost)
+			)
+			coefficient_upgradable.upgrade_completed.connect(_on_upgrade_completed)
+			return true
+		_:
+			assert(false, "Unknown upgrade type: " + type)
+			return false
 
 
 ## Place an item onto this appliance
@@ -83,14 +147,17 @@ func _on_interactable_component_toggle_collision(turn_on: bool) -> void:
 		collision_mask = 0
 
 
-
+## Give visual feedback when hovered
+## @param is_hovered: Whether the item is hovered or not
 func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	if not is_hovered:
 		highlight_component.hide_feedback()
 		return
 	#---------------------------------------------------------------------------
-	print("Player has : ", GlobalScript.player.item_in_hand, ", hovered: ", get_script().get_global_name())
-
+	var item = GlobalScript.player.item_in_hand
+	if item:
+		item = item.get_script().get_global_name()
+	print("Player has : ", item, ", hovered: ", get_script().get_global_name())
 	#---------------------------------------------------------------------------
 	if GlobalScript.player.item_in_hand:
 		var can_accept = _can_accept(GlobalScript.player.item_in_hand)
@@ -99,7 +166,16 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	highlight_component.set_state(ApplianceHighlight.HighlightState.HOVER)
 
 
+## Trigger action, if subclass has action
+func _on_interactable_component_action_use(_is_action: bool) -> void:
+	print("Player used action on: ", get_script().get_global_name(), ", but, it does not have action.")
+## -------------------------------------------------------------------------------------------------
 
-func _on_interactable_component_action_use(is_action: bool) -> void:
-	pass
+
+## InteractableComponent Signal Handlers -----------------------------------------------------------
+func _on_upgrade_requested(player_id: int, property: String, cost: int):
+	push_error("Upgrade not configured")
+
+func _on_upgrade_completed(property: String):
+	print("Successfully upgraded ", property)
 ## -------------------------------------------------------------------------------------------------

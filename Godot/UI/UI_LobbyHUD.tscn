@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://bqtbpncsp1lqe"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayerList" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -154.0
+offset_top = -98.0
+offset_right = 216.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 18
+
+[node name="P1" type="ColorRect" parent="PlayerList"]
+custom_minimum_size = Vector2(70, 50)
+layout_mode = 2
+color = Color(1, 0.133333, 1, 1)
+
+[node name="P2" type="ColorRect" parent="PlayerList"]
+custom_minimum_size = Vector2(70, 50)
+layout_mode = 2
+color = Color(1, 0.133333, 1, 1)
+
+[node name="P3" type="ColorRect" parent="PlayerList"]
+custom_minimum_size = Vector2(70, 50)
+layout_mode = 2
+color = Color(1, 0.133333, 1, 1)
+
+[node name="P4" type="ColorRect" parent="PlayerList"]
+custom_minimum_size = Vector2(70, 50)
+layout_mode = 2
+color = Color(1, 0.133333, 1, 1)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 416.0
+offset_top = 612.0
+offset_right = 497.0
+offset_bottom = 627.0
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+offset_left = 504.0
+offset_top = 612.0
+offset_right = 585.0
+offset_bottom = 627.0
+
+[node name="ColorRect3" type="ColorRect" parent="."]
+offset_left = 592.0
+offset_top = 612.0
+offset_right = 673.0
+offset_bottom = 627.0
+
+[node name="ColorRect4" type="ColorRect" parent="."]
+offset_left = 681.0
+offset_top = 612.0
+offset_right = 762.0
+offset_bottom = 627.0

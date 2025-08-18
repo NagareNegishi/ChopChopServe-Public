@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://bondixuqjetfk"]
+
+[ext_resource type="PackedScene" uid="uid://bv68n23xtnfpl" path="res://scenes/Player/PlayerCar.tscn" id="1_dagx7"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ihmv3"]
+size = Vector3(30, 0.03, 30)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pwhdc"]
+size = Vector3(30, 0.05, 30)
+
+[sub_resource type="Environment" id="Environment_ikll6"]
+ambient_light_source = 2
+ambient_light_energy = 1.5
+reflected_light_source = 1
+tonemap_mode = 2
+tonemap_exposure = 1.15
+
+[node name="JohnoTestScene" type="Node3D"]
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.00272365, -0.563709, 0.825969, -0.00265669, 0.825965, 0.563715, -0.999993, -0.00372971, 0.000752039, 14.8973, 10.793, 0.0817995)
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_ihmv3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+layers = 2
+mesh = SubResource("BoxMesh_pwhdc")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ikll6")
+
+[node name="PlayerCar" parent="." instance=ExtResource("1_dagx7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.466736, 0.265, 0.0172176)

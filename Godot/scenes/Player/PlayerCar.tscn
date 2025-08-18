@@ -1,0 +1,74 @@
+[gd_scene load_steps=11 format=3 uid="uid://bv68n23xtnfpl"]
+
+[ext_resource type="Script" uid="uid://2ow6xvs5s1fr" path="res://scripts/Player/player_car.gd" id="1_3ede1"]
+[ext_resource type="Material" uid="uid://d4heeyo73xso3" path="res://materials/Frog.tres" id="1_jvgwu"]
+[ext_resource type="Script" uid="uid://biiujf8x58pl6" path="res://scripts/Player/player_car_controller.gd" id="3_eoqrs"]
+[ext_resource type="Script" uid="uid://c0buedgtp4uf8" path="res://scenes/Player/camera_lag.gd" id="3_gyd8d"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_0dldl"]
+size = Vector3(0.5, 0.5, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_gyd8d"]
+radius = 0.06
+height = 0.1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gyd8d"]
+size = Vector3(1.15012, 0.519043, 1.80826)
+
+[sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_0dldl"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jvgwu"]
+radius = 0.303941
+height = 1.42979
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_0dldl"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:velocity")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("../Controller:input_direction")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
+[node name="PlayerCar" type="CharacterBody3D"]
+script = ExtResource("1_3ede1")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.232001)
+material_override = ExtResource("1_jvgwu")
+mesh = SubResource("BoxMesh_0dldl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00233293, 0, -0.507763)
+mesh = SubResource("SphereMesh_gyd8d")
+
+[node name="InteractArea" type="Area3D" parent="Mesh"]
+
+[node name="InteractShape" type="CollisionShape3D" parent="Mesh/InteractArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0606232, 0.0100098, 0.00144958)
+shape = SubResource("BoxShape3D_gyd8d")
+
+[node name="SpringArm" type="SpringArm3D" parent="."]
+transform = Transform3D(0.422618, -0.851651, 0.309976, 0, 0.34202, 0.939693, -0.906308, -0.397131, 0.144544, 0, 0, 0.232001)
+shape = SubResource("SeparationRayShape3D_0dldl")
+spring_length = 10.0
+script = ExtResource("3_gyd8d")
+lag_speed = 2.0
+
+[node name="Camera" type="Camera3D" parent="SpringArm"]
+transform = Transform3D(1, 0, 0, 0, 1, -6.14082e-16, 0, -6.14082e-16, 1, 1.48876e-07, -0.00366807, 9.94806)
+fov = 90.0
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, 0, 0.021431, 0.232001)
+shape = SubResource("CapsuleShape3D_jvgwu")
+
+[node name="MultiplayerSync" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_0dldl")
+
+[node name="Controller" type="MultiplayerSynchronizer" parent="."]
+root_path = NodePath("../MultiplayerSync")
+replication_config = SubResource("SceneReplicationConfig_0dldl")
+script = ExtResource("3_eoqrs")

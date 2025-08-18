@@ -6,4 +6,5 @@ var playerColours = PackedColorArray([Color("f542ef",1), Color("3e67fa",1), Colo
 ## Called when the node enters the scene tree for the first time.
 ## @return void
 func _ready() -> void:
-	player = get_tree().get_current_scene().get_node("Player")
+	if get_tree().get_current_scene().has_node("Player"):
+		player = get_tree().get_current_scene().get_node("Player")

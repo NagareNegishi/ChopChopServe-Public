@@ -286,3 +286,22 @@ func serve_to_plate(plate: Plate) -> bool: # Node should change to Plate when it
 
 	push_warning("Plate does not provide required methods")
 	return false
+
+
+
+# Functions for Sabotage System---------------------------------------------------------------------
+
+## Get the current progress of cookwares
+## Note: Only use it when PoweredAppliance can be operated
+## Note: Progress is defined by the `cook_time` of `Food` -> smaller values are more progressed
+## @return: The progress of the cooking process
+func get_progress() -> int:
+	if is_empty():
+		return INF
+	var most_progress = INF
+	for cookware in contents:
+		if cookware.is_empty():
+			continue
+		most_progress = min(most_progress, cookware.average_food())
+	return most_progress
+#---------------------------------------------------------------------------------------------------

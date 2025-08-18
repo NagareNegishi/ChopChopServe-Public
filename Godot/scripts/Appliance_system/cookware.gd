@@ -23,15 +23,18 @@ func put(item: Node) -> bool:
 
 ## Average cooking time of food in cookware
 ## Only subclass of Food should be in Cookware
-func average_food():
+## Note: Do not call when contents is empty (Food has different default cooking time)
+## @return: The average cooking time of all food items in the cookware
+func average_food() -> int:
 	if contents.size() == 1:
-		return
+		return contents[0].get_cook_time()
 	var total = 0.0
 	for food in contents:
 		total += food.get_cook_time()
 	var average = int(total / contents.size())  # we need to check if we want to float or int!!!!!!!!!!
 	for food in contents:
 		food.set_cook_time(average)
+	return average
 
 
 ## Perform cooking logic

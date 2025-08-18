@@ -9,7 +9,7 @@ var has_menu_item: bool = false
 #var dish = DishEnum.new()
 var menu_instance
 const GRID_SIZE = 3
-const CELL_SIZE = 0.5
+const CELL_SIZE = 0.05
 var grid: Array = []
 
 
@@ -22,7 +22,7 @@ func _ready():
 		grid[i].resize(GRID_SIZE)
 		for j in range(GRID_SIZE):
 			grid[i][j]=null # Makes sure they all start out null
-	
+	freeze = true
 	print(grid)
 
 
@@ -36,28 +36,28 @@ func find_next_free_cell() -> Vector2i:
 # Adds items to the plate and scales them so that they appear on the plate
 func add_item(food_node) -> void:
 	disable_collision(food_node)
-	food_items.append(food_node)
-	print("Ingredient on the plate: ", food_items)
 	
 	var cell = find_next_free_cell()
 	if cell.x == -1:
 		print("plate full")
 		return
 	
-	grid[cell.x][cell.y] = food_node  # Note: using x for row, y for column
+	grid[cell.x][cell.y] = food_node
 	food_node.get_parent().remove_child(food_node)
 	add_child(food_node)
 	
-	food_node.scale = Vector3(0.15, 0.15, 0.15)
+	# Disable physics for items
+	if food_node is RigidBody3D:
+		food_node.freeze = true
+		food_node.gravity_scale = 0
 	
-	# Center the grid on the plate
-	# For a 3x3 grid, positions will be: -1, 0, 1 (multiplied by CELL_SIZE)
-	var x_offset = (cell.x - 1) * CELL_SIZE  # cell.x - (GRID_SIZE-1)/2
-	var z_offset = (cell.y - 1) * CELL_SIZE  # cell.y - (GRID_SIZE-1)/2
+	food_node.scale = Vector3(0.5, 0.5, 0.5)
 	
-	# Position relative to the plate's center
-	food_node.transform.origin = Vector3(x_offset, 0.2, z_offset)  # 0.2 = height above plate
+	var x_offset = (cell.x - 1) * CELL_SIZE
+	var z_offset = (cell.y - 1) * CELL_SIZE
 	
+	# Try positioning at the plate's center first
+	food_node.transform.origin = Vector3(x_offset, 0.05, z_offset)  # Start with center
 	check_plate()
 
 # This has been made so that we can add the different ingredients to the plate visually
@@ -67,7 +67,6 @@ func get_items():
 # This is so that if they make a mistake they have to bin the whole thing
 # We can change this later if you want them to be able to take off the top item
 func remove_all():
-	print("Removing all items from plate")
 	for i in range(GRID_SIZE):
 		for j in range(GRID_SIZE):
 			if grid[i][j] != null:
@@ -84,7 +83,6 @@ func check_plate():
 	if food_items.is_empty():
 		return 0
 	var menuitem = menu_instance.match_menu_items(food_items)
-	print("Menu item ==  ",menuitem)
 	if menuitem != null:
 		has_menu_item = true
 		display_menu_item(menuitem)
@@ -100,8 +98,8 @@ func display_menu_item(menuitem: MenuItem):
 	if menu_scene:
 		var menu_node = menu_scene.instantiate()
 		add_child(menu_node)
-		menu_node.transform.origin = Vector3(0, 0.2, 0)
-		menu_node.scale = Vector3(0.25, 0.25, 0.25)
+		menu_node.transform.origin = Vector3(0, 0.05, 0)
+		menu_node.scale = Vector3(0.7, 0.7, 0.7)
 	else:
 		print("Could not load scene for: ", menuitem.get_script().get_global_name())
 
@@ -119,13 +117,6 @@ func setup_menu_item_appearance(menuitem: MenuItem):
 	if menuitem.cooked_mesh_burnt != null:
 		menuitem.cooked_mesh_burnt.visible = false
 
-
-# Didnt work with the staticbody 3d as i couldnt get overlap checking to work with it
-# I dont think Area3D has the same functionality as staticbody3d so Ive just made it so it turns off
-# the collisions permenately
-func turn_on_collision(turn_on: bool) -> void:
-	#$Area3D.disabled = !turn_on
-	$InteractableComponent/CollisionShape3D.disabled = !turn_on
 
 # Makes it so when the player picks up the ingredient its collisions
 # dont stop it from moving correctly which is what the function above is supposed to do

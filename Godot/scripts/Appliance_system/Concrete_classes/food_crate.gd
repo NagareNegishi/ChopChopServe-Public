@@ -34,7 +34,7 @@ func set_supply(food_name: String):
 		push_error("Failed to load or cannot instantiate scene: " + scene_path)
 
 
-## Override unsupported methods to prevent misuse
+## Override unsupported methods to prevent misuse ------------------------------
 func put(_item: Node) -> bool:
 	assert(false, "Food Crate does not support putting items")
 	return false
@@ -46,6 +46,7 @@ func take_at(_index: int) -> Node:
 func start_action() -> bool:
 	assert(false, "Food Crate does not support starting actions")
 	return false
+#-------------------------------------------------------------------------------
 
 
 ## Provide food from the crate
@@ -67,7 +68,9 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 	if not item:
 		var food = take()
 		GlobalScript.player.pickup_item(food)
+		#----------------------------------------------------------------------
 		print("Player took food from FoodCrate: ", food.get_script().get_global_name())
 		print("Player has: ", GlobalScript.player.item_in_hand.get_script().get_global_name())
+		#----------------------------------------------------------------------
 		return true
 	return false

@@ -14,10 +14,7 @@ enum Status {
 }
 
 @export var capacity: int = 4 ## Maximum number of items this appliance can hold
-@export var valid_classes: Array[String] = [] ## Class names that can be placed in (Recommended)
-# @export var valid_classes: Array[Script] = [] ## Class scripts that can be placed in (Fallback)
 @export var action_interval: float = 1.0 ## action every ? seconds
-
 
 var current_status: Status = Status.IDLE
 var contents: Array[Node] = []
@@ -40,9 +37,17 @@ func put(item: Node) -> bool:
 	if not _can_accept(item):
 		return false
 	contents.append(item)
+	#--------------------------------------------
+	print("Put: ", item.get_script().get_global_name(), " onto: ", get_script().get_global_name())
+	print("Contents of ", get_script().get_global_name(), " are: ")
+	for content in contents:
+		print(" --- ", content.get_script().get_global_name())
+	#--------------------------------------------
+
 	# transfer item to appliance
-	if item.get_parent():
-		item.get_parent().remove_child(item)
+	GlobalScript.player.remove_item() # if we only put item from players hand
+	# if item.get_parent():
+	# 	item.get_parent().remove_child(item)
 	add_child(item)
 	return true
 
@@ -53,7 +58,7 @@ func take() -> Node:
 	if contents.is_empty():
 		return null
 	var item = contents.pop_back()
-	# remove_child(item)
+	remove_child(item)
 	return item
 
 
@@ -73,7 +78,7 @@ func _can_accept(item: Node) -> bool:
 	if not item.get_script():
 		print("Cannot accept item, item has no script")
 		return false
-	return item.get_script().get_global_name() in valid_classes
+	return true # Minimum requirement
 
 
 ## Start action process, and unable further actions until it completes
@@ -96,10 +101,6 @@ func start_action() -> bool:
 func _action() -> bool:
 	assert(false, "action() must be implemented in " + get_class())
 	return false
-	# if current_status != Status.USING:
-	#     assert(false, "Do not call action() unless status is USING")
-	#     return false
-
 
 
 ## Set the current status to broken

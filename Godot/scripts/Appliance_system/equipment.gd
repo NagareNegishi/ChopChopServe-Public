@@ -28,6 +28,7 @@ func _ready():
 	super._ready()
 
 
+
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
@@ -66,15 +67,11 @@ func put(item: Node) -> bool:
 		return false
 	GlobalScript.player.remove_item()
 	contents.append(item)
-
-
 #--------------------------------------------
 	print("Put: ", item.get_script().get_global_name(), " onto: ", self.get_script().get_global_name())
 #--------------------------------------------
-
 	# transfer item to appliance
-	if item.get_parent():
-		item.get_parent().remove_child(item)
+	GlobalScript.player.remove_item()
 	add_child(item)
 	return true
 
@@ -115,7 +112,13 @@ func _can_accept(item: Node) -> bool:
 	if not item.get_script():
 		print("Cannot accept item, item has no script")
 		return false
-	return item.get_script().get_global_name() in valid_food
+	# item.get_script().get_global_name() in valid_food
+	#--------------------------------------------
+	var accepted = item.get_script().get_global_name() in valid_food
+	if not accepted:
+		print("Cannot accept : ", item.get_script().get_global_name())
+	return accepted
+	#--------------------------------------------
 
 
 ## Perform cooking logic
@@ -138,9 +141,18 @@ func finish_cook() -> bool:
 	current_status = Status.IDLE
 	status_changed.emit(current_status)
 	for item in contents:
-		if item.has_method("stopCooking"):   #is Food:
-			item.stopCooking()
+		#if item.has_method("stopCooking"):   #is always Food:
+		item.stopCooking()
+	#----------------------------------------------------------------------
+		print("stopCooking() is called in: ", item.get_script().get_global_name())
+	#----------------------------------------------------------------------
 	return true
+
+
+## Check if this equipment is empty
+## @return: True if equipment is empty, false otherwise
+func is_empty() -> bool:
+	return contents.is_empty()
 
 
 ## Check if this equipment can be used
@@ -171,3 +183,30 @@ func _set_status(new_status: Status) -> bool:
 	current_status = new_status
 	status_changed.emit(new_status)
 	return true
+
+
+## Perform action depend on what player is holding
+## @param _item: The Node Player is holding
+## @return: True if action is triggered, false otherwise
+func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
+#--------------------------------------------
+	print("Player is holding: ", item)
+	print("Player.item_in_hand: ", GlobalScript.player.item_in_hand)
+	print("Self: ", get_script().get_global_name())
+#--------------------------------------------
+	# If player has nothing: let them take self, return true
+	if not item:
+		GlobalScript.player.pickup_item(self)
+		print("Player picked up equipment: ", get_script().get_global_name())
+		return true
+
+	# let player decide how to handle drop!!!!!!!!!!!!!!!!!!!!!!!!!!
+	# If item_in_hand is self: let them drop it, return true
+	# elif item == self:
+	# 	GlobalScript.player.drop_item(false)
+	# 	print("Player dropped equipment: ", self.get_script().get_global_name())
+	# 	return true
+
+
+	# If item_in_hand exists: depend on if equipment can accept it
+	return put(item)

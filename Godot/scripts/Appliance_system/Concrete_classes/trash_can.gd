@@ -14,44 +14,60 @@ func _init():
 	model_scene = preload("res://assets/models/furniture/trashcan.glb")
 
 
+## Setup the trash can properties
 func _ready():
 	super._ready()
-	# valid_classes = [Food]
-	# capacity = 10
-	# action_interval = 0.1 ## maybe small amount to avoid rapidly throwing items?
-
-
-## Override unsupported methods to prevent misuse
-func take() -> Node:
-	assert(false, "TrashCan does not support taking items")
-	return null
-
-func take_at(_index: int) -> Node:
-	assert(false, "TrashCan does not support taking items")
-	return null
+	action_interval = 0.1 ## maybe small amount to avoid rapidly throwing items?
 
 
 ## Trigger the throwing process
 ## @return: True if throwing started
 func throw(item: Node) -> bool:
-	if put(item):
-
-		# we could directly free the item here, if state management is not needed
-		return start_action()
+	if _can_accept(item):
+		if current_status != Status.IDLE:
+			#--------------------------------------------
+			print("Trash Can is busy.")
+			#--------------------------------------------
+			return false
+		current_status = Status.USING
+		status_changed.emit(current_status)
+		action_timer.start()
+		# Remove from player and destroy immediately
+		GlobalScript.player.remove_item()
+		item.queue_free()
+		#--------------------------------------------
+		print("Threw away: ", item.get_script().get_global_name())
+		#--------------------------------------------
+		return true
+	#--------------------------------------------
+	print("Can not throw away: ", item)
+	#--------------------------------------------
 	return false
 
 
-## Perform action logic
-func _action() -> bool:
-	if current_status != Status.USING:
-		assert(false, "Do not call wash() unless status is USING")
+## Override unsupported methods to prevent misuse ------------------------------
+func put(_item: Node) -> bool:
+	assert(false, "TrashCan does not support putting items")
+	return false
+
+func take() -> Node:
+	assert(false, "TrashCan does not support taking items")
+	return null
+
+func start_action() -> bool:
+	assert(false, "TrashCan does not support starting actions")
+	return false
+#-------------------------------------------------------------------------------
+
+
+## Check if this appliance can accept the given item
+## @param item: The Node to test for acceptance
+## @return: True if item can be placed, false otherwise
+func _can_accept(item: Node) -> bool:
+	var acceptable = super._can_accept(item)
+	if not acceptable:
 		return false
-	for item in contents:
-		# if item is Food:
-		if item.has_method("is_food"):
-			item.queue_free()
-	contents.clear()
-	return true
+	return item is Food
 
 
 ## Perform action depend on what player is holding

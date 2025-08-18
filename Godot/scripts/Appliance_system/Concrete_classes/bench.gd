@@ -1,12 +1,8 @@
 ## Bench is a type of appliance that allows players to place or take items.
 ## It does not perform any specific actions like cooking or processing.
 class_name Bench
-extends Appliance
+extends UnPoweredAppliance
 
-@export var capacity: int = 4 ## Maximum number of items this appliance can hold
-@export var valid_classes: Array[Script] = [] ## Classes that can be placed in this appliance
-
-var contents: Array[Node] = []
 
 ## Setup the model instance
 func _init():
@@ -17,31 +13,32 @@ func _init():
 ## Setup the bench
 func _ready():
 	super._ready()
+	#capacity = 4
 
 
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
-func player_has(_item: Node) -> bool:
-	return false
-
-
-## Place an item onto this appliance
-## @param item: The Node to place on this appliance
-## @return: True if placement was successful, false otherwise
-func put(item: Node) -> bool:
-	if not _can_accept(item):
-		return false
-	contents.append(item)
-	return true
-
-
-## Remove and return the last item from this appliance
-## @return: The Node that was removed, or null if nothing to take
-func take() -> Node:
-	if contents.is_empty():
-		return null
-	return contents.pop_back()
+func player_has(item: Node) -> bool:
+#--------------------------------------------
+	print("Player is holding: ", item)
+	print("Player.item_in_hand: ", GlobalScript.player.item_in_hand)
+	print("Self: ", get_script().get_global_name())
+#--------------------------------------------
+	# If player has nothing: move item from appliance to player (if exists), return true
+	if not item:
+		var taken = take()
+		if taken:
+			GlobalScript.player.pickup_item(taken)
+			#----------------------------------------------------------------------
+			print("Player took: ", taken.get_script().get_global_name(), ", from: ", get_script().get_global_name())
+			#----------------------------------------------------------------------
+			return true
+		else:
+			print("Nothing to take from Bench")
+			return false
+	# If item_in_hand exists: depend on if appliance can accept it
+	return put(item)
 
 
 ## Remove and return item at specific index
@@ -50,16 +47,29 @@ func take() -> Node:
 func take_at(index: int) -> Node:
 	if index < 0 or index >= contents.size():
 		return null
-	return contents.pop_at(index)
+	var item = contents.pop_at(index)
+	remove_child(item)
+	return item
 
 
 ## Check if this appliance can accept the given item
 ## @param item: The Node to test for acceptance
 ## @return: True if item can be placed, false otherwise
 func _can_accept(item: Node) -> bool:
-	if contents.size() >= capacity:
+	var acceptable = super._can_accept(item)
+	if not acceptable:
 		return false
+	# return item is Food or item is Equipment or item is Plate
+	#--------------------------------------------
+	var accepted = item is Food or item is Equipment or item is Plate
+	if not accepted:
+		print("Cannot accept : ", item.get_script().get_global_name())
+	return accepted
+	#--------------------------------------------
 
-	# may need to check null script, but it depends on how food are implemented!!!!!!!
 
-	return item.get_script() in valid_classes
+## Override unsupported methods to prevent misuse ------------------------------
+func start_action() -> bool:
+	assert(false, "Bench does not support starting actions")
+	return false
+#-------------------------------------------------------------------------------

@@ -2,7 +2,8 @@ class_name Customer extends NPC
 
 # Customers wait this long once seated
 const MAXIMUM_SEATING_TIME: float = 10
-
+# Customers wait this long till they decide order
+const MAXIMUM_ORDER_THINK_TIME: float = 10
 # For agent avoidance to prevent getting stuck
 const AGENT_STUCK_THRESHOLD: float = 0.15
 const MAXIMUM_AVOIDANCE_PRIORITY: float = 0.8
@@ -11,7 +12,6 @@ const AVOIDANCE_PRIORITY_INCREMENT: float = 0.01
 
 # How far customers should sit from table
 const POSITION_IN_FRONT_OF_TABLE: Vector3 = Vector3(0, 0.25 , 0.5)
-
 
 # Targets for pathfinding
 var _table_target: Node3D = null
@@ -25,7 +25,9 @@ var _queued = false
 var _restaurant_id
 
 # Time starts from being seated 
-var _time_till_leaving = MAXIMUM_SEATING_TIME
+var _time_till_leaving: float = MAXIMUM_SEATING_TIME
+var _time_till_order: float = MAXIMUM_ORDER_THINK_TIME
+var order: Array[MenuItem] = [TomatoSoup.new()] # DUMMY CODE TILL ORDER SYSTEM READY
 
 ## Initialize Customer with server and communication ids
 func initialize(game_server : Server, id: String, restaurant_id : String ) -> void:
@@ -77,6 +79,7 @@ func _pathfind_to_target() -> void:
 	if _table_target: # Sits target in front of table
 		_nav_agent.target_position = (_current_target.global_position 
 									+ POSITION_IN_FRONT_OF_TABLE)
+		print(order[0].name_of_meal)  # DUMMY CODE TILL ORDER SYSTEM READY
 	else:
 		_nav_agent.target_position = _current_target.global_position
 
@@ -142,16 +145,31 @@ func _npc_behavior(delta: float) -> void:
 		
 	# Customers who have been seated shall wait till they have to leave
 	if _seated:
-		_time_till_leaving = max(0, _time_till_leaving - delta)
-		if !_time_till_leaving:
-			
-			_game_server.call_service(_table_target.id(), 
-										"set_occupied", 
-										[false])
-			
-			_game_server.call_service(_restaurant_id, 
-										"leave_from_restaurant", 
-										[self])
+		
+		_time_till_order = max(0, _time_till_order - delta)
+		if !_time_till_order:
+			_time_till_leaving = max(0, _time_till_leaving - delta)
+			if !_time_till_leaving:
+				
+				_game_server.call_service(_table_target.id(), 
+											"set_occupied", 
+											[false])
+				
+				_game_server.call_service(_restaurant_id, 
+											"leave_from_restaurant", 
+											[self])
+											
+			var food_served = await _game_server.call_service(_table_target.id(), 
+											"get_food", 
+											[])
+			# DUMMY CODE TILL ORDER SYSTEM READY
+			if food_served && food_served.name_of_meal == order[0].name_of_meal:  
+				_game_server.call_service(_table_target.id(), 
+										"remove_food", 
+										[])
+				
+				print("YAY!")
+				_time_till_leaving = 2
 	
 	# Customers who reach the front of the queue should begin looking for tables
 	if _queued && _queue_target:

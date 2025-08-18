@@ -12,6 +12,8 @@ var power_upgradable: Upgradable
 var capacity_upgradable: Upgradable
 var coefficient_upgradable: Upgradable
 
+var price: int = 100
+
 
 ## Setup the appliance
 func _ready():
@@ -126,6 +128,12 @@ func _can_accept(_item: Node) -> bool:
 func player_has(_item: Node) -> bool:
 	assert(false, "player_has() must be implemented in " + get_class())
 	return false
+
+
+## Getter for Price
+## @return: The price of the appliance
+func get_price() -> int:
+	return price
 
 
 ## InteractableComponent Signal Handlers -----------------------------------------------------------

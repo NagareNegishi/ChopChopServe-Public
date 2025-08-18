@@ -52,7 +52,7 @@ func position_equipment(equipment: Equipment, slot_index: int):
 ## Add corresponding Cookware to the PoweredAppliance
 ## @param cookware_script_name: The script name of the cookware to add
 func add_cookware(cookware_script_name: String):
-	var cookware = ApplianceFactory.create_appliance(cookware_script_name)
+	var cookware = ApplianceFactory._create_appliance(cookware_script_name)
 	if not cookware:
 		push_error("Failed to create cookware: " + cookware_script_name)
 		return

@@ -49,7 +49,19 @@ func take_at(index: int) -> Node:
 		return null
 	var item = contents.pop_at(index)
 	remove_child(item)
+	#--------------------------------------------
+	print(item.get_script().get_global_name(), ", is taken from: ", get_script().get_global_name())
+	#--------------------------------------------
 	return item
+
+
+## Take a food item from the bench
+## @return: The Food item that was taken, or null if none found
+func take_food() -> Food:
+	for i in range(contents.size()):
+		if contents[i] is Food:
+			return take_at(i) as Food
+	return null
 
 
 ## Check if this appliance can accept the given item

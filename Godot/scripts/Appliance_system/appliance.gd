@@ -139,12 +139,18 @@ func _on_interactable_component_interacted() -> void:
 ## Let toggle collision
 ## @param turn_on: Whether to enable or disable collision
 func _on_interactable_component_toggle_collision(turn_on: bool) -> void:
-	if turn_on:
-		collision_layer = 1
-		collision_mask = 1
-	else:
-		collision_layer = 0
-		collision_mask = 0
+	print("Toggling collision of ", get_script().get_global_name(), " from: ", collision_shape.disabled)
+	collision_shape.disabled = not turn_on
+	print("Collision of ", get_script().get_global_name(), " toggled to: ", collision_shape.disabled)
+
+	# TODO: When team starts using collision layers properly:
+	#
+	# if turn_on:
+	# 	collision_layer = APPLIANCES
+	# 	collision_mask = collide_with
+	# else:
+	# 	collision_layer = 0
+	# 	collision_mask = 0
 
 
 ## Give visual feedback when hovered

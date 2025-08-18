@@ -142,6 +142,8 @@ func _on_interactable_component_toggle_collision(turn_on: bool) -> void:
 	print("Toggling collision of ", get_script().get_global_name(), " from: ", collision_shape.disabled)
 	collision_shape.disabled = not turn_on
 	print("Collision of ", get_script().get_global_name(), " toggled to: ", collision_shape.disabled)
+	$InteractableComponent/CollisionShape3D.disabled = not turn_on
+	print("Collision shape disabled: ", $InteractableComponent/CollisionShape3D.disabled)
 
 	# TODO: When team starts using collision layers properly:
 	#

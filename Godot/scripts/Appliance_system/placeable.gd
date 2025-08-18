@@ -327,5 +327,8 @@ func print_sync_properties():
 			print("Property ", i, ": ", property)
 
 
+# External additions------------------------------------------------------------
+## Toggle physics state - requires documentation from original author
 func turnOnPhysics(is_on : bool):
 	set_deferred("freeze", !is_on)
+#-------------------------------------------------------------------------------

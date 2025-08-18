@@ -254,7 +254,7 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 			print("No cookware to take from PoweredAppliance")
 			return false
 	# If player has clean empty plate: serve food from Cookware, return true
-	if item is Plate:  ##or    .is_class("Plate"):
+	if item is Plate:
 		return serve_to_plate(item)
 	# If item_in_hand exists: depend on if appliance can accept it
 	return put(item)
@@ -264,11 +264,6 @@ func serve_to_plate(plate: Plate) -> bool: # Node should change to Plate when it
 	if contents.is_empty():
 		push_warning("Nothing to serve")
 		return false
-	#----------------------------------------------------------------------
-	if not plate:  # could remove it later!!!!!!!!!!!!!!!!!!!!!!
-		push_warning("Cannot serve to null")
-		return false
-	#----------------------------------------------------------------------
 	if plate.has_method("is_ready"):
 		if not plate.is_ready():
 			push_warning("Cannot serve to non-ready plate") # maybe not empty? maybe dirty??
@@ -297,7 +292,7 @@ func serve_to_plate(plate: Plate) -> bool: # Node should change to Plate when it
 ## @return: The progress of the cooking process
 func get_progress() -> int:
 	if is_empty():
-		return INF
+		return int(INF)
 	var most_progress = INF
 	for cookware in contents:
 		if cookware.is_empty():

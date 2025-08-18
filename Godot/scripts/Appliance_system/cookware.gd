@@ -60,7 +60,17 @@ func cook(power: int) -> bool:
 ## @param item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
 func player_has(item: Node) -> bool:
+	#----------------------------------------------------------------------------
+	print("its here 1 ")
+	if not item:
+		push_warning("Cannot perform action with null item")
+		return false
+	print("its : ", item.get_script().get_global_name())
+	print("Comparing with 'Plate': ", item.get_script().get_global_name() == "Plate")
+	print("Comparing with 'Plate': ", item is Plate)
+	#----------------------------------------------------------------------------
 	if item is Plate:
+		print("its here 2 ")
 		return serve_to_plate(item)
 	return super.player_has(item)
 
@@ -70,11 +80,6 @@ func serve_to_plate(plate: Plate) -> bool: # Node should change to Plate when it
 	if contents.is_empty():
 		push_warning("Nothing to serve")
 		return false
-	#----------------------------------------------------------------------
-	if not plate:  # could remove it later!!!!!!!!!!!!!!!!!!!!!!
-		push_warning("Cannot serve to null")
-		return false
-	#----------------------------------------------------------------------
 	if plate.has_method("is_ready"):
 		if not plate.is_ready():
 			push_warning("Cannot serve to non-ready plate") # maybe not empty? maybe dirty??

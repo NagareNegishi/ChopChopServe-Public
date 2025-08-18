@@ -1,10 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://ckxyscw51v3du"]
+[gd_scene load_steps=9 format=3 uid="uid://ckxyscw51v3du"]
 
 [ext_resource type="Script" uid="uid://0wecred12v33" path="res://scripts/Player/player.gd" id="1_3qydi"]
 [ext_resource type="PackedScene" uid="uid://bu4i2rvstrdvh" path="res://assets/hat.fbx" id="2_bvqhm"]
 [ext_resource type="PackedScene" uid="uid://d2rfm5fkxeeic" path="res://assets/Frog.fbx" id="2_q3lat"]
 [ext_resource type="Texture2D" uid="uid://ds43xburqmhn0" path="res://assets/textures/misc/CircleTexture.png" id="4_ved6o"]
-[ext_resource type="PackedScene" uid="uid://dw2oh1yssb0mu" path="res://scenes/Interaction/Bowl.tscn" id="5_socpp"]
 [ext_resource type="PackedScene" uid="uid://tloru3qomb8r" path="res://UI/UI_order.tscn" id="6_fxc31"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l2ndj"]
@@ -71,8 +70,6 @@ texture = SubResource("ViewportTexture_puxyr")
 [node name="SubViewport" type="SubViewport" parent="Sprite3D"]
 transparent_bg = true
 size = Vector2i(600, 132)
-
-[node name="Bowl" parent="Sprite3D/SubViewport" instance=ExtResource("5_socpp")]
 
 [node name="Control" parent="Sprite3D/SubViewport" instance=ExtResource("6_fxc31")]
 

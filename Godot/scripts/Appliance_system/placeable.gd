@@ -325,3 +325,7 @@ func print_sync_properties():
 		for i in range(properties.size()):
 			var property = properties[i]
 			print("Property ", i, ": ", property)
+
+
+func turnOnPhysics(is_on : bool):
+	set_deferred("freeze", !is_on)

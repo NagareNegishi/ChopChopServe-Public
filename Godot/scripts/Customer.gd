@@ -10,7 +10,7 @@ const AVOIDANCE_PRIORITY_RESET_AMOUNT: float = 0.5
 const AVOIDANCE_PRIORITY_INCREMENT: float = 0.01
 
 # How far customers should sit from table
-const POSITION_IN_FRONT_OF_TABLE: Vector3 = Vector3(0, 0 , 0.5)
+const POSITION_IN_FRONT_OF_TABLE: Vector3 = Vector3(0, 0.25 , 0.5)
 
 
 # Targets for pathfinding

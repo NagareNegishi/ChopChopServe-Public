@@ -1,4 +1,4 @@
-class_name Restaurant extends Node
+class_name FoodCourt extends Node
 
 const SECOND_FROM_QUEUE_BACK = 3
 

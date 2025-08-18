@@ -1,8 +1,8 @@
 class_name Server extends Node
 
 var _services: Dictionary = {} # Contains all services that need to communicate
-var _restuarant_scene = preload("res://Restaurant/Restaurant.tscn")
-var _test_without_server = true # For running alternative scenes to main
+var _food_court_scene = preload("res://FoodCourt.tscn")
+var _test_without_server = false # For running alternative scenes to main
 
 ## Adds service to dictionary of known services
 func register_service(service_name: String, service_instance):
@@ -42,12 +42,12 @@ func call_service(target_service: String, operation: String, params: Array = [])
 # For setting up main game scene
 func _ready():
 	if !_test_without_server:
-		var restaurant = _restuarant_scene.instantiate()
-		restaurant.initialize(self, "Restaurant1")
-		add_child(restaurant)
+		var food_court = _food_court_scene.instantiate()
+		food_court.initialize(self, "FoodCourt")
+		add_child(food_court)
 		var customer_creator = CustomerCreator.new(self)
 		register_service("CustomerCreator", customer_creator) 
-		register_service("Restaurant1", restaurant) 
+		register_service("FoodCourt", food_court) 
 		var building = Building.new(self)
 		await get_tree().create_timer(1.0).timeout
 	

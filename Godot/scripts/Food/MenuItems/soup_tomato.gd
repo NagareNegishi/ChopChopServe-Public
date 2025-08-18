@@ -17,7 +17,7 @@ func _init():
 	appliance = "Bowl"
 
 func _ready():
-	cooked_mesh_good = $tomatosoup_good
+	cooked_mesh_good = $TomatoSoup
 	cooked_mesh_bad = null
 	cooked_mesh_burnt = null
 	

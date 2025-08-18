@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_rvr1h"]
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="2_6pm8r"]
-[ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://scenes/Player/Controls.tscn" id="3_iaxrr"]
+[ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="3_iaxrr"]
 [ext_resource type="PackedScene" uid="uid://dythb8xw31t1c" path="res://assets/models/infrastructure/wall.glb" id="4_y86qj"]
 [ext_resource type="PackedScene" uid="uid://dxhfqm13c85ar" path="res://assets/models/decorations/table.glb" id="5_41sqs"]
 [ext_resource type="PackedScene" uid="uid://hxrvqyggbykc" path="res://assets/models/NuFurniture/Bench.glb" id="6_a3cnl"]

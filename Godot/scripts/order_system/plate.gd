@@ -3,6 +3,8 @@ class_name Plate
 var preload_menuItems = preload("res://scripts/Food/MenuItems/menuItem.gd")
 
 
+# TODO: Add a plate is ready method as plate needs to be clean and empty 
+
 var food_items :Array = []
 var has_menu_item: bool = false
 #var ingredients = IngredientsEnum.Ingredients
@@ -34,6 +36,10 @@ func find_next_free_cell() -> Vector2i:
 	return Vector2i(-1,-1)
 
 # Adds items to the plate and scales them so that they appear on the plate
+func add_list_items(food_array: Array):
+	for food in food_array:
+		add_item(food)
+
 func add_item(food_node) -> void:
 	disable_collision(food_node)
 	

@@ -145,20 +145,13 @@ func changeState(appliance_type: ApplianceFactory.CookingStyle) -> foodState:
 func on_state_change():
 	if raw_mesh == null:
 		return # Meshes not yet initialized
-	if cooked_mesh != null:
-		cooked_mesh.visible = false
-	if spoiled_mesh != null:
-		spoiled_mesh.visible = false
-	if burnt_mesh != null:
-		burnt_mesh.visible = false
-	if chopped_mesh != null:
-		chopped_mesh.visible = false
-	if frozen_mesh != null:
-		frozen_mesh.visible = false
-	if mixed_mesh != null:
-		mixed_mesh.visible = false
-	
-	raw_mesh.visible = false
+	visibility_of_mesh(cooked_mesh, false)
+	visibility_of_mesh(spoiled_mesh, false)
+	visibility_of_mesh(burnt_mesh, false)
+	visibility_of_mesh(chopped_mesh, false)
+	visibility_of_mesh(frozen_mesh, false)
+	visibility_of_mesh(mixed_mesh, false)
+	visibility_of_mesh(raw_mesh, false)
 	
 	match(state):
 		foodState.BAKED, foodState.BOILED, foodState.FRIED:
@@ -182,6 +175,15 @@ func on_state_change():
 		_:
 			current_mesh = raw_mesh
 	
-	if current_mesh:
-		current_mesh.visible = true
-		
+	visibility_of_mesh(current_mesh, true)
+
+func visibility_of_mesh(meshName: MeshInstance3D, changeTo: bool):
+	if meshName != null:
+		meshName.visibility = changeTo
+
+func current_visibility(changeTo: bool):
+	current_mesh.visibility = changeTo
+
+func change_collisions():
+	self.collision_layer = 0
+	self.collision_mask = 0

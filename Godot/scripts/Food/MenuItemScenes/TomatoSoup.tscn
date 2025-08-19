@@ -1,9 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://ctjn6a51qelin"]
 
 [ext_resource type="Script" uid="uid://b4hmajvjiipma" path="res://scripts/Food/MenuItems/soup_tomato.gd" id="1_qv208"]
-[ext_resource type="PackedScene" uid="uid://hfxkmecbe3vs" path="res://scripts/Food/MenuItemScenes/tomato_soup.tscn" id="2_jwmsq"]
+[ext_resource type="PackedScene" uid="uid://hfxkmecbe3vs" path="res://scripts/Food/MenuItemScenes/tomato_soup_mesh.tscn" id="2_jwmsq"]
 
 [node name="EmmaTestTomatoSoup" type="Node3D"]
 script = ExtResource("1_qv208")
 
 [node name="TomatoSoup" parent="." instance=ExtResource("2_jwmsq")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)

@@ -262,25 +262,19 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 
 func serve_to_plate(plate: Plate) -> bool: # Node should change to Plate when its ready!!!!!!!!
 	if contents.is_empty():
-		push_warning("Nothing to serve")
+		print("Nothing to serve")
 		return false
-	if plate.has_method("is_ready"):
-		if not plate.is_ready():
-			push_warning("Cannot serve to non-ready plate") # maybe not empty? maybe dirty??
-			return false
-		var cookware = contents[0]
 
-		# Method in Plate, takes Array of Food
-		plate.add_list_items(cookware.take_all())
+	# likely need to check if plate is ready here later!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-		stop_cook()
-		#----------------------------------------------------------------------
-		print("Cookware :", cookware.get_script().get_global_name(), ", served to: ", plate.name)
-		#----------------------------------------------------------------------
-		return true
-
-	push_warning("Plate does not provide required methods")
-	return false
+	var cookware = contents[0]
+	# Method in Plate, takes Array of Food
+	plate.add_list_items(cookware.take_all())
+	stop_cook()
+	#----------------------------------------------------------------------
+	print("Cookware :", cookware.get_script().get_global_name(), ", served to: ", plate.name)
+	#----------------------------------------------------------------------
+	return true
 
 
 

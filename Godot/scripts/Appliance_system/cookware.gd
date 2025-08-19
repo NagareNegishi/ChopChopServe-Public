@@ -78,18 +78,15 @@ func player_has(item: Node) -> bool:
 
 func serve_to_plate(plate: Plate) -> bool: # Node should change to Plate when its ready!!!!!!!!
 	if contents.is_empty():
-		push_warning("Nothing to serve")
+		print("Nothing to serve")
 		return false
-	if plate.has_method("is_ready"):
-		if not plate.is_ready():
-			push_warning("Cannot serve to non-ready plate") # maybe not empty? maybe dirty??
-			return false
 
-		# Method in Plate, takes Array of Food
-		plate.add_list_items(take_all())
-		finish_cook()
-		#----------------------------------------------------------------------
-		print("Cookware :", get_script().get_global_name(), ", served to: ", plate.name)
-		#----------------------------------------------------------------------
-	push_warning("Plate does not provide required methods")
-	return false
+	# likely need to check if plate is ready here later!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+	# Method in Plate, takes Array of Food
+	plate.add_list_items(take_all())
+	finish_cook()
+	#----------------------------------------------------------------------
+	print("Cookware :", get_script().get_global_name(), ", served to: ", plate.name)
+	#----------------------------------------------------------------------
+	return true

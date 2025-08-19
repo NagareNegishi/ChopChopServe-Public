@@ -109,10 +109,10 @@ func finish_cook() -> bool:
 	current_status = Status.IDLE
 	status_changed.emit(current_status)
 	for item in contents:
-		#if item.has_method("stopCooking"):   #is always Food:
-		item.stopCooking()
+		#if item.has_method("stop_cooking"):   #is always Food:
+		item.stop_cooking()
 	#----------------------------------------------------------------------
-		print("stopCooking() is called in: ", item.get_script().get_global_name())
+		print("stop_cooking() is called in: ", item.get_script().get_global_name())
 	#----------------------------------------------------------------------
 	return true
 

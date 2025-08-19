@@ -11,13 +11,13 @@
 script = ExtResource("1_lo8qe")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0, 0)
 shape = SubResource("BoxShape3D_g27tf")
 
 [node name="RawTomato" parent="." instance=ExtResource("3_gqbnl")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 
 [node name="ChoppedTomato" parent="." instance=ExtResource("4_a3k3o")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0410221, -0.00245079, 0.0239362)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.0410221, -0.00245079, 0.0239362)
 
 [node name="InteractableComponent" parent="." instance=ExtResource("2_le8n0")]
 transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0, 0)

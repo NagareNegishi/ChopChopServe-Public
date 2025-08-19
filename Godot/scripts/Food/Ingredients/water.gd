@@ -11,5 +11,5 @@ func _ready():
 	burnt_mesh = null
 	chopped_mesh = null
 	add_to_group("Food")
-	previous_states = ["RAW","BOILED"]
+	#previous_states = ["RAW","BOILED"]
 	on_state_change()

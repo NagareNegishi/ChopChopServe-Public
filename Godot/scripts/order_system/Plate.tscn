@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cy1s0o2ip2hob" path="res://scenes/Interaction/InteractableComponent.tscn" id="2_brnb6"]
 [ext_resource type="PackedScene" uid="uid://dbqvfbxstodt1" path="res://scripts/order_system/plate_mesh.tscn" id="2_njfe6"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_njfe6"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_njfe6"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_oio5h"]
 
@@ -16,11 +16,11 @@ has_action = true
 transform = Transform3D(0.70416, 0, 0, 0, 0.70416, 0, 0, 0, 0.70416, 0, 0.0222136, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -0.0233127, 0.182234, -0.0405737)
-shape = SubResource("BoxShape3D_njfe6")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0233127, 0.182234, -0.0405737)
+shape = SubResource("CylinderShape3D_njfe6")
 
 [node name="PlateMesh" parent="." instance=ExtResource("2_njfe6")]
-transform = Transform3D(0.70416, 0, 0, 0, 0.70416, 0, 0, 0, 0.70416, 0, 0.0252059, 0)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0.0252059, 0)
 
 [node name="InteractableComponent" parent="." instance=ExtResource("2_brnb6")]
 transform = Transform3D(0.26004, 0, 0, 0, 0.26004, 0, 0, 0, 0.26004, 0, 0.117363, 0)

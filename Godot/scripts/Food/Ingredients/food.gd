@@ -18,7 +18,7 @@ signal cooking
 
 # This gets reset in the other methods it is just default
 var food_name = "Default_foodState"
-var spoil_time = 80 # Timer to food spoils
+var spoil_time = 100 # Timer to food spoils
 var state = foodState.RAW # Current state of the food item
 var cook_time = 50 # How long it takes to cook 
 var quality : int # Measures the quality of the food 
@@ -97,11 +97,11 @@ func startCooking(time: int, appliance_type: ApplianceFactory.CookingStyle):
 
 # Lets either the appliance or the player tell the food to stop cooking when it 
 # gets taken out or off the appliance
-func stopCooking():
+func stop_cooking():
 	is_cooking = false
 	time_power = 0
 	current_appliance = null
-	setQuality()
+	set_quality()
 
 # For the appliance to set a new cooking time when new ingredients are added to the appliance so that
 # all the ingredients cook at the same time
@@ -111,7 +111,7 @@ func set_cook_time(time: float):
 func get_cook_time():
 	return cook_time
 
-func setQuality():
+func set_quality():
 	if cook_time <= 0 && cook_time > burn_threshold:
 		quality = clamp(100 - (cook_time / burn_threshold) * 100, 0, 100)
 	else:
@@ -179,10 +179,10 @@ func on_state_change():
 
 func visibility_of_mesh(meshName: MeshInstance3D, changeTo: bool):
 	if meshName != null:
-		meshName.visibility = changeTo
+		meshName.visible = changeTo
 
 func current_visibility(changeTo: bool):
-	current_mesh.visibility = changeTo
+	current_mesh.visible = changeTo
 
 func change_collisions():
 	self.collision_layer = 0

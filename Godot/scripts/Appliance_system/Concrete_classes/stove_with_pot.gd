@@ -14,6 +14,6 @@ func test():
 	var pot = contents[0]
 	if pot:
 		pot.test()
-	start_cook()
+	# start_cook()
 	# inflammable_component.ignite()
 #----------------------------------------------------------------------

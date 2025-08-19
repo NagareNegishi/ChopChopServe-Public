@@ -126,7 +126,7 @@ func is_empty() -> bool:
 ## Check if this equipment can be used
 ## @return: True if equipment can be used, false if broken
 func can_use() -> bool:
-	return current_status == Status.IDLE
+	return current_status == Status.IDLE or current_status == Status.USING
 
 
 ## Set the current status to broken

@@ -4,6 +4,7 @@
 class_name Cookware
 extends Equipment
 
+var power_receiving: int = 0
 
 ## Setup the cookware
 func _ready():
@@ -16,9 +17,21 @@ func _ready():
 ## @return: True if placement was successful, false otherwise
 func put(item: Node) -> bool:
 	var success = super.put(item)
-	if success:
-		average_food()
+	if success: # and item is Food:
+		_put_food(item)
 	return success
+
+
+## Place food into the cookware
+## @param food: The Food item to place into the cookware
+func _put_food(food: Food) -> void:
+	food.current_visibility(false)
+	food.change_collisions()
+	if current_status == Status.USING:
+		average_food()
+		food.startCooking(int(power_receiving * coefficient), cooking_style)
+	print("Food placed in cookware: ", food.get_script().get_global_name())
+	print("Food cook time: ", food.get_cook_time())
 
 
 ## Average cooking time of food in cookware
@@ -46,12 +59,14 @@ func cook(power: int) -> bool:
 	elif current_status != Status.USING:
 		assert(false, "Do not call cook() unless status is USING")
 		return false
+	power_receiving = power
 	for food in contents:
-		food.startCooking(power * coefficient, cooking_style)
+		food.startCooking(int(power_receiving * coefficient), cooking_style)
 		#-----------------------------------------------------------------------
 		print(get_script().get_global_name(), " start cooking ", food.get_script().get_global_name(),
-		 " with power: ", power * coefficient, ", Style is: ",
+		 " with power: ", int(power_receiving * coefficient), ", Style is: ",
 		ApplianceFactory.CookingStyle.keys()[cooking_style])
+		print("Food cook time: ", food.get_cook_time())
 		#----------------------------------------------------------------------
 	return true
 
@@ -81,8 +96,8 @@ func serve_to_plate(plate: Plate) -> bool: # Node should change to Plate when it
 	# likely need to check if plate is ready here later!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 	# Method in Plate, takes Array of Food
-	plate.add_list_items(take_all())
 	finish_cook()
+	plate.add_list_items(take_all())
 	#----------------------------------------------------------------------
 	print("Cookware :", get_script().get_global_name(), ", served to: ", plate.name)
 	#----------------------------------------------------------------------

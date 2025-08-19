@@ -15,20 +15,19 @@ enum Status {
 
 @export var capacity: int = 1 ## Maximum number of items this appliance can hold
 @export var valid_classes: Array[String] = [] ## Class names that can be placed in (Recommended)
-# @export var valid_classes: Array[Script] = [] ## Class scripts that can be placed in (Fallback)
 @export var cook_interval: float = 1.0 ## Cook every ? seconds
 
 var current_status: Status = Status.IDLE
 var contents: Array[Node] = []
 var cook_timer: Timer
 var power: int = 1
-var equipment_slots: Array[Vector3] = []  ## Where to place equipment
+var cookware_slots: Array[Vector3] = []  ## Where to place cookware
 
 
 ## Setup the PoweredAppliance
 func _ready():
 	super._ready()
-	setup_equipment_slots()
+	setup_cookware_slots()
 	# Create and configure timer
 	cook_timer = Timer.new()
 	cook_timer.wait_time = cook_interval
@@ -36,17 +35,17 @@ func _ready():
 	add_child(cook_timer)
 
 
-## Setup equipment slots, should be overridden by subclasses
-## Default implementation expect one Equipment slot in the center
-func setup_equipment_slots():
+## Setup cookware slots, should be overridden by subclasses
+## Default implementation expect one Cookware slot in the center
+func setup_cookware_slots():
 	var slot_position = Vector3(0.0, size.y * 0.5, 0.0)
-	equipment_slots.append(slot_position)
+	cookware_slots.append(slot_position)
 
 
-## Apply position and direction to equipment at given slot
-func position_equipment(equipment: Equipment, slot_index: int):
-	equipment.position = equipment_slots[slot_index]
-	equipment.rotate_to_direction(equipment.default_facing)
+## Apply position and direction to cookware at given slot
+func position_cookware(cookware: Cookware, slot_index: int):
+	cookware.position = cookware_slots[slot_index]
+	cookware.rotate_to_direction(cookware.default_facing)
 
 
 ## Add corresponding Cookware to the PoweredAppliance
@@ -58,7 +57,7 @@ func add_cookware(cookware_script_name: String):
 		return
 	put(cookware)
 	# Position and size cookware relative to appliance
-	position_equipment(cookware, 0)
+	position_cookware(cookware, 0)
 
 
 ## Place an item onto this appliance
@@ -67,6 +66,9 @@ func add_cookware(cookware_script_name: String):
 func put(item: Node) -> bool:
 	if not _can_accept(item):
 		return false
+	# transfer item to appliance
+	GlobalScript.player.remove_item() # if we only put item from players hand
+	add_child(item)
 	contents.append(item)
 	#--------------------------------------------
 	print("Put: ", item.get_script().get_global_name(), " onto: ", get_script().get_global_name())
@@ -74,12 +76,19 @@ func put(item: Node) -> bool:
 	for content in contents:
 		print(" --- ", content.get_script().get_global_name())
 	#--------------------------------------------
-	# transfer item to appliance
-	GlobalScript.player.remove_item() # if we only put item from players hand
-	add_child(item)
-	position_equipment(item, contents.size() - 1)
-	item.lock()
+	if item is Cookware:
+		_put_cookware(item)
 	return true
+
+
+## Place a Cookware onto this PoweredAppliance, start cooking if applicable
+## @param cookware: The Cookware to place on this PoweredAppliance
+func _put_cookware(cookware: Cookware) -> void:
+	position_cookware(cookware, contents.size() - 1)
+	cookware.lock()
+	if not cookware.is_empty() and can_cook():
+		cookware.cook(power)
+		_set_status(Status.COOKING)
 
 
 ## Remove and return the last item from this appliance
@@ -174,10 +183,16 @@ func _cook() -> bool:
 	return true
 
 
-## Check if this equipment is empty
-## @return: True if equipment is empty, false otherwise
+## Check if this PoweredAppliance is empty
+## @return: True if PoweredAppliance is empty, false otherwise
 func is_empty() -> bool:
 	return contents.is_empty()
+
+
+## Check if this PoweredAppliance can cook
+## @return: True if PoweredAppliance can cook, false otherwise
+func can_cook() -> bool:
+	return current_status == Status.COOKING or current_status == Status.IDLE
 
 
 ## Set the current status to broken
@@ -256,6 +271,14 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 	# If player has clean empty plate: serve food from Cookware, return true
 	if item is Plate:
 		return serve_to_plate(item)
+
+	#--------------------------------------------------
+	if item is Food:
+		for content in contents:
+			if content is Cookware:
+				return content.player_has(item)
+	#--------------------------------------------------
+
 	# If item_in_hand exists: depend on if appliance can accept it
 	return put(item)
 

@@ -52,7 +52,11 @@ func add_item(food_node) -> void:
 		return
 	
 	grid[cell.x][cell.y] = food_node
-	food_node.get_parent().remove_child(food_node)
+
+#---------------------------------------------------------
+	if food_node.get_parent():
+		food_node.get_parent().remove_child(food_node)
+#---------------------------------------------------------
 	add_child(food_node)
 	
 	# Disable physics for items

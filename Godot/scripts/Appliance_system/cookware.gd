@@ -61,16 +61,13 @@ func cook(power: int) -> bool:
 ## @return: True if action is triggered, false otherwise
 func player_has(item: Node) -> bool:
 	#----------------------------------------------------------------------------
-	print("its here 1 ")
-	if not item:
-		push_warning("Cannot perform action with null item")
-		return false
-	print("its : ", item.get_script().get_global_name())
-	print("Comparing with 'Plate': ", item.get_script().get_global_name() == "Plate")
-	print("Comparing with 'Plate': ", item is Plate)
+	if item:
+		print("its : ", item.get_script().get_global_name())
+	else:
+		print("player has null!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+
 	#----------------------------------------------------------------------------
 	if item is Plate:
-		print("its here 2 ")
 		return serve_to_plate(item)
 	return super.player_has(item)
 

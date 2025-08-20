@@ -25,14 +25,6 @@ func _setup_interactable():
 	interactable_component.toggle_collision.connect(_on_interactable_component_toggle_collision)
 
 
-## Perform action depend on what player is holding
-## @param _item: The Node Player is holding
-## @return: True if action is triggered, false otherwise
-func player_has(_item: Node) -> bool:
-	assert(false, "player_has() must be implemented in " + get_class())
-	return false
-
-
 ## Place an item onto this appliance
 ## @param item: The Node to place on this appliance
 ## @return: True if placement was successful, false otherwise
@@ -72,16 +64,6 @@ func _on_interactable_component_interacted() -> void:
 	player_has(GlobalScript.player.item_in_hand)
 
 
-## Let toggle collision
-## @param turn_on: Whether to enable or disable collision
-func _on_interactable_component_toggle_collision(turn_on: bool) -> void:
-	if turn_on:
-		collision_layer = 1
-		collision_mask = 1
-	else:
-		collision_layer = 0
-		collision_mask = 0
-
 # Potentially use it in future
 # func _on_interactable_component_hovered(is_hovered: bool) -> void:
 # 	pass
@@ -94,5 +76,3 @@ func _on_interactable_component_toggle_collision(turn_on: bool) -> void:
 		if child is CollisionShape3D:
 			child.disabled = !turn_on
 	$InteractableComponent/CollisionShape3D.disabled = !turn_on
-=======
-## ----------------------------------------------------------------------------------------------

@@ -1,4 +1,7 @@
-[gd_scene format=3 uid="uid://bqtbpncsp1lqe"]
+[gd_scene load_steps=3 format=3 uid="uid://bqtbpncsp1lqe"]
+
+[ext_resource type="PackedScene" uid="uid://geqq8dhkrryc" path="res://UI/UI_PlayerJoin.tscn" id="1_6vwja"]
+[ext_resource type="FontFile" uid="uid://dxc6n0umgi0q4" path="res://assets/fonts/Jua-Regular.ttf" id="2_ykmgt"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -15,55 +18,78 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -154.0
-offset_top = -98.0
-offset_right = 216.0
-offset_bottom = -24.0
+offset_left = -295.0
+offset_top = -79.0
+offset_right = 295.0
+offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_constants/separation = 18
+theme_override_constants/separation = 120
 
-[node name="P1" type="ColorRect" parent="PlayerList"]
-custom_minimum_size = Vector2(70, 50)
+[node name="P1" type="Control" parent="PlayerList"]
 layout_mode = 2
-color = Color(1, 0.133333, 1, 1)
 
-[node name="P2" type="ColorRect" parent="PlayerList"]
-custom_minimum_size = Vector2(70, 50)
+[node name="P1" parent="PlayerList/P1" instance=ExtResource("1_6vwja")]
 layout_mode = 2
-color = Color(1, 0.133333, 1, 1)
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 120.0
+offset_right = 121.0
+offset_bottom = 1.0
 
-[node name="P3" type="ColorRect" parent="PlayerList"]
-custom_minimum_size = Vector2(70, 50)
+[node name="P2" type="Control" parent="PlayerList"]
 layout_mode = 2
-color = Color(1, 0.133333, 1, 1)
 
-[node name="P4" type="ColorRect" parent="PlayerList"]
-custom_minimum_size = Vector2(70, 50)
+[node name="P2" parent="PlayerList/P2" instance=ExtResource("1_6vwja")]
 layout_mode = 2
-color = Color(1, 0.133333, 1, 1)
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 120.0
+offset_right = 121.0
+offset_bottom = 1.0
 
-[node name="ColorRect" type="ColorRect" parent="."]
-layout_mode = 0
-offset_left = 416.0
-offset_top = 612.0
-offset_right = 497.0
-offset_bottom = 627.0
+[node name="P3" type="Control" parent="PlayerList"]
+layout_mode = 2
 
-[node name="ColorRect2" type="ColorRect" parent="."]
-offset_left = 504.0
-offset_top = 612.0
-offset_right = 585.0
-offset_bottom = 627.0
+[node name="P3" parent="PlayerList/P3" instance=ExtResource("1_6vwja")]
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 120.0
+offset_right = 121.0
+offset_bottom = 1.0
 
-[node name="ColorRect3" type="ColorRect" parent="."]
-offset_left = 592.0
-offset_top = 612.0
-offset_right = 673.0
-offset_bottom = 627.0
+[node name="P4" type="Control" parent="PlayerList"]
+layout_mode = 2
 
-[node name="ColorRect4" type="ColorRect" parent="."]
-offset_left = 681.0
-offset_top = 612.0
-offset_right = 762.0
-offset_bottom = 627.0
+[node name="P4" parent="PlayerList/P4" instance=ExtResource("1_6vwja")]
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 120.0
+offset_right = 121.0
+offset_bottom = 1.0
+
+[node name="Watermark" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -139.0
+offset_top = -15.0
+offset_right = -7.0
+offset_bottom = -4.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("2_ykmgt")
+theme_override_font_sizes/font_size = 13
+text = "Chop Chop Serve | Alpha Build"

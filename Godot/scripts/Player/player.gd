@@ -63,7 +63,7 @@ func _movement(delta : float) -> void:
 		velocity.x = move_toward(velocity.x, _direction.x * SPEED, ACCELERATION * delta)
 		velocity.z = move_toward(velocity.z, _direction.z * SPEED, ACCELERATION * delta)
 	else:
-		velocity.x = move_toward(velocity.x, 0, ACCELERATION * SPEED)
+		velocity.x = move_toward(velocity.x, 0, DECELERATION * SPEED)
 		velocity.z = move_toward(velocity.z, 0, DECELERATION * SPEED)
 		
 	move_and_slide()

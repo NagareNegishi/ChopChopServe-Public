@@ -1,14 +1,24 @@
 class_name PlayerCarController
 extends MultiplayerSynchronizer
 
-@export var input_direction : Vector2
+@onready var move_input : int
+@onready var turn_input : int
 
 func _ready() -> void:
 	pass
 	
 func _process(delta: float) -> void:
-	input_direction = Vector2.ZERO
-	input_direction.x = Input.get_action_strength("Right") - Input.get_action_strength("Left")
-	input_direction.y = Input.get_action_strength("Down") - Input.get_action_strength("Up")
+	move_input = 0
+	turn_input = 0
 	
-	
+	if Input.is_action_pressed("Up"):
+		move_input = clampi(move_input + 1, -1, 1)
+		
+	if Input.is_action_pressed("Down"):
+		move_input = clampi(move_input - 1, -1, 1)
+		
+	if Input.is_action_pressed("Left"):
+		turn_input = clampi(turn_input + 1, -1, 1)
+		
+	if Input.is_action_pressed("Right"):
+		turn_input = clampi(turn_input - 1, -1, 1)

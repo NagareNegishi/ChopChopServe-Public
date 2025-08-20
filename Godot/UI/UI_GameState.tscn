@@ -1,5 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://cpf68rvd2ht5y"]
+[gd_scene load_steps=3 format=3 uid="uid://cpf68rvd2ht5y"]
 
+[ext_resource type="Texture2D" uid="uid://bvhcg80u526t2" path="res://assets/textures/HUD/TimerBG.png" id="1_7cglj"]
 [ext_resource type="FontFile" uid="uid://dxc6n0umgi0q4" path="res://assets/fonts/Jua-Regular.ttf" id="1_vitvd"]
 
 [node name="Control" type="Control"]
@@ -7,8 +8,117 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -25.0
+offset_top = -46.0
+offset_right = -25.0
+offset_bottom = -46.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Yellow_BG" type="TextureRect" parent="."]
+modulate = Color(0.780392, 0.658824, 0.262745, 0.941176)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 59.0
+offset_top = -31.0
+offset_right = 119.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_7cglj")
+expand_mode = 1
+flip_v = true
+
+[node name="Yellow_Rep" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 71.0
+offset_top = -26.0
+offset_right = 109.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(19, 15)
+theme_override_colors/font_color = Color(0.992157, 0.917647, 0.301961, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/outline_size = 2
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("1_vitvd")
+theme_override_font_sizes/font_size = 25
+text = "20"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Red_BG" type="TextureRect" parent="."]
+modulate = Color(0.772549, 0.392157, 0.298039, 0.941176)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -123.0
+offset_top = -31.0
+offset_right = -63.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_7cglj")
+expand_mode = 1
+flip_v = true
+
+[node name="Red_rep" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -111.0
+offset_top = -27.0
+offset_right = -73.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(19, 15)
+theme_override_colors/font_color = Color(0.964706, 0.631373, 0.619608, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/outline_size = 2
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("1_vitvd")
+theme_override_font_sizes/font_size = 25
+text = "90"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Main_BG" type="TextureRect" parent="."]
+modulate = Color(0.254902, 0.254902, 0.254902, 0.941176)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -72.0
+offset_top = -38.0
+offset_right = 68.0
+offset_bottom = 44.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_7cglj")
+expand_mode = 1
 
 [node name="Time" type="Label" parent="."]
 layout_mode = 1
@@ -88,9 +198,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -51.0
-offset_top = 19.0
+offset_top = 17.0
 offset_right = 46.0
-offset_bottom = 40.0
+offset_bottom = 38.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.706146, 0.959332, 0.641323, 1)

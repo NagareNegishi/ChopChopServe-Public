@@ -30,8 +30,7 @@ func _put_food(food: Food) -> void:
 	if current_status == Status.USING:
 		average_food()
 		food.startCooking(int(power_receiving * coefficient), cooking_style)
-	print("Food placed in cookware: ", food.get_script().get_global_name())
-	print("Food cook time: ", food.get_cook_time())
+	print("Food placed in cookware: ", food.get_script().get_global_name(), ", Food cook time: ", food.get_cook_time())
 
 
 ## Average cooking time of food in cookware
@@ -65,8 +64,7 @@ func cook(power: int) -> bool:
 		#-----------------------------------------------------------------------
 		print(get_script().get_global_name(), " start cooking ", food.get_script().get_global_name(),
 		 " with power: ", int(power_receiving * coefficient), ", Style is: ",
-		ApplianceFactory.CookingStyle.keys()[cooking_style])
-		print("Food cook time: ", food.get_cook_time())
+		ApplianceFactory.CookingStyle.keys()[cooking_style], ", Food cook time: ", food.get_cook_time())
 		#----------------------------------------------------------------------
 	return true
 
@@ -75,22 +73,24 @@ func cook(power: int) -> bool:
 ## @param item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
 func player_has(item: Node) -> bool:
-	#----------------------------------------------------------------------------
-	if item:
-		print("its : ", item.get_script().get_global_name())
-	else:
-		print("player has null!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+	# #----------------------------------------------------------------------------
+	# if item:
+	# 	print("its : ", item.get_script().get_global_name())
+	# else:
+	# 	print("player has null!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
-	#----------------------------------------------------------------------------
+	# #----------------------------------------------------------------------------
 	if item is Plate:
 		return serve_to_plate(item)
 	return super.player_has(item)
 
 
-
+## Serve food from Cookware to Plate
+## @param plate: The Plate to serve food to
+## @return: True if serving was successful, false otherwise
 func serve_to_plate(plate: Plate) -> bool: # Node should change to Plate when its ready!!!!!!!!
 	if contents.is_empty():
-		print("Nothing to serve")
+		print("Nothing to serve from: ", get_script().get_global_name())
 		return false
 
 	# likely need to check if plate is ready here later!!!!!!!!!!!!!!!!!!!!!!!!!!!!

@@ -16,7 +16,7 @@ func _ready():
 	valid_classes = ["FryerBasket"] # Only one FryerBasket allowed
 	capacity = 1
 	power = 1
-	add_cookware("fryer_basket")
+	_add_cookware("fryer_basket")
 	_setup_inflammable()
 	# cook_interval = 1.0
 

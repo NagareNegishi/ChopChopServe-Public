@@ -3,6 +3,7 @@
 class_name Bench
 extends UnPoweredAppliance
 
+var item_slots: Array[Vector3] = []  ## Where to place items
 
 ## Setup the model instance
 func _init():
@@ -14,7 +15,32 @@ func _init():
 func _ready():
 	super._ready()
 	capacity = 4
+	_setup_item_slots()
 
+
+## Setup cookware slots, should be overridden by subclasses
+## Default implementation expect one Cookware slot in the center
+func _setup_item_slots():
+	for i in range(capacity):
+		var slot_position = Vector3(0.0, size.y * 0.5, 0.0)
+		item_slots.append(slot_position)
+
+
+## Apply position and direction to item at given slot
+func _position_item(item: Node, slot_index: int):
+	item.position = item_slots[slot_index]
+	if item is Cookware:
+		item.rotate_to_direction(item.default_facing)
+
+
+## Place an item onto this appliance
+## @param item: The Node to place on this appliance
+## @return: True if placement was successful, false otherwise
+func put(item: Node) -> bool:
+	if not super.put(item):
+		return false
+	_position_item(item, contents.size() - 1)
+	return true
 
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding

@@ -158,9 +158,7 @@ func _set_status(new_status: Status) -> bool:
 ## @return: True if action is triggered, false otherwise
 func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
 #--------------------------------------------
-	print("Player is holding: ", item)
-	print("Player.item_in_hand: ", GlobalScript.player.item_in_hand)
-	print("Self: ", get_script().get_global_name())
+	print("Player has: ", item, ", Self: ", get_script().get_global_name())
 #--------------------------------------------
 	# If player has nothing: let them take self, return true
 	if not item:

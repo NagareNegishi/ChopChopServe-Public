@@ -14,7 +14,7 @@ func _ready():
 	valid_classes = ["Pot"] # Only one Pot allowed
 	capacity = 1
 	power = 1
-	add_cookware("pot")
+	_add_cookware("pot")
 
 	# Maybe??
 	# cook_interval = 1.0

@@ -129,7 +129,7 @@ func spawn_test_appliance(appliance_type: String):
 		spawn_position.y = 1.0
 		get_tree().current_scene.add_child(appliance)
 		appliance.global_position = spawn_position
-		print("Spawned %s in front of player at: %s" % [appliance_type, spawn_position])
+		# print("Spawned %s in front of player at: %s" % [appliance_type, spawn_position])
 	else:
 		get_tree().current_scene.add_child(appliance)
 		appliance.global_position = Vector3(0, 0, 0)
@@ -138,11 +138,11 @@ func spawn_test_appliance(appliance_type: String):
 
 const TEST_APPLIANCES = [
 	"stove_with_pot",      # Numpad 1
-	"pot",    # Numpad 2
-	"bench", # Numpad 3
-	"chopping_board",    # Numpad 4
-	"fryer",      # Numpad 5
-	"fryer_basket",       # Numpad 6
+	"stove_with_pan",    # Numpad 2
+	"fryer", # Numpad 3
+	"oven",    # Numpad 4
+	"chopping_board",      # Numpad 5
+	"bench",       # Numpad 6
 	"food_crate",       # Numpad 7
 	"sink",      # Numpad 8
 	"trash_can"   # Numpad 9

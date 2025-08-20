@@ -27,7 +27,7 @@ var cookware_slots: Array[Vector3] = []  ## Where to place cookware
 ## Setup the PoweredAppliance
 func _ready():
 	super._ready()
-	setup_cookware_slots()
+	_setup_cookware_slots()
 	# Create and configure timer
 	cook_timer = Timer.new()
 	cook_timer.wait_time = cook_interval
@@ -37,27 +37,27 @@ func _ready():
 
 ## Setup cookware slots, should be overridden by subclasses
 ## Default implementation expect one Cookware slot in the center
-func setup_cookware_slots():
+func _setup_cookware_slots():
 	var slot_position = Vector3(0.0, size.y * 0.5, 0.0)
 	cookware_slots.append(slot_position)
 
 
 ## Apply position and direction to cookware at given slot
-func position_cookware(cookware: Cookware, slot_index: int):
+func _position_cookware(cookware: Cookware, slot_index: int):
 	cookware.position = cookware_slots[slot_index]
 	cookware.rotate_to_direction(cookware.default_facing)
 
 
 ## Add corresponding Cookware to the PoweredAppliance
 ## @param cookware_script_name: The script name of the cookware to add
-func add_cookware(cookware_script_name: String):
+func _add_cookware(cookware_script_name: String):
 	var cookware = ApplianceFactory._create_appliance(cookware_script_name)
 	if not cookware:
 		push_error("Failed to create cookware: " + cookware_script_name)
 		return
 	put(cookware)
 	# Position and size cookware relative to appliance
-	position_cookware(cookware, 0)
+	_position_cookware(cookware, 0)
 
 
 ## Place an item onto this appliance
@@ -84,7 +84,7 @@ func put(item: Node) -> bool:
 ## Place a Cookware onto this PoweredAppliance, start cooking if applicable
 ## @param cookware: The Cookware to place on this PoweredAppliance
 func _put_cookware(cookware: Cookware) -> void:
-	position_cookware(cookware, contents.size() - 1)
+	_position_cookware(cookware, contents.size() - 1)
 	cookware.lock()
 	if not cookware.is_empty() and can_cook():
 		cookware.cook(power)
@@ -249,9 +249,7 @@ func _on_cook_timer_timeout():
 ## @return: True if action is triggered, false otherwise
 func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
 #--------------------------------------------
-	print("Player is holding: ", item)
-	print("Player.item_in_hand: ", GlobalScript.player.item_in_hand)
-	print("Self: ", get_script().get_global_name())
+	print("Player has: ", item, ", Self: ", get_script().get_global_name())
 #--------------------------------------------
 	# If player has nothing: move item from appliance to player (if exists), return true
 	if not item:
@@ -268,30 +266,38 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 		else:
 			print("No cookware to take from PoweredAppliance")
 			return false
-	# If player has clean empty plate: serve food from Cookware, return true
+
+	# If player has plate: try to serve food from Cookware
 	if item is Plate:
 		return serve_to_plate(item)
 
-	#--------------------------------------------------
+	# If player has food: try to put it in Cookware
 	if item is Food:
 		for content in contents:
 			if content is Cookware:
 				return content.player_has(item)
-	#--------------------------------------------------
 
 	# If item_in_hand exists: depend on if appliance can accept it
 	return put(item)
 
 
+
+## Serve food from Cookware to Plate
+## @param plate: The Plate to serve food to
+## @return: True if serving was successful, false otherwise
 func serve_to_plate(plate: Plate) -> bool: # Node should change to Plate when its ready!!!!!!!!
 	if contents.is_empty():
-		print("Nothing to serve")
+		print("Nothing to serve from: ", get_script().get_global_name())
 		return false
 
 	# likely need to check if plate is ready here later!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 	var cookware = contents[0]
 	# Method in Plate, takes Array of Food
+	if cookware.is_empty():
+		print("Nothing to serve from: ", cookware.get_script().get_global_name())
+		return false
+
 	plate.add_list_items(cookware.take_all())
 	stop_cook()
 	#----------------------------------------------------------------------

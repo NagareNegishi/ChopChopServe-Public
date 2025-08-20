@@ -16,7 +16,7 @@ func _ready():
 	valid_classes = ["OvenTray"] # Only one OvenTray allowed
 	capacity = 1
 	power = 1
-	add_cookware("oven_tray")
+	_add_cookware("oven_tray")
 	_setup_inflammable()
 	# cook_interval = 1.0
 

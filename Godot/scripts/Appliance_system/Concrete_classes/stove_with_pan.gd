@@ -5,4 +5,4 @@ extends Stove
 ## Attach cookware to the stove
 func _ready():
 	super._ready()
-	add_cookware("frying_pan")
+	_add_cookware("frying_pan")

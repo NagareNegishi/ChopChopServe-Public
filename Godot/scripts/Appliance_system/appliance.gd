@@ -75,7 +75,7 @@ func enable_upgrade(type: String, values: Array, costs: Array[int]) -> bool:
 			power_upgradable.upgrade_costs = costs
 			power_upgradable.enabled = true
 			#-------------------------------------------------------------------
-			print("Power upgrade enabled for: ", get_script().get_global_name())
+			#print("Power upgrade enabled for: ", get_script().get_global_name())
 			#-------------------------------------------------------------------
 			return true
 		"capacity":
@@ -83,7 +83,7 @@ func enable_upgrade(type: String, values: Array, costs: Array[int]) -> bool:
 			capacity_upgradable.upgrade_costs = costs
 			capacity_upgradable.enabled = true
 			#-------------------------------------------------------------------
-			print("Capacity upgrade enabled for: ", get_script().get_global_name())
+			#print("Capacity upgrade enabled for: ", get_script().get_global_name())
 			#-------------------------------------------------------------------
 			return true
 		"coefficient":
@@ -91,7 +91,7 @@ func enable_upgrade(type: String, values: Array, costs: Array[int]) -> bool:
 			coefficient_upgradable.upgrade_costs = costs
 			coefficient_upgradable.enabled = true
 			#-------------------------------------------------------------------
-			print("Coefficient upgrade enabled for: ", get_script().get_global_name())
+			#print("Coefficient upgrade enabled for: ", get_script().get_global_name())
 			#-------------------------------------------------------------------
 			return true
 		_:
@@ -147,12 +147,8 @@ func _on_interactable_component_interacted() -> void:
 ## Let toggle collision
 ## @param turn_on: Whether to enable or disable collision
 func _on_interactable_component_toggle_collision(turn_on: bool) -> void:
-	print("Toggling collision of ", get_script().get_global_name(), " from: ", collision_shape.disabled)
 	collision_shape.disabled = not turn_on
-	print("Collision of ", get_script().get_global_name(), " toggled to: ", collision_shape.disabled)
 	$InteractableComponent/CollisionShape3D.disabled = not turn_on
-	print("Collision shape disabled: ", $InteractableComponent/CollisionShape3D.disabled)
-
 	# TODO: When team starts using collision layers properly:
 	#
 	# if turn_on:

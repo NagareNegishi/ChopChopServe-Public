@@ -55,3 +55,9 @@ func request_sabotage(saboteur_id: int, target_id: int, sabotage_type: int) -> v
 
 	# how you call this stuff:
 	# $SabotageManager.request_sabotage.rpc(my_peer_id, target_peer_id, "steal_currency")
+
+func spawn_water_spill(target_id: int, duration: float) -> void:
+	var spill = preload("res://scripts/Sabotage/waterSpill.tscn").instantiate()
+	get_tree().get_current_scene().add_child(spill)
+	spill.global_position = get_random_spill_position(target_id)	
+	spill.start_timer(duration)

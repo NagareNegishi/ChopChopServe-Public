@@ -19,12 +19,18 @@ func request_appliance(type: String, team: int = 0) -> Appliance:
 	var price = ApplianceFactory.book[type].price
 
 	## here ask money management to if they can afford it-----------------------
+	if team == 0:
+		var appliance = ApplianceFactory._create_appliance(type)
+		register_appliance(appliance, team)
+		return appliance
+
 	var can_afford = true
 	#---------------------------------------------------------------------------
 	if not can_afford:
 		print("Team %d cannot afford '%s'" % [team, type])
 		return null
 	var appliance = ApplianceFactory._create_appliance(type)
+	appliance.set_appliance_owner(team)
 	register_appliance(appliance, team)
 	return appliance
 

@@ -4,8 +4,17 @@
 class_name Appliance
 extends Placeable
 
+enum Owner {
+	TEAM1,
+	TEAM2,
+	NONE
+}
+
+@export_group("Appliance Settings")
 ## Type of cooking style this appliance supports
 @export var cooking_style: ApplianceFactory.CookingStyle = ApplianceFactory.CookingStyle.NONE
+
+# Reference to components
 var interactable_component: InteractableComponent
 var highlight_component: ApplianceHighlight
 var power_upgradable: Upgradable
@@ -13,6 +22,7 @@ var capacity_upgradable: Upgradable
 var coefficient_upgradable: Upgradable
 
 var price: int = 100
+var current_owner: Owner = Owner.NONE
 
 
 ## Setup the appliance
@@ -134,6 +144,24 @@ func player_has(_item: Node) -> bool:
 ## @return: The price of the appliance
 func get_price() -> int:
 	return price
+
+
+## Getter for Owner
+## @return: The owner of the appliance
+func get_appliance_owner() -> Owner:
+	return current_owner
+
+
+## Setter for Owner
+## @param team_number: The team number to set as the owner
+func set_appliance_owner(team_number: int) -> void:
+	match team_number:
+		1:
+			current_owner = Owner.TEAM1
+		2:
+			current_owner = Owner.TEAM2
+		_:
+			current_owner = Owner.NONE
 
 
 ## InteractableComponent Signal Handlers -----------------------------------------------------------

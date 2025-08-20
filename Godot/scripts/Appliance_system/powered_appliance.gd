@@ -13,6 +13,7 @@ enum Status {
 	BROKEN
 }
 
+@export_group("PoweredAppliance Settings")
 @export var capacity: int = 1 ## Maximum number of items this appliance can hold
 @export var valid_classes: Array[String] = [] ## Class names that can be placed in (Recommended)
 @export var cook_interval: float = 1.0 ## Cook every ? seconds
@@ -51,7 +52,7 @@ func _position_cookware(cookware: Cookware, slot_index: int):
 ## Add corresponding Cookware to the PoweredAppliance
 ## @param cookware_script_name: The script name of the cookware to add
 func _add_cookware(cookware_script_name: String):
-	var cookware = ApplianceFactory._create_appliance(cookware_script_name)
+	var cookware = ApplianceManager.request_appliance(cookware_script_name, current_owner)
 	if not cookware:
 		push_error("Failed to create cookware: " + cookware_script_name)
 		return
@@ -84,6 +85,7 @@ func put(item: Node) -> bool:
 ## Place a Cookware onto this PoweredAppliance, start cooking if applicable
 ## @param cookware: The Cookware to place on this PoweredAppliance
 func _put_cookware(cookware: Cookware) -> void:
+	cookware.restore_original_transform()
 	_position_cookware(cookware, contents.size() - 1)
 	cookware.lock()
 	if not cookware.is_empty() and can_cook():

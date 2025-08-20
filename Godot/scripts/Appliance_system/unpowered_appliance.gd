@@ -13,6 +13,7 @@ enum Status {
 	BROKEN
 }
 
+@export_group("UnPoweredAppliance Settings")
 @export var capacity: int = 4 ## Maximum number of items this appliance can hold
 @export var action_interval: float = 1.0 ## action every ? seconds
 

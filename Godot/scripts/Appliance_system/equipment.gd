@@ -14,10 +14,11 @@ enum Status {
 	BROKEN
 }
 
+@export_group("Equipment Settings")
 @export var coefficient: float = 1.0 ## Cooking efficiency modifier (1.0 = normal)
 @export var capacity: int = 1 ## Maximum number of items this appliance can hold / deal with
 @export var valid_food: Array[String] = [] ## Class names that can be placed in (Recommended)
-# @export var valid_food: Array[Script] = [] ## Class scripts that can be placed in (Fallback)
+
 
 var current_status: Status = Status.IDLE
 var contents: Array[Node] = []

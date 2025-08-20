@@ -6,7 +6,9 @@
 class_name FoodCrate
 extends UnPoweredAppliance
 
-var supply: PackedScene
+@export_group("Supply Settings")
+@export var supply: PackedScene
+@export var supply_name: String = "Tomato"
 var food_directory: String = "res://scripts/Food/IngredientScenes/"
 
 ## Setup the model instance
@@ -14,14 +16,19 @@ func _init():
 	super._init()
 	model_scene = preload("res://assets/models/NuFurniture/FoodCrater.glb")
 
+
+## Set up the FoodCrate
 func _ready():
 	super._ready()
 	action_interval = 0.1 # small interval to avoid rapid item taking
-	
-	
-	#------------------------------------
-	set_supply("Tomato")
-	#------------------------------------
+	_initialize_supply()
+
+
+## Initialize the supply
+func _initialize_supply():
+	if supply and supply.can_instantiate():
+		return
+	set_supply(supply_name)
 
 
 # Set the supply script for the food crate

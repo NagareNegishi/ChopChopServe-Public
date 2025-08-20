@@ -30,6 +30,7 @@ func _setup_item_slots():
 func _position_item(item: Node, slot_index: int):
 	item.position = item_slots[slot_index]
 	if item is Cookware:
+		item.restore_original_transform()
 		item.rotate_to_direction(item.default_facing)
 
 

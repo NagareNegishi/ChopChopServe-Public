@@ -17,6 +17,9 @@ tonemap_exposure = 1.15
 [node name="Player" parent="." instance=ExtResource("1_4nh8j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.48897, 0.559142, 0)
 
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="Player"]
+radius = 0.3
+
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.00272365, -0.563709, 0.825969, -0.00265669, 0.825965, 0.563715, -0.999993, -0.00372971, 0.000752039, 14.8973, 10.793, 0.0817995)
 

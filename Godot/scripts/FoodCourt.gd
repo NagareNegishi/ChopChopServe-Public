@@ -12,6 +12,8 @@ var _game_server: Server # For communications with other services
 var _next_id : int  = 0 # Allows for occupiables to be uniquely indentified
 var _id # For unique indentification for other services
 
+var number_of_restaurants = 2
+
 @export var tables : Array[Table] = [] # Where customers can order from
 @export var queue_spots: Array[QueueSpot] = [] # Where customers will queue
 @export var customer_spawn_point : Node3D # Where customers spawn
@@ -71,7 +73,7 @@ func _process(delta):
 	_time_since_last_customer -= delta
 	if _time_since_last_customer < 0 && await get_free_queue_spot():
 		var new_customer = await _game_server.call_service("CustomerCreator",
-														"create_customer", [_id])
+														"create_customer", [_id, number_of_restaurants])
 		add_child(new_customer)
 		new_customer.position = customer_spawn_point.position
 		_time_since_last_customer += NEW_CUSTOMER_DELAY

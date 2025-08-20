@@ -16,6 +16,7 @@ func add_player_reputation(peer_id: int, amount: float) -> void:
 		player_reputations[peer_id] = clamp(player_reputations[peer_id] + amount, 0, 100)
 		print("Player %d reputation changed to: %f" % [peer_id, player_reputations[peer_id]])
 		reputation_changed.emit(peer_id, player_reputations[peer_id])
+		# Does the game end when they reach 100?
 
 # Subtract reputation
 func minus_reputation(peer_id: int, amount: float) -> void:

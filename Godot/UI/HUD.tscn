@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://dg3km4t6mbwwg"]
 
-[ext_resource type="Script" uid="uid://djull4qell3bf" path="res://scripts/UI/HUD.gd" id="1_v2k7p"]
+[ext_resource type="Script" uid="uid://ccfswi4egkeu8" path="res://UI/UIScript.gd" id="1_gppie"]
 [ext_resource type="PackedScene" uid="uid://b6huce6rberg3" path="res://UI/UI_Reputation.tscn" id="2_ijstf"]
 [ext_resource type="FontFile" uid="uid://dxc6n0umgi0q4" path="res://assets/fonts/Jua-Regular.ttf" id="3_4n7mi"]
 [ext_resource type="Texture2D" uid="uid://b4qjni3x30ew" path="res://assets/textures/HUD/YBottle.png" id="4_f2wx0"]
@@ -13,7 +13,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_v2k7p")
+script = ExtResource("1_gppie")
 
 [node name="Controls" type="ColorRect" parent="."]
 layout_mode = 1
@@ -80,10 +80,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -67.0
-offset_top = -560.0
-offset_right = -14.0
-offset_bottom = -537.0
+offset_left = -60.0
+offset_top = -641.0
+offset_right = -7.0
+offset_bottom = -618.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -145,7 +145,6 @@ anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.0
 offset_left = -59.0
-offset_top = 0.0
 offset_right = 58.0
 offset_bottom = 75.0
 grow_vertical = 1

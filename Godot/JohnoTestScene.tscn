@@ -59,7 +59,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.53571, 0.482358, 0)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Control" parent="CanvasLayer" instance=ExtResource("4_gs5vi")]
+[node name="HUD" parent="CanvasLayer" instance=ExtResource("4_gs5vi")]
 
 [node name="Floor" type="StaticBody3D" parent="."]
 

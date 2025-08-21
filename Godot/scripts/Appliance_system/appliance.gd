@@ -208,5 +208,6 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 
 ## Trigger action, if subclass has action
 func _on_interactable_component_action_use(_is_action: bool) -> void:
-	print("Player used action on: ", get_script().get_global_name(), ", but, it does not have action.")
+	if _is_action:
+		print("Player used action on: ", get_script().get_global_name(), ", but, it does not have action.")
 ## -------------------------------------------------------------------------------------------------

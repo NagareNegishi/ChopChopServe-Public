@@ -599,7 +599,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.49325, 0.1815, 2.71952)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.15604, 0.0150001, -0.837915)
 
 [node name="Plate" parent="." instance=ExtResource("18_h060t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.922215, 1.44696, -2.12493)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.922215, 0.693988, -2.12493)
 
 [node name="foodcrate" parent="." instance=ExtResource("19_mbgef")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69542, 1.02506, 0)

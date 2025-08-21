@@ -48,9 +48,7 @@ func put(item: Node) -> bool:
 ## @return: True if action is triggered, false otherwise
 func player_has(item: Node) -> bool:
 #--------------------------------------------
-	print("Player is holding: ", item)
-	print("Player.item_in_hand: ", GlobalScript.player.item_in_hand)
-	print("Self: ", get_script().get_global_name())
+	print("Player has: ", item, ", Self: ", get_script().get_global_name())
 #--------------------------------------------
 	# If player has nothing: move item from appliance to player (if exists), return true
 	if not item:
@@ -64,6 +62,13 @@ func player_has(item: Node) -> bool:
 		else:
 			print("Nothing to take from Bench")
 			return false
+
+	# If player has food: try to put it in Cookware
+	if item is Food:
+		for content in contents:
+			if content is Cookware:
+				return content.player_has(item)
+
 	# If item_in_hand exists: depend on if appliance can accept it
 	return put(item)
 

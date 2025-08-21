@@ -22,6 +22,20 @@ func _setup_upgradable():
 	enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
 
 
+## Trigger action, if subclass has action
+func _on_interactable_component_action_use(_is_action: bool) -> void:
+	if _is_action:
+		print("Player used action on: ", get_script().get_global_name(), ", maybe chop here??.")
+		for food in contents:
+			print("before chopping: ", food.get_script().get_global_name(), ", cook time: ", food.get_cook_time())
+		cook(1) # what is the power from player??
+		# for food in contents:
+		# 	print("after chopping: ", food.get_script().get_global_name(), ", cook time: ", food.get_cook_time())
+		# finish_cook()
+		# for food in contents:
+		# 	print("after stop chopping: ", food.get_script().get_global_name(), ", cook time: ", food.get_cook_time())
+
+
 # ------------------------------------------------------------------------------
 # may need to override them
 # assuming no cooking but chop???

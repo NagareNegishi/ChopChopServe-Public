@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://bqtbpncsp1lqe"]
+[gd_scene load_steps=4 format=3 uid="uid://bqtbpncsp1lqe"]
 
 [ext_resource type="PackedScene" uid="uid://geqq8dhkrryc" path="res://UI/UI_PlayerJoin.tscn" id="1_6vwja"]
+[ext_resource type="Script" uid="uid://cakb0cas42ccg" path="res://scripts/UI/ui_lobby_hud.gd" id="1_vhq2q"]
 [ext_resource type="FontFile" uid="uid://dxc6n0umgi0q4" path="res://assets/fonts/Jua-Regular.ttf" id="2_ykmgt"]
 
 [node name="Control" type="Control"]
@@ -10,6 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_vhq2q")
 
 [node name="PlayerList" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -93,3 +95,17 @@ theme_override_constants/outline_size = 2
 theme_override_fonts/font = ExtResource("2_ykmgt")
 theme_override_font_sizes/font_size = 13
 text = "Chop Chop Serve | Alpha Build"
+
+[node name="Server" type="Label" parent="."]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 7.0
+offset_right = 132.0
+offset_bottom = 47.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("2_ykmgt")
+theme_override_font_sizes/font_size = 40
+text = "Server"

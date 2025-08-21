@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://bu4i2rvstrdvh" path="res://assets/hat.fbx" id="2_bvqhm"]
 [ext_resource type="PackedScene" uid="uid://d2rfm5fkxeeic" path="res://assets/Frog.fbx" id="2_q3lat"]
 [ext_resource type="Texture2D" uid="uid://ds43xburqmhn0" path="res://assets/textures/misc/CircleTexture.png" id="4_ved6o"]
-[ext_resource type="PackedScene" uid="uid://tloru3qomb8r" path="res://UI/UI_order.tscn" id="6_fxc31"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l2ndj"]
 radius = 0.524702
@@ -13,8 +12,15 @@ height = 1.06912
 [sub_resource type="BoxShape3D" id="BoxShape3D_q3lat"]
 size = Vector3(2.74022, 3, 3)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_puxyr"]
-viewport_path = NodePath("Sprite3D/SubViewport")
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ved6o"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:velocity")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_xcisb"]
 
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
@@ -62,16 +68,12 @@ autostart = true
 wait_time = 0.15
 autostart = true
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.01549, 0)
-billboard = 1
-texture = SubResource("ViewportTexture_puxyr")
+[node name="MultiplayerSync" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_ved6o")
 
-[node name="SubViewport" type="SubViewport" parent="Sprite3D"]
-transparent_bg = true
-size = Vector2i(600, 132)
-
-[node name="Control" parent="Sprite3D/SubViewport" instance=ExtResource("6_fxc31")]
+[node name="Controller" type="MultiplayerSynchronizer" parent="."]
+root_path = NodePath(".")
+replication_config = SubResource("SceneReplicationConfig_xcisb")
 
 [connection signal="area_entered" from="Mesh/InteractArea" to="." method="_on_interact_area_area_entered"]
 [connection signal="area_exited" from="Mesh/InteractArea" to="." method="_on_interact_area_area_exited"]

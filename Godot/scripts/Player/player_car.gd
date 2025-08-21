@@ -15,6 +15,7 @@ extends CharacterBody3D
 var move_particle = preload("res://Particles/MoveParticles.tscn")
 var MOVE_PARTICLES_POOL = []
 
+var  player_inputs = {}
 
 ## Called when the node enters the scene tree for the first time.
 ## @return void
@@ -27,7 +28,11 @@ func _ready() -> void:
 # @param delta time to proces frame
 # @return void
 func _process(delta: float) -> void:
+	if !multiplayer.is_server():
+		return
+	
 	_movement(delta)
+	_clear_inputs()
 	
 	if !is_on_floor():
 		velocity += get_gravity() * delta
@@ -37,20 +42,39 @@ func _process(delta: float) -> void:
 # @param delta time to proces frame
 # @return void
 func _movement(delta : float) -> void:
-	#rotates mesh
-	$Mesh.rotation.y += controller.turn_input * turn_speed * delta
 	
-	if controller.move_input: #handles logic if player is moving 
+	var turn_input_avg : int = 0
+	var move_input_avg : int = 0
+	
+	for key in player_inputs.keys():
+		turn_input_avg += player_inputs[key].turn
+		move_input_avg += player_inputs[key].move
+	
+	if player_inputs.size() != 0:
+		turn_input_avg /= player_inputs.size()
+	
+	if player_inputs.size() != 0:
+		move_input_avg /= player_inputs.size()
+		
+	turn_input_avg = clampi(turn_input_avg, -1, 1)
+	move_input_avg = clampi(move_input_avg, -1, 1)
+	
+	#rotates mesh
+	$Mesh.rotation.y += turn_input_avg * turn_speed * delta
+		
+	#print(move_input_avg, turn_input_avg)
+	
+	if move_input_avg: #handles logic if player is moving 
 		var forward : Vector3 = -$Mesh.transform.basis.z.normalized()
 		
 		#halves the speed of player if in reverse
 		velocity.x = move_toward(velocity.x, 
-		forward.x * (speed if controller.move_input == 1 else speed/2) 
-		* controller.move_input, acceleration * delta)
+		forward.x * (speed if move_input_avg == 1 else speed/2) 
+		* move_input_avg, acceleration * delta)
 		
 		velocity.z = move_toward(velocity.z, 
-		forward.z * (speed if controller.move_input == 1 else speed/2) 
-		* controller.move_input, acceleration * delta)
+		forward.z * (speed if move_input_avg == 1 else speed/2) 
+		* move_input_avg, acceleration * delta)
 	else: #declerates player if not moving 
 		velocity.x = move_toward(velocity.x, 0, decceleration * delta)
 		velocity.z = move_toward(velocity.z, 0, decceleration * delta)
@@ -79,3 +103,16 @@ func _on_particle_timer_timeout() -> void:
 		get_tree().get_current_scene().add_child(particle_ref)
 		
 	particle_ref.global_transform = $Mesh/ParticleSpawn.global_transform
+
+func _clear_inputs():
+	var now = Time.get_ticks_msec()
+	for key in player_inputs.keys():
+		if now - player_inputs[key].time > 300:
+			player_inputs.erase(key)
+
+func _on_received_input(peer_id: int, move : int, turn : int):
+	player_inputs[peer_id] = {
+		"move" : move,
+		"turn" : turn,
+		"time" : Time.get_ticks_msec()
+	}

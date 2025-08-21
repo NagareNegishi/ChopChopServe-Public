@@ -6,21 +6,12 @@
 class_name Equipment
 extends Appliance
 
-signal status_changed(new_status: Status)
-
-enum Status {
-	IDLE,
-	USING,
-	BROKEN
-}
 
 @export_group("Equipment Settings")
 @export var coefficient: float = 1.0 ## Cooking efficiency modifier (1.0 = normal)
 @export var capacity: int = 1 ## Maximum number of items this appliance can hold / deal with
 @export var valid_food: Array[String] = [] ## Class names that can be placed in (Recommended)
 
-
-var current_status: Status = Status.IDLE
 var contents: Array[Node] = []
 
 
@@ -72,9 +63,6 @@ func _can_accept(item: Node) -> bool:
 	if not item:
 		print("Cannot accept item, item is null")
 		return false
-	if current_status == Status.BROKEN:
-		print("Cannot accept item: ", get_script().get_global_name(), " is broken")
-		return false
 	if contents.size() >= capacity:
 		print("Cannot accept item: ", get_script().get_global_name(), " is at full capacity")
 		return false
@@ -95,63 +83,28 @@ func _can_accept(item: Node) -> bool:
 ## @param power: The power from PoweredAppliance or Player
 func cook(_power: int) -> bool:
 	assert(false, "cook() must be implemented in " + get_class())
-	# if current_status != Status.COOKING:
-	#     assert(false, "Do not call cook() unless status is COOKING")
-	#     return false
 	return true
 
 
 ## Finish cooking process
 ## @return: True if cooking finished
 func finish_cook() -> bool:
-	if current_status != Status.USING:
-		push_warning("Cannot finish cooking unless appliance is using")
+	if is_empty():
 		return false
-	current_status = Status.IDLE
-	status_changed.emit(current_status)
 	for item in contents:
-		#if item.has_method("stop_cooking"):   #is always Food:
-		item.stop_cooking()
+		if item is Food:
+			item.stop_cooking()
 	#----------------------------------------------------------------------
-		print("stop_cooking() is called in: ", item.get_script().get_global_name())
+			print("stop_cooking() is called in: ", item.get_script().get_global_name())
 	#----------------------------------------------------------------------
 	return true
+
 
 
 ## Check if this equipment is empty
 ## @return: True if equipment is empty, false otherwise
 func is_empty() -> bool:
 	return contents.is_empty()
-
-
-## Check if this equipment can be used
-## @return: True if equipment can be used, false if broken
-func can_use() -> bool:
-	return current_status == Status.IDLE or current_status == Status.USING
-
-
-## Set the current status to broken
-## @return: True if status was changed, it will always true
-func broken() -> bool:
-	return _set_status(Status.BROKEN)
-
-
-## Set the current status to idle
-## @return: True if status was changed
-func repair() -> bool:
-	if current_status != Status.BROKEN:
-		push_warning("Cannot repair unless appliance is broken")
-		return false
-	return _set_status(Status.IDLE)
-
-
-## Set the current status and emit signal
-## @param new_status: The new status to set
-## @return: always true
-func _set_status(new_status: Status) -> bool:
-	current_status = new_status
-	status_changed.emit(new_status)
-	return true
 
 
 ## Perform action depend on what player is holding

@@ -3,14 +3,11 @@
 class_name UnPoweredAppliance
 extends Appliance
 
-signal status_changed(new_status: Status)
 
-
-# can it be on fire????? or broken?????
 enum Status {
 	IDLE,
 	USING,
-	BROKEN
+	UNABLE
 }
 
 @export_group("UnPoweredAppliance Settings")
@@ -37,18 +34,15 @@ func _ready():
 func put(item: Node) -> bool:
 	if not _can_accept(item):
 		return false
-	contents.append(item)
 	#--------------------------------------------
 	print("Put: ", item.get_script().get_global_name(), " onto: ", get_script().get_global_name())
 	print("Contents of ", get_script().get_global_name(), " are: ")
 	for content in contents:
 		print(" --- ", content.get_script().get_global_name())
 	#--------------------------------------------
-
 	# transfer item to appliance
-	GlobalScript.player.remove_item() # if we only put item from players hand
-	# if item.get_parent():
-	# 	item.get_parent().remove_child(item)
+	GlobalScript.player.remove_item()
+	contents.append(item)
 	add_child(item)
 	return true
 
@@ -70,9 +64,6 @@ func _can_accept(item: Node) -> bool:
 	if not item:
 		print("Cannot accept item, item is null")
 		return false
-	if current_status == Status.BROKEN:
-		print("Cannot accept item: ", get_script().get_global_name(), " is broken")
-		return false
 	if contents.size() >= capacity:
 		print("Cannot accept item: ", get_script().get_global_name(), " is at full capacity")
 		return false
@@ -92,7 +83,6 @@ func start_action() -> bool:
 		push_warning("No items to act on")
 		return false
 	current_status = Status.USING
-	status_changed.emit(current_status)
 	action_timer.start()
 	return _action()
 
@@ -104,33 +94,7 @@ func _action() -> bool:
 	return false
 
 
-## Set the current status to broken
-## @return: True if status was changed, it will always true
-func broken() -> bool:
-	return _set_status(Status.BROKEN)
-
-
-## Set the current status to idle
-## @return: True if status was changed
-func repair() -> bool:
-	if current_status != Status.BROKEN:
-		push_warning("Cannot repair unless appliance is broken")
-		return false
-	return _set_status(Status.IDLE)
-
-
-## Set the current status and emit signal
-## @param new_status: The new status to set
-## @return: always true
-func _set_status(new_status: Status) -> bool:
-	current_status = new_status
-	status_changed.emit(new_status)
-	action_timer.stop()
-	return true
-
-
 ## Timer callback to handle action logic
 func _on_action_timer_timeout():
 	current_status = Status.IDLE
-	status_changed.emit(current_status)
 	action_timer.stop()

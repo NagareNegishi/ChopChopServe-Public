@@ -20,7 +20,7 @@ func _init():
 ## Set up the FoodCrate
 func _ready():
 	super._ready()
-	action_interval = 0.1 # small interval to avoid rapid item taking
+	action_interval = 0.5 # small interval to avoid rapid item taking
 	_initialize_supply()
 
 
@@ -41,21 +41,6 @@ func set_supply(food_name: String):
 		push_error("Failed to load or cannot instantiate scene: " + scene_path)
 
 
-## Override unsupported methods to prevent misuse ------------------------------
-func put(_item: Node) -> bool:
-	assert(false, "Food Crate does not support putting items")
-	return false
-
-func take_at(_index: int) -> Node:
-	assert(false, "Food Crate does not support taking items at specific index")
-	return null
-
-func start_action() -> bool:
-	assert(false, "Food Crate does not support starting actions")
-	return false
-#-------------------------------------------------------------------------------
-
-
 ## Provide food from the crate
 ## @return: The food item that was taken, or null if not in IDLE status
 func take() -> Node:
@@ -63,7 +48,6 @@ func take() -> Node:
 		push_error("FoodCrate is not in IDLE status, cannot take food")
 		return null
 	current_status = Status.USING
-	status_changed.emit(current_status)
 	action_timer.start()
 	return supply.instantiate()
 
@@ -81,3 +65,18 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 		#----------------------------------------------------------------------
 		return true
 	return false
+
+
+## Override unsupported methods to prevent misuse ------------------------------
+func put(_item: Node) -> bool:
+	assert(false, "Food Crate does not support putting items")
+	return false
+
+func take_at(_index: int) -> Node:
+	assert(false, "Food Crate does not support taking items at specific index")
+	return null
+
+func start_action() -> bool:
+	assert(false, "Food Crate does not support starting actions")
+	return false
+#-------------------------------------------------------------------------------

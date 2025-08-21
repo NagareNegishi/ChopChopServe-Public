@@ -71,4 +71,3 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 func _setup_upgradable():
 	super._setup_upgradable()
 	enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
-

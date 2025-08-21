@@ -92,6 +92,9 @@ func ignite() -> bool:
 		print("Fire started on ", target.get_script().get_global_name())
 		#----------------------------------------
 		return true
+	elif target is Bench:
+		target.on_fire()
+		return true
 	else:
 		assert(false, "Target must be a PoweredAppliance to ignite.")
 		return false
@@ -112,6 +115,8 @@ func extinguish(reduction: int) -> bool:
 		_stop_fire_effects()
 		fire_extinguished.emit(target)
 	#----------------------------------------
+	elif target is Bench:
+		target.current_status = target.Status.IDLE
 	print("Fire extinguished on ", target.get_script().get_global_name(), "fire level: ", fire_level)
 	#----------------------------------------
 	return true

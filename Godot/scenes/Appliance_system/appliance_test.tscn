@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://cybdcalgwpwgf"]
+[gd_scene load_steps=31 format=3 uid="uid://cybdcalgwpwgf"]
 
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_6tyql"]
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="2_5rdc3"]
@@ -23,7 +23,6 @@
 [ext_resource type="PackedScene" uid="uid://dvn4ytv3ro6ec" path="res://scripts/Food/IngredientScenes/Tomato.tscn" id="21_4fkuw"]
 [ext_resource type="PackedScene" uid="uid://d2rk45rp8qqrd" path="res://assets/models/NuFurniture/FoodCrater.glb" id="22_4fkuw"]
 [ext_resource type="Script" uid="uid://c28hj0gk73hfy" path="res://scripts/Appliance_system/Concrete_classes/stove_with_pot.gd" id="22_qigai"]
-[ext_resource type="PackedScene" uid="uid://c6lobge52vcq" path="res://assets/models/NuFurniture/stovetop.glb" id="24_50fsw"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ihmv3"]
 size = Vector3(30, 0.03, 30)
@@ -618,4 +617,4 @@ capacity = 1
 valid_classes = Array[String]([])
 cook_interval = 1.0
 cooking_style = 0
-model_scene = ExtResource("24_50fsw")
+model_scene = null

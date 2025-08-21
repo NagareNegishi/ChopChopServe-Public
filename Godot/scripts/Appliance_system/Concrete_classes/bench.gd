@@ -4,11 +4,13 @@ class_name Bench
 extends UnPoweredAppliance
 
 var item_slots: Array[Vector3] = []  ## Where to place items
+var inflammable_component: Inflammable
 
 ## Setup the model instance
 func _init():
 	super._init()
 	model_scene = preload("res://assets/models/furniture/BasicBench.glb")
+	_setup_inflammable()
 
 
 ## Setup the bench
@@ -16,6 +18,12 @@ func _ready():
 	super._ready()
 	capacity = 4
 	_setup_item_slots()
+
+
+## Setup inflammable component
+func _setup_inflammable():
+	inflammable_component = Inflammable.new()
+	add_child(inflammable_component)
 
 
 ## Setup cookware slots, should be overridden by subclasses
@@ -42,6 +50,7 @@ func put(item: Node) -> bool:
 		return false
 	_position_item(item, contents.size() - 1)
 	return true
+
 
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
@@ -123,3 +132,14 @@ func start_action() -> bool:
 func _setup_upgradable():
 	super._setup_upgradable()
 	enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
+
+
+## Handle fire event
+func on_fire() -> void:
+	current_status = Status.UNABLE
+	for i in range(contents.size() - 1, -1, -1):
+		var food = contents[i]
+		if food is Food:
+			contents.erase(food)
+			remove_child(food)
+			food.queue_free()

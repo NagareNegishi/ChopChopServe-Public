@@ -7,7 +7,6 @@ extends Appliance
 signal status_changed(new_status: Status)
 
 enum Status {
-	IDLE,
 	COOKING,
 	OFF,
 	BROKEN
@@ -18,7 +17,7 @@ enum Status {
 @export var valid_classes: Array[String] = [] ## Class names that can be placed in (Recommended)
 @export var cook_interval: float = 1.0 ## Cook every ? seconds
 
-var current_status: Status = Status.IDLE
+var current_status: Status = Status.COOKING
 var contents: Array[Node] = []
 var cook_timer: Timer
 var power: int = 1
@@ -29,11 +28,7 @@ var cookware_slots: Array[Vector3] = []  ## Where to place cookware
 func _ready():
 	super._ready()
 	_setup_cookware_slots()
-	# Create and configure timer
-	cook_timer = Timer.new()
-	cook_timer.wait_time = cook_interval
-	cook_timer.timeout.connect(_on_cook_timer_timeout)
-	add_child(cook_timer)
+	# _setup_cook_timer()
 
 
 ## Setup cookware slots, should be overridden by subclasses
@@ -85,12 +80,11 @@ func put(item: Node) -> bool:
 ## Place a Cookware onto this PoweredAppliance, start cooking if applicable
 ## @param cookware: The Cookware to place on this PoweredAppliance
 func _put_cookware(cookware: Cookware) -> void:
-	cookware.restore_original_transform()
+	cookware.restore_original_transform() #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	_position_cookware(cookware, contents.size() - 1)
 	cookware.lock()
 	if not cookware.is_empty() and can_cook():
 		cookware.cook(power)
-		_set_status(Status.COOKING)
 
 
 ## Remove and return the last item from this appliance
@@ -99,9 +93,17 @@ func take() -> Node:
 	if contents.is_empty():
 		return null
 	var item = contents.pop_back()
-	item.unlock()
+	if item is Cookware:
+		_take_cookware(item)
 	remove_child(item)
 	return item
+
+
+## Take cookware from this appliance
+## @param cookware: The Cookware to take
+func _take_cookware(cookware: Cookware) -> void:
+	cookware.finish_cook()
+	cookware.unlock()
 
 
 ## Check if this appliance can accept the given item
@@ -132,14 +134,12 @@ func _can_accept(item: Node) -> bool:
 ## Start cooking process
 ## @return: True if cooking started
 func start_cook() -> bool:
-	if current_status != Status.IDLE:
+	if current_status != Status.COOKING:
 		return false
 	if contents.is_empty():
 		push_warning("No items to cook")
 		return false
-	current_status = Status.COOKING
-	status_changed.emit(current_status)
-	# cook_timer.start() let food handle the timer
+	# cook_timer.start()
 	#----------------------------------------------------------------------
 	print("start_cook() is called in: ", get_script().get_global_name())
 	#----------------------------------------------------------------------
@@ -156,9 +156,7 @@ func stop_cook() -> bool:
 	for item in contents:
 		if item is Equipment:
 			item.finish_cook()
-	current_status = Status.IDLE
-	status_changed.emit(current_status)
-	cook_timer.stop()
+	# cook_timer.stop()
 	#----------------------------------------------------------------------
 	print("stop_cook() is called in: ", get_script().get_global_name())
 	#----------------------------------------------------------------------
@@ -168,20 +166,12 @@ func stop_cook() -> bool:
 ## Perform cooking logic
 ## This method should be overridden in subclasses to implement specific cooking behavior
 func _cook() -> bool:
-	if current_status != Status.COOKING:
-		assert(false, "Do not call cook() unless status is COOKING")
-		return false
-
 	for item in contents:
 		if item is Cookware:
 			#----------------------------------------------------------------------
 			print("Cooking with: ", item.get_script().get_global_name())
 			#----------------------------------------------------------------------
 			item.cook(power)
-
-		# potentially need it for blender
-		# elif item.has_method("cook"): ## Check the method name!!!!!!!!!!!!!!!!!!!!!!!!
-		# 	item.cook(power, cooking_style)
 	return true
 
 
@@ -194,7 +184,7 @@ func is_empty() -> bool:
 ## Check if this PoweredAppliance can cook
 ## @return: True if PoweredAppliance can cook, false otherwise
 func can_cook() -> bool:
-	return current_status == Status.COOKING or current_status == Status.IDLE
+	return current_status == Status.COOKING
 
 
 ## Set the current status to broken
@@ -209,7 +199,7 @@ func repair() -> bool:
 	if current_status != Status.BROKEN:
 		push_warning("Cannot repair unless appliance is broken")
 		return false
-	return _set_status(Status.IDLE)
+	return _set_status(Status.COOKING)
 
 
 ## Set the current status to off
@@ -225,7 +215,7 @@ func power_off() -> bool:
 func power_on() -> bool:
 	if current_status == Status.BROKEN:
 		return false
-	return _set_status(Status.IDLE)
+	return _set_status(Status.COOKING)
 
 
 ## Set the current status and emit signal
@@ -234,9 +224,17 @@ func power_on() -> bool:
 func _set_status(new_status: Status) -> bool:
 	current_status = new_status
 	status_changed.emit(new_status)
-	cook_timer.stop()
+	# cook_timer.stop()
 	return true
 
+
+# Current implementation uses timer in Food, but keep it for future improvements -------------------
+## Setup cooking timer
+func _setup_cook_timer():
+	cook_timer = Timer.new()
+	cook_timer.wait_time = cook_interval
+	cook_timer.timeout.connect(_on_cook_timer_timeout)
+	add_child(cook_timer)
 
 ## Timer callback to handle cooking logic
 func _on_cook_timer_timeout():
@@ -244,7 +242,7 @@ func _on_cook_timer_timeout():
 		_cook()
 	else:
 		cook_timer.stop()
-
+#---------------------------------------------------------------------------------------------------
 
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
@@ -257,7 +255,7 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 	if not item:
 		var cookware = take()
 		if cookware:
-			cookware.finish_cook()
+			
 			GlobalScript.player.pickup_item(cookware)
 			#----------------------------------------------------------------------
 			print("Player took: ", cookware.get_script().get_global_name(), ", from: ", get_script().get_global_name())
@@ -287,23 +285,24 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 ## Serve food from Cookware to Plate
 ## @param plate: The Plate to serve food to
 ## @return: True if serving was successful, false otherwise
-func serve_to_plate(plate: Plate) -> bool: # Node should change to Plate when its ready!!!!!!!!
+func serve_to_plate(plate: Plate) -> bool:
 	if contents.is_empty():
 		print("Nothing to serve from: ", get_script().get_global_name())
 		return false
 
-	# likely need to check if plate is ready here later!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	if not plate.is_ready(): # Method in Plate, checks if plate is ready
+		print("Plate is not ready: ", plate.get_script().get_global_name())
+		return false
 
 	var cookware = contents[0]
-	# Method in Plate, takes Array of Food
 	if cookware.is_empty():
 		print("Nothing to serve from: ", cookware.get_script().get_global_name())
 		return false
 
-	plate.add_list_items(cookware.take_all())
+	plate.add_list_items(cookware.take_all()) # Method in Plate, takes Array of Food
 	stop_cook()
 	#----------------------------------------------------------------------
-	print("Cookware :", cookware.get_script().get_global_name(), ", served to: ", plate.name)
+	print("Cookware :", cookware.get_script().get_global_name(), ", served to: ", plate.get_script().get_global_name())
 	#----------------------------------------------------------------------
 	return true
 

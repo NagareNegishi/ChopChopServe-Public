@@ -27,9 +27,8 @@ func put(item: Node) -> bool:
 func _put_food(food: Food) -> void:
 	food.current_visibility(false)
 	food.change_collisions()
-	if current_status == Status.USING:
-		average_food()
-		food.startCooking(int(power_receiving * coefficient), cooking_style)
+	average_food()
+	food.startCooking(int(power_receiving * coefficient), cooking_style)
 	print("Food placed in cookware: ", food.get_script().get_global_name(), ", Food cook time: ", food.get_cook_time())
 
 
@@ -52,12 +51,6 @@ func average_food() -> int:
 ## Perform cooking logic
 ## @param power: The power from PoweredAppliance
 func cook(power: int) -> bool:
-	if current_status == Status.IDLE:
-		current_status = Status.USING
-		status_changed.emit(current_status)
-	elif current_status != Status.USING:
-		assert(false, "Do not call cook() unless status is USING")
-		return false
 	power_receiving = power
 	for food in contents:
 		food.startCooking(int(power_receiving * coefficient), cooking_style)
@@ -88,17 +81,18 @@ func player_has(item: Node) -> bool:
 ## Serve food from Cookware to Plate
 ## @param plate: The Plate to serve food to
 ## @return: True if serving was successful, false otherwise
-func serve_to_plate(plate: Plate) -> bool: # Node should change to Plate when its ready!!!!!!!!
+func serve_to_plate(plate: Plate) -> bool:
 	if contents.is_empty():
 		print("Nothing to serve from: ", get_script().get_global_name())
 		return false
 
-	# likely need to check if plate is ready here later!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	if not plate.is_ready():	# Method in Plate, checks if plate is ready
+		print("Plate is not ready: ", plate.get_script().get_global_name())
+		return false
 
-	# Method in Plate, takes Array of Food
 	finish_cook()
-	plate.add_list_items(take_all())
+	plate.add_list_items(take_all())	# Method in Plate, takes Array of Food
 	#----------------------------------------------------------------------
-	print("Cookware :", get_script().get_global_name(), ", served to: ", plate.name)
+	print("Cookware :", get_script().get_global_name(), ", served to: ", plate.get_script().get_global_name())
 	#----------------------------------------------------------------------
 	return true

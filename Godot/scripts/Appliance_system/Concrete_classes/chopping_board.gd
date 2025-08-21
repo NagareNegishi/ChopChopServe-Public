@@ -1,3 +1,8 @@
+## ChoppingBoard is a type of Cookware that allows players to chop food items.
+## Unlike other Cookware, it does not require any power source to operate.
+## Chopping is triggered by player interaction.
+## ChoppingBoard can only hold one food item at a time.
+## ChoppingBoard can not be picked up, and always on ChopTable.
 class_name ChoppingBoard
 extends Cookware
 
@@ -9,17 +14,48 @@ func _init():
 ## Setup the fryer properties
 func _ready():
 	super._ready()
+	interactable_component.is_pickup = false
 	cooking_style = ApplianceFactory.CookingStyle.CHOP
 	valid_food = ["Fish", "Tomato"] # Confirm later!!!!!!!!!!!!!!
-	capacity = 4
+	capacity = 1 # one item only
 	coefficient = 1.0
 
 
-## Override upgradable setup in concrete appliances
-func _setup_upgradable():
-	super._setup_upgradable()
-	enable_upgrade("coefficient", [0.2, 0.2, 0.2], [100, 200, 300])
-	enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
+# ## Override upgradable setup in concrete appliances
+# func _setup_upgradable():
+# 	super._setup_upgradable()
+# 	enable_upgrade("coefficient", [0.2, 0.2, 0.2], [100, 200, 300])
+# 	# enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
+
+
+## Place an item onto this appliance
+## @param item: The Node to place on this appliance
+## @return: True if placement was successful, false otherwise
+func put(item: Node) -> bool:
+	if not _can_accept(item):
+		return false
+	# transfer item to appliance
+	GlobalScript.player.remove_item()
+	contents.append(item)
+	add_child(item)
+	item.position = Vector3(0.0, size.y * 0.5, 0.0)
+#--------------------------------------------
+	print("Put: ", item.get_script().get_global_name(), " onto: ", get_script().get_global_name())
+#--------------------------------------------
+	return true
+
+
+## Perform cooking logic
+## @param power: The power from PoweredAppliance
+func cook(power: int) -> bool:
+	for food in contents:
+		food.startCooking(int(power * coefficient), cooking_style)
+		#-----------------------------------------------------------------------
+		print(get_script().get_global_name(), " start cooking ", food.get_script().get_global_name(),
+		 " with power: ", int(power * coefficient), ", Style is: ",
+		ApplianceFactory.CookingStyle.keys()[cooking_style], ", Food cook time: ", food.get_cook_time())
+		#----------------------------------------------------------------------
+	return true
 
 
 ## Trigger action, if subclass has action

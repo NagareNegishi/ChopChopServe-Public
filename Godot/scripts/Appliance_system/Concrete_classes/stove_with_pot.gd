@@ -6,14 +6,3 @@ extends Stove
 func _ready():
 	super._ready()
 	_add_cookware("pot")
-
-	# test()#----------------------------------------------------------------------
-
-#----------------------------------------------------------------------
-func test():
-	var pot = contents[0]
-	if pot:
-		pot.test()
-	# start_cook()
-	# inflammable_component.ignite()
-#----------------------------------------------------------------------

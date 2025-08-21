@@ -52,36 +52,6 @@ func put(item: Node) -> bool:
 	return true
 
 
-## Perform action depend on what player is holding
-## @param _item: The Node Player is holding
-## @return: True if action is triggered, false otherwise
-func player_has(item: Node) -> bool:
-#--------------------------------------------
-	print("Player has: ", item, ", Self: ", get_script().get_global_name())
-#--------------------------------------------
-	# If player has nothing: move item from appliance to player (if exists), return true
-	if not item:
-		var taken = take()
-		if taken:
-			GlobalScript.player.pickup_item(taken)
-			#----------------------------------------------------------------------
-			print("Player took: ", taken.get_script().get_global_name(), ", from: ", get_script().get_global_name())
-			#----------------------------------------------------------------------
-			return true
-		else:
-			print("Nothing to take from Bench")
-			return false
-
-	# If player has food: try to put it in Cookware
-	if item is Food:
-		for content in contents:
-			if content is Cookware:
-				return content.player_has(item)
-
-	# If item_in_hand exists: depend on if appliance can accept it
-	return put(item)
-
-
 ## Remove and return item at specific index
 ## @param index: Index of item to remove
 ## @return: The Node that was removed, or null if invalid index
@@ -143,3 +113,33 @@ func on_fire() -> void:
 			contents.erase(food)
 			remove_child(food)
 			food.queue_free()
+
+
+## Perform action depend on what player is holding
+## @param _item: The Node Player is holding
+## @return: True if action is triggered, false otherwise
+func player_has(item: Node) -> bool:
+#--------------------------------------------
+	print("Player has: ", item, ", Self: ", get_script().get_global_name())
+#--------------------------------------------
+	# If player has nothing: move item from appliance to player (if exists), return true
+	if not item:
+		var taken = take()
+		if taken:
+			GlobalScript.player.pickup_item(taken)
+			#----------------------------------------------------------------------
+			print("Player took: ", taken.get_script().get_global_name(), ", from: ", get_script().get_global_name())
+			#----------------------------------------------------------------------
+			return true
+		else:
+			print("Nothing to take from Bench")
+			return false
+
+	# If player has food: try to put it in Cookware
+	if item is Food:
+		for content in contents:
+			if content is Cookware:
+				return content.player_has(item)
+
+	# If item_in_hand exists: depend on if appliance can accept it
+	return put(item)

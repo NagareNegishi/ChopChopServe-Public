@@ -40,6 +40,7 @@ func request_sabotage(saboteur_id: int, target_id: int, sabotage_type: int) -> v
 		"crate_switch":
 			print("crate stuff")
 		"water_spill" :
+			spawn_water_spill(target_id, 10.0) # duration can be adjuste
 			print("water stuff")
 		"fire":
 			print("fire stuff")
@@ -61,3 +62,11 @@ func spawn_water_spill(target_id: int, duration: float) -> void:
 	get_tree().get_current_scene().add_child(spill)
 	spill.global_position = get_random_spill_position(target_id)	
 	spill.start_timer(duration)
+
+func get_random_spill_position(target_id: int) -> Vector3:
+	# Example: pick a random spot near the target
+	var target_node = get_tree().get_current_scene().get_node("Player_%d" % target_id)
+	var pos = target_node.global_transform.origin
+	pos.x += randf() * 4 - 2  # random offset -2..2
+	pos.z += randf() * 4 - 2
+	return pos

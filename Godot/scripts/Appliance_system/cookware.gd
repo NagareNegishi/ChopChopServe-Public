@@ -4,6 +4,7 @@
 class_name Cookware
 extends Equipment
 
+var power_receiving: int = 0
 
 ## Setup the cookware
 func _ready():
@@ -16,39 +17,47 @@ func _ready():
 ## @return: True if placement was successful, false otherwise
 func put(item: Node) -> bool:
 	var success = super.put(item)
-	if success:
-		average_food()
+	if success: # and item is Food:
+		_put_food(item)
 	return success
+
+
+## Place food into the cookware
+## @param food: The Food item to place into the cookware
+func _put_food(food: Food) -> void:
+	food.current_visibility(false)
+	food.change_collisions()
+	average_food()
+	food.startCooking(int(power_receiving * coefficient), cooking_style)
+	print("Food placed in cookware: ", food.get_script().get_global_name(), ", Food cook time: ", food.get_cook_time())
 
 
 ## Average cooking time of food in cookware
 ## Only subclass of Food should be in Cookware
-func average_food():
+## Note: Do not call when contents is empty (Food has different default cooking time)
+## @return: The average cooking time of all food items in the cookware
+func average_food() -> int:
 	if contents.size() == 1:
-		return
+		return contents[0].get_cook_time()
 	var total = 0.0
 	for food in contents:
 		total += food.get_cook_time()
 	var average = int(total / contents.size())  # we need to check if we want to float or int!!!!!!!!!!
 	for food in contents:
 		food.set_cook_time(average)
+	return average
 
 
 ## Perform cooking logic
 ## @param power: The power from PoweredAppliance
 func cook(power: int) -> bool:
-	if current_status == Status.IDLE:
-		current_status = Status.USING
-		status_changed.emit(current_status)
-	elif current_status != Status.USING:
-		assert(false, "Do not call cook() unless status is USING")
-		return false
+	power_receiving = power
 	for food in contents:
-		food.startCooking(power * coefficient, cooking_style)
+		food.startCooking(int(power_receiving * coefficient), cooking_style)
 		#-----------------------------------------------------------------------
 		print(get_script().get_global_name(), " start cooking ", food.get_script().get_global_name(),
-		 " with power: ", power * coefficient, ", Style is: ",
-		ApplianceFactory.CookingStyle.keys()[cooking_style])
+		 " with power: ", int(power_receiving * coefficient), ", Style is: ",
+		ApplianceFactory.CookingStyle.keys()[cooking_style], ", Food cook time: ", food.get_cook_time())
 		#----------------------------------------------------------------------
 	return true
 
@@ -57,30 +66,33 @@ func cook(power: int) -> bool:
 ## @param item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
 func player_has(item: Node) -> bool:
+	# #----------------------------------------------------------------------------
+	# if item:
+	# 	print("its : ", item.get_script().get_global_name())
+	# else:
+	# 	print("player has null!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+
+	# #----------------------------------------------------------------------------
 	if item is Plate:
 		return serve_to_plate(item)
 	return super.player_has(item)
 
 
-func serve_to_plate(plate: Plate) -> bool: # Node should change to Plate when its ready!!!!!!!!
+## Serve food from Cookware to Plate
+## @param plate: The Plate to serve food to
+## @return: True if serving was successful, false otherwise
+func serve_to_plate(plate: Plate) -> bool:
 	if contents.is_empty():
-		push_warning("Nothing to serve")
+		print("Nothing to serve from: ", get_script().get_global_name())
 		return false
-	#----------------------------------------------------------------------
-	if not plate:  # could remove it later!!!!!!!!!!!!!!!!!!!!!!
-		push_warning("Cannot serve to null")
-		return false
-	#----------------------------------------------------------------------
-	if plate.has_method("is_ready"):
-		if not plate.is_ready():
-			push_warning("Cannot serve to non-ready plate") # maybe not empty? maybe dirty??
-			return false
 
-		# Method in Plate, takes Array of Food
-		plate.add_list_items(take_all())
-		finish_cook()
-		#----------------------------------------------------------------------
-		print("Cookware :", get_script().get_global_name(), ", served to: ", plate.name)
-		#----------------------------------------------------------------------
-	push_warning("Plate does not provide required methods")
-	return false
+	if not plate.is_ready():	# Method in Plate, checks if plate is ready
+		print("Plate is not ready: ", plate.get_script().get_global_name())
+		return false
+
+	finish_cook()
+	plate.add_list_items(take_all())	# Method in Plate, takes Array of Food
+	#----------------------------------------------------------------------
+	print("Cookware :", get_script().get_global_name(), ", served to: ", plate.get_script().get_global_name())
+	#----------------------------------------------------------------------
+	return true

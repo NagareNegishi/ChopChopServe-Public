@@ -12,6 +12,7 @@ func _ready() -> void:
 	input_timer.timeout.connect(_send_input)
 	input_timer.autostart = true
 	input_timer.start()
+
 	
 func _process(delta: float) -> void:
 	move_input = 0
@@ -31,8 +32,7 @@ func _process(delta: float) -> void:
 
 func _send_input():
 	rpc("_receive_input", multiplayer.get_unique_id(), move_input, turn_input)
-	
 
-@rpc("any_peer")
+@rpc("any_peer", "call_local")
 func _receive_input(sender_id : int, move : int, turn : int):
 	get_parent()._on_received_input(sender_id, move, turn)

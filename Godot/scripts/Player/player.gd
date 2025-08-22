@@ -19,6 +19,13 @@ var move_particle = preload("res://Particles/MoveParticles.tscn")
 var item_in_hand : Node3D = null
 var can_dash : bool = true
 
+@onready var controller : PlayerController = $Controller
+
+func _enter_tree() -> void:
+	set_multiplayer_authority(name.to_int())
+	scale = Vector3(1,1,1)
+
+
 
 ## Called when the node enters the scene tree for the first time.
 ## @return void
@@ -34,7 +41,8 @@ func _ready() -> void:
 ## @param delta the times it takes per frame to render
 ## @return void
 func _physics_process(delta: float) -> void:
-
+	if !is_multiplayer_authority():
+		return
 	# Add the gravity.
 	if !is_on_floor():
 		velocity += get_gravity() * delta
@@ -56,8 +64,7 @@ func _rotate_player(delta: float) -> void:
 ## @param delta the delta from process physics
 ## @return void
 func _movement(delta : float) -> void:
-	var input_dir := Input.get_vector("Up", "Down", "Right", "Left")
-	_direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	_direction = (transform.basis * Vector3(controller.input_dir.x, 0, controller.input_dir.y)).normalized()
 	
 	if _direction:
 		velocity.x = move_toward(velocity.x, _direction.x * SPEED, ACCELERATION * delta)
@@ -120,7 +127,11 @@ func _inputs() -> void:
 ## Handles when the player interacts
 ## @return void
 func _interact() -> void:
-	if (item_in_hand != null && (_closest_item == null || _closest_item != null && _closest_item.is_pickup)):
+	if item_in_hand is Plate && _closest_item.get_parent() is Food:
+		_closest_item.interact()
+		
+	if (item_in_hand != null && (_closest_item == null || 
+	_closest_item != null && _closest_item.is_pickup)):
 		drop_item(false)
 	
 	if _closest_item == null:

@@ -1,29 +1,21 @@
 extends Node
 
-# Dictionary to hold each player's reutation
-var player_reputations: Dictionary = {}
+@export var total_reputation: float = 20.0
 
-signal reputation_changed(peer_id: int, new_reputation: float)
+signal reputation_changed(new_reputation: float)
 
-# Initialise a player's reputation
-func register_player(peer_id: int, starting_reputation: float = 20.0) -> void:
-	player_reputations[peer_id] = clamp(starting_reputation, 0, 100)
-	print("Player %d registered with reputation: %d" % [peer_id, player_reputations[peer_id]])
+# Function to add to the total reputation
+func add_reputation(amount: float) -> void:
+	# Clamp the total_reputation between 0 and 100
+	total_reputation = clamp(total_reputation + amount, 0, 100)
+	print("Reputation changed to: %d" % total_reputation)
+	reputation_changed.emit(total_reputation)
 
-# add reputation to a specific player
-func add_player_reputation(peer_id: int, amount: float) -> void:
-	if peer_id in player_reputations:
-		player_reputations[peer_id] = clamp(player_reputations[peer_id] + amount, 0, 100)
-		print("Player %d reputation changed to: %f" % [peer_id, player_reputations[peer_id]])
-		reputation_changed.emit(peer_id, player_reputations[peer_id])
-		# Does the game end when they reach 100?
+# Function to call to minus from the total_reputation
+func minus_reputation(amount: float) -> void:
+	# Send it to add but with a -
+	add_reputation(-amount)
 
-# Subtract reputation
-func minus_reputation(peer_id: int, amount: float) -> void:
-	add_player_reputation(peer_id, -amount)
-
-# Get a player's current reputation
-func get_player_reputation(peer_id: int) -> float:
-	if peer_id in player_reputations:
-		return player_reputations[peer_id]
-	return 0.0 # Default if player not found
+# Function to get the current reputation values
+func get_reputation() -> float:
+	return total_reputation

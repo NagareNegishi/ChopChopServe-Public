@@ -1,4 +1,6 @@
-[gd_scene load_steps=0 format=3 uid="uid://0nellx788ueo"]
+[gd_scene load_steps=2 format=3 uid="uid://0nellx788ueo"]
+
+[ext_resource type="Script" uid="uid://d2xjqf30xr0l8" path="res://scripts/Sabotage/sabotageUI.gd" id="1_ngd6u"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -7,6 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_ngd6u")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
@@ -20,3 +23,5 @@ text = "Water Spill"
 [node name="RatButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Rat Spawn"
+
+[connection signal="pressed" from="VBoxContainer/WaterButton" to="." method="_on_water_button_pressed"]

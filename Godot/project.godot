@@ -91,6 +91,10 @@ Throw={
 ]
 }
 
+[rendering]
+
+environment/volumetric_fog/volume_depth=150
+
 [shader_globals]
 
 diffuse_curve={

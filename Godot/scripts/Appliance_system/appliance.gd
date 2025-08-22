@@ -41,6 +41,7 @@ func _setup_interactable():
 	add_child(interactable_component)
 	interactable_component.interacted.connect(_on_interactable_component_interacted)
 	interactable_component.toggle_collision.connect(_on_interactable_component_toggle_collision)
+
 	interactable_component.hovered.connect(_on_interactable_component_hovered)
 	interactable_component.action_use.connect(_on_interactable_component_action_use)
 

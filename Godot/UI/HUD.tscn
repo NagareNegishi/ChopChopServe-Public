@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://dg3km4t6mbwwg"]
 
-[ext_resource type="Script" uid="uid://djull4qell3bf" path="res://scripts/UI/HUD.gd" id="1_v2k7p"]
+[ext_resource type="Script" uid="uid://ccfswi4egkeu8" path="res://UI/UIScript.gd" id="1_gppie"]
 [ext_resource type="PackedScene" uid="uid://b6huce6rberg3" path="res://UI/UI_Reputation.tscn" id="2_ijstf"]
 [ext_resource type="FontFile" uid="uid://dxc6n0umgi0q4" path="res://assets/fonts/Jua-Regular.ttf" id="3_4n7mi"]
 [ext_resource type="Texture2D" uid="uid://b4qjni3x30ew" path="res://assets/textures/HUD/YBottle.png" id="4_f2wx0"]
@@ -13,7 +13,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_v2k7p")
+script = ExtResource("1_gppie")
 
 [node name="Controls" type="ColorRect" parent="."]
 layout_mode = 1
@@ -80,10 +80,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -67.0
-offset_top = -560.0
-offset_right = -14.0
-offset_bottom = -537.0
+offset_left = -60.0
+offset_top = -641.0
+offset_right = -7.0
+offset_bottom = -618.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -100,46 +100,43 @@ layout_mode = 1
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 9.0
-offset_top = 13.0
-offset_right = 455.0
-offset_bottom = 66.0
+offset_left = 551.0
+offset_top = 4.0
+offset_right = 997.0
+offset_bottom = 57.0
 grow_horizontal = 1
 grow_vertical = 1
+scale = Vector2(-1, 1)
 
 [node name="Team2Rep" parent="." instance=ExtResource("2_ijstf")]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_bottom = 0.0
-offset_left = -9.0
-offset_top = 13.0
-offset_right = 437.0
-offset_bottom = 66.0
+offset_left = -542.0
+offset_top = 1.0
+offset_right = -95.9998
+offset_bottom = 54.0
 grow_horizontal = 0
 grow_vertical = 1
-scale = Vector2(-1, 1)
+rotation = 0.00872665
 
 [node name="Sauce" parent="Team2Rep" index="0"]
+offset_left = -100.992
+offset_top = -9.45677
+offset_right = 583.008
+offset_bottom = 17.5432
 value = 0.2
 tint_under = Color(0.992157, 0.917647, 0.301961, 0.392157)
 tint_progress = Color(0.990784, 0.919061, 0.301274, 1)
 
 [node name="Bottle" parent="Team2Rep" index="1"]
-offset_top = -48.5
-offset_bottom = 41.5
+offset_left = -329.0
+offset_top = -48.4215
+offset_right = -108.0
+offset_bottom = 41.5785
 texture = ExtResource("4_f2wx0")
 flip_h = false
-
-[node name="Day2" parent="Team2Rep" index="2"]
-offset_left = 217.0
-offset_top = -21.0
-offset_right = 255.0
-offset_bottom = 9.0
-scale = Vector2(-1, 1)
-theme_override_colors/font_color = Color(0.99545, 0.949996, 0.577243, 1)
-theme_override_font_sizes/font_size = 22
-text = "20"
 
 [node name="UIGameState" parent="." instance=ExtResource("4_uk570")]
 layout_mode = 1

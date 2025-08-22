@@ -107,6 +107,35 @@ func is_empty() -> bool:
 	return contents.is_empty()
 
 
+## Check if this equipment can be used
+## @return: True if equipment can be used, false if broken
+func can_use() -> bool:
+	return current_status == Status.IDLE
+
+
+## Set the current status to broken
+## @return: True if status was changed, it will always true
+func broken() -> bool:
+	return _set_status(Status.BROKEN)
+
+
+## Set the current status to idle
+## @return: True if status was changed
+func repair() -> bool:
+	if current_status != Status.BROKEN:
+		push_warning("Cannot repair unless appliance is broken")
+		return false
+	return _set_status(Status.IDLE)
+
+
+## Set the current status and emit signal
+## @param new_status: The new status to set
+## @return: always true
+func _set_status(new_status: Status) -> bool:
+	current_status = new_status
+	status_changed.emit(new_status)
+	return true
+
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise

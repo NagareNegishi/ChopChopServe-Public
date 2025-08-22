@@ -309,7 +309,6 @@ func serve_to_plate(plate: Plate) -> bool:
 
 
 # Functions for Sabotage System---------------------------------------------------------------------
-
 ## Get the current progress of cookwares
 ## Note: Only use it when PoweredAppliance can be operated
 ## Note: Progress is defined by the `cook_time` of `Food` -> smaller values are more progressed

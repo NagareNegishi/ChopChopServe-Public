@@ -13,6 +13,7 @@ extends Appliance
 @export var valid_food: Array[String] = [] ## Class names that can be placed in (Recommended)
 
 var contents: Array[Node] = []
+var can_use: bool = false
 
 
 ## Setup the equipment
@@ -100,11 +101,22 @@ func finish_cook() -> bool:
 	return true
 
 
-
 ## Check if this equipment is empty
 ## @return: True if equipment is empty, false otherwise
 func is_empty() -> bool:
 	return contents.is_empty()
+
+
+## Check if this equipment can be used
+## @return: True if equipment can be used, false otherwise
+func can_cook() -> bool:
+	return can_use and not is_empty()
+
+
+## Set the can_use property, Appliance use only
+## @param value: True if equipment can be used, false otherwise
+func set_can_use(value: bool):
+	can_use = value
 
 
 ## Perform action depend on what player is holding

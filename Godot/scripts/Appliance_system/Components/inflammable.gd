@@ -96,7 +96,7 @@ func ignite() -> bool:
 		target.on_fire()
 		return true
 	else:
-		assert(false, "Target must be a PoweredAppliance to ignite.")
+		assert(false, "Target must be a PoweredAppliance or Bench to ignite.")
 		return false
 
 

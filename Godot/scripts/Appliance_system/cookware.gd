@@ -27,9 +27,10 @@ func put(item: Node) -> bool:
 func _put_food(food: Food) -> void:
 	food.current_visibility(false)
 	food.change_collisions()
-	average_food()
-	food.startCooking(int(power_receiving * coefficient), cooking_style)
-	print("Food placed in cookware: ", food.get_script().get_global_name(), ", Food cook time: ", food.get_cook_time())
+	if can_cook():
+		average_food()
+		food.startCooking(int(power_receiving * coefficient), cooking_style)
+	print("Food placed in cookware: ", food.get_script().get_global_name(), ", Cookware can cook: ", can_cook(), ", Food cook time: ", food.get_cook_time())
 
 
 ## Average cooking time of food in cookware
@@ -51,6 +52,8 @@ func average_food() -> int:
 ## Perform cooking logic
 ## @param power: The power from PoweredAppliance
 func cook(power: int) -> bool:
+	if not can_cook():
+		return false
 	power_receiving = power
 	for food in contents:
 		food.startCooking(int(power_receiving * coefficient), cooking_style)

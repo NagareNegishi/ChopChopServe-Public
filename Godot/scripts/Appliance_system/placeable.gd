@@ -15,6 +15,7 @@ const FLOORS = 1
 const PLAYERS = 2
 const APPLIANCES = 4
 
+@export_group("Placeable Settings")
 ## Check collisions against these layers to prevent invalid placement
 @export var collide_with: int = FLOORS + PLAYERS + APPLIANCES
 ## Visual appearance of the placeable object
@@ -64,6 +65,7 @@ func _ready():
 #----------------------------------------
 	lock()
 	# print_sync_properties()
+	_store_original_transform()
 #----------------------------------------
 
 
@@ -95,7 +97,7 @@ func setup_children():
 
 ## Initialize collision shape based on size
 func setup_collision():
-	collision_layer = 1   #APPLIANCES     !!!! use floor until player sort collision layer!!!!
+	collision_layer = 1   #APPLIANCES     !!!! use floor until the team sort collision layer!!!!
 	collision_mask = 1  #collide_with
 	# Setup physics collision shape
 	if collision_shape:
@@ -327,5 +329,45 @@ func print_sync_properties():
 			print("Property ", i, ": ", property)
 
 
+# External additions------------------------------------------------------------
+## Toggle physics state - requires documentation from original author
 func turnOnPhysics(is_on : bool):
 	set_deferred("freeze", !is_on)
+#-------------------------------------------------------------------------------
+
+
+
+#-------------------------------------------------------------------------------
+# This part should be remove for better performance
+# this is fallback code for if player can not return placeable as original transform
+
+var original_transform: Transform3D
+var original_scale: Vector3
+var original_model_transform: Transform3D
+var original_model_scale: Vector3
+
+func _store_original_transform():
+	# Store the main object's transform/scale
+	original_transform = transform
+	original_scale = scale
+	
+	# Store model's transform/scale if it exists
+	if model_instance:
+		original_model_transform = model_instance.transform
+		original_model_scale = model_instance.scale
+	
+	print("Original transforms stored for ", get_class())
+
+func restore_original_transform():
+	# Restore main object
+	transform = original_transform
+	scale = original_scale
+	
+	# Restore model if it exists
+	if model_instance:
+		model_instance.transform = original_model_transform
+		model_instance.scale = original_model_scale
+	
+	print("All transforms restored for ", get_class())
+
+#-------------------------------------------------------------------------------

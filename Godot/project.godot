@@ -24,6 +24,7 @@ ReputationSystem="*res://scripts/Reputation/reputationSystem.gd"
 CurrencySystem="*res://scripts/Currency/currencySystem.gd"
 GamePhases="*res://scripts/gamePhases.gd"
 ApplianceFactory="*res://scripts/Appliance_system/appliance_factory.gd"
+ApplianceManager="*res://scripts/Appliance_system/appliance_manager.gd"
 
 [display]
 

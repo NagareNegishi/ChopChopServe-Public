@@ -3,7 +3,7 @@ class_name FoodCourt extends Node
 const SECOND_FROM_QUEUE_BACK = 3
 
 # Maximum times and timers relating to customers
-const NEW_CUSTOMER_DELAY : float = 0.5
+const NEW_CUSTOMER_DELAY : float = 1.5
 const QUEUE_CHECK_DELAY : float = 0.5
 var _time_since_last_customer : float = 0
 var _time_since_queue_check : float = 0.5
@@ -17,7 +17,7 @@ var number_of_restaurants = 2
 @export var tables : Array[Table] = [] # Where customers can order from
 @export var queue_spots: Array[QueueSpot] = [] # Where customers will queue
 @export var customer_spawn_point : Node3D # Where customers spawn
-
+@export var customer_exit_point : Node3D # Where customers leave food court to
 ## Initialize restaurant with server and communication ids
 func initialize(game_server : Server, id : String) -> void:
 	_game_server = game_server
@@ -29,6 +29,10 @@ func _ready():
 		occupiable.initialize(str(_id,"occupiable_",_next_id))
 		_game_server.register_service(str(_id,"occupiable_",_next_id), occupiable)
 		_next_id += 1
+
+func get_exit_point():
+	return customer_exit_point
+
 ## Returns a randomly selected free table or null if all are occupied	
 func get_free_table():
 	# Checking for free tables
@@ -52,10 +56,6 @@ func get_free_queue_spot(customer = null):
 													"occupied_with", [])
 		if !occupant || occupant == customer:
 			return queue_spots[i]
-
-## Removes customer from scene
-func leave_from_restaurant(customer: Customer):
-	customer.queue_free()
 
 ## Checks whether a new customer should spawn or queue should move forward
 func _process(delta):

@@ -86,7 +86,6 @@ func _pathfind_to_target() -> void:
 	if _table_target: # Sits target in front of table
 		_nav_agent.target_position = (_current_target.global_position 
 									+ POSITION_IN_FRONT_OF_TABLE)
-		print(order[0].name_of_meal)  # DUMMY CODE TILL ORDER SYSTEM READY
 	else:
 		_nav_agent.target_position = _current_target.global_position
 
@@ -167,10 +166,14 @@ func _npc_behavior(delta: float) -> void:
 											"set_occupied", 
 											[false])
 				
-				_game_server.call_service(_food_court_id, 
-											"leave_from_restaurant", 
-											[self])
-											
+				var exit_point = await _game_server.call_service(_food_court_id, 
+											"get_exit_point", 
+											[])
+				_current_target = exit_point	
+				_table_target = null	
+				_pathfind_to_target()	
+				return
+				
 			var food_served = await _game_server.call_service(_table_target.id(), 
 											"get_food", 
 											[])
@@ -189,3 +192,7 @@ func _npc_behavior(delta: float) -> void:
 											"is_queue_front", 
 											[_queue_target.id()]):
 			check_tables()
+	elif _current_target == await _game_server.call_service(_food_court_id, 
+											"get_exit_point", 
+											[]) and !_is_pathfinding: 
+		queue_free()

@@ -65,7 +65,7 @@ func _ready():
 #----------------------------------------
 	lock()
 	# print_sync_properties()
-	_store_original_transform()
+	# _store_original_transform()
 #----------------------------------------
 
 

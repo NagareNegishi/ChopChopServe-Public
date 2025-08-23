@@ -18,7 +18,7 @@ signal cooking
 
 # This gets reset in the other methods it is just default
 var food_name = "Default_foodState"
-var spoil_time = 80 # Timer to food spoils
+var spoil_time = 100 # Timer to food spoils
 var state = foodState.RAW # Current state of the food item
 var cook_time = 50 # How long it takes to cook 
 var quality : int # Measures the quality of the food 
@@ -97,11 +97,11 @@ func startCooking(time: int, appliance_type: ApplianceFactory.CookingStyle):
 
 # Lets either the appliance or the player tell the food to stop cooking when it 
 # gets taken out or off the appliance
-func stopCooking():
+func stop_cooking():
 	is_cooking = false
 	time_power = 0
 	current_appliance = null
-	setQuality()
+	set_quality()
 
 # For the appliance to set a new cooking time when new ingredients are added to the appliance so that
 # all the ingredients cook at the same time
@@ -111,7 +111,7 @@ func set_cook_time(time: float):
 func get_cook_time():
 	return cook_time
 
-func setQuality():
+func set_quality():
 	if cook_time <= 0 && cook_time > burn_threshold:
 		quality = clamp(100 - (cook_time / burn_threshold) * 100, 0, 100)
 	else:
@@ -145,20 +145,13 @@ func changeState(appliance_type: ApplianceFactory.CookingStyle) -> foodState:
 func on_state_change():
 	if raw_mesh == null:
 		return # Meshes not yet initialized
-	if cooked_mesh != null:
-		cooked_mesh.visible = false
-	if spoiled_mesh != null:
-		spoiled_mesh.visible = false
-	if burnt_mesh != null:
-		burnt_mesh.visible = false
-	if chopped_mesh != null:
-		chopped_mesh.visible = false
-	if frozen_mesh != null:
-		frozen_mesh.visible = false
-	if mixed_mesh != null:
-		mixed_mesh.visible = false
-	
-	raw_mesh.visible = false
+	visibility_of_mesh(cooked_mesh, false)
+	visibility_of_mesh(spoiled_mesh, false)
+	visibility_of_mesh(burnt_mesh, false)
+	visibility_of_mesh(chopped_mesh, false)
+	visibility_of_mesh(frozen_mesh, false)
+	visibility_of_mesh(mixed_mesh, false)
+	visibility_of_mesh(raw_mesh, false)
 	
 	match(state):
 		foodState.BAKED, foodState.BOILED, foodState.FRIED:
@@ -182,6 +175,15 @@ func on_state_change():
 		_:
 			current_mesh = raw_mesh
 	
-	if current_mesh:
-		current_mesh.visible = true
-		
+	visibility_of_mesh(current_mesh, true)
+
+func visibility_of_mesh(meshName: MeshInstance3D, changeTo: bool):
+	if meshName != null:
+		meshName.visible = changeTo
+
+func current_visibility(changeTo: bool):
+	current_mesh.visible = changeTo
+
+func change_collisions():
+	self.collision_layer = 0
+	self.collision_mask = 0

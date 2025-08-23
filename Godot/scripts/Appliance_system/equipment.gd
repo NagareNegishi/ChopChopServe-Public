@@ -6,21 +6,14 @@
 class_name Equipment
 extends Appliance
 
-signal status_changed(new_status: Status)
 
-enum Status {
-	IDLE,
-	USING,
-	BROKEN
-}
-
+@export_group("Equipment Settings")
 @export var coefficient: float = 1.0 ## Cooking efficiency modifier (1.0 = normal)
 @export var capacity: int = 1 ## Maximum number of items this appliance can hold / deal with
 @export var valid_food: Array[String] = [] ## Class names that can be placed in (Recommended)
-# @export var valid_food: Array[Script] = [] ## Class scripts that can be placed in (Fallback)
 
-var current_status: Status = Status.IDLE
 var contents: Array[Node] = []
+var can_use: bool = false
 
 
 ## Setup the equipment
@@ -34,13 +27,13 @@ func _ready():
 func put(item: Node) -> bool:
 	if not _can_accept(item):
 		return false
-	contents.append(item)
-#--------------------------------------------
-	print("Put: ", item.get_script().get_global_name(), " onto: ", self.get_script().get_global_name())
-#--------------------------------------------
 	# transfer item to appliance
 	GlobalScript.player.remove_item()
+	contents.append(item)
 	add_child(item)
+#--------------------------------------------
+	print("Put: ", item.get_script().get_global_name(), " onto: ", get_script().get_global_name())
+#--------------------------------------------
 	return true
 
 
@@ -71,11 +64,8 @@ func _can_accept(item: Node) -> bool:
 	if not item:
 		print("Cannot accept item, item is null")
 		return false
-	if current_status == Status.BROKEN:
-		print("Cannot accept item, appliance is broken")
-		return false
 	if contents.size() >= capacity:
-		print("Cannot accept item, appliance is at full capacity")
+		print("Cannot accept item: ", get_script().get_global_name(), " is at full capacity")
 		return false
 	if not item.get_script():
 		print("Cannot accept item, item has no script")
@@ -94,25 +84,19 @@ func _can_accept(item: Node) -> bool:
 ## @param power: The power from PoweredAppliance or Player
 func cook(_power: int) -> bool:
 	assert(false, "cook() must be implemented in " + get_class())
-	# if current_status != Status.COOKING:
-	#     assert(false, "Do not call cook() unless status is COOKING")
-	#     return false
 	return true
 
 
 ## Finish cooking process
 ## @return: True if cooking finished
 func finish_cook() -> bool:
-	if current_status != Status.USING:
-		push_warning("Cannot finish cooking unless appliance is using")
+	if is_empty():
 		return false
-	current_status = Status.IDLE
-	status_changed.emit(current_status)
 	for item in contents:
-		#if item.has_method("stopCooking"):   #is always Food:
-		item.stopCooking()
+		if item is Food:
+			item.stop_cooking()
 	#----------------------------------------------------------------------
-		print("stopCooking() is called in: ", item.get_script().get_global_name())
+			print("stop_cooking() is called in: ", item.get_script().get_global_name())
 	#----------------------------------------------------------------------
 	return true
 
@@ -124,33 +108,15 @@ func is_empty() -> bool:
 
 
 ## Check if this equipment can be used
-## @return: True if equipment can be used, false if broken
-func can_use() -> bool:
-	return current_status == Status.IDLE
+## @return: True if equipment can be used, false otherwise
+func can_cook() -> bool:
+	return can_use and not is_empty()
 
 
-## Set the current status to broken
-## @return: True if status was changed, it will always true
-func broken() -> bool:
-	return _set_status(Status.BROKEN)
-
-
-## Set the current status to idle
-## @return: True if status was changed
-func repair() -> bool:
-	if current_status != Status.BROKEN:
-		push_warning("Cannot repair unless appliance is broken")
-		return false
-	return _set_status(Status.IDLE)
-
-
-## Set the current status and emit signal
-## @param new_status: The new status to set
-## @return: always true
-func _set_status(new_status: Status) -> bool:
-	current_status = new_status
-	status_changed.emit(new_status)
-	return true
+## Set the can_use property, Appliance use only
+## @param value: True if equipment can be used, false otherwise
+func set_can_use(value: bool):
+	can_use = value
 
 
 ## Perform action depend on what player is holding
@@ -158,9 +124,7 @@ func _set_status(new_status: Status) -> bool:
 ## @return: True if action is triggered, false otherwise
 func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
 #--------------------------------------------
-	print("Player is holding: ", item)
-	print("Player.item_in_hand: ", GlobalScript.player.item_in_hand)
-	print("Self: ", get_script().get_global_name())
+	print("Player has: ", item, ", Self: ", get_script().get_global_name())
 #--------------------------------------------
 	# If player has nothing: let them take self, return true
 	if not item:

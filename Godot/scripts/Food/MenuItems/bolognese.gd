@@ -1,9 +1,12 @@
 extends MenuItem
 class_name Bolognese
 
-# Need to set ingredient list
-# Need to make sure that the state of ingredients matches the state of the ingredient in the array
+# Registers this class in the correct arrays in the superclass
+@warning_ignore("unused_private_class_variable")
 static var _auto_register = MenuItem.register(Bolognese)
+@warning_ignore("unused_private_class_variable")
+static var _type_register = MenuItem.register_type(MenuItem.mains, Bolognese)
+
 func _ready():
 	ingredients = ["Beef", "Pasta", "Tomato"]
 	
@@ -12,7 +15,7 @@ func _ready():
 		"Pasta": ["RAW","BOILED"],
 		"Tomato":["RAW","BLENDED","COOKED"]
 	}
-	appliance = "Bowl"
+	#appliance = "Bowl"
 	
 	cooked_mesh_good = null
 	cooked_mesh_bad = null

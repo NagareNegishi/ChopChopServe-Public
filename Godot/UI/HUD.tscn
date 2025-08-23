@@ -1,0 +1,172 @@
+[gd_scene load_steps=6 format=3 uid="uid://dg3km4t6mbwwg"]
+
+[ext_resource type="Script" uid="uid://ccfswi4egkeu8" path="res://UI/UIScript.gd" id="1_gppie"]
+[ext_resource type="PackedScene" uid="uid://b6huce6rberg3" path="res://UI/UI_Reputation.tscn" id="2_ijstf"]
+[ext_resource type="FontFile" uid="uid://dxc6n0umgi0q4" path="res://assets/fonts/Jua-Regular.ttf" id="3_4n7mi"]
+[ext_resource type="Texture2D" uid="uid://b4qjni3x30ew" path="res://assets/textures/HUD/YBottle.png" id="4_f2wx0"]
+[ext_resource type="PackedScene" uid="uid://cpf68rvd2ht5y" path="res://UI/UI_GameState.tscn" id="4_uk570"]
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gppie")
+
+[node name="Controls" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.692
+anchor_right = 0.17
+anchor_bottom = 1.0
+offset_left = 23.0
+offset_top = 9.58398
+offset_right = -16.84
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="Label" parent="Controls"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = -174.0
+offset_right = 156.0
+offset_bottom = -151.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 13
+text = "CONTROLS (DEBUG)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Controls"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -147.0
+offset_right = 147.0
+offset_bottom = -8.0
+grow_vertical = 0
+
+[node name="LHControls" type="Label" parent="Controls/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "Move - WASD
+Interact / Drop - Space / E
+"
+vertical_alignment = 1
+
+[node name="RHControls" type="Label" parent="Controls/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "Chop / Action  - J
+Dash - K / Shift
+Throw - L"
+vertical_alignment = 1
+
+[node name="FPS" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -60.0
+offset_top = -641.0
+offset_right = -7.0
+offset_bottom = -618.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/outline_size = 2
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("3_4n7mi")
+text = "60 fps"
+uppercase = true
+
+[node name="Team1Rep" parent="." instance=ExtResource("2_ijstf")]
+layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 551.0
+offset_top = 4.0
+offset_right = 997.0
+offset_bottom = 57.0
+grow_horizontal = 1
+grow_vertical = 1
+scale = Vector2(-1, 1)
+
+[node name="Team2Rep" parent="." instance=ExtResource("2_ijstf")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_bottom = 0.0
+offset_left = -542.0
+offset_top = 1.0
+offset_right = -95.9998
+offset_bottom = 54.0
+grow_horizontal = 0
+grow_vertical = 1
+rotation = 0.00872665
+
+[node name="Sauce" parent="Team2Rep" index="0"]
+offset_left = -100.992
+offset_top = -9.45677
+offset_right = 583.008
+offset_bottom = 17.5432
+value = 0.2
+tint_under = Color(0.992157, 0.917647, 0.301961, 0.392157)
+tint_progress = Color(0.990784, 0.919061, 0.301274, 1)
+
+[node name="Bottle" parent="Team2Rep" index="1"]
+offset_left = -329.0
+offset_top = -48.4215
+offset_right = -108.0
+offset_bottom = 41.5785
+texture = ExtResource("4_f2wx0")
+flip_h = false
+
+[node name="UIGameState" parent="." instance=ExtResource("4_uk570")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = -59.0
+offset_right = 58.0
+offset_bottom = 75.0
+grow_vertical = 1
+
+[node name="Watermark" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -139.0
+offset_top = -15.0
+offset_right = -7.0
+offset_bottom = -4.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("3_4n7mi")
+theme_override_font_sizes/font_size = 13
+text = "Chop Chop Serve | Alpha Build"
+
+[editable path="Team2Rep"]

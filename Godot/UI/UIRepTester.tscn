@@ -28,18 +28,18 @@ text = "Reputation: 20.0"
 
 [node name="AddRepButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 60.6874
-offset_top = 185.807
-offset_right = 215.687
-offset_bottom = 224.807
+offset_left = 994.0
+offset_top = 330.0
+offset_right = 1149.0
+offset_bottom = 369.0
 text = "Add Reputation"
 
 [node name="MinusRepButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 62.758
-offset_top = 240.582
-offset_right = 217.758
-offset_bottom = 279.582
+offset_left = 994.071
+offset_top = 370.775
+offset_right = 1149.07
+offset_bottom = 409.775
 text = "Minus Reputation"
 
 [node name="Currency" type="ColorRect" parent="."]
@@ -61,32 +61,34 @@ text = "Currency: $ 200"
 
 [node name="AddCurButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 947.5
-offset_top = 144.0
-offset_right = 1102.5
-offset_bottom = 183.0
+offset_left = 993.031
+offset_top = 133.0
+offset_right = 1148.03
+offset_bottom = 172.0
 text = "Add Currency"
 
 [node name="MinusCurButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 947.469
-offset_top = 202.56
-offset_right = 1102.47
-offset_bottom = 241.56
+offset_left = 993.0
+offset_top = 176.56
+offset_right = 1148.0
+offset_bottom = 215.56
 text = "Minus Currency"
 
 [node name="CookButton" type="Button" parent="."]
-offset_left = 467.192
-offset_top = 268.283
-offset_right = 622.192
-offset_bottom = 307.283
+layout_mode = 0
+offset_left = 994.0
+offset_top = 274.788
+offset_right = 1149.0
+offset_bottom = 313.788
 text = "Cook Phase"
 
 [node name="PrepButton" type="Button" parent="."]
-offset_left = 463.464
-offset_top = 195.212
-offset_right = 618.465
-offset_bottom = 234.212
+layout_mode = 0
+offset_left = 994.464
+offset_top = 233.0
+offset_right = 1149.47
+offset_bottom = 272.0
 text = "Prep Phase
 "
 

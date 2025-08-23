@@ -4,15 +4,33 @@
 class_name Appliance
 extends Placeable
 
+enum Owner {
+	TEAM1,
+	TEAM2,
+	NONE
+}
+
+@export_group("Appliance Settings")
 ## Type of cooking style this appliance supports
 @export var cooking_style: ApplianceFactory.CookingStyle = ApplianceFactory.CookingStyle.NONE
+
+# Reference to components
 var interactable_component: InteractableComponent
+var highlight_component: ApplianceHighlight
+var power_upgradable: Upgradable
+var capacity_upgradable: Upgradable
+var coefficient_upgradable: Upgradable
+
+var price: int = 100
+var current_owner: Owner = Owner.NONE
 
 
 ## Setup the appliance
 func _ready():
 	super._ready()
 	_setup_interactable()
+	_setup_highlight()
+	_setup_upgradable()
 
 
 ## Add interactable component to this class
@@ -23,6 +41,72 @@ func _setup_interactable():
 	add_child(interactable_component)
 	interactable_component.interacted.connect(_on_interactable_component_interacted)
 	interactable_component.toggle_collision.connect(_on_interactable_component_toggle_collision)
+	interactable_component.hovered.connect(_on_interactable_component_hovered)
+	interactable_component.action_use.connect(_on_interactable_component_action_use)
+
+
+## Setup the highlight component
+func _setup_highlight():
+	highlight_component = ApplianceHighlight.new()
+	add_child(highlight_component)
+
+
+## Setup the upgradable components
+func _setup_upgradable():
+	# Create power upgradable
+	power_upgradable = Upgradable.new()
+	power_upgradable.upgradable_property = "power"
+	power_upgradable.upgrade_mode = Upgradable.UpgradeMode.ADD
+	add_child(power_upgradable)
+	# Create capacity upgradable
+	capacity_upgradable = Upgradable.new()
+	capacity_upgradable.upgradable_property = "capacity"
+	capacity_upgradable.upgrade_mode = Upgradable.UpgradeMode.ADD
+	add_child(capacity_upgradable)
+	# Create coefficient upgradable
+	coefficient_upgradable = Upgradable.new()
+	coefficient_upgradable.upgradable_property = "coefficient"
+	coefficient_upgradable.upgrade_mode = Upgradable.UpgradeMode.ADD
+	add_child(coefficient_upgradable)
+
+
+## Enable specific upgrade type
+## @param type: The type of upgrade to enable (e.g. "power", "capacity", "coefficient")
+## @param values: The array of values for the upgrade
+## @param costs: The array of costs for the upgrade
+## @return: True if the upgrade was enabled successfully, false otherwise
+func enable_upgrade(type: String, values: Array, costs: Array[int]) -> bool:
+	if values.size() != costs.size():
+		assert(false, "Values and costs arrays must have the same size.")
+		return false
+	match type:
+		"power":
+			power_upgradable.upgrade_values = values
+			power_upgradable.upgrade_costs = costs
+			power_upgradable.enabled = true
+			#-------------------------------------------------------------------
+			#print("Power upgrade enabled for: ", get_script().get_global_name())
+			#-------------------------------------------------------------------
+			return true
+		"capacity":
+			capacity_upgradable.upgrade_values = values
+			capacity_upgradable.upgrade_costs = costs
+			capacity_upgradable.enabled = true
+			#-------------------------------------------------------------------
+			#print("Capacity upgrade enabled for: ", get_script().get_global_name())
+			#-------------------------------------------------------------------
+			return true
+		"coefficient":
+			coefficient_upgradable.upgrade_values = values
+			coefficient_upgradable.upgrade_costs = costs
+			coefficient_upgradable.enabled = true
+			#-------------------------------------------------------------------
+			#print("Coefficient upgrade enabled for: ", get_script().get_global_name())
+			#-------------------------------------------------------------------
+			return true
+		_:
+			assert(false, "Unknown upgrade type: " + type)
+			return false
 
 
 ## Place an item onto this appliance
@@ -56,9 +140,33 @@ func player_has(_item: Node) -> bool:
 	return false
 
 
+## Getter for Price
+## @return: The price of the appliance
+func get_price() -> int:
+	return price
+
+
+## Getter for Owner
+## @return: The owner of the appliance
+func get_appliance_owner() -> Owner:
+	return current_owner
+
+
+## Setter for Owner
+## @param team_number: The team number to set as the owner
+func set_appliance_owner(team_number: int) -> void:
+	match team_number:
+		1:
+			current_owner = Owner.TEAM1
+		2:
+			current_owner = Owner.TEAM2
+		_:
+			current_owner = Owner.NONE
+
+
 ## InteractableComponent Signal Handlers -----------------------------------------------------------
 
-## Connect to singal: Called when interacted with and will make the player pick this item up
+## Called when interacted with and will make the player pick this item up
 ## @return void
 func _on_interactable_component_interacted() -> void:
 	player_has(GlobalScript.player.item_in_hand)
@@ -67,16 +175,39 @@ func _on_interactable_component_interacted() -> void:
 ## Let toggle collision
 ## @param turn_on: Whether to enable or disable collision
 func _on_interactable_component_toggle_collision(turn_on: bool) -> void:
-	if turn_on:
-		collision_layer = 1
-		collision_mask = 1
-	else:
-		collision_layer = 0
-		collision_mask = 0
+	collision_shape.disabled = not turn_on
+	$InteractableComponent/CollisionShape3D.disabled = not turn_on
+	# TODO: When team starts using collision layers properly:
+	#
+	# if turn_on:
+	# 	collision_layer = APPLIANCES
+	# 	collision_mask = collide_with
+	# else:
+	# 	collision_layer = 0
+	# 	collision_mask = 0
 
-# Potentially use it in future
-# func _on_interactable_component_hovered(is_hovered: bool) -> void:
-# 	pass
-# func _on_interactable_component_action_use(is_action: bool) -> void:
-# 	pass
+
+## Give visual feedback when hovered
+## @param is_hovered: Whether the item is hovered or not
+func _on_interactable_component_hovered(is_hovered: bool) -> void:
+	if not is_hovered:
+		highlight_component.hide_feedback()
+		return
+	#---------------------------------------------------------------------------
+	var item = GlobalScript.player.item_in_hand
+	if item:
+		item = item.get_script().get_global_name()
+	print("Player has : ", item, ", hovered: ", get_script().get_global_name())
+	#---------------------------------------------------------------------------
+	if GlobalScript.player.item_in_hand:
+		var can_accept = _can_accept(GlobalScript.player.item_in_hand)
+		highlight_component.show_feedback(can_accept)
+		return
+	highlight_component.set_state(ApplianceHighlight.HighlightState.HOVER)
+
+
+## Trigger action, if subclass has action
+func _on_interactable_component_action_use(_is_action: bool) -> void:
+	if _is_action:
+		print("Player used action on: ", get_script().get_global_name(), ", but, it does not have action.")
 ## -------------------------------------------------------------------------------------------------

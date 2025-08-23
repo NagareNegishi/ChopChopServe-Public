@@ -1,9 +1,12 @@
 extends MenuItem
 class_name MushroomSoup
 
-# Need to set ingredient list
-# Need to make sure that the state of ingredients matches the state of the ingredient in the array
+# Registers this class in the correct arrays in the superclass
+@warning_ignore("unused_private_class_variable")
 static var _auto_register = MenuItem.register(MushroomSoup)
+@warning_ignore("unused_private_class_variable")
+static var _type_register = MenuItem.register_type(MenuItem.starters, MushroomSoup)
+
 func _ready():
 	ingredients = ["Mushroom", "Mushroom", "Mushroom", "Water"]
 	
@@ -13,7 +16,7 @@ func _ready():
 	}
 	
 	# This is the appliance it is to be collected in 
-	appliance = "Bowl"
+	#appliance = "Bowl"
 	
 	cooked_mesh_good = null
 	cooked_mesh_bad = null

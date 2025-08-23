@@ -52,8 +52,6 @@ transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0.394347, 0)
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Control" parent="CanvasLayer" instance=ExtResource("4_07mic")]
-grow_horizontal = 1
-grow_vertical = 0
 
 [node name="table" parent="." instance=ExtResource("5_vs73y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 2)
@@ -86,9 +84,6 @@ metadata/_editor_floor_ = Vector3(0, 0, 0)
 
 [node name="Node3D" type="Node3D" parent="."]
 
-[node name="Bench" parent="Node3D" instance=ExtResource("7_atlat")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -4, 0, 5)
-
 [node name="Bench2" parent="Node3D" instance=ExtResource("7_atlat")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -5, 0, 5)
 
@@ -109,9 +104,6 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 9, 0, 
 
 [node name="Bench4" parent="Node3D" instance=ExtResource("7_atlat")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -1, 0, 5)
-
-[node name="Bench6" parent="Node3D" instance=ExtResource("7_atlat")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 7, 0, 5)
 
 [node name="Bench16" parent="Node3D" instance=ExtResource("7_atlat")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 8, 0, 5)
@@ -318,9 +310,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 2)
 
 [node name="Node3D3" type="Node3D" parent="."]
 
-[node name="Bench19" parent="Node3D3" instance=ExtResource("7_atlat")]
-transform = Transform3D(1, 0, 6.3573e-08, 0, 1, 0, -6.3573e-08, 0, 1, 7, 0, -5)
-
 [node name="Bench20" parent="Node3D3" instance=ExtResource("7_atlat")]
 transform = Transform3D(1, 0, 6.3573e-08, 0, 1, 0, -6.3573e-08, 0, 1, 8, 0, -5)
 
@@ -341,9 +330,6 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6, 0,
 
 [node name="Bench26" parent="Node3D3" instance=ExtResource("7_atlat")]
 transform = Transform3D(1, 0, -2.38419e-07, 0, 1, 0, 2.38419e-07, 0, 1, 4, 0, -5)
-
-[node name="Bench27" parent="Node3D3" instance=ExtResource("7_atlat")]
-transform = Transform3D(1, 0, -2.38419e-07, 0, 1, 0, 2.38419e-07, 0, 1, -4, 0, -5)
 
 [node name="Bench28" parent="Node3D3" instance=ExtResource("7_atlat")]
 transform = Transform3D(1, 0, -2.38419e-07, 0, 1, 0, 2.38419e-07, 0, 1, -5, 0, -5)

@@ -4,19 +4,26 @@ class_name MenuItem
 @export var cooked_mesh_good: MeshInstance3D
 @export var cooked_mesh_bad: MeshInstance3D
 @export var cooked_mesh_burnt: MeshInstance3D
+@export var ui_texture: Texture2D
 
 var ingredients = []
 var ingredient_states = {}
 var name_of_meal : String
-var appliance : String = "Plate"
+#var appliance : String = "Plate"
 # A MenuItem needs an Array of ingredients to combine together to make it
 # They need to be able to add things together in a bowl/plate/pan etc. to make the menuItem
 # do you need to be able to cook these?? or are you putting them together after they are cooked??
 
 static var subclasses = []
+static var starters = []
+static var mains = []
+static var deserts = []
 
 static func register(subclass_class):
 	subclasses.append(subclass_class)
+
+static func register_type(list_name: Array, food_item):
+	list_name.append(food_item)
 
 static func get_subclasses() -> Array:
 	return subclasses

@@ -63,7 +63,7 @@ func _movement(delta : float) -> void:
 		velocity.x = move_toward(velocity.x, _direction.x * SPEED, ACCELERATION * delta)
 		velocity.z = move_toward(velocity.z, _direction.z * SPEED, ACCELERATION * delta)
 	else:
-		velocity.x = move_toward(velocity.x, 0, ACCELERATION * SPEED)
+		velocity.x = move_toward(velocity.x, 0, DECELERATION * SPEED)
 		velocity.z = move_toward(velocity.z, 0, DECELERATION * SPEED)
 		
 	move_and_slide()
@@ -280,8 +280,6 @@ func remove_item() -> Node3D:
 	
 	item_in_hand.global_position = $Mesh/ItemPoint.global_position + $Mesh.global_transform.basis.z * 2.5
 	item_in_hand.global_rotation = $Mesh/ItemPoint.global_rotation
-	
-	get_tree().get_current_scene().add_child(item_in_hand)
 	
 	item_in_hand.scale = $Mesh/ItemPoint.global_transform.basis.get_scale() / item_in_hand.global_transform.basis.get_scale()
 	

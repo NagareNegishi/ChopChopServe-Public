@@ -42,12 +42,13 @@ func call_service(target_service: String, operation: String, params: Array = [])
 # For setting up main game scene
 func _ready():
 	if !_test_without_server:
-		var food_court = _food_court_scene.instantiate()
-		food_court.initialize(self, "FoodCourt")
-		add_child(food_court)
+		#var food_court = _food_court_scene.instantiate()
+		#food_court.initialize(self, "FoodCourt")
+		#add_child(food_court)
 		var customer_creator = CustomerCreator.new(self)
 		register_service("CustomerCreator", customer_creator) 
-		register_service("FoodCourt", food_court) 
+		
+		#register_service("FoodCourt", food_court) 
 		var building = Building.new(self)
 		await get_tree().create_timer(1.0).timeout
 	

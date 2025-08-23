@@ -1,9 +1,9 @@
 class_name Customer extends NPC
 
 # Customers wait this long once seated
-const MAXIMUM_SEATING_TIME: float = 10
+var MAXIMUM_SEATING_TIME: float = randf_range(100.0,300.0)
 # Customers wait this long till they decide order
-const MAXIMUM_ORDER_THINK_TIME: float = 10
+const MAXIMUM_ORDER_THINK_TIME: float = 1
 # For agent avoidance to prevent getting stuck
 const AGENT_STUCK_THRESHOLD: float = 0.15
 const STUCK_RECALCULATE_TIME: float = 1.0 

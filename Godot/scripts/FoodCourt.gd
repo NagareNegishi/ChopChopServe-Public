@@ -8,9 +8,12 @@ const QUEUE_CHECK_DELAY : float = 0.5
 var _time_since_last_customer : float = 0
 var _time_since_queue_check : float = 0.5
 
-var _game_server: Server # For communications with other services
+# Temp removed for alpha set up
+#var _game_server: Server # For communications with other services
+@onready var _game_server = get_node("/root/GameServer")
+
 var _next_id : int  = 0 # Allows for occupiables to be uniquely indentified
-var _id # For unique indentification for other services
+var _id = "FoodCourt" # For unique indentification for other services
 
 var number_of_restaurants = 2
 
@@ -25,6 +28,7 @@ func initialize(game_server : Server, id : String) -> void:
 
 ## Preprares restaurants occupiables for communications
 func _ready():
+	_game_server.register_service("FoodCourt", self) # For alpha use
 	for occupiable in tables + queue_spots:
 		occupiable.initialize(str(_id,"occupiable_",_next_id))
 		_game_server.register_service(str(_id,"occupiable_",_next_id), occupiable)

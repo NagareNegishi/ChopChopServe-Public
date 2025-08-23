@@ -1,4 +1,4 @@
-class_name fix
+class_name MockPlayer
 extends CharacterBody3D
 
 const SPEED : float = 4.0

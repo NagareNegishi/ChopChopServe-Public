@@ -52,8 +52,6 @@ func _add_cookware(cookware_script_name: String):
 		push_error("Failed to create cookware: " + cookware_script_name)
 		return
 	put(cookware)
-	# Position and size cookware relative to appliance
-	_position_cookware(cookware, 0)
 
 
 ## Place an item onto this appliance
@@ -80,10 +78,12 @@ func put(item: Node) -> bool:
 ## Place a Cookware onto this PoweredAppliance, start cooking if applicable
 ## @param cookware: The Cookware to place on this PoweredAppliance
 func _put_cookware(cookware: Cookware) -> void:
-	cookware.restore_original_transform() #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	# cookware.restore_original_transform() #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	_position_cookware(cookware, contents.size() - 1)
 	cookware.lock()
-	if not cookware.is_empty() and can_cook():
+	cookware.set_can_use(true)
+	cookware.power_receiving = power
+	if cookware.can_cook() and can_cook():
 		cookware.cook(power)
 
 
@@ -103,6 +103,7 @@ func take() -> Node:
 ## @param cookware: The Cookware to take
 func _take_cookware(cookware: Cookware) -> void:
 	cookware.finish_cook()
+	cookware.set_can_use(false)
 	cookware.unlock()
 
 
@@ -309,6 +310,7 @@ func serve_to_plate(plate: Plate) -> bool:
 
 
 # Functions for Sabotage System---------------------------------------------------------------------
+
 ## Get the current progress of cookwares
 ## Note: Only use it when PoweredAppliance can be operated
 ## Note: Progress is defined by the `cook_time` of `Food` -> smaller values are more progressed

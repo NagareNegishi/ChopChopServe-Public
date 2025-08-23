@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://0nellx788ueo"]
 
-[ext_resource type="Script" uid="uid://d2xjqf30xr0l8" path="res://scripts/Sabotage/sabotageUI.gd" id="1_ngd6u"]
+[ext_resource type="Script" path="res://scripts/Sabotage/sabotageUI.gd" id="1_ngd6u"]
 
 [node name="Control" type="Control"]
 layout_mode = 3

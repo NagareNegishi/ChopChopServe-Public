@@ -24,8 +24,7 @@ var can_dash : bool = true
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
 	scale = Vector3(1,1,1)
-
-
+	
 
 ## Called when the node enters the scene tree for the first time.
 ## @return void

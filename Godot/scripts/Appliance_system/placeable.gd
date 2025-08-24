@@ -65,7 +65,7 @@ func _ready():
 #----------------------------------------
 	lock()
 	# print_sync_properties()
-	# _store_original_transform()
+	_store_original_transform()       # should be removed once player returns original scale !!!
 #----------------------------------------
 
 
@@ -356,7 +356,7 @@ func _store_original_transform():
 		original_model_transform = model_instance.transform
 		original_model_scale = model_instance.scale
 	
-	print("Original transforms stored for ", get_class())
+	# print("Original transforms stored for ", get_class())
 
 func restore_original_transform():
 	# Restore main object
@@ -368,6 +368,6 @@ func restore_original_transform():
 		model_instance.transform = original_model_transform
 		model_instance.scale = original_model_scale
 	
-	print("All transforms restored for ", get_class())
+	# print("All transforms restored for ", get_class())
 
 #-------------------------------------------------------------------------------

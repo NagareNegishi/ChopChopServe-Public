@@ -4,19 +4,27 @@ class_name MenuItem
 @export var cooked_mesh_good: MeshInstance3D
 @export var cooked_mesh_bad: MeshInstance3D
 @export var cooked_mesh_burnt: MeshInstance3D
+@export var ui_texture: Texture2D
 
 var ingredients = []
 var ingredient_states = {}
 var name_of_meal : String
-var appliance : String = "Plate"
+var is_avalible = true
+#var appliance : String = "Plate"
 # A MenuItem needs an Array of ingredients to combine together to make it
 # They need to be able to add things together in a bowl/plate/pan etc. to make the menuItem
 # do you need to be able to cook these?? or are you putting them together after they are cooked??
 
 static var subclasses = []
+static var starters = []
+static var mains = []
+static var deserts = []
 
 static func register(subclass_class):
 	subclasses.append(subclass_class)
+
+static func register_type(list_name: Array, food_item):
+	list_name.append(food_item)
 
 static func get_subclasses() -> Array:
 	return subclasses
@@ -24,9 +32,11 @@ static func get_subclasses() -> Array:
 
 # Needs to check if the list matches any of the MenuItems
 func match_menu_items(input_ingredients: Array):
+	print("in match menu")
 	for subclass in subclasses:
 		var instance = subclass.new()
 		if check_items(input_ingredients, instance.ingredients, instance):
+			print("in check items if")
 			return instance 
 	print("there is no menu item that contains these ingredients")
 	return null
@@ -34,6 +44,7 @@ func match_menu_items(input_ingredients: Array):
 
 	# This checks if the ingredient list passed matches the ingredient list we have
 func check_items(pass_ingredients: Array, required_ingredients: Array, food_instance: MenuItem) -> bool:
+	print("in check items")
 	if pass_ingredients.size() != required_ingredients.size():
 		print("Size mismatch - returning false")
 		return false

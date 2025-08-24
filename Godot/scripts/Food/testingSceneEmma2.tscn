@@ -14,13 +14,13 @@ size = Vector3(30, 0.05, 30)
 [node name="Node3D" type="Node3D"]
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.954067, -0.107162, 0.279772, -0.143861, 0.655263, 0.741576, -0.262793, -0.747761, 0.609748, 0.254422, 0.755146, 0.714502)
+transform = Transform3D(0.298639, 0.657569, -0.691677, 0.0565168, 0.711293, 0.70062, 0.952691, -0.248324, 0.175256, -4.16355, 3.17598, 2.24947)
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-4.37114e-08, -0.980271, 0.197657, 0, 0.197657, 0.980271, -1, 4.2849e-08, -8.63987e-09, -2.43264, 0.703702, -5.76367)
 
 [node name="Player" parent="." instance=ExtResource("2_l4sy3")]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.402831, 0.111938, -0.00624955)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.99988, 0.548986, -0.00624955)
 
 [node name="Platform" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0183344, 0)
@@ -32,16 +32,16 @@ shape = SubResource("BoxShape3D_l4sy3")
 mesh = SubResource("BoxMesh_g72bx")
 
 [node name="Tomato" parent="." instance=ExtResource("1_akbwx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.524851, -0.00981309, 0.161398)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.524851, 0.0573251, 0.475907)
 
 [node name="Tomato2" parent="." instance=ExtResource("1_akbwx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.518291, -0.00882792, -0.366477)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.503762, 0.0529738, -0.577666)
 
 [node name="Tomato3" parent="." instance=ExtResource("1_akbwx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.524685, -0.010083, -0.0814413)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.524685, 0.0520719, -0.0814413)
 
 [node name="Water" parent="." instance=ExtResource("3_g4svb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.448845, 0.0832666, 0.431482)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.448845, 0.0832666, 1.04215)
 
 [node name="Plate" parent="." instance=ExtResource("4_bd52m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00354898, -0.013115, -0.000960737)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.148813, -0.013115, -0.000960737)

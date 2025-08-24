@@ -30,7 +30,6 @@ func throw(item: Node) -> bool:
 			#--------------------------------------------
 			return false
 		current_status = Status.USING
-		status_changed.emit(current_status)
 		action_timer.start()
 		# Remove from player and destroy immediately
 		GlobalScript.player.remove_item()
@@ -43,21 +42,6 @@ func throw(item: Node) -> bool:
 	print("Can not throw away: ", item)
 	#--------------------------------------------
 	return false
-
-
-## Override unsupported methods to prevent misuse ------------------------------
-func put(_item: Node) -> bool:
-	assert(false, "TrashCan does not support putting items")
-	return false
-
-func take() -> Node:
-	assert(false, "TrashCan does not support taking items")
-	return null
-
-func start_action() -> bool:
-	assert(false, "TrashCan does not support starting actions")
-	return false
-#-------------------------------------------------------------------------------
 
 
 ## Check if this appliance can accept the given item
@@ -75,3 +59,17 @@ func _can_accept(item: Node) -> bool:
 ## @return: True if action is triggered, false otherwise
 func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
 	return throw(item)
+
+## Override unsupported methods to prevent misuse ------------------------------
+func put(_item: Node) -> bool:
+	assert(false, "TrashCan does not support putting items")
+	return false
+
+func take() -> Node:
+	assert(false, "TrashCan does not support taking items")
+	return null
+
+func start_action() -> bool:
+	assert(false, "TrashCan does not support starting actions")
+	return false
+#-------------------------------------------------------------------------------

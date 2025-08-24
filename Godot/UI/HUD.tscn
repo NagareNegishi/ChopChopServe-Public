@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://cc2eoolceia3f"]
+[gd_scene load_steps=6 format=3 uid="uid://dg3km4t6mbwwg"]
 
 [ext_resource type="Script" uid="uid://ccfswi4egkeu8" path="res://UI/UIScript.gd" id="1_gppie"]
-[ext_resource type="PackedScene" path="res://UI/UI_Reputation.tscn" id="2_ijstf"]
-[ext_resource type="FontFile" path="res://assets/fonts/Jua-Regular.ttf" id="3_4n7mi"]
-[ext_resource type="Texture2D" path="res://assets/textures/HUD/YBottle.png" id="4_f2wx0"]
-[ext_resource type="PackedScene" path="res://UI/UI_GameState.tscn" id="4_uk570"]
+[ext_resource type="PackedScene" uid="uid://b6huce6rberg3" path="res://UI/UI_Reputation.tscn" id="2_ijstf"]
+[ext_resource type="FontFile" uid="uid://dxc6n0umgi0q4" path="res://assets/fonts/Jua-Regular.ttf" id="3_4n7mi"]
+[ext_resource type="Texture2D" uid="uid://b4qjni3x30ew" path="res://assets/textures/HUD/YBottle.png" id="4_f2wx0"]
+[ext_resource type="PackedScene" uid="uid://cpf68rvd2ht5y" path="res://UI/UI_GameState.tscn" id="4_uk570"]
+
 
 [node name="HUD" type="Control"]
 layout_mode = 3

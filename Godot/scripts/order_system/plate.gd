@@ -3,18 +3,23 @@ class_name Plate
 var preload_menuItems = preload("res://scripts/Food/MenuItems/menuItem.gd")
 
 
+# TODO: Add a plate is ready method as plate needs to be clean and empty 
+
 var food_items :Array = []
 var has_menu_item: bool = false
 #var ingredients = IngredientsEnum.Ingredients
 #var dish = DishEnum.new()
 var menu_instance
 const GRID_SIZE = 3
-const CELL_SIZE = 0.05
+const CELL_SIZE = 0.2
 var grid: Array = []
+var is_dirty : bool = false
+var is_full : bool = false
 
 
 func _ready():
 	menu_instance = preload_menuItems.new()
+	print(menu_instance)
 	# Makes a grid on the plate in which ingredients can be placed in 
 	grid.resize(GRID_SIZE)
 	for i in range(GRID_SIZE):
@@ -23,7 +28,6 @@ func _ready():
 		for j in range(GRID_SIZE):
 			grid[i][j]=null # Makes sure they all start out null
 	freeze = true
-	print(grid)
 
 
 func find_next_free_cell() -> Vector2i:
@@ -34,7 +38,12 @@ func find_next_free_cell() -> Vector2i:
 	return Vector2i(-1,-1)
 
 # Adds items to the plate and scales them so that they appear on the plate
+func add_list_items(food_array: Array):
+	for food in food_array:
+		add_item(food)
+
 func add_item(food_node) -> void:
+	food_items.append(food_node)
 	disable_collision(food_node)
 	
 	var cell = find_next_free_cell()
@@ -43,7 +52,11 @@ func add_item(food_node) -> void:
 		return
 	
 	grid[cell.x][cell.y] = food_node
-	food_node.get_parent().remove_child(food_node)
+
+#---------------------------------------------------------
+	if food_node.get_parent():
+		food_node.get_parent().remove_child(food_node)
+#---------------------------------------------------------
 	add_child(food_node)
 	
 	# Disable physics for items
@@ -80,12 +93,16 @@ func remove_all():
 # This checks if the plate contains a dish, when it does contain a dish it removes everything and
 # replaces the list of ingredients with only the found meal
 func check_plate():
+	print(grid)
 	if food_items.is_empty():
+		print("food items is emptyw")
 		return 0
 	var menuitem = menu_instance.match_menu_items(food_items)
+	print(menuitem)
 	if menuitem != null:
 		has_menu_item = true
 		display_menu_item(menuitem)
+		is_full = true
 		remove_all()
 		grid[1][1] = menuitem # Makes the meal we created the only thing on the plate
 	return 0
@@ -150,3 +167,11 @@ func _on_interactable_component_action_use(is_action: bool) -> void:
 				break
 			if food_node && food_node.is_in_group("Bin"):
 				remove_all()
+
+func is_ready()->bool:
+	if is_dirty:
+		return false
+	if is_full:
+		return false
+	
+	return true

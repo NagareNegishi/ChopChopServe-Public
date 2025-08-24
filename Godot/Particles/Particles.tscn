@@ -1,10 +1,7 @@
-
-[gd_scene load_steps=50 format=3 uid="uid://dpdrqqhoutpc3"]
+[gd_scene load_steps=49 format=3 uid="uid://dpdrqqhoutpc3"]
 
 [ext_resource type="Texture2D" uid="uid://bx6m3o5gtj1u3" path="res://Particles/hapy.jpg" id="1_l7qkd"]
-[ext_resource type="Texture2D" uid="uid://uficg2hqqbnp" path="res://Particles/sad-emoji.png" id="2_cwed3"]
 [ext_resource type="Texture2D" uid="uid://24gc7h8nhp8p" path="res://Particles/Skull_and_Crossbones.svg.png" id="3_cwed3"]
-
 
 [sub_resource type="Curve" id="Curve_1xyps"]
 _data = [Vector2(0, 0.348315), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]

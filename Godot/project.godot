@@ -28,6 +28,7 @@ EditorNetworkTest="*res://scripts/editor_network_test.gd"
 ApplianceManager="*res://scripts/Appliance_system/appliance_manager.gd"
 SabotageSystem="*res://scripts/Sabotage/sabotageSystem.gd"
 
+
 [display]
 
 window/stretch/mode="canvas_items"

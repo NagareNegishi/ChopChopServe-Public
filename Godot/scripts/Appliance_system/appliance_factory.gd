@@ -177,3 +177,8 @@ func _input(event):
 		if appliance_index >= 0 and appliance_index < TEST_APPLIANCES.size():
 			spawn_test_appliance(TEST_APPLIANCES[appliance_index])
 			print("Numpad %d pressed - spawning %s" % [appliance_index + 1, TEST_APPLIANCES[appliance_index]])
+
+# # mock to make serve_to_plate compile
+# func match_menu_items(items: Array):
+# 	return null
+

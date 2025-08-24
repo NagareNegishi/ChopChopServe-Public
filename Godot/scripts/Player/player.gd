@@ -152,10 +152,16 @@ func _throw() -> void:
 ## Handles logic when player uses an action
 ## @return void
 func _action(is_active : bool) -> void:
-	if item_in_hand == null:
+	if item_in_hand != null && item_in_hand.get_node("InteractableComponent").has_action:
+		item_in_hand.get_node("InteractableComponent").action(is_active)
 		return
+	
+	if _closest_item == null:
+		return
+	
+	_closest_item.action(is_active)
 		
-	item_in_hand.get_node("InteractableComponent").action(is_active)
+	
 
 
 ## Sets what item the player is holding

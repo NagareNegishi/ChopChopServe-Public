@@ -56,9 +56,3 @@ func hsv_lerp(color_a: Color, color_b: Color, t: float) -> Color:
 func _check_progress():
 	if  $TextureProgressBar.value >= 1:
 		emit_signal("finshed")
-
-func _physics_process(delta: float) -> void:
-	if(current_progress <= 0):
-		set_amount(1)
-	
-	remove_amount(delta * 0.05)

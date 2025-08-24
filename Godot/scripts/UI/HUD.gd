@@ -1,9 +1,11 @@
 class_name HUD
 extends Control
 
-
+@onready var debug_hud = [$Controls, $FPS, $Server]
 func _ready() -> void:
-	$Controls.visible = false
+	$Server.text = "Client" if !multiplayer.is_server() else "Server"
+	for control in debug_hud:
+		control.visible = false
 	
 func _process(delta: float) -> void:
 	var fps = Engine.get_frames_per_second()
@@ -12,4 +14,5 @@ func _process(delta: float) -> void:
 		_toggle_debug_controls()
 
 func _toggle_debug_controls():
-	$Controls.visible = !$Controls.visible
+	for control in debug_hud:
+		control.visible = !control.visible

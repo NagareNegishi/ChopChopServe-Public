@@ -19,6 +19,12 @@ var move_particle = preload("res://Particles/MoveParticles.tscn")
 var item_in_hand : Node3D = null
 var can_dash : bool = true
 
+@onready var controller : PlayerController = $Controller
+
+func _enter_tree() -> void:
+	set_multiplayer_authority(name.to_int())
+	scale = Vector3(1,1,1)
+	
 
 ## Called when the node enters the scene tree for the first time.
 ## @return void
@@ -34,7 +40,8 @@ func _ready() -> void:
 ## @param delta the times it takes per frame to render
 ## @return void
 func _physics_process(delta: float) -> void:
-
+	#if !is_multiplayer_authority():
+		#return
 	# Add the gravity.
 	if !is_on_floor():
 		velocity += get_gravity() * delta
@@ -56,8 +63,7 @@ func _rotate_player(delta: float) -> void:
 ## @param delta the delta from process physics
 ## @return void
 func _movement(delta : float) -> void:
-	var input_dir := Input.get_vector("Up", "Down", "Right", "Left")
-	_direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	_direction = (transform.basis * Vector3(controller.input_dir.x, 0, controller.input_dir.y)).normalized()
 	
 	if _direction:
 		velocity.x = move_toward(velocity.x, _direction.x * SPEED, ACCELERATION * delta)
@@ -120,7 +126,11 @@ func _inputs() -> void:
 ## Handles when the player interacts
 ## @return void
 func _interact() -> void:
-	if (item_in_hand != null && (_closest_item == null || _closest_item != null && _closest_item.is_pickup)):
+	if item_in_hand is Plate && _closest_item.get_parent() is Food:
+		_closest_item.interact()
+		
+	if (item_in_hand != null && (_closest_item == null || 
+	_closest_item != null && _closest_item.is_pickup)):
 		drop_item(false)
 	
 	if _closest_item == null:
@@ -142,10 +152,16 @@ func _throw() -> void:
 ## Handles logic when player uses an action
 ## @return void
 func _action(is_active : bool) -> void:
-	if item_in_hand == null:
+	if item_in_hand != null && item_in_hand.get_node("InteractableComponent").has_action:
+		item_in_hand.get_node("InteractableComponent").action(is_active)
 		return
+	
+	if _closest_item == null:
+		return
+	
+	_closest_item.action(is_active)
 		
-	item_in_hand.get_node("InteractableComponent").action(is_active)
+	
 
 
 ## Sets what item the player is holding
@@ -250,6 +266,8 @@ func _on_check_interactables_timeout() -> void:
 	_closest_item = closest_item
 
 
+## Handles the move particles on the player when they move
+## @return void
 func _on_move_particles_timeout() -> void:
 	if velocity == Vector3.ZERO:
 		return
@@ -271,7 +289,8 @@ func _on_move_particles_timeout() -> void:
 		
 	particle_ref.global_transform = $Mesh/movePoint.global_transform
 
-
+## Removes current item from the playes hand and its parent
+## @return Node3D the item that was removed from the players hand
 func remove_item() -> Node3D:
 	if item_in_hand == null:
 		return null
@@ -287,11 +306,15 @@ func remove_item() -> Node3D:
 	item_in_hand = null
 	return res
 	
-	
+
+## Handles the scale of the item when item is picked up
+## @return void
 func _final_pickup(item: Node3D) -> void:
 	var scale = Transform3D().basis.get_scale()
 	item.scale = scale / $Mesh/ItemPoint.global_transform.basis.get_scale()
-	
+
+## Handles the transform when the item is dropped
+## @return void
 func _final_drop(item: Node3D) -> void:
 	var scale = Transform3D().basis.get_scale()
 	item.scale = ($Mesh/ItemPoint.global_transform.basis.get_scale() / scale)

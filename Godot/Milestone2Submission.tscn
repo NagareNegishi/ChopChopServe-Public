@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://m8tkhmmfjf2k"]
+[gd_scene load_steps=41 format=3 uid="uid://m8tkhmmfjf2k"]
 
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_vg8fw"]
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="2_fwbjx"]
@@ -16,14 +16,19 @@
 [ext_resource type="PackedScene" uid="uid://b7x0xycilg7vt" path="res://assets/models/NuFurniture/newblender.glb" id="14_bylnx"]
 [ext_resource type="PackedScene" uid="uid://b64oudiukwpwa" path="res://assets/models/NuFurniture/nufridge.glb" id="15_fe3e7"]
 [ext_resource type="PackedScene" uid="uid://d1iqitph17b80" path="res://scenes/Interaction/AbstractPickup.tscn" id="16_pci36"]
+[ext_resource type="PackedScene" uid="uid://b5nb1nxo1r1kb" path="res://scenes/Appliance_system/bench.tscn" id="16_tq2ju"]
 [ext_resource type="PackedScene" uid="uid://dw2oh1yssb0mu" path="res://scenes/Interaction/Bowl.tscn" id="17_tq2ju"]
 [ext_resource type="Script" uid="uid://bauejc2d2sn4k" path="res://scripts/Appliance_system/Concrete_classes/trash_can.gd" id="17_wbg5q"]
 [ext_resource type="Script" uid="uid://bkgoeb22iydyl" path="res://scripts/Appliance_system/Concrete_classes/chop_table.gd" id="17_yhilg"]
 [ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="18_aikh2"]
 [ext_resource type="Script" uid="uid://csva2rdwdh12o" path="res://scripts/Appliance_system/Concrete_classes/fryer.gd" id="18_ovpkf"]
 [ext_resource type="Script" uid="uid://b6m0pkcwbxbrf" path="res://scripts/Appliance_system/Concrete_classes/food_crate.gd" id="19_c5fyv"]
+[ext_resource type="PackedScene" uid="uid://bakeesqt3byva" path="res://scenes/Appliance_system/sink.tscn" id="19_r44p0"]
 [ext_resource type="PackedScene" uid="uid://dbqm4i10x565r" path="res://scripts/Food/IngredientScenes/Water.tscn" id="20_c5fyv"]
+[ext_resource type="PackedScene" uid="uid://df6cemvjo3grw" path="res://scenes/Appliance_system/chop_table.tscn" id="20_fe3e7"]
 [ext_resource type="PackedScene" uid="uid://cn8yjuakgjsam" path="res://assets/newmodels/furniture/Sink.glb" id="20_yhilg"]
+[ext_resource type="PackedScene" uid="uid://dlk0mbdfg2cmq" path="res://scenes/Appliance_system/oven.tscn" id="21_pci36"]
+[ext_resource type="PackedScene" uid="uid://cw5uvt35a87nt" path="res://scenes/Appliance_system/blender.tscn" id="22_tq2ju"]
 [ext_resource type="PackedScene" uid="uid://dvn4ytv3ro6ec" path="res://scripts/Food/IngredientScenes/Tomato.tscn" id="25_ku0jr"]
 [ext_resource type="PackedScene" uid="uid://di1h1y3g30eka" path="res://assets/newmodels/furniture/FoodCrate.glb" id="26_t411u"]
 [ext_resource type="Script" uid="uid://c28hj0gk73hfy" path="res://scripts/Appliance_system/Concrete_classes/stove_with_pot.gd" id="27_bylnx"]
@@ -338,14 +343,22 @@ transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, 2, 0, 9)
 [node name="Bench20" parent="== RSIDE ==" instance=ExtResource("6_yhilg")]
 transform = Transform3D(1, 0, 6.3573e-08, 0, 1, 0, -6.3573e-08, 0, 1, 8, 0, -5)
 
+[node name="Placeable" parent="== RSIDE ==/Bench20" instance=ExtResource("16_tq2ju")]
+
 [node name="Bench21" parent="== RSIDE ==" instance=ExtResource("6_yhilg")]
 transform = Transform3D(1, 0, 6.3573e-08, 0, 1, 0, -6.3573e-08, 0, 1, 9, 0, -5)
+
+[node name="Placeable" parent="== RSIDE ==/Bench21" instance=ExtResource("16_tq2ju")]
 
 [node name="Bench22" parent="== RSIDE ==" instance=ExtResource("6_yhilg")]
 transform = Transform3D(1.19249e-08, 0, 1, 0, 1, 0, -1, 0, 1.19249e-08, 9, 0, -6)
 
+[node name="Placeable" parent="== RSIDE ==/Bench22" instance=ExtResource("16_tq2ju")]
+
 [node name="Bench23" parent="== RSIDE ==" instance=ExtResource("6_yhilg")]
 transform = Transform3D(1.19249e-08, 0, 1, 0, 1, 0, -1, 0, 1.19249e-08, 9, 0, -8)
+
+[node name="Placeable" parent="== RSIDE ==/Bench23" instance=ExtResource("16_tq2ju")]
 
 [node name="Bench24" parent="== RSIDE ==" instance=ExtResource("6_yhilg")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6, 0, -6)
@@ -355,6 +368,8 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6, 0,
 
 [node name="Bench26" parent="== RSIDE ==" instance=ExtResource("6_yhilg")]
 transform = Transform3D(1, 0, -2.38419e-07, 0, 1, 0, 2.38419e-07, 0, 1, 4, 0, -5)
+
+[node name="Placeable" parent="== RSIDE ==/Bench26" instance=ExtResource("16_tq2ju")]
 
 [node name="Bench28" parent="== RSIDE ==" instance=ExtResource("6_yhilg")]
 transform = Transform3D(1, 0, -2.38419e-07, 0, 1, 0, 2.38419e-07, 0, 1, -5, 0, -5)
@@ -371,6 +386,8 @@ transform = Transform3D(1, 0, 6.3573e-08, 0, 1, 0, -6.3573e-08, 0, 1, -6, 0, -5)
 [node name="Bench32" parent="== RSIDE ==" instance=ExtResource("6_yhilg")]
 transform = Transform3D(1, 0, -2.38419e-07, 0, 1, 0, 2.38419e-07, 0, 1, 3, 0, -5)
 
+[node name="Placeable" parent="== RSIDE ==/Bench32" instance=ExtResource("16_tq2ju")]
+
 [node name="Bench33" parent="== RSIDE ==" instance=ExtResource("6_yhilg")]
 transform = Transform3D(2.50343e-07, 0, 1, 0, 1, 0, -1, 0, 2.50343e-07, -1.19209e-07, 0, -6)
 
@@ -380,8 +397,12 @@ transform = Transform3D(2.50343e-07, 0, 1, 0, 1, 0, -1, 0, 2.50343e-07, 1.19209e
 [node name="Bench35" parent="== RSIDE ==" instance=ExtResource("6_yhilg")]
 transform = Transform3D(7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, 3, 0, -8)
 
+[node name="Placeable" parent="== RSIDE ==/Bench35" instance=ExtResource("16_tq2ju")]
+
 [node name="Bench36" parent="== RSIDE ==" instance=ExtResource("6_yhilg")]
 transform = Transform3D(7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, 3, 0, -6)
+
+[node name="Placeable" parent="== RSIDE ==/Bench36" instance=ExtResource("16_tq2ju")]
 
 [node name="trashcan3" parent="== RSIDE ==" instance=ExtResource("7_5qu14")]
 transform = Transform3D(-1, 0, -8.74232e-08, 0, 1, 0, 8.74232e-08, 0, -1, 7, 0, -9)
@@ -401,6 +422,8 @@ transform = Transform3D(1, 0, -2.38419e-07, 0, 1, 0, 2.38419e-07, 0, 1, -2, 0, -
 
 [node name="sink_2glb4" parent="== RSIDE ==" instance=ExtResource("8_wbg5q")]
 transform = Transform3D(1, 0, -2.38419e-07, 0, 1, 0, 2.38419e-07, 0, 1, 5, 0, -5)
+
+[node name="Sink" parent="== RSIDE ==/sink_2glb4" instance=ExtResource("19_r44p0")]
 
 [node name="nufryer3" parent="== RSIDE ==" instance=ExtResource("9_ovpkf")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 4, 0, -9)
@@ -441,6 +464,8 @@ model_scene = null
 [node name="fatdrawers4" parent="== RSIDE ==" instance=ExtResource("11_ehrbh")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 5, 0, -9)
 
+[node name="ChopTable" parent="== RSIDE ==/fatdrawers4" instance=ExtResource("20_fe3e7")]
+
 [node name="choppingboard7" parent="== RSIDE ==" instance=ExtResource("12_ku0jr")]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 5, 0.678958, -9)
 
@@ -453,8 +478,12 @@ transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0, 0, -7
 [node name="oven4" parent="== RSIDE ==" instance=ExtResource("13_t411u")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 3, 0, -7)
 
+[node name="Oven" parent="== RSIDE ==/oven4" instance=ExtResource("21_pci36")]
+
 [node name="newblender3" parent="== RSIDE ==" instance=ExtResource("14_bylnx")]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 9, 0, -7)
+
+[node name="Blender" parent="== RSIDE ==/newblender3" instance=ExtResource("22_tq2ju")]
 
 [node name="newblender4" parent="== RSIDE ==" instance=ExtResource("14_bylnx")]
 transform = Transform3D(-1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, -6, 0, -7)

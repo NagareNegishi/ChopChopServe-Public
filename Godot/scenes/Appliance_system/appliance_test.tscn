@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cc6wwdpdgswiu"]
+[gd_scene load_steps=30 format=3 uid="uid://cc6wwdpdgswiu"]
 
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_lnrcm"]
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="2_sg6mr"]
@@ -18,6 +18,10 @@
 [ext_resource type="PackedScene" uid="uid://d1iqitph17b80" path="res://scenes/Interaction/AbstractPickup.tscn" id="16_igaqv"]
 [ext_resource type="PackedScene" uid="uid://dw2oh1yssb0mu" path="res://scenes/Interaction/Bowl.tscn" id="17_tckvl"]
 [ext_resource type="PackedScene" uid="uid://br76j8t76ne2x" path="res://scripts/order_system/Plate.tscn" id="18_2abng"]
+[ext_resource type="PackedScene" uid="uid://dt4wue57mdx1d" path="res://scenes/Appliance_system/trash_can.tscn" id="19_ogxfj"]
+[ext_resource type="PackedScene" uid="uid://krj0gwn31x8u" path="res://scenes/Appliance_system/stove_with_pot.tscn" id="20_axw2j"]
+[ext_resource type="PackedScene" uid="uid://b0ougk3d4jnku" path="res://scenes/Appliance_system/food_crate.tscn" id="21_v351g"]
+[ext_resource type="PackedScene" uid="uid://bakeesqt3byva" path="res://scenes/Appliance_system/sink.tscn" id="22_d7ux1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ihmv3"]
 size = Vector3(30, 0.03, 30)
@@ -201,14 +205,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -2)
 [node name="table4" parent="== TABLES ==" instance=ExtResource("5_ggf7q")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -2)
 
-[node name="table5" parent="== TABLES ==" instance=ExtResource("5_ggf7q")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 2)
-
 [node name="table6" parent="== TABLES ==" instance=ExtResource("5_ggf7q")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 2)
-
-[node name="table7" parent="== TABLES ==" instance=ExtResource("5_ggf7q")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -2)
 
 [node name="table8" parent="== TABLES ==" instance=ExtResource("5_ggf7q")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -2)
@@ -587,10 +585,22 @@ shape = SubResource("BoxShape3D_pk2le")
 environment = SubResource("Environment_ikll6")
 
 [node name="AbstractPickup" parent="." instance=ExtResource("16_igaqv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.49325, 0.1815, 2.71952)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.49325, 0.1815, 7.90545)
 
 [node name="Bowl" parent="." instance=ExtResource("17_tckvl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.100964, 0.0150001, -0.837915)
 
 [node name="Plate" parent="." instance=ExtResource("18_2abng")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.5, -2)
+
+[node name="TrashCan" parent="." instance=ExtResource("19_ogxfj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.41731, 0, -4.35149)
+
+[node name="StoveWithPot" parent="." instance=ExtResource("20_axw2j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8857, 0, 2.18459)
+
+[node name="FoodCrate" parent="." instance=ExtResource("21_v351g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.36006, 0, 3.81223)
+
+[node name="Sink" parent="." instance=ExtResource("22_d7ux1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.59479, 0, 3.48332)

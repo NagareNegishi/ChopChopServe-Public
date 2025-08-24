@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://df6cemvjo3grw"]
+
+[ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="1_m2hjv"]
+[ext_resource type="Script" uid="uid://bkgoeb22iydyl" path="res://scripts/Appliance_system/Concrete_classes/chop_table.gd" id="2_f7xxg"]
+[ext_resource type="PackedScene" uid="uid://iwgylemncmgr" path="res://assets/newmodels/furniture/BasicBench.glb" id="3_jjqqy"]
+
+[node name="ChopTable" instance=ExtResource("1_m2hjv")]
+script = ExtResource("2_f7xxg")
+capacity = 4
+action_interval = 1.0
+cooking_style = 0
+model_scene = ExtResource("3_jjqqy")
+
+[node name="CollisionShape3D" parent="." index="0"]
+debug_color = Color(1, 0.764706, 0.192157, 1)
+
+[node name="BasicBench2" parent="." index="3" instance=ExtResource("3_jjqqy")]

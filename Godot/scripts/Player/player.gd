@@ -126,7 +126,8 @@ func _inputs() -> void:
 ## Handles when the player interacts
 ## @return void
 func _interact() -> void:
-	if item_in_hand is Plate && _closest_item.get_parent() is Food:
+	if item_in_hand is Plate && (_closest_item.get_parent() is Food ||
+	_closest_item.get_parent() is Appliance):
 		_closest_item.interact()
 		
 	if (item_in_hand != null && (_closest_item == null || 
@@ -156,7 +157,7 @@ func _action(is_active : bool) -> void:
 		item_in_hand.get_node("InteractableComponent").action(is_active)
 		return
 	
-	if _closest_item == null:
+	if _closest_item == null || item_in_hand != null:
 		return
 	
 	_closest_item.action(is_active)
@@ -202,7 +203,9 @@ func drop_item(is_throw : bool) -> bool:
 	if(item_in_hand == null):
 		return false
 	
-	item_in_hand.get_parent().remove_child(item_in_hand)
+	if item_in_hand.get_parent():
+		item_in_hand.get_parent().remove_child(item_in_hand)
+		
 	if item_in_hand.has_node("InteractableComponent"):
 		item_in_hand.get_node("InteractableComponent").turn_on_collision(true)
 	

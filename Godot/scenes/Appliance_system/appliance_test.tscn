@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cugrmqio3bpri"]
+[gd_scene load_steps=26 format=3 uid="uid://cc6wwdpdgswiu"]
 
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_lnrcm"]
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="2_sg6mr"]

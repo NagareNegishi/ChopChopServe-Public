@@ -40,8 +40,8 @@ func _ready() -> void:
 ## @param delta the times it takes per frame to render
 ## @return void
 func _physics_process(delta: float) -> void:
-	if !is_multiplayer_authority():
-		return
+	#if !is_multiplayer_authority():
+		#return
 	# Add the gravity.
 	if !is_on_floor():
 		velocity += get_gravity() * delta
@@ -260,6 +260,8 @@ func _on_check_interactables_timeout() -> void:
 	_closest_item = closest_item
 
 
+## Handles the move particles on the player when they move
+## @return void
 func _on_move_particles_timeout() -> void:
 	if velocity == Vector3.ZERO:
 		return
@@ -281,7 +283,8 @@ func _on_move_particles_timeout() -> void:
 		
 	particle_ref.global_transform = $Mesh/movePoint.global_transform
 
-
+## Removes current item from the playes hand and its parent
+## @return Node3D the item that was removed from the players hand
 func remove_item() -> Node3D:
 	if item_in_hand == null:
 		return null
@@ -297,11 +300,15 @@ func remove_item() -> Node3D:
 	item_in_hand = null
 	return res
 	
-	
+
+## Handles the scale of the item when item is picked up
+## @return void
 func _final_pickup(item: Node3D) -> void:
 	var scale = Transform3D().basis.get_scale()
 	item.scale = scale / $Mesh/ItemPoint.global_transform.basis.get_scale()
-	
+
+## Handles the transform when the item is dropped
+## @return void
 func _final_drop(item: Node3D) -> void:
 	var scale = Transform3D().basis.get_scale()
 	item.scale = ($Mesh/ItemPoint.global_transform.basis.get_scale() / scale)

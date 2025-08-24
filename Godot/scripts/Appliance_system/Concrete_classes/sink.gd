@@ -16,6 +16,13 @@ func _ready():
 	# action_interval = 1.0
 
 
+## Add interactable component to this class
+## InteractableComponent is scene dependent, can not instantiate from script
+func _setup_interactable():
+	super._setup_interactable()
+	interactable_component.has_action = true
+
+
 ## Trigger the washing process
 ## @return: True if washing started
 func wash() -> bool:

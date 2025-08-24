@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://m8tkhmmfjf2k"]
+[gd_scene load_steps=29 format=3 uid="uid://m8tkhmmfjf2k"]
 
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_vg8fw"]
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="2_fwbjx"]
@@ -17,6 +17,10 @@
 [ext_resource type="PackedScene" uid="uid://b64oudiukwpwa" path="res://assets/models/NuFurniture/nufridge.glb" id="15_fe3e7"]
 [ext_resource type="PackedScene" uid="uid://d1iqitph17b80" path="res://scenes/Interaction/AbstractPickup.tscn" id="16_pci36"]
 [ext_resource type="PackedScene" uid="uid://dw2oh1yssb0mu" path="res://scenes/Interaction/Bowl.tscn" id="17_tq2ju"]
+[ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="18_aikh2"]
+[ext_resource type="Script" uid="uid://b6m0pkcwbxbrf" path="res://scripts/Appliance_system/Concrete_classes/food_crate.gd" id="19_c5fyv"]
+[ext_resource type="PackedScene" uid="uid://dbqm4i10x565r" path="res://scripts/Food/IngredientScenes/Water.tscn" id="20_c5fyv"]
+[ext_resource type="PackedScene" uid="uid://cn8yjuakgjsam" path="res://assets/newmodels/furniture/Sink.glb" id="20_yhilg"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ihmv3"]
 size = Vector3(30, 0.03, 30)
@@ -590,3 +594,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.49325, 0.1815, 2.71952)
 
 [node name="Bowl" parent="." instance=ExtResource("17_tq2ju")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.100964, 0.0150001, -0.837915)
+
+[node name="Placeable" parent="." instance=ExtResource("18_aikh2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09944, 0.578648, -4)
+script = ExtResource("19_c5fyv")
+supply = ExtResource("20_c5fyv")
+supply_name = "Tomato"
+capacity = 4
+action_interval = 1.0
+cooking_style = 0
+model_scene = ExtResource("20_yhilg")

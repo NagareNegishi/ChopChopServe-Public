@@ -80,10 +80,8 @@ func player_has(item: Node) -> bool:
 ## Trigger action, if subclass has action
 func _on_interactable_component_action_use(_is_action: bool) -> void:
 	if _is_action:
-		chopping_board.cook(1) # what is the power of player?
+		chopping_board.cook(1)
 		print("Chop!!!!")
-		# await get_tree().physics_frame
-		# chopping_board.finish_cook()
 	else:
 		chopping_board.finish_cook()
 		print("Chopping board finished cooking.")

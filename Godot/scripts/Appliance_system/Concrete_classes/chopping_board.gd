@@ -21,6 +21,13 @@ func _ready():
 	coefficient = 1.0
 
 
+## Add interactable component to this class
+## InteractableComponent is scene dependent, can not instantiate from script
+func _setup_interactable():
+	super._setup_interactable()
+	interactable_component.has_action = true
+
+
 # ## Override upgradable setup in concrete appliances
 # func _setup_upgradable():
 # 	super._setup_upgradable()
@@ -61,11 +68,8 @@ func cook(power: int) -> bool:
 ## Trigger action, if subclass has action
 func _on_interactable_component_action_use(_is_action: bool) -> void:
 	if _is_action:
-		print("Player used action on: ", get_script().get_global_name(), ", it can chop!!.")
-		for food in contents:
-			print("before chopping: ", food.get_script().get_global_name(), ", cook time: ", food.get_cook_time())
-		cook(1) # what is the power from player??
-		await get_tree().physics_frame
+		cook(1)
+	else:
 		finish_cook()
 
 

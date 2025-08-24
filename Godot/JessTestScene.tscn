@@ -1,8 +1,8 @@
-[gd_scene load_steps=25 format=3 uid="uid://b653lvwf6gi5a"]
+[gd_scene load_steps=25 format=3 uid="uid://bhky5bauqkfj6"]
 
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_uk2o3"]
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="2_vgemh"]
-[ext_resource type="PackedScene" uid="uid://0nellx788ueo" path="res://scripts/Sabotage/sabotageUIl.tscn" id="3_uk2o3"]
+[ext_resource type="PackedScene" uid="uid://bhqst728w2ljb" path="res://scripts/Sabotage/sabotageUIl.tscn" id="3_uk2o3"]
 [ext_resource type="PackedScene" uid="uid://dythb8xw31t1c" path="res://assets/models/infrastructure/wall.glb" id="4_7ip2m"]
 [ext_resource type="PackedScene" uid="uid://dxhfqm13c85ar" path="res://assets/models/decorations/table.glb" id="5_ddxrh"]
 [ext_resource type="PackedScene" uid="uid://hxrvqyggbykc" path="res://assets/models/NuFurniture/Bench.glb" id="6_oi5yk"]

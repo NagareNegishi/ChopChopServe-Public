@@ -2,7 +2,7 @@ extends Node
 
 # Current starting currency is 200
 # Change this back later !!
-@export var total_currency: float = 1000.0
+@export var total_currency: float = 10000.0
 signal currency_changed(new_currency: float)
 
 # Add more currency to the total

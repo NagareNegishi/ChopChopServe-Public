@@ -1,9 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cs3v7ygojqy8p"]
+[gd_scene load_steps=5 format=3 uid="uid://d0hulcvks34nk"]
 
 [ext_resource type="Script" path="res://scripts/Sabotage/waterSpill.gd" id="1_breg5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_18j2u"]
-size = Vector3(2, 0.5, 2)
+size = Vector3(2, 1, 2)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_breg5"]
 vertex_color_use_as_albedo = true
@@ -14,9 +14,11 @@ material = SubResource("StandardMaterial3D_breg5")
 size = Vector3(2, 0.5, 2)
 
 [node name="waterSpill" type="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.387781, 0)
 script = ExtResource("1_breg5")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.245347, 0)
 shape = SubResource("BoxShape3D_18j2u")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

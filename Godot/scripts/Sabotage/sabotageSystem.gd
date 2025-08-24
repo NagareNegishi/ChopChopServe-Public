@@ -48,7 +48,7 @@ func request_sabotage(sabotage_type: int) -> void:
 			# Handle crate switch sabotage
 		SabotageType.WATER_SPILL:
 			print("water stuff")
-			spawn_water_spill(2.0) # duration can be adjusted
+			spawn_water_spill(5.0) # duration can be adjusted
 		SabotageType.FIRE:
 			print("fire stuff")
 			# Handle fire sabotage
@@ -82,6 +82,6 @@ func get_random_spill_position() -> Vector3:
 		push_error("Player node not found in scene!")
 		return Vector3.ZERO
 	var pos = target_node.global_transform.origin
-	pos.x += randf() * 4 - 2
-	pos.z += randf() * 4 - 2
+	pos.x += randf() * 4 #- 2
+	pos.z += randf() * 4 #- 2
 	return pos

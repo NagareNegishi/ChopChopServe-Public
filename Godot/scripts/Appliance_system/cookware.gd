@@ -25,8 +25,8 @@ func put(item: Node) -> bool:
 ## Place food into the cookware
 ## @param food: The Food item to place into the cookware
 func _put_food(food: Food) -> void:
-	food.current_visibility(false)
-	food.change_collisions()
+	# food.current_visibility(false)
+	# food.change_collisions()
 	if can_cook():
 		average_food()
 		food.startCooking(int(power_receiving * coefficient), cooking_style)

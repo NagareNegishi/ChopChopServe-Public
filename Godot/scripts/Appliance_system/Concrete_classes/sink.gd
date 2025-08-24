@@ -2,6 +2,7 @@
 class_name Sink
 extends UnPoweredAppliance
 
+var water_scene: PackedScene = preload("res://scripts/Food/IngredientScenes/Water.tscn")
 
 ## Setup the model instance
 func _init():
@@ -14,6 +15,11 @@ func _ready():
 	super._ready()
 	capacity = 4
 	# action_interval = 1.0
+
+	if water_scene and water_scene.can_instantiate():
+		print("Sink water scene preloaded successfully")
+	else:
+		push_error("Failed to preload water scene in Sink")
 
 
 ## Add interactable component to this class
@@ -70,6 +76,20 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 		else:
 			print("No plate to take from Sink")
 			return false
+
+	# If Player has Pot, provide water
+	if item is Pot:
+		print("Player has pot, provide water")
+		var water = water_scene.instantiate()
+		return item.player_has(water)
+		# var yes = item.put(water)
+		# if yes:
+		# 	print("Provided water to pot")
+		# 	return true
+		# else:
+		# 	print("Failed to provide water to pot")
+		# 	return false
+
 	# If player has empty plate: depend on if sink can accept it
 	return put(item)
 

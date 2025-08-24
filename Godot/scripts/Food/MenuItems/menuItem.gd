@@ -9,6 +9,7 @@ class_name MenuItem
 var ingredients = []
 var ingredient_states = {}
 var name_of_meal : String
+var is_avalible = true
 #var appliance : String = "Plate"
 # A MenuItem needs an Array of ingredients to combine together to make it
 # They need to be able to add things together in a bowl/plate/pan etc. to make the menuItem

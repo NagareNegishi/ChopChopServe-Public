@@ -69,13 +69,13 @@ func cook(power: int) -> bool:
 ## @param item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
 func player_has(item: Node) -> bool:
-	# #----------------------------------------------------------------------------
-	# if item:
-	# 	print("its : ", item.get_script().get_global_name())
-	# else:
-	# 	print("player has null!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+	#----------------------------------------------------------------------------
+	if item:
+		print("its : ", item.get_script().get_global_name())
+	else:
+		print("PLAYER HAS NULL !!")
 
-	# #----------------------------------------------------------------------------
+	#----------------------------------------------------------------------------
 	if item is Plate:
 		return serve_to_plate(item)
 	return super.player_has(item)

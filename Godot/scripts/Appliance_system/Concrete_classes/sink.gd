@@ -16,6 +16,13 @@ func _ready():
 	# action_interval = 1.0
 
 
+## Add interactable component to this class
+## InteractableComponent is scene dependent, can not instantiate from script
+func _setup_interactable():
+	super._setup_interactable()
+	interactable_component.has_action = true
+
+
 ## Trigger the washing process
 ## @return: True if washing started
 func wash() -> bool:
@@ -65,6 +72,13 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 			return false
 	# If player has empty plate: depend on if sink can accept it
 	return put(item)
+
+
+## Trigger action, if subclass has action
+func _on_interactable_component_action_use(_is_action: bool) -> void:
+	print("Player used action on: ", get_script().get_global_name(), ", it can wash.")
+	if _is_action:
+		wash()
 
 
 ## Override upgradable setup in concrete appliances

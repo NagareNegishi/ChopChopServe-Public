@@ -34,7 +34,7 @@ func _ready():
 ## Setup cookware slots, should be overridden by subclasses
 ## Default implementation expect one Cookware slot in the center
 func _setup_cookware_slots():
-	var slot_position = Vector3(0.0, size.y * 0.5, 0.0)
+	var slot_position = Vector3(0.0, size.y * 0.8, 0.0)
 	cookware_slots.append(slot_position)
 
 
@@ -78,7 +78,7 @@ func put(item: Node) -> bool:
 ## Place a Cookware onto this PoweredAppliance, start cooking if applicable
 ## @param cookware: The Cookware to place on this PoweredAppliance
 func _put_cookware(cookware: Cookware) -> void:
-	# cookware.restore_original_transform() #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	cookware.restore_original_transform() # should be removed once player returns original scale !!!
 	_position_cookware(cookware, contents.size() - 1)
 	cookware.lock()
 	cookware.set_can_use(true)
@@ -105,6 +105,7 @@ func _take_cookware(cookware: Cookware) -> void:
 	cookware.finish_cook()
 	cookware.set_can_use(false)
 	cookware.unlock()
+	cookware.restore_original_transform()
 
 
 ## Check if this appliance can accept the given item

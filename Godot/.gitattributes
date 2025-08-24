@@ -1,2 +1,4 @@
 # Normalize EOL for all files that Git considers text files.
 * text=auto eol=lf
+Godot/assets/newmodels/food/recipes/finished/*.glb filter=lfs diff=lfs merge=lfs -text
+Godot/assets/newmodels/furniture/*.glb filter=lfs diff=lfs merge=lfs -text

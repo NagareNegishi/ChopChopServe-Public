@@ -67,6 +67,13 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 	return put(item)
 
 
+## Trigger action, if subclass has action
+func _on_interactable_component_action_use(_is_action: bool) -> void:
+	print("Player used action on: ", get_script().get_global_name(), ", it can wash.")
+	if _is_action:
+		wash()
+
+
 ## Override upgradable setup in concrete appliances
 func _setup_upgradable():
 	super._setup_upgradable()

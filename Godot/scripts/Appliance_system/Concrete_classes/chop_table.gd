@@ -64,11 +64,32 @@ func player_has(item: Node) -> bool:
 		print("Chopping board cannot accept:", item.get_script().get_global_name())
 		return false
 	#------------------------------------------------------------------------------------
-	chopping_board.cook(1) # what is the power of player? or how Food handle chopping?
+
+
+
+	# comment out if someone want to test before action button implementation !!!!!!!!!!!!!!!!!!!!!!
+	# chopping_board.cook(50) # what is the power of player? or how Food handle chopping?
+	# await get_tree().physics_frame
+	# chopping_board.finish_cook()
+	
+	
+	
+	
+	
 	# let player pick up directly??
 	GlobalScript.player.pickup_item(chopping_board.take())
 	#------------------------------------------------------------------------------------
 	return true
+
+
+## Trigger action, if subclass has action
+func _on_interactable_component_action_use(_is_action: bool) -> void:
+	print("Player used action on: ", get_script().get_global_name(), ", it can chop!!.")
+	if _is_action:
+		chopping_board.cook(1) # what is the power of player?
+		await get_tree().physics_frame
+		chopping_board.finish_cook()
+
 
 
 ## Override unsupported methods to prevent misuse ------------------------------

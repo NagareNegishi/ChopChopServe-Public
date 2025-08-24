@@ -181,7 +181,4 @@ func _input(event):
 			spawn_test_appliance(TEST_APPLIANCES[appliance_index])
 			print("Numpad %d pressed - spawning %s" % [appliance_index + 1, TEST_APPLIANCES[appliance_index]])
 
-# # mock to make serve_to_plate compile
-# func match_menu_items(items: Array):
-# 	return null
 

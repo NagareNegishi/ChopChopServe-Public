@@ -145,14 +145,15 @@ const TEST_APPLIANCES = [
 	"bench",       # Numpad 6
 	"food_crate",       # Numpad 7
 	"sink",      # Numpad 8
-	"trash_can"   # Numpad 9
+	"trash_can",   # Numpad 9
+	"stove_with_pan"  # Numpad 0
 ]
 
 func _input(event):
 	if event is InputEventKey and event.pressed:
 		var appliance_index = -1
 	
-		# Check for numpad keys 1-9
+		# Check for numpad keys 1-9 + 0
 		match event.keycode:
 			KEY_KP_1:
 				appliance_index = 0
@@ -172,13 +173,12 @@ func _input(event):
 				appliance_index = 7
 			KEY_KP_9:
 				appliance_index = 8
+			KEY_KP_0:
+				appliance_index = 9
 		
 		# Spawn the corresponding appliance
 		if appliance_index >= 0 and appliance_index < TEST_APPLIANCES.size():
 			spawn_test_appliance(TEST_APPLIANCES[appliance_index])
 			print("Numpad %d pressed - spawning %s" % [appliance_index + 1, TEST_APPLIANCES[appliance_index]])
 
-# # mock to make serve_to_plate compile
-# func match_menu_items(items: Array):
-# 	return null
 

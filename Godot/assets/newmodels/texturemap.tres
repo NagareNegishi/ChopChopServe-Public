@@ -1,13 +1,3 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://d1mru8ywyt58h"]
-
-[ext_resource type="Texture2D" uid="uid://boc606fnvk47d" path="res://assets/newmodels/TextureMap.png" id="1_hc828"]
-
-[resource]
-albedo_texture = ExtResource("1_hc828")
-emission = Color(0.168627, 0.258824, 1, 1)
-emission_energy_multiplier = 0.0
-clearcoat = 0.0
-ao_light_affect = 1.0
-backlight = Color(0.601908, 0.972184, 0.729815, 1)
-distance_fade_min_distance = 166.05
-distance_fade_max_distance = 0.0
+version https://git-lfs.github.com/spec/v1
+oid sha256:9dad028ac548dc7f787566425f1ef56750536f0023506c69e4eaec94cfc61386
+size 491

@@ -126,7 +126,7 @@ func _inputs() -> void:
 ## Handles when the player interacts
 ## @return void
 func _interact() -> void:
-	if item_in_hand is Plate && (_closest_item.get_parent() is Food ||
+	if (item_in_hand is Plate && _closest_item != null) && (_closest_item.get_parent() is Food ||
 	_closest_item.get_parent() is Appliance):
 		_closest_item.interact()
 		

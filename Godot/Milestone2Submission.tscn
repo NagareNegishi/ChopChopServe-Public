@@ -605,7 +605,8 @@ transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, 2, 0, 9)
 [node name="Bench20" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("6_yhilg")]
 transform = Transform3D(1, 0, 6.3573e-08, 0, 1, 0, -6.3573e-08, 0, 1, 8, 0, -5)
 
-[node name="Placeable" parent="NavigationRegion3D/== RSIDE ==/Bench20" instance=ExtResource("20_fe3e7")]
+[node name="ChopTable" parent="NavigationRegion3D/== RSIDE ==/Bench20" instance=ExtResource("24_q757p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.597495, 0)
 
 [node name="Bench21" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("6_yhilg")]
 transform = Transform3D(1, 0, 6.3573e-08, 0, 1, 0, -6.3573e-08, 0, 1, 9, 0, -5)
@@ -760,9 +761,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.97447, 0.392201, -5.00542)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.27045, 0, -3.81482)
 
 [node name="FoodCrate" parent="." instance=ExtResource("30_bota8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.34422, 0, -2.47513)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.34422, 0, -2.75199)
 
 [node name="FoodCrate2" parent="." instance=ExtResource("30_bota8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.46532, 0, -1.15222)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.39644, 0, -1.84384)
 supply = ExtResource("21_c5fyv")
 model_scene = ExtResource("31_gnhd6")

@@ -22,4 +22,4 @@ func _ready():
 	cooked_mesh_good = $TomatoSoup
 	cooked_mesh_bad = null
 	cooked_mesh_burnt = null
-	
+	ui_texture = load("res://assets/textures/recipes/TomatoSoup.png")

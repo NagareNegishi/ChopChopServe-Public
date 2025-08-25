@@ -6,6 +6,11 @@
 class_name ChoppingBoard
 extends Cookware
 
+# -----------------------------------------------------------------------------
+# ADDED so we know how much we need to scale the model on the chopping board by
+var food_scale_factor: float = 4
+# -----------------------------------------------------------------------------
+
 ## Setup the model instance
 func _init():
 	super._init()
@@ -46,6 +51,14 @@ func put(item: Node) -> bool:
 	contents.append(item)
 	add_child(item)
 	item.position = Vector3(0.0, size.y * 0.5, 0.0)
+	
+	# -------------------------------------------------------------------------
+	# ADDED to scale the food to be on the chopping board to be visible
+	if item is Food:
+		item.scale *= food_scale_factor
+	
+	# -------------------------------------------------------------------------
+	
 #--------------------------------------------
 	print("Put: ", item.get_script().get_global_name(), " onto: ", get_script().get_global_name())
 #--------------------------------------------
@@ -72,7 +85,15 @@ func _on_interactable_component_action_use(_is_action: bool) -> void:
 	else:
 		finish_cook()
 
-
+# ----------------------------------------------------------------------------- !!!!
+# ADDED so that when you take the food from the chopping board the scale goes back to how it was
+func take() -> Node:
+	var item = super.take()
+	if item and item is Food:
+		item.scale /= food_scale_factor
+	item.stop_cooking()
+	return item
+# -----------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
 # may need to override them

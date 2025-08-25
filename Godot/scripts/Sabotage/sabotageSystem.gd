@@ -1,7 +1,5 @@
 #class_name Sabotage_System
 extends Node
-<<<<<<< HEAD
-=======
 
 var current_sabotage
 
@@ -87,4 +85,3 @@ func get_random_spill_position() -> Vector3:
 	pos.x += randf() * 4 #- 2
 	pos.z += randf() * 4 #- 2
 	return pos
->>>>>>> c0fd6d1a7d52a0f947ed166ac602643aa3805e25

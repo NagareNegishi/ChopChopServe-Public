@@ -30,10 +30,10 @@ func call_service(target_service: String, operation: String, params: Array = [])
 	var service = get_service(target_service)
 	# Useful checks to ensure services are set up and called correctly
 	if service == null:
-		print("Error: Service '%s' not found" % target_service)
+		#print("Error: Service '%s' not found" % target_service)
 		return null
 	if not service.has_method(operation):
-		print("Error: Service '%s' does not support operation '%s'" % [target_service, operation])
+		#print("Error: Service '%s' does not support operation '%s'" % [target_service, operation])
 		return null
 	# Calls function from service and returns result
 	var result = await service.callv(operation, params)
@@ -50,6 +50,8 @@ func _ready():
 		
 		#register_service("FoodCourt", food_court) 
 		var building = Building.new(self)
+		var order_generator = generateOrder.new()
+		register_service("OrderGenerator", order_generator) 
 		await get_tree().create_timer(1.0).timeout
 	
 	

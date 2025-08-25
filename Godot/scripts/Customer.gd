@@ -31,7 +31,7 @@ var _restaurant_number : int
 # Time starts from being seated 
 var _time_till_leaving: float = MAXIMUM_SEATING_TIME
 var _time_till_order: float = MAXIMUM_ORDER_THINK_TIME
-var order: Array[MenuItem] = [TomatoSoup.new()] # DUMMY CODE TILL ORDER SYSTEM READY
+var order
 
 ## Initialize Customer with server and communication ids
 func initialize(game_server : Server, id: String, 
@@ -40,6 +40,9 @@ func initialize(game_server : Server, id: String,
 	_id = id
 	_food_court_id = food_court_id
 	_restaurant_number = restaurant_number
+	order = await _game_server.call_service("OrderGenerator", 
+													"get_order", [])
+													
 ## Attempt to accquire unoccupied table to navigate towards
 func check_tables() -> void:
 	_table_target = await _game_server.call_service(_food_court_id, 
@@ -105,7 +108,6 @@ func _update_pathfinding(delta: float) -> void:
 	var _distance_to_target = global_position.distance_to(_nav_agent.target_position)
 	if (_nav_agent.is_navigation_finished() 
 		|| _distance_to_target <= PATHFINDING_DISTANCE_THRESHOLD):
-			
 		if _table_target: # Tweens customer's position in front of table
 			var tween = create_tween()
 			tween.set_ease(Tween.EASE_OUT)
@@ -134,7 +136,6 @@ func _update_pathfinding(delta: float) -> void:
 		_stuck_timer += delta
 		# If stuck for long enough, recalculate the entire path
 		if _stuck_timer >= STUCK_RECALCULATE_TIME:
-			print("I'm stuck, finding a new path!")
 			_pathfind_to_target() # This forces a full recalculation
 			_stuck_timer = 0.0 # Reset the timer
 	else:
@@ -174,17 +175,18 @@ func _npc_behavior(delta: float) -> void:
 				_pathfind_to_target()	
 				return
 				
-			var food_served = await _game_server.call_service(_table_target.id(), 
-											"get_food", 
+			var plate_served = await _game_server.call_service(_table_target.id(), 
+											"get_plate", 
 											[])
 			# DUMMY CODE TILL ORDER SYSTEM READY
-			if food_served && food_served.name_of_meal == order[0].name_of_meal:  
-				_game_server.call_service(_table_target.id(), 
-										"remove_food", 
-										[])
-				
-				print("YAY!")
-				_time_till_leaving = 2
+			if plate_served:
+				var food = plate_served.get_children().back()
+				if food is TomatoSoup:
+					_game_server.call_service(_table_target.id(), 
+												"remove_plate", 
+												[])
+					print("YAY!")
+					_time_till_leaving = 2
 	
 	# Customers who reach the front of the queue should begin looking for tables
 	if _queued && _queue_target:

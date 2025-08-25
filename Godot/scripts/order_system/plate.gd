@@ -19,7 +19,7 @@ var is_full : bool = false
 
 func _ready():
 	menu_instance = preload_menuItems.new()
-	print(menu_instance)
+	#print(menu_instance)
 	# Makes a grid on the plate in which ingredients can be placed in 
 	grid.resize(GRID_SIZE)
 	for i in range(GRID_SIZE):
@@ -40,9 +40,11 @@ func find_next_free_cell() -> Vector2i:
 # Adds items to the plate and scales them so that they appear on the plate
 func add_list_items(food_array: Array):
 	for food in food_array:
+		print("Adding ", food, " to the plate")
 		add_item(food)
 
 func add_item(food_node) -> void:
+	print("in add item")
 	food_items.append(food_node)
 	disable_collision(food_node)
 	
@@ -94,11 +96,13 @@ func remove_all():
 # replaces the list of ingredients with only the found meal
 func check_plate():
 	print(grid)
+	for item in food_items:
+		print("this food items ", item, " previoous states ", item.previous_states)
 	if food_items.is_empty():
 		print("food items is emptyw")
 		return 0
 	var menuitem = menu_instance.match_menu_items(food_items)
-	print(menuitem)
+	#print(menuitem)
 	if menuitem != null:
 		has_menu_item = true
 		display_menu_item(menuitem)
@@ -149,7 +153,7 @@ func disable_collision(node: Node):
 
 # this is what the plate does when in certain areas, Havent added what it is to do when it interacts
 # with the appliance yet but shouldnt be too difficult
-func _on_interactable_component_action_use(is_action: bool) -> void:
+func _on_interactable_component_action_interact(is_action: bool) -> void:
 	if not is_action:
 		return
 	

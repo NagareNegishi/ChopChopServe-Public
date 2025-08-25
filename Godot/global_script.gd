@@ -16,6 +16,7 @@ var ui_game_state : UIGameState
 func _ready() -> void:
 	if get_tree().get_current_scene().has_node("Player"):
 		player = get_tree().get_current_scene().get_node("Player")
+		print("Found Player")
 		
 	if get_tree().get_current_scene().has_node("HUD"):
 		ui_game_state = get_tree().get_current_scene().get_node("HUD")

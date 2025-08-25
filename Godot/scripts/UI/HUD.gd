@@ -5,7 +5,7 @@ extends Control
 func _ready() -> void:
 	$Server.text = "Client" if !multiplayer.is_server() else "Server"
 	for control in debug_hud:
-		control.visible = false
+		control.visible = true
 	
 func _process(delta: float) -> void:
 	var fps = Engine.get_frames_per_second()

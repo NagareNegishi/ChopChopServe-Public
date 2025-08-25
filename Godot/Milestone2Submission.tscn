@@ -1,4 +1,6 @@
+
 [gd_scene load_steps=29 format=3 uid="uid://m8tkhmmfjf2k"]
+
 
 [ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_aikh2"]
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_vg8fw"]
@@ -16,11 +18,13 @@
 [ext_resource type="PackedScene" uid="uid://b7x0xycilg7vt" path="res://assets/models/NuFurniture/newblender.glb" id="14_bylnx"]
 [ext_resource type="PackedScene" uid="uid://b64oudiukwpwa" path="res://assets/models/NuFurniture/nufridge.glb" id="15_fe3e7"]
 [ext_resource type="PackedScene" uid="uid://d1iqitph17b80" path="res://scenes/Interaction/AbstractPickup.tscn" id="16_pci36"]
+
 [ext_resource type="Script" uid="uid://dv1g0obwvkkkt" path="res://scripts/QueueSpot.gd" id="17_c5fyv"]
 [ext_resource type="Script" uid="uid://dnns4dn8p042y" path="res://scripts/Table.gd" id="19_yhilg"]
 [ext_resource type="PackedScene" uid="uid://br76j8t76ne2x" path="res://scripts/order_system/Plate.tscn" id="20_aikh2"]
 [ext_resource type="PackedScene" uid="uid://dbqm4i10x565r" path="res://scripts/Food/IngredientScenes/Water.tscn" id="21_c5fyv"]
 [ext_resource type="PackedScene" uid="uid://bhby0n47wy3nv" path="res://assets/models/infrastructure/wall.tscn" id="21_wbg5q"]
+
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_67eo6"]
 size = Vector3(1.11963, 1, 3.02759)
@@ -712,5 +716,7 @@ mesh = SubResource("BoxMesh_pwhdc")
 [node name="Plate" parent="." instance=ExtResource("20_aikh2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.47223, 0.132272, -0.0941153)
 
+
 [node name="Water" parent="." instance=ExtResource("21_c5fyv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.97447, 0.392201, -5.00542)
+

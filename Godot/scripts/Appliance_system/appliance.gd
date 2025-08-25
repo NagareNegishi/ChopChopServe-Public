@@ -210,4 +210,11 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 func _on_interactable_component_action_use(_is_action: bool) -> void:
 	if _is_action:
 		print("Player used action on: ", get_script().get_global_name(), ", but, it does not have action.")
+
+
+## TODO: Probably implement this in InteractableComponent not here
+## Toggle interaction
+func _toggle_interaction(can_interact: bool) -> void:
+	interactable_component.can_be_interacted = can_interact
+	interactable_component.turn_on_collision(can_interact)
 ## -------------------------------------------------------------------------------------------------

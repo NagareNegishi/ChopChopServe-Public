@@ -34,16 +34,16 @@ func _ready():
 func put(item: Node) -> bool:
 	if not _can_accept(item):
 		return false
+	# transfer item to appliance
+	GlobalScript.player.remove_item()
+	contents.append(item)
+	add_child(item)
 	#--------------------------------------------
 	print("Put: ", item.get_script().get_global_name(), " onto: ", get_script().get_global_name())
 	print("Contents of ", get_script().get_global_name(), " are: ")
 	for content in contents:
 		print(" --- ", content.get_script().get_global_name())
 	#--------------------------------------------
-	# transfer item to appliance
-	GlobalScript.player.remove_item()
-	contents.append(item)
-	add_child(item)
 	return true
 
 

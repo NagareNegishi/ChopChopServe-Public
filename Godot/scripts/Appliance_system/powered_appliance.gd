@@ -78,6 +78,7 @@ func put(item: Node) -> bool:
 ## Place a Cookware onto this PoweredAppliance, start cooking if applicable
 ## @param cookware: The Cookware to place on this PoweredAppliance
 func _put_cookware(cookware: Cookware) -> void:
+	cookware._toggle_interaction(false)
 	cookware.restore_original_transform() # should be removed once player returns original scale !!!
 	_position_cookware(cookware, contents.size() - 1)
 	cookware.lock()
@@ -106,6 +107,7 @@ func _take_cookware(cookware: Cookware) -> void:
 	cookware.set_can_use(false)
 	cookware.unlock()
 	cookware.restore_original_transform()
+	cookware._toggle_interaction(true)
 
 
 ## Check if this appliance can accept the given item
@@ -301,9 +303,11 @@ func serve_to_plate(plate: Plate) -> bool:
 		print("Nothing to serve from: ", cookware.get_script().get_global_name())
 		return false
 
+	cookware.finish_cook()
+	print("Contents of : ", cookware.get_script().get_global_name(), " Before serving: ", cookware.contents)
 	plate.add_list_items(cookware.take_all()) # Method in Plate, takes Array of Food
-	stop_cook()
 	#----------------------------------------------------------------------
+	print("Contents of : ", cookware.get_script().get_global_name(), " After serving: ", cookware.contents)
 	print("Cookware :", cookware.get_script().get_global_name(), ", served to: ", plate.get_script().get_global_name())
 	#----------------------------------------------------------------------
 	return true

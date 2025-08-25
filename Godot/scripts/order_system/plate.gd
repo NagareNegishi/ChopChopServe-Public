@@ -19,7 +19,7 @@ var is_full : bool = false
 
 func _ready():
 	menu_instance = preload_menuItems.new()
-	print(menu_instance)
+	#print(menu_instance)
 	# Makes a grid on the plate in which ingredients can be placed in 
 	grid.resize(GRID_SIZE)
 	for i in range(GRID_SIZE):
@@ -93,12 +93,12 @@ func remove_all():
 # This checks if the plate contains a dish, when it does contain a dish it removes everything and
 # replaces the list of ingredients with only the found meal
 func check_plate():
-	print(grid)
+	#print(grid)
 	if food_items.is_empty():
 		print("food items is emptyw")
 		return 0
 	var menuitem = menu_instance.match_menu_items(food_items)
-	print(menuitem)
+	#print(menuitem)
 	if menuitem != null:
 		has_menu_item = true
 		display_menu_item(menuitem)

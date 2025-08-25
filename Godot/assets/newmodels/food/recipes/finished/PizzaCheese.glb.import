@@ -3,7 +3,7 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://cw8mmd2ro0dxx"
+uid="uid://dpeid0xfyetbe"
 path="res://.godot/imported/PizzaCheese.glb-79ae2e019200f87e98af3e1eed9ad113.scn"
 
 [deps]
@@ -41,4 +41,4 @@ _subresources={
 }
 }
 gltf/naming_version=1
-gltf/embedded_image_handling=1
+gltf/embedded_image_handling=0

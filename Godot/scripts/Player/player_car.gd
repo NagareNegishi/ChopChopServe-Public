@@ -7,6 +7,8 @@ extends CharacterBody3D
 @export var acceleration : float = 15
 @export var decceleration : float = 30
 
+var turn_input_avg : int = 0
+var move_input_avg : int = 0
 
 @onready var controller : PlayerCarController = $Controller
 @onready var camera : Camera3D = $SpringArm/Camera
@@ -29,6 +31,7 @@ func _ready() -> void:
 # @return void
 func _process(delta: float) -> void:
 	if !multiplayer.is_server():
+		$ParticleTimer.stop()
 		return
 	
 	_movement(delta)
@@ -42,23 +45,38 @@ func _process(delta: float) -> void:
 # @param delta time to proces frame
 # @return void
 func _movement(delta : float) -> void:
+	#resets average
+	turn_input_avg = 0
+	move_input_avg = 0
 	
-	var turn_input_avg : int = 0
-	var move_input_avg : int = 0
+	var move_zero_count = 0
+	var turn_zero_count = 0
 	
+	#adds all turn and move inputs
 	for key in player_inputs.keys():
 		turn_input_avg += player_inputs[key].turn
 		move_input_avg += player_inputs[key].move
-	
-	if player_inputs.size() != 0:
-		turn_input_avg /= player_inputs.size()
-	
-	if player_inputs.size() != 0:
-		move_input_avg /= player_inputs.size()
 		
+		#tracks how many players arent requesting to move
+		if player_inputs[key].move == 0:
+			move_zero_count += 1
+		
+		#tracks how many players arent requesting to turn
+		if player_inputs[key].turn == 0:
+			turn_zero_count += 1
+	
+	#averages inputs if at least one player is requesting to move
+	if (player_inputs.size() - move_zero_count) != 0:
+		turn_input_avg /= (player_inputs.size() - move_zero_count)
+	
+	#averages inputs if at least one player is requesting to turn
+	if (player_inputs.size() - turn_zero_count) != 0:
+		move_input_avg /= (player_inputs.size() - turn_zero_count)
+	
+	#clamps average bewteen -1 and 1
 	turn_input_avg = clampi(turn_input_avg, -1, 1)
 	move_input_avg = clampi(move_input_avg, -1, 1)
-	
+
 	#rotates mesh
 	$Mesh.rotation.y += turn_input_avg * turn_speed * delta
 		
@@ -83,33 +101,44 @@ func _movement(delta : float) -> void:
 
 # Uses unactive particles from pool and actives them if player is moving
 # @return void
+@rpc("authority")
 func _on_particle_timer_timeout() -> void:
-	if (velocity == Vector3.ZERO || controller.move_input == -1) && controller.turn_input == 0:
+	if (velocity == Vector3.ZERO || move_input_avg == -1) && turn_input_avg == 0:
 		return
 	
-	var particle_ref : MoveParticles = null
+	var particle_index : int = -1
 
 	for particle : MoveParticles in MOVE_PARTICLES_POOL:
 		if !particle.is_active:
-			particle_ref = particle
+			particle_index = MOVE_PARTICLES_POOL.find(particle)
 			break
 
-	if particle_ref == null:
+	if particle_index == -1:
 		return
-
-	particle_ref.set_active(true)
 	
-	if particle_ref.get_parent() != get_tree().get_current_scene():
-		get_tree().get_current_scene().add_child(particle_ref)
-		
-	particle_ref.global_transform = $Mesh/ParticleSpawn.global_transform
+	rpc("_spawn_particle", particle_index)
 
+
+@rpc("authority", "call_local")
+func _spawn_particle(index : int) -> void:
+	var particle = MOVE_PARTICLES_POOL.get(index)
+	particle.set_active(true)
+	
+	if particle.get_parent() != get_tree().get_current_scene():
+		get_tree().get_current_scene().add_child(particle)
+
+	particle.global_transform = $Mesh/ParticleSpawn.global_transform
+	
+# clears inputs stored in player_inputs if 
+# they are pressed within given timeframe
+# @return void 
 func _clear_inputs():
 	var now = Time.get_ticks_msec()
 	for key in player_inputs.keys():
 		if now - player_inputs[key].time > 300:
 			player_inputs.erase(key)
 
+# adds input into player_input
 func _on_received_input(peer_id: int, move : int, turn : int):
 	player_inputs[peer_id] = {
 		"move" : move,

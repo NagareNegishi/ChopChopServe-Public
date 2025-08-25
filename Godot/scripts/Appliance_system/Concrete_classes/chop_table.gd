@@ -12,6 +12,13 @@ func _ready():
 	_add_chopping_board()
 
 
+## Add interactable component to this class
+## InteractableComponent is scene dependent, can not instantiate from script
+func _setup_interactable():
+	super._setup_interactable()
+	interactable_component.has_action = true
+
+
 ## Add the chopping board to the bench
 func _add_chopping_board() -> void:
 	capacity = 1
@@ -64,11 +71,23 @@ func player_has(item: Node) -> bool:
 		print("Chopping board cannot accept:", item.get_script().get_global_name())
 		return false
 	#------------------------------------------------------------------------------------
-	chopping_board.cook(1) # what is the power of player? or how Food handle chopping?
 	# let player pick up directly??
 	GlobalScript.player.pickup_item(chopping_board.take())
 	#------------------------------------------------------------------------------------
 	return true
+
+
+## Trigger action, if subclass has action
+func _on_interactable_component_action_use(_is_action: bool) -> void:
+	if _is_action:
+		chopping_board.cook(1) # what is the power of player?
+		print("Chop!!!!")
+		# await get_tree().physics_frame
+		# chopping_board.finish_cook()
+	else:
+		chopping_board.finish_cook()
+		print("Chopping board finished cooking.")
+
 
 
 ## Override unsupported methods to prevent misuse ------------------------------

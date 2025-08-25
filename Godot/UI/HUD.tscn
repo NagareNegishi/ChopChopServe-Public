@@ -1,10 +1,11 @@
 [gd_scene load_steps=6 format=3 uid="uid://dg3km4t6mbwwg"]
 
-[ext_resource type="Script" uid="uid://ccfswi4egkeu8" path="res://UI/UIScript.gd" id="1_gppie"]
+[ext_resource type="Script" uid="uid://djull4qell3bf" path="res://scripts/UI/HUD.gd" id="1_f2wx0"]
 [ext_resource type="PackedScene" uid="uid://b6huce6rberg3" path="res://UI/UI_Reputation.tscn" id="2_ijstf"]
 [ext_resource type="FontFile" uid="uid://dxc6n0umgi0q4" path="res://assets/fonts/Jua-Regular.ttf" id="3_4n7mi"]
 [ext_resource type="Texture2D" uid="uid://b4qjni3x30ew" path="res://assets/textures/HUD/YBottle.png" id="4_f2wx0"]
 [ext_resource type="PackedScene" uid="uid://cpf68rvd2ht5y" path="res://UI/UI_GameState.tscn" id="4_uk570"]
+
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -13,7 +14,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_gppie")
+script = ExtResource("1_f2wx0")
 
 [node name="Controls" type="ColorRect" parent="."]
 layout_mode = 1
@@ -75,17 +76,14 @@ vertical_alignment = 1
 
 [node name="FPS" type="Label" parent="."]
 layout_mode = 1
-anchors_preset = 3
+anchors_preset = 1
 anchor_left = 1.0
-anchor_top = 1.0
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -60.0
-offset_top = -641.0
-offset_right = -7.0
-offset_bottom = -618.0
+offset_left = -71.0
+offset_top = 50.0
+offset_right = -18.0
+offset_bottom = 73.0
 grow_horizontal = 0
-grow_vertical = 0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 0
@@ -168,5 +166,23 @@ theme_override_constants/outline_size = 2
 theme_override_fonts/font = ExtResource("3_4n7mi")
 theme_override_font_sizes/font_size = 13
 text = "Chop Chop Serve | Alpha Build"
+
+[node name="Server" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -105.0
+offset_top = 7.0
+offset_right = -6.0
+offset_bottom = 37.0
+grow_horizontal = 0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("3_4n7mi")
+theme_override_font_sizes/font_size = 30
+text = "Server"
 
 [editable path="Team2Rep"]

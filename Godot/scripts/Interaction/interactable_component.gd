@@ -6,6 +6,7 @@ signal action_use(is_action : bool)
 signal toggle_collision(turn_on : bool)
 
 @export var is_pickup : bool
+@export var has_action : bool = false
 
 var can_be_interacted : bool = true
 
@@ -19,7 +20,8 @@ func interact() -> void:
 ## Emits signal that the player has used action with this object
 ## @return void
 func action(in_use : bool) -> void:
-	emit_signal("action_use", in_use)
+	if has_action:
+		emit_signal("action_use", in_use)
 
 
 ## Emits signal that the player is hovering over this object

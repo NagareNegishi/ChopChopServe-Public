@@ -1,15 +1,18 @@
 extends Node
 
 const SHOULD_LOAD : bool = false
-const IPADDRESS : String = "10.20.217.105"
+const IPADDRESS : String = "10.20.217.73"
 const PORT : int = 25565
 
 var peer : ENetMultiplayerPeer = ENetMultiplayerPeer.new()
 
+## Called when the node enters the scene tree for the first time.
+## @return void 
 func _ready() -> void:
 	if !SHOULD_LOAD:
 		return
-
+	
+	#Signals to test if players are connecting
 	multiplayer.connected_to_server.connect(_on_connected)
 	multiplayer.connection_failed.connect(_on_connection_failed)
 	multiplayer.server_disconnected.connect(_on_disconnected)
@@ -26,11 +29,20 @@ func _ready() -> void:
 		if clinet_error == OK:
 			multiplayer.multiplayer_peer = client
 
+
+## Runs when player is connect to server
+## @return void 
 func _on_connected():
 	print("Connected to server")
 
+
+## Runs when player fails to connect to server
+## @return void 
 func _on_connection_failed():
 	print("Failed to connect to server")
 
+
+## Runs when player fails to connect to server
+## @return void 
 func _on_disconnected():
 	print("Disconnected from server")

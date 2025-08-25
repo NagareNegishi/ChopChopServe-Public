@@ -129,7 +129,7 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 	# If player has nothing: let them take self, return true
 	if not item:
 		GlobalScript.player.pickup_item(self)
-		print("Player picked up equipment: ", get_script().get_global_name())
+		print("Player tried to pick up equipment: ", get_script().get_global_name())
 		return true
 
 	# let player decide how to handle drop!!!!!!!!!!!!!!!!!!!!!!!!!!

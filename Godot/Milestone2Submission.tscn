@@ -19,7 +19,6 @@
 [ext_resource type="PackedScene" uid="uid://b5nb1nxo1r1kb" path="res://scenes/Appliance_system/bench.tscn" id="16_tq2ju"]
 [ext_resource type="PackedScene" uid="uid://dw2oh1yssb0mu" path="res://scenes/Interaction/Bowl.tscn" id="17_tq2ju"]
 [ext_resource type="Script" uid="uid://bauejc2d2sn4k" path="res://scripts/Appliance_system/Concrete_classes/trash_can.gd" id="17_wbg5q"]
-[ext_resource type="Script" uid="uid://bkgoeb22iydyl" path="res://scripts/Appliance_system/Concrete_classes/chop_table.gd" id="17_yhilg"]
 [ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="18_aikh2"]
 [ext_resource type="Script" uid="uid://csva2rdwdh12o" path="res://scripts/Appliance_system/Concrete_classes/fryer.gd" id="18_ovpkf"]
 [ext_resource type="Script" uid="uid://b6m0pkcwbxbrf" path="res://scripts/Appliance_system/Concrete_classes/food_crate.gd" id="19_c5fyv"]
@@ -33,6 +32,7 @@
 [ext_resource type="PackedScene" uid="uid://di1h1y3g30eka" path="res://assets/newmodels/furniture/FoodCrate.glb" id="26_t411u"]
 [ext_resource type="Script" uid="uid://c28hj0gk73hfy" path="res://scripts/Appliance_system/Concrete_classes/stove_with_pot.gd" id="27_bylnx"]
 [ext_resource type="PackedScene" uid="uid://d4bn5pltpfukp" path="res://assets/newmodels/furniture/StoveSingle.glb" id="28_fe3e7"]
+[ext_resource type="PackedScene" uid="uid://br76j8t76ne2x" path="res://scripts/order_system/Plate.tscn" id="32_pci36"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ihmv3"]
 size = Vector3(30, 0.03, 30)
@@ -454,17 +454,14 @@ transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -2, 0.67
 [node name="actualwide4" parent="== RSIDE ==" instance=ExtResource("10_7se30")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 6, 0, -9)
 
-[node name="Placeable" parent="== RSIDE ==/actualwide4" instance=ExtResource("18_aikh2")]
-script = ExtResource("17_yhilg")
-capacity = 4
-action_interval = 1.0
-cooking_style = 0
-model_scene = null
+[node name="ChopTable" parent="== RSIDE ==/actualwide4" instance=ExtResource("20_fe3e7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.518905, 0)
 
 [node name="fatdrawers4" parent="== RSIDE ==" instance=ExtResource("11_ehrbh")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 5, 0, -9)
 
 [node name="ChopTable" parent="== RSIDE ==/fatdrawers4" instance=ExtResource("20_fe3e7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.531554, 0)
 
 [node name="choppingboard7" parent="== RSIDE ==" instance=ExtResource("12_ku0jr")]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 5, 0.678958, -9)
@@ -681,3 +678,9 @@ valid_classes = Array[String]([])
 cook_interval = 1.0
 cooking_style = 0
 model_scene = ExtResource("28_fe3e7")
+
+[node name="Plate" parent="." instance=ExtResource("32_pci36")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.10575, 0.512757, -2.20096)
+
+[node name="ChopTable" parent="." instance=ExtResource("20_fe3e7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.50179, 0.597237, -0.977133)

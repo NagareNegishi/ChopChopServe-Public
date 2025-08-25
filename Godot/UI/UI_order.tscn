@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://tloru3qomb8r"]
+[gd_scene load_steps=4 format=3 uid="uid://tloru3qomb8r"]
 
+[ext_resource type="Script" uid="uid://ckmuq2kqhvio3" path="res://scripts/UI/ui_order.gd" id="1_8cmx7"]
 [ext_resource type="PackedScene" uid="uid://ckhue72bmvrjv" path="res://UI/UI_Progress.tscn" id="1_ib7mx"]
 [ext_resource type="Texture2D" uid="uid://chbbc8dxqfr1y" path="res://assets/textures/recipes/TomatoSoup.png" id="2_8cmx7"]
 
@@ -12,6 +13,7 @@ offset_left = -1.0
 offset_right = -1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_8cmx7")
 
 [node name="UiProgress" parent="." instance=ExtResource("1_ib7mx")]
 layout_mode = 1

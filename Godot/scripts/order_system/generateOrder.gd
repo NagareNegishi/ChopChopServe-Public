@@ -30,11 +30,19 @@ func get_order():
 	check_food_avalibility(d, menu_instance.deserts)
 	
 	# Put the order together
-	order.append(random_food_generator(s))
-	order.append(random_food_generator(s))
-	order.append(random_food_generator(m))
-	order.append(random_food_generator(m))
-	order.append(random_food_generator(d))
+	if !s.is_empty():
+		order.append(random_food_generator(s))
+		order.append(random_food_generator(s))
+	
+	if !m.is_empty():
+		order.append(random_food_generator(m))
+		order.append(random_food_generator(m))
+	
+	if !d.is_empty():
+		order.append(random_food_generator(d))
+	
+	if order == null:
+		push_error("There is nothing to be ordered, no recipes/menu items are avalible")
 	
 	return order
 

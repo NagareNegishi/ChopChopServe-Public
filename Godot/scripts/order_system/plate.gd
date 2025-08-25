@@ -40,9 +40,11 @@ func find_next_free_cell() -> Vector2i:
 # Adds items to the plate and scales them so that they appear on the plate
 func add_list_items(food_array: Array):
 	for food in food_array:
+		print("Adding ", food, " to the plate")
 		add_item(food)
 
 func add_item(food_node) -> void:
+	print("in add item")
 	food_items.append(food_node)
 	disable_collision(food_node)
 	
@@ -93,7 +95,9 @@ func remove_all():
 # This checks if the plate contains a dish, when it does contain a dish it removes everything and
 # replaces the list of ingredients with only the found meal
 func check_plate():
-	#print(grid)
+	print(grid)
+	for item in food_items:
+		print("this food items ", item, " previoous states ", item.previous_states)
 	if food_items.is_empty():
 		print("food items is emptyw")
 		return 0
@@ -149,7 +153,7 @@ func disable_collision(node: Node):
 
 # this is what the plate does when in certain areas, Havent added what it is to do when it interacts
 # with the appliance yet but shouldnt be too difficult
-func _on_interactable_component_action_use(is_action: bool) -> void:
+func _on_interactable_component_action_interact(is_action: bool) -> void:
 	if not is_action:
 		return
 	

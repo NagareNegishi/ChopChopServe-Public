@@ -99,7 +99,7 @@ func _process(delta):
 # in testing, spoil times will be extended for actual cooking
 func spoil_ingredient(delta : float):
 	spoil_time-=delta * cook_timer.wait_time 
-	if(spoil_time <= 0 && !is_cooked && state != foodState.SPOILED && previous_states.has("CHOPPED")&& food_name != "Water"):
+	if(spoil_time <= 0 && !is_cooked && state != foodState.SPOILED && previous_states.has(foodState.CHOPPED)&& food_name != "Water"):
 		state = foodState.SPOILED
 		#emit_signal("changed_food_state")
 		on_state_change()
@@ -130,12 +130,35 @@ func spoil_ingredient(delta : float):
 		#on_state_change()
 
 
+func convert_enum_to_string(enum_name: foodState)-> String:
+	match(enum_name):
+		foodState.RAW:
+			return "RAW"
+		foodState.BAKED:
+			return "BAKED"
+		foodState.CHOPPED:
+			return "CHOPPED"
+		foodState.FROZEN:
+			return "FROZEN"
+		foodState.BOILED:
+			return "BOILED"
+		foodState.MIXED:
+			return "MIXED"
+		foodState.FRIED:
+			return "FRIED"
+		foodState.SPOILED:
+			return "SPOILED"
+		foodState.BURNT:
+			return "BURNT"
+		_:
+			return "RAW"
+
 func chop():
 	print("remaining chop time, ", chop_time)
 	chop_time -=  time_power * cook_timer.wait_time 
 	if chop_time <= 0:
 		state = foodState.CHOPPED
-		previous_states.append(state)
+		previous_states.append(convert_enum_to_string(state))
 		is_cooked = true
 		print("Food is chopped   ", food_name)
 		#emit_signal("changed_food_state")
@@ -147,7 +170,8 @@ func boil():
 	print("Cook time remaining: ", cook_time, " on food item: ", food_name)
 	if(cook_time <= 0 && cook_time > burn_threshold):
 		state = foodState.BOILED;
-		previous_states.append(state)
+		if !previous_states.has(convert_enum_to_string(state)):
+			previous_states.append(convert_enum_to_string(state))
 		is_cooked = true
 		print("Food is boiled ", food_name)
 		#emit_signal("changed_food_state")
@@ -224,7 +248,7 @@ func startCooking(time: int, appliance_type: ApplianceFactory.CookingStyle):
 		match appliance_type:
 			ApplianceFactory.CookingStyle.CHOP:
 				print("Reset chop_time to:", chop_time)
-				cook_timer.wait_time = 0.1
+				cook_timer.wait_time = 1.0
 				chop_time = 4  # Reset chop time
 			ApplianceFactory.CookingStyle.BAKE:
 				cook_timer.wait_time = 1.0

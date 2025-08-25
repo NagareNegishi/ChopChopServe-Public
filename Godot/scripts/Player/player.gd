@@ -318,6 +318,7 @@ func _final_pickup(item: Node3D) -> void:
 	var scale = Transform3D().basis.get_scale()
 	item.scale = scale / $Mesh/ItemPoint.global_transform.basis.get_scale()
 
+
 ## Handles the transform when the item is dropped
 ## @return void
 func _final_drop(item: Node3D) -> void:

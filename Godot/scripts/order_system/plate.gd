@@ -155,10 +155,12 @@ func disable_collision(node: Node):
 # with the appliance yet but shouldnt be too difficult
 func _on_interactable_component_action_interact(is_action: bool) -> void:
 	if not is_action:
+
 		return
 	
 	var area = $Area3D
 	for body in area.get_overlapping_bodies():
+		
 		if body.is_in_group("Food") && !has_menu_item:
 			add_item(body) 
 			break
@@ -169,6 +171,8 @@ func _on_interactable_component_action_interact(is_action: bool) -> void:
 			if food_node && food_node.is_in_group("Food") && !has_menu_item:
 				add_item(food_node)
 				break
+			if food_node && food_node.is_in_group("Bin"):
+				remove_all()
 			if food_node && food_node.is_in_group("Bin"):
 				remove_all()
 

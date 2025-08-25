@@ -30,7 +30,7 @@ func _enter_tree() -> void:
 ## @return void
 func _ready() -> void:
 	$DashCooldown.wait_time = DASH_COOLDOWN
-	$Decal.modulate = GlobalScript.playerColours.get(1)
+	$Decal.modulate = GlobalScript.player_colours.get(1)
 	
 	for i in range(10):
 		var particle = move_particle.instantiate()

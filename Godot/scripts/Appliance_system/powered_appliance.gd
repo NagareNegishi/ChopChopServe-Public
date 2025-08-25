@@ -78,6 +78,7 @@ func put(item: Node) -> bool:
 ## Place a Cookware onto this PoweredAppliance, start cooking if applicable
 ## @param cookware: The Cookware to place on this PoweredAppliance
 func _put_cookware(cookware: Cookware) -> void:
+	cookware._toggle_interaction(false)
 	cookware.restore_original_transform() # should be removed once player returns original scale !!!
 	_position_cookware(cookware, contents.size() - 1)
 	cookware.lock()
@@ -106,6 +107,7 @@ func _take_cookware(cookware: Cookware) -> void:
 	cookware.set_can_use(false)
 	cookware.unlock()
 	cookware.restore_original_transform()
+	cookware._toggle_interaction(true)
 
 
 ## Check if this appliance can accept the given item

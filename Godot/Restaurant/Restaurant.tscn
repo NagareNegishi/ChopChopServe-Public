@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://csxhswy10y5qd"]
 
-[ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/Restaurant.gd" id="1_ujeve"]
+[ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_ujeve"]
 [ext_resource type="Script" uid="uid://dnns4dn8p042y" path="res://scripts/Table.gd" id="1_vkde5"]
 [ext_resource type="Script" uid="uid://dv1g0obwvkkkt" path="res://scripts/QueueSpot.gd" id="3_tg54l"]
 

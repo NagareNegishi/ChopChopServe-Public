@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://m8tkhmmfjf2k"]
+[gd_scene load_steps=26 format=3 uid="uid://m8tkhmmfjf2k"]
 
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_vg8fw"]
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="2_fwbjx"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://b64oudiukwpwa" path="res://assets/models/NuFurniture/nufridge.glb" id="15_fe3e7"]
 [ext_resource type="PackedScene" uid="uid://d1iqitph17b80" path="res://scenes/Interaction/AbstractPickup.tscn" id="16_pci36"]
 [ext_resource type="PackedScene" uid="uid://dw2oh1yssb0mu" path="res://scenes/Interaction/Bowl.tscn" id="17_tq2ju"]
+[ext_resource type="PackedScene" uid="uid://dvn4ytv3ro6ec" path="res://scripts/Food/IngredientScenes/Tomato.tscn" id="18_fwbjx"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ihmv3"]
 size = Vector3(30, 0.03, 30)
@@ -590,3 +591,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.49325, 0.1815, 2.71952)
 
 [node name="Bowl" parent="." instance=ExtResource("17_tq2ju")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.100964, 0.0150001, -0.837915)
+
+[node name="Tomato" parent="." instance=ExtResource("18_fwbjx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55889, 0.0573251, 0.475907)
+
+[node name="Tomato2" parent="." instance=ExtResource("18_fwbjx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.57998, 0.0529738, -0.577666)
+
+[node name="Tomato3" parent="." instance=ExtResource("18_fwbjx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55905, 0.0520719, -0.0814413)

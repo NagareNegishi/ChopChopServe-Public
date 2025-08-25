@@ -30,7 +30,7 @@ func _enter_tree() -> void:
 ## @return void
 func _ready() -> void:
 	$DashCooldown.wait_time = DASH_COOLDOWN
-	$Decal.modulate = GlobalScript.playerColours.get(1)
+	$Decal.modulate = GlobalScript.player_outline_colours.get(1)
 	
 	for i in range(10):
 		var particle = move_particle.instantiate()
@@ -127,7 +127,7 @@ func _inputs() -> void:
 ## @return void
 func _interact() -> void:
 		
-	if ((item_in_hand != null && _closest_item != null) && 
+	if (((item_in_hand is Plate  || item_in_hand is Cookware) && _closest_item != null) && 
 	(_closest_item.get_parent() is Food || _closest_item.get_parent() is Appliance)):
 		_closest_item.interact()
 		return
@@ -222,10 +222,9 @@ func drop_item(is_throw : bool) -> bool:
 
 	if is_throw && item_in_hand is AbstractThrowable:
 		item_in_hand.linear_velocity = $Mesh.global_transform.basis.z * THROW_STRENGTH
-		_dash(false)
 
 	item_in_hand = null
-	
+	print("Ahhh")
 	return true
 
 

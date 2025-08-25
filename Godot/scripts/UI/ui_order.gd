@@ -1,7 +1,7 @@
 class_name UIOrder
 extends Control
 
-@onready var progress_bar : CustomProgressBar = $TextureProgressBar
+@onready var progress_bar : CustomProgressBar = $UiProgress
 @onready var item_image : TextureRect = $MenuItem
 
 ## Sets the order to the given menu item

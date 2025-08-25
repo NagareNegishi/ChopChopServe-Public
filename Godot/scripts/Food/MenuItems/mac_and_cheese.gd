@@ -5,7 +5,7 @@ class_name MacAndCheese
 @warning_ignore("unused_private_class_variable")
 static var _auto_register = MenuItem.register(MacAndCheese)
 @warning_ignore("unused_private_class_variable")
-static var _type_register = MenuItem.register_type(MenuItem.starters, MacAndCheese)
+static var _type_register = MenuItem.register_type(MenuItem.starters, MacAndCheese.new())
 
 func _ready():
 	ingredients = ["Pasta", "Cheese"]

@@ -30,7 +30,7 @@ func _enter_tree() -> void:
 ## @return void
 func _ready() -> void:
 	$DashCooldown.wait_time = DASH_COOLDOWN
-	$Decal.modulate = GlobalScript.playerColours.get(1)
+	$Decal.modulate = GlobalScript.player_colours.get(1)
 	
 	for i in range(10):
 		var particle = move_particle.instantiate()
@@ -317,6 +317,7 @@ func remove_item() -> Node3D:
 func _final_pickup(item: Node3D) -> void:
 	var scale = Transform3D().basis.get_scale()
 	item.scale = scale / $Mesh/ItemPoint.global_transform.basis.get_scale()
+
 
 ## Handles the transform when the item is dropped
 ## @return void

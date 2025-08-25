@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://cvh3gjttq1wun"]
+
+[ext_resource type="Shader" uid="uid://b2nq0q2fof4jx" path="res://shaders/cel-shader-base.gdshader" id="1_0bwib"]
+[ext_resource type="Texture2D" uid="uid://boc606fnvk47d" path="res://assets/newmodels/TextureMap.png" id="2_n44uv"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_0bwib")
+shader_parameter/color = Color(0.823529, 0.847059, 0.847059, 1)
+shader_parameter/base_texture = ExtResource("2_n44uv")
+shader_parameter/specular = Color(0, 0, 0, 0.5)
+shader_parameter/fresnel = Color(0, 0, 0, 0.3)
+shader_parameter/uv_scale = Vector2(1, 1)
+shader_parameter/uv_offset = Vector2(0, 0)

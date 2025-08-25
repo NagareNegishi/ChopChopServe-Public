@@ -11,12 +11,12 @@ func _init(server = null):
 		_game_server = server
 
 ## Creates unique customer with reference to which restaurant its in
-func create_customer(restaurant_id: String):
+func create_customer(restaurant_id: String, restaurant_number: int):
 	var customer = _customer_packed_scene.instantiate()
 	_game_server.register_service("Customer_" + str(_next_id), customer)
 	_game_server.call_service("Customer_" + str(_next_id), "initialize", 
 								[_game_server, "Customer_" + str(_next_id), 
-								restaurant_id])
+								restaurant_id, _next_id % restaurant_number])
 	_next_id += 1
 	return customer
 	

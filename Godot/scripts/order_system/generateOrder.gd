@@ -1,5 +1,5 @@
 extends Node
-
+class_name generateOrder
 # variables for the menuitem to be loaded into this script so its values can be used
 var preload_menuItems = preload("res://scripts/Food/MenuItems/menuItem.gd")
 var menu_instance
@@ -25,10 +25,10 @@ func get_order():
 	order.clear() # Make sure there is nothing in the list already as precaution
 	
 	# Put available food into new lists
-	check_food_avalibility(s, menu_instance.starters)
-	check_food_avalibility(m, menu_instance.mains)
-	check_food_avalibility(d, menu_instance.deserts)
-	
+	check_food_avalibility(s, MI.starters)
+	check_food_avalibility(m, MI.mains)
+	check_food_avalibility(d, MI.deserts)
+
 	# Put the order together
 	order.append(random_food_generator(s))
 	order.append(random_food_generator(s))
@@ -43,9 +43,9 @@ func get_order():
 # @param food_type is an array list of available food items of a certain type
 # @return a menuitem
 func random_food_generator(food_type: Array)-> MenuItem:
-	var size = food_type.size()-1
-	var rand = randi % size
-	return food_type.get(rand)
+	if food_type.size() < 1:
+		return
+	return food_type.pick_random()
 
 
 # Puts the available food_types into new arrays so that the npcs dont have access to anything they shouldn't

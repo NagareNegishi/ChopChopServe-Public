@@ -22,6 +22,9 @@ shape = SubResource("BoxShape3D_gvljy")
 transform = Transform3D(0.333, 0, 0, 0, 0.333, 0, 0, 0, 0.333, 0, 0, 0)
 is_pickup = true
 
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="."]
+radius = 0.3
+
 [connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]
 [connection signal="hovered" from="InteractableComponent" to="." method="_on_interactable_component_hovered"]
 [connection signal="interacted" from="InteractableComponent" to="." method="_on_interactable_component_interacted"]

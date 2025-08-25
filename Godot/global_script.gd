@@ -6,7 +6,8 @@ enum Team {
 }
 
 var player : Player
-var playerColours = PackedColorArray([Color("fcdefb",1), Color("cfecf8",1), Color("fccabd",1), Color("f8fab4",1)]) # Colours: Pink, Blue, Red, Yellow
+var player_colours = PackedColorArray([Color("ff94fc",1), Color("57ceff",1), Color("ff734f",1), Color("76ff61",1)]) # Colours: Pink, Blue, Red, Green
+var player_outline_colours = PackedColorArray([Color("f20cb5",1), Color("124dff",1), Color("e32f00",1), Color("1cd400",1)]) # Colours: Pink, Blue, Red, Green
 var ui_game_state : UIGameState 
 
 

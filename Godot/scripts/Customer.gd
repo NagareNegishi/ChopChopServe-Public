@@ -1,17 +1,19 @@
 class_name Customer extends NPC
 
 # Customers wait this long once seated
-const MAXIMUM_SEATING_TIME: float = 10
-
+var MAXIMUM_SEATING_TIME: float = randf_range(100.0,300.0)
+# Customers wait this long till they decide order
+const MAXIMUM_ORDER_THINK_TIME: float = 1
 # For agent avoidance to prevent getting stuck
 const AGENT_STUCK_THRESHOLD: float = 0.15
+const STUCK_RECALCULATE_TIME: float = 1.0 
+var _stuck_timer: float = 0.0
 const MAXIMUM_AVOIDANCE_PRIORITY: float = 0.8
 const AVOIDANCE_PRIORITY_RESET_AMOUNT: float = 0.5
 const AVOIDANCE_PRIORITY_INCREMENT: float = 0.01
 
 # How far customers should sit from table
-const POSITION_IN_FRONT_OF_TABLE: Vector3 = Vector3(0, 0 , 0.5)
-
+const POSITION_IN_FRONT_OF_TABLE: Vector3 = Vector3(0, 0.25 , 0.5)
 
 # Targets for pathfinding
 var _table_target: Node3D = null
@@ -21,28 +23,36 @@ var _queue_target: Node3D = null
 var _seated = false
 var _queued = false
 
-# ID to communicate with restaurant they are in
-var _restaurant_id
+# ID to communicate with food court they are in
+var _food_court_id
+
+var _restaurant_number : int
 
 # Time starts from being seated 
-var _time_till_leaving = MAXIMUM_SEATING_TIME
+var _time_till_leaving: float = MAXIMUM_SEATING_TIME
+var _time_till_order: float = MAXIMUM_ORDER_THINK_TIME
+var order
 
 ## Initialize Customer with server and communication ids
-func initialize(game_server : Server, id: String, restaurant_id : String ) -> void:
+func initialize(game_server : Server, id: String, 
+				food_court_id : String, restaurant_number : int ) -> void:
 	_game_server = game_server
 	_id = id
-	_restaurant_id = restaurant_id
-
+	_food_court_id = food_court_id
+	_restaurant_number = restaurant_number
+	order = await _game_server.call_service("OrderGenerator", 
+													"get_order", [])
+													
 ## Attempt to accquire unoccupied table to navigate towards
 func check_tables() -> void:
-	_table_target = await _game_server.call_service(_restaurant_id, 
+	_table_target = await _game_server.call_service(_food_court_id, 
 													"get_free_table", [])
 	if _table_target:
 		_queued = false 
 		if _queue_target:
 			_game_server.call_service(_queue_target.id(), "set_occupied", [false])
 
-		_game_server.call_service(_restaurant_id, "shift_queue", [])
+		_game_server.call_service(_food_court_id, "shift_queue", [])
 		_game_server.call_service(_table_target.id(), "set_occupied", [true])
 		_queue_target = null
 		_queued = false
@@ -61,7 +71,7 @@ func move_up_queue(spot_in_front : QueueSpot):
 
 ## Accquire spot in queue to navigate towards
 func find_queue_spot() -> void:
-	_queue_target = await _game_server.call_service(_restaurant_id, 
+	_queue_target = await _game_server.call_service(_food_court_id, 
 													"get_free_queue_spot", 
 													[_id])	
 	_game_server.call_service(_queue_target.id(), "set_occupied", [true, _id])
@@ -70,6 +80,8 @@ func find_queue_spot() -> void:
 
 ## Tells navigation agent where and what the target is
 func _pathfind_to_target() -> void:
+	# Disable the obstacle so it doesn't block its own path
+	_nav_obstacle.avoidance_enabled = false
 	if !_current_target: 
 		find_queue_spot()
 	_is_pathfinding = true
@@ -96,7 +108,6 @@ func _update_pathfinding(delta: float) -> void:
 	var _distance_to_target = global_position.distance_to(_nav_agent.target_position)
 	if (_nav_agent.is_navigation_finished() 
 		|| _distance_to_target <= PATHFINDING_DISTANCE_THRESHOLD):
-			
 		if _table_target: # Tweens customer's position in front of table
 			var tween = create_tween()
 			tween.set_ease(Tween.EASE_OUT)
@@ -109,6 +120,8 @@ func _update_pathfinding(delta: float) -> void:
 		_queued = _queue_target
 		_is_pathfinding = false
 		stop_movement()
+		# Enable the obstacle now that the Customer has stopped
+		_nav_obstacle.avoidance_enabled = true
 		return
 	
 	# Sets customer velocity and direction based on next path position
@@ -118,14 +131,16 @@ func _update_pathfinding(delta: float) -> void:
 	var _intended_velocity = _direction_to_next * SPEED
 	_nav_agent.set_velocity(_intended_velocity)
 	set_direction(_direction_to_next)
-	
-	 # Assume agent to be stuck if below threshold so move them off course
+	 # If velocity is very low, assume the agent is stuck.
 	if velocity.length() < AGENT_STUCK_THRESHOLD:
-		velocity = _agent_speed
-		velocity.z = -SPEED if velocity.z > 0 else SPEED
-		_nav_agent.avoidance_priority += AVOIDANCE_PRIORITY_INCREMENT
-		if _nav_agent.avoidance_priority >= MAXIMUM_AVOIDANCE_PRIORITY:
-			_nav_agent.avoidance_priority = AVOIDANCE_PRIORITY_RESET_AMOUNT
+		_stuck_timer += delta
+		# If stuck for long enough, recalculate the entire path
+		if _stuck_timer >= STUCK_RECALCULATE_TIME:
+			_pathfind_to_target() # This forces a full recalculation
+			_stuck_timer = 0.0 # Reset the timer
+	else:
+		# If the agent is moving freely, reset the timer.
+		_stuck_timer = 0.0
 	
 ## Customers will either:
 ## - search or move to targets (queue spot or table)
@@ -142,20 +157,44 @@ func _npc_behavior(delta: float) -> void:
 		
 	# Customers who have been seated shall wait till they have to leave
 	if _seated:
-		_time_till_leaving = max(0, _time_till_leaving - delta)
-		if !_time_till_leaving:
-			
-			_game_server.call_service(_table_target.id(), 
-										"set_occupied", 
-										[false])
-			
-			_game_server.call_service(_restaurant_id, 
-										"leave_from_restaurant", 
-										[self])
+		
+		_time_till_order = max(0, _time_till_order - delta)
+		if !_time_till_order:
+			_time_till_leaving = max(0, _time_till_leaving - delta)
+			if !_time_till_leaving:
+				
+				_game_server.call_service(_table_target.id(), 
+											"set_occupied", 
+											[false])
+				
+				var exit_point = await _game_server.call_service(_food_court_id, 
+											"get_exit_point", 
+											[])
+				_current_target = exit_point	
+				_table_target = null	
+				_pathfind_to_target()	
+				return
+				
+			var plate_served = await _game_server.call_service(_table_target.id(), 
+											"get_plate", 
+											[])
+			# DUMMY CODE TILL ORDER SYSTEM READY
+			if plate_served:
+				var food = plate_served.get_children().back()
+				if food is TomatoSoup:
+					_game_server.call_service(_table_target.id(), 
+												"remove_plate", 
+												[])
+					print("YAY!")
+					_time_till_leaving = 2
 	
 	# Customers who reach the front of the queue should begin looking for tables
 	if _queued && _queue_target:
-		if await _game_server.call_service(_restaurant_id, 
+		if await _game_server.call_service(_food_court_id, 
 											"is_queue_front", 
 											[_queue_target.id()]):
 			check_tables()
+	elif _current_target == await _game_server.call_service(_food_court_id, 
+											"get_exit_point", 
+											[]) and !_is_pathfinding: 
+		queue_free()

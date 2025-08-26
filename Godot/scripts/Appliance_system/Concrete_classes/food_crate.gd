@@ -8,7 +8,7 @@ extends UnPoweredAppliance
 
 @export_group("Supply Settings")
 @export var supply: PackedScene
-@export var supply_name: String = "Tomato"
+@export var supply_name: String = "Tomato" # "Water"
 var food_directory: String = "res://scripts/Food/IngredientScenes/"
 
 ## Setup the model instance

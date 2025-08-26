@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cw5uvt35a87nt"]
+
+[ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="1_mlwd7"]
+[ext_resource type="Script" uid="uid://dmims6gtvtpcn" path="res://scripts/Appliance_system/Concrete_classes/blender.gd" id="2_co8sm"]
+
+[node name="Blender" instance=ExtResource("1_mlwd7")]
+script = ExtResource("2_co8sm")
+capacity = 1
+valid_classes = Array[String]([])
+cook_interval = 1.0
+cooking_style = 0
+model_scene = null
+
+[node name="CollisionShape3D" parent="." index="0"]
+debug_color = Color(1, 0.764706, 0.192157, 1)

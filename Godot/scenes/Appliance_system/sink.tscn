@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://bakeesqt3byva"]
+
+[ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="1_m1eio"]
+[ext_resource type="Script" uid="uid://w1vqe8q2rxu7" path="res://scripts/Appliance_system/Concrete_classes/sink.gd" id="2_6dhi0"]
+[ext_resource type="PackedScene" uid="uid://cn8yjuakgjsam" path="res://assets/newmodels/furniture/Sink.glb" id="3_fl6ko"]
+
+[node name="Sink" instance=ExtResource("1_m1eio")]
+script = ExtResource("2_6dhi0")
+capacity = 4
+action_interval = 1.0
+cooking_style = 0
+model_scene = null
+
+[node name="CollisionShape3D" parent="." index="0"]
+debug_color = Color(1, 0.764706, 0.192157, 1)
+
+[node name="Sink2" parent="." index="3" instance=ExtResource("3_fl6ko")]

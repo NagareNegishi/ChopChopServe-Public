@@ -28,6 +28,7 @@ func _add_chopping_board() -> void:
 	var board_position = Vector3(0.0, size.y * 0.5, 0.0)
 	chopping_board.position = board_position
 	chopping_board.lock()
+	chopping_board._toggle_interaction(false)
 
 
 ## Place an item onto this appliance
@@ -80,13 +81,9 @@ func player_has(item: Node) -> bool:
 ## Trigger action, if subclass has action
 func _on_interactable_component_action_use(_is_action: bool) -> void:
 	if _is_action:
-		chopping_board.cook(1) # what is the power of player?
-		print("Chop!!!!")
-		# await get_tree().physics_frame
-		# chopping_board.finish_cook()
+		chopping_board.cook(1)
 	else:
 		chopping_board.finish_cook()
-		print("Chopping board finished cooking.")
 
 
 

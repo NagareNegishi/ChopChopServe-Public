@@ -27,6 +27,7 @@ const APPLIANCES = 4
 ## Default facing direction
 @export var default_facing: Direction = Direction.NORTH
 
+
 var can_move: bool = true
 var facing_direction: Direction
 var model_instance: Node3D
@@ -113,6 +114,14 @@ func setup_collision():
 
 # Setup the model instance from the assigned PackedScene
 func setup_model():
+	# If concrete class has a instance of model as child, use it (for someone use .tscn)
+	for child in get_children():
+		if child.scene_file_path.ends_with(".glb"):
+			model_instance = child
+			align_to_model()
+			return
+
+	# otherwise, instantiate the model scene and align it
 	if not model_scene:
 		push_warning("No model assigned to " + name)
 		return

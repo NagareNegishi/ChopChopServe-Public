@@ -7,6 +7,7 @@ class_name ChoppingBoard
 extends Cookware
 
 # -----------------------------------------------------------------------------
+# TODO: Move the variable to appropriate class
 # ADDED so we know how much we need to scale the model on the chopping board by
 var food_scale_factor: float = 4
 # -----------------------------------------------------------------------------
@@ -24,6 +25,13 @@ func _ready():
 	valid_food = ["Fish", "Tomato"] # Confirm later!!!!!!!!!!!!!!
 	capacity = 1 # one item only
 	coefficient = 1.0
+
+
+## Add interactable component to this class
+## InteractableComponent is scene dependent, can not instantiate from script
+func _setup_interactable():
+	super._setup_interactable()
+	interactable_component.has_action = true
 
 
 # ## Override upgradable setup in concrete appliances
@@ -46,6 +54,7 @@ func put(item: Node) -> bool:
 	item.position = Vector3(0.0, size.y * 0.5, 0.0)
 	
 	# -------------------------------------------------------------------------
+	# TODO: Move the function to appropriate class
 	# ADDED to scale the food to be on the chopping board to be visible
 	if item is Food:
 		item.scale *= food_scale_factor
@@ -63,66 +72,22 @@ func put(item: Node) -> bool:
 func cook(power: int) -> bool:
 	for food in contents:
 		food.startCooking(int(power * coefficient), cooking_style)
-		#-----------------------------------------------------------------------
-		print(get_script().get_global_name(), " start cooking ", food.get_script().get_global_name(),
-		 " with power: ", int(power * coefficient), ", Style is: ",
-		ApplianceFactory.CookingStyle.keys()[cooking_style], ", Food cook time: ", food.get_cook_time())
-		#----------------------------------------------------------------------
 	return true
 
 
 ## Trigger action, if subclass has action
 func _on_interactable_component_action_use(_is_action: bool) -> void:
 	if _is_action:
-		print("Player used action on: ", get_script().get_global_name(), ", it can chop!!.")
-		for food in contents:
-			print("before chopping: ", food.get_script().get_global_name(), ", cook time: ", food.get_cook_time())
-		cook(1) # what is the power from player??
-		await get_tree().physics_frame
-		#finish_cook()
+		cook(1)
+	else:
+		finish_cook()
 
 # ----------------------------------------------------------------------------- !!!!
+# TODO: Move the function to appropriate class (No need to override)
 # ADDED so that when you take the food from the chopping board the scale goes back to how it was
 func take() -> Node:
 	var item = super.take()
 	if item and item is Food:
 		item.scale /= food_scale_factor
-	item.stop_cooking()
 	return item
 # -----------------------------------------------------------------------------
-
-# ------------------------------------------------------------------------------
-# may need to override them
-# assuming no cooking but chop???
-
-# ## Perform cooking logic
-# ## This method should be overridden in subclasses to implement specific cooking behavior
-# ## @param power: The power from PoweredAppliance or Player
-# func cook(_power: int) -> bool:
-# 	assert(false, "cook() must be implemented in " + get_class())
-# 	# if current_status != Status.COOKING:
-# 	#     assert(false, "Do not call cook() unless status is COOKING")
-# 	#     return false
-# 	return true
-
-
-# ## Finish cooking process
-# ## @return: True if cooking finished
-# func finish_cook() -> bool:
-# 	if current_status != Status.USING:
-# 		push_warning("Cannot finish cooking unless appliance is using")
-# 		return false
-# 	current_status = Status.IDLE
-# 	status_changed.emit(current_status)
-# 	for item in contents:
-# 		#if item.has_method("stopCooking"):   #is always Food:
-# 		item.stopCooking()
-# 	#----------------------------------------------------------------------
-# 		print("stopCooking() is called in: ", item.get_script().get_global_name())
-# 	#----------------------------------------------------------------------
-# 	return true
-#
-# ## Perform action depend on what player is holding
-# ## @param _item: The Node Player is holding
-# ## @return: True if action is triggered, false otherwise
-# func player_has(item: Node) -> bool:

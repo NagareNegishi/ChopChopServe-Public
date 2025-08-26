@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://brax13qxb8tj2"]
+[gd_scene load_steps=42 format=3 uid="uid://brax13qxb8tj2"]
 
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_ki10l"]
 [ext_resource type="PackedScene" uid="uid://d1iqitph17b80" path="res://scenes/Interaction/AbstractPickup.tscn" id="2_gf84l"]
@@ -22,6 +22,25 @@ albedo_color = Color(0.205691, 0.213579, 0.0325713, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_8t6q8"]
 material = SubResource("StandardMaterial3D_38v8k")
 size = Vector3(15, 0.05, 15)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2io33"]
+sky_top_color = Color(0.589807, 0.430029, 0.926535, 1)
+
+[sub_resource type="Sky" id="Sky_0qhj0"]
+sky_material = SubResource("ProceduralSkyMaterial_2io33")
+
+[sub_resource type="Environment" id="Environment_2io33"]
+background_mode = 2
+background_color = Color(0.64905, 0.679089, 0.789599, 1)
+sky = SubResource("Sky_0qhj0")
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0
+volumetric_fog_length = 100.0
+volumetric_fog_sky_affect = 0.0
+
+[sub_resource type="FogMaterial" id="FogMaterial_0qhj0"]
+density = 0.25
+emission = Color(0.810673, 0.882116, 0.732692, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_2io33"]
 
@@ -118,18 +137,6 @@ material = SubResource("StandardMaterial3D_gf84l")
 radial_segments = 6
 rings = 8
 
-[sub_resource type="Environment" id="Environment_2io33"]
-background_mode = 1
-background_color = Color(0.64905, 0.679089, 0.789599, 1)
-volumetric_fog_enabled = true
-volumetric_fog_density = 0.0
-volumetric_fog_length = 100.0
-volumetric_fog_sky_affect = 0.0
-
-[sub_resource type="FogMaterial" id="FogMaterial_0qhj0"]
-density = 0.25
-emission = Color(0.810673, 0.882116, 0.732692, 1)
-
 [node name="BradleyTestScene" type="Node3D"]
 
 [node name="Platform" type="StaticBody3D" parent="."]
@@ -149,9 +156,17 @@ mesh = SubResource("BoxMesh_8t6q8")
 [node name="Player" parent="." instance=ExtResource("1_ki10l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.48897, 0.562044, 0)
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_2io33")
+
+[node name="FogVolume" type="FogVolume" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.4115, -2.27606, 22.5616)
+size = Vector3(50, 5, 45)
+material = SubResource("FogMaterial_0qhj0")
+
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.00272365, -0.563709, 0.825969, -0.00265669, 0.825965, 0.563715, -0.999993, -0.00372971, 0.000752039, -4.65642, 13.8183, -3.87403)
-light_energy = 1.2
+light_energy = 1.5
 light_volumetric_fog_energy = 1.5
 light_bake_mode = 1
 shadow_enabled = true
@@ -1051,11 +1066,3 @@ mesh = SubResource("SphereMesh_5oaun")
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="Node3D6"]
 transform = Transform3D(9.07048e-15, -4.74724, 2.07508e-07, -3.08113, -1.57863e-07, -3.6115, 3.6115, -1.34681e-07, -3.08113, 36.8243, -0.691134, 23.2793)
 mesh = SubResource("SphereMesh_5oaun")
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_2io33")
-
-[node name="FogVolume" type="FogVolume" parent="WorldEnvironment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.4115, -2.27606, 22.5616)
-size = Vector3(50, 5, 45)
-material = SubResource("FogMaterial_0qhj0")

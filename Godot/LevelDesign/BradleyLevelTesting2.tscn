@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cdkyf70jhtj1n"]
+[gd_scene load_steps=23 format=3 uid="uid://cdkyf70jhtj1n"]
 
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_t0o5o"]
 [ext_resource type="PackedScene" uid="uid://d1iqitph17b80" path="res://scenes/Interaction/AbstractPickup.tscn" id="2_oflhc"]
@@ -24,6 +24,19 @@ size = Vector3(30, 0.03, 30)
 [sub_resource type="BoxMesh" id="BoxMesh_w6hnu"]
 size = Vector3(30, 0.05, 30)
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ad3b7"]
+sky_top_color = Color(0.540081, 0.0948352, 0.486115, 1)
+sky_horizon_color = Color(0.958096, 0.855453, 0.843266, 1)
+sky_energy_multiplier = 0.75
+
+[sub_resource type="Sky" id="Sky_07mic"]
+sky_material = SubResource("ProceduralSkyMaterial_ad3b7")
+
+[sub_resource type="Environment" id="Environment_vs73y"]
+background_mode = 2
+background_color = Color(0.486804, 0.263312, 0.0939578, 1)
+sky = SubResource("Sky_07mic")
+
 [node name="BradleyTestScene" type="Node3D"]
 
 [node name="Platform" type="StaticBody3D" parent="."]
@@ -37,8 +50,14 @@ mesh = SubResource("BoxMesh_w6hnu")
 [node name="Player" parent="." instance=ExtResource("1_t0o5o")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.48897, 0.562044, 0)
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_vs73y")
+
 [node name="Sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.00272365, -0.563709, 0.825969, -0.00265669, 0.825965, 0.563715, -0.999993, -0.0037297, 0.000752039, 3.02675, 3.87548, 6.79733)
+transform = Transform3D(-0.157718, 0.949193, -0.272319, -0.00344962, 0.275239, 0.96137, 0.987478, 0.152565, -0.0401358, 3.02675, 3.87548, 6.79733)
+light_color = Color(0.996243, 0.610274, 0.474286, 1)
+light_energy = 2.0
+shadow_enabled = true
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-4.37114e-08, -0.819152, 0.573576, 0, 0.573576, 0.819152, -1, 3.58063e-08, -2.50718e-08, 11, 10, 0)

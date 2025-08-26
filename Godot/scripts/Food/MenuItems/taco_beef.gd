@@ -5,7 +5,7 @@ class_name BeefTaco
 @warning_ignore("unused_private_class_variable")
 static var _auto_register = MenuItem.register(BeefTaco)
 @warning_ignore("unused_private_class_variable")
-static var _type_register = MenuItem.register_type(MenuItem.mains, BeefTaco)
+static var _type_register = MenuItem.register_type(MenuItem.mains, BeefTaco.new())
 
 func _ready():
 	ingredients = ["Dough", "Beef", "Tomato"]

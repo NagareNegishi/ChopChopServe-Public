@@ -1,21 +1,26 @@
-class_name Restaurant extends Node
+class_name FoodCourt extends Node
 
 const SECOND_FROM_QUEUE_BACK = 3
 
 # Maximum times and timers relating to customers
-const NEW_CUSTOMER_DELAY : float = 0.5
+const NEW_CUSTOMER_DELAY : float = 1.5
 const QUEUE_CHECK_DELAY : float = 0.5
 var _time_since_last_customer : float = 0
 var _time_since_queue_check : float = 0.5
 
-var _game_server: Server # For communications with other services
+# Temp removed for alpha set up
+#var _game_server: Server # For communications with other services
+@onready var _game_server = get_node("/root/GameServer")
+
 var _next_id : int  = 0 # Allows for occupiables to be uniquely indentified
-var _id # For unique indentification for other services
+var _id = "FoodCourt" # For unique indentification for other services
+
+var number_of_restaurants = 2
 
 @export var tables : Array[Table] = [] # Where customers can order from
 @export var queue_spots: Array[QueueSpot] = [] # Where customers will queue
 @export var customer_spawn_point : Node3D # Where customers spawn
-
+@export var customer_exit_point : Node3D # Where customers leave food court to
 ## Initialize restaurant with server and communication ids
 func initialize(game_server : Server, id : String) -> void:
 	_game_server = game_server
@@ -23,10 +28,15 @@ func initialize(game_server : Server, id : String) -> void:
 
 ## Preprares restaurants occupiables for communications
 func _ready():
+	_game_server.register_service("FoodCourt", self) # For alpha use
 	for occupiable in tables + queue_spots:
 		occupiable.initialize(str(_id,"occupiable_",_next_id))
 		_game_server.register_service(str(_id,"occupiable_",_next_id), occupiable)
 		_next_id += 1
+
+func get_exit_point():
+	return customer_exit_point
+
 ## Returns a randomly selected free table or null if all are occupied	
 func get_free_table():
 	# Checking for free tables
@@ -51,10 +61,6 @@ func get_free_queue_spot(customer = null):
 		if !occupant || occupant == customer:
 			return queue_spots[i]
 
-## Removes customer from scene
-func leave_from_restaurant(customer: Customer):
-	customer.queue_free()
-
 ## Checks whether a new customer should spawn or queue should move forward
 func _process(delta):
 	# Shifts queue if there are any gaps
@@ -71,7 +77,7 @@ func _process(delta):
 	_time_since_last_customer -= delta
 	if _time_since_last_customer < 0 && await get_free_queue_spot():
 		var new_customer = await _game_server.call_service("CustomerCreator",
-														"create_customer", [_id])
+														"create_customer", [_id, number_of_restaurants])
 		add_child(new_customer)
 		new_customer.position = customer_spawn_point.position
 		_time_since_last_customer += NEW_CUSTOMER_DELAY

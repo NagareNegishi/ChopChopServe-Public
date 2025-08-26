@@ -30,7 +30,12 @@ func _enter_tree() -> void:
 ## @return void
 func _ready() -> void:
 	$DashCooldown.wait_time = DASH_COOLDOWN
-	$Decal.modulate = GlobalScript.player_outline_colours.get(1)
+
+## Had conflict here, first one was from Player-Controller, I will comment out the one was in main--------------------------------------------------
+  $Decal.modulate = GlobalScript.player_outline_colours.get(1)
+	# $Decal.modulate = GlobalScript.player_colours.get(1)
+##-----------------------------------------------------------------------------------------------------------------------
+
 	
 	for i in range(10):
 		var particle = move_particle.instantiate()

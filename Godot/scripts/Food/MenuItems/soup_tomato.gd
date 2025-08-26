@@ -5,7 +5,7 @@ class_name TomatoSoup
 @warning_ignore("unused_private_class_variable")
 static var _auto_register = MenuItem.register(TomatoSoup)
 @warning_ignore("unused_private_class_variable")
-static var _type_register = MenuItem.register_type(MenuItem.starters, TomatoSoup)
+static var _type_register = MenuItem.register_type(MenuItem.starters, TomatoSoup.new())
 
 func _init():
 	ingredients = ["Tomato","Tomato","Tomato", "Water"]
@@ -14,7 +14,7 @@ func _init():
 		"Tomato": ["RAW","CHOPPED", "BOILED"],
 		"Water": ["RAW","BOILED"]
 	}
-	
+	is_available = true
 	# This is the appliance it is to be collected in 
 	#appliance = "Bowl"
 

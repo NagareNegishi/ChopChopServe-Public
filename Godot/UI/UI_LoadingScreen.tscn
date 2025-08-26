@@ -1,5 +1,119 @@
-[gd_scene format=3 uid="uid://cy8ahksvgtb76"]
+[gd_scene load_steps=11 format=3 uid="uid://cy8ahksvgtb76"]
+
+[ext_resource type="Texture2D" uid="uid://disavts8312pt" path="res://assets/textures/misc/LoadingBar3.png" id="1_fw21u"]
+[ext_resource type="Script" uid="uid://beg6c7n0yn6yg" path="res://scripts/UI/ui_loading_screen.gd" id="1_p87ie"]
+[ext_resource type="Texture2D" uid="uid://bpww3wiaqof13" path="res://icon.svg" id="1_tped4"]
+[ext_resource type="Shader" uid="uid://b22unitrdiinr" path="res://shaders/load.gdshader" id="4_1mer7"]
+[ext_resource type="Texture2D" uid="uid://2pguohnmuvmw" path="res://assets/textures/HUD/cHEFhAT.png" id="5_8qgpr"]
+[ext_resource type="FontFile" uid="uid://dxc6n0umgi0q4" path="res://assets/fonts/Jua-Regular.ttf" id="6_8qgpr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_86krc"]
+shader = ExtResource("4_1mer7")
+shader_parameter/mask_tex = ExtResource("5_8qgpr")
+shader_parameter/scale = 1.8
+shader_parameter/softness = 0.05
+shader_parameter/mask_tex_size = Vector2(280, 245)
+
+[sub_resource type="Animation" id="Animation_1mer7"]
+resource_name = "LoadIn"
+length = 3.0
+step = 0.0416667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.8, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_8qgpr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.8]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_apckc"]
+_data = {
+&"LoadIn": SubResource("Animation_1mer7"),
+&"RESET": SubResource("Animation_8qgpr")
+}
 
 [node name="UILoadingScreen" type="Control"]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_p87ie")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_86krc")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -573.0
+offset_top = -325.0
+offset_right = 576.0
+offset_bottom = 331.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ColorRect"]
+libraries = {
+&"": SubResource("AnimationLibrary_apckc")
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -22.0
+offset_top = -51.0
+offset_right = 21.0
+offset_bottom = -8.0
+texture = ExtResource("1_tped4")
+expand_mode = 1
+
+[node name="ProgressBar" type="TextureProgressBar" parent="."]
+layout_mode = 0
+offset_left = -87.0
+offset_top = 8.0
+offset_right = 86.0
+offset_bottom = 35.0
+texture_under = ExtResource("1_fw21u")
+texture_progress = ExtResource("1_fw21u")
+
+[node name="HintText" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -213.0
+offset_top = 44.0
+offset_right = 213.0
+offset_bottom = 79.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("6_8qgpr")
+theme_override_font_sizes/normal_font_size = 24
+text = "You can throw items with [image]
+"
+horizontal_alignment = 1

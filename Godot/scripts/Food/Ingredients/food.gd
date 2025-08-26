@@ -91,43 +91,18 @@ func _process(delta):
 		if spoil_time >= 0:
 			spoil_ingredient(delta)
 	
-	#if is_cooking:
-		#boil()
 
 # Delta is passed from process which ticks over every second and therefore has the food spoil 
 # in like 50-100 seconds, these times are while we dont have the round times set up and also while
 # in testing, spoil times will be extended for actual cooking
 func spoil_ingredient(delta : float):
 	spoil_time-=delta * cook_timer.wait_time 
-	if(spoil_time <= 0 && !is_cooked && state != foodState.SPOILED && previous_states.has(foodState.CHOPPED)&& food_name != "Water"):
+	if(spoil_time <= 0 && !is_cooked && state != foodState.SPOILED && previous_states.has("CHOPPED")&& food_name != "Water"):
 		state = foodState.SPOILED
 		#emit_signal("changed_food_state")
 		on_state_change()
 		previous_states.append(state)
 		quality = 0
-	
-
-# This is called by the process function, it has a count down for the amount of time left to cook 
-# and when it is cooked it will change the state of the food and also add its new state to the
-# list so that the plate knows if the ingredient has gone through all the necessary states to turn 
-# into a meal
-# We talked about emitting signals when things change to let the server know and thats why there are
-# signals but they currently do nothing as i dont think the server has been set up
-#func cook(appliance_type: ApplianceFactory.CookingStyle):
-	#cook_time -=  time_power * cook_timer.wait_time
-	#if(cook_time <= 0 && cook_time > burn_threshold && state != foodState.CHOPPED):
-		#state = changeState(appliance_type);
-		#previous_states.append(state)
-		#is_cooked = true
-		#print("COOKED FOODDDD   ", food_name)
-		##emit_signal("changed_food_state")
-		#on_state_change()
-		##emit_signal("cooked")
-	#if(cook_time <= burn_threshold): # burn_threshold is 2 times the time it takes to cook it
-		#state = foodState.BURNT
-		##emit_signal("changed_food_state")
-		#print("BURNTTTT FOOOOODDDD  ", food_name)
-		#on_state_change()
 
 
 func convert_enum_to_string(enum_name: foodState)-> String:

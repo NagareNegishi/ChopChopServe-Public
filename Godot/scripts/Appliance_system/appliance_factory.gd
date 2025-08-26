@@ -142,7 +142,7 @@ const TEST_APPLIANCES = [
 	"fryer", # Numpad 3
 	"blender",    # Numpad 4
 	"chop_table",      # Numpad 5
-	"bench",       # Numpad 6
+	"cabinet",       # Numpad 6
 	"food_crate",       # Numpad 7
 	"sink",      # Numpad 8
 	"trash_can",   # Numpad 9

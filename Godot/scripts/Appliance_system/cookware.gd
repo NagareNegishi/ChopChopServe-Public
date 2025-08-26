@@ -5,11 +5,21 @@ class_name Cookware
 extends Equipment
 
 var power_receiving: int = 0
+var sizzle_particles: ParticleController
 
 ## Setup the cookware
 func _ready():
 	super._ready()
 	interactable_component.is_pickup = true
+	_setup_visual_effects()
+
+
+## Setup visual effects
+func _setup_visual_effects():
+	sizzle_particles = ParticleController.create_with_effect(ParticleController.EffectType.SIZZLE)
+	sizzle_particles.position.y = size.y * 0.8
+	add_child(sizzle_particles)
+	sizzle_particles.set_scale_multiplier(2.0)
 
 
 ## Place an item onto this appliance
@@ -30,6 +40,7 @@ func _put_food(food: Food) -> void:
 	if can_cook():
 		average_food()
 		food.startCooking(int(power_receiving * coefficient), cooking_style)
+		_toggle_sizzle(true)
 	print("Food placed in cookware: ", food.get_script().get_global_name(), ", Cookware can cook: ", can_cook(), ", Food cook time: ", food.get_cook_time())
 
 
@@ -62,7 +73,17 @@ func cook(power: int) -> bool:
 		 " with power: ", int(power_receiving * coefficient), ", Style is: ",
 		ApplianceFactory.CookingStyle.keys()[cooking_style], ", Food cook time: ", food.get_cook_time())
 		#----------------------------------------------------------------------
+	_toggle_sizzle(true)
 	return true
+
+
+## Finish cooking process
+## @return: True if cooking finished
+func finish_cook() -> bool:
+	var success = super.finish_cook()
+	if success:
+		_toggle_sizzle(false)
+	return success
 
 
 ## Perform action depend on what player is holding
@@ -99,3 +120,11 @@ func serve_to_plate(plate: Plate) -> bool:
 	print("Cookware :", get_script().get_global_name(), ", served to: ", plate.get_script().get_global_name())
 	#----------------------------------------------------------------------
 	return true
+
+
+## Toggle sizzle particles effect
+func _toggle_sizzle(sizzle: bool) -> void:
+	if sizzle:
+		sizzle_particles.play()
+	else:
+		sizzle_particles.stop()

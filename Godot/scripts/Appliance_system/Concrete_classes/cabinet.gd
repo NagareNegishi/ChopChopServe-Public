@@ -44,13 +44,6 @@ func _can_accept(item: Node) -> bool:
 	return item is Plate and item.is_ready() # maybe we need different method to check clean and empty
 
 
-## Override unsupported methods to prevent misuse ------------------------------
-func start_action() -> bool:
-	assert(false, "Cabinet does not support starting actions")
-	return false
-#-------------------------------------------------------------------------------
-
-
 ## Override upgradable setup in concrete appliances
 func _setup_upgradable():
 	super._setup_upgradable()
@@ -76,3 +69,10 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 			return false
 	# If player has empty plate: depend on if cabinet can accept it
 	return put(item)
+
+
+## Override unsupported methods to prevent misuse ------------------------------
+func start_action() -> bool:
+	assert(false, "Cabinet does not support starting actions")
+	return false
+#-------------------------------------------------------------------------------

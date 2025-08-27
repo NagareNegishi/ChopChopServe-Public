@@ -167,3 +167,23 @@ func get_progress() -> int:
 		return int(INF)
 	return average_food()
 #---------------------------------------------------------------------------------------------------
+
+
+## InteractableComponent Signal Handlers -----------------------------------------------------------
+## Give visual feedback when hovered
+## @param is_hovered: Whether the item is hovered or not
+func _on_interactable_component_hovered(is_hovered: bool) -> void:
+	if not is_hovered:
+		highlight_component.hide_feedback()
+		return
+	var item = GlobalScript.player.item_in_hand
+	#---------------------------------------------------------------------------
+	if item:
+		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())
+	#---------------------------------------------------------------------------
+	if not item:
+		highlight_component.set_state(ApplianceHighlight.HighlightState.HOVER)
+		return
+	var can_accept = _can_accept(item)
+	highlight_component.show_feedback(can_accept)
+## -------------------------------------------------------------------------------------------------

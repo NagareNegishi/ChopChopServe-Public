@@ -9,8 +9,9 @@ var team2: Array[int] = []
 # Menu UI elements
 @onready var menu = $Menu
 @onready var create_button = $Menu/VBoxContainer/CreateButton
+@onready var host_public_ip_input = $Menu/VBoxContainer/HostPublicIPInput
 @onready var join_button = $Menu/VBoxContainer/JoinButton
-@onready var ip_input = $Menu/VBoxContainer/IPInput
+@onready var ip_input = $Menu/VBoxContainer/ClientIPInput
 # Lobby UI elements
 @onready var lobby_screen = $LobbyScreen
 @onready var player1_label = $LobbyScreen/VBoxContainer/HBoxContainer/Player1
@@ -33,7 +34,8 @@ func _ready():
 
 ## Create Lobby
 func _on_create_pressed():
-	if network_layer.create_game(4):
+	var public_ip = host_public_ip_input.text.strip_edges()
+	if network_layer.create_game_with_ip(4, public_ip):
 		player_list = [1]
 		_switch_to_lobby()
 	else:
@@ -55,6 +57,11 @@ func _switch_to_lobby():
 	menu.hide()
 	lobby_screen.show()
 	_update_player_list()
+	
+	if network_layer.is_host():
+		print("=== HOST CONNECTION INFO ===")
+		print("Share with friends: " + network_layer.get_connection_info())
+		print("============================")
 
 
 ## Switch to Menu

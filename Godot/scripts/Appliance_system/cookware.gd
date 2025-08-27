@@ -59,6 +59,11 @@ func average_food() -> int:
 		food.set_cook_time(average)
 	return average
 
+#TODO:
+# set_cook_time(average) will be food.set_cook_time(average, cooking_style)
+# get_cook_time() will be food.get_cook_time(cooking_style)
+# no need to int casting and also check Blender
+
 
 ## Perform cooking logic
 ## @param power: The power from PoweredAppliance

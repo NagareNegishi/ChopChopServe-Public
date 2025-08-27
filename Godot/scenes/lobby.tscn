@@ -40,11 +40,16 @@ grow_vertical = 2
 layout_mode = 2
 text = "Create Game"
 
+[node name="HostPublicIPInput" type="LineEdit" parent="Menu/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "[Public IP (optional - leave empty for LAN)]"
+alignment = 1
+
 [node name="JoinButton" type="Button" parent="Menu/VBoxContainer"]
 layout_mode = 2
 text = "Join Game"
 
-[node name="IPInput" type="LineEdit" parent="Menu/VBoxContainer"]
+[node name="ClientIPInput" type="LineEdit" parent="Menu/VBoxContainer"]
 layout_mode = 2
 placeholder_text = "127.0.0.1:7000"
 

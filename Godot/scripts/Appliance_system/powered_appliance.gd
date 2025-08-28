@@ -332,6 +332,7 @@ func get_progress() -> float:
 	return most_progress
 #---------------------------------------------------------------------------------------------------
 
+
 ## InteractableComponent Signal Handlers -----------------------------------------------------------
 ## Give visual feedback when hovered
 ## @param is_hovered: Whether the item is hovered or not

@@ -30,7 +30,7 @@ func _put_food(food: Food) -> void:
 	if can_cook():
 		average_food()
 		food.startCooking(int(power_receiving * coefficient), cooking_style)
-	print("Food placed in cookware: ", food.get_script().get_global_name(), ", Cookware can cook: ", can_cook(), ", Food cook time: ", food.get_cook_time())
+#	print("Food placed in cookware: ", food.get_script().get_global_name(), ", Cookware can cook: ", can_cook(), ", Food cook time: ", food.get_cook_time())
 
 
 ## Average cooking time of food in cookware
@@ -39,13 +39,13 @@ func _put_food(food: Food) -> void:
 ## @return: The average cooking time of all food items in the cookware
 func average_food() -> int:
 	if contents.size() == 1:
-		return contents[0].get_cook_time()
+		return contents[0].get_cook_time(cooking_style)
 	var total = 0.0
 	for food in contents:
-		total += food.get_cook_time()
+		total += food.get_cook_time(cooking_style)
 	var average = int(total / contents.size())  # we need to check if we want to float or int!!!!!!!!!!
 	for food in contents:
-		food.set_cook_time(average)
+		food.set_cook_time(average, cooking_style)
 	return average
 
 

@@ -321,14 +321,14 @@ func serve_to_plate(plate: Plate) -> bool:
 ## Note: Only use it when PoweredAppliance can be operated
 ## Note: Progress is defined by the `cook_time` of `Food` -> smaller values are more progressed
 ## @return: The progress of the cooking process
-func get_progress() -> int:
+func get_progress() -> float:
 	if is_empty():
-		return int(INF)
+		return INF
 	var most_progress = INF
 	for cookware in contents:
 		if cookware.is_empty():
 			continue
-		most_progress = min(most_progress, cookware.average_food())
+		most_progress = min(most_progress, cookware._average_food())
 	return most_progress
 #---------------------------------------------------------------------------------------------------
 

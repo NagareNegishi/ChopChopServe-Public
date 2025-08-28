@@ -50,24 +50,24 @@ func _put_food(food: Food) -> void:
 	food.current_visibility(false)
 	food.change_collisions()
 	if current_status == Status.COOKING:
-		average_food()
+		_average_food()
 		food.startCooking(power, cooking_style)
-	print("Food placed in blender: ", food.get_script().get_global_name(), ", Food cook time: ", food.get_cook_time())
+	print("Food placed in blender: ", food.get_script().get_global_name(), ", Food cook time: ", food.get_cook_time(cooking_style))
 
 
 ## Average cooking time of food in cookware
 ## Only subclass of Food should be in Cookware
 ## Note: Do not call when contents is empty (Food has different default cooking time)
 ## @return: The average cooking time of all food items in the cookware
-func average_food() -> int:
+func _average_food() -> float:
 	if contents.size() == 1:
-		return contents[0].get_cook_time()
+		return contents[0].get_cook_time(cooking_style)
 	var total = 0.0
 	for food in contents:
-		total += food.get_cook_time()
-	var average = int(total / contents.size())  # we need to check if we want to float or int!!!!!!!!!!
+		total += food.get_cook_time(cooking_style)
+	var average = total / contents.size()
 	for food in contents:
-		food.set_cook_time(average)
+		food.set_cook_time(average, cooking_style)
 	return average
 
 
@@ -162,10 +162,10 @@ func serve_to_plate(plate: Plate) -> bool:
 ## Note: Only use it when PoweredAppliance can be operated
 ## Note: Progress is defined by the `cook_time` of `Food` -> smaller values are more progressed
 ## @return: The progress of the cooking process
-func get_progress() -> int:
+func get_progress() -> float:
 	if is_empty():
-		return int(INF)
-	return average_food()
+		return INF
+	return _average_food()
 #---------------------------------------------------------------------------------------------------
 
 

@@ -38,31 +38,32 @@ func _put_food(food: Food) -> void:
 	# food.current_visibility(false)
 	# food.change_collisions()
 	if can_cook():
-		average_food()
+		# _average_food() # depend on Food implementation ---------------------------
 		food.startCooking(int(power_receiving * coefficient), cooking_style)
+		_average_food()
 		_toggle_sizzle(true)
-	print("Food placed in cookware: ", food.get_script().get_global_name(), ", Cookware can cook: ", can_cook(), ", Food cook time: ", food.get_cook_time())
+	print("Food placed in cookware: ", food.get_script().get_global_name(), ", Cookware can cook: ", can_cook(), ", Food cook time: ", food.get_cook_time(cooking_style))
 
 
 ## Average cooking time of food in cookware
 ## Only subclass of Food should be in Cookware
 ## Note: Do not call when contents is empty (Food has different default cooking time)
 ## @return: The average cooking time of all food items in the cookware
-func average_food() -> int:
+func _average_food() -> float:
 	if contents.size() == 1:
-		return contents[0].get_cook_time()
+		return contents[0].get_cook_time(cooking_style)
 	var total = 0.0
 	for food in contents:
-		total += food.get_cook_time()
-	var average = int(total / contents.size())  # we need to check if we want to float or int!!!!!!!!!!
+		total += food.get_cook_time(cooking_style)
+		print("Total cooking time in cookware: ", total)
+	var average = total / contents.size()
+	print("Average cooking time in cookware: ", average)
 	for food in contents:
-		food.set_cook_time(average)
+		print("Setting food cook time from: ", food.get_cook_time(cooking_style), " to average: ", average)
+		food.set_cook_time(average, cooking_style)
+		print("After setting food cook time: ", food.get_cook_time(cooking_style))
 	return average
 
-#TODO:
-# set_cook_time(average) will be food.set_cook_time(average, cooking_style)
-# get_cook_time() will be food.get_cook_time(cooking_style)
-# no need to int casting and also check Blender
 
 
 ## Perform cooking logic
@@ -76,7 +77,7 @@ func cook(power: int) -> bool:
 		#-----------------------------------------------------------------------
 		print(get_script().get_global_name(), " start cooking ", food.get_script().get_global_name(),
 		 " with power: ", int(power_receiving * coefficient), ", Style is: ",
-		ApplianceFactory.CookingStyle.keys()[cooking_style], ", Food cook time: ", food.get_cook_time())
+		ApplianceFactory.CookingStyle.keys()[cooking_style], ", Food cook time: ", food.get_cook_time(cooking_style))
 		#----------------------------------------------------------------------
 	_toggle_sizzle(true)
 	return true

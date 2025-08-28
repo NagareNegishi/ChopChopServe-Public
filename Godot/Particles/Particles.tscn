@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://dpdrqqhoutpc3"]
+[gd_scene load_steps=54 format=3 uid="uid://dpdrqqhoutpc3"]
 
 [ext_resource type="Texture2D" uid="uid://bx6m3o5gtj1u3" path="res://Particles/hapy.jpg" id="1_l7qkd"]
 [ext_resource type="Texture2D" uid="uid://24gc7h8nhp8p" path="res://Particles/Skull_and_Crossbones.svg.png" id="3_cwed3"]
@@ -253,6 +253,33 @@ billboard_keep_scale = true
 material = SubResource("StandardMaterial3D_2qv8e")
 size = Vector2(0.2, 0.2)
 
+[sub_resource type="Curve" id="Curve_cwed3"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.47931, 1), 0.0, 0.0, 0, 0, Vector2(0.951724, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_1x3w2"]
+curve = SubResource("Curve_cwed3")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7f1fg"]
+emission_shape = 2
+emission_sphere_radius = 0.2
+gravity = Vector3(0, 0, 0)
+scale_min = 0.5
+scale_max = 0.5
+scale_curve = SubResource("CurveTexture_1x3w2")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_acvn8"]
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.896111, 0.63853, 0, 1)
+emission_enabled = true
+emission = Color(0.872177, 0.827703, 3.85046e-07, 1)
+emission_energy_multiplier = 5.35
+
+[sub_resource type="SphereMesh" id="SphereMesh_jtpir"]
+material = SubResource("StandardMaterial3D_acvn8")
+radius = 0.025
+height = 0.05
+
 [node name="Node3D" type="Node3D"]
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
@@ -332,6 +359,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.9559, 0.141365, -0.189272)
 text = "Spoiled Food (Placeholder Image)"
 font_size = 18
 
+[node name="Text10" type="Label3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.40876, 0.141365, -0.189272)
+text = "Fireflies
+"
+font_size = 18
+
 [node name="Node3D2" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.89968, 0, 0)
 
@@ -408,3 +441,14 @@ lifetime = 3.0
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_1x3w2")
 draw_pass_1 = SubResource("QuadMesh_7f1fg")
+
+[node name="GPUParticles3D4" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.37354, 0, 0)
+lifetime = 10.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_7f1fg")
+draw_pass_1 = SubResource("SphereMesh_jtpir")
+
+[node name="GPUParticlesAttractorSphere3D" type="GPUParticlesAttractorSphere3D" parent="GPUParticles3D4"]
+transform = Transform3D(0.271653, 0, 0, 0, 0.191246, 0, 0, 0, 0.242991, 0, 0.00363755, 0)
+strength = 0.25

@@ -40,6 +40,7 @@ func _ready():
 	_setup_timer()
 	_setup_visual_effects()
 	#----------------------------------------
+	# ignite()
 	#print("Inflammable component added to: ", target.get_script().get_global_name())
 	#----------------------------------------
 

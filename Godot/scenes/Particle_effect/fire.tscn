@@ -52,7 +52,7 @@ amount = 40
 lifetime = 3.0
 speed_scale = 4.23
 local_coords = true
-trail_lifetime = 0.01
+trail_lifetime = 0.02
 process_material = SubResource("ParticleProcessMaterial_pkxnn")
 draw_pass_1 = SubResource("SphereMesh_6kowk")
 

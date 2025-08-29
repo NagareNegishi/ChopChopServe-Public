@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://ckxyscw51v3du"]
+[gd_scene load_steps=12 format=3 uid="uid://ckxyscw51v3du"]
 
 [ext_resource type="Script" uid="uid://0wecred12v33" path="res://scripts/Player/player.gd" id="1_3qydi"]
 [ext_resource type="PackedScene" uid="uid://bu4i2rvstrdvh" path="res://assets/hat.fbx" id="2_bvqhm"]
 [ext_resource type="PackedScene" uid="uid://d2rfm5fkxeeic" path="res://assets/Frog.fbx" id="2_q3lat"]
 [ext_resource type="Texture2D" uid="uid://ds43xburqmhn0" path="res://assets/textures/misc/CircleTexture.png" id="4_ved6o"]
+[ext_resource type="Script" uid="uid://b3odgdfvtu6" path="res://scripts/Player/player_state.gd" id="5_socpp"]
 [ext_resource type="Script" uid="uid://b1a2y0am2avrj" path="res://scripts/Player/player_controller.gd" id="5_xcisb"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l2ndj"]
@@ -12,6 +13,17 @@ height = 1.06912
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_q3lat"]
 size = Vector3(2.74022, 3, 3)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_fxc31"]
+properties/0/path = NodePath(".:player_id")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:player_name")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:team")
+properties/2/spawn = true
+properties/2/replication_mode = 1
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ved6o"]
 properties/0/path = NodePath(".:position")
@@ -71,6 +83,11 @@ autostart = true
 [node name="MoveParticles" type="Timer" parent="."]
 wait_time = 0.15
 autostart = true
+
+[node name="PlayerState" type="MultiplayerSynchronizer" parent="."]
+root_path = NodePath(".")
+replication_config = SubResource("SceneReplicationConfig_fxc31")
+script = ExtResource("5_socpp")
 
 [node name="MultiplayerSync" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_ved6o")

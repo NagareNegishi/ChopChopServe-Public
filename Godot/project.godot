@@ -103,7 +103,7 @@ DEBUG={
 
 [rendering]
 
-environment/volumetric_fog/volume_depth=150
+environment/volumetric_fog/volume_depth=200
 
 [shader_globals]
 

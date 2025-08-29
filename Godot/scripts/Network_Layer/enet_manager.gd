@@ -51,6 +51,7 @@ func _on_player_joined(player_id: int):
 
 
 ## Update Player List when a player intentionally leaves, and host shares it
+## This function can be use for kicking players too
 ## @param player_id: The ID of the player who left
 func player_leaves_intentionally(player_id: int):
 	if not enet_layer.is_host():

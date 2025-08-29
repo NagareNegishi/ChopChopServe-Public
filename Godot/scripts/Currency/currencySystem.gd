@@ -1,8 +1,10 @@
 extends Node
 
+# Starting CUrrency
+# Change later - high for testing use
 var total_cur_team = {
-	1: 500.0,
-	2: 500.0
+	1: 10000.0,
+	2: 10000.0
 }
 
 # Current starting currency is 200

@@ -168,3 +168,4 @@ text = "Power Outage"
 [connection signal="pressed" from="Buttons/Team2/CurAddButton_2" to="." method="_on_cur_add_button_2_pressed"]
 [connection signal="pressed" from="Buttons/Team2/CurMinusButton_2" to="." method="_on_cur_minus_button_2_pressed"]
 [connection signal="pressed" from="Sabotages/WaterSpill" to="." method="_on_water_spill_pressed"]
+[connection signal="pressed" from="Sabotages/Fire" to="." method="_on_fire_pressed"]

@@ -51,7 +51,7 @@ func request_sabotage(teamID: int, sabotage_type: int) -> void:
 			spawn_water_spill(5.0) # duration can be adjusted
 		SabotageType.FIRE:
 			print("fire stuff")
-			# Handle fire sabotage
+			spawn_fire()
 		SabotageType.FOOD_CRITIC:
 			print("critic stuff")
 			spawn_food_critic()
@@ -102,6 +102,22 @@ func spawn_fire() -> void:
 	# most upgraded one i think.
 	# create a fire class that handles the fire logic
 	# but connect it to the appliance system
+
+	#var flammable_appliances = get_tree().get_nodes_in_group("flammable")
+
+	#if flammable_appliances.size() == 0:
+	#	push_warning("No famiable Appliances found!")
+	#	return
+
+	# Pick a random one
+	#var random_index = randi() % flammable_appliances.size()
+	#var appliance = flammable_appliances[random_index]
+
+	# Start the fire
+	#if "inflammable_component" in appliance and appliance.inflammable_component:
+	#	appliance.inflammable_component.ignite()
+	#else:
+	#	push_warning("Chosen appliance has no inflamiable compnent")
 
 # ------- Food Critic Stuff -------
 func spawn_food_critic() -> void:

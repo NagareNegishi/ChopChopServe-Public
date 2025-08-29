@@ -63,3 +63,7 @@ func _on_currency_changed(teamID: int, new_currency: float) -> void:
 # Water Spill
 func _on_water_spill_pressed() -> void:
 	SabotageSystem.request_sabotage(1, 1)
+
+func _on_fire_pressed() -> void:
+	print("fire button pressed")
+	SabotageSystem.request_sabotage(1, 2)

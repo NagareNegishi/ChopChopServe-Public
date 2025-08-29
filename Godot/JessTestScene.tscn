@@ -1,8 +1,7 @@
-[gd_scene load_steps=25 format=3 uid="uid://bhky5bauqkfj6"]
+[gd_scene load_steps=24 format=3 uid="uid://bhky5bauqkfj6"]
 
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_uk2o3"]
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="2_vgemh"]
-[ext_resource type="PackedScene" uid="uid://onr0y71fwoa6" path="res://scripts/Sabotage/sabotageUI.tscn" id="3_uk2o3"]
 [ext_resource type="PackedScene" uid="uid://dythb8xw31t1c" path="res://assets/models/infrastructure/wall.glb" id="4_7ip2m"]
 [ext_resource type="PackedScene" uid="uid://dxhfqm13c85ar" path="res://assets/models/decorations/table.glb" id="5_ddxrh"]
 [ext_resource type="PackedScene" uid="uid://hxrvqyggbykc" path="res://assets/models/NuFurniture/Bench.glb" id="6_oi5yk"]
@@ -15,8 +14,8 @@
 [ext_resource type="PackedScene" uid="uid://dyyd5onvpbmsv" path="res://assets/models/NuFurniture/oven.glb" id="13_paao4"]
 [ext_resource type="PackedScene" uid="uid://b7x0xycilg7vt" path="res://assets/models/NuFurniture/newblender.glb" id="14_coers"]
 [ext_resource type="PackedScene" uid="uid://b64oudiukwpwa" path="res://assets/models/NuFurniture/nufridge.glb" id="15_gxqm5"]
+[ext_resource type="PackedScene" uid="uid://bf35vdqr3y7n7" path="res://UI/UI_Test_Scene.tscn" id="16_uk2o3"]
 [ext_resource type="PackedScene" uid="uid://d1iqitph17b80" path="res://scenes/Interaction/AbstractPickup.tscn" id="16_y22bl"]
-[ext_resource type="PackedScene" uid="uid://c0dm7s16qpo82" path="res://UI/UIRepTester.tscn" id="17_vgemh"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ihmv3"]
 size = Vector3(30, 0.03, 30)
@@ -586,7 +585,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.49325, 0.1815, 2.71952)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Control" parent="CanvasLayer" instance=ExtResource("3_uk2o3")]
-visible = false
-
-[node name="UiRepTester" parent="CanvasLayer" instance=ExtResource("17_vgemh")]
+[node name="UITestScene" parent="CanvasLayer" instance=ExtResource("16_uk2o3")]

@@ -26,3 +26,7 @@ func _on_body_entered(body: Node3D) -> void:
 	# this causes the team to lose reputation
 	emit_signal("entered_water_spill", body)
 	print("player in the water")
+
+	# maybe need to change the logic around all of this code ??
+	# like if getObject(player or customer) is within thisArea then signal
+	# or something

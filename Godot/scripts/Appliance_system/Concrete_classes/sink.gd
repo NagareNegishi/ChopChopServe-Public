@@ -89,16 +89,17 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 
 	# If Player has Pot, provide water
 	if item is Pot:
-		print("Player has pot, provide water")
+		#--------------------------------------------
+		print("Player has is called, provide water, Self: ", get_script().get_global_name())
+		#--------------------------------------------
 		var water = water_scene.instantiate()
-		return item.player_has(water)
-		# var yes = item.put(water)
-		# if yes:
-		# 	print("Provided water to pot")
-		# 	return true
-		# else:
-		# 	print("Failed to provide water to pot")
-		# 	return false
+		var accepted = item.put_without_remove(water)
+		if accepted:
+			print("Provided water to pot")
+			return true
+		else:
+			print("Failed to provide water to pot")
+			return false
 
 	# If player has empty plate: depend on if sink can accept it
 	return put(item)

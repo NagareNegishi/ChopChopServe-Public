@@ -3,6 +3,11 @@
 ## 1. Container: Used by PoweredAppliance, like a Pot, Pan, etc.
 ## 2. Tool: Used with Appliance, like a Knife, Whisk, etc.
 ## Equipment must be used by PoweredAppliance or Player, it will not work alone
+## TODO: Ideally remove:
+##	- GlobalScript.player.pickup_item(self)
+##	- GlobalScript.player.remove_item(self)
+## from Appliance subclasses, as it not part of design and created dependency,
+## making management and maintenance more complex and less reusable.
 class_name Equipment
 extends Appliance
 
@@ -29,6 +34,21 @@ func put(item: Node) -> bool:
 		return false
 	# transfer item to appliance
 	GlobalScript.player.remove_item()
+	contents.append(item)
+	add_child(item)
+#--------------------------------------------
+	print("Put: ", item.get_script().get_global_name(), " onto: ", get_script().get_global_name())
+#--------------------------------------------
+	return true
+
+
+## Place an item onto this appliance, without interacting with the player
+## if we could remove Player dependency from this class, we can remove this method
+## @param item: The Node to place on this appliance
+## @return: True if placement was successful, false otherwise
+func put_without_remove(item: Node) -> bool:
+	if not _can_accept(item):
+		return false
 	contents.append(item)
 	add_child(item)
 #--------------------------------------------
@@ -124,7 +144,7 @@ func set_can_use(value: bool):
 ## @return: True if action is triggered, false otherwise
 func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
 #--------------------------------------------
-	print("Player has: ", item, ", Self: ", get_script().get_global_name())
+	print("Player has is called, player has: ", item, ", Self: ", get_script().get_global_name())
 #--------------------------------------------
 	# If player has nothing: let them take self, return true
 	if not item:
@@ -141,4 +161,5 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 
 
 	# If item_in_hand exists: depend on if equipment can accept it
+	print("put will be called on: ", get_script().get_global_name())
 	return put(item)

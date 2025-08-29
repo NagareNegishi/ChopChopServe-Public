@@ -10,14 +10,14 @@ signal changed_food_state
 signal cooking
 
 #Meshes
-@export var raw_mesh: MeshInstance3D
-@export var cooked_mesh: MeshInstance3D
-@export var spoiled_mesh: MeshInstance3D
-@export var burnt_mesh: MeshInstance3D
-@export var chopped_mesh: MeshInstance3D
-@export var frozen_mesh: MeshInstance3D
-@export var mixed_mesh: MeshInstance3D
-@export var texture : Texture2D
+@export var raw_mesh: MeshInstance3D = null
+@export var cooked_mesh: MeshInstance3D = null
+@export var spoiled_mesh: MeshInstance3D = null
+@export var burnt_mesh: MeshInstance3D = null
+@export var chopped_mesh: MeshInstance3D = null
+@export var frozen_mesh: MeshInstance3D = null
+@export var mixed_mesh: MeshInstance3D = null
+@export var texture : Texture2D = null
 
 # This gets reset in the other methods it is just default
 var food_name = "Default_foodState"
@@ -193,10 +193,12 @@ func fry():
 
 
 func mix():
-	MIXED_time -= time_power
+	MIXED_time -= time_power * cook_timer.wait_time
 	if MIXED_time <= 0:
 		state = foodState.MIXED
-		previous_states.append(state)
+		is_cooked = true
+		if !previous_states.has(convert_enum_to_string(state)):
+			previous_states.append(convert_enum_to_string(state))
 		print("Food is mixed   ", food_name)
 		on_state_change()
 		stop_cooking()
@@ -281,6 +283,8 @@ func set_cook_time(time: float, style: ApplianceFactory.CookingStyle):
 	@warning_ignore("unused_variable")
 	var time_instance = get(get_cooking_type(style)+"_time")
 	time_instance = time
+	print("Style     ",style)
+	print("ime instance",time_instance)
 
 
 # Lets the appliance get the cooking time of the ingredient
@@ -341,6 +345,8 @@ func visibility_of_mesh(meshName: MeshInstance3D, changeTo: bool):
 		meshName.visible = changeTo
 
 func current_visibility(changeTo: bool):
+	if !current_mesh:
+		push_error("No mesh passed to current_visibility() in food.gd")
 	current_mesh.visible = changeTo
 
 func change_collisions():

@@ -193,17 +193,16 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	if not is_hovered:
 		highlight_component.hide_feedback()
 		return
-	#---------------------------------------------------------------------------
 	var item = GlobalScript.player.item_in_hand
-	if item:
-		item = item.get_script().get_global_name()
-	print("Player has : ", item, ", hovered: ", get_script().get_global_name())
 	#---------------------------------------------------------------------------
-	if GlobalScript.player.item_in_hand:
-		var can_accept = _can_accept(GlobalScript.player.item_in_hand)
-		highlight_component.show_feedback(can_accept)
+	if item:
+		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())
+	#---------------------------------------------------------------------------
+	if not item:
+		highlight_component.set_state(ApplianceHighlight.HighlightState.HOVER)
 		return
-	highlight_component.set_state(ApplianceHighlight.HighlightState.HOVER)
+	var can_accept = _can_accept(item)
+	highlight_component.show_feedback(can_accept)
 
 
 ## Trigger action, if subclass has action

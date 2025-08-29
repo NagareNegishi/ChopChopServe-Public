@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://bntp2jq70snlr"]
+
+[ext_resource type="PackedScene" uid="uid://c0utphbi5chwj" path="res://assets/newmodels/food/ingredients/raw/Milk.glb" id="1_bfxuc"]
+
+[node name="Milk" instance=ExtResource("1_bfxuc")]

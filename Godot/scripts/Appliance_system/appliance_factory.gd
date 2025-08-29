@@ -142,7 +142,7 @@ const TEST_APPLIANCES = [
 	"fryer", # Numpad 3
 	"blender",    # Numpad 4
 	"chop_table",      # Numpad 5
-	"bench",       # Numpad 6
+	"cabinet",       # Numpad 6
 	"food_crate",       # Numpad 7
 	"sink",      # Numpad 8
 	"trash_can",   # Numpad 9
@@ -180,5 +180,3 @@ func _input(event):
 		if appliance_index >= 0 and appliance_index < TEST_APPLIANCES.size():
 			spawn_test_appliance(TEST_APPLIANCES[appliance_index])
 			print("Numpad %d pressed - spawning %s" % [appliance_index + 1, TEST_APPLIANCES[appliance_index]])
-
-

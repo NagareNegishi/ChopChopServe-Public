@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://depeuqst6pos6"]
+
+[ext_resource type="PackedScene" uid="uid://du4h2yy5r51p0" path="res://assets/newmodels/food/recipes/finished/BurgerChicken.glb" id="1_5map2"]
+
+[node name="ChickenBurger" instance=ExtResource("1_5map2")]

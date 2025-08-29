@@ -20,6 +20,7 @@ var item_in_hand : Node3D = null
 var can_dash : bool = true
 
 @onready var controller : PlayerController = $Controller
+@onready var player_state : PlayerState = $PlayerState
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
@@ -30,7 +31,7 @@ func _enter_tree() -> void:
 ## @return void
 func _ready() -> void:
 	$DashCooldown.wait_time = DASH_COOLDOWN
-
+	player_state.player_id = name.to_int()
 ## Had conflict here, first one was from Player-Controller, I will comment out the one was in main--------------------------------------------------
 	$Decal.modulate = GlobalScript.player_outline_colours.get(1)
 	# $Decal.modulate = GlobalScript.player_colours.get(1)
@@ -330,3 +331,10 @@ func _final_drop(item: Node3D) -> void:
 	item.scale = ($Mesh/ItemPoint.global_transform.basis.get_scale() / scale)
 	item.global_position = $Mesh/ItemPoint.global_position + $Mesh.global_transform.basis.z * 2.5
 	item.global_rotation = $Mesh/ItemPoint.global_rotation
+
+
+func set_team(team : GlobalScript.Team):
+	player_state.team = team
+
+func get_team() -> GlobalScript.Team:
+	return player_state.team

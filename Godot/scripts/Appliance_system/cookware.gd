@@ -32,6 +32,17 @@ func put(item: Node) -> bool:
 	return success
 
 
+## Place an item onto this appliance
+## @param item: The Node to place on this appliance
+## @return: True if placement was successful, false otherwise
+func put_all(items: Array) -> bool:
+	if not _can_accept_all(items):
+		return false
+	for item in items:
+		put(item)
+	return true
+
+
 ## Place food into the cookware
 ## @param food: The Food item to place into the cookware
 func _put_food(food: Food) -> void:
@@ -63,6 +74,22 @@ func _average_food() -> float:
 		food.set_cook_time(average, cooking_style)
 		print("After setting food cook time: ", food.get_cook_time(cooking_style))#!!!!!!!!!!!!!!
 	return average
+
+
+## Check if this appliance can accept the all given items
+## @param items: The Array of Nodes to test for acceptance
+## @return: True if all items can be placed, false otherwise
+func _can_accept_all(items: Array) -> bool:
+	if items.is_empty():
+		print("Cannot accept items, its empty")
+		return false
+	if contents.size() + items.size() > capacity:
+		print("Cannot accept items: ", get_script().get_global_name(), " is at full capacity")
+		return false
+	for item in items:
+		if not item.get_script().get_global_name() in valid_food:
+			return false
+	return true
 
 
 ## Perform cooking logic
@@ -137,7 +164,7 @@ func serve_to_plate(plate: Plate) -> bool:
 		print("Plate is not ready: ", plate.get_script().get_global_name())
 		return false
 
-	finish_cook()
+	# finish_cook()
 	plate.add_list_items(take_all())	# Method in Plate, takes Array of Food
 	#----------------------------------------------------------------------
 	print("Cookware :", get_script().get_global_name(), ", served to: ", plate.get_script().get_global_name())

@@ -36,10 +36,21 @@ func put(item: Node) -> bool:
 	return true
 
 
+## Place an item onto this appliance
+## @param item: The Node to place on this appliance
+## @return: True if placement was successful, false otherwise
+func put_all(items: Array) -> bool:
+	if not _can_accept_all(items):
+		return false
+	for item in items:
+		put(item)
+	return true
+
+
 ## Place food into the blender
 ## @param food: The Food item to place into the blender
 func _put_food(food: Food) -> void:
-	food.current_visibility(false)
+	#food.current_visibility(false)
 	food.change_collisions()
 	if current_status == Status.COOKING:
 		_average_food()
@@ -78,6 +89,22 @@ func take_all() -> Array[Node]:
 		remove_child(item)
 	contents = []
 	return all_items
+
+
+## Check if this appliance can accept the all given items
+## @param items: The Array of Nodes to test for acceptance
+## @return: True if all items can be placed, false otherwise
+func _can_accept_all(items: Array) -> bool:
+	if items.is_empty():
+		print("Cannot accept items, its empty")
+		return false
+	if contents.size() + items.size() > capacity:
+		print("Cannot accept items: ", get_script().get_global_name(), " is at full capacity")
+		return false
+	for item in items:
+		if not item.get_script().get_global_name() in valid_classes:
+			return false
+	return true
 
 
 ## Perform cooking logic
@@ -145,21 +172,47 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 	if item is Plate:
 		return serve_to_plate(item)
 
+	# If player has cookware: try to transfer contents
+	if item is Cookware:
+		if is_empty() and _can_accept_all(item.show_contents()):
+			return put_all(item.take_all())
+		if item._can_accept_all(contents):
+			return item.put_all(take_all())
+
 	# If item_in_hand exists: depend on if Blender can accept it
 	return put_from_player(item)
+
+
+## Check if the target can accept the current contents
+## @param target: The Node to check for acceptance
+## @return: True if the target can accept the current contents, false otherwise
+func _check_target(target: Node) -> bool:
+	if is_empty():
+		if target is Cookware:
+			return _can_accept_all(target.show_contents())
+		print("Nothing to serve from: ", get_script().get_global_name())
+		return false
+	if target is Plate and target.is_ready():
+		# maybe check capacity here??? or no need? depend on how plate handle capacity
+		return true
+	if target is Cookware:
+		return target._can_accept_all(contents)
+	return false
 
 
 ## Serve food from Cookware to Plate
 ## @param plate: The Plate to serve food to
 ## @return: True if serving was successful, false otherwise
 func serve_to_plate(plate: Plate) -> bool:
-	if contents.is_empty():
-		print("Nothing to serve from: ", get_script().get_global_name())
+	if not _check_target(plate):
 		return false
+	# if contents.is_empty():
+	# 	print("Nothing to serve from: ", get_script().get_global_name())
+	# 	return false
 
-	if not plate.is_ready(): # Method in Plate, checks if plate is ready
-		print("Plate is not ready: ", plate.get_script().get_global_name())
-		return false
+	# if not plate.is_ready(): # Method in Plate, checks if plate is ready
+	# 	print("Plate is not ready: ", plate.get_script().get_global_name())
+	# 	return false
 
 	plate.add_list_items(take_all()) # Method in Plate, takes Array of Food
 	stop_cook()
@@ -183,8 +236,10 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	if not item:
 		highlight_component.set_state(ApplianceHighlight.HighlightState.HOVER)
 		return
-	var can_accept = _can_accept(item)
-	highlight_component.show_feedback(can_accept)
+	if item is Plate or item is Cookware:
+		highlight_component.show_feedback(_check_target(item))
+		return
+	highlight_component.show_feedback(_can_accept(item))
 ## -------------------------------------------------------------------------------------------------
 
 

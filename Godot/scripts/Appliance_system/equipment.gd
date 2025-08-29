@@ -45,6 +45,7 @@ func take() -> Node:
 ## Remove and return all items
 ## @return: Array of all items that were removed
 func take_all() -> Array[Node]:
+	finish_cook()
 	var all_items = contents
 	for item in all_items:
 		remove_child(item)
@@ -106,6 +107,12 @@ func is_empty() -> bool:
 ## @return: True if equipment is full, false otherwise
 func is_full() -> bool:
 	return contents.size() >= capacity
+
+
+## Show the contents of this equipment
+## @return: Array of all items in this equipment as copies
+func show_contents() -> Array[Node]:
+	return contents.duplicate()
 
 
 ## Check if this equipment can be used

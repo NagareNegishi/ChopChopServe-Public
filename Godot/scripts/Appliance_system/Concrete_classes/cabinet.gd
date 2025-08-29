@@ -70,6 +70,24 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 			return false
 	# If player has empty plate: depend on if cabinet can accept it
 	return put_from_player(item)
+
+
+## Give visual feedback when hovered
+## @param is_hovered: Whether the item is hovered or not
+func _on_interactable_component_hovered(is_hovered: bool) -> void:
+	if not is_hovered:
+		highlight_component.hide_feedback()
+		return
+	var item = GlobalScript.player.item_in_hand
+	#---------------------------------------------------------------------------
+	if item:
+		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())
+	#---------------------------------------------------------------------------
+	if not item:
+		highlight_component.show_feedback(true)
+		return
+	var can_accept = _can_accept(item)
+	highlight_component.show_feedback(can_accept)
 #---------------------------------------------------------------------------------------------------
 
 

@@ -16,7 +16,7 @@ func _init():
 ## Setup the bench
 func _ready():
 	super._ready()
-	capacity = 4
+	capacity = 1
 	_setup_item_slots()
 
 
@@ -142,5 +142,39 @@ func player_has(item: Node) -> bool:
 			if content is Cookware:
 				return content.player_has(item)
 
+	# If player has plate: try to serve food from Cookware
+	if item is Plate and serve_to_plate(item):
+		return true
+
 	# If item_in_hand exists: depend on if appliance can accept it
 	return put(item)
+
+
+## Serve food from Cookware to Plate
+## @param plate: The Plate to serve food to
+## @return: True if serving was successful, false otherwise
+func serve_to_plate(plate: Plate) -> bool:
+	if contents.is_empty():
+		print("Nothing to serve from: ", get_script().get_global_name())
+		return false
+
+	if not plate.is_ready(): # Method in Plate, checks if plate is ready
+		print("Plate is not ready: ", plate.get_script().get_global_name())
+		return false
+
+	var cookware = contents[0]
+	if not cookware is Cookware:
+		print("Cannot serve from: ", cookware.get_script().get_global_name(), ", not Cookware")
+		return false
+
+	if cookware.is_empty():
+		print("Nothing to serve from: ", cookware.get_script().get_global_name())
+		return false
+
+	print("Contents of : ", cookware.get_script().get_global_name(), " Before serving: ", cookware.contents)
+	plate.add_list_items(cookware.take_all()) # Method in Plate, takes Array of Food
+	#----------------------------------------------------------------------
+	print("Contents of : ", cookware.get_script().get_global_name(), " After serving: ", cookware.contents)
+	print("Cookware :", cookware.get_script().get_global_name(), ", served to: ", plate.get_script().get_global_name())
+	#----------------------------------------------------------------------
+	return true

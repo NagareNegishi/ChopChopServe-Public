@@ -248,6 +248,7 @@ func _on_cook_timer_timeout():
 		cook_timer.stop()
 #---------------------------------------------------------------------------------------------------
 
+
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
@@ -320,13 +321,36 @@ func serve_to_plate(plate: Plate) -> bool:
 ## Note: Only use it when PoweredAppliance can be operated
 ## Note: Progress is defined by the `cook_time` of `Food` -> smaller values are more progressed
 ## @return: The progress of the cooking process
-func get_progress() -> int:
+func get_progress() -> float:
 	if is_empty():
-		return int(INF)
+		return INF
 	var most_progress = INF
 	for cookware in contents:
 		if cookware.is_empty():
 			continue
-		most_progress = min(most_progress, cookware.average_food())
+		most_progress = min(most_progress, cookware._average_food())
 	return most_progress
 #---------------------------------------------------------------------------------------------------
+
+
+## InteractableComponent Signal Handlers -----------------------------------------------------------
+## Give visual feedback when hovered
+## @param is_hovered: Whether the item is hovered or not
+func _on_interactable_component_hovered(is_hovered: bool) -> void:
+	if not is_hovered:
+		highlight_component.hide_feedback()
+		return
+	var item = GlobalScript.player.item_in_hand
+	#---------------------------------------------------------------------------
+	if item:
+		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())
+	#---------------------------------------------------------------------------
+	if not item:
+		highlight_component.set_state(ApplianceHighlight.HighlightState.HOVER)
+		return
+	var can_accept = _can_accept(item)
+	if not can_accept:
+		for cookware in contents:
+			can_accept = cookware._can_accept(item)
+	highlight_component.show_feedback(can_accept)
+## -------------------------------------------------------------------------------------------------

@@ -52,7 +52,7 @@ func _put_food(food: Food) -> void:
 	if current_status == Status.COOKING:
 		average_food()
 		food.startCooking(power, cooking_style)
-	print("Food placed in blender: ", food.get_script().get_global_name(), ", Food cook time: ", food.get_cook_time())
+	print("Food placed in blender: ", food.get_script().get_global_name(), ", Food cook time: ", food.get_cook_time(cooking_style))
 
 
 ## Average cooking time of food in cookware

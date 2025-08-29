@@ -13,8 +13,8 @@ dest_files=["res://.godot/imported/IceCreamChoc.glb-916a21e6267ab042797a33f4d803
 
 [params]
 
-nodes/root_type=""
-nodes/root_name=""
+nodes/root_type="MeshInstance3D"
+nodes/root_name="ChocIcecream"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false

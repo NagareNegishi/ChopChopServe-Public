@@ -18,7 +18,7 @@
 [ext_resource type="Script" uid="uid://c52li82tp4c6f" path="res://scripts/Player/spawn_point.gd" id="17_pk2le"]
 [ext_resource type="PackedScene" uid="uid://dythb8xw31t1c" path="res://assets/models/infrastructure/wall.glb" id="17_tg3k6"]
 [ext_resource type="PackedScene" uid="uid://dvn4ytv3ro6ec" path="res://scripts/Food/IngredientScenes/Tomato.tscn" id="18_7dw3l"]
-[ext_resource type="Shader" uid="uid://b22unitrdiinr" path="res://shaders/load.gdshader" id="18_hgfpf"]
+[ext_resource type="Shader" path="res://shaders/load.gdshader" id="18_hgfpf"]
 [ext_resource type="Texture2D" uid="uid://2pguohnmuvmw" path="res://assets/textures/HUD/cHEFhAT.png" id="19_7vqgh"]
 
 [sub_resource type="Environment" id="Environment_ikll6"]

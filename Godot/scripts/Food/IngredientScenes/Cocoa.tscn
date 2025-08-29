@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://dyuu05wnk05js"]
+
+[ext_resource type="Script" uid="uid://dm3kagnw7juao" path="res://scripts/Food/Ingredients/cocoa.gd" id="1_n6biq"]
+[ext_resource type="PackedScene" uid="uid://ia3me0t3qg6t" path="res://scripts/Food/IngredientScenes/cocoa_mesh.tscn" id="2_bt316"]
+[ext_resource type="PackedScene" uid="uid://cy1s0o2ip2hob" path="res://scenes/Interaction/InteractableComponent.tscn" id="3_5c7ov"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tkic3"]
+
+[node name="Cocoa" type="RigidBody3D"]
+script = ExtResource("1_n6biq")
+
+[node name="Cocoa" parent="." instance=ExtResource("2_bt316")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -0.340175, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_tkic3")
+
+[node name="InteractableComponent" parent="." instance=ExtResource("3_5c7ov")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.00561047, 0.160834, 0)
+is_pickup = true
+
+[connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]
+[connection signal="hovered" from="InteractableComponent" to="." method="_on_interactable_component_hovered"]
+[connection signal="interacted" from="InteractableComponent" to="." method="_on_interactable_component_interacted"]
+[connection signal="toggle_collision" from="InteractableComponent" to="." method="_on_interactable_component_toggle_collision"]

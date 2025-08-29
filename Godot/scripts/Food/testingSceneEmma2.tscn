@@ -1,9 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://d0gukrfpslja6"]
+[gd_scene load_steps=10 format=3 uid="uid://d0gukrfpslja6"]
 
 [ext_resource type="PackedScene" uid="uid://dvn4ytv3ro6ec" path="res://scripts/Food/IngredientScenes/Tomato.tscn" id="1_akbwx"]
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="2_l4sy3"]
 [ext_resource type="PackedScene" uid="uid://dbqm4i10x565r" path="res://scripts/Food/IngredientScenes/Water.tscn" id="3_g4svb"]
 [ext_resource type="PackedScene" uid="uid://br76j8t76ne2x" path="res://scripts/order_system/Plate.tscn" id="4_bd52m"]
+[ext_resource type="PackedScene" uid="uid://dyuu05wnk05js" path="res://scripts/Food/IngredientScenes/Cocoa.tscn" id="5_edgn2"]
+[ext_resource type="PackedScene" uid="uid://drihqdubig0l3" path="res://scripts/Food/IngredientScenes/Flour.tscn" id="6_4jwbs"]
+[ext_resource type="PackedScene" uid="uid://buwb1io8j33ph" path="res://scripts/Food/IngredientScenes/Milk.tscn" id="7_4gwwl"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_l4sy3"]
 size = Vector3(30, 0.03, 30)
@@ -45,3 +48,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.448845, 0.0832666, 1.04215
 
 [node name="Plate" parent="." instance=ExtResource("4_bd52m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.148813, -0.013115, -0.000960737)
+
+[node name="Cocoa" parent="." instance=ExtResource("5_edgn2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.00569, 0.351296, 1.42333)
+
+[node name="Flour" parent="." instance=ExtResource("6_4jwbs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.56243, 0.329853, 0.27106)
+
+[node name="Milk" parent="." instance=ExtResource("7_4gwwl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.98507, 0.378526, -0.0984571)

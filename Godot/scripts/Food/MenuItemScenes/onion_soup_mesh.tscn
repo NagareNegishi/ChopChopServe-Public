@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://fwfo6eotk8xk"]
+
+[ext_resource type="PackedScene" uid="uid://bb76mds3vbotr" path="res://assets/newmodels/food/recipes/finished/SoupOnion.glb" id="1_u20k5"]
+
+[node name="OnionSoup" instance=ExtResource("1_u20k5")]

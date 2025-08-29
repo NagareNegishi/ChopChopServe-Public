@@ -3,11 +3,13 @@ class_name Milk
 
 func _ready():
 	food_name = "Milk"
-	cook_time = 30
-	raw_mesh = $rawMilk
-	spoiled_mesh = $spoiledMilk
+	raw_mesh = $Milk
+	mixed_mesh = $Milk
+	spoiled_mesh = null
 	cooked_mesh = null
 	burnt_mesh = null
 	chopped_mesh = null
+	previous_states=["RAW", "MIXED"]
+	add_to_group("Food")
 	on_state_change()
 	# Spoil time same as super class

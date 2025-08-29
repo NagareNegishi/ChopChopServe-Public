@@ -1,6 +1,6 @@
 [gd_scene load_steps=39 format=3 uid="uid://m8tkhmmfjf2k"]
 
-[ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_aikh2"]
+[ext_resource type="Script" path="res://scripts/FoodCourt.gd" id="1_aikh2"]
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_vg8fw"]
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="2_fwbjx"]
 [ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="3_m5ye0"]
@@ -61,7 +61,7 @@ size = Vector3(30, 0.03, 30)
 [sub_resource type="BoxMesh" id="BoxMesh_pwhdc"]
 size = Vector3(30, 0.05, 30)
 
-[node name="JohnoTestScene" type="Node3D" node_paths=PackedStringArray("tables", "queue_spots", "customer_spawn_point", "customer_exit_point")]
+[node name="JohnoTestScene2" type="Node3D" node_paths=PackedStringArray("tables", "queue_spots", "customer_spawn_point", "customer_exit_point")]
 script = ExtResource("1_aikh2")
 tables = [NodePath("NavigationRegion3D/== TABLES ==/TableBody8"), NodePath("NavigationRegion3D/== TABLES ==/TableBody7"), NodePath("NavigationRegion3D/== TABLES ==/TableBody6"), NodePath("NavigationRegion3D/== TABLES ==/TableBody5"), NodePath("NavigationRegion3D/== TABLES ==/TableBody9"), NodePath("NavigationRegion3D/== TABLES ==/TableBody10"), NodePath("NavigationRegion3D/== TABLES ==/TableBody11"), NodePath("NavigationRegion3D/== TABLES ==/TableBody12")]
 queue_spots = [NodePath("===QUEUE==/QueueSpot-1"), NodePath("===QUEUE==/QueueSpot-2"), NodePath("===QUEUE==/QueueSpot-3"), NodePath("===QUEUE==/QueueSpot-4"), NodePath("===QUEUE==/QueueSpot-5")]

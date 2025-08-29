@@ -1,6 +1,7 @@
-## Inflammable component - add as child to make PoweredAppliance inflammable
+## Inflammable component - add as child to make the parent inflammable
 ## Manages fire level, visual effects, and appliance state changes
-## PoweredAppliance use Inflammable must implement following:
+## Target use Inflammable must have a 'size' property (Vector3)
+## and must implement following:
 ## var inflammable_component: Inflammable
 ##
 ## func _setup_inflammable():
@@ -22,30 +23,24 @@ signal fire_extinguished(target: Node)
 ## Maximum fire intensity level
 @export var threshold: float = 80.0 #?????? when to start? stop? spread?
 
-# Assuming particle effects come as PackedScenes!!!!!!!!!!!!!!!!!!!
-@export_group("Visual Effects")
-@export var fire_scene: PackedScene
-## Scene containing fire particle effects
-@export var smoke_scene: PackedScene
-## Scene containing smoke particle effects
 
 var fire_level: float = 0.0
 var fire_timer: Timer
 var target: Node
-var fire_particles: Node3D
-var smoke_particles: Node3D
+var fire_particles: ParticleController
+var smoke_particles: ParticleController
 
 
 ## Initialize the component
 func _ready():
 	target = get_parent()
-	if not target:
-		assert(false, "Inflammable component must have a parent appliance!")
-		return
+	assert(target != null, "Inflammable component must have a parent!")
+	assert("size" in target, "Target must have a 'size' property for Inflammable component!")
 	target.add_to_group("flammable")
 	_setup_timer()
 	_setup_visual_effects()
 	#----------------------------------------
+	# ignite()
 	#print("Inflammable component added to: ", target.get_script().get_global_name())
 	#----------------------------------------
 
@@ -60,17 +55,16 @@ func _setup_timer():
 
 ## Setup visual effects
 func _setup_visual_effects():
-	if fire_scene:
-		fire_particles = fire_scene.instantiate()
-		add_child(fire_particles)
-		fire_particles.emitting = false
-	if smoke_scene:
-		smoke_particles = smoke_scene.instantiate()
-		add_child(smoke_particles)
-		smoke_particles.emitting = false
-	if not fire_particles or not smoke_particles:
-		push_error("Fire or smoke particle scenes are not set up correctly!")
-		# assert(false, "Fire or smoke particle scenes are not set up correctly!")
+	var target_size = target.size
+	fire_particles = ParticleController.create_with_effect(ParticleController.EffectType.FIRE)
+	fire_particles.position.y = target_size.y * 0.8
+	add_child(fire_particles)
+	fire_particles.set_scale_multiplier(8.0)
+	
+	smoke_particles = ParticleController.create_with_effect(ParticleController.EffectType.SMOKE)
+	smoke_particles.position.y = target_size.y * 0.8
+	add_child(smoke_particles)
+	smoke_particles.set_scale_multiplier(2.0)
 
 
 ## Set target on fire
@@ -124,20 +118,14 @@ func extinguish(reduction: int) -> bool:
 
 ## Start fire effects
 func _start_fire_effects():
-	# fire_particles.emitting = true
-	# smoke_particles.emitting = true
-	#----------------------------------------
-	print("Fire effects started on ", target.get_script().get_global_name())
-	#----------------------------------------
+	fire_particles.play()
+	smoke_particles.play()
 
 
 ## Stop fire effects
 func _stop_fire_effects():
-	# fire_particles.emitting = false
-	# smoke_particles.emitting = false
-	#----------------------------------------
-	print("Fire effects stopped on ", target.get_script().get_global_name())
-	#----------------------------------------
+	fire_particles.stop()
+	smoke_particles.stop()
 
 
 ## Increase fire level

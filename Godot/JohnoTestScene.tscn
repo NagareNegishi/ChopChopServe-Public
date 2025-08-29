@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bg2l1urkd7kjy"]
+[gd_scene load_steps=26 format=3 uid="uid://bg2l1urkd7kjy"]
 
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="3_l1ni4"]
 [ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="4_gs5vi"]
@@ -20,6 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://dvn4ytv3ro6ec" path="res://scripts/Food/IngredientScenes/Tomato.tscn" id="18_7dw3l"]
 [ext_resource type="Shader" path="res://shaders/load.gdshader" id="18_hgfpf"]
 [ext_resource type="Texture2D" uid="uid://2pguohnmuvmw" path="res://assets/textures/HUD/cHEFhAT.png" id="19_7vqgh"]
+
 
 [sub_resource type="Environment" id="Environment_ikll6"]
 ambient_light_energy = 1.5
@@ -44,13 +45,6 @@ radius = 0.712891
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pk2le"]
 size = Vector3(0.429199, 4.9848, 20.9254)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_romb4"]
-shader = ExtResource("18_hgfpf")
-shader_parameter/mask_tex = ExtResource("19_7vqgh")
-shader_parameter/scale = 0.01
-shader_parameter/softness = 0.0
-shader_parameter/mask_tex_size = Vector2(280, 245)
 
 [node name="JohnoTestScene" type="Node3D"]
 
@@ -622,15 +616,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.53571, 0.482358, 0)
 [node name="== HUD ==" type="CanvasLayer" parent="."]
 
 [node name="HUD" parent="== HUD ==" instance=ExtResource("4_gs5vi")]
-
-[node name="ColorRect" type="ColorRect" parent="== HUD =="]
-material = SubResource("ShaderMaterial_romb4")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
 
 [node name="Camera" type="Camera3D" parent="."]
 transform = Transform3D(-4.37114e-08, -0.819152, 0.573576, 0, 0.573576, 0.819152, -1, 3.58063e-08, -2.50718e-08, 11, 10, 0)

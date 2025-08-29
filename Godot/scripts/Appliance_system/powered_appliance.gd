@@ -60,16 +60,8 @@ func _add_cookware(cookware_script_name: String):
 func put(item: Node) -> bool:
 	if not _can_accept(item):
 		return false
-	# transfer item to appliance
-	GlobalScript.player.remove_item() # if we only put item from players hand
-	add_child(item)
 	contents.append(item)
-	#--------------------------------------------
-	print("Put: ", item.get_script().get_global_name(), " onto: ", get_script().get_global_name())
-	print("Contents of ", get_script().get_global_name(), " are: ")
-	for content in contents:
-		print(" --- ", content.get_script().get_global_name())
-	#--------------------------------------------
+	add_child(item)
 	if item is Cookware:
 		_put_cookware(item)
 	return true
@@ -126,13 +118,13 @@ func _can_accept(item: Node) -> bool:
 	if not item.get_script():
 		print("Cannot accept item, item has no script")
 		return false
-	# return item.get_script().get_global_name() in valid_classes
-	#--------------------------------------------
-	var accepted = item.get_script().get_global_name() in valid_classes
-	if not accepted:
-		print("Cannot accept : ", item.get_script().get_global_name())
-	return accepted
-	#--------------------------------------------
+	return item.get_script().get_global_name() in valid_classes
+	# #--------------------------------------------
+	# var accepted = item.get_script().get_global_name() in valid_classes
+	# if not accepted:
+	# 	print("Cannot accept : ", item.get_script().get_global_name())
+	# return accepted
+	# #--------------------------------------------
 
 
 ## Start cooking process
@@ -144,9 +136,9 @@ func start_cook() -> bool:
 		push_warning("No items to cook")
 		return false
 	# cook_timer.start()
-	#----------------------------------------------------------------------
-	print("start_cook() is called in: ", get_script().get_global_name())
-	#----------------------------------------------------------------------
+	# #----------------------------------------------------------------------
+	# print("start_cook() is called in: ", get_script().get_global_name())
+	# #----------------------------------------------------------------------
 	_cook()
 	return true
 
@@ -161,9 +153,9 @@ func stop_cook() -> bool:
 		if item is Equipment:
 			item.finish_cook()
 	# cook_timer.stop()
-	#----------------------------------------------------------------------
-	print("stop_cook() is called in: ", get_script().get_global_name())
-	#----------------------------------------------------------------------
+	# #----------------------------------------------------------------------
+	# print("stop_cook() is called in: ", get_script().get_global_name())
+	# #----------------------------------------------------------------------
 	return true
 
 
@@ -172,9 +164,9 @@ func stop_cook() -> bool:
 func _cook() -> bool:
 	for item in contents:
 		if item is Cookware:
-			#----------------------------------------------------------------------
-			print("Cooking with: ", item.get_script().get_global_name())
-			#----------------------------------------------------------------------
+			# #----------------------------------------------------------------------
+			# print("Cooking with: ", item.get_script().get_global_name())
+			# #----------------------------------------------------------------------
 			item.cook(power)
 	return true
 
@@ -249,6 +241,30 @@ func _on_cook_timer_timeout():
 #---------------------------------------------------------------------------------------------------
 
 
+## For Player interaction --------------------------------------------------------------------------
+
+## Place an item onto this appliance from Player
+## if we could remove Player dependency from this class, we can remove this method
+## @param item: The Node to place on this appliance
+## @return: True if placement was successful, false otherwise
+func put_from_player(item: Node) -> bool:
+	if not _can_accept(item):
+		return false
+	# transfer item to appliance
+	GlobalScript.player.remove_item()
+	contents.append(item)
+	add_child(item)
+	#--------------------------------------------
+	print("Put: ", item.get_script().get_global_name(), " onto: ", get_script().get_global_name())
+	print("Contents of ", get_script().get_global_name(), " are: ")
+	for content in contents:
+		print(" --- ", content.get_script().get_global_name())
+	#--------------------------------------------
+	if item is Cookware:
+		_put_cookware(item)
+	return true
+
+
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
@@ -260,11 +276,10 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 	if not item:
 		var cookware = take()
 		if cookware:
-			
 			GlobalScript.player.pickup_item(cookware)
-			#----------------------------------------------------------------------
-			print("Player took: ", cookware.get_script().get_global_name(), ", from: ", get_script().get_global_name())
-			#----------------------------------------------------------------------
+			# #----------------------------------------------------------------------
+			# print("Player took: ", cookware.get_script().get_global_name(), ", from: ", get_script().get_global_name())
+			# #----------------------------------------------------------------------
 			if contents.is_empty():
 				stop_cook()
 			return true
@@ -283,8 +298,7 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 				return content.player_has(item)
 
 	# If item_in_hand exists: depend on if appliance can accept it
-	return put(item)
-
+	return put_from_player(item)
 
 
 ## Serve food from Cookware to Plate
@@ -305,35 +319,15 @@ func serve_to_plate(plate: Plate) -> bool:
 		return false
 
 	cookware.finish_cook()
-	print("Contents of : ", cookware.get_script().get_global_name(), " Before serving: ", cookware.contents)
+	# print("Contents of : ", cookware.get_script().get_global_name(), " Before serving: ", cookware.contents)
 	plate.add_list_items(cookware.take_all()) # Method in Plate, takes Array of Food
-	#----------------------------------------------------------------------
-	print("Contents of : ", cookware.get_script().get_global_name(), " After serving: ", cookware.contents)
-	print("Cookware :", cookware.get_script().get_global_name(), ", served to: ", plate.get_script().get_global_name())
-	#----------------------------------------------------------------------
+	# #----------------------------------------------------------------------
+	# print("Contents of : ", cookware.get_script().get_global_name(), " After serving: ", cookware.contents)
+	# print("Cookware :", cookware.get_script().get_global_name(), ", served to: ", plate.get_script().get_global_name())
+	# #----------------------------------------------------------------------
 	return true
 
 
-
-# Functions for Sabotage System---------------------------------------------------------------------
-
-## Get the current progress of cookwares
-## Note: Only use it when PoweredAppliance can be operated
-## Note: Progress is defined by the `cook_time` of `Food` -> smaller values are more progressed
-## @return: The progress of the cooking process
-func get_progress() -> float:
-	if is_empty():
-		return INF
-	var most_progress = INF
-	for cookware in contents:
-		if cookware.is_empty():
-			continue
-		most_progress = min(most_progress, cookware._average_food())
-	return most_progress
-#---------------------------------------------------------------------------------------------------
-
-
-## InteractableComponent Signal Handlers -----------------------------------------------------------
 ## Give visual feedback when hovered
 ## @param is_hovered: Whether the item is hovered or not
 func _on_interactable_component_hovered(is_hovered: bool) -> void:
@@ -354,3 +348,22 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 			can_accept = cookware._can_accept(item)
 	highlight_component.show_feedback(can_accept)
 ## -------------------------------------------------------------------------------------------------
+
+
+# Functions for Sabotage System---------------------------------------------------------------------
+
+## Get the current progress of cookwares
+## Note: Only use it when PoweredAppliance can be operated
+## Note: Progress is defined by the `cook_time` of `Food` -> smaller values are more progressed
+## @return: The progress of the cooking process
+func get_progress() -> float:
+	if is_empty():
+		return INF
+	var most_progress = INF
+	for cookware in contents:
+		if cookware.is_empty():
+			continue
+		most_progress = min(most_progress, cookware._average_food())
+	return most_progress
+#---------------------------------------------------------------------------------------------------
+

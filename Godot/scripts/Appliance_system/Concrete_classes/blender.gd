@@ -29,16 +29,8 @@ func _setup_upgradable():
 func put(item: Node) -> bool:
 	if not _can_accept(item):
 		return false
-	# transfer item to appliance
-	GlobalScript.player.remove_item() # if we only put item from players hand
 	add_child(item)
 	contents.append(item)
-	#--------------------------------------------
-	print("Put: ", item.get_script().get_global_name(), " onto: ", get_script().get_global_name())
-	print("Contents of ", get_script().get_global_name(), " are: ")
-	for content in contents:
-		print(" --- ", content.get_script().get_global_name())
-	#--------------------------------------------
 	if item is Food:
 		_put_food(item)
 	return true
@@ -52,7 +44,7 @@ func _put_food(food: Food) -> void:
 	if current_status == Status.COOKING:
 		_average_food()
 		food.startCooking(power, cooking_style)
-	print("Food placed in blender: ", food.get_script().get_global_name(), ", Food cook time: ", food.get_cook_time(cooking_style))
+	# print("Food placed in blender: ", food.get_script().get_global_name(), ", Food cook time: ", food.get_cook_time(cooking_style))
 
 
 ## Average cooking time of food in cookware
@@ -109,13 +101,34 @@ func stop_cook() -> bool:
 	for item in contents:
 		if item is Food:
 			item.stop_cooking()
-	#----------------------------------------------------------------------
-	print("stop_cook() is called in: ", get_script().get_global_name())
-	#----------------------------------------------------------------------
+	# #----------------------------------------------------------------------
+	# print("stop_cook() is called in: ", get_script().get_global_name())
+	# #----------------------------------------------------------------------
 	return true
 
 
-#---------------------------------------------------------------------------------------------------
+## For Player interaction --------------------------------------------------------------------------
+
+## Place an item onto this appliance
+## @param item: The Node to place on this appliance
+## @return: True if placement was successful, false otherwise
+func put_from_player(item: Node) -> bool:
+	if not _can_accept(item):
+		return false
+	# transfer item to appliance
+	GlobalScript.player.remove_item() # if we only put item from players hand
+	add_child(item)
+	contents.append(item)
+	#--------------------------------------------
+	print("Put: ", item.get_script().get_global_name(), " onto: ", get_script().get_global_name())
+	print("Contents of ", get_script().get_global_name(), " are: ")
+	for content in contents:
+		print(" --- ", content.get_script().get_global_name())
+	#--------------------------------------------
+	if item is Food:
+		_put_food(item)
+	return true
+
 
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
@@ -133,7 +146,7 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 		return serve_to_plate(item)
 
 	# If item_in_hand exists: depend on if Blender can accept it
-	return put(item)
+	return put_from_player(item)
 
 
 ## Serve food from Cookware to Plate
@@ -150,26 +163,12 @@ func serve_to_plate(plate: Plate) -> bool:
 
 	plate.add_list_items(take_all()) # Method in Plate, takes Array of Food
 	stop_cook()
-	#----------------------------------------------------------------------
-	print("Blender, served to: ", plate.get_script().get_global_name())
-	#----------------------------------------------------------------------
+	# #----------------------------------------------------------------------
+	# print("Blender, served to: ", plate.get_script().get_global_name())
+	# #----------------------------------------------------------------------
 	return true
 
 
-# Functions for Sabotage System---------------------------------------------------------------------
-
-## Get the current progress of cookwares
-## Note: Only use it when PoweredAppliance can be operated
-## Note: Progress is defined by the `cook_time` of `Food` -> smaller values are more progressed
-## @return: The progress of the cooking process
-func get_progress() -> float:
-	if is_empty():
-		return INF
-	return _average_food()
-#---------------------------------------------------------------------------------------------------
-
-
-## InteractableComponent Signal Handlers -----------------------------------------------------------
 ## Give visual feedback when hovered
 ## @param is_hovered: Whether the item is hovered or not
 func _on_interactable_component_hovered(is_hovered: bool) -> void:
@@ -187,3 +186,17 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	var can_accept = _can_accept(item)
 	highlight_component.show_feedback(can_accept)
 ## -------------------------------------------------------------------------------------------------
+
+
+# Functions for Sabotage System---------------------------------------------------------------------
+
+## Get the current progress of cookwares
+## Note: Only use it when PoweredAppliance can be operated
+## Note: Progress is defined by the `cook_time` of `Food` -> smaller values are more progressed
+## @return: The progress of the cooking process
+func get_progress() -> float:
+	if is_empty():
+		return INF
+	return _average_food()
+#---------------------------------------------------------------------------------------------------
+

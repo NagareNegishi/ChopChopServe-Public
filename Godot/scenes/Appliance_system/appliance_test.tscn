@@ -767,6 +767,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.34422, 0, -2.75199)
 [node name="FoodCrate2" parent="." instance=ExtResource("30_am8m3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.39644, 0, -1.84384)
 supply = ExtResource("28_g7qyv")
+supply_name = "Water"
 model_scene = ExtResource("31_o1oxj")
 
 [node name="bench" parent="." instance=ExtResource("21_wagc4")]

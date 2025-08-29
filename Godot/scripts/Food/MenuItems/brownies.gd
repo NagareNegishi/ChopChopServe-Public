@@ -11,11 +11,11 @@ func _ready():
 	ingredients = ["Flour", "Cocoa", "Milk"]
 	
 	ingredient_states = {
-		"Flour": ["RAW","BLENDED"],
-		"Cocoa": ["RAW","BLENDED"],
-		"Milk": ["RAW", "BLENDED"]
+		"Flour": ["RAW","MIXED"],
+		"Cocoa": ["RAW","MIXED"],
+		"Milk": ["RAW", "MIXED"]
 	}
 	
-	cooked_mesh_good = null
+	cooked_mesh_good = $Brownie
 	cooked_mesh_bad = null
 	cooked_mesh_burnt = null

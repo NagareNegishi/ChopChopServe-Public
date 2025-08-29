@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://drihqdubig0l3"]
+
+[ext_resource type="Script" uid="uid://drx2l5axfgl1d" path="res://scripts/Food/Ingredients/flour.gd" id="1_tv7yx"]
+[ext_resource type="PackedScene" uid="uid://c2ohqv88chlx8" path="res://scripts/Food/IngredientScenes/flour_mesh.tscn" id="2_ixt2d"]
+[ext_resource type="PackedScene" uid="uid://cy1s0o2ip2hob" path="res://scenes/Interaction/InteractableComponent.tscn" id="3_6kr4p"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vem8e"]
+
+[node name="Flour" type="RigidBody3D"]
+script = ExtResource("1_tv7yx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_vem8e")
+
+[node name="Flour" parent="." instance=ExtResource("2_ixt2d")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -0.356385, 0)
+
+[node name="InteractableComponent" parent="." instance=ExtResource("3_6kr4p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00561047, 0.00504118, 0)
+is_pickup = true
+
+[connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]
+[connection signal="hovered" from="InteractableComponent" to="." method="_on_interactable_component_hovered"]
+[connection signal="interacted" from="InteractableComponent" to="." method="_on_interactable_component_interacted"]
+[connection signal="toggle_collision" from="InteractableComponent" to="." method="_on_interactable_component_toggle_collision"]

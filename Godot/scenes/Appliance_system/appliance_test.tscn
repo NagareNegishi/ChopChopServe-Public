@@ -758,9 +758,6 @@ mesh = SubResource("BoxMesh_pwhdc")
 [node name="Plate" parent="." instance=ExtResource("27_8ugct")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.47223, 0.132272, -0.0941153)
 
-[node name="Water" parent="." instance=ExtResource("28_g7qyv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.97447, 0.392201, -5.00542)
-
 [node name="StoveWithPot" parent="." instance=ExtResource("29_34ge6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.27045, 0, -3.81482)
 

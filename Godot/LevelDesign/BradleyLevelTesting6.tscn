@@ -20,10 +20,9 @@ size = Vector3(30, 0.03, 30)
 size = Vector3(30, 0.05, 30)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pksmq"]
-sky_top_color = Color(0.0625792, 0.183233, 0.112906, 1)
+sky_top_color = Color(0.240864, 0.535908, 0.363218, 1)
 sky_horizon_color = Color(0.114085, 0.201018, 0.12337, 1)
 sky_energy_multiplier = 2.5
-energy_multiplier = 1.2
 
 [sub_resource type="Sky" id="Sky_5hk4s"]
 sky_material = SubResource("ProceduralSkyMaterial_pksmq")
@@ -104,7 +103,7 @@ strength = 0.25
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.00081585, -0.0171376, 0.999853, -0.00371627, 0.999846, 0.0171405, -0.999993, -0.00372971, 0.000752036, 14.9894, 3.00242, 6.79733)
 light_color = Color(0.29286, 0.319624, 0.292889, 1)
-light_energy = 2.5
+light_energy = 2.0
 light_volumetric_fog_energy = 0.0
 shadow_enabled = true
 shadow_opacity = 0.2

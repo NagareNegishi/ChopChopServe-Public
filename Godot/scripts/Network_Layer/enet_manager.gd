@@ -3,7 +3,9 @@ extends Node
 
 signal player_list_updated(players: Array[int])
 signal team_assigned(team1: Array[int], team2: Array[int])
-signal host_disconnected()
+signal disconnected_from_server()
+signal back_to_main_menu()
+
 
 const MAX_WAITING : float = 120.0
 var enet_layer: ENetNetworkLayer
@@ -20,7 +22,7 @@ func _ready():
 	add_child(enet_layer)
 	enet_layer.player_joined.connect(_on_player_joined)
 	enet_layer.player_left.connect(_on_player_left)
-	enet_layer.disconnected.connect(_on_server_disconnected)
+	enet_layer.disconnected.connect(_on_disconnected_from_server)
 	enet_layer.data_received.connect(_on_data_received)
 
 
@@ -57,6 +59,9 @@ func player_leaves_intentionally(player_id: int):
 	if not enet_layer.is_host():
 		push_warning("player_leaves_intentionally() should only be called by host")
 		return
+	if player_id == -1:
+		print("Player can not leave - Invalid player ID")
+		return
 	print("Player left: " + str(player_id))
 	player_list.erase(player_id)
 	team1.erase(player_id)
@@ -66,30 +71,37 @@ func player_leaves_intentionally(player_id: int):
 		"type": "player_list_update",
 		"players": player_list
 	})
+
 	# If host is leaving, shut down the server
 	if player_id == enet_layer.get_my_id():
+		clear_player_list()
+		back_to_main_menu.emit()
 		enet_layer.leave_game()
+	else:
+		enet_layer.send_to(player_id, {
+		"type": "you_are_leaving"
+		})
 	player_list_updated.emit(player_list)
+
 
 
 ## Update Player List when a player accidentally leaves, and host shares it
 ## @param player_id: The ID of the player who left
 func _on_player_left(player_id: int):
-	print("Player disconnected: " + str(player_id))
 	if player_id not in offline_players:
 		offline_players.append(player_id)
 	if enet_layer.is_host():
-		print("Game paused due to player disconnection.")
+		# print("Game paused due to player disconnection.")
 		game_paused = true
 		# need actual logic here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
 ## Clear all game state since host is gone
-func _on_server_disconnected():
-	print("Host disconnected - returning to menu")
+func _on_disconnected_from_server():
+	print("Disconnected from server - returning to menu")
 	clear_player_list()
 	game_paused = false
-	host_disconnected.emit()
+	disconnected_from_server.emit()
 
 
 ## Handle incoming data
@@ -102,6 +114,13 @@ func _on_data_received(from_id: int, data: Dictionary):
 	elif data.get("type") == "player_leaving_intentionally":
 		if enet_layer.is_host() and data.has("player_id"):
 			player_leaves_intentionally(data.player_id)
+
+	elif data.get("type") == "you_are_leaving":
+		back_to_main_menu.emit()
+		await get_tree().create_timer(0.1).timeout
+		enet_layer.leave_game()
+
+
 
 
 ## Get current player list

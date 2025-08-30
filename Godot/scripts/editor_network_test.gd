@@ -1,7 +1,7 @@
 extends Node
 
 const SHOULD_LOAD : bool = false
-const IPADDRESS : String = "10.20.217.73"
+const IPADDRESS : String = "10.20.217.201"
 const PORT : int = 25565
 
 var peer : ENetMultiplayerPeer = ENetMultiplayerPeer.new()
@@ -13,9 +13,9 @@ func _ready() -> void:
 		return
 	
 	#Signals to test if players are connecting
-	multiplayer.connected_to_server.connect(_on_connected)
-	multiplayer.connection_failed.connect(_on_connection_failed)
-	multiplayer.server_disconnected.connect(_on_disconnected)
+	#multiplayer.connected_to_server.connect(_on_connected)
+	#multiplayer.connection_failed.connect(_on_connection_failed)
+	#multiplayer.server_disconnected.connect(_on_disconnected)
 
 	var error : Error = peer.create_server(PORT,4)
 
@@ -34,6 +34,7 @@ func _ready() -> void:
 ## @return void 
 func _on_connected():
 	print("Connected to server")
+	
 
 
 ## Runs when player fails to connect to server

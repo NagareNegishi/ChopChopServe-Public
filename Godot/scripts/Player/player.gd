@@ -22,8 +22,8 @@ var can_dash : bool = true
 @onready var controller : PlayerController = $Controller
 @onready var player_state : PlayerState = $PlayerState
 
+
 func _enter_tree() -> void:
-	set_multiplayer_authority(name.to_int())
 	scale = Vector3(1,1,1)
 
 
@@ -32,23 +32,20 @@ func _enter_tree() -> void:
 func _ready() -> void:
 	$DashCooldown.wait_time = DASH_COOLDOWN
 	player_state.player_id = name.to_int()
-## Had conflict here, first one was from Player-Controller, I will comment out the one was in main--------------------------------------------------
-	$Decal.modulate = GlobalScript.player_outline_colours.get(1)
-	# $Decal.modulate = GlobalScript.player_colours.get(1)
-##-----------------------------------------------------------------------------------------------------------------------
 
-	
 	for i in range(10):
 		var particle = move_particle.instantiate()
 		MOVE_PARTICLES_POOL.append(particle)
+	
+
 
 
 ## Functionailty that happens every frame
 ## @param delta the times it takes per frame to render
 ## @return void
 func _physics_process(delta: float) -> void:
-	#if !is_multiplayer_authority():
-		#return
+	if !is_multiplayer_authority():
+		return
 	# Add the gravity.
 	if !is_on_floor():
 		velocity += get_gravity() * delta

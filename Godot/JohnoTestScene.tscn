@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bg2l1urkd7kjy"]
+[gd_scene load_steps=29 format=3 uid="uid://bg2l1urkd7kjy"]
 
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="3_l1ni4"]
 [ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="4_gs5vi"]
@@ -18,6 +18,9 @@
 [ext_resource type="Script" uid="uid://c52li82tp4c6f" path="res://scripts/Player/spawn_point.gd" id="17_pk2le"]
 [ext_resource type="PackedScene" uid="uid://dythb8xw31t1c" path="res://assets/models/infrastructure/wall.glb" id="17_tg3k6"]
 [ext_resource type="PackedScene" uid="uid://dvn4ytv3ro6ec" path="res://scripts/Food/IngredientScenes/Tomato.tscn" id="18_7dw3l"]
+[ext_resource type="PackedScene" uid="uid://br76j8t76ne2x" path="res://scripts/order_system/Plate.tscn" id="19_yfgsi"]
+[ext_resource type="PackedScene" uid="uid://iwgylemncmgr" path="res://assets/newmodels/furniture/BasicBench.glb" id="22_romb4"]
+[ext_resource type="PackedScene" uid="uid://o3tvfl5dgcnq" path="res://assets/newmodels/food/recipes/finished/BreadGarlic.glb" id="23_dok52"]
 
 [sub_resource type="Environment" id="Environment_ikll6"]
 ambient_light_energy = 1.5
@@ -78,8 +81,8 @@ script = ExtResource("17_pk2le")
 [node name="Sun" type="DirectionalLight3D" parent="== LIGHTING =="]
 transform = Transform3D(0.00272365, -0.563709, 0.825969, -0.00265669, 0.825965, 0.563715, -0.999993, -0.00372971, 0.000752039, 14.8973, 10.793, 0.0817995)
 shadow_enabled = true
-shadow_opacity = 0.61
-shadow_blur = 1.4
+shadow_opacity = 0.46
+shadow_blur = 0.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="== LIGHTING =="]
 environment = SubResource("Environment_ikll6")
@@ -625,3 +628,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.57998, 0.0529738, -0.577666
 
 [node name="Tomato3" parent="." instance=ExtResource("18_7dw3l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55905, 0.0520719, -0.0814413)
+
+[node name="Plate" parent="." instance=ExtResource("19_yfgsi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.82093, 0.015, 0.95368)
+
+[node name="Player" parent="." instance=ExtResource("16_0ny5b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.03862, 0.542895, -0.166803)
+
+[node name="BasicBench2" parent="." instance=ExtResource("22_romb4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.34548, 0.0150001, -1.30589)
+
+[node name="BreadGarlic2" parent="." instance=ExtResource("23_dok52")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.74152, 0.015, 1.93723)

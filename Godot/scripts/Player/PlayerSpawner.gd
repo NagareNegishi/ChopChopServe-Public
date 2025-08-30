@@ -1,10 +1,12 @@
 class_name PlayerSpawner
 extends MultiplayerSpawner
 
+const RUN : bool = false
 @export var spawns : Array[SpawnPoint]
 @export var network_player : PackedScene
 
 func _ready() -> void:
+	if !RUN: return
 	multiplayer.peer_connected.connect(_spawn_player)
 	if multiplayer.is_server():
 		_spawn_player(multiplayer.get_unique_id())

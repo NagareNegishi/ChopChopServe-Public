@@ -1,7 +1,7 @@
 class_name PlayerSpawner
 extends MultiplayerSpawner
 
-const RUN : bool = false
+const RUN : bool = true
 
 @export var spawns : Array[SpawnPoint]
 @export var network_player : PackedScene

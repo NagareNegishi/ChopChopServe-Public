@@ -32,7 +32,13 @@ func _enter_tree() -> void:
 func _ready() -> void:
 	$DashCooldown.wait_time = DASH_COOLDOWN
 	player_state.player_id = name.to_int()
-
+	set_multiplayer_authority(name.to_int())
+	
+	if multiplayer.get_unique_id() == name.to_int():
+		$Decal.modulate = GlobalScript.player_outline_colours.get(randi() % 4 + 1)
+		set_team(randi() % 2 + 1)
+		print("Team: ",  get_team())
+	
 	for i in range(10):
 		var particle = move_particle.instantiate()
 		MOVE_PARTICLES_POOL.append(particle)

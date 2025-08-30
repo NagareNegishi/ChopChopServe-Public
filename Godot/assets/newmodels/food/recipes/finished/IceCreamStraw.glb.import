@@ -13,8 +13,8 @@ dest_files=["res://.godot/imported/IceCreamStraw.glb-8f2c8b51bd881b4fe2cee1ef85f
 
 [params]
 
-nodes/root_type=""
-nodes/root_name=""
+nodes/root_type="MeshInstance3D"
+nodes/root_name="StrawIcecream"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false

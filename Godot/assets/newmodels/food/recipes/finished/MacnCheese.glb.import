@@ -13,8 +13,8 @@ dest_files=["res://.godot/imported/MacnCheese.glb-1797ec4649d69e2ae44db1c0248ac0
 
 [params]
 
-nodes/root_type=""
-nodes/root_name=""
+nodes/root_type="MeshInstance3D"
+nodes/root_name="MacNCheese"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false

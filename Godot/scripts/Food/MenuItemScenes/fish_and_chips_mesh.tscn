@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://nkr2kfa8xgol"]
+
+[ext_resource type="PackedScene" uid="uid://dknywfn4fxbi5" path="res://assets/newmodels/food/recipes/finished/FishandChips.glb" id="1_7e2wh"]
+
+[node name="FishAndChips" instance=ExtResource("1_7e2wh")]

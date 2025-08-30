@@ -27,6 +27,9 @@ func get_random_team() -> GlobalScript.Team:
 
 func get_local_player() -> Player:
 	var my_id = multiplayer.get_unique_id()
+	if !get_tree().current_scene.get_node("== PLAYERS =="):
+		return null
+	
 	for child : Player in get_tree().current_scene.get_node("== PLAYERS ==").get_children():
 		if child.get_multiplayer_authority() == my_id:
 			return child

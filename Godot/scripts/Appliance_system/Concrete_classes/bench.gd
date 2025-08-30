@@ -26,6 +26,12 @@ func _setup_inflammable():
 	add_child(inflammable_component)
 
 
+## Override upgradable setup in concrete appliances
+func _setup_upgradable():
+	super._setup_upgradable()
+	enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
+
+
 ## Setup cookware slots, should be overridden by subclasses
 ## Default implementation expect one Cookware slot in the center
 func _setup_item_slots():
@@ -40,7 +46,6 @@ func _position_item(item: Node, slot_index: int):
 		item.restore_original_transform()
 		item.rotate_to_direction(item.default_facing)
 	item.position = item_slots[slot_index]
-
 
 
 ## Place an item onto this appliance
@@ -61,9 +66,9 @@ func take_at(index: int) -> Node:
 		return null
 	var item = contents.pop_at(index)
 	remove_child(item)
-	#--------------------------------------------
-	print(item.get_script().get_global_name(), ", is taken from: ", get_script().get_global_name())
-	#--------------------------------------------
+	# #--------------------------------------------
+	# print(item.get_script().get_global_name(), ", is taken from: ", get_script().get_global_name())
+	# #--------------------------------------------
 	return item
 
 
@@ -83,13 +88,13 @@ func _can_accept(item: Node) -> bool:
 	var acceptable = super._can_accept(item)
 	if not acceptable:
 		return false
-	# return item is Food or item is Equipment or item is Plate
-	#--------------------------------------------
-	var accepted = item is Food or item is Equipment or item is Plate
-	if not accepted:
-		print("Cannot accept : ", item.get_script().get_global_name())
-	return accepted
-	#--------------------------------------------
+	return item is Food or item is Equipment or item is Plate
+	# #--------------------------------------------
+	# var accepted = item is Food or item is Equipment or item is Plate
+	# if not accepted:
+	# 	print("Cannot accept : ", item.get_script().get_global_name())
+	# return accepted
+	# #--------------------------------------------
 
 
 ## Override unsupported methods to prevent misuse ------------------------------
@@ -97,12 +102,6 @@ func start_action() -> bool:
 	assert(false, "Bench does not support starting actions")
 	return false
 #-------------------------------------------------------------------------------
-
-
-## Override upgradable setup in concrete appliances
-func _setup_upgradable():
-	super._setup_upgradable()
-	enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
 
 
 ## Handle fire event
@@ -114,6 +113,19 @@ func on_fire() -> void:
 			contents.erase(food)
 			remove_child(food)
 			food.queue_free()
+
+
+## For Player interaction --------------------------------------------------------------------------
+
+## Place an item onto this appliance from Player
+## if we could remove Player dependency from this class, we can remove this method
+## @param item: The Node to place on this appliance
+## @return: True if placement was successful, false otherwise
+func put_from_player(item: Node) -> bool:
+	if not super.put_from_player(item):
+		return false
+	_position_item(item, contents.size() - 1)
+	return true
 
 
 ## Perform action depend on what player is holding
@@ -128,9 +140,9 @@ func player_has(item: Node) -> bool:
 		var taken = take()
 		if taken:
 			GlobalScript.player.pickup_item(taken)
-			#----------------------------------------------------------------------
-			print("Player took: ", taken.get_script().get_global_name(), ", from: ", get_script().get_global_name())
-			#----------------------------------------------------------------------
+			# #----------------------------------------------------------------------
+			# print("Player took: ", taken.get_script().get_global_name(), ", from: ", get_script().get_global_name())
+			# #----------------------------------------------------------------------
 			return true
 		else:
 			print("Nothing to take from Bench")
@@ -147,7 +159,7 @@ func player_has(item: Node) -> bool:
 		return true
 
 	# If item_in_hand exists: depend on if appliance can accept it
-	return put(item)
+	return put_from_player(item)
 
 
 ## Serve food from Cookware to Plate
@@ -171,10 +183,11 @@ func serve_to_plate(plate: Plate) -> bool:
 		print("Nothing to serve from: ", cookware.get_script().get_global_name())
 		return false
 
-	print("Contents of : ", cookware.get_script().get_global_name(), " Before serving: ", cookware.contents)
+	# print("Contents of : ", cookware.get_script().get_global_name(), " Before serving: ", cookware.contents)
 	plate.add_list_items(cookware.take_all()) # Method in Plate, takes Array of Food
-	#----------------------------------------------------------------------
-	print("Contents of : ", cookware.get_script().get_global_name(), " After serving: ", cookware.contents)
-	print("Cookware :", cookware.get_script().get_global_name(), ", served to: ", plate.get_script().get_global_name())
-	#----------------------------------------------------------------------
+	# #----------------------------------------------------------------------
+	# print("Contents of : ", cookware.get_script().get_global_name(), " After serving: ", cookware.contents)
+	# print("Cookware :", cookware.get_script().get_global_name(), ", served to: ", plate.get_script().get_global_name())
+	# #----------------------------------------------------------------------
 	return true
+#---------------------------------------------------------------------------------------------------

@@ -1,0 +1,75 @@
+[gd_scene load_steps=2 format=3 uid="uid://dv637b862sice"]
+
+[ext_resource type="PackedScene" uid="uid://xep0woqbc85e" path="res://scenes/Network_Layer/player_slot.tscn" id="1_tbni4"]
+
+[node name="LobbyNetwork" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RoleLabel" type="Label" parent="."]
+layout_mode = 2
+offset_right = 260.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 30
+text = "You are:"
+
+[node name="TeamLabel" type="Label" parent="."]
+layout_mode = 2
+offset_left = 400.0
+offset_right = 660.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 30
+text = "You are Team: "
+
+[node name="ControlContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 900.0
+offset_top = 250.0
+offset_right = 1100.0
+offset_bottom = 430.0
+
+[node name="ShuffleButton" type="Button" parent="ControlContainer"]
+layout_mode = 2
+text = "Shuffle Team"
+
+[node name="StartButton" type="Button" parent="ControlContainer"]
+layout_mode = 2
+text = "Game Begin"
+
+[node name="HSeparator" type="HSeparator" parent="ControlContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="LeaveButton" type="Button" parent="ControlContainer"]
+layout_mode = 2
+text = "Leave Game"
+
+[node name="PlayerList" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -306.0
+offset_top = -150.0
+offset_right = 306.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="PanelContainer" parent="PlayerList" instance=ExtResource("1_tbni4")]
+layout_mode = 2
+
+[node name="PanelContainer2" parent="PlayerList" instance=ExtResource("1_tbni4")]
+layout_mode = 2
+
+[node name="PanelContainer3" parent="PlayerList" instance=ExtResource("1_tbni4")]
+layout_mode = 2
+
+[node name="PanelContainer4" parent="PlayerList" instance=ExtResource("1_tbni4")]
+layout_mode = 2

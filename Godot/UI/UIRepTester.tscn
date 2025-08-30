@@ -79,22 +79,18 @@ text = "Minus Currency"
 
 [node name="CookButton" type="Button" parent="."]
 layout_mode = 0
-
 offset_left = 467.192
 offset_top = 268.283
 offset_right = 622.192
 offset_bottom = 307.283
-
 text = "Cook Phase"
 
 [node name="PrepButton" type="Button" parent="."]
 layout_mode = 0
-
 offset_left = 463.464
 offset_top = 195.212
 offset_right = 618.465
 offset_bottom = 234.212
-
 text = "Prep Phase
 "
 

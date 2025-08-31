@@ -1,10 +1,18 @@
 ## Auto loaded as: ENetManager
 extends Node
 
+enum GameProgress {
+	LOBBY,
+	IN_GAME,
+	PAUSED
+}
+
 signal player_list_updated(players: Array[int])
 signal team_assigned(team1: Array[int], team2: Array[int])
 signal disconnected_from_server()
 signal back_to_main_menu()
+signal game_started()
+signal game_paused(is_paused: bool)
 
 
 const MAX_WAITING : float = 120.0
@@ -13,7 +21,7 @@ var player_list: Array[int] = []
 var team1: Array[int] = []
 var team2: Array[int] = []
 var offline_players: Array[int] = []
-var game_paused: bool = false
+var current_state: GameProgress = GameProgress.LOBBY
 
 
 ## Setup
@@ -29,27 +37,40 @@ func _ready():
 ## Update Player List when a player joins, and host shares it
 ## @param player_id: The ID of the player who joined
 func _on_player_joined(player_id: int):
-	print("Player joined: " + str(player_id))
 	# Only the host handles player management
 	if not enet_layer.is_host():
 		return
+
 	# case client coming back from disconnection
 	if player_id in offline_players:
 		offline_players.erase(player_id)
 		print("Player " + str(player_id) + " reconnected!")
 		if offline_players.is_empty():
 			print("Game resumed.")
-			game_paused = false
-			# need actual logic here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			current_state = GameProgress.IN_GAME
+			enet_layer.broadcast_except(enet_layer.get_my_id(), {
+				"type": "game_paused",
+				"is_paused": false
+			})
+			game_paused.emit(false)
+		return
 
-	# case new client joining
+	# case new client joining after the game has started
+	if current_state == GameProgress.IN_GAME:
+		print("Sorry, you cannot join the game in progress.")
+		enet_layer.send_to(player_id, {
+		"type": "you_are_leaving"
+		})
+		return
+
+	# case new client joining in lobby
 	if player_id not in player_list:
 		player_list.append(player_id)
-	enet_layer.broadcast_except(enet_layer.get_my_id(), {
-		"type": "player_list_update",
-		"players": player_list
-	})
-	player_list_updated.emit(player_list)
+		enet_layer.broadcast_except(enet_layer.get_my_id(), {
+			"type": "player_list_update",
+			"players": player_list
+		})
+		player_list_updated.emit(player_list)
 
 
 ## Update Player List when a player intentionally leaves, and host shares it
@@ -84,43 +105,66 @@ func player_leaves_intentionally(player_id: int):
 	player_list_updated.emit(player_list)
 
 
-
 ## Update Player List when a player accidentally leaves, and host shares it
 ## @param player_id: The ID of the player who left
 func _on_player_left(player_id: int):
+	if player_id not in player_list:
+		return
 	if player_id not in offline_players:
 		offline_players.append(player_id)
-	if enet_layer.is_host():
-		# print("Game paused due to player disconnection.")
-		game_paused = true
-		# need actual logic here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	if enet_layer.is_host() and current_state == GameProgress.IN_GAME:
+		print("Game paused due to player disconnection!")
+		current_state = GameProgress.PAUSED
+		enet_layer.broadcast_except(enet_layer.get_my_id(), {
+			"type": "game_paused",
+			"is_paused": true
+		})
+		game_paused.emit(true)
 
 
-## Clear all game state since host is gone
+## Clear all game state
 func _on_disconnected_from_server():
 	print("Disconnected from server - returning to menu")
 	clear_player_list()
-	game_paused = false
+	current_state = GameProgress.LOBBY
 	disconnected_from_server.emit()
 
 
 ## Handle incoming data
 func _on_data_received(from_id: int, data: Dictionary):
 	# print("DEBUG: Received data from : ", from_id, ": ", data, "I am : ", enet_layer.get_my_id())
-	if data.get("type") == "player_list_update":
-		player_list = data.players
-		player_list_updated.emit(player_list)
+	match data.get("type"):
+		"player_list_update":
+			player_list = data.players
+			player_list_updated.emit(player_list)
 
-	elif data.get("type") == "player_leaving_intentionally":
-		if enet_layer.is_host() and data.has("player_id"):
-			player_leaves_intentionally(data.player_id)
+		"player_leaving_intentionally":
+			if enet_layer.is_host() and data.has("player_id"):
+				player_leaves_intentionally(data.player_id)
 
-	elif data.get("type") == "you_are_leaving":
-		back_to_main_menu.emit()
-		await get_tree().create_timer(0.1).timeout
-		enet_layer.leave_game()
+		"you_are_leaving":
+			back_to_main_menu.emit()
+			await get_tree().create_timer(0.1).timeout
+			enet_layer.leave_game()
 
+		"team_assignment":
+			team1 = data.team1
+			team2 = data.team2
+			team_assigned.emit(team1, team2)
+		
+		"game_starting":
+			current_state = GameProgress.IN_GAME
+			game_started.emit()
 
+		"game_paused":
+			if (data.is_paused):
+				current_state = GameProgress.PAUSED
+			else:
+				current_state = GameProgress.IN_GAME
+			game_paused.emit(data.is_paused)
+
+		_:
+			print("Unknown message type: ", data.get("type"))
 
 
 ## Get current player list
@@ -147,3 +191,46 @@ func clear_player_list():
 	team1.clear()
 	team2.clear()
 	offline_players.clear()
+
+
+## Shuffle players into two teams and broadcast the assignment
+func shuffle_players():
+	if not enet_layer.is_host():
+		push_warning("shuffle_players() should only be called by host")
+		return
+	if player_list.size() % 2 != 0:
+		push_warning("Cannot shuffle players with odd number of players.")
+		return
+	team1.clear()
+	team2.clear()
+	var shuffled = player_list.duplicate()
+	shuffled.shuffle()
+	var team_size = shuffled.size() / 2
+	team1 = shuffled.slice(0, team_size)
+	team2 = shuffled.slice(team_size)
+	enet_layer.broadcast_except(enet_layer.get_my_id(), {
+		"type": "team_assignment",
+		"team1": team1,
+		"team2": team2
+	})
+	team_assigned.emit(team1, team2)
+
+
+## Check if game can start
+## @return: True if game can start, false otherwise
+func can_start_game() -> bool:
+	return team1.size() == team2.size() and not team1.is_empty()
+
+
+## Start the game
+func start_game() -> void:
+	if not can_start_game():
+		push_warning("Cannot start game - teams not ready!")
+		return
+	current_state = GameProgress.IN_GAME
+	enet_layer.broadcast_except(enet_layer.get_my_id(), {
+		"type": "game_starting"
+	})
+	game_started.emit()
+
+

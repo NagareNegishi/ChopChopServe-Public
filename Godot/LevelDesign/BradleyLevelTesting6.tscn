@@ -102,7 +102,7 @@ strength = 0.25
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.00081585, -0.0171376, 0.999853, -0.00371627, 0.999846, 0.0171405, -0.999993, -0.00372971, 0.000752036, 14.9894, 3.00242, 6.79733)
-light_color = Color(0.29286, 0.319624, 0.292889, 1)
+light_color = Color(0.394408, 0.426956, 0.394426, 1)
 light_energy = 2.0
 light_volumetric_fog_energy = 0.0
 shadow_enabled = true

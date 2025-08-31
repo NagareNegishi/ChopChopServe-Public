@@ -20,9 +20,9 @@ size = Vector3(30, 0.03, 30)
 size = Vector3(30, 0.05, 30)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pksmq"]
-sky_top_color = Color(0.222535, 0.500906, 0.33811, 1)
+sky_top_color = Color(0.178321, 0.414777, 0.2767, 1)
 sky_horizon_color = Color(0.114085, 0.201018, 0.12337, 1)
-sky_energy_multiplier = 2.5
+sky_energy_multiplier = 3.0
 
 [sub_resource type="Sky" id="Sky_5hk4s"]
 sky_material = SubResource("ProceduralSkyMaterial_pksmq")
@@ -31,6 +31,11 @@ sky_material = SubResource("ProceduralSkyMaterial_pksmq")
 background_mode = 2
 background_energy_multiplier = 0.75
 sky = SubResource("Sky_5hk4s")
+fog_mode = 1
+fog_light_color = Color(0.548475, 0.721291, 0.589885, 1)
+fog_light_energy = 0.5
+fog_density = 0.2
+fog_depth_end = 40.0
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.0
 volumetric_fog_length = 30.0
@@ -85,7 +90,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.48897, 0.562044, 0)
 environment = SubResource("Environment_u0lgh")
 
 [node name="FogVolume" type="FogVolume" parent="WorldEnvironment"]
-transform = Transform3D(29.8387, 0, 0, 0, 1, 0, 0, 0, 37.709, 1.12108, -0.592261, 0)
+transform = Transform3D(29.8387, 0, 0, 0, 1, 0, 0, 0, 37.709, 1.12108, -0.00191355, 0)
 size = Vector3(2, 1.94434, 2)
 material = SubResource("FogMaterial_pksmq")
 
@@ -101,7 +106,7 @@ transform = Transform3D(0.271653, 0, 0, 0, 0.191246, 0, 0, 0, 0.242991, 0, 0.003
 strength = 0.25
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.00081585, -0.0171376, 0.999853, -0.00371627, 0.999846, 0.0171405, -0.999993, -0.00372971, 0.000752036, 14.9894, 3.00242, 6.79733)
+transform = Transform3D(0.00115355, -0.108848, 0.994058, -0.00362568, 0.994051, 0.108852, -0.999993, -0.00372971, 0.000752036, 14.9894, 3.00242, 6.79733)
 light_color = Color(0.394408, 0.426956, 0.394426, 1)
 light_energy = 2.0
 light_volumetric_fog_energy = 0.0

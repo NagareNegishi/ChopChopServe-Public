@@ -22,32 +22,30 @@ var can_dash : bool = true
 @onready var controller : PlayerController = $Controller
 @onready var player_state : PlayerState = $PlayerState
 
+
 func _enter_tree() -> void:
-	set_multiplayer_authority(name.to_int())
 	scale = Vector3(1,1,1)
-	
+
 
 ## Called when the node enters the scene tree for the first time.
 ## @return void
 func _ready() -> void:
 	$DashCooldown.wait_time = DASH_COOLDOWN
 	player_state.player_id = name.to_int()
-## Had conflict here, first one was from Player-Controller, I will comment out the one was in main--------------------------------------------------
-	$Decal.modulate = GlobalScript.player_outline_colours.get(1)
-	# $Decal.modulate = GlobalScript.player_colours.get(1)
-##-----------------------------------------------------------------------------------------------------------------------
 
-	
 	for i in range(10):
 		var particle = move_particle.instantiate()
 		MOVE_PARTICLES_POOL.append(particle)
+	
+
+
 
 ## Functionailty that happens every frame
 ## @param delta the times it takes per frame to render
 ## @return void
 func _physics_process(delta: float) -> void:
-	#if !is_multiplayer_authority():
-		#return
+	if !is_multiplayer_authority():
+		return
 	# Add the gravity.
 	if !is_on_floor():
 		velocity += get_gravity() * delta
@@ -155,7 +153,6 @@ func _throw() -> void:
 		return
 	
 	drop_item(true)
-	
 
 
 ## Handles logic when player uses an action
@@ -169,8 +166,6 @@ func _action(is_active : bool) -> void:
 		return
 	
 	_closest_item.action(is_active)
-		
-	
 
 
 ## Sets what item the player is holding
@@ -183,6 +178,9 @@ func pickup_item(item : Node3D) -> bool:
 	if(!item.get_node("InteractableComponent").is_pickup):
 		push_error("not pickup")
 		return false
+	
+	if item_in_hand:
+		drop_item(false)
 	
 	item.global_position = Vector3(0,0,0)
 	item.global_rotation = Vector3(0,0,0)
@@ -228,9 +226,9 @@ func drop_item(is_throw : bool) -> bool:
 
 	if is_throw && item_in_hand is AbstractThrowable:
 		item_in_hand.linear_velocity = $Mesh.global_transform.basis.z * THROW_STRENGTH
-
+		
+	print("Item dropped ", item_in_hand)
 	item_in_hand = null
-	print("Ahhh")
 	return true
 
 
@@ -299,9 +297,11 @@ func _on_move_particles_timeout() -> void:
 		
 	particle_ref.global_transform = $Mesh/movePoint.global_transform
 
+
 ## Removes current item from the playes hand and its parent
 ## @return Node3D the item that was removed from the players hand
 func remove_item() -> Node3D:
+	#return item_in_hand
 	if item_in_hand == null:
 		return null
 		
@@ -314,8 +314,9 @@ func remove_item() -> Node3D:
 	
 	var res = item_in_hand
 	item_in_hand = null
+	print("Item removed")
 	return res
-	
+
 
 ## Handles the scale of the item when item is picked up
 ## @return void
@@ -333,8 +334,27 @@ func _final_drop(item: Node3D) -> void:
 	item.global_rotation = $Mesh/ItemPoint.global_rotation
 
 
+## Assigns the player a team
+## @param team the teamm you want to assign the player
+## @return void
 func set_team(team : GlobalScript.Team):
 	player_state.team = team
 
+
+## Gets the team on the player
+## @return GlobalScript.Team what team the player is assigned
 func get_team() -> GlobalScript.Team:
 	return player_state.team
+
+
+## Sets the players name
+## @param String the players new name
+## @return void
+func set_player_name(name : String):
+	player_state.player_name = name
+
+
+## Gets the players name
+## @return String the players name
+func get_player_name() -> String:
+	return player_state.player_name

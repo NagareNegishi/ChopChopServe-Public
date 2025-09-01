@@ -20,3 +20,7 @@ func _ready() -> void:
 		
 	if get_tree().get_current_scene().has_node("HUD"):
 		ui_game_state = get_tree().get_current_scene().get_node("HUD")
+
+
+func get_random_team() -> GlobalScript.Team:
+	return GlobalScript.Team.TEAM1 if (randf() <= 0.5) else GlobalScript.Team.TEAM2

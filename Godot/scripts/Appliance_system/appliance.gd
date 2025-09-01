@@ -132,14 +132,6 @@ func _can_accept(_item: Node) -> bool:
 	return false
 
 
-## Perform action depend on what player is holding
-## @param _item: The Node Player is holding
-## @return: True if action is triggered, false otherwise
-func player_has(_item: Node) -> bool:
-	assert(false, "player_has() must be implemented in " + get_class())
-	return false
-
-
 ## Getter for Price
 ## @return: The price of the appliance
 func get_price() -> int:
@@ -165,6 +157,14 @@ func set_appliance_owner(team_number: int) -> void:
 
 
 ## InteractableComponent Signal Handlers -----------------------------------------------------------
+
+## Perform action depend on what player is holding
+## @param _item: The Node Player is holding
+## @return: True if action is triggered, false otherwise
+func player_has(_item: Node) -> bool:
+	assert(false, "player_has() must be implemented in " + get_class())
+	return false
+
 
 ## Called when interacted with and will make the player pick this item up
 ## @return void

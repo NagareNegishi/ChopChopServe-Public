@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ctogacpb230ch"]
+
+[ext_resource type="PackedScene" uid="uid://bg27vgp7gb8kf" path="res://assets/models/food/ingredients/processed/PotatoChopped.glb" id="1_x4ugn"]
+
+[node name="PotatoChips" instance=ExtResource("1_x4ugn")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)

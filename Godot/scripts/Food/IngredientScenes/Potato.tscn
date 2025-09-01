@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://ckiyjl6dexd4g"]
+
+[ext_resource type="Script" uid="uid://dhlgcegh4qw1t" path="res://scripts/Food/Ingredients/potato.gd" id="1_xba6o"]
+[ext_resource type="PackedScene" uid="uid://c2s73gkvo02gy" path="res://scripts/Food/IngredientScenes/raw_potato.tscn" id="2_ou20t"]
+[ext_resource type="PackedScene" uid="uid://ctogacpb230ch" path="res://scripts/Food/IngredientScenes/potato_chips.tscn" id="3_prflu"]
+[ext_resource type="PackedScene" uid="uid://cy1s0o2ip2hob" path="res://scenes/Interaction/InteractableComponent.tscn" id="4_ou20t"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_prflu"]
+
+[node name="Potato" type="RigidBody3D"]
+script = ExtResource("1_xba6o")
+
+[node name="Potato" parent="." instance=ExtResource("2_ou20t")]
+
+[node name="PotatoChips" parent="." instance=ExtResource("3_prflu")]
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.557705, 0)
+shape = SubResource("BoxShape3D_prflu")
+
+[node name="InteractableComponent" parent="." instance=ExtResource("4_ou20t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.558246, 0)
+is_pickup = true
+
+[connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]
+[connection signal="hovered" from="InteractableComponent" to="." method="_on_interactable_component_hovered"]
+[connection signal="interacted" from="InteractableComponent" to="." method="_on_interactable_component_interacted"]
+[connection signal="toggle_collision" from="InteractableComponent" to="." method="_on_interactable_component_toggle_collision"]

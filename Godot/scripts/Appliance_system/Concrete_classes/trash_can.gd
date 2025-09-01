@@ -18,6 +18,7 @@ func _init():
 func _ready():
 	super._ready()
 	action_interval = 0.1 ## maybe small amount to avoid rapidly throwing items?
+	add_to_group("Bin")
 
 
 ## Trigger the throwing process

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c2s73gkvo02gy"]
+
+[ext_resource type="PackedScene" uid="uid://ki0b6e8dw13n" path="res://assets/models/food/ingredients/raw/Potato2.glb" id="1_ox8nf"]
+
+[node name="Potato" instance=ExtResource("1_ox8nf")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)

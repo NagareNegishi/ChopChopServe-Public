@@ -11,9 +11,10 @@ func _init():
 func _ready():
 	super._ready()
 	cooking_style = ApplianceFactory.CookingStyle.BLEND
-	valid_classes = ["Tomato", "Water"]
+	valid_classes = ["Tomato", "Water", "Milk","Cocoa","Flour"]
 	capacity = 4
 	power = 1
+	add_to_group("Appliance")
 
 
 ## Override upgradable setup in concrete appliances
@@ -65,7 +66,8 @@ func _average_food() -> float:
 	var total = 0.0
 	for food in contents:
 		total += food.get_cook_time(cooking_style)
-	var average = total / contents.size()
+
+	var average = int(total / contents.size())  # we need to check if we want to float or int!!!!!!!!!!
 	for food in contents:
 		food.set_cook_time(average, cooking_style)
 	return average
@@ -164,6 +166,7 @@ func serve_to_plate(plate: Plate) -> bool:
 ## @return: The progress of the cooking process
 func get_progress() -> float:
 	if is_empty():
+<<<<<<< HEAD
 		return INF
 	return _average_food()
 #---------------------------------------------------------------------------------------------------
@@ -187,3 +190,8 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	var can_accept = _can_accept(item)
 	highlight_component.show_feedback(can_accept)
 ## -------------------------------------------------------------------------------------------------
+=======
+		return int(INF)
+	return average_food()
+#---------------------------------------------------------------------------------------------------
+>>>>>>> 4a78761 (Added ability to make brownies and fish and chips and edited some appliances to accept food types #3 #6)

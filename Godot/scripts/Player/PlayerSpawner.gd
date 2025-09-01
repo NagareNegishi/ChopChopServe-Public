@@ -29,7 +29,8 @@ func _spawn_player(id : int):
 	var player : Player = network_player.instantiate()
 	
 	player.name = str(id)
-	player.set_multiplayer_authority(id)
+
+
 	get_node(spawn_path).call_deferred("add_child", player)
 	rpc("_set_position", id, spawn_point.position)
 

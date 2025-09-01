@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://d1iqitph17b80"]
+[gd_scene load_steps=6 format=3 uid="uid://d1iqitph17b80"]
 
 [ext_resource type="Script" uid="uid://b4us8bb8x12ya" path="res://scripts/Interaction/abstract_throwable.gd" id="1_i3ohc"]
 [ext_resource type="PackedScene" uid="uid://cy1s0o2ip2hob" path="res://scenes/Interaction/InteractableComponent.tscn" id="1_ybolb"]
@@ -6,6 +6,14 @@
 [sub_resource type="BoxMesh" id="BoxMesh_l5jrx"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gvljy"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gvljy"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
 
 [node name="AbstractPickup" type="RigidBody3D"]
 script = ExtResource("1_i3ohc")
@@ -24,6 +32,9 @@ is_pickup = true
 
 [node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="."]
 radius = 0.3
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_gvljy")
 
 [connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]
 [connection signal="hovered" from="InteractableComponent" to="." method="_on_interactable_component_hovered"]

@@ -25,6 +25,7 @@ var can_dash : bool = true
 
 func _enter_tree() -> void:
 	scale = Vector3(1,1,1)
+	
 
 
 ## Called when the node enters the scene tree for the first time.
@@ -35,7 +36,7 @@ func _ready() -> void:
 	set_multiplayer_authority(name.to_int())
 	
 	if multiplayer.get_unique_id() == name.to_int():
-		$Decal.modulate = GlobalScript.player_outline_colours.get(randi() % 4 + 1)
+		$Decal.modulate = GlobalScript.player_outline_colours.get(randi() % 3)
 		set_team(randi() % 2 + 1)
 		print("Team: ",  get_team())
 	
@@ -121,7 +122,7 @@ func _inputs() -> void:
 		_dash(true)
 		
 	if Input.is_action_just_pressed("Interact"):
-		_interact()
+		_server_interact(self)
 		
 	if Input.is_action_just_pressed("Throw"):
 		_throw()
@@ -133,23 +134,32 @@ func _inputs() -> void:
 		_action(false)
 
 
-## Handles when the player interacts
-## @return void
-func _interact() -> void:
-		
+func _server_interact(player : Player) -> void:
+	print("Server")
 	if (((item_in_hand is Plate  || item_in_hand is Cookware) && _closest_item != null) && 
 	(_closest_item.get_parent() is Food || _closest_item.get_parent() is Appliance)):
-		_closest_item.interact()
+		_client_interact(true)
 		return
 	
 	elif (item_in_hand != null && (_closest_item == null || 
 	_closest_item != null && _closest_item.is_pickup)):
-		drop_item(false)
+		_client_interact(false)
 	
 	if _closest_item == null:
 		return
 	 
-	_closest_item.interact()
+	_client_interact(true)
+
+
+
+## Handles when the player interacts
+## @return void
+func _client_interact(interact : bool) -> void:
+	if interact:
+		_closest_item.interact()
+	else:
+		drop_item(false)
+	
 
 
 ## Handles the logic for when player throws item

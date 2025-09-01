@@ -17,7 +17,7 @@ func _ready():
 	capacity = 4
 	# action_interval = 1.0
 	_setup_visual_effects()
-
+	_set_affixes()
 	if water_scene and water_scene.can_instantiate():
 		print("Sink water scene preloaded successfully")
 	else:
@@ -109,6 +109,8 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 		print("Provide water to pot")
 		#--------------------------------------------
 		var water = water_scene.instantiate()
+		water.name = prefix + "Water" + str(count)
+		count += 1
 		return item.put(water)
 		# var accepted = item.put(water)
 		# if accepted:

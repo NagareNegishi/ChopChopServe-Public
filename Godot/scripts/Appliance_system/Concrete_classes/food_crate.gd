@@ -12,6 +12,7 @@ extends UnPoweredAppliance
 var food_directory: String = "res://scripts/Food/IngredientScenes/"
 var supply_instance: Node
 
+
 ## Setup the model instance
 func _init():
 	super._init()
@@ -22,6 +23,7 @@ func _init():
 func _ready():
 	super._ready()
 	action_interval = 0.5 # small interval to avoid rapid item taking
+	_set_affixes()
 	_initialize_supply()
 
 
@@ -52,7 +54,11 @@ func take() -> Node:
 		return null
 	current_status = Status.USING
 	action_timer.start()
-	return supply.instantiate()
+
+	var food = supply.instantiate()
+	food.name = prefix + supply_name + str(count)
+	count += 1
+	return food
 
 
 ## For Player interaction --------------------------------------------------------------------------

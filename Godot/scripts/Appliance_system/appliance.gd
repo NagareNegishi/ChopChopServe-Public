@@ -34,7 +34,6 @@ func _ready():
 	_setup_interactable()
 	_setup_highlight()
 	_setup_upgradable()
-	print("my path is: ", get_path())
 
 
 ## Setup multiplayer synchronization, if not already set up
@@ -170,6 +169,25 @@ func set_appliance_owner(team_number: int) -> void:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 func _set_contents_names(new_names: Array[String]):
 	print("I am : ", get_script().get_global_name(), ", Setting contents names is triggered with: ", new_names)
 	contents_names = new_names
@@ -186,6 +204,15 @@ func _update_contents():
 			contents.append(item)
 		else:
 			push_warning("Item '", item_name, "' not found as child of ", name)
+
+
+
+
+
+
+
+
+
 
 
 

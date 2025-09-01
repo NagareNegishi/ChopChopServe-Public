@@ -16,6 +16,7 @@ func _init():
 func _ready():
 	super._ready()
 	capacity = 4
+	_set_affixes()
 	# _setup_item_slots()
 	if plate_scene and plate_scene.can_instantiate():
 		print("Cabinet plate scene preloaded successfully")
@@ -23,6 +24,8 @@ func _ready():
 		push_error("Failed to preload plate scene in Cabinet")
 	for i in range(capacity):
 		var plate = plate_scene.instantiate()
+		plate.name = prefix + plate.get_script().get_global_name() + str(count)
+		count += 1
 		add_child(plate)
 		put(plate)
 

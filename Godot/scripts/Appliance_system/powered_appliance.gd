@@ -309,9 +309,13 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 	if not item:
 		var cookware = take()
 		if cookware:
-			#print("Path before pickup: ", cookware.get_path())
+			print("Path before pickup: ", cookware.get_path())
+
+			get_tree().current_scene.add_child(cookware)
+			print("Path when at scene root: ", cookware.get_path())
+
 			GlobalScript.player.pickup_item(cookware)
-			#print("Path after pickup: ", cookware.get_path())
+			print("Path after pickup: ", cookware.get_path())
 			# #----------------------------------------------------------------------
 			# print("Player took: ", cookware.get_script().get_global_name(), ", from: ", get_script().get_global_name())
 			# #----------------------------------------------------------------------

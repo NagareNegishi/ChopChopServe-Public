@@ -17,6 +17,10 @@ enum Status {
 var current_status: Status = Status.IDLE
 var action_timer: Timer
 
+# variable for supplier type
+var prefix: String
+var count: int
+
 
 func _ready():
 	super._ready()
@@ -34,6 +38,20 @@ func setup_multiplayer_sync():
 		var config = multiplayer_sync.replication_config
 		config.add_property(NodePath(".:current_status"))
 		config.add_property(NodePath(".:capacity"))
+
+
+## Set the prefix for the Object supplied by this appliance
+func _set_affixes():
+	count = 1
+	if current_owner == Owner.TEAM1:
+		prefix = "T1_"
+	elif current_owner == Owner.TEAM2:
+		prefix = "T2_"
+	else:
+		prefix = "T0_"
+	if multiplayer_sync and multiplayer_sync.replication_config:
+		var config = multiplayer_sync.replication_config
+		config.add_property(NodePath(".:count"))
 
 
 ## Place an item onto this appliance

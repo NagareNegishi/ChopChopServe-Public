@@ -151,4 +151,3 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	var can_accept = _can_accept(item) or (item is Pot and not item.is_full())
 	highlight_component.show_feedback(can_accept)
 #---------------------------------------------------------------------------------------------------
-

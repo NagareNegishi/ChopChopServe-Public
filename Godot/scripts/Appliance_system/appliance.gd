@@ -5,9 +5,9 @@ class_name Appliance
 extends Placeable
 
 enum Owner {
+	NONE,
 	TEAM1,
-	TEAM2,
-	NONE
+	TEAM2
 }
 
 @export_group("Appliance Settings")

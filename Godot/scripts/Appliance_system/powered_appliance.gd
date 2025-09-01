@@ -56,7 +56,10 @@ func _position_cookware(cookware: Cookware, slot_index: int):
 ## Add corresponding Cookware to the PoweredAppliance
 ## @param cookware_script_name: The script name of the cookware to add
 func _add_cookware(cookware_script_name: String):
-	var cookware = ApplianceManager.request_appliance(cookware_script_name, current_owner)
+	var cookware = ApplianceFactory._create_appliance(cookware_script_name)
+	cookware.set_appliance_owner(current_owner)
+	cookware.name = name + "_" + cookware_script_name
+	ApplianceManager.register_appliance(cookware, current_owner, cookware.name)
 	if not cookware:
 		push_error("Failed to create cookware: " + cookware_script_name)
 		return

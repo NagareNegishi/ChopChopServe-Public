@@ -167,6 +167,18 @@ func _on_data_received(from_id: int, data: Dictionary):
 			print("Unknown message type: ", data.get("type"))
 
 
+## Get the ID of the current player
+## @return: The ID of the current player
+func get_my_id() -> int:
+	return enet_layer.get_my_id()
+
+
+## Check if the current player is the host
+## @return: True if the current player is the host, false otherwise
+func is_host() -> bool:
+	return enet_layer.is_host()
+
+
 ## Get current player list
 ## @return: The current list of players
 func get_player_list() -> Array[int]:

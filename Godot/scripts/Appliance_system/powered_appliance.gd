@@ -18,7 +18,6 @@ enum Status {
 @export var cook_interval: float = 1.0 ## Cook every ? seconds
 
 var current_status: Status = Status.COOKING
-var contents: Array[Node] = []
 var cook_timer: Timer
 var power: int = 1
 var cookware_slots: Array[Vector3] = []  ## Where to place cookware
@@ -29,6 +28,16 @@ func _ready():
 	super._ready()
 	_setup_cookware_slots()
 	# _setup_cook_timer()
+
+
+## Setup multiplayer synchronization, if not already set up
+func setup_multiplayer_sync():
+	super.setup_multiplayer_sync()
+	if multiplayer_sync and multiplayer_sync.replication_config:
+		var config = multiplayer_sync.replication_config
+		config.add_property(NodePath(".:current_status"))
+		config.add_property(NodePath(".:power"))
+		config.add_property(NodePath(".:capacity"))
 
 
 ## Setup cookware slots, should be overridden by subclasses
@@ -62,6 +71,12 @@ func put(item: Node) -> bool:
 		return false
 	contents.append(item)
 	add_child(item)
+
+#-------------------------------------------------------------------------------
+	contents_names.append(item.name)
+#-------------------------------------------------------------------------------
+
+
 	if item is Cookware:
 		_put_cookware(item)
 	return true
@@ -86,6 +101,12 @@ func take() -> Node:
 	if contents.is_empty():
 		return null
 	var item = contents.pop_back()
+
+#-------------------------------------------------------------------------------
+	if not contents_names.is_empty():
+		contents_names.pop_back()
+#-------------------------------------------------------------------------------
+
 	if item is Cookware:
 		_take_cookware(item)
 	remove_child(item)
@@ -260,6 +281,12 @@ func put_from_player(item: Node) -> bool:
 	GlobalScript.player.remove_item()
 	contents.append(item)
 	add_child(item)
+
+#-------------------------------------------------------------------------------
+	contents_names.append(item.name)
+#-------------------------------------------------------------------------------
+
+
 	#--------------------------------------------
 	print("Put: ", item.get_script().get_global_name(), " onto: ", get_script().get_global_name())
 	print("Contents of ", get_script().get_global_name(), " are: ")
@@ -282,7 +309,9 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 	if not item:
 		var cookware = take()
 		if cookware:
+			#print("Path before pickup: ", cookware.get_path())
 			GlobalScript.player.pickup_item(cookware)
+			#print("Path after pickup: ", cookware.get_path())
 			# #----------------------------------------------------------------------
 			# print("Player took: ", cookware.get_script().get_global_name(), ", from: ", get_script().get_global_name())
 			# #----------------------------------------------------------------------
@@ -375,6 +404,7 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	#---------------------------------------------------------------------------
 	if item:
 		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())
+		print("Item name is:", item.name)
 	#---------------------------------------------------------------------------
 	if not item:
 		highlight_component.set_state(ApplianceHighlight.HighlightState.HOVER)

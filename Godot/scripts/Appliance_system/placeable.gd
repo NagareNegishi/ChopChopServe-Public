@@ -141,7 +141,7 @@ func setup_multiplayer_sync():
 	if multiplayer_sync:
 		if not multiplayer_sync.replication_config:
 			var config = SceneReplicationConfig.new()
-			config.add_property(NodePath(".:position")) 
+			config.add_property(NodePath(".:position"))
 			config.add_property(NodePath(".:rotation"))
 			config.add_property(NodePath(".:size"))
 			multiplayer_sync.replication_config = config

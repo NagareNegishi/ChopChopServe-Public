@@ -70,6 +70,9 @@ func take_at(index: int) -> Node:
 	var item = contents.pop_at(index)
 	remove_child(item)
 	# #--------------------------------------------
+	contents_names.remove_at(index)
+
+
 	# print(item.get_script().get_global_name(), ", is taken from: ", get_script().get_global_name())
 	# #--------------------------------------------
 	return item

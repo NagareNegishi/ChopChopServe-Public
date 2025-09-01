@@ -21,8 +21,11 @@ var power_upgradable: Upgradable
 var capacity_upgradable: Upgradable
 var coefficient_upgradable: Upgradable
 
-var price: int = 100
+
 var current_owner: Owner = Owner.NONE
+var contents: Array[Node] = []
+var contents_names: Array[String] = []: set = _set_contents_names
+var price: int = 100
 
 
 ## Setup the appliance
@@ -31,6 +34,16 @@ func _ready():
 	_setup_interactable()
 	_setup_highlight()
 	_setup_upgradable()
+	print("my path is: ", get_path())
+
+
+## Setup multiplayer synchronization, if not already set up
+func setup_multiplayer_sync():
+	super.setup_multiplayer_sync()
+	if multiplayer_sync and multiplayer_sync.replication_config:
+		var config = multiplayer_sync.replication_config
+		config.add_property(NodePath(".:current_owner"))
+		config.add_property(NodePath(".:contents_names"))
 
 
 ## Add interactable component to this class
@@ -154,6 +167,28 @@ func set_appliance_owner(team_number: int) -> void:
 			current_owner = Owner.TEAM2
 		_:
 			current_owner = Owner.NONE
+
+
+
+func _set_contents_names(new_names: Array[String]):
+	print("I am : ", get_script().get_global_name(), ", Setting contents names is triggered with: ", new_names)
+	contents_names = new_names
+	_update_contents()
+
+
+func _update_contents():
+	contents.clear()
+	for item_name in contents_names:
+		var item = get_node_or_null(NodePath(item_name))
+		print("NodePath: ", NodePath(item_name))
+		if item:
+			print("Found item: ", item.get_script().get_global_name())
+			contents.append(item)
+		else:
+			push_warning("Item '", item_name, "' not found as child of ", name)
+
+
+
 
 
 ## InteractableComponent Signal Handlers -----------------------------------------------------------

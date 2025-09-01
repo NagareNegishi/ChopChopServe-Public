@@ -15,7 +15,6 @@ enum Status {
 @export var action_interval: float = 1.0 ## action every ? seconds
 
 var current_status: Status = Status.IDLE
-var contents: Array[Node] = []
 var action_timer: Timer
 
 
@@ -28,6 +27,15 @@ func _ready():
 	add_child(action_timer)
 
 
+## Setup multiplayer synchronization, if not already set up
+func setup_multiplayer_sync():
+	super.setup_multiplayer_sync()
+	if multiplayer_sync and multiplayer_sync.replication_config:
+		var config = multiplayer_sync.replication_config
+		config.add_property(NodePath(".:current_status"))
+		config.add_property(NodePath(".:capacity"))
+
+
 ## Place an item onto this appliance
 ## @param item: The Node to place on this appliance
 ## @return: True if placement was successful, false otherwise
@@ -36,6 +44,12 @@ func put(item: Node) -> bool:
 		return false
 	contents.append(item)
 	add_child(item)
+
+#-------------------------------------------------------------------------------
+	contents_names.append(item.name)
+#-------------------------------------------------------------------------------
+
+
 	return true
 
 
@@ -45,6 +59,15 @@ func take() -> Node:
 	if contents.is_empty():
 		return null
 	var item = contents.pop_back()
+
+
+#-------------------------------------------------------------------------------
+	if not contents_names.is_empty():
+		contents_names.pop_back()
+#-------------------------------------------------------------------------------
+
+
+
 	remove_child(item)
 	return item
 
@@ -104,6 +127,11 @@ func put_from_player(item: Node) -> bool:
 	GlobalScript.player.remove_item()
 	contents.append(item)
 	add_child(item)
+
+#-------------------------------------------------------------------------------
+	contents_names.append(item.name)
+#-------------------------------------------------------------------------------
+
 #--------------------------------------------
 	print("Put: ", item.get_script().get_global_name(), " onto: ", get_script().get_global_name())
 #--------------------------------------------

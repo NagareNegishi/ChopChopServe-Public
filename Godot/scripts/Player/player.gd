@@ -21,7 +21,7 @@ var can_dash : bool = true
 
 @onready var controller : PlayerController = $Controller
 @onready var player_state : PlayerState = $PlayerState
-
+@onready var item_point = $Mesh/ItemPoint
 
 func _enter_tree() -> void:
 	scale = Vector3(1,1,1)
@@ -122,7 +122,7 @@ func _inputs() -> void:
 		_dash(true)
 		
 	if Input.is_action_just_pressed("Interact"):
-		_server_interact(self)
+		_interact()
 		
 	if Input.is_action_just_pressed("Throw"):
 		_throw()
@@ -134,32 +134,20 @@ func _inputs() -> void:
 		_action(false)
 
 
-func _server_interact(player : Player) -> void:
-	print("Server")
+func _interact() -> void:
 	if (((item_in_hand is Plate  || item_in_hand is Cookware) && _closest_item != null) && 
 	(_closest_item.get_parent() is Food || _closest_item.get_parent() is Appliance)):
-		_client_interact(true)
+		_closest_item.interact()
 		return
 	
 	elif (item_in_hand != null && (_closest_item == null || 
 	_closest_item != null && _closest_item.is_pickup)):
-		_client_interact(false)
+		server_drop_item(self.get_path(), false)
 	
 	if _closest_item == null:
 		return
 	 
-	_client_interact(true)
-
-
-
-## Handles when the player interacts
-## @return void
-func _client_interact(interact : bool) -> void:
-	if interact:
-		_closest_item.interact()
-	else:
-		drop_item(false)
-	
+	_closest_item.interact()
 
 
 ## Handles the logic for when player throws item
@@ -182,6 +170,7 @@ func _action(is_active : bool) -> void:
 		return
 	
 	_closest_item.action(is_active)
+
 
 
 ## Sets what item the player is holding
@@ -219,9 +208,100 @@ func pickup_item(item : Node3D) -> bool:
 	
 	return true
 
+
+@rpc("authority", "call_local")
+func server_pickup(player_name : String, item_name : String) -> void:
+	var player : Node3D = get_tree().current_scene.get_node(player_name)
+	var item : Node3D = get_tree().current_scene.get_node(item_name)
+	
+	if !item or !player:
+		return
+	
+	rpc("_client_pickup", player_name, item_name)
+	
+	
+## Sets what item the player is holding
+## @return bool if successfully picked up
+@rpc("any_peer", "call_local")
+func _client_pickup(player_path : String, item_path : String) -> bool:
+	var item : Node3D = get_tree().current_scene.get_node(item_path)
+	var player : Node3D = get_tree().current_scene.get_node(player_path)
+	
+	if(item == null):
+		push_error("item invalid")
+		return false
+	
+	if(!item.get_node("InteractableComponent").is_pickup):
+		push_error("not pickup")
+		return false
+	
+	if player.item_in_hand:
+		player.rpc_id(1, "server_drop_item", false)
+	
+	item.global_position = Vector3(0,0,0)
+	item.global_rotation = Vector3(0,0,0)
+#----------------------------------------------------------
+# Added small change here
+	if item.get_parent():
+		item.get_parent().remove_child(item)
+#----------------------------------------------------------
+	if item.has_method("turnOnPhysics"):
+		item.turnOnPhysics(false)
+	
+	if item.has_node("InteractableComponent"):
+		item.get_node("InteractableComponent").turn_on_collision(false)
+	
+	player.item_point.add_child(item)
+	player.call_deferred("_final_pickup", item)
+
+	
+	item_in_hand = item
+	
+	return true
+
+
+@rpc("authority", "call_local")
+func server_drop_item(player_path : String, is_throw : bool) -> bool:
+	var player : Node3D = get_tree().current_scene.get_node(player_path)
+	print("print")
+	if(player.item_in_hand == null):
+		return false
+	rpc("_client_drop_item",player_path, is_throw)
+	return true
+
+
+@rpc("any_peer", "call_local")
+func _client_drop_item(player_path : String, is_throw : bool) -> bool:
+	var player : Node3D = get_tree().current_scene.get_node(player_path)
+	
+	if player.item_in_hand.get_parent():
+		player.item_in_hand.get_parent().remove_child(player.item_in_hand)
+		
+	if player.item_in_hand.has_node("InteractableComponent"):
+		player.item_in_hand.get_node("InteractableComponent").turn_on_collision(true)
+	
+	get_tree().get_current_scene().add_child(player.item_in_hand)
+	player.call_deferred("_final_drop", player.item_in_hand)
+	
+
+	player._action(false)
+
+	if player.item_in_hand.has_method("turnOnPhysics"):
+		player.item_in_hand.turnOnPhysics(true)
+
+	if is_throw && player.item_in_hand is AbstractThrowable:
+		player.item_in_hand.linear_velocity = $Mesh.global_transform.basis.z * THROW_STRENGTH
+		
+	print("Item dropped ", player.item_in_hand)
+	player.item_in_hand = null
+	return true
+
+
+
 ## drops item in hand in front of player
 ## @return bool if dropped item succesfully
 func drop_item(is_throw : bool) -> bool:
+	
 	if(item_in_hand == null):
 		return false
 	

@@ -1,7 +1,7 @@
 extends Node
 
 const SHOULD_LOAD : bool = false
-const IPADDRESS : String = "10.20.217.53"
+const IPADDRESS : String = "10.20.217.68"
 const PORT : int = 25565
 
 var peer : ENetMultiplayerPeer = ENetMultiplayerPeer.new()

@@ -19,7 +19,8 @@ func _process(_delta: float) -> void:
 ## Connect to singal: Called when interacted with and will make the player pick this item up
 ## @return void
 func _on_interactable_component_interacted() -> void:
-	GlobalScript.get_local_player().pickup_item(self)
+	GlobalScript.get_local_player().rpc_id(1,"server_pickup", 
+	GlobalScript.get_local_player().get_path(), self.get_path())
 	for child in self.get_children():
 		if child is MeshInstance3D:
 			child.material_overlay = null

@@ -69,8 +69,7 @@ func _average_food() -> float:
 	var total = 0.0
 	for food in contents:
 		total += food.get_cook_time(cooking_style)
-
-	var average = int(total / contents.size())  # we need to check if we want to float or int!!!!!!!!!!
+	var average = total / contents.size()
 	for food in contents:
 		food.set_cook_time(average, cooking_style)
 	return average
@@ -224,20 +223,6 @@ func serve_to_plate(plate: Plate) -> bool:
 	return true
 
 
-# Functions for Sabotage System---------------------------------------------------------------------
-
-## Get the current progress of cookwares
-## Note: Only use it when PoweredAppliance can be operated
-## Note: Progress is defined by the `cook_time` of `Food` -> smaller values are more progressed
-## @return: The progress of the cooking process
-func get_progress() -> float:
-	if is_empty():
-		return INF
-	return _average_food()
-#---------------------------------------------------------------------------------------------------
-
-
-## InteractableComponent Signal Handlers -----------------------------------------------------------
 ## Give visual feedback when hovered
 ## @param is_hovered: Whether the item is hovered or not
 func _on_interactable_component_hovered(is_hovered: bool) -> void:
@@ -252,12 +237,6 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	if not item:
 		highlight_component.set_state(ApplianceHighlight.HighlightState.HOVER)
 		return
-	var can_accept = _can_accept(item)
-	highlight_component.show_feedback(can_accept)
-## -------------------------------------------------------------------------------------------------
-		return int(INF)
-	return average_food()
-#---------------------------------------------------------------------------------------------------
 	if item is Plate or item is Cookware:
 		highlight_component.show_feedback(_check_target(item))
 		return

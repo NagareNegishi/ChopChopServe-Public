@@ -3,14 +3,14 @@
 [ext_resource type="PackedScene" uid="uid://bv68n23xtnfpl" path="res://scenes/Player/PlayerCar.tscn" id="1_2io33"]
 [ext_resource type="Material" uid="uid://dwgftkho746av" path="res://LevelDesign/SwampFog.tres" id="1_d2eau"]
 [ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="4_55i4u"]
-[ext_resource type="PackedScene" uid="uid://386cia5dig43" path="res://assets/NaturePacks/FBX/Willow_4.fbx" id="5_2io33"]
+[ext_resource type="PackedScene" uid="uid://386cia5dig43" path="res://assets/NaturePack/Willow_4.fbx" id="5_2io33"]
 [ext_resource type="MeshLibrary" uid="uid://bc2c7fksdc6nh" path="res://LevelDesign/Tilemap.tres" id="6_4qp8e"]
-[ext_resource type="PackedScene" uid="uid://x0o0oxbumdxi" path="res://assets/NaturePacks/FBX/Willow_2.fbx" id="6_38v8k"]
-[ext_resource type="PackedScene" uid="uid://dxiqfig0wnu0t" path="res://assets/NaturePacks/FBX/Willow_1.fbx" id="7_8t6q8"]
-[ext_resource type="PackedScene" uid="uid://cmnawc3gjo880" path="res://assets/NaturePacks/FBX/Willow_3.fbx" id="8_0m1vj"]
-[ext_resource type="PackedScene" uid="uid://b1unktw7nwuy7" path="res://assets/NaturePacks/FBX/WoodLog_Moss.fbx" id="9_4vkss"]
-[ext_resource type="PackedScene" uid="uid://dldovmi6yp8ly" path="res://assets/NaturePacks/FBX/Plant_2.fbx" id="10_ki10l"]
-[ext_resource type="PackedScene" uid="uid://c8mn5s6ndr0ki" path="res://assets/NaturePacks/FBX/Plant_1.fbx" id="11_gf84l"]
+[ext_resource type="PackedScene" uid="uid://x0o0oxbumdxi" path="res://assets/NaturePack/Willow_2.fbx" id="6_38v8k"]
+[ext_resource type="PackedScene" uid="uid://dxiqfig0wnu0t" path="res://assets/NaturePack/Willow_1.fbx" id="7_8t6q8"]
+[ext_resource type="PackedScene" uid="uid://cmnawc3gjo880" path="res://assets/NaturePack/Willow_3.fbx" id="8_0m1vj"]
+[ext_resource type="PackedScene" uid="uid://b1unktw7nwuy7" path="res://assets/NaturePack/WoodLog_Moss.fbx" id="9_4vkss"]
+[ext_resource type="PackedScene" uid="uid://dldovmi6yp8ly" path="res://assets/NaturePack/Plant_2.fbx" id="10_ki10l"]
+[ext_resource type="PackedScene" uid="uid://c8mn5s6ndr0ki" path="res://assets/NaturePack/Plant_1.fbx" id="11_gf84l"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w6hnu"]
 size = Vector3(30, 0.03, 30)
@@ -151,14 +151,14 @@ transform = Transform3D(3.78729, 0, 0, 0, 1, 0, 0, 0, 3.0888, -16.4111, 0, -22.5
 mesh = SubResource("BoxMesh_w6hnu")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Platform"]
-transform = Transform3D(3.78757, 0, 0, 0, 3.032, 0, 0, 0, 3.032, -16.391, 0, 23.259)
+transform = Transform3D(3.788, 0, 0, 0, 1.1, 0, 0, 0, 3.032, -16.391, 0, 23.259)
 mesh = SubResource("BoxMesh_8t6q8")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_2io33")
 
 [node name="FogVolume" type="FogVolume" parent="WorldEnvironment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.4115, -1.03632, 22.5616)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.411, -1.3, 22.562)
 size = Vector3(50, 5, 45)
 material = ExtResource("1_d2eau")
 
@@ -756,7 +756,7 @@ transform = Transform3D(0.841247, 0, -0.540652, 0, 1, 0, 0.540652, 0, 0.841247, 
 transform = Transform3D(0.880825, 0, -0.473443, 0, 1, 0, 0.473443, 0, 0.880825, -5.73274, 0.0999598, 7.20043)
 
 [node name="Willow_1" parent="Swamp" instance=ExtResource("7_8t6q8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.68583, 0.0582429, 13.7571)
+transform = Transform3D(0.844954, 0, 0.534839, 0, 1, 0, -0.534839, 0, 0.844954, 4.68583, 0.0582429, 13.7571)
 
 [node name="Willow_3" parent="Swamp" instance=ExtResource("8_0m1vj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.71668, 0.0579129, 21.6823)

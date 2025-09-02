@@ -10,7 +10,6 @@ const DASH_COOLDOWN : float = 0.2
 const ANGULAR_ACCELERATION : float = 15
 const PUSH_FORCE : float = 0.3
 const THROW_STRENGTH : float = 40
-
 var MOVE_PARTICLES_POOL = []
 var _direction : Vector3 = Vector3.FORWARD
 var _items_in_interactable_area = []
@@ -22,6 +21,7 @@ var can_dash : bool = true
 @onready var controller : PlayerController = $Controller
 @onready var player_state : PlayerState = $PlayerState
 @onready var item_point = $Mesh/ItemPoint
+@onready var check_interactables : Timer = $CheckInteractables
 
 func _enter_tree() -> void:
 	scale = Vector3(1,1,1)
@@ -39,12 +39,14 @@ func _ready() -> void:
 		$Decal.modulate = GlobalScript.player_outline_colours.get(randi() % 3)
 		set_team(randi() % 2 + 1)
 		print("Team: ",  get_team())
+	else:
+		check_interactables.stop()
+	
 	
 	for i in range(10):
 		var particle = move_particle.instantiate()
 		MOVE_PARTICLES_POOL.append(particle)
 	
-
 
 
 ## Functionailty that happens every frame
@@ -53,13 +55,22 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if !is_multiplayer_authority():
 		return
+	
 	# Add the gravity.
 	if !is_on_floor():
 		velocity += get_gravity() * delta
 		
 	_inputs()
 	_movement(delta)
+	collision_check()
 	_rotate_player(delta)
+	
+
+func collision_check() -> void:
+	for i in get_slide_collision_count():
+		var collider = get_slide_collision(i)
+		if collider.get_collider() is RigidBody3D:
+			collider.get_collider().apply_central_impulse(-collider.get_normal() * PUSH_FORCE)
 
 
 ## Rotates player to the direction they are moving
@@ -84,11 +95,6 @@ func _movement(delta : float) -> void:
 		velocity.z = move_toward(velocity.z, 0, DECELERATION * SPEED)
 		
 	move_and_slide()
-	
-	for i in get_slide_collision_count():
-		var collider = get_slide_collision(i)
-		if collider.get_collider() is RigidBody3D:
-			collider.get_collider().apply_central_impulse(-collider.get_normal() * PUSH_FORCE)
 
 
 ## Allows player to dash again after cooldown finshed
@@ -125,7 +131,7 @@ func _inputs() -> void:
 		_interact()
 		
 	if Input.is_action_just_pressed("Throw"):
-		_throw()
+		server_drop_item(get_path(), true)
 		
 	if Input.is_action_just_pressed("Action"):
 		_action(true)
@@ -170,7 +176,6 @@ func _action(is_active : bool) -> void:
 		return
 	
 	_closest_item.action(is_active)
-
 
 
 ## Sets what item the player is holding

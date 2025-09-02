@@ -1,11 +1,10 @@
 class_name AbstractThrowable extends RigidBody3D
 
-@export var has_action : bool
 var overlay = preload("res://materials/InteractOverlay.tres")
 
 ## Called when the node enters the scene tree for the first time.
 ## @return void
-func _ready() -> void:
+func _enter_tree() -> void:
 	pass
 
 
@@ -32,7 +31,6 @@ func _on_interactable_component_interacted() -> void:
 ## @param is_hovered boolean that dicates if pickup is on or off
 ## @return void
 func _on_interactable_component_hovered(is_hovered: bool) -> void:
-
 	for child in self.get_children():
 		if child is MeshInstance3D:
 			child.material_overlay = overlay if is_hovered else null
@@ -41,8 +39,7 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 ## @param has_action if the player is using the action input
 ## @return void
 func _on_interactable_component_action_use(is_action: bool) -> void:
-	if has_action:
-		print("Action: " + str(is_action))
+	pass
 	
 func turnOnPhysics(is_on : bool):
 	set_deferred("freeze", !is_on)

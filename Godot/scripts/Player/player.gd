@@ -53,6 +53,9 @@ func _ready() -> void:
 ## @param delta the times it takes per frame to render
 ## @return void
 func _physics_process(delta: float) -> void:
+	if multiplayer.is_server():
+		collision_check()
+	
 	if !is_multiplayer_authority():
 		return
 	
@@ -62,7 +65,6 @@ func _physics_process(delta: float) -> void:
 		
 	_inputs()
 	_movement(delta)
-	collision_check()
 	_rotate_player(delta)
 	
 
@@ -78,14 +80,16 @@ func collision_check() -> void:
 ## @return void
 func _rotate_player(delta: float) -> void:
 	if(_direction.length() > 0):
-		$Mesh.rotation.y = lerp_angle($Mesh.rotation.y, atan2(_direction.x, _direction.z), delta * ANGULAR_ACCELERATION)
+		$Mesh.rotation.y = lerp_angle($Mesh.rotation.y, 
+		atan2(_direction.x, _direction.z), delta * ANGULAR_ACCELERATION)
 
 
 ## Handles movement logic for player
 ## @param delta the delta from process physics
 ## @return void
 func _movement(delta : float) -> void:
-	_direction = (transform.basis * Vector3(controller.input_dir.x, 0, controller.input_dir.y)).normalized()
+	_direction = (transform.basis * 
+	Vector3(controller.input_dir.x, 0, controller.input_dir.y)).normalized()
 	
 	if _direction:
 		velocity.x = move_toward(velocity.x, _direction.x * SPEED, ACCELERATION * delta)

@@ -30,14 +30,12 @@ func _ready():
 	# _setup_cook_timer()
 
 
-## Setup multiplayer synchronization, if not already set up
-func setup_multiplayer_sync():
-	super.setup_multiplayer_sync()
-	if multiplayer_sync and multiplayer_sync.replication_config:
-		var config = multiplayer_sync.replication_config
-		config.add_property(NodePath(".:current_status"))
-		config.add_property(NodePath(".:power"))
-		config.add_property(NodePath(".:capacity"))
+## Add synchronization properties for the placeable object
+func _add_sync_properties(config: SceneReplicationConfig):
+	super._add_sync_properties(config)
+	config.add_property(NodePath(".:current_status"))
+	config.add_property(NodePath(".:power"))
+	config.add_property(NodePath(".:capacity"))
 
 
 ## Setup cookware slots, should be overridden by subclasses
@@ -74,12 +72,9 @@ func put(item: Node) -> bool:
 		return false
 	contents.append(item)
 	add_child(item)
-
 #-------------------------------------------------------------------------------
 	contents_names.append(item.name)
 #-------------------------------------------------------------------------------
-
-
 	if item is Cookware:
 		_put_cookware(item)
 	return true
@@ -104,12 +99,10 @@ func take() -> Node:
 	if contents.is_empty():
 		return null
 	var item = contents.pop_back()
-
 #-------------------------------------------------------------------------------
 	if not contents_names.is_empty():
 		contents_names.pop_back()
 #-------------------------------------------------------------------------------
-
 	if item is Cookware:
 		_take_cookware(item)
 	remove_child(item)
@@ -136,7 +129,7 @@ func _can_accept(item: Node) -> bool:
 	if current_status == Status.BROKEN:
 		print("Cannot accept item: ", get_script().get_global_name(), " is broken")
 		return false
-	if contents.size() >= capacity:
+	if contents_names.size() >= capacity:
 		print("Cannot accept item: ", get_script().get_global_name(), " is at full capacity")
 		return false
 	if not item.get_script():
@@ -273,6 +266,15 @@ func _on_cook_timer_timeout():
 
 ## For Player interaction --------------------------------------------------------------------------
 
+func put_request(item: Node) -> void:
+	if not _can_accept(item):
+		return
+	_put_as_host.rpc_id(1, ENetManager.get_peer_id(), item.name)
+
+@rpc("any_peer", "call_local", "reliable")
+func _put_as_host(player_id: int, item_name: String) -> void:
+	pass
+
 ## Place an item onto this appliance from Player
 ## if we could remove Player dependency from this class, we can remove this method
 ## @param item: The Node to place on this appliance
@@ -284,12 +286,9 @@ func put_from_player(item: Node) -> bool:
 	GlobalScript.player.remove_item()
 	contents.append(item)
 	add_child(item)
-
 #-------------------------------------------------------------------------------
 	contents_names.append(item.name)
 #-------------------------------------------------------------------------------
-
-
 	#--------------------------------------------
 	print("Put: ", item.get_script().get_global_name(), " onto: ", get_script().get_global_name())
 	print("Contents of ", get_script().get_global_name(), " are: ")

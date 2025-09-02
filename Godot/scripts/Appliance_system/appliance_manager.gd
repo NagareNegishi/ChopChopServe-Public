@@ -10,6 +10,10 @@ var team2_appliances: Array[Appliance] = []
 var shared_appliances: Array[Appliance] = [] # if this concept is needed
 var next_id: int = 0
 
+# Registered items created from appliances
+var team1_items: Dictionary = {}  # item_name -> Node
+var team2_items: Dictionary = {}
+
 
 ## Local player requests new Appliance
 ## @param type: The type of appliance to request
@@ -83,8 +87,10 @@ func register_appliance(appliance: Appliance, team: int, appliance_name: String)
 	if not appliance:
 		push_error("Cannot register a null appliance!")
 		return
-	appliance.set_appliance_owner(team)
-	appliance.name = appliance_name
+	# If using a .tscn file, it should already have an owner and name set
+	if not appliance.using_tscn:
+		appliance.set_appliance_owner(team)
+		appliance.name = appliance_name
 	match team:
 		1: team1_appliances.append(appliance)
 		2: team2_appliances.append(appliance)
@@ -123,3 +129,27 @@ func reset_appliances() -> void:
 	team2_appliances.clear()
 	shared_appliances.clear()
 	next_id = 0
+
+
+## Register an item created by an appliance
+func register_item(item: Node, team: int, item_name: String) -> void:
+	if not item:
+		push_error("Cannot register a null item!")
+		return
+	match team:
+		1:
+			team1_items[item_name] = item
+			#print("Registered item for Team 1: %s" % item_name)
+		2:
+			team2_items[item_name] = item
+			#print("Registered item for Team 2: %s" % item_name)
+		_: push_error("Unknown team: %d" % team)
+
+
+## Get item by name for RPC operations
+func get_item(item_name: String) -> Node:
+	if team1_items.has(item_name):
+		return team1_items[item_name]
+	if team2_items.has(item_name):
+		return team2_items[item_name]
+	return null

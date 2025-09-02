@@ -10,6 +10,11 @@ enum Owner {
 	TEAM2
 }
 
+@export_group("REQUIRED - You must set this!")
+@export var using_tscn: bool = false
+@export var unique_name: String = "UNNAMED_APPLIANCE"
+@export var current_owner: Owner = Owner.TEAM1 #Owner.NONE
+
 @export_group("Appliance Settings")
 ## Type of cooking style this appliance supports
 @export var cooking_style: ApplianceFactory.CookingStyle = ApplianceFactory.CookingStyle.NONE
@@ -21,8 +26,6 @@ var power_upgradable: Upgradable
 var capacity_upgradable: Upgradable
 var coefficient_upgradable: Upgradable
 
-
-var current_owner: Owner = Owner.NONE
 var contents: Array[Node] = []
 var contents_names: Array[String] = []: set = _set_contents_names
 var price: int = 100
@@ -34,15 +37,22 @@ func _ready():
 	_setup_interactable()
 	_setup_highlight()
 	_setup_upgradable()
+	if using_tscn:
+		_check_unique_name()
+		ApplianceManager.register_appliance(self, current_owner, name)
 
 
-## Setup multiplayer synchronization, if not already set up
-func setup_multiplayer_sync():
-	super.setup_multiplayer_sync()
-	if multiplayer_sync and multiplayer_sync.replication_config:
-		var config = multiplayer_sync.replication_config
-		config.add_property(NodePath(".:current_owner"))
-		config.add_property(NodePath(".:contents_names"))
+## If instance is made through .tscn, it must have a unique name
+func _check_unique_name():
+	assert(unique_name != "UNNAMED_APPLIANCE", "Appliance has not been given a unique name!")
+	name = unique_name
+
+
+## Add synchronization properties for the placeable object
+func _add_sync_properties(config: SceneReplicationConfig):
+	super._add_sync_properties(config)
+	config.add_property(NodePath(".:current_owner"))
+	config.add_property(NodePath(".:contents_names"))
 
 
 ## Add interactable component to this class
@@ -170,24 +180,6 @@ func set_appliance_owner(team_number: int) -> void:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 func _set_contents_names(new_names: Array[String]):
 	print("I am : ", get_script().get_global_name(), ", Setting contents names is triggered with: ", new_names)
 	contents_names = new_names
@@ -204,13 +196,6 @@ func _update_contents():
 			contents.append(item)
 		else:
 			push_warning("Item '", item_name, "' not found as child of ", name)
-
-
-
-
-
-
-
 
 
 

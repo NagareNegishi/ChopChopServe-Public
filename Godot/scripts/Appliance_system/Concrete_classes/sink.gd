@@ -24,6 +24,12 @@ func _ready():
 		push_error("Failed to preload water scene in Sink")
 
 
+## Add synchronization properties for the placeable object
+func _add_sync_properties(config: SceneReplicationConfig):
+	super._add_sync_properties(config)
+	config.add_property(NodePath(".:supply_count"))
+
+
 ## Add interactable component to this class
 ## InteractableComponent is scene dependent, can not instantiate from script
 func _setup_interactable():
@@ -57,6 +63,16 @@ func _toggle_bubble(bubble: bool) -> void:
 ## @return: True if washing started
 func wash() -> bool:
 	return start_action()
+
+
+## Provide water, register it with unique name
+## @return: The Water instance provided
+func _provide_water() -> Water:
+	var water = water_scene.instantiate()
+	water.name = prefix + "Water" + str(supply_count)
+	supply_count += 1
+	ApplianceManager.register_item(water, current_owner, water.name)
+	return water
 
 
 ## Check if this appliance can accept the given item
@@ -108,17 +124,7 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 		#--------------------------------------------
 		print("Provide water to pot")
 		#--------------------------------------------
-		var water = water_scene.instantiate()
-		water.name = prefix + "Water" + str(count)
-		count += 1
-		return item.put(water)
-		# var accepted = item.put(water)
-		# if accepted:
-		# 	print("Provided water to pot")
-		# 	return true
-		# else:
-		# 	print("Failed to provide water to pot")
-		# 	return false
+		return item.put(_provide_water())
 
 	# If player has empty plate: depend on if sink can accept it
 	return put_from_player(item)

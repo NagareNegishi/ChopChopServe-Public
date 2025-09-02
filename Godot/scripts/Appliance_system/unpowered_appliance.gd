@@ -19,7 +19,7 @@ var action_timer: Timer
 
 # variable for supplier type
 var prefix: String
-var count: int
+var supply_count: int
 
 
 func _ready():
@@ -31,27 +31,22 @@ func _ready():
 	add_child(action_timer)
 
 
-## Setup multiplayer synchronization, if not already set up
-func setup_multiplayer_sync():
-	super.setup_multiplayer_sync()
-	if multiplayer_sync and multiplayer_sync.replication_config:
-		var config = multiplayer_sync.replication_config
-		config.add_property(NodePath(".:current_status"))
-		config.add_property(NodePath(".:capacity"))
+## Add synchronization properties for the placeable object
+func _add_sync_properties(config: SceneReplicationConfig):
+	super._add_sync_properties(config)
+	config.add_property(NodePath(".:current_status"))
+	config.add_property(NodePath(".:capacity"))
 
 
 ## Set the prefix for the Object supplied by this appliance
 func _set_affixes():
-	count = 1
+	supply_count = 1
 	if current_owner == Owner.TEAM1:
 		prefix = "T1_"
 	elif current_owner == Owner.TEAM2:
 		prefix = "T2_"
 	else:
 		prefix = "T0_"
-	if multiplayer_sync and multiplayer_sync.replication_config:
-		var config = multiplayer_sync.replication_config
-		config.add_property(NodePath(".:count"))
 
 
 ## Place an item onto this appliance
@@ -97,7 +92,7 @@ func _can_accept(item: Node) -> bool:
 	if not item:
 		print("Cannot accept item, item is null")
 		return false
-	if contents.size() >= capacity:
+	if contents_names.size() >= capacity:
 		print("Cannot accept item: ", get_script().get_global_name(), " is at full capacity")
 		return false
 	if not item.get_script():

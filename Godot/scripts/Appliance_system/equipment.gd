@@ -21,14 +21,12 @@ func _ready():
 	super._ready()
 
 
-## Setup multiplayer synchronization, if not already set up
-func setup_multiplayer_sync():
-	super.setup_multiplayer_sync()
-	if multiplayer_sync and multiplayer_sync.replication_config:
-		var config = multiplayer_sync.replication_config
-		config.add_property(NodePath(".:can_use"))
-		config.add_property(NodePath(".:coefficient"))
-		config.add_property(NodePath(".:capacity"))
+## Add synchronization properties for the placeable object
+func _add_sync_properties(config: SceneReplicationConfig):
+	super._add_sync_properties(config)
+	config.add_property(NodePath(".:can_use"))
+	config.add_property(NodePath(".:coefficient"))
+	config.add_property(NodePath(".:capacity"))
 
 
 ## Place an item onto this appliance
@@ -88,7 +86,7 @@ func _can_accept(item: Node) -> bool:
 	if not item:
 		print("Cannot accept item, item is null")
 		return false
-	if contents.size() >= capacity:
+	if contents_names.size() >= capacity:
 		print("Cannot accept item: ", get_script().get_global_name(), " is at full capacity")
 		return false
 	if not item.get_script():

@@ -27,6 +27,12 @@ func _ready():
 	_initialize_supply()
 
 
+## Add synchronization properties for the placeable object
+func _add_sync_properties(config: SceneReplicationConfig):
+	super._add_sync_properties(config)
+	config.add_property(NodePath(".:supply_count"))
+
+
 ## Initialize the supply
 func _initialize_supply():
 	if supply and supply.can_instantiate():
@@ -56,8 +62,9 @@ func take() -> Node:
 	action_timer.start()
 
 	var food = supply.instantiate()
-	food.name = prefix + supply_name + str(count)
-	count += 1
+	food.name = prefix + supply_name + str(supply_count)
+	supply_count += 1
+	ApplianceManager.register_item(food, current_owner, food.name)
 	return food
 
 

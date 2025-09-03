@@ -34,3 +34,12 @@ func get_local_player() -> Player:
 		if child.get_multiplayer_authority() == my_id:
 			return child
 	return null
+
+func get_local_player_by_id(player_id : int) -> Player:
+	if !get_tree().current_scene.get_node("== PLAYERS =="):
+		return null
+	
+	for child : Player in get_tree().current_scene.get_node("== PLAYERS ==").get_children():
+		if child.get_multiplayer_authority() == player_id:
+			return child
+	return null

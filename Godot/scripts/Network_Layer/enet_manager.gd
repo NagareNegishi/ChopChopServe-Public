@@ -131,7 +131,7 @@ func _on_disconnected_from_server():
 
 
 ## Handle incoming data
-func _on_data_received(from_id: int, data: Dictionary):
+func _on_data_received(_from_id: int, data: Dictionary):
 	# print("DEBUG: Received data from : ", from_id, ": ", data, "I am : ", enet_layer.get_my_id())
 	match data.get("type"):
 		"player_list_update":
@@ -177,6 +177,26 @@ func get_my_id() -> int:
 ## @return: True if the current player is the host, false otherwise
 func is_host() -> bool:
 	return enet_layer.is_host()
+
+
+## Get the team ID of the local player
+func get_my_team() -> int:
+	if get_my_id() in team1:
+		return 1
+	elif get_my_id() in team2:
+		return 2
+	return 0
+
+
+## Get the team of a given player
+## @param player_id: The ID of the player
+## @return: The team ID of the player, or 0 if not in a team
+func get_team(player_id: int) -> int:
+	if player_id in team1:
+		return 1
+	elif player_id in team2:
+		return 2
+	return 0
 
 
 ## Get current player list

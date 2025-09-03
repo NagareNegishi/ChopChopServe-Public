@@ -240,7 +240,18 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	if not is_hovered:
 		highlight_component.hide_feedback()
 		return
-	var item = GlobalScript.player.item_in_hand
+
+#---------------------------------------------------------------
+	var player = get_tree().get_first_node_in_group("player")
+	if not player:
+		player = get_tree().current_scene.get_node("Player")
+
+	var item = player.item_in_hand
+#---------------------------------------------------------------
+
+
+
+	# var item = GlobalScript.player.item_in_hand
 	#---------------------------------------------------------------------------
 	if item:
 		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())

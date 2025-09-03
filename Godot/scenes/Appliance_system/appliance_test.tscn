@@ -731,7 +731,6 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 4, 0, 
 [node name="Fryer" parent="NavigationRegion3D/== RSIDE ==/nufryer3" instance=ExtResource("24_kwx2i")]
 using_tscn = true
 unique_name = "11UNNAMED_APPLIANCE"
-current_owner = 1
 
 [node name="nufryer4" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("13_03u44")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -1, 0, -9)

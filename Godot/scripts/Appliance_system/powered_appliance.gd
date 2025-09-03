@@ -64,20 +64,24 @@ func _add_cookware(cookware_script_name: String):
 	put(cookware)
 
 
-## Place an item onto this appliance
+## Place an item onto this appliance, if it can accept it
 ## @param item: The Node to place on this appliance
 ## @return: True if placement was successful, false otherwise
 func put(item: Node) -> bool:
 	if not _can_accept(item):
 		return false
+	_put(item)
+	return true
+
+
+## Place an item onto this appliance
+## @param item: The Node to place on this appliance
+func _put(item: Node) -> void:
 	contents.append(item)
 	add_child(item)
-#-------------------------------------------------------------------------------
 	contents_names.append(item.name)
-#-------------------------------------------------------------------------------
 	if item is Cookware:
 		_put_cookware(item)
-	return true
 
 
 ## Place a Cookware onto this PoweredAppliance, start cooking if applicable
@@ -136,12 +140,6 @@ func _can_accept(item: Node) -> bool:
 		print("Cannot accept item, item has no script")
 		return false
 	return item.get_script().get_global_name() in valid_classes
-	# #--------------------------------------------
-	# var accepted = item.get_script().get_global_name() in valid_classes
-	# if not accepted:
-	# 	print("Cannot accept : ", item.get_script().get_global_name())
-	# return accepted
-	# #--------------------------------------------
 
 
 ## Start cooking process
@@ -181,9 +179,6 @@ func stop_cook() -> bool:
 func _cook() -> bool:
 	for item in contents:
 		if item is Cookware:
-			# #----------------------------------------------------------------------
-			# print("Cooking with: ", item.get_script().get_global_name())
-			# #----------------------------------------------------------------------
 			item.cook(power)
 	return true
 
@@ -266,14 +261,47 @@ func _on_cook_timer_timeout():
 
 ## For Player interaction --------------------------------------------------------------------------
 
+# TODO: need new way to transfer item ownership from player to appliance
+
 func put_request(item: Node) -> void:
+	# locally check first to reduce network calls
 	if not _can_accept(item):
+		return
+	if ENetManager.is_host():
+		_put(item)
 		return
 	_put_as_host.rpc_id(1, ENetManager.get_peer_id(), item.name)
 
-@rpc("any_peer", "call_local", "reliable")
+
+@rpc("any_peer", "call_remote", "reliable")
 func _put_as_host(player_id: int, item_name: String) -> void:
-	pass
+	if not ENetManager.is_host():
+		return
+	# host need check to prevent conflicts/ cheating
+	var item
+	match ENetManager.get_team(player_id):
+		1:
+			item = ApplianceManager.team1_items.get(item_name)
+		2:
+			item = ApplianceManager.team2_items.get(item_name)
+		_:
+			return
+	if not item:
+		print("Item not found: ", item_name)
+		return
+	if not _can_accept(item):
+		return
+	_put(item)
+	#notify_contents_changed.rpc(contents_names)
+
+
+# ## Notify all players (except host) the update of contents
+# ## @param update: The updated contents names
+# @rpc("authority", "call_remote", "reliable")
+# func notify_contents_changed(update: Array[String]):
+# 	_set_contents_names(update)
+
+
 
 ## Place an item onto this appliance from Player
 ## if we could remove Player dependency from this class, we can remove this method
@@ -406,7 +434,18 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	if not is_hovered:
 		highlight_component.hide_feedback()
 		return
-	var item = GlobalScript.player.item_in_hand
+
+
+#---------------------------------------------------------------
+	var player = get_tree().get_first_node_in_group("player")
+	if not player:
+		player = get_tree().current_scene.get_node("Player")
+
+	var item = player.item_in_hand
+#---------------------------------------------------------------
+
+
+	#var item = GlobalScript.player.item_in_hand
 	#---------------------------------------------------------------------------
 	if item:
 		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())

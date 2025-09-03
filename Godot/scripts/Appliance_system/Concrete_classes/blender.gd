@@ -223,6 +223,7 @@ func serve_to_plate(plate: Plate) -> bool:
 	return true
 
 
+## InteractableComponent Signal Handlers -----------------------------------------------------------
 ## Give visual feedback when hovered
 ## @param is_hovered: Whether the item is hovered or not
 func _on_interactable_component_hovered(is_hovered: bool) -> void:
@@ -255,3 +256,4 @@ func get_progress() -> float:
 		return INF
 	return _average_food()
 #---------------------------------------------------------------------------------------------------
+

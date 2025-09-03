@@ -7,12 +7,14 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_prflu"]
 
-[node name="Potato" type="RigidBody3D"]
+[node name="Potato2" type="RigidBody3D"]
 script = ExtResource("1_xba6o")
 
 [node name="Potato" parent="." instance=ExtResource("2_ou20t")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
 
 [node name="PotatoChips" parent="." instance=ExtResource("3_prflu")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
 visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

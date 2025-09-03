@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://0aex3yts1utd"]
+
+[ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="1_n4tm3"]
+[ext_resource type="PackedScene" uid="uid://iwgylemncmgr" path="res://assets/newmodels/furniture/BasicBench.glb" id="2_o34na"]
+
+[node name="Cabinet" instance=ExtResource("1_n4tm3")]
+
+[node name="BasicBench2" parent="." index="3" instance=ExtResource("2_o34na")]

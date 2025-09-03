@@ -2,7 +2,6 @@
 
 importer="texture"
 type="CompressedTexture2D"
-
 uid="uid://dl1no0s7covj1"
 path.s3tc="res://.godot/imported/TRUCKMOVE_TextureMap.png-ed9da1ad3e6f5582a66209e0f3a51df4.s3tc.ctex"
 metadata={
@@ -37,4 +36,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=0
-

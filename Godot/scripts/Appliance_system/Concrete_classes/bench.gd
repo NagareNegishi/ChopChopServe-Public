@@ -3,6 +3,8 @@
 class_name Bench
 extends UnPoweredAppliance
 
+@export var invalid_food: Array[String] = [] ## Class names that can not be placed in this equipment
+
 var item_slots: Array[Vector3] = []  ## Where to place items
 var inflammable_component: Inflammable
 
@@ -16,6 +18,7 @@ func _init():
 ## Setup the bench
 func _ready():
 	super._ready()
+	invalid_food = ["Water"]
 	capacity = 1
 	_setup_item_slots()
 
@@ -67,6 +70,9 @@ func take_at(index: int) -> Node:
 	var item = contents.pop_at(index)
 	remove_child(item)
 	# #--------------------------------------------
+	contents_names.remove_at(index)
+
+
 	# print(item.get_script().get_global_name(), ", is taken from: ", get_script().get_global_name())
 	# #--------------------------------------------
 	return item
@@ -88,13 +94,20 @@ func _can_accept(item: Node) -> bool:
 	var acceptable = super._can_accept(item)
 	if not acceptable:
 		return false
-	return item is Food or item is Equipment or item is Plate
+	return is_valid_food(item) or item is Equipment or item is Plate
 	# #--------------------------------------------
 	# var accepted = item is Food or item is Equipment or item is Plate
 	# if not accepted:
 	# 	print("Cannot accept : ", item.get_script().get_global_name())
 	# return accepted
 	# #--------------------------------------------
+
+
+## Check if food item is valid for the Bench
+func is_valid_food(item: Node) -> bool:
+	if not item is Food:
+		return false
+	return not item.get_script().get_global_name() in invalid_food
 
 
 ## Override unsupported methods to prevent misuse ------------------------------

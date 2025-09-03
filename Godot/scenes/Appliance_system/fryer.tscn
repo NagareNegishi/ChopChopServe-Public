@@ -9,6 +9,9 @@ script = ExtResource("2_kpy1d")
 capacity = 1
 valid_classes = Array[String]([])
 cook_interval = 1.0
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1
 cooking_style = 0
 model_scene = ExtResource("3_woer6")
 

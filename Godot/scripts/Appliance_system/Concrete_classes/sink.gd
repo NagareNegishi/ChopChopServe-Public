@@ -17,11 +17,17 @@ func _ready():
 	capacity = 4
 	# action_interval = 1.0
 	_setup_visual_effects()
-
+	_set_affixes()
 	if water_scene and water_scene.can_instantiate():
 		print("Sink water scene preloaded successfully")
 	else:
 		push_error("Failed to preload water scene in Sink")
+
+
+## Add synchronization properties for the placeable object
+func _add_sync_properties(config: SceneReplicationConfig):
+	super._add_sync_properties(config)
+	config.add_property(NodePath(".:supply_count"))
 
 
 ## Add interactable component to this class
@@ -57,6 +63,16 @@ func _toggle_bubble(bubble: bool) -> void:
 ## @return: True if washing started
 func wash() -> bool:
 	return start_action()
+
+
+## Provide water, register it with unique name
+## @return: The Water instance provided
+func _provide_water() -> Water:
+	var water = water_scene.instantiate()
+	water.name = prefix + "Water" + str(supply_count)
+	supply_count += 1
+	ApplianceManager.register_item(water, current_owner, water.name)
+	return water
 
 
 ## Check if this appliance can accept the given item
@@ -108,15 +124,7 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 		#--------------------------------------------
 		print("Provide water to pot")
 		#--------------------------------------------
-		var water = water_scene.instantiate()
-		return item.put(water)
-		# var accepted = item.put(water)
-		# if accepted:
-		# 	print("Provided water to pot")
-		# 	return true
-		# else:
-		# 	print("Failed to provide water to pot")
-		# 	return false
+		return item.put(_provide_water())
 
 	# If player has empty plate: depend on if sink can accept it
 	return put_from_player(item)
@@ -149,4 +157,3 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	var can_accept = _can_accept(item) or (item is Pot and not item.is_full())
 	highlight_component.show_feedback(can_accept)
 #---------------------------------------------------------------------------------------------------
-

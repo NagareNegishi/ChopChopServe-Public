@@ -23,8 +23,11 @@ func _setup_interactable():
 func _add_chopping_board() -> void:
 	capacity = 1
 	item_slots.clear()
-	chopping_board = ApplianceManager.request_appliance("chopping_board", current_owner)
+	chopping_board = ApplianceFactory._create_appliance("chopping_board")
+	chopping_board.set_appliance_owner(current_owner)
+	chopping_board.name = name + "_chopping_board"
 	add_child(chopping_board)
+	ApplianceManager.register_appliance(chopping_board, current_owner, chopping_board.name)
 	var board_position = Vector3(0.0, size.y * 0.5, 0.0)
 	chopping_board.position = board_position
 	chopping_board.lock()

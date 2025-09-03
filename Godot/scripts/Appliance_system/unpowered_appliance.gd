@@ -15,8 +15,11 @@ enum Status {
 @export var action_interval: float = 1.0 ## action every ? seconds
 
 var current_status: Status = Status.IDLE
-var contents: Array[Node] = []
 var action_timer: Timer
+
+# variable for supplier type
+var prefix: String
+var supply_count: int
 
 
 func _ready():
@@ -28,6 +31,24 @@ func _ready():
 	add_child(action_timer)
 
 
+## Add synchronization properties for the placeable object
+func _add_sync_properties(config: SceneReplicationConfig):
+	super._add_sync_properties(config)
+	config.add_property(NodePath(".:current_status"))
+	config.add_property(NodePath(".:capacity"))
+
+
+## Set the prefix for the Object supplied by this appliance
+func _set_affixes():
+	supply_count = 1
+	if current_owner == Owner.TEAM1:
+		prefix = "T1_"
+	elif current_owner == Owner.TEAM2:
+		prefix = "T2_"
+	else:
+		prefix = "T0_"
+
+
 ## Place an item onto this appliance
 ## @param item: The Node to place on this appliance
 ## @return: True if placement was successful, false otherwise
@@ -36,6 +57,12 @@ func put(item: Node) -> bool:
 		return false
 	contents.append(item)
 	add_child(item)
+
+#-------------------------------------------------------------------------------
+	contents_names.append(item.name)
+#-------------------------------------------------------------------------------
+
+
 	return true
 
 
@@ -45,6 +72,15 @@ func take() -> Node:
 	if contents.is_empty():
 		return null
 	var item = contents.pop_back()
+
+
+#-------------------------------------------------------------------------------
+	if not contents_names.is_empty():
+		contents_names.pop_back()
+#-------------------------------------------------------------------------------
+
+
+
 	remove_child(item)
 	return item
 
@@ -56,7 +92,7 @@ func _can_accept(item: Node) -> bool:
 	if not item:
 		print("Cannot accept item, item is null")
 		return false
-	if contents.size() >= capacity:
+	if contents_names.size() >= capacity:
 		print("Cannot accept item: ", get_script().get_global_name(), " is at full capacity")
 		return false
 	if not item.get_script():
@@ -104,6 +140,11 @@ func put_from_player(item: Node) -> bool:
 	GlobalScript.player.remove_item()
 	contents.append(item)
 	add_child(item)
+
+#-------------------------------------------------------------------------------
+	contents_names.append(item.name)
+#-------------------------------------------------------------------------------
+
 #--------------------------------------------
 	print("Put: ", item.get_script().get_global_name(), " onto: ", get_script().get_global_name())
 #--------------------------------------------

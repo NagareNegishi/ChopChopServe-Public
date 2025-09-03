@@ -9,7 +9,6 @@ func _ready():
 	cooked_mesh = null
 	burnt_mesh = null
 	chopped_mesh = null
-	previous_states=["RAW", "MIXED"]
 	add_to_group("Food")
 	on_state_change()
 	# Spoil time same as super class

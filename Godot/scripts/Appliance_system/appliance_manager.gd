@@ -69,5 +69,3 @@ func get_team_appliances(team: int = 0) -> Array[Appliance]:
 		1: return team1_appliances.duplicate()
 		2: return team2_appliances.duplicate()
 		_: return shared_appliances.duplicate()
-
-

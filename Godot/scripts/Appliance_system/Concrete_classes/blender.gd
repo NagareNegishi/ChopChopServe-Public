@@ -11,9 +11,10 @@ func _init():
 func _ready():
 	super._ready()
 	cooking_style = ApplianceFactory.CookingStyle.BLEND
-	valid_classes = ["Tomato", "Water"]
+	valid_classes = ["Tomato", "Water", "Milk","Cocoa","Flour"]
 	capacity = 4
 	power = 1
+	add_to_group("Appliance")
 
 
 ## Override upgradable setup in concrete appliances
@@ -222,6 +223,7 @@ func serve_to_plate(plate: Plate) -> bool:
 	return true
 
 
+## InteractableComponent Signal Handlers -----------------------------------------------------------
 ## Give visual feedback when hovered
 ## @param is_hovered: Whether the item is hovered or not
 func _on_interactable_component_hovered(is_hovered: bool) -> void:

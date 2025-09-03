@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://ewrdxspvam21"]
+
+[ext_resource type="Script" uid="uid://b2u7yk82gvg1j" path="res://scripts/Food/MenuItems/fish_and_chips.gd" id="1_yv2nc"]
+[ext_resource type="PackedScene" uid="uid://nkr2kfa8xgol" path="res://scripts/Food/MenuItemScenes/fish_and_chips_mesh.tscn" id="2_400ja"]
+
+[node name="FishAndChips" type="Node3D"]
+script = ExtResource("1_yv2nc")
+
+[node name="FishAndChips" parent="." instance=ExtResource("2_400ja")]

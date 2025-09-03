@@ -150,11 +150,3 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	highlight_component.show_feedback(can_accept)
 #---------------------------------------------------------------------------------------------------
 
-
-## Toggle bubble particles effect
-func _toggle_bubble(bubble: bool) -> void:
-	if bubble:
-		bubble_particles.play()
-	else:
-		bubble_particles.stop()
-

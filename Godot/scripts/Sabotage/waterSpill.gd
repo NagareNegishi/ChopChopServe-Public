@@ -5,6 +5,8 @@ extends Area3D
 		
 @onready var reputation_system = ReputationSystem
 
+signal entered_water_spill(body: Node3D)
+
 func start_timer(seconds: float) -> void:
 	# Timer For the Water Spill
 	var timer = Timer.new()
@@ -18,11 +20,13 @@ func _on_timer_timeout() -> void:
 	queue_free()
 
 func _on_body_entered(body: Node3D) -> void:
-	if body is Player:
-		print("player in the water")
-		# Need to make it so the player trips
-		#reputation_system.add_reputation(3)
-	#if body is Costomer:
-		#print("Costomer detected etc")
-		# random chance of the customer tripping logic
-		# needed to be added here !!
+	# Signal to be caught by the player and customers
+	# When player dashes they drop their items
+	# Customers can slip and fall
+	# this causes the team to lose reputation
+	emit_signal("entered_water_spill", body)
+	print("player in the water")
+
+	# maybe need to change the logic around all of this code ??
+	# like if getObject(player or customer) is within thisArea then signal
+	# or something

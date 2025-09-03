@@ -27,6 +27,12 @@ func _ready():
 		put(plate)
 
 
+## Override upgradable setup in concrete appliances
+func _setup_upgradable():
+	super._setup_upgradable()
+	enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
+
+
 # ## Setup cookware slots, should be overridden by subclasses
 # ## Default implementation expect one Cookware slot in the center
 # func _setup_item_slots():
@@ -44,12 +50,7 @@ func _can_accept(item: Node) -> bool:
 	return item is Plate and item.is_ready() # maybe we need different method to check clean and empty
 
 
-## Override upgradable setup in concrete appliances
-func _setup_upgradable():
-	super._setup_upgradable()
-	enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
-
-
+## For Player interaction --------------------------------------------------------------------------
 
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
@@ -68,7 +69,26 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 			print("No plate to take from Cabinet")
 			return false
 	# If player has empty plate: depend on if cabinet can accept it
-	return put(item)
+	return put_from_player(item)
+
+
+## Give visual feedback when hovered
+## @param is_hovered: Whether the item is hovered or not
+func _on_interactable_component_hovered(is_hovered: bool) -> void:
+	if not is_hovered:
+		highlight_component.hide_feedback()
+		return
+	var item = GlobalScript.player.item_in_hand
+	#---------------------------------------------------------------------------
+	if item:
+		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())
+	#---------------------------------------------------------------------------
+	if not item:
+		highlight_component.show_feedback(true)
+		return
+	var can_accept = _can_accept(item)
+	highlight_component.show_feedback(can_accept)
+#---------------------------------------------------------------------------------------------------
 
 
 ## Override unsupported methods to prevent misuse ------------------------------
@@ -76,3 +96,8 @@ func start_action() -> bool:
 	assert(false, "Cabinet does not support starting actions")
 	return false
 #-------------------------------------------------------------------------------
+
+
+
+
+

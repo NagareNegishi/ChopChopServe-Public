@@ -34,16 +34,8 @@ func _ready():
 func put(item: Node) -> bool:
 	if not _can_accept(item):
 		return false
-	# transfer item to appliance
-	GlobalScript.player.remove_item()
 	contents.append(item)
 	add_child(item)
-	#--------------------------------------------
-	print("Put: ", item.get_script().get_global_name(), " onto: ", get_script().get_global_name())
-	print("Contents of ", get_script().get_global_name(), " are: ")
-	for content in contents:
-		print(" --- ", content.get_script().get_global_name())
-	#--------------------------------------------
 	return true
 
 
@@ -98,3 +90,22 @@ func _action() -> bool:
 func _on_action_timer_timeout():
 	current_status = Status.IDLE
 	action_timer.stop()
+
+
+## For Player interaction --------------------------------------------------------------------------
+## Place an item onto this appliance from Player
+## if we could remove Player dependency from this class, we can remove this method
+## @param item: The Node to place on this appliance
+## @return: True if placement was successful, false otherwise
+func put_from_player(item: Node) -> bool:
+	if not _can_accept(item):
+		return false
+	# transfer item to appliance
+	GlobalScript.player.remove_item()
+	contents.append(item)
+	add_child(item)
+#--------------------------------------------
+	print("Put: ", item.get_script().get_global_name(), " onto: ", get_script().get_global_name())
+#--------------------------------------------
+	return true
+#---------------------------------------------------------------------------------------------------

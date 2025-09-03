@@ -39,6 +39,20 @@ func _setup_visual_effects():
 	bubble_particles.set_scale_multiplier(2.0)
 
 
+## Override upgradable setup in concrete appliances
+func _setup_upgradable():
+	super._setup_upgradable()
+	enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
+
+
+## Toggle bubble particles effect
+func _toggle_bubble(bubble: bool) -> void:
+	if bubble:
+		bubble_particles.play()
+	else:
+		bubble_particles.stop()
+
+
 ## Trigger the washing process
 ## @return: True if washing started
 func wash() -> bool:
@@ -70,6 +84,8 @@ func _action() -> bool:
 	return true
 
 
+## For Player interaction --------------------------------------------------------------------------
+
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
@@ -89,11 +105,13 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 
 	# If Player has Pot, provide water
 	if item is Pot:
-		print("Player has pot, provide water")
+		#--------------------------------------------
+		print("Provide water to pot")
+		#--------------------------------------------
 		var water = water_scene.instantiate()
-		return item.player_has(water)
-		# var yes = item.put(water)
-		# if yes:
+		return item.put(water)
+		# var accepted = item.put(water)
+		# if accepted:
 		# 	print("Provided water to pot")
 		# 	return true
 		# else:
@@ -101,7 +119,7 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 		# 	return false
 
 	# If player has empty plate: depend on if sink can accept it
-	return put(item)
+	return put_from_player(item)
 
 
 ## Trigger action, if subclass has action
@@ -114,10 +132,23 @@ func _on_interactable_component_action_use(_is_action: bool) -> void:
 		_toggle_bubble(false)
 
 
-## Override upgradable setup in concrete appliances
-func _setup_upgradable():
-	super._setup_upgradable()
-	enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
+## Give visual feedback when hovered
+## @param is_hovered: Whether the item is hovered or not
+func _on_interactable_component_hovered(is_hovered: bool) -> void:
+	if not is_hovered:
+		highlight_component.hide_feedback()
+		return
+	var item = GlobalScript.player.item_in_hand
+	#---------------------------------------------------------------------------
+	if item:
+		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())
+	#---------------------------------------------------------------------------
+	if not item:
+		highlight_component.set_state(ApplianceHighlight.HighlightState.HOVER)
+		return
+	var can_accept = _can_accept(item) or (item is Pot and not item.is_full())
+	highlight_component.show_feedback(can_accept)
+#---------------------------------------------------------------------------------------------------
 
 
 ## Toggle bubble particles effect
@@ -126,3 +157,4 @@ func _toggle_bubble(bubble: bool) -> void:
 		bubble_particles.play()
 	else:
 		bubble_particles.stop()
+

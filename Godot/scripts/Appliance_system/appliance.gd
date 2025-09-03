@@ -181,7 +181,7 @@ func set_appliance_owner(team_number: int) -> void:
 
 
 func _set_contents_names(new_names: Array[String]):
-	print("I am : ", get_script().get_global_name(), ", Setting contents names is triggered with: ", new_names)
+	print("I am : ", get_script().get_global_name(), ", Setting contents names is triggered with: ", new_names, "------ My ID is: ", ENetManager.get_my_id())
 	contents_names = new_names
 	_update_contents()
 

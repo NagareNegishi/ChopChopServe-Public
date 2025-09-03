@@ -79,7 +79,9 @@ func put(item: Node) -> bool:
 func _put(item: Node) -> void:
 	contents.append(item)
 	add_child(item)
-	contents_names.append(item.name)
+	var update = contents_names.duplicate()
+	update.append(item.name)
+	contents_names = update
 	if item is Cookware:
 		_put_cookware(item)
 
@@ -103,10 +105,12 @@ func take() -> Node:
 	if contents.is_empty() or contents_names.is_empty():
 		return null
 	var item = contents.pop_back()
-	contents_names.pop_back()
 	if item is Cookware:
 		_take_cookware(item)
 	remove_child(item)
+	var update = contents_names.duplicate()
+	update.pop_back()
+	contents_names = update
 	return item
 
 
@@ -291,6 +295,7 @@ func _put_as_host(player_id: int, item_name: String) -> void:
 	player.remove_item()
 	_put(item)
 	print("put item: ", item.name, " as host")
+	_sync_contents.rpc(contents_names)
 
 
 
@@ -313,6 +318,8 @@ func _take_as_host(player_id: int) -> void:
 	if contents.is_empty():
 		stop_cook()
 	print("take item: ", item.name, " as host")
+
+	_sync_contents.rpc(contents_names)
 	get_tree().current_scene.add_child(item)
 	_give_item_to_player.rpc_id(player_id, item.get_path())
 
@@ -325,6 +332,10 @@ func _give_item_to_player(item_path: NodePath) -> void:
 	if item:
 		GlobalScript.get_local_player().pickup_item(item)
 
+
+@rpc("authority", "call_remote", "reliable")
+func _sync_contents(update: Array[String]) -> void:
+	contents_names = update
 
 
 ## Perform action depend on what player is holding

@@ -65,7 +65,7 @@ func _ready():
 	cook_timer.timeout.connect(_on_timer_timeout)
 
 func _on_timer_timeout():
-	print("=== TIMER TICK === is_cooking:", is_cooking, " current_appliance:", current_appliance, " time_power:", time_power)
+	#print("=== TIMER TICK === is_cooking:", is_cooking, " current_appliance:", current_appliance, " time_power:", time_power)
 	if is_cooking:
 		# Process cooking based on current appliance type
 		match current_appliance:
@@ -136,7 +136,7 @@ func check_time(a, b):
 
 # -------------------------TYPES OF COOKING------------------------------------
 func chop():
-	print("remaining chop time, ", CHOPPED_time)
+	#print("remaining chop time, ", CHOPPED_time)
 	CHOPPED_time -=  time_power * cook_timer.wait_time 
 	if check_time(CHOPPED_time, 0):
 		state = foodState.CHOPPED
@@ -149,20 +149,20 @@ func chop():
 
 func boil():
 	BOILED_time -=  time_power * cook_timer.wait_time 
-	print("Cook time remaining: ", BOILED_time, " on food item: ", food_name)
+	#print("Cook time remaining: ", BOILED_time, " on food item: ", food_name)
 	if(BOILED_time <= 0 && BOILED_time > boil_burn):
 		state = foodState.BOILED;
 		if !previous_states.has(convert_enum_to_string(state)):
 			previous_states.append(convert_enum_to_string(state))
 		is_cooked = true
-		print("Food is boiled ", food_name)
+		#print("Food is boiled ", food_name)
 		#emit_signal("changed_food_state")
 		on_state_change()
 		#emit_signal("cooked")
 	if(BOILED_time <= boil_burn): # -BOILED_time is 2 times the time it takes to cook it
 		state = foodState.BURNT
 		#emit_signal("changed_food_state")
-		print("Food is burnt while boiling ", food_name)
+		#print("Food is burnt while boiling ", food_name)
 		on_state_change()
 		stop_cooking()
 

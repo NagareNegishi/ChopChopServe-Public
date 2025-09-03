@@ -78,15 +78,14 @@ func put_from_player(item: Node) -> bool:
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
-func player_has(item: Node) -> bool:
+func player_has(item: Node) -> void:
 	if item:
 		if chopping_board.put_from_player(item):
 			print("Place :", item.get_script().get_global_name(), " onto chopping board")
-			return true
+			return
 		print("Chopping board cannot accept:", item.get_script().get_global_name())
-		return false
+		return
 	GlobalScript.get_local_player().pickup_item(chopping_board.take())
-	return true
 
 
 ## Trigger action, if subclass has action

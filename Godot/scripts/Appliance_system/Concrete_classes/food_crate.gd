@@ -47,7 +47,7 @@ func set_supply(food_name: String):
 	supply = load(scene_path)
 	if supply and supply.can_instantiate():
 		supply_instance = supply.instantiate()
-		print("FoodCrate supply set to: ", scene_path.get_file().get_basename())
+		# print("FoodCrate supply set to: ", scene_path.get_file().get_basename())
 	else:
 		push_error("Failed to load or cannot instantiate scene: " + scene_path)
 
@@ -73,24 +73,24 @@ func take() -> Node:
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
-func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
+func player_has(item: Node) -> void: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
 	if not item:
 		var food = take()
 		if not food:
-			return false
+			return
 		GlobalScript.get_local_player().pickup_item(food)
 		# #----------------------------------------------------------------------
 		# print("Player took food from FoodCrate: ", food.get_script().get_global_name())
 		# print("Player has: ", GlobalScript.player.item_in_hand.get_script().get_global_name())
 		# #----------------------------------------------------------------------
-		return true
+		return
 	if item is Cookware and item._can_accept(supply_instance):
 		var food = take()
 		if not food:
-			return false
+			return
 		item.put(food)
-		return true
-	return false
+		return
+	return
 
 
 ## Give visual feedback when hovered

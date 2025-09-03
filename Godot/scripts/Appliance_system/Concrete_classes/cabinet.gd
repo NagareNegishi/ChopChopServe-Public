@@ -70,7 +70,7 @@ func _can_accept(item: Node) -> bool:
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
-func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
+func player_has(item: Node) -> void: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
 	# If player has nothing: move Plate from Cabinet to player (if exists), return true
 	if not item:
 		var plate = take()
@@ -79,12 +79,12 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 			#----------------------------------------------------------------------
 			print("Player took: ", plate.get_script().get_global_name(), ", from: ", get_script().get_global_name())
 			#----------------------------------------------------------------------
-			return true
+			return
 		else:
 			print("No plate to take from Cabinet")
-			return false
+			return
 	# If player has empty plate: depend on if cabinet can accept it
-	return put_from_player(item)
+	put_from_player(item)
 
 
 ## Give visual feedback when hovered

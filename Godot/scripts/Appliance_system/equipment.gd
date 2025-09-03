@@ -177,11 +177,11 @@ func put_from_player(item: Node) -> bool:
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
-func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
+func player_has(item: Node) -> void: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
 	# If player has nothing: let them take self, return true
 	if not item:
 		GlobalScript.get_local_player().pickup_item(self)
-		return true
+		return
 	# If item_in_hand exists: depend on if equipment can accept it
-	return put_from_player(item)
+	put_from_player(item)
 ## -------------------------------------------------------------------------------------------------

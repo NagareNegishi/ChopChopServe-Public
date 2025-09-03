@@ -177,27 +177,30 @@ func put_from_player(item: Node) -> bool:
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
-func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
+func player_has(item: Node) -> void: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
 #--------------------------------------------
 	print("Player has: ", item, ", Self: ", get_script().get_global_name())
 #--------------------------------------------
 	# If player has nothing, return false
 	if not item:
-		return false
+		return
 
 	# If player has plate: try to serve
 	if item is Plate:
-		return serve_to_plate(item)
+		serve_to_plate(item)
+		return
 
 	# If player has cookware: try to transfer contents
 	if item is Cookware:
 		if is_empty() and _can_accept_all(item.show_contents()):
-			return put_all(item.take_all())
+			put_all(item.take_all())
+			return
 		if item._can_accept_all(contents):
-			return item.put_all(take_all())
+			item.put_all(take_all())
+			return
 
 	# If item_in_hand exists: depend on if Blender can accept it
-	return put_from_player(item)
+	put_from_player(item)
 
 
 ## Check if the target can accept the current contents

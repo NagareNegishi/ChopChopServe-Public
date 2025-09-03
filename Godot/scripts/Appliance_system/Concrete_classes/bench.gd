@@ -144,7 +144,7 @@ func put_from_player(item: Node) -> bool:
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
-func player_has(item: Node) -> bool:
+func player_has(item: Node) -> void:
 #--------------------------------------------
 	print("Player has: ", item, ", Self: ", get_script().get_global_name())
 #--------------------------------------------
@@ -156,23 +156,24 @@ func player_has(item: Node) -> bool:
 			# #----------------------------------------------------------------------
 			# print("Player took: ", taken.get_script().get_global_name(), ", from: ", get_script().get_global_name())
 			# #----------------------------------------------------------------------
-			return true
+			return
 		else:
 			print("Nothing to take from Bench")
-			return false
+			return
 
 	# If player has food: try to put it in Cookware
 	if item is Food:
 		for content in contents:
 			if content is Cookware:
-				return content.player_has(item)
+				content.player_has(item)
+				return
 
 	# If player has plate: try to serve food from Cookware
 	if item is Plate and serve_to_plate(item):
-		return true
+		return
 
 	# If item_in_hand exists: depend on if appliance can accept it
-	return put_from_player(item)
+	put_from_player(item)
 
 
 ## Serve food from Cookware to Plate

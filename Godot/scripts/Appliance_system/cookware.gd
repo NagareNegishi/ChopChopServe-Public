@@ -146,10 +146,11 @@ func put_from_player(item: Node) -> bool:
 ## Perform action depend on what player is holding
 ## @param item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
-func player_has(item: Node) -> bool:
+func player_has(item: Node) -> void:
 	if item is Plate:
-		return serve_to_plate(item)
-	return super.player_has(item)
+		serve_to_plate(item)
+		return
+	super.player_has(item)
 
 
 ## Serve food from Cookware to Plate

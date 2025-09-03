@@ -207,10 +207,9 @@ func _update_contents():
 
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
-## @return: True if action is triggered, false otherwise
-func player_has(_item: Node) -> bool:
+func player_has(_item: Node) -> void:
 	assert(false, "player_has() must be implemented in " + get_class())
-	return false
+
 
 
 ## Called when interacted with and will make the player pick this item up
@@ -243,7 +242,7 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	var item = GlobalScript.get_local_player().item_in_hand
 	#---------------------------------------------------------------------------
 	if item:
-		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())
+		print("Player with ID: ", ENetManager.get_my_id(), " has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())
 	#---------------------------------------------------------------------------
 	if not item:
 		highlight_component.set_state(ApplianceHighlight.HighlightState.HOVER)

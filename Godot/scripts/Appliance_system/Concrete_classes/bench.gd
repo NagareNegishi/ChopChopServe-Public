@@ -152,7 +152,7 @@ func player_has(item: Node) -> bool:
 	if not item:
 		var taken = take()
 		if taken:
-			GlobalScript.player.pickup_item(taken)
+			GlobalScript.get_local_player().pickup_item(taken)
 			# #----------------------------------------------------------------------
 			# print("Player took: ", taken.get_script().get_global_name(), ", from: ", get_script().get_global_name())
 			# #----------------------------------------------------------------------

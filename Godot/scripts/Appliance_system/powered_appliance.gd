@@ -311,7 +311,7 @@ func put_from_player(item: Node) -> bool:
 	if not _can_accept(item):
 		return false
 	# transfer item to appliance
-	GlobalScript.player.remove_item()
+	GlobalScript.get_local_player().remove_item()
 	contents.append(item)
 	add_child(item)
 #-------------------------------------------------------------------------------
@@ -344,7 +344,7 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 			get_tree().current_scene.add_child(cookware)
 			print("Path when at scene root: ", cookware.get_path())
 
-			GlobalScript.player.pickup_item(cookware)
+			GlobalScript.get_local_player().pickup_item(cookware)
 			print("Path after pickup: ", cookware.get_path())
 			# #----------------------------------------------------------------------
 			# print("Player took: ", cookware.get_script().get_global_name(), ", from: ", get_script().get_global_name())
@@ -435,17 +435,7 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 		highlight_component.hide_feedback()
 		return
 
-
-#---------------------------------------------------------------
-	var player = get_tree().get_first_node_in_group("player")
-	if not player:
-		player = get_tree().current_scene.get_node("Player")
-
-	var item = player.item_in_hand
-#---------------------------------------------------------------
-
-
-	#var item = GlobalScript.player.item_in_hand
+	var item = GlobalScript.get_local_player().item_in_hand
 	#---------------------------------------------------------------------------
 	if item:
 		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())

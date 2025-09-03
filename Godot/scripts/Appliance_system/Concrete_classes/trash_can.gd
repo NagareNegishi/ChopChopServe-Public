@@ -34,7 +34,7 @@ func throw(item: Node) -> bool:
 		current_status = Status.USING
 		action_timer.start()
 		# Remove from player and destroy immediately
-		GlobalScript.player.remove_item()
+		GlobalScript.get_local_player().remove_item()
 		item.queue_free()
 		#--------------------------------------------
 		print("Threw away: ", item.get_script().get_global_name())
@@ -91,7 +91,7 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	if not is_hovered:
 		highlight_component.hide_feedback()
 		return
-	var item = GlobalScript.player.item_in_hand
+	var item = GlobalScript.get_local_player().item_in_hand
 	#---------------------------------------------------------------------------
 	if item:
 		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())

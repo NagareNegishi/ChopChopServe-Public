@@ -155,7 +155,7 @@ func put_from_player(item: Node) -> bool:
 	if not _can_accept(item):
 		return false
 	# transfer item to appliance
-	GlobalScript.player.remove_item() # if we only put item from players hand
+	GlobalScript.get_local_player().remove_item() # if we only put item from players hand
 	add_child(item)
 	contents.append(item)
 
@@ -246,7 +246,7 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	if not is_hovered:
 		highlight_component.hide_feedback()
 		return
-	var item = GlobalScript.player.item_in_hand
+	var item = GlobalScript.get_local_player().item_in_hand
 	#---------------------------------------------------------------------------
 	if item:
 		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())

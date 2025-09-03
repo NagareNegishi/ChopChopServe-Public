@@ -85,7 +85,7 @@ func player_has(item: Node) -> bool:
 			return true
 		print("Chopping board cannot accept:", item.get_script().get_global_name())
 		return false
-	GlobalScript.player.pickup_item(chopping_board.take())
+	GlobalScript.get_local_player().pickup_item(chopping_board.take())
 	return true
 
 

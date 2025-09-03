@@ -163,7 +163,7 @@ func put_from_player(item: Node) -> bool:
 	if not _can_accept(item):
 		return false
 	# transfer item to appliance
-	GlobalScript.player.remove_item()
+	GlobalScript.get_local_player().remove_item()
 	contents.append(item)
 	add_child(item)
 
@@ -180,7 +180,7 @@ func put_from_player(item: Node) -> bool:
 func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
 	# If player has nothing: let them take self, return true
 	if not item:
-		GlobalScript.player.pickup_item(self)
+		GlobalScript.get_local_player().pickup_item(self)
 		return true
 	# If item_in_hand exists: depend on if equipment can accept it
 	return put_from_player(item)

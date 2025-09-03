@@ -16,15 +16,30 @@ func _init():
 func _ready():
 	super._ready()
 	capacity = 4
+	_set_affixes()
 	# _setup_item_slots()
 	if plate_scene and plate_scene.can_instantiate():
 		print("Cabinet plate scene preloaded successfully")
 	else:
 		push_error("Failed to preload plate scene in Cabinet")
 	for i in range(capacity):
-		var plate = plate_scene.instantiate()
-		add_child(plate)
-		put(plate)
+		put(_provide_plate())
+
+
+## Provide plate, register it with unique name
+## @return: The Plate instance provided
+func _provide_plate() -> Plate:
+	var plate = plate_scene.instantiate()
+	plate.name = prefix + plate.get_script().get_global_name() + str(supply_count)
+	supply_count += 1
+	ApplianceManager.register_item(plate, current_owner, plate.name)
+	return plate
+
+
+## Add synchronization properties for the placeable object
+func _add_sync_properties(config: SceneReplicationConfig):
+	super._add_sync_properties(config)
+	config.add_property(NodePath(".:supply_count"))
 
 
 ## Override upgradable setup in concrete appliances

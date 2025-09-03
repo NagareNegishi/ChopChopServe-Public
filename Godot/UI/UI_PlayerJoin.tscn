@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://geqq8dhkrryc"]
+[gd_scene load_steps=4 format=3 uid="uid://geqq8dhkrryc"]
 
 [ext_resource type="Texture2D" uid="uid://2pguohnmuvmw" path="res://assets/textures/HUD/cHEFhAT.png" id="1_3hohr"]
 [ext_resource type="Script" uid="uid://cgb3gdc7yi0s1" path="res://scripts/UI/ui_player_join.gd" id="1_u8vah"]
 [ext_resource type="Texture2D" uid="uid://bpnik5eevb8f7" path="res://assets/textures/HUD/Chef.png" id="2_gjcho"]
-[ext_resource type="FontFile" uid="uid://dxc6n0umgi0q4" path="res://assets/fonts/Jua-Regular.ttf" id="2_vccva"]
 
 [node name="UiPlayerJoin" type="Control"]
 layout_mode = 3
@@ -80,69 +79,16 @@ grow_vertical = 2
 texture = ExtResource("2_gjcho")
 expand_mode = 2
 
-[node name="Name_Shadow" type="ColorRect" parent="."]
-modulate = Color(0.247059, 0.247059, 0.247059, 1)
+[node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -44.0
-offset_top = 38.0
-offset_right = 47.0
-offset_bottom = 56.0
+offset_left = -26.0
+offset_top = 45.0
+offset_right = 26.0
+offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Name" type="ColorRect" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -45.0
-offset_top = 36.0
-offset_right = 46.0
-offset_bottom = 54.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Name_Inner" type="ColorRect" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -43.0
-offset_top = 38.0
-offset_right = 44.0
-offset_bottom = 52.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -44.5
-offset_top = 37.0
-offset_right = 44.5
-offset_bottom = 53.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/outline_size = 1
-theme_override_constants/shadow_outline_size = 1
-theme_override_fonts/font = ExtResource("2_vccva")
-theme_override_font_sizes/font_size = 11
-text = "MitchyCakez"
-horizontal_alignment = 1
-vertical_alignment = 1

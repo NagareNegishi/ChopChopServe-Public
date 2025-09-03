@@ -1839,6 +1839,48 @@ _subresources={
 "use_external/enabled": true,
 "use_external/path": "uid://d1mru8ywyt58h"
 }
+},
+"meshes": {
+"TRUCKMOVE_Circle": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/newmodels/animations/TRUCKMOVE_Circle.tres"
+},
+"TRUCKMOVE_Circle_004": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/newmodels/animations/TRUCKMOVE_Circle_004.tres"
+},
+"TRUCKMOVE_Circle_005": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/newmodels/animations/TRUCKMOVE_Circle_005.tres"
+},
+"TRUCKMOVE_Circle_006": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/newmodels/animations/TRUCKMOVE_Circle_006.tres"
+},
+"TRUCKMOVE_Circle_007": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/newmodels/animations/TRUCKMOVE_Circle_007.tres"
+}
 }
 }
 gltf/naming_version=1

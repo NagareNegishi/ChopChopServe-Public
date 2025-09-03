@@ -223,21 +223,6 @@ func serve_to_plate(plate: Plate) -> bool:
 	return true
 
 
-
-# Functions for Sabotage System---------------------------------------------------------------------
-
-## Get the current progress of cookwares
-## Note: Only use it when PoweredAppliance can be operated
-## Note: Progress is defined by the `cook_time` of `Food` -> smaller values are more progressed
-## @return: The progress of the cooking process
-#func get_progress() -> float:
-	#if is_empty():
-#<<<<<<< HEAD
-		#return INF
-	#return _average_food()
-#---------------------------------------------------------------------------------------------------
-
-
 ## InteractableComponent Signal Handlers -----------------------------------------------------------
 ## Give visual feedback when hovered
 ## @param is_hovered: Whether the item is hovered or not
@@ -258,13 +243,6 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 		return
 	highlight_component.show_feedback(_can_accept(item))
 ## -------------------------------------------------------------------------------------------------
-
-#=======
-		#return int(INF)
-	#return average_food()
-##---------------------------------------------------------------------------------------------------
-#>>>>>>> 4a78761 (Added ability to make brownies and fish and chips and edited some appliances to accept food types #3 #6)
-
 
 
 # Functions for Sabotage System---------------------------------------------------------------------

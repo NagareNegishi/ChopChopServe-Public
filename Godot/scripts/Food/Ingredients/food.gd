@@ -303,11 +303,11 @@ func set_cook_time(time: float, style: ApplianceFactory.CookingStyle):
 			MIXED_time = time
 			
 		ApplianceFactory.CookingStyle.BOIL:
-			print("Old boil time: ", BOILED_time)
 			BOILED_time = time
-			print("New boil time: ", BOILED_time)
+			
 		ApplianceFactory.CookingStyle.DEEP_FRY, ApplianceFactory.CookingStyle.PAN_FRY:
 			FRIED_time = time
+			
 		_:
 			push_error("Unkown cooking style passed to get_cooking_style in food.gd")
 

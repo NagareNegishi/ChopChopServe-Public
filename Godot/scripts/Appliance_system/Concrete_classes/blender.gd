@@ -164,11 +164,11 @@ func serve_to_plate(plate: Plate) -> bool:
 ## Note: Only use it when PoweredAppliance can be operated
 ## Note: Progress is defined by the `cook_time` of `Food` -> smaller values are more progressed
 ## @return: The progress of the cooking process
-func get_progress() -> float:
-	if is_empty():
-<<<<<<< HEAD
-		return INF
-	return _average_food()
+#func get_progress() -> float:
+	#if is_empty():
+#<<<<<<< HEAD
+		#return INF
+	#return _average_food()
 #---------------------------------------------------------------------------------------------------
 
 
@@ -190,8 +190,8 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	var can_accept = _can_accept(item)
 	highlight_component.show_feedback(can_accept)
 ## -------------------------------------------------------------------------------------------------
-=======
-		return int(INF)
-	return average_food()
-#---------------------------------------------------------------------------------------------------
->>>>>>> 4a78761 (Added ability to make brownies and fish and chips and edited some appliances to accept food types #3 #6)
+#=======
+		#return int(INF)
+	#return average_food()
+##---------------------------------------------------------------------------------------------------
+#>>>>>>> 4a78761 (Added ability to make brownies and fish and chips and edited some appliances to accept food types #3 #6)

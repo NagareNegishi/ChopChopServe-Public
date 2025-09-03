@@ -11,9 +11,9 @@ func _init():
 	ingredients = ["Flour", "Cocoa", "Milk"]
 	
 	ingredient_states = {
-		"Flour": ["RAW","MIXED"],
-		"Cocoa": ["RAW","MIXED"],
-		"Milk": ["RAW", "MIXED"]
+		"Flour": ["RAW","MIXED","BAKED"],
+		"Cocoa": ["RAW","MIXED","BAKED"],
+		"Milk": ["RAW", "MIXED","BAKED"]
 	}
 	is_available = true
 

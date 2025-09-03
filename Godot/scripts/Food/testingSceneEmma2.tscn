@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://d0gukrfpslja6"]
+[gd_scene load_steps=15 format=3 uid="uid://d0gukrfpslja6"]
 
 [ext_resource type="PackedScene" uid="uid://dvn4ytv3ro6ec" path="res://scripts/Food/IngredientScenes/Tomato.tscn" id="1_akbwx"]
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="2_l4sy3"]
@@ -9,6 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://buwb1io8j33ph" path="res://scripts/Food/IngredientScenes/Milk.tscn" id="7_4gwwl"]
 [ext_resource type="PackedScene" uid="uid://6d5c2oekevkx" path="res://scripts/Food/IngredientScenes/Fish.tscn" id="9_4gwwl"]
 [ext_resource type="PackedScene" uid="uid://ckiyjl6dexd4g" path="res://scripts/Food/IngredientScenes/Potato.tscn" id="9_eyb3j"]
+[ext_resource type="PackedScene" uid="uid://pee1rah6hbep" path="res://scenes/Appliance_system/stove_with_pan.tscn" id="10_wf3k0"]
+[ext_resource type="PackedScene" uid="uid://dbeboubu5gkhe" path="res://scenes/Appliance_system/fryer.tscn" id="11_65dra"]
+[ext_resource type="PackedScene" uid="uid://df6cemvjo3grw" path="res://scenes/Appliance_system/chop_table.tscn" id="12_jbebj"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_l4sy3"]
 size = Vector3(30, 0.03, 30)
@@ -34,6 +37,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0183344, 0)
 shape = SubResource("BoxShape3D_l4sy3")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Platform"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.536898, -0.427182, 0.133972)
 mesh = SubResource("BoxMesh_g72bx")
 
 [node name="Tomato" parent="." instance=ExtResource("1_akbwx")]
@@ -65,3 +69,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 2)
 
 [node name="Fish" parent="." instance=ExtResource("9_4gwwl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.25316)
+
+[node name="StoveWithPan" parent="." instance=ExtResource("10_wf3k0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.22778, 0.0234718, -3.92019)
+
+[node name="Fryer" parent="." instance=ExtResource("11_65dra")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.364217, -0.0033343, -3.96254)
+
+[node name="ChopTable" parent="." instance=ExtResource("12_jbebj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.07605, 0.0331886, -3.90914)

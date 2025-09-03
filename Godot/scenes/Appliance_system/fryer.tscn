@@ -12,7 +12,4 @@ cook_interval = 1.0
 cooking_style = 0
 model_scene = ExtResource("3_woer6")
 
-[node name="CollisionShape3D" parent="." index="0"]
-debug_color = Color(1, 0.764706, 0.192157, 1)
-
 [node name="DeepFryer" parent="." index="3" instance=ExtResource("3_woer6")]

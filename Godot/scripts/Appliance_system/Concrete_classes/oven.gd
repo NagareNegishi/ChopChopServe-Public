@@ -32,4 +32,3 @@ func _setup_upgradable():
 func _setup_inflammable():
 	inflammable_component = Inflammable.new()
 	add_child(inflammable_component)
-

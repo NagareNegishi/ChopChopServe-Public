@@ -198,9 +198,8 @@ func serve_to_plate(plate: Plate) -> bool:
 
 	# print("Contents of : ", cookware.get_script().get_global_name(), " Before serving: ", cookware.contents)
 	plate.add_list_items(cookware.take_all()) # Method in Plate, takes Array of Food
-	# #----------------------------------------------------------------------
-	# print("Contents of : ", cookware.get_script().get_global_name(), " After serving: ", cookware.contents)
-	# print("Cookware :", cookware.get_script().get_global_name(), ", served to: ", plate.get_script().get_global_name())
-	# #----------------------------------------------------------------------
+	#----------------------------------------------------------------------
+	print("Contents of : ", cookware.get_script().get_global_name(), " After serving: ", cookware.contents)
+	print("Cookware :", cookware.get_script().get_global_name(), ", served to: ", plate.get_script().get_global_name())
+	#----------------------------------------------------------------------
 	return true
-#---------------------------------------------------------------------------------------------------

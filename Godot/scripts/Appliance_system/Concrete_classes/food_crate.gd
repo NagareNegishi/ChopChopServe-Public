@@ -128,6 +128,7 @@ func start_action() -> bool:
 	assert(false, "Food Crate does not support starting actions")
 	return false
 
+
 func put_from_player(_item: Node) -> bool:
 	assert(false, "Food Crate does not support putting items")
 	return false

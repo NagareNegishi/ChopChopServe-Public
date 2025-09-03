@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://b4qjni3x30ew" path="res://assets/textures/HUD/YBottle.png" id="4_f2wx0"]
 [ext_resource type="PackedScene" uid="uid://cpf68rvd2ht5y" path="res://UI/UI_GameState.tscn" id="4_uk570"]
 
-
 [node name="HUD" type="Control"]
 layout_mode = 3
 anchors_preset = 15

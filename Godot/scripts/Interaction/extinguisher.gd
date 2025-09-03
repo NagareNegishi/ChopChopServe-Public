@@ -21,9 +21,8 @@ func _physics_process(_delta: float) -> void:
 	_extingush()
 
 func _can_extingush() -> bool:
-	var appliance : Appliance = $ExtinguishRange.get_collider()
 	return (!$ExtinguishRange.is_colliding() && 
-	appliance)
+	$ExtinguishRange.get_collider() is Appliance)
 
 
 ## Will extingush the fire from appliance the line trace is hitting if valid

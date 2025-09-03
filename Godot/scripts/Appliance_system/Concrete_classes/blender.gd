@@ -11,9 +11,10 @@ func _init():
 func _ready():
 	super._ready()
 	cooking_style = ApplianceFactory.CookingStyle.BLEND
-	valid_classes = ["Tomato", "Water"]
+	valid_classes = ["Tomato", "Water", "Milk","Cocoa","Flour"]
 	capacity = 4
 	power = 1
+	add_to_group("Appliance")
 
 
 ## Override upgradable setup in concrete appliances
@@ -254,4 +255,3 @@ func get_progress() -> float:
 		return INF
 	return _average_food()
 #---------------------------------------------------------------------------------------------------
-

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbfyjdwv7bhtv"]
+
+[ext_resource type="PackedScene" uid="uid://dc1jlqvjwwg0x" path="res://assets/models/food/ingredients/raw/Fish.glb" id="1_5klyf"]
+
+[node name="raw_fish" instance=ExtResource("1_5klyf")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)

@@ -6,6 +6,5 @@ func _ready():
 	spoil_time = 150
 	raw_mesh = $Cocoa
 	mixed_mesh = $Cocoa
-	previous_states = ["RAW", "MIXED"]
 	add_to_group("Food")
 	on_state_change()

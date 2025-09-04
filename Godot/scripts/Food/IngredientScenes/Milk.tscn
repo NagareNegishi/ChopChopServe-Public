@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://buwb1io8j33ph"]
+
+[ext_resource type="Script" uid="uid://cp0hc6tgnaw7f" path="res://scripts/Food/Ingredients/milk.gd" id="1_il8k8"]
+[ext_resource type="PackedScene" uid="uid://bntp2jq70snlr" path="res://scripts/Food/IngredientScenes/milk_mesh.tscn" id="2_eij10"]
+[ext_resource type="PackedScene" uid="uid://cy1s0o2ip2hob" path="res://scenes/Interaction/InteractableComponent.tscn" id="3_inqbr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b0yn0"]
+
+[node name="Milk" type="RigidBody3D"]
+script = ExtResource("1_il8k8")
+
+[node name="Milk" parent="." instance=ExtResource("2_eij10")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -0.342544, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_b0yn0")
+
+[node name="InteractableComponent" parent="." instance=ExtResource("3_inqbr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00561047, -0.0017208, 0)
+is_pickup = true
+
+[connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]
+[connection signal="hovered" from="InteractableComponent" to="." method="_on_interactable_component_hovered"]
+[connection signal="interacted" from="InteractableComponent" to="." method="_on_interactable_component_interacted"]
+[connection signal="toggle_collision" from="InteractableComponent" to="." method="_on_interactable_component_toggle_collision"]

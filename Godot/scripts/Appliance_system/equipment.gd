@@ -10,9 +10,9 @@ extends Appliance
 @export_group("Equipment Settings")
 @export var coefficient: float = 1.0 ## Cooking efficiency modifier (1.0 = normal)
 @export var capacity: int = 1 ## Maximum number of items this appliance can hold / deal with
-@export var valid_food: Array[String] = [] ## Class names that can be placed in (Recommended)
+@export var valid_food: Array[String] = [] ## Class names that can be placed in this equipment
 
-var contents: Array[Node] = []
+
 var can_use: bool = false
 
 
@@ -21,19 +21,27 @@ func _ready():
 	super._ready()
 
 
+## Add synchronization properties for the placeable object
+func _add_sync_properties(config: SceneReplicationConfig):
+	super._add_sync_properties(config)
+	config.add_property(NodePath(".:can_use"))
+	config.add_property(NodePath(".:coefficient"))
+	config.add_property(NodePath(".:capacity"))
+
+
 ## Place an item onto this appliance
 ## @param item: The Node to place on this appliance
 ## @return: True if placement was successful, false otherwise
 func put(item: Node) -> bool:
 	if not _can_accept(item):
 		return false
-	# transfer item to appliance
-	GlobalScript.player.remove_item()
 	contents.append(item)
 	add_child(item)
-#--------------------------------------------
-	print("Put: ", item.get_script().get_global_name(), " onto: ", get_script().get_global_name())
-#--------------------------------------------
+
+#-------------------------------------------------------------------------------
+	contents_names.append(item.name)
+#-------------------------------------------------------------------------------
+
 	return true
 
 
@@ -43,6 +51,13 @@ func take() -> Node:
 	if contents.is_empty():
 		return null
 	var item = contents.pop_back()
+
+#-------------------------------------------------------------------------------
+	if not contents_names.is_empty():
+		contents_names.pop_back()
+#-------------------------------------------------------------------------------
+
+
 	remove_child(item)
 	return item
 
@@ -50,10 +65,17 @@ func take() -> Node:
 ## Remove and return all items
 ## @return: Array of all items that were removed
 func take_all() -> Array[Node]:
+	finish_cook()
 	var all_items = contents
 	for item in all_items:
 		remove_child(item)
 	contents = []
+
+	#-----------------------------------
+	contents_names = []
+#-----------------------------------
+
+
 	return all_items
 
 
@@ -64,19 +86,19 @@ func _can_accept(item: Node) -> bool:
 	if not item:
 		print("Cannot accept item, item is null")
 		return false
-	if contents.size() >= capacity:
+	if contents_names.size() >= capacity:
 		print("Cannot accept item: ", get_script().get_global_name(), " is at full capacity")
 		return false
 	if not item.get_script():
 		print("Cannot accept item, item has no script")
 		return false
-	# item.get_script().get_global_name() in valid_food
-	#--------------------------------------------
-	var accepted = item.get_script().get_global_name() in valid_food
-	if not accepted:
-		print("Cannot accept : ", item.get_script().get_global_name())
-	return accepted
-	#--------------------------------------------
+	return item.get_script().get_global_name() in valid_food
+	# #--------------------------------------------
+	# var accepted = item.get_script().get_global_name() in valid_food
+	# if not accepted:
+	# 	print("Cannot accept : ", item.get_script().get_global_name())
+	# return accepted
+	# #--------------------------------------------
 
 
 ## Perform cooking logic
@@ -95,9 +117,9 @@ func finish_cook() -> bool:
 	for item in contents:
 		if item is Food:
 			item.stop_cooking()
-	#----------------------------------------------------------------------
-			print("stop_cooking() is called in: ", item.get_script().get_global_name())
-	#----------------------------------------------------------------------
+	# #----------------------------------------------------------------------
+	# 		print("stop_cooking() is called in: ", item.get_script().get_global_name())
+	# #----------------------------------------------------------------------
 	return true
 
 
@@ -105,6 +127,18 @@ func finish_cook() -> bool:
 ## @return: True if equipment is empty, false otherwise
 func is_empty() -> bool:
 	return contents.is_empty()
+
+
+## Check if this equipment is full
+## @return: True if equipment is full, false otherwise
+func is_full() -> bool:
+	return contents.size() >= capacity
+
+
+## Show the contents of this equipment
+## @return: Array of all items in this equipment as copies
+func show_contents() -> Array[Node]:
+	return contents.duplicate()
 
 
 ## Check if this equipment can be used
@@ -119,26 +153,35 @@ func set_can_use(value: bool):
 	can_use = value
 
 
+## For Player interaction --------------------------------------------------------------------------
+
+## Place an item onto this appliance from Player
+## if we could remove Player dependency from this class, we can remove this method
+## @param item: The Node to place on this appliance
+## @return: True if placement was successful, false otherwise
+func put_from_player(item: Node) -> bool:
+	if not _can_accept(item):
+		return false
+	# transfer item to appliance
+	GlobalScript.player.remove_item()
+	contents.append(item)
+	add_child(item)
+
+#-------------------------------------------------------------------------------
+	contents_names.append(item.name)
+#-------------------------------------------------------------------------------
+
+	return true
+
+
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
 func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
-#--------------------------------------------
-	print("Player has: ", item, ", Self: ", get_script().get_global_name())
-#--------------------------------------------
 	# If player has nothing: let them take self, return true
 	if not item:
 		GlobalScript.player.pickup_item(self)
-		print("Player tried to pick up equipment: ", get_script().get_global_name())
 		return true
-
-	# let player decide how to handle drop!!!!!!!!!!!!!!!!!!!!!!!!!!
-	# If item_in_hand is self: let them drop it, return true
-	# elif item == self:
-	# 	GlobalScript.player.drop_item(false)
-	# 	print("Player dropped equipment: ", self.get_script().get_global_name())
-	# 	return true
-
-
 	# If item_in_hand exists: depend on if equipment can accept it
-	return put(item)
+	return put_from_player(item)
+## -------------------------------------------------------------------------------------------------

@@ -172,7 +172,7 @@ size = Vector3(50, 5, 45)
 material = ExtResource("1_d2eau")
 
 [node name="PlayerCar" parent="." instance=ExtResource("1_2io33")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.51444, 0.827044, -0.0166001)
+transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 2.51444, 0.827044, -0.0166001)
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.00272365, -0.563709, 0.825969, -0.00265669, 0.825965, 0.563715, -0.999993, -0.00372971, 0.000752039, -4.65642, 13.8183, -3.87403)

@@ -1,21 +1,23 @@
 extends MenuItem
-class_name Brownies
+class_name Brownie
 
 # Registers this class in the correct arrays in the superclass
 @warning_ignore("unused_private_class_variable")
-static var _auto_register = MenuItem.register(Brownies)
+static var _auto_register = MenuItem.register(Brownie)
 @warning_ignore("unused_private_class_variable")
-static var _type_register = MenuItem.register_type(MenuItem.deserts, Brownies.new())
+static var _type_register = MenuItem.register_type(MenuItem.deserts, Brownie.new())
 
-func _ready():
+func _init():
 	ingredients = ["Flour", "Cocoa", "Milk"]
 	
 	ingredient_states = {
-		"Flour": ["RAW","BLENDED"],
-		"Cocoa": ["RAW","BLENDED"],
-		"Milk": ["RAW", "BLENDED"]
+		"Flour": ["RAW","MIXED","BAKED"],
+		"Cocoa": ["RAW","MIXED","BAKED"],
+		"Milk": ["RAW", "MIXED","BAKED"]
 	}
-	
-	cooked_mesh_good = null
+	is_available = true
+
+func _ready():
+	cooked_mesh_good = $Brownie
 	cooked_mesh_bad = null
 	cooked_mesh_burnt = null

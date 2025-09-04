@@ -1,7 +1,10 @@
 # appliance_factory.gd
 ## IMPORTANT: All concrete appliances MUST BE in the defined PATH!!
-## to be AutoLoaded as ApplianceFactory, expected used example:
-## var appliance = ApplianceFactory.create_appliance("stove")
+## to be AutoLoaded as ApplianceFactory.
+## However, most methods are ApplianceManager use only.
+
+## It can be used for testing, for example:
+## var appliance = ApplianceFactory._create_appliance("stove")
 ## kitchen.add_child(appliance)
 ## appliance.place_at(target_position)
 extends Node
@@ -27,37 +30,46 @@ var book: Dictionary = {}
 
 ## Setup the factory
 func _ready():
-	register_appliances()
-	print_book()
+	_register_appliances()
+	# print_book()
+
+	ApplianceManager.appliance_created.connect(_on_test_appliance_created)
 
 
+## Note: only used by ApplianceManager
 ## Create an appliance instance of the given type
 ## @param type: Name of the appliance type to create
 ## @return: Instance of the appliance or null if not found
-func create_appliance(type: String) -> Appliance:
-	if not book.has(type):
-		push_error("Appliance type '%s' not registered!" % type)
-		return null
+func _create_appliance(type: String) -> Appliance:
 	var instance = base_scene.instantiate()
-	instance.set_script(book[type])
-	if instance is Appliance:
-		return instance
-	push_error("Registered type '%s' is not an Appliance!" % type)
-	return null
+	instance.set_script(book[type].script)
+	return instance
 
 
 ## Register a new appliance type with the factory
 ## @param type: Name of the appliance type
 ## @param script: Script of appliance, must match with the type
-func register_appliance(type: String, script: Script):
+func _register_appliance(type: String, script: Script):
 	if not script.can_instantiate():
 		push_error("Script '%s' cannot be instantiated!" % type)
 		return
-	book[type] = script
+	# Little wasteful, but need to access instance variables
+	var temp_instance = base_scene.instantiate()
+	temp_instance.set_script(script)
+	if temp_instance is Appliance:
+		var price = temp_instance.get_price()
+		book[type] = {
+			"script": script,
+			"price": price
+		}
+		temp_instance.queue_free()
+	else:
+		temp_instance.queue_free()
+		push_error("Registered type '%s' is not an Appliance!" % type)
 
 
 ## Register all appliances in the defined directory
-func register_appliances():
+func _register_appliances():
 	var dir: DirAccess = DirAccess.open(PATH)
 	if not dir:
 		push_error("Cannot open directory: " + PATH)
@@ -70,71 +82,53 @@ func register_appliances():
 			var script_name = file_name.get_basename()
 			var script: Script = load(PATH + file_name)
 			if script:
-				register_appliance(script_name, script)
+				_register_appliance(script_name, script)
 			else:
 				push_warning("Failed to load script: " + file_name)
 		file_name = dir.get_next()
+
+
+## Provide the list of valid input for create_appliance()
+## @return: Array of strings that can be used with create_appliance()
+func get_options() -> Array[String]:
+	return book.keys()
+
+
+
+
+
+
+
+# for testing --------------------------------------------------------------------------------------
 
 
 ## Print the registered appliances in the factory
 func print_book():
 	print("Registered appliances:")
 	for appliance_name in book:
-		var script = book[appliance_name]
-		print("- %s -> %s" % [appliance_name, script.get_global_name()])
-
-
-
-
-
-
-
-
-## Spawn appliance in front of the player for testing
-func spawn_test_appliance(appliance_type: String):
-	var appliance = create_appliance(appliance_type)
-	if not appliance:
-		print("Failed to spawn: ", appliance_type)
-		return
-	
-	# Find the player node
-	var player = get_tree().get_first_node_in_group("player")
-	if not player:
-		player = get_tree().current_scene.get_node("Player")
-	if player:
-		# Get player's position and forward direction
-		var player_pos = player.global_position
-		var player_forward = -player.global_transform.basis.z
-		# Spawn distance in front of player
-		var spawn_distance = 2.0  # Adjust this value as needed
-		var spawn_position = player_pos + (player_forward * spawn_distance)
-		spawn_position.y = 1.0
-		get_tree().current_scene.add_child(appliance)
-		appliance.global_position = spawn_position
-		print("Spawned %s in front of player at: %s" % [appliance_type, spawn_position])
-	else:
-		get_tree().current_scene.add_child(appliance)
-		appliance.global_position = Vector3(0, 0, 0)
-		print("Player not found! Spawned %s at origin" % appliance_type)
+		var info = book[appliance_name]
+		print("- %s -> %s (Price: %d)" % [appliance_name, info.script.get_global_name(), info.price])
 
 
 const TEST_APPLIANCES = [
 	"stove_with_pot",      # Numpad 1
-	"pot",    # Numpad 2
-	"bench", # Numpad 3
-	"chopping_board",    # Numpad 4
-	"fryer",      # Numpad 5
-	"fryer_basket",       # Numpad 6
+	"oven",    # Numpad 2
+	"fryer", # Numpad 3
+	"blender",    # Numpad 4
+	"chop_table",      # Numpad 5
+	"cabinet",       # Numpad 6
 	"food_crate",       # Numpad 7
 	"sink",      # Numpad 8
-	"trash_can"   # Numpad 9
+	"trash_can",   # Numpad 9
+	"stove_with_pan"  # Numpad 0
 ]
+
 
 func _input(event):
 	if event is InputEventKey and event.pressed:
 		var appliance_index = -1
 	
-		# Check for numpad keys 1-9
+		# Check for numpad keys 1-9 + 0
 		match event.keycode:
 			KEY_KP_1:
 				appliance_index = 0
@@ -154,18 +148,34 @@ func _input(event):
 				appliance_index = 7
 			KEY_KP_9:
 				appliance_index = 8
-		
+			KEY_KP_0:
+				appliance_index = 9
+
 		# Spawn the corresponding appliance
 		if appliance_index >= 0 and appliance_index < TEST_APPLIANCES.size():
-			spawn_test_appliance(TEST_APPLIANCES[appliance_index])
+			ApplianceManager.request_appliance(TEST_APPLIANCES[appliance_index], 0)
 			print("Numpad %d pressed - spawning %s" % [appliance_index + 1, TEST_APPLIANCES[appliance_index]])
 
 
-
-# mock to make serve_to_plate compile
-func match_menu_items(items: Array):
-	return null
-
-# # mock to make serve_to_plate compile
-# func match_menu_items(items: Array):
-# 	return null
+func _on_test_appliance_created(appliance: Appliance):
+	var player = get_tree().get_first_node_in_group("player")
+	if not player:
+		player = get_tree().current_scene.get_node("Player")
+	if not player:
+		print("DEBUG: Current scene children: ")
+		for child in get_tree().current_scene.get_children():
+			print("  - ", child.name, " (", child.get_script(), ")")
+	if player:
+		print("DEBUG: Player found, positioning appliance")
+		# Get player's position and forward direction
+		var player_pos = player.global_position
+		var player_forward = -player.global_transform.basis.z
+		# Spawn distance in front of player
+		var spawn_distance = 2.0  # Adjust this value as needed
+		var spawn_position = player_pos + (player_forward * spawn_distance)
+		spawn_position.y = 1.0
+		get_tree().current_scene.add_child(appliance)
+		appliance.global_position = spawn_position
+		print("DEBUG: Appliance added to scene at: ", appliance.global_position)
+	else:
+		print("DEBUG: No player found!")

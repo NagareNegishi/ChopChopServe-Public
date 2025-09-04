@@ -8,7 +8,7 @@ func _ready():
 	food_name = "Tomato"
 	raw_mesh = $RawTomato
 	spoiled_mesh = null
-	cooked_mesh = null
+	cooked_mesh = $ChoppedTomato
 	burnt_mesh = null
 	chopped_mesh = $ChoppedTomato
 	# Spoil time is 80 which is same as super class

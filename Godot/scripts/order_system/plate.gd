@@ -19,7 +19,7 @@ var is_full : bool = false
 
 func _ready():
 	menu_instance = preload_menuItems.new()
-	print(menu_instance)
+	#print(menu_instance)
 	# Makes a grid on the plate in which ingredients can be placed in 
 	grid.resize(GRID_SIZE)
 	for i in range(GRID_SIZE):
@@ -40,9 +40,11 @@ func find_next_free_cell() -> Vector2i:
 # Adds items to the plate and scales them so that they appear on the plate
 func add_list_items(food_array: Array):
 	for food in food_array:
+		print("Adding ", food, " to the plate")
 		add_item(food)
 
 func add_item(food_node) -> void:
+	print("in add item")
 	food_items.append(food_node)
 	disable_collision(food_node)
 	
@@ -52,7 +54,11 @@ func add_item(food_node) -> void:
 		return
 	
 	grid[cell.x][cell.y] = food_node
-	food_node.get_parent().remove_child(food_node)
+
+#---------------------------------------------------------
+	if food_node.get_parent():
+		food_node.get_parent().remove_child(food_node)
+#---------------------------------------------------------
 	add_child(food_node)
 	
 	# Disable physics for items
@@ -86,15 +92,23 @@ func remove_all():
 			grid[i][j] = null
 	food_items.clear()
 
+
+func give_all()->Array:
+	var food_list = food_items
+	remove_all()
+	return food_list
+
 # This checks if the plate contains a dish, when it does contain a dish it removes everything and
 # replaces the list of ingredients with only the found meal
 func check_plate():
 	print(grid)
+	for item in food_items:
+		print("this food items ", item, " previoous states ", item.previous_states)
 	if food_items.is_empty():
 		print("food items is emptyw")
 		return 0
 	var menuitem = menu_instance.match_menu_items(food_items)
-	print(menuitem)
+	#print(menuitem)
 	if menuitem != null:
 		has_menu_item = true
 		display_menu_item(menuitem)
@@ -107,6 +121,7 @@ func check_plate():
 func display_menu_item(menuitem: MenuItem):
 	# Load the actual scene file
 	var scene_path = "res://scripts/Food/MenuItemScenes/" + menuitem.get_script().get_global_name() + ".tscn"
+	print("Scene path:        ", scene_path)
 	var menu_scene = load(scene_path)
 	if menu_scene:
 		var menu_node = menu_scene.instantiate()
@@ -145,17 +160,40 @@ func disable_collision(node: Node):
 
 # this is what the plate does when in certain areas, Havent added what it is to do when it interacts
 # with the appliance yet but shouldnt be too difficult
-func _on_interactable_component_action_use(is_action: bool) -> void:
+func _on_interactable_component_action_interact(is_action: bool) -> void:
 	if not is_action:
 		return
 	
 	var area = $Area3D
 	for body in area.get_overlapping_bodies():
+		
+		# Check if interacting with Equipment/Appliance while player is holding the plate
+		if body is Equipment or body.get_parent() is Equipment:
+			var equipment = body if body is Equipment else body.get_parent()
+			
+			# Only transfer if plate has food items and player is holding the plate
+			if not food_items.is_empty() and GlobalScript.player.item_in_hand == self:
+				var food_list = give_all()
+				
+				# Try to add each food item to the equipment
+				for food_item in food_list:
+					if not equipment.put(food_item):
+						# If equipment can't accept the item, handle appropriately
+						# Could put it back on plate, drop it, or show message
+						print("Equipment couldn't accept: ", food_item.get_script().get_global_name())
+				
+				print("Transferred items from plate to ", equipment.get_script().get_global_name())
+				return
+		
+		# Original food pickup logic
 		if body.is_in_group("Food") && !has_menu_item:
 			add_item(body) 
 			break
+			
+		# Bin interaction
 		if body.is_in_group("Bin"):
 			remove_all()
+			
 		if body is StaticBody3D:
 			var food_node = body.get_parent()
 			if food_node && food_node.is_in_group("Food") && !has_menu_item:
@@ -163,6 +201,7 @@ func _on_interactable_component_action_use(is_action: bool) -> void:
 				break
 			if food_node && food_node.is_in_group("Bin"):
 				remove_all()
+
 
 func is_ready()->bool:
 	if is_dirty:

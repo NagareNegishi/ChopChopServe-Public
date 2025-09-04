@@ -2,25 +2,26 @@
 
 [ext_resource type="Script" uid="uid://hak4lspr1w83" path="res://scripts/Food/Ingredients/tomato.gd" id="1_lo8qe"]
 [ext_resource type="PackedScene" uid="uid://cy1s0o2ip2hob" path="res://scenes/Interaction/InteractableComponent.tscn" id="2_le8n0"]
-[ext_resource type="PackedScene" uid="uid://d1fw0ju7wc0cr" path="res://scripts/Food/IngredientScenes/raw_tomato.tscn" id="3_gqbnl"]
+[ext_resource type="PackedScene" uid="uid://c8lollu205wox" path="res://scripts/Food/IngredientScenes/raw_tomato.tscn" id="3_gqbnl"]
 [ext_resource type="PackedScene" uid="uid://c3fs67k164fl1" path="res://scripts/Food/IngredientScenes/chopped_tomato.tscn" id="4_a3k3o"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_g27tf"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_gqbnl"]
+radius = 0.262174
 
 [node name="Tomato" type="RigidBody3D"]
 script = ExtResource("1_lo8qe")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("BoxShape3D_g27tf")
-
-[node name="RawTomato" parent="." instance=ExtResource("3_gqbnl")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00409151, 0.226959, 0)
+shape = SubResource("SphereShape3D_gqbnl")
 
 [node name="ChoppedTomato" parent="." instance=ExtResource("4_a3k3o")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.0410221, -0.00245079, 0.0239362)
+transform = Transform3D(3.5, 0, 0, 0, 3.5, 0, 0, 0, 3.5, -0.0410221, -0.00245079, 0.0239362)
+
+[node name="RawTomato" parent="." instance=ExtResource("3_gqbnl")]
 
 [node name="InteractableComponent" parent="." instance=ExtResource("2_le8n0")]
-transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0, 0)
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.00561047, 0.160834, 0)
 is_pickup = true
 
 [connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]

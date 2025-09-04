@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://tloru3qomb8r"]
+[gd_scene load_steps=4 format=3 uid="uid://tloru3qomb8r"]
 
+[ext_resource type="Script" uid="uid://ckmuq2kqhvio3" path="res://scripts/UI/ui_order.gd" id="1_8cmx7"]
 [ext_resource type="PackedScene" uid="uid://ckhue72bmvrjv" path="res://UI/UI_Progress.tscn" id="1_ib7mx"]
 [ext_resource type="Texture2D" uid="uid://chbbc8dxqfr1y" path="res://assets/textures/recipes/TomatoSoup.png" id="2_8cmx7"]
 
@@ -12,6 +13,7 @@ offset_left = -1.0
 offset_right = -1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_8cmx7")
 
 [node name="UiProgress" parent="." instance=ExtResource("1_ib7mx")]
 layout_mode = 1
@@ -24,7 +26,6 @@ offset_left = 0.0
 offset_top = 0.0
 offset_right = 0.0
 offset_bottom = 0.0
-scale = Vector2(0.5, 0.6)
 current_progress = 0.995
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="."]
@@ -35,9 +36,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -26.0
-offset_top = -46.0
+offset_top = -49.0
 offset_right = 1300.0
-offset_bottom = 1122.0
+offset_bottom = 1119.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.04, 0.045)
@@ -52,9 +53,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -28.0
-offset_top = -52.0
+offset_top = -55.0
 offset_right = 29.0
-offset_bottom = 5.0
+offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_8cmx7")

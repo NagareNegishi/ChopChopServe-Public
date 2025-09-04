@@ -13,15 +13,17 @@ script = ExtResource("1_xcqpf")
 
 [node name="Reputation" type="ColorRect" parent="."]
 layout_mode = 0
-offset_right = 281.0
-offset_bottom = 54.0
+offset_left = 1.0
+offset_top = 576.0
+offset_right = 282.0
+offset_bottom = 630.0
 
 [node name="ReputationNumber" type="Label" parent="."]
 layout_mode = 0
-offset_left = 9.0
-offset_top = 5.0
-offset_right = 263.0
-offset_bottom = 47.0
+offset_left = 10.0
+offset_top = 581.0
+offset_right = 264.0
+offset_bottom = 623.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 30
 text = "Reputation: 20.0"
@@ -44,17 +46,17 @@ text = "Minus Reputation"
 
 [node name="Currency" type="ColorRect" parent="."]
 layout_mode = 0
-offset_left = 870.446
-offset_top = 0.27449
-offset_right = 1151.45
-offset_bottom = 54.2745
+offset_left = 871.446
+offset_top = 576.274
+offset_right = 1152.45
+offset_bottom = 630.274
 
 [node name="CurrencyNumber" type="Label" parent="."]
 layout_mode = 0
-offset_left = 879.446
-offset_top = 5.27449
-offset_right = 1133.45
-offset_bottom = 47.2745
+offset_left = 880.446
+offset_top = 581.274
+offset_right = 1134.45
+offset_bottom = 623.274
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 30
 text = "Currency: $ 200"
@@ -77,18 +79,18 @@ text = "Minus Currency"
 
 [node name="CookButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 994.0
-offset_top = 274.788
-offset_right = 1149.0
-offset_bottom = 313.788
+offset_left = 467.192
+offset_top = 268.283
+offset_right = 622.192
+offset_bottom = 307.283
 text = "Cook Phase"
 
 [node name="PrepButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 994.464
-offset_top = 233.0
-offset_right = 1149.47
-offset_bottom = 272.0
+offset_left = 463.464
+offset_top = 195.212
+offset_right = 618.465
+offset_bottom = 234.212
 text = "Prep Phase
 "
 

@@ -9,7 +9,7 @@ const PATH_UPDATE_INTERVAL: float = 0.5
 
 # Provides agent to control NPC
 @onready var _nav_agent = $NavigationAgent3D
-
+@onready var _nav_obstacle = $NavigationObstacle3D
 var _game_server: Server # For communications with other services
 
 # Agent's target information

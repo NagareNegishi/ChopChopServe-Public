@@ -3,22 +3,23 @@
 class_name UnPoweredAppliance
 extends Appliance
 
-signal status_changed(new_status: Status)
 
-
-# can it be on fire????? or broken?????
 enum Status {
 	IDLE,
 	USING,
-	BROKEN
+	UNABLE
 }
 
+@export_group("UnPoweredAppliance Settings")
 @export var capacity: int = 4 ## Maximum number of items this appliance can hold
 @export var action_interval: float = 1.0 ## action every ? seconds
 
 var current_status: Status = Status.IDLE
-var contents: Array[Node] = []
 var action_timer: Timer
+
+# variable for supplier type
+var prefix: String
+var supply_count: int
 
 
 func _ready():
@@ -30,6 +31,24 @@ func _ready():
 	add_child(action_timer)
 
 
+## Add synchronization properties for the placeable object
+func _add_sync_properties(config: SceneReplicationConfig):
+	super._add_sync_properties(config)
+	config.add_property(NodePath(".:current_status"))
+	config.add_property(NodePath(".:capacity"))
+
+
+## Set the prefix for the Object supplied by this appliance
+func _set_affixes():
+	supply_count = 1
+	if current_owner == Owner.TEAM1:
+		prefix = "T1_"
+	elif current_owner == Owner.TEAM2:
+		prefix = "T2_"
+	else:
+		prefix = "T0_"
+
+
 ## Place an item onto this appliance
 ## @param item: The Node to place on this appliance
 ## @return: True if placement was successful, false otherwise
@@ -37,18 +56,13 @@ func put(item: Node) -> bool:
 	if not _can_accept(item):
 		return false
 	contents.append(item)
-	#--------------------------------------------
-	print("Put: ", item.get_script().get_global_name(), " onto: ", get_script().get_global_name())
-	print("Contents of ", get_script().get_global_name(), " are: ")
-	for content in contents:
-		print(" --- ", content.get_script().get_global_name())
-	#--------------------------------------------
-
-	# transfer item to appliance
-	GlobalScript.player.remove_item() # if we only put item from players hand
-	# if item.get_parent():
-	# 	item.get_parent().remove_child(item)
 	add_child(item)
+
+#-------------------------------------------------------------------------------
+	contents_names.append(item.name)
+#-------------------------------------------------------------------------------
+
+
 	return true
 
 
@@ -58,6 +72,15 @@ func take() -> Node:
 	if contents.is_empty():
 		return null
 	var item = contents.pop_back()
+
+
+#-------------------------------------------------------------------------------
+	if not contents_names.is_empty():
+		contents_names.pop_back()
+#-------------------------------------------------------------------------------
+
+
+
 	remove_child(item)
 	return item
 
@@ -69,11 +92,8 @@ func _can_accept(item: Node) -> bool:
 	if not item:
 		print("Cannot accept item, item is null")
 		return false
-	if current_status == Status.BROKEN:
-		print("Cannot accept item, appliance is broken")
-		return false
-	if contents.size() >= capacity:
-		print("Cannot accept item, appliance is at full capacity")
+	if contents_names.size() >= capacity:
+		print("Cannot accept item: ", get_script().get_global_name(), " is at full capacity")
 		return false
 	if not item.get_script():
 		print("Cannot accept item, item has no script")
@@ -91,7 +111,6 @@ func start_action() -> bool:
 		push_warning("No items to act on")
 		return false
 	current_status = Status.USING
-	status_changed.emit(current_status)
 	action_timer.start()
 	return _action()
 
@@ -103,33 +122,31 @@ func _action() -> bool:
 	return false
 
 
-## Set the current status to broken
-## @return: True if status was changed, it will always true
-func broken() -> bool:
-	return _set_status(Status.BROKEN)
-
-
-## Set the current status to idle
-## @return: True if status was changed
-func repair() -> bool:
-	if current_status != Status.BROKEN:
-		push_warning("Cannot repair unless appliance is broken")
-		return false
-	return _set_status(Status.IDLE)
-
-
-## Set the current status and emit signal
-## @param new_status: The new status to set
-## @return: always true
-func _set_status(new_status: Status) -> bool:
-	current_status = new_status
-	status_changed.emit(new_status)
-	action_timer.stop()
-	return true
-
-
 ## Timer callback to handle action logic
 func _on_action_timer_timeout():
 	current_status = Status.IDLE
-	status_changed.emit(current_status)
 	action_timer.stop()
+
+
+## For Player interaction --------------------------------------------------------------------------
+## Place an item onto this appliance from Player
+## if we could remove Player dependency from this class, we can remove this method
+## @param item: The Node to place on this appliance
+## @return: True if placement was successful, false otherwise
+func put_from_player(item: Node) -> bool:
+	if not _can_accept(item):
+		return false
+	# transfer item to appliance
+	GlobalScript.player.remove_item()
+	contents.append(item)
+	add_child(item)
+
+#-------------------------------------------------------------------------------
+	contents_names.append(item.name)
+#-------------------------------------------------------------------------------
+
+#--------------------------------------------
+	print("Put: ", item.get_script().get_global_name(), " onto: ", get_script().get_global_name())
+#--------------------------------------------
+	return true
+#---------------------------------------------------------------------------------------------------

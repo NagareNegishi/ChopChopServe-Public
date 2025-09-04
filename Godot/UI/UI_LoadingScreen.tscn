@@ -1,0 +1,281 @@
+[gd_scene load_steps=18 format=3 uid="uid://cy8ahksvgtb76"]
+
+[ext_resource type="Script" uid="uid://beg6c7n0yn6yg" path="res://scripts/UI/ui_loading_screen.gd" id="1_p87ie"]
+[ext_resource type="Shader" uid="uid://b22unitrdiinr" path="res://shaders/load.gdshader" id="4_1mer7"]
+[ext_resource type="Texture2D" uid="uid://bd22knafnq56v" path="res://assets/textures/misc/ChefFroggo.png" id="4_apckc"]
+[ext_resource type="Texture2D" uid="uid://2pguohnmuvmw" path="res://assets/textures/HUD/cHEFhAT.png" id="5_8qgpr"]
+[ext_resource type="FontFile" uid="uid://dxc6n0umgi0q4" path="res://assets/fonts/Jua-Regular.ttf" id="6_8qgpr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_86krc"]
+shader = ExtResource("4_1mer7")
+shader_parameter/mask_tex = ExtResource("5_8qgpr")
+shader_parameter/scale = 1.8
+shader_parameter/softness = 0.05
+shader_parameter/mask_tex_size = Vector2(280, 245)
+
+[sub_resource type="Animation" id="Animation_tlpe4"]
+resource_name = "FroggoFadeIn"
+step = 0.0416667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Clip/Froggo:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_1mer7"]
+resource_name = "LoadIn"
+length = 3.0
+step = 0.0416667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.8, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_8qgpr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.8]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Clip/Froggo:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_apckc"]
+_data = {
+&"FroggoFadeIn": SubResource("Animation_tlpe4"),
+&"LoadIn": SubResource("Animation_1mer7"),
+&"RESET": SubResource("Animation_8qgpr")
+}
+
+[sub_resource type="Animation" id="Animation_re5al"]
+resource_name = "FadeIn"
+
+[sub_resource type="Animation" id="Animation_q5svn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 16)]
+}
+
+[sub_resource type="Animation" id="Animation_apckc"]
+resource_name = "Walk"
+length = 3.0
+loop_mode = 1
+step = 0.0416667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.66667, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-112, 16), Vector2(268.12, 16), Vector2(268.12, 16)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jwwhn"]
+_data = {
+&"FadeIn": SubResource("Animation_re5al"),
+&"RESET": SubResource("Animation_q5svn"),
+&"Walk": SubResource("Animation_apckc")
+}
+
+[sub_resource type="Animation" id="Animation_jwwhn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Floor:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.00136e-05, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Floor:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.980392, 0.976471, 0.964706, 0.04)]
+}
+
+[sub_resource type="Animation" id="Animation_1a33j"]
+resource_name = "ScaleIn"
+step = 0.0416667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Floor:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1.00136e-05, 1), Vector2(0.8, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Floor:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.980392, 0.976471, 0.964706, 0), Color(0.980392, 0.976471, 0.964706, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_re5al"]
+_data = {
+&"RESET": SubResource("Animation_jwwhn"),
+&"ScaleIn": SubResource("Animation_1a33j")
+}
+
+[node name="UILoadingScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_p87ie")
+
+[node name="ChefHatEffect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_86krc")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -573.0
+offset_top = -325.0
+offset_right = 576.0
+offset_bottom = 331.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ChefHatEffect"]
+libraries = {
+&"": SubResource("AnimationLibrary_apckc")
+}
+
+[node name="Clip" type="Control" parent="."]
+clip_children = 1
+clip_contents = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -129.0
+offset_top = -79.0
+offset_right = 132.0
+offset_bottom = 29.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Froggo" type="TextureRect" parent="Clip"]
+layout_mode = 0
+offset_top = 16.0
+offset_right = 101.0
+offset_bottom = 117.0
+rotation = 0.10472
+pivot_offset = Vector2(50, 50)
+texture = ExtResource("4_apckc")
+expand_mode = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Clip/Froggo"]
+libraries = {
+&"": SubResource("AnimationLibrary_jwwhn")
+}
+
+[node name="Floor" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = -172.0
+offset_top = 27.0
+offset_right = 172.0
+offset_bottom = 30.0
+scale = Vector2(1.00136e-05, 1)
+pivot_offset = Vector2(172, 1.5)
+color = Color(0.980392, 0.976471, 0.964706, 0.04)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Floor"]
+root_node = NodePath("../..")
+libraries = {
+&"": SubResource("AnimationLibrary_re5al")
+}
+
+[node name="HintText" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -213.0
+offset_top = 56.0
+offset_right = 213.0
+offset_bottom = 91.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0.980392, 0.976471, 0.964706, 1)
+theme_override_fonts/normal_font = ExtResource("6_8qgpr")
+theme_override_font_sizes/normal_font_size = 24
+text = "You can throw items with [image]
+"
+horizontal_alignment = 1

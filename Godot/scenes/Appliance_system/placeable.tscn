@@ -24,7 +24,7 @@ model_scene = ExtResource("2_4em8r")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_j8wpf")
-debug_color = Color(0.499556, 0.43392, 0.985267, 1)
+debug_color = Color(1, 0.764706, 0.192157, 1)
 
 [node name="InteractionArea" type="Area3D" parent="."]
 

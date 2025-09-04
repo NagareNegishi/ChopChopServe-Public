@@ -16,18 +16,8 @@ func _ready():
 	coefficient = 1.0
 
 
-
-
-func test():
-	var tom_path = "res://scripts/Food/IngredientScenes/Tomato.tscn"
-	var wat_path = "res://scripts/Food/IngredientScenes/Water.tscn"
-	var supply = load(tom_path)
-	var wat_supply = load(wat_path)
-	put(supply.instantiate())
-	put(supply.instantiate())
-	put(wat_supply.instantiate())
-	put(supply.instantiate())
-	put(supply.instantiate())
-	put(supply.instantiate())
-
-
+## Override upgradable setup in concrete appliances
+func _setup_upgradable():
+	super._setup_upgradable()
+	enable_upgrade("coefficient", [0.2, 0.2, 0.2], [100, 200, 300])
+	enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])

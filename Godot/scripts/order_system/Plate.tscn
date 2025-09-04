@@ -30,6 +30,9 @@ is_pickup = true
 transform = Transform3D(0.281664, 0, 0, 0, 0.281664, 0, 0, 0, 0.281664, 0, 0.176022, 0)
 shape = SubResource("BoxShape3D_oio5h")
 
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="."]
+radius = 0.3
+
 [connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]
 [connection signal="hovered" from="InteractableComponent" to="." method="_on_interactable_component_hovered"]
 [connection signal="interacted" from="InteractableComponent" to="." method="_on_interactable_component_interacted"]

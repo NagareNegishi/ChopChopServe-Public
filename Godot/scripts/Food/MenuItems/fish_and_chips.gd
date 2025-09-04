@@ -1,17 +1,22 @@
 extends MenuItem
 class_name FishAndChips
 
-# Need to set ingredient list
-# Need to make sure that the state of ingredients matches the state of the ingredient in the array
+# Registers this class in the correct arrays in the superclass
+@warning_ignore("unused_private_class_variable")
 static var _auto_register = MenuItem.register(FishAndChips)
-func _ready():
+@warning_ignore("unused_private_class_variable")
+static var _type_register = MenuItem.register_type(MenuItem.mains, FishAndChips.new())
+
+func _init():
 	ingredients = ["Fish", "Potato"]
 	
 	ingredient_states = {
-		"Fish": ["RAW","COOKED"],
+		"Fish": ["RAW","FRIED"],
 		"Potato": ["RAW","CHOPPED","FRIED"]
 	}
-	
-	cooked_mesh_good = null
+	is_available = true
+
+func _ready():
+	cooked_mesh_good = $FishAndChips
 	cooked_mesh_bad = null
 	cooked_mesh_burnt = null

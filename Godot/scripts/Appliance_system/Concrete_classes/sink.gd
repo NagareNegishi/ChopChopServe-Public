@@ -2,6 +2,8 @@
 class_name Sink
 extends UnPoweredAppliance
 
+var water_scene: PackedScene = preload("res://scripts/Food/IngredientScenes/Water.tscn")
+var bubble_particles: ParticleController
 
 ## Setup the model instance
 func _init():
@@ -14,12 +16,63 @@ func _ready():
 	super._ready()
 	capacity = 4
 	# action_interval = 1.0
+	_setup_visual_effects()
+	_set_affixes()
+	if water_scene and water_scene.can_instantiate():
+		print("Sink water scene preloaded successfully")
+	else:
+		push_error("Failed to preload water scene in Sink")
+
+
+## Add synchronization properties for the placeable object
+func _add_sync_properties(config: SceneReplicationConfig):
+	super._add_sync_properties(config)
+	config.add_property(NodePath(".:supply_count"))
+
+
+## Add interactable component to this class
+## InteractableComponent is scene dependent, can not instantiate from script
+func _setup_interactable():
+	super._setup_interactable()
+	interactable_component.has_action = true
+
+
+## Setup visual effects
+func _setup_visual_effects():
+	bubble_particles = ParticleController.create_with_effect(ParticleController.EffectType.BUBBLE)
+	bubble_particles.position.y = size.y * 0.8
+	add_child(bubble_particles)
+	bubble_particles.set_scale_multiplier(2.0)
+
+
+## Override upgradable setup in concrete appliances
+func _setup_upgradable():
+	super._setup_upgradable()
+	enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
+
+
+## Toggle bubble particles effect
+func _toggle_bubble(bubble: bool) -> void:
+	if bubble:
+		bubble_particles.play()
+	else:
+		bubble_particles.stop()
 
 
 ## Trigger the washing process
 ## @return: True if washing started
 func wash() -> bool:
 	return start_action()
+
+
+## Provide water, register it with unique name
+## @return: The Water instance provided
+func _provide_water() -> Water:
+	var water = water_scene.instantiate()
+	water.name = prefix + "Water" + str(supply_count)
+	supply_count += 1
+	ApplianceManager.register_item(water, current_owner, water.name)
+	return water
 
 
 ## Check if this appliance can accept the given item
@@ -47,6 +100,8 @@ func _action() -> bool:
 	return true
 
 
+## For Player interaction --------------------------------------------------------------------------
+
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
@@ -63,6 +118,42 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 		else:
 			print("No plate to take from Sink")
 			return false
-	# If player has empty plate: depend on if sink can accept it
-	return put(item)
 
+	# If Player has Pot, provide water
+	if item is Pot:
+		#--------------------------------------------
+		print("Provide water to pot")
+		#--------------------------------------------
+		return item.put(_provide_water())
+
+	# If player has empty plate: depend on if sink can accept it
+	return put_from_player(item)
+
+
+## Trigger action, if subclass has action
+func _on_interactable_component_action_use(_is_action: bool) -> void:
+	print("Player used action on: ", get_script().get_global_name(), ", it can wash.")
+	if _is_action:
+		wash()
+		_toggle_bubble(true)
+	else:
+		_toggle_bubble(false)
+
+
+## Give visual feedback when hovered
+## @param is_hovered: Whether the item is hovered or not
+func _on_interactable_component_hovered(is_hovered: bool) -> void:
+	if not is_hovered:
+		highlight_component.hide_feedback()
+		return
+	var item = GlobalScript.player.item_in_hand
+	#---------------------------------------------------------------------------
+	if item:
+		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())
+	#---------------------------------------------------------------------------
+	if not item:
+		highlight_component.set_state(ApplianceHighlight.HighlightState.HOVER)
+		return
+	var can_accept = _can_accept(item) or (item is Pot and not item.is_full())
+	highlight_component.show_feedback(can_accept)
+#---------------------------------------------------------------------------------------------------

@@ -1,9 +1,8 @@
-[gd_scene load_steps=38 format=3 uid="uid://brax13qxb8tj2"]
+[gd_scene load_steps=40 format=3 uid="uid://brax13qxb8tj2"]
 
-[ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_ki10l"]
-[ext_resource type="PackedScene" uid="uid://d1iqitph17b80" path="res://scenes/Interaction/AbstractPickup.tscn" id="2_gf84l"]
-[ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="3_5oaun"]
-[ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://scenes/Player/Controls.tscn" id="4_55i4u"]
+[ext_resource type="PackedScene" uid="uid://bv68n23xtnfpl" path="res://scenes/Player/PlayerCar.tscn" id="1_2io33"]
+[ext_resource type="Material" uid="uid://dwgftkho746av" path="res://LevelDesign/SwampFog.tres" id="1_d2eau"]
+[ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="4_55i4u"]
 [ext_resource type="MeshLibrary" uid="uid://bc2c7fksdc6nh" path="res://LevelDesign/Tilemap.tres" id="6_4qp8e"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w6hnu"]
@@ -22,6 +21,20 @@ albedo_color = Color(0.205691, 0.213579, 0.0325713, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_8t6q8"]
 material = SubResource("StandardMaterial3D_38v8k")
 size = Vector3(15, 0.05, 15)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2io33"]
+sky_top_color = Color(0.589807, 0.430029, 0.926535, 1)
+
+[sub_resource type="Sky" id="Sky_0qhj0"]
+sky_material = SubResource("ProceduralSkyMaterial_2io33")
+
+[sub_resource type="Environment" id="Environment_2io33"]
+background_mode = 2
+background_color = Color(0.64905, 0.679089, 0.789599, 1)
+sky = SubResource("Sky_0qhj0")
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0
+volumetric_fog_sky_affect = 0.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_2io33"]
 
@@ -134,20 +147,26 @@ mesh = SubResource("BoxMesh_w6hnu")
 transform = Transform3D(3.78757, 0, 0, 0, 3.032, 0, 0, 0, 3.032, -16.4097, -0.0433445, 23.0736)
 mesh = SubResource("BoxMesh_8t6q8")
 
-[node name="Player" parent="." instance=ExtResource("1_ki10l")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.48897, 0.562044, 0)
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_2io33")
+
+[node name="FogVolume" type="FogVolume" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.4115, -1.03632, 22.5616)
+size = Vector3(50, 5, 45)
+material = ExtResource("1_d2eau")
+
+[node name="PlayerCar" parent="." instance=ExtResource("1_2io33")]
+transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 2.51444, 0.827044, -0.0166001)
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.00272365, -0.563709, 0.825969, -0.00265669, 0.825965, 0.563715, -0.999993, -0.0037297, 0.000752039, 3.02675, 3.87548, 6.79733)
+transform = Transform3D(0.00272365, -0.563709, 0.825969, -0.00265669, 0.825965, 0.563715, -0.999993, -0.00372971, 0.000752039, -4.65642, 13.8183, -3.87403)
+light_energy = 1.5
+light_volumetric_fog_energy = 1.5
+light_bake_mode = 1
+shadow_enabled = true
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-4.37114e-08, -0.819152, 0.573576, 0, 0.573576, 0.819152, -1, 3.58063e-08, -2.50718e-08, 23, 23, 0)
-
-[node name="AbstractPickup" parent="." instance=ExtResource("2_gf84l")]
-transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -0.23996, 0.182575, -1.3455)
-
-[node name="Extinguisher" parent="." instance=ExtResource("3_5oaun")]
-transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0.394347, 0)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

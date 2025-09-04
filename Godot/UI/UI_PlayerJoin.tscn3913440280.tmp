@@ -1,0 +1,134 @@
+[gd_scene load_steps=5 format=3 uid="uid://geqq8dhkrryc"]
+
+[ext_resource type="Texture2D" uid="uid://2pguohnmuvmw" path="res://assets/textures/HUD/cHEFhAT.png" id="1_3hohr"]
+[ext_resource type="Script" uid="uid://cgb3gdc7yi0s1" path="res://scripts/UI/ui_player_join.gd" id="1_u8vah"]
+[ext_resource type="Texture2D" uid="uid://bpnik5eevb8f7" path="res://assets/textures/HUD/Chef.png" id="2_gjcho"]
+[ext_resource type="FontFile" uid="uid://dxc6n0umgi0q4" path="res://assets/fonts/Jua-Regular.ttf" id="2_vccva"]
+
+[node name="UiPlayerJoin" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.0174533
+script = ExtResource("1_u8vah")
+
+[node name="BG_Shadow" type="TextureRect" parent="."]
+modulate = Color(0.2484, 0.2484, 0.2484, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -38.9824
+offset_top = -25.0
+offset_right = 51.0176
+offset_bottom = 57.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_3hohr")
+expand_mode = 2
+
+[node name="BG_Outline" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -30.0
+offset_right = 51.0
+offset_bottom = 52.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_3hohr")
+expand_mode = 2
+
+[node name="BG_Inner" type="TextureRect" parent="."]
+modulate = Color(0.811192, 0.92664, 0.972423, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -47.9999
+offset_top = -28.0
+offset_right = 49.0001
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_3hohr")
+expand_mode = 2
+
+[node name="Chef" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -31.0
+offset_top = -10.0
+offset_right = 31.0
+offset_bottom = 52.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_gjcho")
+expand_mode = 2
+
+[node name="Name_Shadow" type="ColorRect" parent="."]
+modulate = Color(0.247059, 0.247059, 0.247059, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0176
+offset_top = 42.0001
+offset_right = 40.9824
+offset_bottom = 57.0001
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Name" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -41.5
+offset_top = 40.5
+offset_right = 39.5
+offset_bottom = 55.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Name_Inner" type="ColorRect" parent="Name"]
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 80.0
+offset_bottom = 14.0
+color = Color(0.446079, 0.718273, 0.875923, 1)
+
+[node name="Label" type="Label" parent="Name"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 80.0
+offset_bottom = 14.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/outline_size = 0
+theme_override_fonts/font = ExtResource("2_vccva")
+theme_override_font_sizes/font_size = 10
+text = "MitchyCakez"
+horizontal_alignment = 1
+vertical_alignment = 1

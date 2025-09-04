@@ -1,0 +1,94 @@
+[gd_scene load_steps=4 format=3 uid="uid://geqq8dhkrryc"]
+
+[ext_resource type="Texture2D" uid="uid://2pguohnmuvmw" path="res://assets/textures/HUD/cHEFhAT.png" id="1_3hohr"]
+[ext_resource type="Script" uid="uid://cgb3gdc7yi0s1" path="res://scripts/UI/ui_player_join.gd" id="1_u8vah"]
+[ext_resource type="Texture2D" uid="uid://bpnik5eevb8f7" path="res://assets/textures/HUD/Chef.png" id="2_gjcho"]
+
+[node name="UiPlayerJoin" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_u8vah")
+
+[node name="BG_Shadow" type="TextureRect" parent="."]
+modulate = Color(0.2484, 0.2484, 0.2484, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -39.0
+offset_top = -24.0
+offset_right = 51.0
+offset_bottom = 54.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_3hohr")
+expand_mode = 2
+
+[node name="BG_Outline" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -51.0
+offset_top = -32.0
+offset_right = 53.0
+offset_bottom = 55.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_3hohr")
+expand_mode = 2
+
+[node name="BG_Inner" type="TextureRect" parent="."]
+modulate = Color(0.811192, 0.92664, 0.972423, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -27.0
+offset_right = 49.0
+offset_bottom = 49.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_3hohr")
+expand_mode = 2
+
+[node name="Chef" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -31.0
+offset_top = -10.0
+offset_right = 31.0
+offset_bottom = 52.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_gjcho")
+expand_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -26.0
+offset_top = 45.0
+offset_right = 26.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2

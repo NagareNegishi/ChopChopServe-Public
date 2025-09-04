@@ -23,7 +23,10 @@ func add_food(food : Food) -> bool:
 		clear()
 		return false
 	
-	$HBox.get_child(current_amount).texture = preload("res://assets/textures/ingredients/Tomato.png")
+	$HBox.get_child(current_amount).texture = (
+		preload("res://assets/textures/ingredients/Tomato.png") 
+		if food == null || food.texture == null else food.texture)
+	
 	current_amount += 1
 	
 	if current_amount >= MAX_AMOUNT:

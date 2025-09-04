@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://pee1rah6hbep"]
+
+[ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="1_w0q5y"]
+[ext_resource type="Script" uid="uid://ca3m1ubyivmki" path="res://scripts/Appliance_system/Concrete_classes/stove_with_pan.gd" id="2_ucj5t"]
+[ext_resource type="PackedScene" uid="uid://d4bn5pltpfukp" path="res://assets/newmodels/furniture/StoveSingle.glb" id="3_jlone"]
+
+[node name="StoveWithPan" instance=ExtResource("1_w0q5y")]
+script = ExtResource("2_ucj5t")
+capacity = 1
+valid_classes = Array[String]([])
+cook_interval = 1.0
+cooking_style = 0
+model_scene = ExtResource("3_jlone")
+
+[node name="CollisionShape3D" parent="." index="0"]
+debug_color = Color(1, 0.764706, 0.192157, 1)
+
+[node name="StoveSingle" parent="." index="3" instance=ExtResource("3_jlone")]

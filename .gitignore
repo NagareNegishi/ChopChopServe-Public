@@ -28,3 +28,11 @@ mono_crash.*.json
 
 # VS Code settings (personal configuration)
 .vscode/
+Godot/assets/newmodels/food/recipes/burnt/PizzaBurnt.glb
+Godot/assets/newmodels/food/recipes/burnt/SoupBurnt.glb
+Godot/assets/newmodels/food/recipes/burnt/SteakBurnt.glb
+Godot/assets/newmodels/food/recipes/burnt/TacoBurnt.glb
+Godot/assets/newmodels/furniture/Sink.glb
+Godot/assets/newmodels/furniture/Stove.glb
+Godot/assets/newmodels/items/Bowl.glb
+Godot/assets/newmodels/items/FireEx.glb

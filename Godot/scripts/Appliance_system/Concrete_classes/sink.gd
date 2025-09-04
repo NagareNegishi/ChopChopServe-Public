@@ -2,6 +2,8 @@
 class_name Sink
 extends UnPoweredAppliance
 
+var water_scene: PackedScene = preload("res://scripts/Food/IngredientScenes/Water.tscn")
+var bubble_particles: ParticleController
 
 ## Setup the model instance
 func _init():
@@ -14,6 +16,27 @@ func _ready():
 	super._ready()
 	capacity = 4
 	# action_interval = 1.0
+	_setup_visual_effects()
+
+	if water_scene and water_scene.can_instantiate():
+		print("Sink water scene preloaded successfully")
+	else:
+		push_error("Failed to preload water scene in Sink")
+
+
+## Add interactable component to this class
+## InteractableComponent is scene dependent, can not instantiate from script
+func _setup_interactable():
+	super._setup_interactable()
+	interactable_component.has_action = true
+
+
+## Setup visual effects
+func _setup_visual_effects():
+	bubble_particles = ParticleController.create_with_effect(ParticleController.EffectType.BUBBLE)
+	bubble_particles.position.y = size.y * 0.8
+	add_child(bubble_particles)
+	bubble_particles.set_scale_multiplier(2.0)
 
 
 ## Trigger the washing process
@@ -63,6 +86,43 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 		else:
 			print("No plate to take from Sink")
 			return false
+
+	# If Player has Pot, provide water
+	if item is Pot:
+		print("Player has pot, provide water")
+		var water = water_scene.instantiate()
+		return item.player_has(water)
+		# var yes = item.put(water)
+		# if yes:
+		# 	print("Provided water to pot")
+		# 	return true
+		# else:
+		# 	print("Failed to provide water to pot")
+		# 	return false
+
 	# If player has empty plate: depend on if sink can accept it
 	return put(item)
 
+
+## Trigger action, if subclass has action
+func _on_interactable_component_action_use(_is_action: bool) -> void:
+	print("Player used action on: ", get_script().get_global_name(), ", it can wash.")
+	if _is_action:
+		wash()
+		_toggle_bubble(true)
+	else:
+		_toggle_bubble(false)
+
+
+## Override upgradable setup in concrete appliances
+func _setup_upgradable():
+	super._setup_upgradable()
+	enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
+
+
+## Toggle bubble particles effect
+func _toggle_bubble(bubble: bool) -> void:
+	if bubble:
+		bubble_particles.play()
+	else:
+		bubble_particles.stop()

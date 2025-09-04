@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://dt4wue57mdx1d"]
+
+[ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="1_s4gv8"]
+[ext_resource type="Script" uid="uid://bauejc2d2sn4k" path="res://scripts/Appliance_system/Concrete_classes/trash_can.gd" id="2_ux6ja"]
+[ext_resource type="PackedScene" uid="uid://cmix30sn0yf2h" path="res://assets/models/decorations/trashcanoutside.glb" id="3_i1tnl"]
+
+[node name="TrashCan" instance=ExtResource("1_s4gv8")]
+script = ExtResource("2_ux6ja")
+capacity = 4
+action_interval = 1.0
+cooking_style = 0
+model_scene = null
+
+[node name="CollisionShape3D" parent="." index="0"]
+debug_color = Color(1, 0.764706, 0.192157, 1)
+
+[node name="trashcanoutside" parent="." index="3" instance=ExtResource("3_i1tnl")]

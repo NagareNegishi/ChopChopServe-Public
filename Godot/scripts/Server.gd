@@ -1,8 +1,8 @@
 class_name Server extends Node
 
 var _services: Dictionary = {} # Contains all services that need to communicate
-var _restuarant_scene = preload("res://Restaurant/Restaurant.tscn")
-var _test_without_server = true # For running alternative scenes to main
+var _food_court_scene = preload("res://FoodCourt.tscn")
+var _test_without_server = false # For running alternative scenes to main
 
 ## Adds service to dictionary of known services
 func register_service(service_name: String, service_instance):
@@ -30,10 +30,10 @@ func call_service(target_service: String, operation: String, params: Array = [])
 	var service = get_service(target_service)
 	# Useful checks to ensure services are set up and called correctly
 	if service == null:
-		print("Error: Service '%s' not found" % target_service)
+		#print("Error: Service '%s' not found" % target_service)
 		return null
 	if not service.has_method(operation):
-		print("Error: Service '%s' does not support operation '%s'" % [target_service, operation])
+		#print("Error: Service '%s' does not support operation '%s'" % [target_service, operation])
 		return null
 	# Calls function from service and returns result
 	var result = await service.callv(operation, params)
@@ -42,13 +42,16 @@ func call_service(target_service: String, operation: String, params: Array = [])
 # For setting up main game scene
 func _ready():
 	if !_test_without_server:
-		var restaurant = _restuarant_scene.instantiate()
-		restaurant.initialize(self, "Restaurant1")
-		add_child(restaurant)
+		#var food_court = _food_court_scene.instantiate()
+		#food_court.initialize(self, "FoodCourt")
+		#add_child(food_court)
 		var customer_creator = CustomerCreator.new(self)
 		register_service("CustomerCreator", customer_creator) 
-		register_service("Restaurant1", restaurant) 
+		
+		#register_service("FoodCourt", food_court) 
 		var building = Building.new(self)
+		var order_generator = generateOrder.new()
+		register_service("OrderGenerator", order_generator) 
 		await get_tree().create_timer(1.0).timeout
 	
 	

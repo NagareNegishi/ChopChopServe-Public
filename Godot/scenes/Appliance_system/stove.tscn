@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqpdxpf2l7uw1"]
+
+[ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="1_sxtcq"]
+[ext_resource type="PackedScene" uid="uid://d4bn5pltpfukp" path="res://assets/newmodels/furniture/StoveSingle.glb" id="2_kx67w"]
+
+[node name="Stove" instance=ExtResource("1_sxtcq")]
+
+[node name="StoveSingle" parent="." index="3" instance=ExtResource("2_kx67w")]

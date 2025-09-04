@@ -35,30 +35,30 @@ func _add_sync_properties(config: SceneReplicationConfig):
 func put(item: Node) -> bool:
 	if not _can_accept(item):
 		return false
+	_put(item)
+	return true
+
+
+## Place an item onto this appliance
+## @param item: The Node to place on this appliance
+func _put(item: Node) -> void:
 	contents.append(item)
 	add_child(item)
-
-#-------------------------------------------------------------------------------
-	contents_names.append(item.name)
-#-------------------------------------------------------------------------------
-
-	return true
+	var update = contents_names.duplicate()
+	update.append(item.name)
+	contents_names = update
 
 
 ## Remove and return the last item from this appliance
 ## @return: The Node that was removed, or null if nothing to take
 func take() -> Node:
-	if contents.is_empty():
+	if contents.is_empty() or contents_names.is_empty():
 		return null
 	var item = contents.pop_back()
-
-#-------------------------------------------------------------------------------
-	if not contents_names.is_empty():
-		contents_names.pop_back()
-#-------------------------------------------------------------------------------
-
-
 	remove_child(item)
+	var update = contents_names.duplicate()
+	update.pop_back()
+	contents_names = update
 	return item
 
 
@@ -70,12 +70,7 @@ func take_all() -> Array[Node]:
 	for item in all_items:
 		remove_child(item)
 	contents = []
-
-	#-----------------------------------
 	contents_names = []
-#-----------------------------------
-
-
 	return all_items
 
 
@@ -93,12 +88,6 @@ func _can_accept(item: Node) -> bool:
 		print("Cannot accept item, item has no script")
 		return false
 	return item.get_script().get_global_name() in valid_food
-	# #--------------------------------------------
-	# var accepted = item.get_script().get_global_name() in valid_food
-	# if not accepted:
-	# 	print("Cannot accept : ", item.get_script().get_global_name())
-	# return accepted
-	# #--------------------------------------------
 
 
 ## Perform cooking logic
@@ -154,6 +143,9 @@ func set_can_use(value: bool):
 
 
 ## For Player interaction --------------------------------------------------------------------------
+
+# TODO: need new way to transfer item ownership from player to appliance
+
 
 ## Place an item onto this appliance from Player
 ## if we could remove Player dependency from this class, we can remove this method

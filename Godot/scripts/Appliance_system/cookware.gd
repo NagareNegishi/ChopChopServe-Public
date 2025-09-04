@@ -66,13 +66,9 @@ func _average_food() -> float:
 	var total = 0.0
 	for food in contents:
 		total += food.get_cook_time(cooking_style)
-		print("Total cooking time in cookware: ", total)#!!!!!!!!!!!!!!
 	var average = total / contents.size()
-	print("Average cooking time in cookware: ", average)#!!!!!!!!!!!!!!
 	for food in contents:
-		print("Setting food cook time from: ", food.get_cook_time(cooking_style), " to average: ", average) #!!!!!!!!!!!!!!
 		food.set_cook_time(average, cooking_style)
-		print("After setting food cook time: ", food.get_cook_time(cooking_style))#!!!!!!!!!!!!!!
 	return average
 
 
@@ -100,11 +96,11 @@ func cook(power: int) -> bool:
 	power_receiving = power
 	for food in contents:
 		food.startCooking(int(power_receiving * coefficient), cooking_style)
-		#-----------------------------------------------------------------------
-		print(get_script().get_global_name(), " start cooking ", food.get_script().get_global_name(),
-		 " with power: ", int(power_receiving * coefficient), ", Style is: ",
-		ApplianceFactory.CookingStyle.keys()[cooking_style], ", Food cook time: ", food.get_cook_time(cooking_style))
-		#----------------------------------------------------------------------
+		# #-----------------------------------------------------------------------
+		# print(get_script().get_global_name(), " start cooking ", food.get_script().get_global_name(),
+		#  " with power: ", int(power_receiving * coefficient), ", Style is: ",
+		# ApplianceFactory.CookingStyle.keys()[cooking_style], ", Food cook time: ", food.get_cook_time(cooking_style))
+		# #----------------------------------------------------------------------
 	_toggle_sizzle(true)
 	return true
 
@@ -165,7 +161,6 @@ func serve_to_plate(plate: Plate) -> bool:
 		print("Plate is not ready: ", plate.get_script().get_global_name())
 		return false
 
-	# finish_cook()
 	plate.add_list_items(take_all())	# Method in Plate, takes Array of Food
 	#----------------------------------------------------------------------
 	print("Cookware :", get_script().get_global_name(), ", served to: ", plate.get_script().get_global_name())

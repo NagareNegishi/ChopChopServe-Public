@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://bdjshhsep8nix"]
+[gd_scene load_steps=42 format=3 uid="uid://bdjshhsep8nix"]
 
 [ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_tckvl"]
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="2_yy0im"]
@@ -33,6 +33,7 @@
 [ext_resource type="PackedScene" uid="uid://krj0gwn31x8u" path="res://scenes/Appliance_system/stove_with_pot.tscn" id="31_dv6fj"]
 [ext_resource type="PackedScene" uid="uid://b0ougk3d4jnku" path="res://scenes/Appliance_system/food_crate.tscn" id="32_r8ffs"]
 [ext_resource type="PackedScene" uid="uid://cn8yjuakgjsam" path="res://assets/newmodels/furniture/Sink.glb" id="33_om36i"]
+[ext_resource type="PackedScene" uid="uid://bqpdxpf2l7uw1" path="res://scenes/Appliance_system/stove.tscn" id="34_lpo6d"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_67eo6"]
 size = Vector3(1.11963, 1, 3.02759)
@@ -837,3 +838,6 @@ using_tscn = false
 unique_name = "UNNAMED_APPLIANCE"
 current_owner = 1
 model_scene = ExtResource("33_om36i")
+
+[node name="Stove" parent="." instance=ExtResource("34_lpo6d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.12252, 0, -3.6305)

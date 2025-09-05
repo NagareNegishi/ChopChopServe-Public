@@ -1,12 +1,14 @@
-[gd_scene load_steps=65 format=3 uid="uid://brax13qxb8tj2"]
+[gd_scene load_steps=70 format=3 uid="uid://brax13qxb8tj2"]
 
 [ext_resource type="PackedScene" uid="uid://bv68n23xtnfpl" path="res://scenes/Player/PlayerCar.tscn" id="1_2io33"]
 [ext_resource type="Material" uid="uid://dwgftkho746av" path="res://LevelDesign/SwampFog.tres" id="1_d2eau"]
 [ext_resource type="PackedScene" uid="uid://ctuxfj7asiapr" path="res://assets/CityPacks/gltf/building_A.gltf" id="1_xuksc"]
 [ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="4_55i4u"]
 [ext_resource type="PackedScene" uid="uid://386cia5dig43" path="res://assets/NaturePack/Willow_4.fbx" id="5_2io33"]
+[ext_resource type="Material" uid="uid://byaedubwwadbe" path="res://LevelDesign/Water1.tres" id="5_mpt4u"]
 [ext_resource type="MeshLibrary" uid="uid://bc2c7fksdc6nh" path="res://LevelDesign/Tilemap.tres" id="6_4qp8e"]
 [ext_resource type="PackedScene" uid="uid://x0o0oxbumdxi" path="res://assets/NaturePack/Willow_2.fbx" id="6_38v8k"]
+[ext_resource type="Shader" uid="uid://c46kta255prk4" path="res://LevelDesign/Water2.gdshader" id="6_mpt4u"]
 [ext_resource type="PackedScene" uid="uid://dxiqfig0wnu0t" path="res://assets/NaturePack/Willow_1.fbx" id="7_8t6q8"]
 [ext_resource type="PackedScene" uid="uid://c246c0j12yfci" path="res://assets/CityPacks/gltf/building_G.gltf" id="7_d7del"]
 [ext_resource type="PackedScene" uid="uid://cmnawc3gjo880" path="res://assets/NaturePack/Willow_3.fbx" id="8_0m1vj"]
@@ -21,7 +23,9 @@
 [ext_resource type="PackedScene" uid="uid://dkfedsj2qiqrt" path="res://assets/CityPacks/gltf/building_E.gltf" id="12_n6iw7"]
 [ext_resource type="PackedScene" uid="uid://5kqjoe26ij5a" path="res://assets/NaturePack/Plant_4.fbx" id="13_ki10l"]
 [ext_resource type="PackedScene" uid="uid://ce6ykxrh4tljj" path="res://assets/NaturePack/CommonTree_5.fbx" id="14_0akqr"]
+[ext_resource type="PackedScene" uid="uid://b5k27w0hkfal2" path="res://assets/CityPacks/gltf/dumpster.gltf" id="14_4l3fe"]
 [ext_resource type="PackedScene" uid="uid://ipdwo7l1u41s" path="res://assets/NaturePack/Lilypad.fbx" id="14_gf84l"]
+[ext_resource type="PackedScene" uid="uid://ckj0k5hyhyssx" path="res://assets/CityPacks/gltf/box_B.gltf" id="15_3xxrs"]
 [ext_resource type="PackedScene" uid="uid://crb6re60bdq61" path="res://assets/NaturePack/Willow_5.fbx" id="15_ki10l"]
 [ext_resource type="PackedScene" uid="uid://cm8fk0nsxtsm2" path="res://assets/NaturePack/CommonTree_3.fbx" id="15_r5ry3"]
 [ext_resource type="PackedScene" uid="uid://7p0tcfmgevn1" path="res://assets/NaturePack/CommonTree_4.fbx" id="16_4l3fe"]
@@ -69,11 +73,9 @@ volumetric_fog_sky_affect = 0.0
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2io33"]
 albedo_color = Color(0.325441, 0.325441, 0.325441, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_0qhj0"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u4l04"]
-albedo_color = Color(0.496326, 0.65867, 1, 1)
-roughness = 0.0
+[sub_resource type="PlaneMesh" id="PlaneMesh_spsuo"]
+material = ExtResource("5_mpt4u")
+size = Vector2(94.205, 15.74)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bldn6"]
 albedo_color = Color(0.8954, 0.731213, 0.526979, 1)
@@ -90,6 +92,23 @@ point_count = 5
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5oaun"]
 albedo_color = Color(0.32549, 0.32549, 0.32549, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5xw4e"]
+render_priority = 0
+shader = ExtResource("6_mpt4u")
+shader_parameter/out_color = Color(0.14902, 0.568627, 0.811765, 1)
+shader_parameter/amount = 0.5
+shader_parameter/speed = 1.0
+shader_parameter/beer_factor = 0.2
+shader_parameter/metallic = 1.0
+shader_parameter/specular = 0.5
+shader_parameter/roughness = 0.2
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5xw4e"]
+material = SubResource("ShaderMaterial_5xw4e")
+size = Vector2(50, 50)
+subdivide_width = 25
+subdivide_depth = 25
 
 [sub_resource type="PrismMesh" id="PrismMesh_8t6q8"]
 
@@ -256,9 +275,8 @@ mesh = SubResource("BoxMesh_2io33")
 surface_material_override/0 = SubResource("StandardMaterial3D_2io33")
 
 [node name="MeshInstance3D13" type="MeshInstance3D" parent="Node3D"]
-transform = Transform3D(-4.00956e-06, 0, -23, 0, 0.32, 0, 91.728, 0, -1.00536e-06, 38, -0.1, 1.66103e-06)
-mesh = SubResource("BoxMesh_0qhj0")
-surface_material_override/0 = SubResource("StandardMaterial3D_u4l04")
+transform = Transform3D(-4.37114e-08, 0, -1.43187, 0, 1, 0, 1, 0, -6.25891e-08, 107.532, -0.403716, 0.0566957)
+mesh = SubResource("PlaneMesh_spsuo")
 
 [node name="MeshInstance3D20" type="MeshInstance3D" parent="Node3D"]
 transform = Transform3D(4.00956e-06, 0, -17.94, 0, 0.32, 0, -91.728, 0, -7.84182e-07, 21, 0.01, 9.17939e-07)
@@ -352,6 +370,11 @@ path_continuous_u = true
 path_u_distance = 1.0
 path_joined = false
 material = SubResource("StandardMaterial3D_5oaun")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(-1.00313, 0, 0.0190192, 0, 1, 0, -0.0101374, 0, -1.88201, 48.8525, -0.403723, -0.139448)
+mesh = SubResource("PlaneMesh_5xw4e")
+skeleton = NodePath("../MeshInstance3D13")
 
 [node name="Node3D2" type="Node3D" parent="."]
 
@@ -453,6 +476,27 @@ transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -29, 0, -38)
 [node name="base3" parent="City/Buildings" instance=ExtResource("28_3ftmd")]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 7, 0, -38)
 
+[node name="dumpster2" parent="City/Buildings" instance=ExtResource("14_4l3fe")]
+transform = Transform3D(0.31874, 0, 2.98302, 0, 3, 0, -2.98302, 0, 0.31874, -30.6383, 0.299971, -36.2778)
+
+[node name="dumpster4" parent="City/Buildings" instance=ExtResource("14_4l3fe")]
+transform = Transform3D(1.98613, 0, 2.24839, 0, 3, 0, -2.24839, 0, 1.98613, -29.974, 0.299971, -38.7179)
+
+[node name="dumpster3" parent="City/Buildings" instance=ExtResource("14_4l3fe")]
+transform = Transform3D(2.99987, 0, 0.0282739, 0, 3, 0, -0.0282739, 0, 2.99987, -27.185, 0.299971, -39.8358)
+
+[node name="box_B2" parent="City/Buildings" instance=ExtResource("15_3xxrs")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -28.9512, 0.29997, -37.9544)
+
+[node name="box_B3" parent="City/Buildings" instance=ExtResource("15_3xxrs")]
+transform = Transform3D(0.741403, 0, -2.90694, 0, 3, 0, 2.90694, 0, 0.741403, -28.2937, 0.29997, -38.2518)
+
+[node name="box_B4" parent="City/Buildings" instance=ExtResource("15_3xxrs")]
+transform = Transform3D(-2.99697, 0, -0.134886, 0, 3, 0, 0.134886, 0, -2.99697, -28.1165, 0.299971, -37.1937)
+
+[node name="box_B5" parent="City/Buildings" instance=ExtResource("15_3xxrs")]
+transform = Transform3D(-0.871355, 0, 2.87067, 0, 3, 0, -2.87067, 0, -0.871355, -28.76, 0.299971, -36.867)
+
 [node name="Foliage" type="Node3D" parent="City"]
 
 [node name="CommonTree_5" parent="City/Foliage" instance=ExtResource("14_0akqr")]
@@ -493,6 +537,11 @@ skeleton = NodePath("")
 
 [node name="MeshInstance3D41" type="MeshInstance3D" parent="Swamp"]
 transform = Transform3D(13.68, -6.78285, 3.89108e-08, -1.19594e-06, -3.42355e-07, -2.432, 23.6944, 3.91608, -1.45217e-07, 0, 0, 18)
+mesh = SubResource("SphereMesh_u4l04")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D44" type="MeshInstance3D" parent="Swamp"]
+transform = Transform3D(4.92324, -68.8092, 9.92165e-08, -3.33114e-06, -3.01405e-06, -2.432, 76.0486, 4.45451, -1.12952e-07, -11.0656, -0.0515606, 45.7904)
 mesh = SubResource("SphereMesh_u4l04")
 skeleton = NodePath("")
 

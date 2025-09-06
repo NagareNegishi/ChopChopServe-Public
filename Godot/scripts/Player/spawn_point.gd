@@ -5,11 +5,17 @@ extends Marker3D
 @export var team : GlobalScript.Team
 @export var priority : Priority
 
+@onready var flag : Sprite3D = $Sprite3D
+
 enum Priority{
 	NONE,
 	FIRST,
 	SECOND
 }
+
+
+func _ready() -> void:
+	flag.visible = false
 
 
 func use():

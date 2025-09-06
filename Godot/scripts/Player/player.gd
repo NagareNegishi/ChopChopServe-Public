@@ -22,6 +22,7 @@ var can_dash : bool = true
 @onready var player_state : PlayerState = $PlayerState
 @onready var item_point = $Mesh/ItemPoint
 @onready var check_interactables : Timer = $CheckInteractables
+@onready var anim_tree : AnimationTree = $AnimationTree
 
 func _enter_tree() -> void:
 	scale = Vector3(1,1,1)
@@ -98,7 +99,13 @@ func _movement(delta : float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, DECELERATION * SPEED)
 		velocity.z = move_toward(velocity.z, 0, DECELERATION * SPEED)
-		
+	
+	if velocity == Vector3.ZERO:
+		anim_tree["parameters/conditions/is_idle"] = true
+		anim_tree["parameters/conditions/is_moving"] = false
+	else:
+		anim_tree["parameters/conditions/is_moving"] = true
+		anim_tree["parameters/conditions/is_idle"] = false
 	move_and_slide()
 
 
@@ -452,15 +459,5 @@ func set_team(team : GlobalScript.Team):
 func get_team() -> GlobalScript.Team:
 	return player_state.team
 
-
-## Sets the players name
-## @param String the players new name
-## @return void
-func set_player_name(name : String):
-	player_state.player_name = name
-
-
-## Gets the players name
-## @return String the players name
-func get_player_name() -> String:
-	return player_state.player_name
+func _set_state_bool(param : String, value : bool) -> bool:
+	return true

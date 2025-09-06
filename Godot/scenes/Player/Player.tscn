@@ -1,8 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://ckxyscw51v3du"]
+[gd_scene load_steps=17 format=3 uid="uid://ckxyscw51v3du"]
 
 [ext_resource type="Script" uid="uid://0wecred12v33" path="res://scripts/Player/player.gd" id="1_3qydi"]
-[ext_resource type="PackedScene" uid="uid://bu4i2rvstrdvh" path="res://assets/hat.fbx" id="2_bvqhm"]
-[ext_resource type="PackedScene" uid="uid://d2rfm5fkxeeic" path="res://assets/Frog.fbx" id="2_q3lat"]
+[ext_resource type="PackedScene" uid="uid://d4fmw7rcfjnsg" path="res://assets/newmodels/animations/Froggo.glb" id="2_xcisb"]
 [ext_resource type="Texture2D" uid="uid://ds43xburqmhn0" path="res://assets/textures/misc/CircleTexture.png" id="4_ved6o"]
 [ext_resource type="Script" uid="uid://b3odgdfvtu6" path="res://scripts/Player/player_state.gd" id="5_socpp"]
 [ext_resource type="Script" uid="uid://b1a2y0am2avrj" path="res://scripts/Player/player_controller.gd" id="5_xcisb"]
@@ -13,6 +12,34 @@ height = 1.06912
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_q3lat"]
 size = Vector3(2.74022, 3, 3)
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xcisb"]
+animation = &"IdleAnimation"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_socpp"]
+animation = &"Walking"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_socpp"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fxc31"]
+xfade_time = 0.1
+advance_mode = 2
+advance_condition = &"is_moving"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xcisb"]
+xfade_time = 0.1
+advance_mode = 2
+advance_condition = &"is_idle"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_socpp"]
+states/IdleAnimation/node = SubResource("AnimationNodeAnimation_xcisb")
+states/IdleAnimation/position = Vector2(412, 86)
+states/Start/position = Vector2(238, 85.3333)
+states/Walking/node = SubResource("AnimationNodeAnimation_socpp")
+states/Walking/position = Vector2(623.333, 3.33333)
+transitions = ["Start", "IdleAnimation", SubResource("AnimationNodeStateMachineTransition_socpp"), "IdleAnimation", "Walking", SubResource("AnimationNodeStateMachineTransition_fxc31"), "Walking", "IdleAnimation", SubResource("AnimationNodeStateMachineTransition_xcisb")]
+graph_offset = Vector2(-120, -56)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_fxc31"]
 properties/0/path = NodePath(".:player_id")
@@ -45,14 +72,14 @@ properties/3/replication_mode = 2
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
 script = ExtResource("1_3qydi")
 
-[node name="hat" parent="." instance=ExtResource("2_bvqhm")]
-transform = Transform3D(0.155, 0, 0, 0, 0.155, 0, 0, 0, 0.155, 0, 0.358834, 0)
-
 [node name="PlayerCollision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_l2ndj")
 
-[node name="Mesh" parent="." instance=ExtResource("2_q3lat")]
-transform = Transform3D(-7.64949e-09, 0, -0.175, 0, 0.175, 0, 0.175, 0, -7.64949e-09, 0, -0.568662, 0)
+[node name="Mesh" parent="." instance=ExtResource("2_xcisb")]
+transform = Transform3D(-7.64949e-09, 0, -0.175, 0, 0.175, 0, 0.175, 0, -7.64949e-09, 0, -0.556445, 0)
+
+[node name="Clothes_001" parent="Mesh/Armature" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="InteractArea" type="Area3D" parent="Mesh"]
 transform = Transform3D(-1.16884e-07, 0.0186302, 2.3488, 0, 1.42888, -0.0306244, -2.674, -8.14351e-10, -1.02669e-07, -0.000434988, 3.34623, 6.77052)
@@ -74,6 +101,13 @@ texture_albedo = ExtResource("4_ved6o")
 emission_energy = 0.0
 upper_fade = 0.00226391
 cull_mask = 1048574
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+root_node = NodePath("../Mesh")
+tree_root = SubResource("AnimationNodeStateMachine_socpp")
+anim_player = NodePath("../Mesh/AnimationPlayer")
+parameters/conditions/is_idle = false
+parameters/conditions/is_moving = false
 
 [node name="DashCooldown" type="Timer" parent="."]
 wait_time = 0.2
@@ -105,3 +139,5 @@ script = ExtResource("5_xcisb")
 [connection signal="timeout" from="DashCooldown" to="." method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="CheckInteractables" to="." method="_on_check_interactables_timeout"]
 [connection signal="timeout" from="MoveParticles" to="." method="_on_move_particles_timeout"]
+
+[editable path="Mesh"]

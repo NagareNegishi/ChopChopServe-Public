@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://6d5c2oekevkx"]
+
+[ext_resource type="Script" uid="uid://dw8t6nq6vbgl5" path="res://scripts/Food/Ingredients/fish.gd" id="1_u43tf"]
+[ext_resource type="PackedScene" uid="uid://1rq24ghnvxa0" path="res://scripts/Food/IngredientScenes/cooked_fish.tscn" id="2_v4w4m"]
+[ext_resource type="PackedScene" uid="uid://cbfyjdwv7bhtv" path="res://scripts/Food/IngredientScenes/raw_fish.tscn" id="3_ba7qa"]
+[ext_resource type="PackedScene" uid="uid://cy1s0o2ip2hob" path="res://scenes/Interaction/InteractableComponent.tscn" id="4_v4w4m"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ba7qa"]
+
+[node name="Fish" type="RigidBody3D"]
+script = ExtResource("1_u43tf")
+
+[node name="cooked_fish" parent="." instance=ExtResource("2_v4w4m")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="Fish" parent="." instance=ExtResource("3_ba7qa")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.476061, 0)
+shape = SubResource("BoxShape3D_ba7qa")
+
+[node name="InteractableComponent" parent="." instance=ExtResource("4_v4w4m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.473122, 0)
+is_pickup = true
+
+[connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]
+[connection signal="hovered" from="InteractableComponent" to="." method="_on_interactable_component_hovered"]
+[connection signal="interacted" from="InteractableComponent" to="." method="_on_interactable_component_interacted"]
+[connection signal="toggle_collision" from="InteractableComponent" to="." method="_on_interactable_component_toggle_collision"]

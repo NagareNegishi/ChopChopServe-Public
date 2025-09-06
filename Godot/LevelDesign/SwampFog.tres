@@ -1,5 +1,6 @@
 [gd_resource type="FogMaterial" format=3 uid="uid://dwgftkho746av"]
 
 [resource]
+resource_local_to_scene = true
 emission = Color(0.810673, 0.882116, 0.732692, 1)
 height_falloff = 1.0

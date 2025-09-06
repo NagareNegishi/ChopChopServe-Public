@@ -92,6 +92,12 @@ func remove_all():
 			grid[i][j] = null
 	food_items.clear()
 
+
+func give_all()->Array:
+	var food_list = food_items
+	remove_all()
+	return food_list
+
 # This checks if the plate contains a dish, when it does contain a dish it removes everything and
 # replaces the list of ingredients with only the found meal
 func check_plate():
@@ -115,6 +121,7 @@ func check_plate():
 func display_menu_item(menuitem: MenuItem):
 	# Load the actual scene file
 	var scene_path = "res://scripts/Food/MenuItemScenes/" + menuitem.get_script().get_global_name() + ".tscn"
+	print("Scene path:        ", scene_path)
 	var menu_scene = load(scene_path)
 	if menu_scene:
 		var menu_node = menu_scene.instantiate()
@@ -155,17 +162,38 @@ func disable_collision(node: Node):
 # with the appliance yet but shouldnt be too difficult
 func _on_interactable_component_action_interact(is_action: bool) -> void:
 	if not is_action:
-
 		return
 	
 	var area = $Area3D
 	for body in area.get_overlapping_bodies():
 		
+		# Check if interacting with Equipment/Appliance while player is holding the plate
+		if body is Equipment or body.get_parent() is Equipment:
+			var equipment = body if body is Equipment else body.get_parent()
+			
+			# Only transfer if plate has food items and player is holding the plate
+			if not food_items.is_empty() and GlobalScript.player.item_in_hand == self:
+				var food_list = give_all()
+				
+				# Try to add each food item to the equipment
+				for food_item in food_list:
+					if not equipment.put(food_item):
+						# If equipment can't accept the item, handle appropriately
+						# Could put it back on plate, drop it, or show message
+						print("Equipment couldn't accept: ", food_item.get_script().get_global_name())
+				
+				print("Transferred items from plate to ", equipment.get_script().get_global_name())
+				return
+		
+		# Original food pickup logic
 		if body.is_in_group("Food") && !has_menu_item:
 			add_item(body) 
 			break
+			
+		# Bin interaction
 		if body.is_in_group("Bin"):
 			remove_all()
+			
 		if body is StaticBody3D:
 			var food_node = body.get_parent()
 			if food_node && food_node.is_in_group("Food") && !has_menu_item:
@@ -173,8 +201,7 @@ func _on_interactable_component_action_interact(is_action: bool) -> void:
 				break
 			if food_node && food_node.is_in_group("Bin"):
 				remove_all()
-			if food_node && food_node.is_in_group("Bin"):
-				remove_all()
+
 
 func is_ready()->bool:
 	if is_dirty:

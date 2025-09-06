@@ -12,6 +12,7 @@ extends UnPoweredAppliance
 var food_directory: String = "res://scripts/Food/IngredientScenes/"
 var supply_instance: Node
 
+
 ## Setup the model instance
 func _init():
 	super._init()
@@ -22,7 +23,14 @@ func _init():
 func _ready():
 	super._ready()
 	action_interval = 0.5 # small interval to avoid rapid item taking
+	_set_affixes()
 	_initialize_supply()
+
+
+## Add synchronization properties for the placeable object
+func _add_sync_properties(config: SceneReplicationConfig):
+	super._add_sync_properties(config)
+	config.add_property(NodePath(".:supply_count"))
 
 
 ## Initialize the supply
@@ -52,7 +60,12 @@ func take() -> Node:
 		return null
 	current_status = Status.USING
 	action_timer.start()
-	return supply.instantiate()
+
+	var food = supply.instantiate()
+	food.name = prefix + supply_name + str(supply_count)
+	supply_count += 1
+	ApplianceManager.register_item(food, current_owner, food.name)
+	return food
 
 
 ## For Player interaction --------------------------------------------------------------------------
@@ -114,6 +127,7 @@ func take_at(_index: int) -> Node:
 func start_action() -> bool:
 	assert(false, "Food Crate does not support starting actions")
 	return false
+
 
 func put_from_player(_item: Node) -> bool:
 	assert(false, "Food Crate does not support putting items")

@@ -36,7 +36,7 @@ func _extingush() -> void:
 ## @param is_action if the player is using the action input
 ## @return void
 func _on_interactable_component_action_use(is_action: bool) -> void:
-	rpc_id(1, "server_action", is_action)
+	rpc("server_action", is_action)
 
 
 @rpc("authority", "call_local")

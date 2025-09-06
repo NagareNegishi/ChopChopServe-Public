@@ -33,10 +33,11 @@ func _enter_tree() -> void:
 func _ready() -> void:
 	$DashCooldown.wait_time = DASH_COOLDOWN
 	player_state.player_id = name.to_int()
-	set_multiplayer_authority(name.to_int())
+	call_deferred("set_multiplayer_authority", name.to_int())
 	
 	if multiplayer.get_unique_id() == name.to_int():
-		$Decal.modulate = GlobalScript.player_outline_colours.get(randi() % 3)
+		$Decal.modulate = GlobalScript.player_outline_colours.get(
+			ENetManager.get_player_list().find(name.to_int()))
 		set_team(randi() % 2 + 1)
 		print("Team: ",  get_team())
 	else:
@@ -53,7 +54,7 @@ func _ready() -> void:
 ## @param delta the times it takes per frame to render
 ## @return void
 func _physics_process(delta: float) -> void:
-	if multiplayer.is_server():
+	if ENetManager.is_host():
 		collision_check()
 	
 	if !is_multiplayer_authority():
@@ -275,7 +276,7 @@ func server_drop_item(player_path : String, is_throw : bool) -> bool:
 	print("print")
 	if(player.item_in_hand == null):
 		return false
-	rpc("_client_drop_item",player_path, is_throw)
+	rpc("_client_drop_item", player_path, is_throw)
 	return true
 
 

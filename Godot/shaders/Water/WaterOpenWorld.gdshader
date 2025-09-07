@@ -45,7 +45,7 @@ void fragment() {
 
     // Base material parameters
     ALBEDO    = out_color.rgb;
-	EMISSION = out_color.rgb * 0.8; // Boosts brightness without overpowering
+	EMISSION = out_color.rgb * 0.7; // Boosts brightness without overpowering
     METALLIC  = metallic;
     SPECULAR  = specular;
     ROUGHNESS = roughness;

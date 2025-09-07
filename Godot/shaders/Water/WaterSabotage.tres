@@ -1,6 +1,6 @@
-[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://byaedubwwadbe"]
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://c5cgp40o6fxiq"]
 
-[sub_resource type="Shader" id="Shader_4l3fe"]
+[sub_resource type="Shader" id="Shader_3pt03"]
 code = "// NOTE: Shader automatically converted from Godot Engine 4.4.1.stable's StandardMaterial3D.
 
 shader_type spatial;
@@ -122,8 +122,8 @@ noise = SubResource("FastNoiseLite_mpt4u")
 
 [resource]
 render_priority = 0
-shader = SubResource("Shader_4l3fe")
-shader_parameter/albedo = Color(0.317647, 0.701961, 0.94902, 0.439216)
+shader = SubResource("Shader_3pt03")
+shader_parameter/albedo = Color(0.317647, 0.701961, 0.94902, 1)
 shader_parameter/albedo_texture_size = Vector2i(0, 0)
 shader_parameter/point_size = 1.0
 shader_parameter/roughness = 0.0

@@ -5,10 +5,10 @@
 [ext_resource type="PackedScene" uid="uid://ctuxfj7asiapr" path="res://assets/CityPacks/gltf/building_A.gltf" id="1_xuksc"]
 [ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="4_55i4u"]
 [ext_resource type="PackedScene" uid="uid://386cia5dig43" path="res://assets/NaturePack/Willow_4.fbx" id="5_2io33"]
-[ext_resource type="Material" uid="uid://byaedubwwadbe" path="res://LevelDesign/Water1.tres" id="5_mpt4u"]
+[ext_resource type="Material" uid="uid://8a2o8qga7q64" path="res://shaders/Water/WaterOpenworldAlt.tres" id="5_mpt4u"]
 [ext_resource type="MeshLibrary" uid="uid://bc2c7fksdc6nh" path="res://LevelDesign/Tilemap.tres" id="6_4qp8e"]
 [ext_resource type="PackedScene" uid="uid://x0o0oxbumdxi" path="res://assets/NaturePack/Willow_2.fbx" id="6_38v8k"]
-[ext_resource type="Shader" uid="uid://c46kta255prk4" path="res://LevelDesign/Water2.gdshader" id="6_mpt4u"]
+[ext_resource type="Shader" uid="uid://c46kta255prk4" path="res://shaders/Water/WaterOpenWorld.gdshader" id="6_mpt4u"]
 [ext_resource type="PackedScene" uid="uid://dxiqfig0wnu0t" path="res://assets/NaturePack/Willow_1.fbx" id="7_8t6q8"]
 [ext_resource type="PackedScene" uid="uid://c246c0j12yfci" path="res://assets/CityPacks/gltf/building_G.gltf" id="7_d7del"]
 [ext_resource type="PackedScene" uid="uid://cmnawc3gjo880" path="res://assets/NaturePack/Willow_3.fbx" id="8_0m1vj"]
@@ -100,9 +100,9 @@ shader_parameter/out_color = Color(0.14902, 0.568627, 0.811765, 1)
 shader_parameter/amount = 0.5
 shader_parameter/speed = 1.0
 shader_parameter/beer_factor = 0.2
-shader_parameter/metallic = 1.0
+shader_parameter/metallic = 0.0
 shader_parameter/specular = 0.5
-shader_parameter/roughness = 0.2
+shader_parameter/roughness = 0.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_5xw4e"]
 material = SubResource("ShaderMaterial_5xw4e")
@@ -444,13 +444,19 @@ transform = Transform3D(3, 0, -1.90739e-07, 0, 3, 0, 1.90739e-07, 0, 3, -11, 0, 
 transform = Transform3D(-1.31134e-07, 0, 3, 0, 3, 0, -3, 0, -1.31134e-07, -29, 0, -2)
 
 [node name="building_C3" parent="City/Buildings" instance=ExtResource("8_3k8ju")]
-transform = Transform3D(3, 0, -1.56319e-13, 0, 3, 0, 1.56319e-13, 0, 3, -4, 0, -21)
+transform = Transform3D(3, 0, -1.56319e-13, 0, 3, 0, 1.56319e-13, 0, 3, -3.46802, 0, -21)
 
 [node name="building_B2" parent="City/Buildings" instance=ExtResource("9_vas5k")]
 transform = Transform3D(-1.31134e-07, 0, 3, 0, 3, 0, -3, 0, -1.31134e-07, -29, 0, -20)
 
 [node name="building_B3" parent="City/Buildings" instance=ExtResource("9_vas5k")]
 transform = Transform3D(3, 0, -1.56319e-13, 0, 3, 0, 1.56319e-13, 0, 3, 1, 0, -38)
+
+[node name="building_G4" parent="City/Buildings" instance=ExtResource("7_d7del")]
+transform = Transform3D(5.96048e-08, 0, 3, 0, 3, 0, -3, 0, 5.96048e-08, 3, 0, -5.36851)
+
+[node name="building_B4" parent="City/Buildings" instance=ExtResource("9_vas5k")]
+transform = Transform3D(-1.31134e-07, 0, 3, 0, 3, 0, -3, 0, -1.31134e-07, 3, 0, -11.3685)
 
 [node name="building_H2" parent="City/Buildings" instance=ExtResource("10_n6iw7")]
 transform = Transform3D(-1.31134e-07, 0, 3, 0, 3, 0, -3, 0, -1.31134e-07, -29, 0, -26)
@@ -462,7 +468,7 @@ transform = Transform3D(3, 0, -1.56319e-13, 0, 3, 0, 1.56319e-13, 0, 3, -5, 0, -
 transform = Transform3D(-1.31134e-07, 0, 3, 0, 3, 0, -3, 0, -1.31134e-07, -29, 0, -32)
 
 [node name="building_A3" parent="City/Buildings" instance=ExtResource("1_xuksc")]
-transform = Transform3D(3, 0, -1.56319e-13, 0, 3, 0, 1.56319e-13, 0, 3, 2, 0, -21)
+transform = Transform3D(3, 0, -1.56319e-13, 0, 3, 0, 1.56319e-13, 0, 3, 2.53198, 0, -21)
 
 [node name="building_D2" parent="City/Buildings" instance=ExtResource("11_vas5k")]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -23, 0, -38)
@@ -505,8 +511,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -12)
 [node name="CommonTree_6" parent="City/Foliage" instance=ExtResource("14_0akqr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.1679, 0, -2.51196)
 
+[node name="CommonTree_12" parent="City/Foliage" instance=ExtResource("14_0akqr")]
+transform = Transform3D(-0.941323, 0, -0.337506, 0, 1, 0, 0.337506, 0, -0.941323, -20.1501, 4.76837e-07, -7.31454)
+
 [node name="CommonTree_3" parent="City/Foliage" instance=ExtResource("15_r5ry3")]
 transform = Transform3D(-0.363869, 0, 0.93145, 0, 1, 0, -0.93145, 0, -0.363869, -21.4739, 0.117029, -14.3831)
+
+[node name="CommonTree_21" parent="City/Foliage" instance=ExtResource("15_r5ry3")]
+transform = Transform3D(-0.363869, 0, 0.93145, 0, 1, 0, -0.93145, 0, -0.363869, -3.4739, 0.117029, -1.3831)
+
+[node name="CommonTree_11" parent="City/Foliage" instance=ExtResource("15_r5ry3")]
+transform = Transform3D(-0.909352, 0, -0.416027, 0, 1, 0, 0.416027, 0, -0.909352, -22.1144, 0.117029, -7.31581)
 
 [node name="CommonTree_4" parent="City/Foliage" instance=ExtResource("16_4l3fe")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.9607, 0.154858, -15.5222)
@@ -517,11 +532,35 @@ transform = Transform3D(-0.108832, 0, -0.99406, 0, 1, 0, 0.99406, 0, -0.108832, 
 [node name="CommonTree_8" parent="City/Foliage" instance=ExtResource("14_0akqr")]
 transform = Transform3D(0.641543, 0, -0.767087, 0, 1, 0, 0.767087, 0, 0.641543, -15.603, 0.0901161, -13.7916)
 
+[node name="CommonTree_18" parent="City/Foliage" instance=ExtResource("14_0akqr")]
+transform = Transform3D(0.141264, 0, 0.989972, 0, 1, 0, -0.989972, 0, 0.141264, -13.484, 4.76837e-07, -7.51915)
+
+[node name="CommonTree_19" parent="City/Foliage" instance=ExtResource("15_r5ry3")]
+transform = Transform3D(0.993556, 0, -0.113342, 0, 1, 0, 0.113342, 0, 0.993556, -7.87834, 0.117029, -5.76986)
+
+[node name="CommonTree_20" parent="City/Foliage" instance=ExtResource("14_0akqr")]
+transform = Transform3D(-0.977926, 0, -0.208953, 0, 1, 0, 0.208953, 0, -0.977926, -10.7452, 0.0901161, -5.25107)
+
 [node name="CommonTree_9" parent="City/Foliage" instance=ExtResource("16_4l3fe")]
 transform = Transform3D(-0.108832, 0, -0.99406, 0, 1, 0, 0.99406, 0, -0.108832, -23.5341, 0.154857, -4.50009)
 
 [node name="CommonTree_10" parent="City/Foliage" instance=ExtResource("14_0akqr")]
 transform = Transform3D(0.641543, 0, -0.767087, 0, 1, 0, 0.767087, 0, 0.641543, -19.7709, 0.0901161, -4.30359)
+
+[node name="CommonTree_13" parent="City/Foliage" instance=ExtResource("14_0akqr")]
+transform = Transform3D(-0.192042, 0, 0.981387, 0, 1, 0, -0.981387, 0, -0.192042, -11.9272, 0, -3.01847)
+
+[node name="CommonTree_14" parent="City/Foliage" instance=ExtResource("14_0akqr")]
+transform = Transform3D(0.511998, 0, -0.858987, 0, 1, 0, 0.858987, 0, 0.511998, -7.66389, 4.76837e-07, -1.80818)
+
+[node name="CommonTree_15" parent="City/Foliage" instance=ExtResource("16_4l3fe")]
+transform = Transform3D(0.996458, 0, 0.0840953, 0, 1, 0, -0.0840953, 0, 0.996458, -13.9314, 0.154857, -1.29591)
+
+[node name="CommonTree_16" parent="City/Foliage" instance=ExtResource("14_0akqr")]
+transform = Transform3D(0.629606, 0, 0.776915, 0, 1, 0, -0.776915, 0, 0.629606, -13.8935, 0.0901161, -5.0268)
+
+[node name="CommonTree_17" parent="City/Foliage" instance=ExtResource("14_0akqr")]
+transform = Transform3D(0.629606, 0, 0.776915, 0, 1, 0, -0.776915, 0, 0.629606, -5.75374, 0.0901161, -4.0089)
 
 [node name="Swamp" type="Node3D" parent="."]
 

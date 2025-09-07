@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://bg2l1urkd7kjy"]
+[gd_scene load_steps=30 format=3 uid="uid://bg2l1urkd7kjy"]
 
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="3_l1ni4"]
 [ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="4_gs5vi"]
@@ -31,9 +31,6 @@ tonemap_exposure = 1.15
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ihmv3"]
 size = Vector3(30, 0.03, 30)
-
-[sub_resource type="BoxMesh" id="BoxMesh_pwhdc"]
-size = Vector3(30, 0.05, 30)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_67eo6"]
 size = Vector3(1.11963, 1, 3.02759)
@@ -103,10 +100,6 @@ environment = SubResource("Environment_ikll6")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="== LEVEL ==/Floor"]
 shape = SubResource("BoxShape3D_ihmv3")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="== LEVEL ==/Floor"]
-layers = 2
-mesh = SubResource("BoxMesh_pwhdc")
 
 [node name="== WALLS ==" type="Node" parent="== LEVEL =="]
 

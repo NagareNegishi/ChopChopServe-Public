@@ -34,6 +34,23 @@ func _ready():
 		_game_server.register_service(str(_id,"occupiable_",_next_id), occupiable)
 		_next_id += 1
 
+#-----------------------------------
+var checked = false
+
+func check_players():
+	print("Checking players at food court")
+	var player_list = ENetManager.get_player_list()
+	print("Player list: ", player_list)
+	for player_id in player_list:
+		var player = GlobalScript.get_local_player_by_id(player_id)
+		if player:
+			print("Player ", player_id, " found at food court")
+		else:
+			print("Player ", player_id, " not found at food court")
+
+#-----------------------------------
+
+
 func get_exit_point():
 	return customer_exit_point
 
@@ -63,6 +80,11 @@ func get_free_queue_spot(customer = null):
 
 ## Checks whether a new customer should spawn or queue should move forward
 func _process(delta):
+#-----------------------------------
+	if !checked:
+		checked = true
+		check_players()
+#-----------------------------------
 	# Shifts queue if there are any gaps
 	_time_since_queue_check -= delta
 	if _time_since_queue_check < 0:

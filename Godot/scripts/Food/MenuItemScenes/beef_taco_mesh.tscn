@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dshlaa06owlxb"]
-
-[ext_resource type="PackedScene" uid="uid://dhs681xaacuku" path="res://assets/newmodels/food/recipes/finished/TacoBeef.glb" id="1_7hopn"]
-
-[node name="BeefTaco" instance=ExtResource("1_7hopn")]

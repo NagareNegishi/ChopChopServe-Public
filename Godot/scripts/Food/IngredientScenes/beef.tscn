@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://oh7khqcab67w"]
+
+[ext_resource type="Script" uid="uid://be2cfx8m026fm" path="res://scripts/Food/Ingredients/beef.gd" id="1_4vj1n"]
+[ext_resource type="PackedScene" uid="uid://cy1s0o2ip2hob" path="res://scenes/Interaction/InteractableComponent.tscn" id="3_6yqwy"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wqgny"]
+
+[node name="Beef" type="RigidBody3D"]
+script = ExtResource("1_4vj1n")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.468339, 0)
+shape = SubResource("BoxShape3D_wqgny")
+
+[node name="InteractableComponent" parent="." instance=ExtResource("3_6yqwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00561047, 0.47338, 0)
+is_pickup = true
+
+[connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]
+[connection signal="hovered" from="InteractableComponent" to="." method="_on_interactable_component_hovered"]
+[connection signal="interacted" from="InteractableComponent" to="." method="_on_interactable_component_interacted"]
+[connection signal="toggle_collision" from="InteractableComponent" to="." method="_on_interactable_component_toggle_collision"]

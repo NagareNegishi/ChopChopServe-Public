@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dbk80652kdlku"]
-
-[ext_resource type="PackedScene" uid="uid://bitjiyov7hes2" path="res://assets/newmodels/food/recipes/finished/SteakChips.glb" id="1_a70g8"]
-
-[node name="SteakNChips" instance=ExtResource("1_a70g8")]

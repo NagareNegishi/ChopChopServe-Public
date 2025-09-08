@@ -131,6 +131,7 @@ func put_request(item: Node) -> void:
 	if ENetManager.is_host():
 		GlobalScript.get_local_player().remove_item()
 		_put(item)
+		_sync_contents.rpc(contents_names)
 		print("put item: ", item.name, " as host")
 		return
 	_put_as_host.rpc_id(1, ENetManager.get_my_id(), item.name)

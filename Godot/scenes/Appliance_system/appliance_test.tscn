@@ -841,3 +841,5 @@ model_scene = ExtResource("33_om36i")
 
 [node name="Stove" parent="." instance=ExtResource("34_lpo6d")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.12252, 0, -3.6305)
+using_tscn = true
+unique_name = "UNNAMED_APPLIANCEstest"

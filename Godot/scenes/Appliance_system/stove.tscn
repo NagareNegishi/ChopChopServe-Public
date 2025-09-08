@@ -1,8 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://bqpdxpf2l7uw1"]
+[gd_scene load_steps=4 format=3 uid="uid://bqpdxpf2l7uw1"]
 
 [ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="1_sxtcq"]
+[ext_resource type="Script" uid="uid://crigvh2th3lu8" path="res://scripts/Appliance_system/Concrete_classes/stove.gd" id="2_5acl0"]
 [ext_resource type="PackedScene" uid="uid://d4bn5pltpfukp" path="res://assets/newmodels/furniture/StoveSingle.glb" id="2_kx67w"]
 
 [node name="Stove" instance=ExtResource("1_sxtcq")]
+script = ExtResource("2_5acl0")
+capacity = 1
+valid_classes = Array[String]([])
+cook_interval = 1.0
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1
+cooking_style = 0
+model_scene = null
 
 [node name="StoveSingle" parent="." index="3" instance=ExtResource("2_kx67w")]

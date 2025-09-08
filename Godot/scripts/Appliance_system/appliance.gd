@@ -187,6 +187,8 @@ func _set_contents_names(new_names: Array[String]):
 
 
 func _update_contents():
+	print("=================================================================")
+	print("before update, contents is: ", contents)
 	contents.clear()
 	for item_name in contents_names:
 		var item = get_node_or_null(NodePath(item_name))
@@ -195,7 +197,7 @@ func _update_contents():
 			print("Found item: ", item.get_script().get_global_name())
 			contents.append(item)
 		else:
-			push_warning("Item '", item_name, "' not found as child of ", name)
+			print("Item '", item_name, "' not found as child of ", name)
 
 
 

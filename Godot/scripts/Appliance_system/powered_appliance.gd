@@ -272,6 +272,7 @@ func put_request(item: Node) -> void:
 		GlobalScript.get_local_player().remove_item()
 		_put(item)
 		print("put item: ", item.name, " as host")
+		_sync_contents.rpc(contents_names)
 		return
 	_put_as_host.rpc_id(1, ENetManager.get_my_id(), item.name)
 	print("Send request to put item: ", item.name, " as client: ", ENetManager.get_my_id())
@@ -336,6 +337,7 @@ func _give_item_to_player(item_path: NodePath) -> void:
 @rpc("authority", "call_remote", "reliable")
 func _sync_contents(update: Array[String]) -> void:
 	contents_names = update
+	# print("sync_contents called, new contents are: ", update, ", this player id: ", ENetManager.get_my_id())
 
 
 ## Perform action depend on what player is holding

@@ -47,6 +47,7 @@ func check_players():
 			print("Player ", player_id, " found at food court")
 		else:
 			print("Player ", player_id, " not found at food court")
+	print("Game start =================================================")
 
 #-----------------------------------
 

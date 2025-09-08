@@ -2,8 +2,10 @@
 
 importer="texture"
 type="CompressedTexture2D"
+
 uid="uid://jld7ojqiou7v"
 path.s3tc="res://.godot/imported/Pasta_TextureMap.png-bb639f201545b36b6fbe6ee625752094.s3tc.ctex"
+
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true

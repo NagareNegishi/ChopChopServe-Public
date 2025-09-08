@@ -12,10 +12,13 @@ const RUN : bool = true
 func _ready() -> void:
 	if !RUN: return
 	
-	multiplayer.peer_connected.connect(_spawn_player)
+	#multiplayer.peer_connected.connect(_spawn_player)
+	if !ENetManager.is_host():
+		return
+	
+	for player_id : int in ENetManager.get_player_list():
+		_spawn_player(player_id)
 
-	if multiplayer.is_server():
-		_spawn_player(multiplayer.get_unique_id())
 
 
 ## Spawns player, automatically replicated
@@ -24,7 +27,7 @@ func _ready() -> void:
 func _spawn_player(id : int):
 	if !multiplayer.is_server() : return
 
-	var spawn_point : SpawnPoint = _get_spawn_point()
+	var spawn_point : SpawnPoint = _get_spawn_point(id)
 	
 	var player : Player = network_player.instantiate()
 	
@@ -56,13 +59,16 @@ func _apply_position(player_id : int, spawn_point : Vector3):
 
 ## Finds a valid spawn point for the player to spawn at
 ## @return void
-func _get_spawn_point() -> SpawnPoint:
+func _get_spawn_point(player_id : int) -> SpawnPoint:
 	#Filters all active spawn points
-	var valid_spawns = spawns.filter(func(_spawn : SpawnPoint) : return _spawn.is_active())
+	var valid_spawns = spawns.filter(
+		func(_spawn : SpawnPoint) : return _spawn.is_active()).filter(
+		func(_spawn : SpawnPoint) : return _spawn.team == ENetManager.get_team(player_id))
+	
+	valid_spawns.sort_custom(func(a : SpawnPoint, b : SpawnPoint) : return a.priority > b.priority)
 	
 	if valid_spawns.size() <= 0:
 		return null
 		
-	var index : int = randi() % valid_spawns.size()
-	valid_spawns.get(index).use()
-	return valid_spawns.get(index)
+	valid_spawns.get(0).use()
+	return valid_spawns.get(0)

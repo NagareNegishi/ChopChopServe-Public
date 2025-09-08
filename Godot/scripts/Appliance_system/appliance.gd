@@ -179,13 +179,15 @@ func set_appliance_owner(team_number: int) -> void:
 
 
 
-
+## Update contents names and refresh contents array
+## @param new_names: The new array of contents names
 func _set_contents_names(new_names: Array[String]):
 	print("I am : ", get_script().get_global_name(), ", Setting contents names is triggered with: ", new_names, "------ My ID is: ", ENetManager.get_my_id())
 	contents_names = new_names
 	_update_contents()
 
 
+## Update contents array based on contents names
 func _update_contents():
 	print("=================================================================")
 	print("before update, contents is: ", contents)
@@ -198,10 +200,6 @@ func _update_contents():
 			contents.append(item)
 		else:
 			print("Item '", item_name, "' not found as child of ", name)
-
-
-
-
 
 
 

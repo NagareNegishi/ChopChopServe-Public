@@ -32,6 +32,12 @@ func put(item: Node) -> bool:
 		return false
 	add_child(item)
 	contents.append(item)
+
+#-------------------------------------------------------------------------------
+	contents_names.append(item.name)
+#-------------------------------------------------------------------------------
+
+
 	if item is Food:
 		_put_food(item)
 	return true
@@ -89,6 +95,11 @@ func take_all() -> Array[Node]:
 	for item in all_items:
 		remove_child(item)
 	contents = []
+
+	#-----------------------------------
+	contents_names = []
+#-----------------------------------
+
 	return all_items
 
 
@@ -147,6 +158,11 @@ func put_from_player(item: Node) -> bool:
 	GlobalScript.player.remove_item() # if we only put item from players hand
 	add_child(item)
 	contents.append(item)
+
+#-------------------------------------------------------------------------------
+	contents_names.append(item.name)
+#-------------------------------------------------------------------------------
+
 	#--------------------------------------------
 	print("Put: ", item.get_script().get_global_name(), " onto: ", get_script().get_global_name())
 	print("Contents of ", get_script().get_global_name(), " are: ")
@@ -234,6 +250,7 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	#---------------------------------------------------------------------------
 	if item:
 		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())
+		print("Item name is:", item.name)
 	#---------------------------------------------------------------------------
 	if not item:
 		highlight_component.set_state(ApplianceHighlight.HighlightState.HOVER)

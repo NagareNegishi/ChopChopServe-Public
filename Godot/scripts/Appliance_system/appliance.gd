@@ -5,10 +5,15 @@ class_name Appliance
 extends Placeable
 
 enum Owner {
+	NONE,
 	TEAM1,
-	TEAM2,
-	NONE
+	TEAM2
 }
+
+@export_group("REQUIRED - You must set this!")
+@export var using_tscn: bool = false
+@export var unique_name: String = "UNNAMED_APPLIANCE"
+@export var current_owner: Owner = Owner.TEAM1 #Owner.NONE
 
 @export_group("Appliance Settings")
 ## Type of cooking style this appliance supports
@@ -21,8 +26,9 @@ var power_upgradable: Upgradable
 var capacity_upgradable: Upgradable
 var coefficient_upgradable: Upgradable
 
+var contents: Array[Node] = []
+var contents_names: Array[String] = []: set = _set_contents_names
 var price: int = 100
-var current_owner: Owner = Owner.NONE
 
 
 ## Setup the appliance
@@ -31,6 +37,22 @@ func _ready():
 	_setup_interactable()
 	_setup_highlight()
 	_setup_upgradable()
+	if using_tscn:
+		_check_unique_name()
+		ApplianceManager.register_appliance(self, current_owner, name)
+
+
+## If instance is made through .tscn, it must have a unique name
+func _check_unique_name():
+	assert(unique_name != "UNNAMED_APPLIANCE", "Appliance has not been given a unique name!")
+	name = unique_name
+
+
+## Add synchronization properties for the placeable object
+func _add_sync_properties(config: SceneReplicationConfig):
+	super._add_sync_properties(config)
+	config.add_property(NodePath(".:current_owner"))
+	config.add_property(NodePath(".:contents_names"))
 
 
 ## Add interactable component to this class
@@ -156,6 +178,31 @@ func set_appliance_owner(team_number: int) -> void:
 			current_owner = Owner.NONE
 
 
+
+
+func _set_contents_names(new_names: Array[String]):
+	print("I am : ", get_script().get_global_name(), ", Setting contents names is triggered with: ", new_names)
+	contents_names = new_names
+	_update_contents()
+
+
+func _update_contents():
+	contents.clear()
+	for item_name in contents_names:
+		var item = get_node_or_null(NodePath(item_name))
+		print("NodePath: ", NodePath(item_name))
+		if item:
+			print("Found item: ", item.get_script().get_global_name())
+			contents.append(item)
+		else:
+			push_warning("Item '", item_name, "' not found as child of ", name)
+
+
+
+
+
+
+
 ## InteractableComponent Signal Handlers -----------------------------------------------------------
 
 ## Perform action depend on what player is holding
@@ -193,7 +240,18 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	if not is_hovered:
 		highlight_component.hide_feedback()
 		return
-	var item = GlobalScript.player.item_in_hand
+
+#---------------------------------------------------------------
+	var player = get_tree().get_first_node_in_group("player")
+	if not player:
+		player = get_tree().current_scene.get_node("Player")
+
+	var item = player.item_in_hand
+#---------------------------------------------------------------
+
+
+
+	# var item = GlobalScript.player.item_in_hand
 	#---------------------------------------------------------------------------
 	if item:
 		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())

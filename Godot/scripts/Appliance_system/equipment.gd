@@ -12,13 +12,21 @@ extends Appliance
 @export var capacity: int = 1 ## Maximum number of items this appliance can hold / deal with
 @export var valid_food: Array[String] = [] ## Class names that can be placed in this equipment
 
-var contents: Array[Node] = []
+
 var can_use: bool = false
 
 
 ## Setup the equipment
 func _ready():
 	super._ready()
+
+
+## Add synchronization properties for the placeable object
+func _add_sync_properties(config: SceneReplicationConfig):
+	super._add_sync_properties(config)
+	config.add_property(NodePath(".:can_use"))
+	config.add_property(NodePath(".:coefficient"))
+	config.add_property(NodePath(".:capacity"))
 
 
 ## Place an item onto this appliance
@@ -29,6 +37,11 @@ func put(item: Node) -> bool:
 		return false
 	contents.append(item)
 	add_child(item)
+
+#-------------------------------------------------------------------------------
+	contents_names.append(item.name)
+#-------------------------------------------------------------------------------
+
 	return true
 
 
@@ -38,6 +51,13 @@ func take() -> Node:
 	if contents.is_empty():
 		return null
 	var item = contents.pop_back()
+
+#-------------------------------------------------------------------------------
+	if not contents_names.is_empty():
+		contents_names.pop_back()
+#-------------------------------------------------------------------------------
+
+
 	remove_child(item)
 	return item
 
@@ -50,6 +70,12 @@ func take_all() -> Array[Node]:
 	for item in all_items:
 		remove_child(item)
 	contents = []
+
+	#-----------------------------------
+	contents_names = []
+#-----------------------------------
+
+
 	return all_items
 
 
@@ -60,7 +86,7 @@ func _can_accept(item: Node) -> bool:
 	if not item:
 		print("Cannot accept item, item is null")
 		return false
-	if contents.size() >= capacity:
+	if contents_names.size() >= capacity:
 		print("Cannot accept item: ", get_script().get_global_name(), " is at full capacity")
 		return false
 	if not item.get_script():
@@ -140,6 +166,11 @@ func put_from_player(item: Node) -> bool:
 	GlobalScript.player.remove_item()
 	contents.append(item)
 	add_child(item)
+
+#-------------------------------------------------------------------------------
+	contents_names.append(item.name)
+#-------------------------------------------------------------------------------
+
 	return true
 
 

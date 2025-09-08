@@ -69,7 +69,7 @@ func _ready():
 	cook_timer.timeout.connect(_on_timer_timeout)
 
 func _on_timer_timeout():
-	#print("=== TIMER TICK === is_cooking:", is_cooking, " current_appliance:", current_appliance, " time_power:", time_power)
+	print("=== TIMER TICK === is_cooking:", is_cooking, " current_appliance:", current_appliance, " time_power:", time_power)
 	if is_cooking:
 		# Process cooking based on current appliance type
 		match current_appliance:

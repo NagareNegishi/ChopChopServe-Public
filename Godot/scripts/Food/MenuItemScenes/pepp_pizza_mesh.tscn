@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bdtfepyvumjmg"]
-
-[ext_resource type="PackedScene" uid="uid://clea36crinrd4" path="res://assets/newmodels/food/recipes/finished/PizzaPep.glb" id="1_8du7q"]
-
-[node name="PeppPizza" instance=ExtResource("1_8du7q")]

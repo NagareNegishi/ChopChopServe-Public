@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bdbl32vyojhuk"]
-
-[ext_resource type="PackedScene" uid="uid://dch6ncj0pyqm3" path="res://assets/newmodels/food/recipes/finished/IceCreamVanilla.glb" id="1_bvtqi"]
-
-[node name="VaniIcecream" instance=ExtResource("1_bvtqi")]

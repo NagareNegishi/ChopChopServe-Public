@@ -15,6 +15,9 @@ func _ready():
 		"Potato": ["RAW","CHOPPED","FRIED"]
 	}
 	
-	cooked_mesh_good = null
+	is_available=true
+
+func _init():
+	cooked_mesh_good = $SteakChips
 	cooked_mesh_bad = null
 	cooked_mesh_burnt = null

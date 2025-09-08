@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://ia3me0t3qg6t"]
-
-[ext_resource type="PackedScene" uid="uid://ftq7ihgr3jyb" path="res://assets/newmodels/food/ingredients/raw/Cocoa.glb" id="1_ewmi1"]
-
-[node name="Cocoa" instance=ExtResource("1_ewmi1")]

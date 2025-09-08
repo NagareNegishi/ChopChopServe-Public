@@ -22,6 +22,7 @@ var can_dash : bool = true
 @onready var player_state : PlayerState = $PlayerState
 @onready var item_point = $Mesh/ItemPoint
 @onready var check_interactables : Timer = $CheckInteractables
+@onready var anim_tree : AnimationTree = $AnimationTree
 
 func _enter_tree() -> void:
 	scale = Vector3(1,1,1)
@@ -33,10 +34,11 @@ func _enter_tree() -> void:
 func _ready() -> void:
 	$DashCooldown.wait_time = DASH_COOLDOWN
 	player_state.player_id = name.to_int()
-	set_multiplayer_authority(name.to_int())
+	call_deferred("set_multiplayer_authority", name.to_int())
 	
 	if multiplayer.get_unique_id() == name.to_int():
-		$Decal.modulate = GlobalScript.player_outline_colours.get(randi() % 3)
+		$Decal.modulate = GlobalScript.player_outline_colours.get(
+			ENetManager.get_player_list().find(name.to_int()))
 		set_team(randi() % 2 + 1)
 		print("Team: ",  get_team())
 	else:
@@ -53,7 +55,7 @@ func _ready() -> void:
 ## @param delta the times it takes per frame to render
 ## @return void
 func _physics_process(delta: float) -> void:
-	if multiplayer.is_server():
+	if ENetManager.is_host():
 		collision_check()
 	
 	if !is_multiplayer_authority():
@@ -97,7 +99,13 @@ func _movement(delta : float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, DECELERATION * SPEED)
 		velocity.z = move_toward(velocity.z, 0, DECELERATION * SPEED)
-		
+	
+	if velocity == Vector3.ZERO:
+		anim_tree["parameters/conditions/is_idle"] = true
+		anim_tree["parameters/conditions/is_moving"] = false
+	else:
+		anim_tree["parameters/conditions/is_moving"] = true
+		anim_tree["parameters/conditions/is_idle"] = false
 	move_and_slide()
 
 
@@ -275,7 +283,7 @@ func server_drop_item(player_path : String, is_throw : bool) -> bool:
 	print("print")
 	if(player.item_in_hand == null):
 		return false
-	rpc("_client_drop_item",player_path, is_throw)
+	rpc("_client_drop_item", player_path, is_throw)
 	return true
 
 
@@ -451,15 +459,5 @@ func set_team(team : GlobalScript.Team):
 func get_team() -> GlobalScript.Team:
 	return player_state.team
 
-
-## Sets the players name
-## @param String the players new name
-## @return void
-func set_player_name(name : String):
-	player_state.player_name = name
-
-
-## Gets the players name
-## @return String the players name
-func get_player_name() -> String:
-	return player_state.player_name
+func _set_state_bool(param : String, value : bool) -> bool:
+	return true

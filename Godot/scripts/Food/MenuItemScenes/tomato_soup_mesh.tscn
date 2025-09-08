@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://hfxkmecbe3vs"]
-
-[ext_resource type="PackedScene" uid="uid://biga783ngkjyn" path="res://assets/models/food/recipes/TomatoSoup.glb" id="1_wiprc"]
-
-[node name="TomatoSoup" instance=ExtResource("1_wiprc")]

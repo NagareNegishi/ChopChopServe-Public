@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://b4knfj44otkrj"]
-
-[ext_resource type="PackedScene" uid="uid://d5jwg67jgfcq" path="res://assets/newmodels/food/recipes/finished/BurgerFish.glb" id="1_dnu83"]
-
-[node name="FishBurger" instance=ExtResource("1_dnu83")]

@@ -1,7 +1,6 @@
 class_name Player 
 extends CharacterBody3D
 
-const SPEED : float = 4.0
 const ACCELERATION : float = 100
 const DECELERATION : float = 60
 const DASH_DURATION : float = 0.025
@@ -10,6 +9,8 @@ const DASH_COOLDOWN : float = 0.2
 const ANGULAR_ACCELERATION : float = 15
 const PUSH_FORCE : float = 0.3
 const THROW_STRENGTH : float = 40
+
+var speed : float = 4.0
 var MOVE_PARTICLES_POOL = []
 var _direction : Vector3 = Vector3.FORWARD
 var _items_in_interactable_area = []
@@ -36,19 +37,31 @@ func _ready() -> void:
 	player_state.player_id = name.to_int()
 	call_deferred("set_multiplayer_authority", name.to_int())
 	
+	#Sets the default animation values
+	anim_tree["parameters/conditions/is_idle"] = true
+	anim_tree["parameters/conditions/is_moving"] = false
+	anim_tree["parameters/SM_Walking/conditions/empty"] = true
+	anim_tree["parameters/SM_IDLE/conditions/empty"] = true
+	anim_tree["parameters/SM_Walking/conditions/holding"] = false
+	anim_tree["parameters/SM_IDLE/conditions/holding"] = false
+	anim_tree["parameters/SM_ACTION/conditions/chopping"] = false
+	
 	if multiplayer.get_unique_id() == name.to_int():
 		$Decal.modulate = GlobalScript.player_outline_colours.get(
 			ENetManager.get_player_list().find(name.to_int()))
 		set_team(randi() % 2 + 1)
-		print("Team: ",  get_team())
+	
 	else:
 		check_interactables.stop()
-	
 	
 	for i in range(10):
 		var particle = move_particle.instantiate()
 		MOVE_PARTICLES_POOL.append(particle)
 	
+
+
+func set_speed(new_speed : float) -> void:
+	speed = max(new_speed, 0)
 
 
 ## Functionailty that happens every frame
@@ -58,7 +71,14 @@ func _physics_process(delta: float) -> void:
 	if ENetManager.is_host():
 		collision_check()
 	
-	if !is_multiplayer_authority():
+	if velocity == Vector3.ZERO:
+		anim_tree["parameters/conditions/is_idle"] = true
+		anim_tree["parameters/conditions/is_moving"] = false
+	else:
+		anim_tree["parameters/conditions/is_moving"] = true
+		anim_tree["parameters/conditions/is_idle"] = false
+	
+	if multiplayer.get_unique_id() != name.to_int():
 		return
 	
 	# Add the gravity.
@@ -94,18 +114,12 @@ func _movement(delta : float) -> void:
 	Vector3(controller.input_dir.x, 0, controller.input_dir.y)).normalized()
 	
 	if _direction:
-		velocity.x = move_toward(velocity.x, _direction.x * SPEED, ACCELERATION * delta)
-		velocity.z = move_toward(velocity.z, _direction.z * SPEED, ACCELERATION * delta)
+		velocity.x = move_toward(velocity.x, _direction.x * speed, ACCELERATION * delta)
+		velocity.z = move_toward(velocity.z, _direction.z * speed, ACCELERATION * delta)
 	else:
-		velocity.x = move_toward(velocity.x, 0, DECELERATION * SPEED)
-		velocity.z = move_toward(velocity.z, 0, DECELERATION * SPEED)
+		velocity.x = move_toward(velocity.x, 0, DECELERATION * speed)
+		velocity.z = move_toward(velocity.z, 0, DECELERATION * speed)
 	
-	if velocity == Vector3.ZERO:
-		anim_tree["parameters/conditions/is_idle"] = true
-		anim_tree["parameters/conditions/is_moving"] = false
-	else:
-		anim_tree["parameters/conditions/is_moving"] = true
-		anim_tree["parameters/conditions/is_idle"] = false
 	move_and_slide()
 
 
@@ -117,7 +131,8 @@ func _on_dash_timer_timeout() -> void:
 ## Performs the dash and starts the dash cooldown
 ## @return void
 func _dash(is_forward : bool) -> void:
-	
+	if !velocity:
+		return
 	var dash_tween = create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	
 	# If player moving it will launch in direction of movement 
@@ -187,6 +202,9 @@ func _action(is_active : bool) -> void:
 	if _closest_item == null || item_in_hand != null:
 		return
 	
+	anim_tree["parameters/SM_ACTION/conditions/chopping"] = true if (
+		is_active && _closest_item.get_parent() is ChoppingBoard) else false
+	
 	_closest_item.action(is_active)
 
 
@@ -253,7 +271,7 @@ func _client_pickup(player_path : String, item_path : String) -> bool:
 		return false
 	
 	if player.item_in_hand:
-		player.rpc_id(1, "server_drop_item", false)
+		player.rpc("server_drop_item", false)
 	
 	item.global_position = Vector3(0,0,0)
 	item.global_rotation = Vector3(0,0,0)
@@ -268,6 +286,10 @@ func _client_pickup(player_path : String, item_path : String) -> bool:
 	if item.has_node("InteractableComponent"):
 		item.get_node("InteractableComponent").turn_on_collision(false)
 	
+	player.anim_tree["parameters/SM_Walking/conditions/empty"] = false
+	player.anim_tree["parameters/SM_IDLE/conditions/empty"] = false
+	player.anim_tree["parameters/SM_Walking/conditions/holding"] = true
+	player.anim_tree["parameters/SM_IDLE/conditions/holding"] = true
 	player.item_point.add_child(item)
 	player.call_deferred("_final_pickup", item)
 
@@ -310,6 +332,10 @@ func _client_drop_item(player_path : String, is_throw : bool) -> bool:
 		player.item_in_hand.linear_velocity = $Mesh.global_transform.basis.z * THROW_STRENGTH
 		
 	print("Item dropped ", player.item_in_hand)
+	player.anim_tree["parameters/SM_Walking/conditions/empty"] = true
+	player.anim_tree["parameters/SM_IDLE/conditions/empty"] = true
+	player.anim_tree["parameters/SM_Walking/conditions/holding"] = false
+	player.anim_tree["parameters/SM_IDLE/conditions/holding"] = false
 	player.item_in_hand = null
 	return true
 
@@ -458,6 +484,3 @@ func set_team(team : GlobalScript.Team):
 ## @return GlobalScript.Team what team the player is assigned
 func get_team() -> GlobalScript.Team:
 	return player_state.team
-
-func _set_state_bool(param : String, value : bool) -> bool:
-	return true

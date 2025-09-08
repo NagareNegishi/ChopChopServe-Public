@@ -30,6 +30,7 @@ mono_crash.*.json
 .vscode/
 .vscode/settings.json
 .vscode
+
 Godot/assets/newmodels/food/recipes/burnt/PizzaBurnt.glb
 Godot/assets/newmodels/food/recipes/burnt/SoupBurnt.glb
 Godot/assets/newmodels/food/recipes/burnt/SteakBurnt.glb

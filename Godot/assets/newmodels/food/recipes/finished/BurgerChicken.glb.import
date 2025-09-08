@@ -13,8 +13,8 @@ dest_files=["res://.godot/imported/BurgerChicken.glb-b547f9e2e4adbc6df90d0823b9b
 
 [params]
 
-nodes/root_type=""
-nodes/root_name=""
+nodes/root_type="MeshInstance3D"
+nodes/root_name="ChickenBurger"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false

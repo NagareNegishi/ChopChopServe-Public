@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://knarko2b5k28"]
+
+[ext_resource type="PackedScene" uid="uid://deur6yxrx41kb" path="res://assets/newmodels/food/recipes/finished/Steak.glb" id="1_7wmym"]
+
+[node name="Steak" instance=ExtResource("1_7wmym")]

@@ -2,7 +2,7 @@ class_name MainMenu
 extends Control
 
 
-var network_layer
+var network_layer: ENetNetworkLayer
 # Menu UI elements
 @onready var menu = $Menu
 @onready var create_button = $Menu/HostContainer/CreateButton
@@ -26,7 +26,7 @@ func _ready():
 	leave_button.pressed.connect(_on_leave_pressed)
 	network_layer.connected.connect(_switch_to_lobby)
 	ENetManager.player_list_updated.connect(_update_player_list)
-	ENetManager.host_disconnected.connect(_switch_to_menu)
+	ENetManager.disconnected_from_server.connect(_switch_to_menu)
 
 
 ## Create Lobby
@@ -47,15 +47,16 @@ func _on_join_pressed():
 
 ## Switch to Lobby
 func _switch_to_lobby():
+	change_scene("res://scenes/Network_Layer/lobby_network.tscn")
 
-	# Change this part to switch stage to bus
-	menu.hide()
-	lobby_screen.show()
+	# # Change this part to switch stage to bus
+	# menu.hide()
+	# lobby_screen.show()
 	
-	if network_layer.is_host():
-		print("=== HOST CONNECTION INFO ===")
-		print("Share with friends: " + network_layer.get_connection_info())
-		print("============================")
+	# if network_layer.is_host():
+	# 	print("=== HOST CONNECTION INFO ===")
+	# 	print("Share with friends: " + network_layer.get_connection_info())
+	# 	print("============================")
 
 
 ## Switch to Menu
@@ -71,7 +72,7 @@ func _on_leave_pressed():
 		# Host can directly call the function
 		ENetManager.player_leaves_intentionally(my_id)
 	else:
-		# Client sends message to host
+		# Client notifies host they're leaving
 		ENetManager.enet_layer.send_to(1, {
 			"type": "player_leaving_intentionally",
 			"player_id": my_id
@@ -100,3 +101,9 @@ func _update_player_list(player_list: Array[int] = []):
 			labels[i].text = text
 		else:
 			labels[i].text = "Empty"
+
+
+## Helper Functions to Change Scenes
+func change_scene(scene_path: String):
+	## "res://scenes/Network_Layer/lobby_network.tscn"
+	get_tree().call_deferred("change_scene_to_file", scene_path)

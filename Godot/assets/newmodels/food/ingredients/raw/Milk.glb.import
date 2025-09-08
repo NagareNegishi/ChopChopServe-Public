@@ -13,8 +13,8 @@ dest_files=["res://.godot/imported/Milk.glb-4aa76a7317478a5b884f8d3bf6f8b232.scn
 
 [params]
 
-nodes/root_type=""
-nodes/root_name=""
+nodes/root_type="MeshInstance3D"
+nodes/root_name="Milk"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false

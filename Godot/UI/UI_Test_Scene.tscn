@@ -1,0 +1,171 @@
+[gd_scene load_steps=2 format=3 uid="uid://bf35vdqr3y7n7"]
+
+[ext_resource type="Script" uid="uid://7v450tlpinyn" path="res://UI/UITestMainScene.gd" id="1_latdh"]
+
+[node name="UITestScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_latdh")
+
+[node name="Buttons" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 418.0
+offset_right = 1148.0
+offset_bottom = 635.0
+theme_override_constants/separation = 800
+alignment = 1
+
+[node name="Team1" type="VBoxContainer" parent="Buttons"]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+
+[node name="TeamName" type="Label" parent="Buttons/Team1"]
+layout_mode = 2
+text = "TEAM ONE"
+
+[node name="Reputation" type="Label" parent="Buttons/Team1"]
+layout_mode = 2
+text = "Reputation:"
+
+[node name="RepAddButton_1" type="Button" parent="Buttons/Team1"]
+layout_mode = 2
+text = "Add"
+
+[node name="RepMinusButton_1" type="Button" parent="Buttons/Team1"]
+layout_mode = 2
+text = "Minus"
+
+[node name="Currency" type="Label" parent="Buttons/Team1"]
+layout_mode = 2
+text = "Currency:"
+
+[node name="CurAddButton_1" type="Button" parent="Buttons/Team1"]
+layout_mode = 2
+text = "Add"
+
+[node name="CurMinusButton_1" type="Button" parent="Buttons/Team1"]
+layout_mode = 2
+text = "Minus"
+
+[node name="Team2" type="VBoxContainer" parent="Buttons"]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+
+[node name="TeamName" type="Label" parent="Buttons/Team2"]
+layout_mode = 2
+text = "TEAM TWO"
+
+[node name="Reputation" type="Label" parent="Buttons/Team2"]
+layout_mode = 2
+text = "Reputation:"
+
+[node name="RepAddButton_2" type="Button" parent="Buttons/Team2"]
+layout_mode = 2
+text = "Add"
+
+[node name="RepMinusButton_2" type="Button" parent="Buttons/Team2"]
+layout_mode = 2
+text = "Minus"
+
+[node name="Currency" type="Label" parent="Buttons/Team2"]
+layout_mode = 2
+text = "Currency:"
+
+[node name="CurAddButton_2" type="Button" parent="Buttons/Team2"]
+layout_mode = 2
+text = "Add"
+
+[node name="CurMinusButton_2" type="Button" parent="Buttons/Team2"]
+layout_mode = 2
+text = "Minus"
+
+[node name="Scores" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 258.0
+offset_top = 533.0
+offset_right = 912.0
+offset_bottom = 610.0
+theme_override_constants/separation = 400
+
+[node name="TeamOne" type="VBoxContainer" parent="Scores"]
+layout_mode = 2
+
+[node name="TeamName" type="Label" parent="Scores/TeamOne"]
+layout_mode = 2
+text = "TEAM ONE:"
+
+[node name="Reputation_1" type="Label" parent="Scores/TeamOne"]
+layout_mode = 2
+text = "Reputation: 20.0"
+
+[node name="Currency_1" type="Label" parent="Scores/TeamOne"]
+layout_mode = 2
+text = "Currency: 500.0"
+
+[node name="TeamTwo" type="VBoxContainer" parent="Scores"]
+layout_mode = 2
+
+[node name="TeamName" type="Label" parent="Scores/TeamTwo"]
+layout_mode = 2
+text = "TEAM TWO:"
+
+[node name="Reputation_2" type="Label" parent="Scores/TeamTwo"]
+layout_mode = 2
+text = "Reputation: 20.0"
+
+[node name="Currency_2" type="Label" parent="Scores/TeamTwo"]
+layout_mode = 2
+text = "Currency: 500.0"
+
+[node name="Sabotages" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 63.0
+offset_top = 15.0
+offset_right = 1081.0
+offset_bottom = 55.0
+theme_override_constants/separation = 40
+
+[node name="CurrentSab" type="Label" parent="Sabotages"]
+layout_mode = 2
+text = "Current Sabotage: Nothing"
+
+[node name="CrateSwitch" type="Button" parent="Sabotages"]
+layout_mode = 2
+text = "Crate Switch"
+
+[node name="WaterSpill" type="Button" parent="Sabotages"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "Water Spill"
+
+[node name="Fire" type="Button" parent="Sabotages"]
+layout_mode = 2
+text = "Start Fire"
+
+[node name="FoodCritic" type="Button" parent="Sabotages"]
+layout_mode = 2
+text = "Food Critic"
+
+[node name="RatSwarm" type="Button" parent="Sabotages"]
+layout_mode = 2
+text = "Rat Swarm"
+
+[node name="PowerOutage" type="Button" parent="Sabotages"]
+layout_mode = 2
+text = "Power Outage"
+
+[connection signal="pressed" from="Buttons/Team1/RepAddButton_1" to="." method="_on_rep_add_button_1_pressed"]
+[connection signal="pressed" from="Buttons/Team1/RepMinusButton_1" to="." method="_on_rep_minus_button_1_pressed"]
+[connection signal="pressed" from="Buttons/Team1/CurAddButton_1" to="." method="_on_cur_add_button_1_pressed"]
+[connection signal="pressed" from="Buttons/Team1/CurMinusButton_1" to="." method="_on_cur_minus_button_1_pressed"]
+[connection signal="pressed" from="Buttons/Team2/RepAddButton_2" to="." method="_on_rep_add_button_2_pressed"]
+[connection signal="pressed" from="Buttons/Team2/RepMinusButton_2" to="." method="_on_rep_minus_button_2_pressed"]
+[connection signal="pressed" from="Buttons/Team2/CurAddButton_2" to="." method="_on_cur_add_button_2_pressed"]
+[connection signal="pressed" from="Buttons/Team2/CurMinusButton_2" to="." method="_on_cur_minus_button_2_pressed"]
+[connection signal="pressed" from="Sabotages/WaterSpill" to="." method="_on_water_spill_pressed"]
+[connection signal="pressed" from="Sabotages/Fire" to="." method="_on_fire_pressed"]

@@ -2,17 +2,17 @@
 
 [ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="1_db3qd"]
 [ext_resource type="Script" uid="uid://csva2rdwdh12o" path="res://scripts/Appliance_system/Concrete_classes/fryer.gd" id="2_kpy1d"]
-[ext_resource type="PackedScene" uid="uid://crdhbej5y20w8" path="res://assets/newmodels/furniture/DeepFryer.glb" id="3_woer6"]
+[ext_resource type="PackedScene" uid="uid://ho847w7nyk3w" path="res://assets/newmodels/furniture/DeepestFryer.glb" id="3_woer6"]
 
 [node name="Fryer" instance=ExtResource("1_db3qd")]
 script = ExtResource("2_kpy1d")
 capacity = 1
 valid_classes = Array[String]([])
 cook_interval = 1.0
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1
 cooking_style = 0
 model_scene = ExtResource("3_woer6")
-
-[node name="CollisionShape3D" parent="." index="0"]
-debug_color = Color(1, 0.764706, 0.192157, 1)
 
 [node name="DeepFryer" parent="." index="3" instance=ExtResource("3_woer6")]

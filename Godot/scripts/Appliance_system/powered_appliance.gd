@@ -14,11 +14,10 @@ enum Status {
 
 @export_group("PoweredAppliance Settings")
 @export var capacity: int = 1 ## Maximum number of items this appliance can hold
-@export var valid_classes: Array[String] = [] ## Class names that can be placed in (Recommended)
+@export var valid_classes: Array[String] = [] ## Class names that can be placed in this appliance
 @export var cook_interval: float = 1.0 ## Cook every ? seconds
 
 var current_status: Status = Status.COOKING
-var contents: Array[Node] = []
 var cook_timer: Timer
 var power: int = 1
 var cookware_slots: Array[Vector3] = []  ## Where to place cookware
@@ -29,6 +28,14 @@ func _ready():
 	super._ready()
 	_setup_cookware_slots()
 	# _setup_cook_timer()
+
+
+## Add synchronization properties for the placeable object
+func _add_sync_properties(config: SceneReplicationConfig):
+	super._add_sync_properties(config)
+	config.add_property(NodePath(".:current_status"))
+	config.add_property(NodePath(".:power"))
+	config.add_property(NodePath(".:capacity"))
 
 
 ## Setup cookware slots, should be overridden by subclasses
@@ -47,32 +54,34 @@ func _position_cookware(cookware: Cookware, slot_index: int):
 ## Add corresponding Cookware to the PoweredAppliance
 ## @param cookware_script_name: The script name of the cookware to add
 func _add_cookware(cookware_script_name: String):
-	var cookware = ApplianceManager.request_appliance(cookware_script_name, current_owner)
+	var cookware = ApplianceFactory._create_appliance(cookware_script_name)
+	cookware.set_appliance_owner(current_owner)
+	cookware.name = name + "_" + cookware_script_name
+	ApplianceManager.register_appliance(cookware, current_owner, cookware.name)
 	if not cookware:
 		push_error("Failed to create cookware: " + cookware_script_name)
 		return
 	put(cookware)
 
 
-## Place an item onto this appliance
+## Place an item onto this appliance, if it can accept it
 ## @param item: The Node to place on this appliance
 ## @return: True if placement was successful, false otherwise
 func put(item: Node) -> bool:
 	if not _can_accept(item):
 		return false
-	# transfer item to appliance
-	GlobalScript.player.remove_item() # if we only put item from players hand
-	add_child(item)
+	_put(item)
+	return true
+
+
+## Place an item onto this appliance
+## @param item: The Node to place on this appliance
+func _put(item: Node) -> void:
 	contents.append(item)
-	#--------------------------------------------
-	print("Put: ", item.get_script().get_global_name(), " onto: ", get_script().get_global_name())
-	print("Contents of ", get_script().get_global_name(), " are: ")
-	for content in contents:
-		print(" --- ", content.get_script().get_global_name())
-	#--------------------------------------------
+	add_child(item)
+	contents_names.append(item.name)
 	if item is Cookware:
 		_put_cookware(item)
-	return true
 
 
 ## Place a Cookware onto this PoweredAppliance, start cooking if applicable
@@ -94,6 +103,10 @@ func take() -> Node:
 	if contents.is_empty():
 		return null
 	var item = contents.pop_back()
+#-------------------------------------------------------------------------------
+	if not contents_names.is_empty():
+		contents_names.pop_back()
+#-------------------------------------------------------------------------------
 	if item is Cookware:
 		_take_cookware(item)
 	remove_child(item)
@@ -120,19 +133,13 @@ func _can_accept(item: Node) -> bool:
 	if current_status == Status.BROKEN:
 		print("Cannot accept item: ", get_script().get_global_name(), " is broken")
 		return false
-	if contents.size() >= capacity:
+	if contents_names.size() >= capacity:
 		print("Cannot accept item: ", get_script().get_global_name(), " is at full capacity")
 		return false
 	if not item.get_script():
 		print("Cannot accept item, item has no script")
 		return false
-	# return item.get_script().get_global_name() in valid_classes
-	#--------------------------------------------
-	var accepted = item.get_script().get_global_name() in valid_classes
-	if not accepted:
-		print("Cannot accept : ", item.get_script().get_global_name())
-	return accepted
-	#--------------------------------------------
+	return item.get_script().get_global_name() in valid_classes
 
 
 ## Start cooking process
@@ -144,9 +151,9 @@ func start_cook() -> bool:
 		push_warning("No items to cook")
 		return false
 	# cook_timer.start()
-	#----------------------------------------------------------------------
-	print("start_cook() is called in: ", get_script().get_global_name())
-	#----------------------------------------------------------------------
+	# #----------------------------------------------------------------------
+	# print("start_cook() is called in: ", get_script().get_global_name())
+	# #----------------------------------------------------------------------
 	_cook()
 	return true
 
@@ -161,9 +168,9 @@ func stop_cook() -> bool:
 		if item is Equipment:
 			item.finish_cook()
 	# cook_timer.stop()
-	#----------------------------------------------------------------------
-	print("stop_cook() is called in: ", get_script().get_global_name())
-	#----------------------------------------------------------------------
+	# #----------------------------------------------------------------------
+	# print("stop_cook() is called in: ", get_script().get_global_name())
+	# #----------------------------------------------------------------------
 	return true
 
 
@@ -172,9 +179,6 @@ func stop_cook() -> bool:
 func _cook() -> bool:
 	for item in contents:
 		if item is Cookware:
-			#----------------------------------------------------------------------
-			print("Cooking with: ", item.get_script().get_global_name())
-			#----------------------------------------------------------------------
 			item.cook(power)
 	return true
 
@@ -183,6 +187,12 @@ func _cook() -> bool:
 ## @return: True if PoweredAppliance is empty, false otherwise
 func is_empty() -> bool:
 	return contents.is_empty()
+
+
+## Check if this PoweredAppliance is full
+## @return: True if PoweredAppliance is full, false otherwise
+func is_full() -> bool:
+	return contents.size() >= capacity
 
 
 ## Check if this PoweredAppliance can cook
@@ -249,6 +259,75 @@ func _on_cook_timer_timeout():
 #---------------------------------------------------------------------------------------------------
 
 
+## For Player interaction --------------------------------------------------------------------------
+
+# TODO: need new way to transfer item ownership from player to appliance
+
+func put_request(item: Node) -> void:
+	# locally check first to reduce network calls
+	if not _can_accept(item):
+		return
+	if ENetManager.is_host():
+		_put(item)
+		return
+	_put_as_host.rpc_id(1, ENetManager.get_peer_id(), item.name)
+
+
+@rpc("any_peer", "call_remote", "reliable")
+func _put_as_host(player_id: int, item_name: String) -> void:
+	if not ENetManager.is_host():
+		return
+	# host need check to prevent conflicts/ cheating
+	var item
+	match ENetManager.get_team(player_id):
+		1:
+			item = ApplianceManager.team1_items.get(item_name)
+		2:
+			item = ApplianceManager.team2_items.get(item_name)
+		_:
+			return
+	if not item:
+		print("Item not found: ", item_name)
+		return
+	if not _can_accept(item):
+		return
+	_put(item)
+	#notify_contents_changed.rpc(contents_names)
+
+
+# ## Notify all players (except host) the update of contents
+# ## @param update: The updated contents names
+# @rpc("authority", "call_remote", "reliable")
+# func notify_contents_changed(update: Array[String]):
+# 	_set_contents_names(update)
+
+
+
+## Place an item onto this appliance from Player
+## if we could remove Player dependency from this class, we can remove this method
+## @param item: The Node to place on this appliance
+## @return: True if placement was successful, false otherwise
+func put_from_player(item: Node) -> bool:
+	if not _can_accept(item):
+		return false
+	# transfer item to appliance
+	GlobalScript.player.remove_item()
+	contents.append(item)
+	add_child(item)
+#-------------------------------------------------------------------------------
+	contents_names.append(item.name)
+#-------------------------------------------------------------------------------
+	#--------------------------------------------
+	print("Put: ", item.get_script().get_global_name(), " onto: ", get_script().get_global_name())
+	print("Contents of ", get_script().get_global_name(), " are: ")
+	for content in contents:
+		print(" --- ", content.get_script().get_global_name())
+	#--------------------------------------------
+	if item is Cookware:
+		_put_cookware(item)
+	return true
+
+
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
@@ -260,11 +339,16 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 	if not item:
 		var cookware = take()
 		if cookware:
-			
+			print("Path before pickup: ", cookware.get_path())
+
+			get_tree().current_scene.add_child(cookware)
+			print("Path when at scene root: ", cookware.get_path())
+
 			GlobalScript.player.pickup_item(cookware)
-			#----------------------------------------------------------------------
-			print("Player took: ", cookware.get_script().get_global_name(), ", from: ", get_script().get_global_name())
-			#----------------------------------------------------------------------
+			print("Path after pickup: ", cookware.get_path())
+			# #----------------------------------------------------------------------
+			# print("Player took: ", cookware.get_script().get_global_name(), ", from: ", get_script().get_global_name())
+			# #----------------------------------------------------------------------
 			if contents.is_empty():
 				stop_cook()
 			return true
@@ -282,8 +366,36 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 			if content is Cookware:
 				return content.player_has(item)
 
+	# If player has cookware: try to transfer contents
+	if item is Cookware and not is_empty():
+		var cookware = contents[0]
+		if cookware.is_empty() and cookware._can_accept_all(item.show_contents()):
+			return cookware.put_all(item.take_all())
+		if item._can_accept_all(cookware.show_contents()):
+			return item.put_all(cookware.take_all())
+
 	# If item_in_hand exists: depend on if appliance can accept it
-	return put(item)
+	return put_from_player(item)
+
+
+## Check if the target can accept the current contents
+## @param target: The Node to check for acceptance
+## @return: True if the target can accept the current contents, false otherwise
+func _check_target(target: Node) -> bool:
+	if is_empty():
+		print("Nothing to serve from: ", get_script().get_global_name())
+		return false
+	if target is Plate and target.is_ready():
+		if contents[0].is_empty():
+			return false
+		# maybe check capacity here??? or no need? depend on how plate handle capacity
+		return true
+	if target is Cookware:
+		var cookware = contents[0]
+		if cookware.is_empty():
+			return cookware._can_accept_all(target.show_contents())
+		return target._can_accept_all(cookware.show_contents())
+	return false
 
 
 
@@ -291,28 +403,66 @@ func player_has(item: Node) -> bool: # we may need player or id as parameter for
 ## @param plate: The Plate to serve food to
 ## @return: True if serving was successful, false otherwise
 func serve_to_plate(plate: Plate) -> bool:
-	if contents.is_empty():
-		print("Nothing to serve from: ", get_script().get_global_name())
+	if not _check_target(plate):
 		return false
+	# if is_empty():
+	# 	print("Nothing to serve from: ", get_script().get_global_name())
+	# 	return false
 
-	if not plate.is_ready(): # Method in Plate, checks if plate is ready
-		print("Plate is not ready: ", plate.get_script().get_global_name())
-		return false
+	# if not plate.is_ready(): # Method in Plate, checks if plate is ready
+	# 	print("Plate is not ready: ", plate.get_script().get_global_name())
+	# 	return false
 
 	var cookware = contents[0]
 	if cookware.is_empty():
 		print("Nothing to serve from: ", cookware.get_script().get_global_name())
 		return false
 
-	cookware.finish_cook()
-	print("Contents of : ", cookware.get_script().get_global_name(), " Before serving: ", cookware.contents)
+	#cookware.finish_cook()
+	# print("Contents of : ", cookware.get_script().get_global_name(), " Before serving: ", cookware.contents)
 	plate.add_list_items(cookware.take_all()) # Method in Plate, takes Array of Food
-	#----------------------------------------------------------------------
-	print("Contents of : ", cookware.get_script().get_global_name(), " After serving: ", cookware.contents)
-	print("Cookware :", cookware.get_script().get_global_name(), ", served to: ", plate.get_script().get_global_name())
-	#----------------------------------------------------------------------
+	# #----------------------------------------------------------------------
+	# print("Contents of : ", cookware.get_script().get_global_name(), " After serving: ", cookware.contents)
+	# print("Cookware :", cookware.get_script().get_global_name(), ", served to: ", plate.get_script().get_global_name())
+	# #----------------------------------------------------------------------
 	return true
 
+
+## Give visual feedback when hovered
+## @param is_hovered: Whether the item is hovered or not
+func _on_interactable_component_hovered(is_hovered: bool) -> void:
+	if not is_hovered:
+		highlight_component.hide_feedback()
+		return
+
+
+#---------------------------------------------------------------
+	var player = get_tree().get_first_node_in_group("player")
+	if not player:
+		player = get_tree().current_scene.get_node("Player")
+
+	var item = player.item_in_hand
+#---------------------------------------------------------------
+
+
+	#var item = GlobalScript.player.item_in_hand
+	#---------------------------------------------------------------------------
+	if item:
+		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())
+		print("Item name is:", item.name)
+	#---------------------------------------------------------------------------
+	if not item:
+		highlight_component.set_state(ApplianceHighlight.HighlightState.HOVER)
+		return
+	if item is Plate or item is Cookware:
+		highlight_component.show_feedback(_check_target(item))
+		return
+	var can_accept = _can_accept(item)
+	if not can_accept:
+		for cookware in contents:
+			can_accept = cookware._can_accept(item)
+	highlight_component.show_feedback(can_accept)
+## -------------------------------------------------------------------------------------------------
 
 
 # Functions for Sabotage System---------------------------------------------------------------------
@@ -332,25 +482,3 @@ func get_progress() -> float:
 	return most_progress
 #---------------------------------------------------------------------------------------------------
 
-
-## InteractableComponent Signal Handlers -----------------------------------------------------------
-## Give visual feedback when hovered
-## @param is_hovered: Whether the item is hovered or not
-func _on_interactable_component_hovered(is_hovered: bool) -> void:
-	if not is_hovered:
-		highlight_component.hide_feedback()
-		return
-	var item = GlobalScript.player.item_in_hand
-	#---------------------------------------------------------------------------
-	if item:
-		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())
-	#---------------------------------------------------------------------------
-	if not item:
-		highlight_component.set_state(ApplianceHighlight.HighlightState.HOVER)
-		return
-	var can_accept = _can_accept(item)
-	if not can_accept:
-		for cookware in contents:
-			can_accept = cookware._can_accept(item)
-	highlight_component.show_feedback(can_accept)
-## -------------------------------------------------------------------------------------------------

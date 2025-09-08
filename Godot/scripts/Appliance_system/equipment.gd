@@ -44,9 +44,22 @@ func put(item: Node) -> bool:
 func _put(item: Node) -> void:
 	contents.append(item)
 	add_child(item)
-	var update = contents_names.duplicate()
-	update.append(item.name)
-	contents_names = update
+	contents_names.append(item.name)
+
+
+## Client-side method to put item, called by host
+## @param item_name: The name of the item to put
+## @param player_id: The id of the player who is putting the item
+@rpc("authority", "call_remote", "reliable")
+func _client_put(item_name: String, player_id: int) -> void:
+	# First try to find item in player's hand
+	var player = GlobalScript.get_local_player_by_id(player_id)
+	if player:
+		var item = player.item_in_hand
+		if item and item.name == item_name:
+			player.remove_item()
+			_put(item)
+			return
 
 
 ## Remove and return the last item from this appliance
@@ -56,22 +69,8 @@ func take() -> Node:
 		return null
 	var item = contents.pop_back()
 	remove_child(item)
-	var update = contents_names.duplicate()
-	update.pop_back()
-	contents_names = update
+	contents_names.pop_back()
 	return item
-
-
-## Remove and return all items
-## @return: Array of all items that were removed
-func take_all() -> Array[Node]:
-	finish_cook()
-	var all_items = contents
-	for item in all_items:
-		remove_child(item)
-	contents = []
-	contents_names = []
-	return all_items
 
 
 ## Check if this appliance can accept the given item
@@ -142,11 +141,97 @@ func set_can_use(value: bool):
 	can_use = value
 
 
+
 ## For Player interaction --------------------------------------------------------------------------
 
-# TODO: need new way to transfer item ownership from player to appliance
+## Request to put an item onto this appliance from Player
+## @param item: The Node to place on this appliance
+func put_request(item: Node) -> void:
+	# locally check first to reduce network calls
+	if not _can_accept(item):
+		return
+	# host directly put item and notify clients
+	if ENetManager.is_host():
+		GlobalScript.get_local_player().remove_item()
+		_put(item)
+		_client_put.rpc(item.name, ENetManager.get_my_id())
+		_sync_contents.rpc(contents_names)
+		return
+	_put_as_host.rpc_id(1, ENetManager.get_my_id(), item.name)
 
 
+## Host-side method to handle put requests from clients
+## @param player_id: The id of the player who is putting the item
+## @param item_name: The name of the item to put
+@rpc("any_peer", "call_remote", "reliable")
+func _put_as_host(player_id: int, item_name: String) -> void:
+	if not ENetManager.is_host():
+		return
+	# host need check to prevent conflicts/ cheating
+	var player = GlobalScript.get_local_player_by_id(player_id)
+	if not player:
+		print("Player not found with id: ", player_id)
+		return
+	var item = player.item_in_hand
+	if not _can_accept(item):
+		return
+	if item.name != item_name:
+		print("Item name mismatch: expected ", item_name, ", got ", item.name)
+		return
+	player.remove_item()
+	_put(item)
+	_client_put.rpc(item.name, player_id)
+	_sync_contents.rpc(contents_names)
+
+
+## Sync contents names across network
+## @param update: The updated contents names array
+@rpc("authority", "call_remote", "reliable")
+func _sync_contents(update: Array[String]) -> void:
+	contents_names = update
+
+
+## Request to pick up this equipment by Player
+func pickup_request() -> void:
+	_pickup_as_host.rpc_id(1, ENetManager.get_my_id())
+
+
+## Host-side method to handle pickup request, called by client
+## @param player_id: The id of the player who is taking the item
+@rpc("any_peer", "call_local", "reliable")
+func _pickup_as_host(player_id: int) -> void:
+	if not ENetManager.is_host():
+		return
+	_give_item_to_player.rpc(player_id, self.get_path())
+
+
+#TODO: if we need to reduce the host load, make this method "any_peer" and skip the _pickup_as_host
+# Client-side method to give item to player, called by host
+## @param player_id: The id of the player who is taking the item
+## @param item_path: The NodePath of the item to give
+@rpc("authority", "call_local", "reliable")
+func _give_item_to_player(player_id: int, item_path: NodePath) -> void:
+	var item = get_node_or_null(item_path)
+	if item:
+		var player = GlobalScript.get_local_player_by_id(player_id)
+		if player:
+			player.pickup_item(item)
+
+
+## Perform action depend on what player is holding
+## @param _item: The Node Player is holding
+## @return: True if action is triggered, false otherwise
+func player_has(item: Node) -> void: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
+	# If player has nothing: let them take self, return true
+	if not item:
+		pickup_request()
+		return
+	put_request(item)
+## -------------------------------------------------------------------------------------------------
+
+
+
+## Non-networking methods for Player interaction ---------------------------------------------------
 ## Place an item onto this appliance from Player
 ## if we could remove Player dependency from this class, we can remove this method
 ## @param item: The Node to place on this appliance
@@ -158,22 +243,5 @@ func put_from_player(item: Node) -> bool:
 	GlobalScript.get_local_player().remove_item()
 	contents.append(item)
 	add_child(item)
-
-#-------------------------------------------------------------------------------
 	contents_names.append(item.name)
-#-------------------------------------------------------------------------------
-
 	return true
-
-
-## Perform action depend on what player is holding
-## @param _item: The Node Player is holding
-## @return: True if action is triggered, false otherwise
-func player_has(item: Node) -> void: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
-	# If player has nothing: let them take self, return true
-	if not item:
-		GlobalScript.get_local_player().pickup_item(self)
-		return
-	# If item_in_hand exists: depend on if equipment can accept it
-	put_from_player(item)
-## -------------------------------------------------------------------------------------------------

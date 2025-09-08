@@ -43,6 +43,21 @@ func put_all(items: Array) -> bool:
 	return true
 
 
+## Client-side method to put item, called by host
+## @param item_name: The name of the item to put
+## @param player_id: The id of the player who is putting the item
+@rpc("authority", "call_remote", "reliable")
+func _client_put(item_name: String, player_id: int) -> void:
+	# First try to find item in player's hand
+	var player = GlobalScript.get_local_player_by_id(player_id)
+	if player:
+		var item = player.item_in_hand
+		if item and item.name == item_name:
+			player.remove_item()
+			_put(item)
+			return
+
+
 ## Place food into the cookware
 ## @param food: The Food item to place into the cookware
 func _put_food(food: Food) -> void:
@@ -70,6 +85,18 @@ func _average_food() -> float:
 	for food in contents:
 		food.set_cook_time(average, cooking_style)
 	return average
+
+
+## Remove and return all items
+## @return: Array of all items that were removed
+func take_all() -> Array[Node]:
+	finish_cook()
+	var all_items = contents
+	for item in all_items:
+		remove_child(item)
+	contents = []
+	contents_names = []
+	return all_items
 
 
 ## Check if this appliance can accept the all given items
@@ -135,9 +162,6 @@ func put_from_player(item: Node) -> bool:
 	return success
 
 
-# TODO??
-# if we don't want to serve food to plate, when cookware is floor or not specified location
-# we can comment out method below:
 
 ## Perform action depend on what player is holding
 ## @param item: The Node Player is holding
@@ -167,3 +191,7 @@ func serve_to_plate(plate: Plate) -> bool:
 	#----------------------------------------------------------------------
 	return true
 ## -------------------------------------------------------------------------------------------------
+
+
+
+## Non-networking methods for Player interaction ---------------------------------------------------

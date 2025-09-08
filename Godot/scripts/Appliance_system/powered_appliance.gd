@@ -305,9 +305,6 @@ func _on_cook_timer_timeout():
 
 ## For Player interaction --------------------------------------------------------------------------
 
-# TODO: need new way to transfer item ownership from player to appliance
-
-
 ## Request to put an item onto this appliance from Player
 ## @param item: The Node to place on this appliance
 func put_request(item: Node) -> void:
@@ -379,7 +376,9 @@ func _take_as_host(player_id: int) -> void:
 func _give_item_to_player(player_id: int, item_path: NodePath) -> void:
 	var item = get_node_or_null(item_path)
 	if item:
-		GlobalScript.get_local_player_by_id(player_id).pickup_item(item)
+		var player = GlobalScript.get_local_player_by_id(player_id)
+		if player:
+			player.pickup_item(item)
 
 
 ## Sync contents names across network
@@ -409,7 +408,7 @@ func player_has(item: Node) -> void: # we may need player or id as parameter for
 		contents[0].player_has(item)
 		return
 	# If player has cookware: try to transfer contents
-	if item is Cookware:
+	if item is Cookware and not is_empty():
 		transfer_request(item)
 		return
 	# If item_in_hand exists: depend on if appliance can accept it
@@ -567,52 +566,33 @@ func get_progress() -> float:
 #---------------------------------------------------------------------------------------------------
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Non-networking methods for Player interaction ----------------------------------------------------
+# ## Place an item onto this appliance from Player
+# ## if we could remove Player dependency from this class, we can remove this method
+# ## @param item: The Node to place on this appliance
+# ## @return: True if placement was successful, false otherwise
+# func put_from_player(item: Node) -> bool:
+# 	if not _can_accept(item):
+# 		return false
+# 	# transfer item to appliance
+# 	GlobalScript.get_local_player().remove_item()
+# 	contents.append(item)
+# 	add_child(item)
+# 	contents_names.append(item.name)
+# 	if item is Cookware:
+# 		_put_cookware(item)
+# 	return true
 
-## Place an item onto this appliance from Player
-## if we could remove Player dependency from this class, we can remove this method
-## @param item: The Node to place on this appliance
-## @return: True if placement was successful, false otherwise
-func put_from_player(item: Node) -> bool:
-	if not _can_accept(item):
-		return false
-	# transfer item to appliance
-	GlobalScript.get_local_player().remove_item()
-	contents.append(item)
-	add_child(item)
-	contents_names.append(item.name)
-	if item is Cookware:
-		_put_cookware(item)
-	return true
-
-
-## Serve food from Cookware to Plate
-## @param plate: The Plate to serve food to
-## @return: True if serving was successful, false otherwise
-func serve_to_plate(plate: Plate) -> bool:
-	if not _check_target(plate):
-		return false
-	var cookware = contents[0]
-	if cookware.is_empty():
-		print("Nothing to serve from: ", cookware.get_script().get_global_name())
-		return false
-	plate.add_list_items(cookware.take_all()) # Method in Plate, takes Array of Food
-	return true
-
+# ## Serve food from Cookware to Plate
+# ## @param plate: The Plate to serve food to
+# ## @return: True if serving was successful, false otherwise
+# func serve_to_plate(plate: Plate) -> bool:
+# 	if not _check_target(plate):
+# 		return false
+# 	var cookware = contents[0]
+# 	if cookware.is_empty():
+# 		print("Nothing to serve from: ", cookware.get_script().get_global_name())
+# 		return false
+# 	plate.add_list_items(cookware.take_all()) # Method in Plate, takes Array of Food
+# 	return true
 #---------------------------------------------------------------------------------------------------

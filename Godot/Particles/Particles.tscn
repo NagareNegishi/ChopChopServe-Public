@@ -493,6 +493,7 @@ strength = 0.25
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.41952, -0.0486439, 0)
 amount = 50
 lifetime = 0.5
+speed_scale = 0.5
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_2qv8e")
 draw_pass_1 = SubResource("SphereMesh_acvn8")

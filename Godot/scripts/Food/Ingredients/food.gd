@@ -19,6 +19,8 @@ signal cooking
 @export var mixed_mesh: MeshInstance3D = null
 @export var texture : Texture2D = null
 
+
+
 # This gets reset in the other methods it is just default
 var food_name = "Default_foodState"
 var previous_states = ["RAW"] # List of the previous states so that the plate knows 
@@ -35,11 +37,11 @@ var is_cooked : bool = false
 # --------------------------- COOKING TIMES -----------------------------------
 var BOILED_time = 30 # How long it takes to cook 
 var boil_burn = -30
-var CHOPPED_time = 4 # Time needed to chop
+var CHOPPED_time = 2 # Time needed to chop
 var FROZEN_time = 8 # Time needed to freeze
 var MIXED_time = 6 # Time needed to mix/blend
 var BAKED_time = 15 # Time needed to bake
-var baked_birn = -15
+var baked_burn = -15
 var FRIED_time = 10 # Time needed to fry
 var fry_burn = -10
 var spoil_time = 100 # Timer to food 
@@ -57,8 +59,10 @@ enum foodState{
 	BURNT # Overcooked
 }
 
+
 var cook_timer : Timer = Timer.new()
 func _ready():
+	# Timer set up
 	add_child(cook_timer)
 	cook_timer.wait_time = 1.0
 	cook_timer.one_shot = false
@@ -130,97 +134,55 @@ func convert_enum_to_string(enum_name: foodState)-> String:
 		_:
 			return "RAW"
 
-func check_time(a, b):
-	return a <= b
-
-
 # -------------------------TYPES OF COOKING------------------------------------
 func chop():
-	print("remaining chop time, ", CHOPPED_time)
-	CHOPPED_time -=  time_power * cook_timer.wait_time 
-	if check_time(CHOPPED_time, 0):
-		state = foodState.CHOPPED
-		previous_states.append(convert_enum_to_string(state))
-		is_cooked = true
-		print("Food is chopped   ", food_name)
-		#emit_signal("changed_food_state")
-		on_state_change()
-		stop_cooking()
+	CHOPPED_time -= time_power * cook_timer.wait_time 
+	check_processed(foodState.CHOPPED, CHOPPED_time, 0, true)
 
 func boil():
-	BOILED_time -=  time_power * cook_timer.wait_time 
-	print("Cook time remaining: ", BOILED_time, " on food item: ", food_name)
-	if(BOILED_time <= 0 && BOILED_time > boil_burn):
-		state = foodState.BOILED;
-		if !previous_states.has(convert_enum_to_string(state)):
-			previous_states.append(convert_enum_to_string(state))
-		is_cooked = true
-		print("Food is boiled ", food_name)
-		#emit_signal("changed_food_state")
-		on_state_change()
-		#emit_signal("cooked")
-	if(BOILED_time <= boil_burn): # -BOILED_time is 2 times the time it takes to cook it
-		state = foodState.BURNT
-		#emit_signal("changed_food_state")
-		print("Food is burnt while boiling ", food_name)
-		on_state_change()
-		stop_cooking()
+	BOILED_time -= time_power * cook_timer.wait_time 
+	check_processed(foodState.BOILED, BOILED_time, boil_burn, false)
+	check_burnt(BOILED_time, boil_burn)
 
 func bake():
-	BAKED_time -= time_power * cook_timer.wait_time
-	if BAKED_time <= 0 && BAKED_time > -(BAKED_time):
-		state = foodState.BAKED
-		previous_states.append(state)
-		is_cooked = true
-		print("Food is baked   ", food_name)
-		on_state_change()
-	elif BAKED_time <= -(BAKED_time):
-		state = foodState.BURNT
-		print("Food is burnt while baking   ", food_name)
-		on_state_change()
-		stop_cooking()
+	BAKED_time -= time_power * cook_timer.wait_time 
+	check_processed(foodState.BAKED, BAKED_time, baked_burn, false)
+	check_burnt(BAKED_time, baked_burn)
 
 func fry():
-	print("Cook time remaining: ", FRIED_time, " on food item: ", food_name)
-	FRIED_time -= time_power * cook_timer.wait_time
-	if FRIED_time <= 0 && FRIED_time > fry_burn:
-		state = foodState.FRIED
-		if !previous_states.has(convert_enum_to_string(state)):
-			previous_states.append(convert_enum_to_string(state))
-		is_cooked = true
-		print("Food is fried   ", food_name)
-		on_state_change()
-	elif FRIED_time <= fry_burn:
-		state = foodState.BURNT
-		if !previous_states.has(convert_enum_to_string(state)):
-			previous_states.append(convert_enum_to_string(state))
-		print("Food is burnt while frying   ", food_name)
-		on_state_change()
-		stop_cooking()
-
+	FRIED_time -= time_power * cook_timer.wait_time 
+	check_processed(foodState.FRIED, FRIED_time, fry_burn, false)
+	check_burnt(FRIED_time, fry_burn)
 
 func mix():
-	MIXED_time -= time_power * cook_timer.wait_time
-	if MIXED_time <= 0:
-		state = foodState.MIXED
-		is_cooked = true
-		if !previous_states.has(convert_enum_to_string(state)):
-			previous_states.append(convert_enum_to_string(state))
-		print("Food is mixed   ", food_name)
-		on_state_change()
-		stop_cooking()
-
+	MIXED_time -= time_power * cook_timer.wait_time 
+	check_processed(foodState.MIXED, MIXED_time, 0, true)
 
 func freeze():
-	FROZEN_time -= time_power
-	if FROZEN_time <= 0:
-		state = foodState.FROZEN
-		previous_states.append(state)
-		is_cooked = true
-		print("Food is frozen   ", food_name)
-		stop_cooking()
+	FROZEN_time -= time_power * cook_timer.wait_time 
+	check_processed(foodState.FROZEN, FROZEN_time, 0, true)
 
 # -------------------------END OF COOKING TYPES---------------------------------
+func check_processed(s: foodState, time_a:int, time_b:int, stop:bool):
+	print("Cook time remaining: ", time_a, " on food item: ", food_name)
+	if(time_a <= 0 && time_a > time_b):
+		state = s;
+		if !previous_states.has(convert_enum_to_string(state)):
+			previous_states.append(convert_enum_to_string(state))
+		is_cooked = true
+		print("Food is done ", food_name)
+		#emit_signal("changed_food_state")
+		if stop:
+			stop_cooking()
+		on_state_change()
+
+
+func check_burnt(time_a, time_b):
+	if(time_a <= time_b): # -BOILED_time is 2 times the time it takes to cook it
+		state = foodState.BURNT
+		#emit_signal("changed_food_state")
+		on_state_change()
+		stop_cooking()
 
 # Called by the appliance to cook the food passing in the power/time to cook it and the
 # cooking style as well as this will determine what it looks like
@@ -239,7 +201,7 @@ func startCooking(time: int, appliance_type: ApplianceFactory.CookingStyle):
 		match appliance_type:
 			ApplianceFactory.CookingStyle.CHOP:
 				if CHOPPED_time <= 0:
-					CHOPPED_time = 4  # Reset chop time
+					CHOPPED_time = 2 # Reset chop time
 			ApplianceFactory.CookingStyle.BAKE:
 				if BAKED_time <= 0:
 					BAKED_time = 15  # Reset bake time
@@ -254,7 +216,6 @@ func startCooking(time: int, appliance_type: ApplianceFactory.CookingStyle):
 					BOILED_time = 30  # Reset cook time for boiling
 	#emit_signal("cooking")
 	cook_timer.start()
-	
 
 
 # Lets either the appliance or the player tell the food to stop cooking when it 

@@ -11,7 +11,7 @@ func _init():
 func _ready():
 	super._ready()
 	cooking_style = ApplianceFactory.CookingStyle.DEEP_FRY
-	valid_food = ["Fish", "Tomato", "Potato"] # Confirm later!!!!!!!!!!!!!!
+	valid_food = ["Fish", "Tomato", "Potato", "Onion"] # Confirm later!!!!!!!!!!!!!!
 	capacity = 4
 	coefficient = 1.0
 	

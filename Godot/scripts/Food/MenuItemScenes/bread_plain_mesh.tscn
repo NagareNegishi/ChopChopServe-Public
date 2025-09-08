@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://vraknb8ep8h"]
-
-[ext_resource type="PackedScene" uid="uid://bb0fuihlatyg0" path="res://assets/newmodels/food/recipes/finished/BreadPlain.glb" id="1_24pyd"]
-
-[node name="BreadPlain" instance=ExtResource("1_24pyd")]

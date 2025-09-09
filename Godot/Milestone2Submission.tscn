@@ -607,21 +607,37 @@ transform = Transform3D(1, 0, 6.3573e-08, 0, 1, 0, -6.3573e-08, 0, 1, 8, 0, -5)
 
 [node name="ChopTable" parent="NavigationRegion3D/== RSIDE ==/Bench20" instance=ExtResource("24_q757p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.597495, 0)
+invalid_food = Array[String]([])
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1
 
 [node name="Bench21" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("6_yhilg")]
 transform = Transform3D(1, 0, 6.3573e-08, 0, 1, 0, -6.3573e-08, 0, 1, 9, 0, -5)
 
 [node name="Placeable" parent="NavigationRegion3D/== RSIDE ==/Bench21" instance=ExtResource("20_fe3e7")]
+invalid_food = Array[String]([])
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1
 
 [node name="Bench22" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("6_yhilg")]
 transform = Transform3D(1.19249e-08, 0, 1, 0, 1, 0, -1, 0, 1.19249e-08, 9, 0, -6)
 
 [node name="Placeable" parent="NavigationRegion3D/== RSIDE ==/Bench22" instance=ExtResource("20_fe3e7")]
+invalid_food = Array[String]([])
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1
 
 [node name="Bench23" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("6_yhilg")]
 transform = Transform3D(1.19249e-08, 0, 1, 0, 1, 0, -1, 0, 1.19249e-08, 9, 0, -8)
 
 [node name="Placeable" parent="NavigationRegion3D/== RSIDE ==/Bench23" instance=ExtResource("20_fe3e7")]
+invalid_food = Array[String]([])
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1
 
 [node name="Bench24" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("6_yhilg")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6, 0, -6)
@@ -633,6 +649,10 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6, 0,
 transform = Transform3D(1, 0, -2.38419e-07, 0, 1, 0, 2.38419e-07, 0, 1, 4, 0, -5)
 
 [node name="Placeable" parent="NavigationRegion3D/== RSIDE ==/Bench26" instance=ExtResource("20_fe3e7")]
+invalid_food = Array[String]([])
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1
 
 [node name="Bench28" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("6_yhilg")]
 transform = Transform3D(1, 0, -2.38419e-07, 0, 1, 0, 2.38419e-07, 0, 1, -5, 0, -5)
@@ -650,6 +670,10 @@ transform = Transform3D(1, 0, 6.3573e-08, 0, 1, 0, -6.3573e-08, 0, 1, -6, 0, -5)
 transform = Transform3D(1, 0, -2.38419e-07, 0, 1, 0, 2.38419e-07, 0, 1, 3, 0, -5)
 
 [node name="Placeable" parent="NavigationRegion3D/== RSIDE ==/Bench32" instance=ExtResource("20_fe3e7")]
+invalid_food = Array[String]([])
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1
 
 [node name="Bench33" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("6_yhilg")]
 transform = Transform3D(2.50343e-07, 0, 1, 0, 1, 0, -1, 0, 2.50343e-07, -1.19209e-07, 0, -6)
@@ -661,17 +685,28 @@ transform = Transform3D(2.50343e-07, 0, 1, 0, 1, 0, -1, 0, 2.50343e-07, 1.19209e
 transform = Transform3D(7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, 3, 0, -8)
 
 [node name="Placeable" parent="NavigationRegion3D/== RSIDE ==/Bench35" instance=ExtResource("20_fe3e7")]
+invalid_food = Array[String]([])
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1
 
 [node name="Bench36" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("6_yhilg")]
 transform = Transform3D(7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, 3, 0, -6)
 
 [node name="Placeable" parent="NavigationRegion3D/== RSIDE ==/Bench36" instance=ExtResource("20_fe3e7")]
+invalid_food = Array[String]([])
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1
 
 [node name="trashcan3" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("7_5qu14")]
 transform = Transform3D(-1, 0, -8.74232e-08, 0, 1, 0, 8.74232e-08, 0, -1, 7, 0, -9)
 
 [node name="TrashCan" parent="NavigationRegion3D/== RSIDE ==/trashcan3" instance=ExtResource("21_pci36")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1
 
 [node name="trashcan4" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("7_5qu14")]
 transform = Transform3D(-1, 0, -8.74232e-08, 0, 1, 0, 8.74232e-08, 0, -1, -4, 0, -9)
@@ -683,6 +718,9 @@ transform = Transform3D(1, 0, -2.38419e-07, 0, 1, 0, 2.38419e-07, 0, 1, -2, 0, -
 transform = Transform3D(1, 0, -2.38419e-07, 0, 1, 0, 2.38419e-07, 0, 1, 5, 0, -5)
 
 [node name="Sink" parent="NavigationRegion3D/== RSIDE ==/sink_2glb4" instance=ExtResource("22_tq2ju")]
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1
 
 [node name="nufryer3" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("9_ovpkf")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 4, 0, -9)
@@ -708,11 +746,19 @@ transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -2, 0.67
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 6, 0, -9)
 
 [node name="ChopTable" parent="NavigationRegion3D/== RSIDE ==/actualwide4" instance=ExtResource("24_q757p")]
+invalid_food = Array[String]([])
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1
 
 [node name="fatdrawers4" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("11_ehrbh")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 5, 0, -9)
 
 [node name="ChopTable" parent="NavigationRegion3D/== RSIDE ==/fatdrawers4" instance=ExtResource("24_q757p")]
+invalid_food = Array[String]([])
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1
 
 [node name="choppingboard7" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("12_ku0jr")]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 5, 0.678958, -9)
@@ -727,11 +773,17 @@ transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0, 0, -7
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 3, 0, -7)
 
 [node name="Oven" parent="NavigationRegion3D/== RSIDE ==/oven4" instance=ExtResource("25_4qsnr")]
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1
 
 [node name="newblender3" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("14_bylnx")]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 9, 0, -7)
 
 [node name="Blender" parent="NavigationRegion3D/== RSIDE ==/newblender3" instance=ExtResource("26_ttrxq")]
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1
 
 [node name="newblender4" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("14_bylnx")]
 transform = Transform3D(-1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, -6, 0, -7)
@@ -759,11 +811,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.97447, 0.392201, -5.00542)
 
 [node name="StoveWithPot" parent="." instance=ExtResource("29_xho1v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.27045, 0, -3.81482)
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1
 
 [node name="FoodCrate" parent="." instance=ExtResource("30_bota8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.34422, 0, -2.75199)
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1
 
 [node name="FoodCrate2" parent="." instance=ExtResource("30_bota8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.39644, 0, -1.84384)
 supply = ExtResource("21_c5fyv")
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1
 model_scene = ExtResource("31_gnhd6")

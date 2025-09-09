@@ -17,9 +17,10 @@ func _ready():
 	
 	# This is the appliance it is to be collected in 
 	#appliance = "Bowl"
-	
-	cooked_mesh_good = null
+	is_available=true
+
+
+func _init():
+	cooked_mesh_good = $SoupPumpkin
 	cooked_mesh_bad = null
 	cooked_mesh_burnt = null
-	
-	register(self)

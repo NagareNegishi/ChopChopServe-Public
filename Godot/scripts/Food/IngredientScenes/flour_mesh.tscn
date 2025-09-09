@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://c2ohqv88chlx8"]
-
-[ext_resource type="PackedScene" uid="uid://c41v4rgoetbnp" path="res://assets/newmodels/food/ingredients/raw/Flour.glb" id="1_a7sr6"]
-
-[node name="Flour" instance=ExtResource("1_a7sr6")]

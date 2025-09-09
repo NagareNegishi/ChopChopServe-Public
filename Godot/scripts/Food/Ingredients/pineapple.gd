@@ -10,3 +10,6 @@ func _ready():
 	chopped_mesh = null
 	# Spoil time is same as super class
 	# Cook time is same as super class
+	
+	add_to_group("Food")
+	on_state_change()

@@ -1,37 +1,40 @@
-[gd_scene load_steps=40 format=3 uid="uid://c0u28p2b13i0s"]
+[gd_scene load_steps=43 format=3 uid="uid://bmcg5uk1crhrh"]
 
-[ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_8vcd1"]
-[ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="2_igaqv"]
-[ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="3_tckvl"]
-[ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="4_yy0im"]
-[ext_resource type="PackedScene" uid="uid://d1iqitph17b80" path="res://scenes/Interaction/AbstractPickup.tscn" id="5_utqg8"]
-[ext_resource type="Script" uid="uid://dv1g0obwvkkkt" path="res://scripts/QueueSpot.gd" id="6_hs7id"]
-[ext_resource type="Script" uid="uid://dnns4dn8p042y" path="res://scripts/Table.gd" id="7_jx4i3"]
-[ext_resource type="PackedScene" uid="uid://dxhfqm13c85ar" path="res://assets/models/decorations/table.glb" id="8_7d8uc"]
-[ext_resource type="PackedScene" uid="uid://bhby0n47wy3nv" path="res://assets/models/infrastructure/wall.tscn" id="9_2nf2p"]
-[ext_resource type="PackedScene" uid="uid://hxrvqyggbykc" path="res://assets/models/NuFurniture/Bench.glb" id="10_bm81y"]
-[ext_resource type="PackedScene" uid="uid://bkbecho40n7y6" path="res://assets/models/NuFurniture/trashcan.glb" id="11_72o7r"]
-[ext_resource type="PackedScene" uid="uid://v7nfkw4q5020" path="res://assets/models/NuFurniture/sink.2glb.glb" id="12_xhdds"]
-[ext_resource type="PackedScene" uid="uid://dm1p1i7vkurb0" path="res://assets/models/NuFurniture/nufryer.glb" id="13_03u44"]
-[ext_resource type="PackedScene" uid="uid://cdqkrjq5ctkjy" path="res://assets/models/NuFurniture/actualwide.glb" id="14_s7q5e"]
-[ext_resource type="PackedScene" uid="uid://bjhvmpray6c2h" path="res://assets/models/NuFurniture/fatdrawers.glb" id="15_o2stf"]
-[ext_resource type="PackedScene" uid="uid://cjl0yhl53y46r" path="res://assets/models/items/choppingboard.glb" id="16_eusnu"]
-[ext_resource type="PackedScene" uid="uid://dyyd5onvpbmsv" path="res://assets/models/NuFurniture/oven.glb" id="17_j0ts4"]
-[ext_resource type="PackedScene" uid="uid://b7x0xycilg7vt" path="res://assets/models/NuFurniture/newblender.glb" id="18_dbwdl"]
-[ext_resource type="PackedScene" uid="uid://b64oudiukwpwa" path="res://assets/models/NuFurniture/nufridge.glb" id="19_vom6f"]
-[ext_resource type="PackedScene" uid="uid://df6cemvjo3grw" path="res://scenes/Appliance_system/chop_table.tscn" id="20_l01kc"]
-[ext_resource type="PackedScene" uid="uid://b5nb1nxo1r1kb" path="res://scenes/Appliance_system/bench.tscn" id="21_wagc4"]
-[ext_resource type="PackedScene" uid="uid://dt4wue57mdx1d" path="res://scenes/Appliance_system/trash_can.tscn" id="22_yg0nm"]
-[ext_resource type="PackedScene" uid="uid://bakeesqt3byva" path="res://scenes/Appliance_system/sink.tscn" id="23_bc62a"]
-[ext_resource type="PackedScene" uid="uid://dbeboubu5gkhe" path="res://scenes/Appliance_system/fryer.tscn" id="24_kwx2i"]
-[ext_resource type="PackedScene" uid="uid://dlk0mbdfg2cmq" path="res://scenes/Appliance_system/oven.tscn" id="25_o6it4"]
-[ext_resource type="PackedScene" uid="uid://cw5uvt35a87nt" path="res://scenes/Appliance_system/blender.tscn" id="26_qbs51"]
-[ext_resource type="PackedScene" uid="uid://br76j8t76ne2x" path="res://scripts/order_system/Plate.tscn" id="27_8ugct"]
-[ext_resource type="PackedScene" uid="uid://dbqm4i10x565r" path="res://scripts/Food/IngredientScenes/Water.tscn" id="28_g7qyv"]
-[ext_resource type="PackedScene" uid="uid://krj0gwn31x8u" path="res://scenes/Appliance_system/stove_with_pot.tscn" id="29_34ge6"]
-[ext_resource type="PackedScene" uid="uid://b0ougk3d4jnku" path="res://scenes/Appliance_system/food_crate.tscn" id="30_am8m3"]
-[ext_resource type="PackedScene" uid="uid://cn8yjuakgjsam" path="res://assets/newmodels/furniture/Sink.glb" id="31_o1oxj"]
-[ext_resource type="Script" uid="uid://263f6vkv1ajj" path="res://scripts/Appliance_system/Concrete_classes/cabinet.gd" id="32_rfom3"]
+[ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_tckvl"]
+[ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="2_yy0im"]
+[ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="3_utqg8"]
+[ext_resource type="PackedScene" uid="uid://bk7ovilp788kq" path="res://scripts/Player/spawn_point.tscn" id="4_hs7id"]
+[ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="5_jx4i3"]
+[ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="6_7d8uc"]
+[ext_resource type="PackedScene" uid="uid://d1iqitph17b80" path="res://scenes/Interaction/AbstractPickup.tscn" id="7_2nf2p"]
+[ext_resource type="Script" uid="uid://dv1g0obwvkkkt" path="res://scripts/QueueSpot.gd" id="8_bm81y"]
+[ext_resource type="Script" uid="uid://dnns4dn8p042y" path="res://scripts/Table.gd" id="9_72o7r"]
+[ext_resource type="PackedScene" uid="uid://dxhfqm13c85ar" path="res://assets/models/decorations/table.glb" id="10_xhdds"]
+[ext_resource type="PackedScene" uid="uid://bhby0n47wy3nv" path="res://assets/models/infrastructure/wall.tscn" id="11_03u44"]
+[ext_resource type="PackedScene" uid="uid://hxrvqyggbykc" path="res://assets/models/NuFurniture/Bench.glb" id="12_s7q5e"]
+[ext_resource type="PackedScene" uid="uid://bkbecho40n7y6" path="res://assets/models/NuFurniture/trashcan.glb" id="13_o2stf"]
+[ext_resource type="PackedScene" uid="uid://v7nfkw4q5020" path="res://assets/models/NuFurniture/sink.2glb.glb" id="14_eusnu"]
+[ext_resource type="PackedScene" uid="uid://dm1p1i7vkurb0" path="res://assets/models/NuFurniture/nufryer.glb" id="15_j0ts4"]
+[ext_resource type="PackedScene" uid="uid://cdqkrjq5ctkjy" path="res://assets/models/NuFurniture/actualwide.glb" id="16_dbwdl"]
+[ext_resource type="PackedScene" uid="uid://bjhvmpray6c2h" path="res://assets/models/NuFurniture/fatdrawers.glb" id="17_vom6f"]
+[ext_resource type="PackedScene" uid="uid://cjl0yhl53y46r" path="res://assets/models/items/choppingboard.glb" id="18_l01kc"]
+[ext_resource type="PackedScene" uid="uid://dyyd5onvpbmsv" path="res://assets/models/NuFurniture/oven.glb" id="19_wagc4"]
+[ext_resource type="PackedScene" uid="uid://b7x0xycilg7vt" path="res://assets/models/NuFurniture/newblender.glb" id="20_yg0nm"]
+[ext_resource type="PackedScene" uid="uid://b64oudiukwpwa" path="res://assets/models/NuFurniture/nufridge.glb" id="21_bc62a"]
+[ext_resource type="PackedScene" uid="uid://df6cemvjo3grw" path="res://scenes/Appliance_system/chop_table.tscn" id="22_kwx2i"]
+[ext_resource type="PackedScene" uid="uid://b5nb1nxo1r1kb" path="res://scenes/Appliance_system/bench.tscn" id="23_o6it4"]
+[ext_resource type="PackedScene" uid="uid://dt4wue57mdx1d" path="res://scenes/Appliance_system/trash_can.tscn" id="24_qbs51"]
+[ext_resource type="PackedScene" uid="uid://bakeesqt3byva" path="res://scenes/Appliance_system/sink.tscn" id="25_8ugct"]
+[ext_resource type="PackedScene" uid="uid://dbeboubu5gkhe" path="res://scenes/Appliance_system/fryer.tscn" id="26_g7qyv"]
+[ext_resource type="PackedScene" uid="uid://dlk0mbdfg2cmq" path="res://scenes/Appliance_system/oven.tscn" id="27_34ge6"]
+[ext_resource type="PackedScene" uid="uid://cw5uvt35a87nt" path="res://scenes/Appliance_system/blender.tscn" id="28_am8m3"]
+[ext_resource type="PackedScene" uid="uid://br76j8t76ne2x" path="res://scripts/order_system/Plate.tscn" id="29_o1oxj"]
+[ext_resource type="PackedScene" uid="uid://dbqm4i10x565r" path="res://scripts/Food/IngredientScenes/Water.tscn" id="30_cj5mg"]
+[ext_resource type="PackedScene" uid="uid://krj0gwn31x8u" path="res://scenes/Appliance_system/stove_with_pot.tscn" id="31_dv6fj"]
+[ext_resource type="PackedScene" uid="uid://b0ougk3d4jnku" path="res://scenes/Appliance_system/food_crate.tscn" id="32_r8ffs"]
+[ext_resource type="PackedScene" uid="uid://cn8yjuakgjsam" path="res://assets/newmodels/furniture/Sink.glb" id="33_om36i"]
+[ext_resource type="PackedScene" uid="uid://bqpdxpf2l7uw1" path="res://scenes/Appliance_system/stove.tscn" id="34_lpo6d"]
+[ext_resource type="PackedScene" uid="uid://dvn4ytv3ro6ec" path="res://scripts/Food/IngredientScenes/Tomato.tscn" id="35_ewtc1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_67eo6"]
 size = Vector3(1.11963, 1, 3.02759)
@@ -62,28 +65,55 @@ size = Vector3(30, 0.03, 30)
 [sub_resource type="BoxMesh" id="BoxMesh_pwhdc"]
 size = Vector3(30, 0.05, 30)
 
-[node name="JohnoTestScene" type="Node3D" node_paths=PackedStringArray("tables", "queue_spots", "customer_spawn_point", "customer_exit_point")]
-script = ExtResource("1_8vcd1")
+[node name="JohnoTestScene2" type="Node3D" node_paths=PackedStringArray("tables", "queue_spots", "customer_spawn_point", "customer_exit_point")]
+script = ExtResource("1_tckvl")
 tables = [NodePath("NavigationRegion3D/== TABLES ==/TableBody8"), NodePath("NavigationRegion3D/== TABLES ==/TableBody7"), NodePath("NavigationRegion3D/== TABLES ==/TableBody6"), NodePath("NavigationRegion3D/== TABLES ==/TableBody5"), NodePath("NavigationRegion3D/== TABLES ==/TableBody9"), NodePath("NavigationRegion3D/== TABLES ==/TableBody10"), NodePath("NavigationRegion3D/== TABLES ==/TableBody11"), NodePath("NavigationRegion3D/== TABLES ==/TableBody12")]
 queue_spots = [NodePath("===QUEUE==/QueueSpot-1"), NodePath("===QUEUE==/QueueSpot-2"), NodePath("===QUEUE==/QueueSpot-3"), NodePath("===QUEUE==/QueueSpot-4"), NodePath("===QUEUE==/QueueSpot-5")]
 customer_spawn_point = NodePath("CustomerSpawnPoint")
 customer_exit_point = NodePath("CustomerExitPoint")
 
-[node name="Player" parent="." instance=ExtResource("2_igaqv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.92596, 0.559142, -7.0921)
+[node name="== PLAYERS ==" type="Node" parent="."]
+
+[node name="== SPAWNS ==" type="Node" parent="."]
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="== SPAWNS ==" node_paths=PackedStringArray("spawns")]
+_spawnable_scenes = PackedStringArray("uid://ckxyscw51v3du")
+spawn_path = NodePath("../../== PLAYERS ==")
+spawn_limit = 4
+script = ExtResource("2_yy0im")
+spawns = [NodePath("../SpawnPoint2"), NodePath("../SpawnPoint3"), NodePath("../SpawnPoint4"), NodePath("../SpawnPoint")]
+network_player = ExtResource("3_utqg8")
+
+[node name="SpawnPoint" parent="== SPAWNS ==" instance=ExtResource("4_hs7id")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.59256, 0, -1.93155)
+team = 1
+priority = 1
+
+[node name="SpawnPoint2" parent="== SPAWNS ==" instance=ExtResource("4_hs7id")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.35706, 0, -6.71761)
+team = 2
+priority = 1
+
+[node name="SpawnPoint3" parent="== SPAWNS ==" instance=ExtResource("4_hs7id")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.35706, 0, -0.131173)
+team = 2
+
+[node name="SpawnPoint4" parent="== SPAWNS ==" instance=ExtResource("4_hs7id")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.35158, 0, -1.78232)
+team = 1
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.00272365, -0.563709, 0.825969, -0.00265669, 0.825965, 0.563715, -0.999993, -0.00372971, 0.000752039, 14.8973, 10.793, 0.0817995)
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-4.37114e-08, -0.819152, 0.573576, 0, 0.573576, 0.819152, -1, 3.58063e-08, -2.50718e-08, 9.34595, 4.87089, -4.83022)
+transform = Transform3D(-4.37114e-08, -0.819152, 0.573576, 0, 0.573576, 0.819152, -1, 3.58063e-08, -2.50718e-08, 9.58905, 3.85385, -4.76924)
 
-[node name="Extinguisher" parent="." instance=ExtResource("3_tckvl")]
+[node name="Extinguisher" parent="." instance=ExtResource("5_jx4i3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.53571, 0.482358, 0)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="HUD" parent="CanvasLayer" instance=ExtResource("4_yy0im")]
+[node name="HUD" parent="CanvasLayer" instance=ExtResource("6_7d8uc")]
 
 [node name="== TEMP COLLISION ==" type="Node" parent="."]
 
@@ -194,30 +224,30 @@ shape = SubResource("BoxShape3D_0ny5b")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_ikll6")
 
-[node name="AbstractPickup" parent="." instance=ExtResource("5_utqg8")]
+[node name="AbstractPickup" parent="." instance=ExtResource("7_2nf2p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.49325, 0.1815, 2.71952)
 
 [node name="===QUEUE==" type="Node" parent="."]
 
 [node name="QueueSpot-1" type="Node3D" parent="===QUEUE=="]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 2)
-script = ExtResource("6_hs7id")
+script = ExtResource("8_bm81y")
 
 [node name="QueueSpot-2" type="Node3D" parent="===QUEUE=="]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 3.5)
-script = ExtResource("6_hs7id")
+script = ExtResource("8_bm81y")
 
 [node name="QueueSpot-3" type="Node3D" parent="===QUEUE=="]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 5)
-script = ExtResource("6_hs7id")
+script = ExtResource("8_bm81y")
 
 [node name="QueueSpot-4" type="Node3D" parent="===QUEUE=="]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 6.5)
-script = ExtResource("6_hs7id")
+script = ExtResource("8_bm81y")
 
 [node name="QueueSpot-5" type="Node3D" parent="===QUEUE=="]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 8)
-script = ExtResource("6_hs7id")
+script = ExtResource("8_bm81y")
 
 [node name="CustomerSpawnPoint" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.067, 0.728576, 8.38035)
@@ -232,14 +262,14 @@ navigation_mesh = SubResource("NavigationMesh_ovpkf")
 
 [node name="TableBody8" type="StaticBody3D" parent="NavigationRegion3D/== TABLES ==" node_paths=PackedStringArray("detection_area")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.00051, -0.0130892, -1.98885)
-script = ExtResource("7_jx4i3")
+script = ExtResource("9_72o7r")
 detection_area = NodePath("Area3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/== TABLES ==/TableBody8"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.314758, 0)
 shape = SubResource("CylinderShape3D_7se30")
 
-[node name="table8" parent="NavigationRegion3D/== TABLES ==/TableBody8" instance=ExtResource("8_7d8uc")]
+[node name="table8" parent="NavigationRegion3D/== TABLES ==/TableBody8" instance=ExtResource("10_xhdds")]
 
 [node name="Area3D" type="Area3D" parent="NavigationRegion3D/== TABLES ==/TableBody8"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -250,14 +280,14 @@ shape = SubResource("CylinderShape3D_7se30")
 
 [node name="TableBody7" type="StaticBody3D" parent="NavigationRegion3D/== TABLES ==" node_paths=PackedStringArray("detection_area")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -2)
-script = ExtResource("7_jx4i3")
+script = ExtResource("9_72o7r")
 detection_area = NodePath("Area3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/== TABLES ==/TableBody7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.314758, 0)
 shape = SubResource("CylinderShape3D_7se30")
 
-[node name="table7" parent="NavigationRegion3D/== TABLES ==/TableBody7" instance=ExtResource("8_7d8uc")]
+[node name="table7" parent="NavigationRegion3D/== TABLES ==/TableBody7" instance=ExtResource("10_xhdds")]
 
 [node name="Area3D" type="Area3D" parent="NavigationRegion3D/== TABLES ==/TableBody7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -268,14 +298,14 @@ shape = SubResource("CylinderShape3D_7se30")
 
 [node name="TableBody6" type="StaticBody3D" parent="NavigationRegion3D/== TABLES ==" node_paths=PackedStringArray("detection_area")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.00051, -0.0130892, 2.01115)
-script = ExtResource("7_jx4i3")
+script = ExtResource("9_72o7r")
 detection_area = NodePath("Area3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/== TABLES ==/TableBody6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.314758, 0)
 shape = SubResource("CylinderShape3D_7se30")
 
-[node name="table8" parent="NavigationRegion3D/== TABLES ==/TableBody6" instance=ExtResource("8_7d8uc")]
+[node name="table8" parent="NavigationRegion3D/== TABLES ==/TableBody6" instance=ExtResource("10_xhdds")]
 
 [node name="Area3D" type="Area3D" parent="NavigationRegion3D/== TABLES ==/TableBody6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -286,14 +316,14 @@ shape = SubResource("CylinderShape3D_7se30")
 
 [node name="TableBody5" type="StaticBody3D" parent="NavigationRegion3D/== TABLES ==" node_paths=PackedStringArray("detection_area")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 2)
-script = ExtResource("7_jx4i3")
+script = ExtResource("9_72o7r")
 detection_area = NodePath("Area3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/== TABLES ==/TableBody5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.314758, 0)
 shape = SubResource("CylinderShape3D_7se30")
 
-[node name="table7" parent="NavigationRegion3D/== TABLES ==/TableBody5" instance=ExtResource("8_7d8uc")]
+[node name="table7" parent="NavigationRegion3D/== TABLES ==/TableBody5" instance=ExtResource("10_xhdds")]
 
 [node name="Area3D" type="Area3D" parent="NavigationRegion3D/== TABLES ==/TableBody5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -304,14 +334,14 @@ shape = SubResource("CylinderShape3D_7se30")
 
 [node name="TableBody9" type="StaticBody3D" parent="NavigationRegion3D/== TABLES ==" node_paths=PackedStringArray("detection_area")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.999485, -0.0130892, -1.98885)
-script = ExtResource("7_jx4i3")
+script = ExtResource("9_72o7r")
 detection_area = NodePath("Area3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/== TABLES ==/TableBody9"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.314758, 0)
 shape = SubResource("CylinderShape3D_7se30")
 
-[node name="table8" parent="NavigationRegion3D/== TABLES ==/TableBody9" instance=ExtResource("8_7d8uc")]
+[node name="table8" parent="NavigationRegion3D/== TABLES ==/TableBody9" instance=ExtResource("10_xhdds")]
 
 [node name="Area3D" type="Area3D" parent="NavigationRegion3D/== TABLES ==/TableBody9"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -322,14 +352,14 @@ shape = SubResource("CylinderShape3D_7se30")
 
 [node name="TableBody10" type="StaticBody3D" parent="NavigationRegion3D/== TABLES ==" node_paths=PackedStringArray("detection_area")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -2)
-script = ExtResource("7_jx4i3")
+script = ExtResource("9_72o7r")
 detection_area = NodePath("Area3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/== TABLES ==/TableBody10"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.314758, 0)
 shape = SubResource("CylinderShape3D_7se30")
 
-[node name="table7" parent="NavigationRegion3D/== TABLES ==/TableBody10" instance=ExtResource("8_7d8uc")]
+[node name="table7" parent="NavigationRegion3D/== TABLES ==/TableBody10" instance=ExtResource("10_xhdds")]
 
 [node name="Area3D" type="Area3D" parent="NavigationRegion3D/== TABLES ==/TableBody10"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -340,14 +370,14 @@ shape = SubResource("CylinderShape3D_7se30")
 
 [node name="TableBody11" type="StaticBody3D" parent="NavigationRegion3D/== TABLES ==" node_paths=PackedStringArray("detection_area")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.999485, -0.0130892, 2.01115)
-script = ExtResource("7_jx4i3")
+script = ExtResource("9_72o7r")
 detection_area = NodePath("Area3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/== TABLES ==/TableBody11"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.314758, 0)
 shape = SubResource("CylinderShape3D_7se30")
 
-[node name="table8" parent="NavigationRegion3D/== TABLES ==/TableBody11" instance=ExtResource("8_7d8uc")]
+[node name="table8" parent="NavigationRegion3D/== TABLES ==/TableBody11" instance=ExtResource("10_xhdds")]
 
 [node name="Area3D" type="Area3D" parent="NavigationRegion3D/== TABLES ==/TableBody11"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -358,14 +388,14 @@ shape = SubResource("CylinderShape3D_7se30")
 
 [node name="TableBody12" type="StaticBody3D" parent="NavigationRegion3D/== TABLES ==" node_paths=PackedStringArray("detection_area")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 2)
-script = ExtResource("7_jx4i3")
+script = ExtResource("9_72o7r")
 detection_area = NodePath("Area3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/== TABLES ==/TableBody12"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.314758, 0)
 shape = SubResource("CylinderShape3D_7se30")
 
-[node name="table7" parent="NavigationRegion3D/== TABLES ==/TableBody12" instance=ExtResource("8_7d8uc")]
+[node name="table7" parent="NavigationRegion3D/== TABLES ==/TableBody12" instance=ExtResource("10_xhdds")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.040947, -0.0524943, -0.000102043)
 
 [node name="Area3D" type="Area3D" parent="NavigationRegion3D/== TABLES ==/TableBody12"]
@@ -377,427 +407,388 @@ shape = SubResource("CylinderShape3D_7se30")
 
 [node name="== WALLS ==" type="Node" parent="NavigationRegion3D"]
 
-[node name="Wall54" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall54" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 2)
 
-[node name="Wall55" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall55" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10, 0, 10)
 
-[node name="Wall56" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall56" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 8, 0, 10)
 
-[node name="Wall57" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall57" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 6, 0, 10)
 
-[node name="Wall58" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall58" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4, 0, 10)
 
-[node name="Wall59" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall59" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2, 0, 10)
 
-[node name="Wall60" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall60" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 10)
 
-[node name="Wall61" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall61" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2, 0, 10)
 
-[node name="Wall62" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall62" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4, 0, 10)
 
-[node name="Wall63" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall63" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -6, 0, 10)
 
-[node name="Wall64" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall64" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 10, 0, -10)
 
-[node name="Wall65" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall65" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 8, 0, -10)
 
-[node name="Wall66" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall66" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 6, 0, -10)
 
-[node name="Wall67" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall67" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4, 0, -10)
 
-[node name="Wall68" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall68" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2, 0, -10)
 
-[node name="Wall69" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall69" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -10)
 
-[node name="Wall70" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall70" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2, 0, -10)
 
-[node name="Wall71" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall71" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4, 0, -10)
 
-[node name="Wall72" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall72" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6, 0, -10)
 
-[node name="Wall73" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall73" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 10, 0, -10)
 
-[node name="Wall74" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall74" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 10, 0, -8)
 
-[node name="Wall75" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall75" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 10, 0, -6)
 
-[node name="Wall76" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall76" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 10, 0, -4)
 
-[node name="Wall77" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall77" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 10, 0, 8)
 
-[node name="Wall78" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall78" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 10, 0, 10)
 
-[node name="Wall79" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall79" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 10, 0, 4)
 
-[node name="Wall80" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall80" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 10, 0, 6)
 
-[node name="Wall81" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall81" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 10, 0, 2)
 
-[node name="Wall82" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall82" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 10, 0, -2)
 
-[node name="Wall83" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall83" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 10)
 
-[node name="Wall84" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall84" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 8)
 
-[node name="Wall85" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall85" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 6)
 
-[node name="Wall86" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall86" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 4)
 
-[node name="Wall87" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall87" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -8)
 
-[node name="Wall88" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall88" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -10)
 
-[node name="Wall89" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall89" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -4)
 
-[node name="Wall90" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall90" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -6)
 
-[node name="Wall91" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("9_2nf2p")]
+[node name="Wall91" parent="NavigationRegion3D/== WALLS ==" instance=ExtResource("11_03u44")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -2)
 
 [node name="== LSIDE ==" type="Node3D" parent="NavigationRegion3D"]
 
-[node name="Bench2" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench2" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -5, 0, 5)
 
-[node name="Bench18" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench18" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -6, 0, 5)
 
-[node name="Bench3" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench3" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -6, 0, 6)
 
-[node name="Bench5" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench5" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -6, 0, 8)
 
-[node name="Bench10" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench10" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 9, 0, 6)
 
-[node name="Bench13" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench13" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 9, 0, 8)
 
-[node name="Bench4" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench4" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -1, 0, 5)
 
-[node name="Bench16" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench16" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 8, 0, 5)
 
-[node name="Bench7" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench7" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 4, 0, 5)
 
-[node name="Bench8" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench8" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 3, 0, 5)
 
-[node name="Bench17" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench17" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 9, 0, 5)
 
-[node name="Bench15" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench15" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 5)
 
-[node name="Bench9" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench9" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(-2.18557e-07, 0, -1, 0, 1, 0, 1, 0, -2.18557e-07, 3, 0, 6)
 
-[node name="Bench11" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench11" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(-2.18557e-07, 0, -1, 0, 1, 0, 1, 0, -2.18557e-07, 3, 0, 8)
 
-[node name="Bench12" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench12" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(-2.18557e-07, 0, 1, 0, 1, 0, -1, 0, -2.18557e-07, 3.25842e-07, 0, 8)
 
-[node name="Bench14" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench14" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(-2.18557e-07, 0, 1, 0, 1, 0, -1, 0, -2.18557e-07, -2.06632e-07, 0, 6)
 
-[node name="trashcan" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("11_72o7r")]
+[node name="trashcan" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("13_o2stf")]
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -4, 0, 9)
 
-[node name="trashcan2" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("11_72o7r")]
+[node name="trashcan2" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("13_o2stf")]
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 7, 0, 9)
 
-[node name="sink_2glb" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("12_xhdds")]
+[node name="sink_2glb" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("14_eusnu")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 5, 0, 5)
 
-[node name="sink_2glb2" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("12_xhdds")]
+[node name="sink_2glb2" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("14_eusnu")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -2, 0, 5)
 
-[node name="nufryer" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("13_03u44")]
+[node name="nufryer" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("15_j0ts4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 9)
 
-[node name="nufryer2" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("13_03u44")]
+[node name="nufryer2" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("15_j0ts4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 9)
 
-[node name="actualwide" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("14_s7q5e")]
+[node name="actualwide" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("16_dbwdl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 9)
 
-[node name="fatdrawers" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("15_o2stf")]
+[node name="fatdrawers" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("17_vom6f")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 9)
 
-[node name="choppingboard" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("16_eusnu")]
+[node name="choppingboard" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("18_l01kc")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 6, 0.678958, 9)
 
-[node name="choppingboard2" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("16_eusnu")]
+[node name="choppingboard2" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("18_l01kc")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5, 0.678958, 9)
 
-[node name="actualwide2" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("14_s7q5e")]
+[node name="actualwide2" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("16_dbwdl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 9)
 
-[node name="fatdrawers2" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("15_o2stf")]
+[node name="fatdrawers2" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("17_vom6f")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 9)
 
-[node name="choppingboard3" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("16_eusnu")]
+[node name="choppingboard3" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("18_l01kc")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2, 0.678958, 9)
 
-[node name="choppingboard4" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("16_eusnu")]
+[node name="choppingboard4" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("18_l01kc")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -3, 0.678958, 9)
 
-[node name="oven" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("17_j0ts4")]
+[node name="oven" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("19_wagc4")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 3, 0, 7)
 
-[node name="oven2" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("17_j0ts4")]
+[node name="oven2" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("19_wagc4")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 7)
 
-[node name="newblender" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("18_dbwdl")]
+[node name="newblender" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("20_yg0nm")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6, 0, 7)
 
-[node name="newblender2" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("18_dbwdl")]
+[node name="newblender2" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("20_yg0nm")]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 9, 0, 7)
 
-[node name="nufridge16" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("19_vom6f")]
+[node name="nufridge16" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("21_bc62a")]
 transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, 1, 0, 9)
 
-[node name="nufridge17" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("19_vom6f")]
+[node name="nufridge17" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("21_bc62a")]
 transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, 2, 0, 9)
 
 [node name="== RSIDE ==" type="Node3D" parent="NavigationRegion3D"]
 
-[node name="Bench20" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench20" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(1, 0, 6.3573e-08, 0, 1, 0, -6.3573e-08, 0, 1, 8, 0, -5)
 
-[node name="ChopTable" parent="NavigationRegion3D/== RSIDE ==/Bench20" instance=ExtResource("20_l01kc")]
+[node name="ChopTable" parent="NavigationRegion3D/== RSIDE ==/Bench20" instance=ExtResource("22_kwx2i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.597495, 0)
 invalid_food = Array[String]([])
-using_tscn = true
-unique_name = "1UNNAMED_APPLIANCE"
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
 current_owner = 1
 
-[node name="Bench21" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench21" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(1, 0, 6.3573e-08, 0, 1, 0, -6.3573e-08, 0, 1, 9, 0, -5)
 
-[node name="Placeable" parent="NavigationRegion3D/== RSIDE ==/Bench21" instance=ExtResource("21_wagc4")]
-invalid_food = Array[String]([])
-using_tscn = true
-unique_name = "2UNNAMED_APPLIANCE"
-current_owner = 1
+[node name="Placeable" parent="NavigationRegion3D/== RSIDE ==/Bench21" instance=ExtResource("23_o6it4")]
 
-[node name="Bench22" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench22" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(1.19249e-08, 0, 1, 0, 1, 0, -1, 0, 1.19249e-08, 9, 0, -6)
 
-[node name="Placeable" parent="NavigationRegion3D/== RSIDE ==/Bench22" instance=ExtResource("21_wagc4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5837, 0)
-invalid_food = Array[String]([])
-using_tscn = true
-unique_name = "3UNNAMED_APPLIANCE"
-current_owner = 1
+[node name="Placeable" parent="NavigationRegion3D/== RSIDE ==/Bench22" instance=ExtResource("23_o6it4")]
 
-[node name="Bench23" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench23" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(1.19249e-08, 0, 1, 0, 1, 0, -1, 0, 1.19249e-08, 9, 0, -8)
 
-[node name="Placeable" parent="NavigationRegion3D/== RSIDE ==/Bench23" instance=ExtResource("21_wagc4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.533345, 0)
-invalid_food = Array[String]([])
-using_tscn = true
-unique_name = "4UNNAMED_APPLIANCE"
-current_owner = 1
+[node name="Placeable" parent="NavigationRegion3D/== RSIDE ==/Bench23" instance=ExtResource("23_o6it4")]
 
-[node name="Bench24" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench24" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6, 0, -6)
 
-[node name="Bench25" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench25" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6, 0, -8)
 
-[node name="Bench26" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench26" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(1, 0, -2.38419e-07, 0, 1, 0, 2.38419e-07, 0, 1, 4, 0, -5)
 
-[node name="Placeable" parent="NavigationRegion3D/== RSIDE ==/Bench26" instance=ExtResource("21_wagc4")]
-invalid_food = Array[String]([])
-using_tscn = true
-unique_name = "5UNNAMED_APPLIANCE"
-current_owner = 1
+[node name="Placeable" parent="NavigationRegion3D/== RSIDE ==/Bench26" instance=ExtResource("23_o6it4")]
 
-[node name="Bench28" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench28" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(1, 0, -2.38419e-07, 0, 1, 0, 2.38419e-07, 0, 1, -5, 0, -5)
 
-[node name="Bench29" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench29" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(1, 0, -2.38419e-07, 0, 1, 0, 2.38419e-07, 0, 1, -1, 0, -5)
 
-[node name="Bench30" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench30" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(1, 0, 6.3573e-08, 0, 1, 0, -6.3573e-08, 0, 1, -2.38419e-07, 0, -5)
 
-[node name="Bench31" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench31" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(1, 0, 6.3573e-08, 0, 1, 0, -6.3573e-08, 0, 1, -6, 0, -5)
 
-[node name="Bench32" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench32" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(1, 0, -2.38419e-07, 0, 1, 0, 2.38419e-07, 0, 1, 3, 0, -5)
 
-[node name="Placeable" parent="NavigationRegion3D/== RSIDE ==/Bench32" instance=ExtResource("21_wagc4")]
-invalid_food = Array[String]([])
-using_tscn = true
-unique_name = "6UNNAMED_APPLIANCE"
-current_owner = 1
+[node name="Placeable" parent="NavigationRegion3D/== RSIDE ==/Bench32" instance=ExtResource("23_o6it4")]
 
-[node name="Bench33" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench33" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(2.50343e-07, 0, 1, 0, 1, 0, -1, 0, 2.50343e-07, -1.19209e-07, 0, -6)
 
-[node name="Bench34" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench34" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(2.50343e-07, 0, 1, 0, 1, 0, -1, 0, 2.50343e-07, 1.19209e-07, 0, -8)
 
-[node name="Bench35" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench35" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, 3, 0, -8)
 
-[node name="Placeable" parent="NavigationRegion3D/== RSIDE ==/Bench35" instance=ExtResource("21_wagc4")]
-invalid_food = Array[String]([])
-using_tscn = true
-unique_name = "7UNNAMED_APPLIANCE"
-current_owner = 1
+[node name="Placeable" parent="NavigationRegion3D/== RSIDE ==/Bench35" instance=ExtResource("23_o6it4")]
 
-[node name="Bench36" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("10_bm81y")]
+[node name="Bench36" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("12_s7q5e")]
 transform = Transform3D(7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, 3, 0, -6)
 
-[node name="Placeable" parent="NavigationRegion3D/== RSIDE ==/Bench36" instance=ExtResource("21_wagc4")]
-invalid_food = Array[String]([])
-using_tscn = true
-unique_name = "8UNNAMED_APPLIANCE"
-current_owner = 1
+[node name="Placeable" parent="NavigationRegion3D/== RSIDE ==/Bench36" instance=ExtResource("23_o6it4")]
 
-[node name="trashcan3" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("11_72o7r")]
+[node name="trashcan3" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("13_o2stf")]
 transform = Transform3D(-1, 0, -8.74232e-08, 0, 1, 0, 8.74232e-08, 0, -1, 7, 0, -9)
 
-[node name="TrashCan" parent="NavigationRegion3D/== RSIDE ==/trashcan3" instance=ExtResource("22_yg0nm")]
+[node name="TrashCan" parent="NavigationRegion3D/== RSIDE ==/trashcan3" instance=ExtResource("24_qbs51")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
-using_tscn = true
-unique_name = "9UNNAMED_APPLIANCE"
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
 current_owner = 1
 
-[node name="trashcan4" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("11_72o7r")]
+[node name="trashcan4" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("13_o2stf")]
 transform = Transform3D(-1, 0, -8.74232e-08, 0, 1, 0, 8.74232e-08, 0, -1, -4, 0, -9)
 
-[node name="sink_2glb3" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("12_xhdds")]
+[node name="sink_2glb3" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("14_eusnu")]
 transform = Transform3D(1, 0, -2.38419e-07, 0, 1, 0, 2.38419e-07, 0, 1, -2, 0, -5)
 
-[node name="sink_2glb4" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("12_xhdds")]
+[node name="sink_2glb4" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("14_eusnu")]
 transform = Transform3D(1, 0, -2.38419e-07, 0, 1, 0, 2.38419e-07, 0, 1, 5, 0, -5)
 
-[node name="Sink" parent="NavigationRegion3D/== RSIDE ==/sink_2glb4" instance=ExtResource("23_bc62a")]
-using_tscn = true
-unique_name = "0UNNAMED_APPLIANCE"
-current_owner = 1
+[node name="Sink" parent="NavigationRegion3D/== RSIDE ==/sink_2glb4" instance=ExtResource("25_8ugct")]
 
-[node name="nufryer3" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("13_03u44")]
+[node name="nufryer3" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("15_j0ts4")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 4, 0, -9)
 
-[node name="Fryer" parent="NavigationRegion3D/== RSIDE ==/nufryer3" instance=ExtResource("24_kwx2i")]
-using_tscn = true
-unique_name = "11UNNAMED_APPLIANCE"
+[node name="Fryer" parent="NavigationRegion3D/== RSIDE ==/nufryer3" instance=ExtResource("26_g7qyv")]
 
-[node name="nufryer4" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("13_03u44")]
+[node name="nufryer4" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("15_j0ts4")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -1, 0, -9)
 
-[node name="actualwide3" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("14_s7q5e")]
+[node name="actualwide3" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("16_dbwdl")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -2, 0, -9)
 
-[node name="fatdrawers3" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("15_o2stf")]
+[node name="fatdrawers3" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("17_vom6f")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -3, 0, -9)
 
-[node name="choppingboard5" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("16_eusnu")]
+[node name="choppingboard5" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("18_l01kc")]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -3, 0.678958, -9)
 
-[node name="choppingboard6" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("16_eusnu")]
+[node name="choppingboard6" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("18_l01kc")]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -2, 0.678958, -9)
 
-[node name="actualwide4" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("14_s7q5e")]
+[node name="actualwide4" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("16_dbwdl")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 6, 0, -9)
 
-[node name="ChopTable" parent="NavigationRegion3D/== RSIDE ==/actualwide4" instance=ExtResource("20_l01kc")]
+[node name="ChopTable" parent="NavigationRegion3D/== RSIDE ==/actualwide4" instance=ExtResource("22_kwx2i")]
 invalid_food = Array[String]([])
-using_tscn = true
-unique_name = "12UNNAMED_APPLIANCE"
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
 current_owner = 1
 
-[node name="fatdrawers4" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("15_o2stf")]
+[node name="fatdrawers4" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("17_vom6f")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 5, 0, -9)
 
-[node name="ChopTable" parent="NavigationRegion3D/== RSIDE ==/fatdrawers4" instance=ExtResource("20_l01kc")]
+[node name="ChopTable" parent="NavigationRegion3D/== RSIDE ==/fatdrawers4" instance=ExtResource("22_kwx2i")]
 invalid_food = Array[String]([])
-using_tscn = true
-unique_name = "13UNNAMED_APPLIANCE"
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
 current_owner = 1
 
-[node name="choppingboard7" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("16_eusnu")]
+[node name="choppingboard7" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("18_l01kc")]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 5, 0.678958, -9)
 
-[node name="choppingboard8" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("16_eusnu")]
+[node name="choppingboard8" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("18_l01kc")]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 6, 0.678958, -9)
 
-[node name="oven3" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("17_j0ts4")]
+[node name="oven3" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("19_wagc4")]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0, 0, -7)
 
-[node name="oven4" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("17_j0ts4")]
+[node name="oven4" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("19_wagc4")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 3, 0, -7)
 
-[node name="Oven" parent="NavigationRegion3D/== RSIDE ==/oven4" instance=ExtResource("25_o6it4")]
-using_tscn = true
-unique_name = "14UNNAMED_APPLIANCE"
-current_owner = 1
+[node name="Oven" parent="NavigationRegion3D/== RSIDE ==/oven4" instance=ExtResource("27_34ge6")]
 
-[node name="newblender3" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("18_dbwdl")]
+[node name="newblender3" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("20_yg0nm")]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 9, 0, -7)
 
-[node name="Blender" parent="NavigationRegion3D/== RSIDE ==/newblender3" instance=ExtResource("26_qbs51")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.737419, 0)
-using_tscn = true
-unique_name = "15UNNAMED_APPLIANCE"
+[node name="Blender" parent="NavigationRegion3D/== RSIDE ==/newblender3" instance=ExtResource("28_am8m3")]
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
 current_owner = 1
 
-[node name="newblender4" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("18_dbwdl")]
+[node name="newblender4" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("20_yg0nm")]
 transform = Transform3D(-1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, -6, 0, -7)
 
-[node name="nufridge18" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("19_vom6f")]
+[node name="nufridge18" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("21_bc62a")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2, 0, -9)
 
-[node name="nufridge19" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("19_vom6f")]
+[node name="nufridge19" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("21_bc62a")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 1, 0, -9)
 
 [node name="Floor" type="StaticBody3D" parent="NavigationRegion3D"]
@@ -809,33 +800,31 @@ shape = SubResource("BoxShape3D_ihmv3")
 layers = 2
 mesh = SubResource("BoxMesh_pwhdc")
 
-[node name="Plate" parent="." instance=ExtResource("27_8ugct")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.47223, 0.132272, -0.0941153)
+[node name="Plate" parent="." instance=ExtResource("29_o1oxj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.19246, 0.705777, -1.44999)
 
-[node name="StoveWithPot" parent="." instance=ExtResource("29_34ge6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.27045, 0, -3.81482)
-using_tscn = true
-unique_name = "7UNNAMED_APPLIANCE"
-current_owner = 1
+[node name="Water" parent="." instance=ExtResource("30_cj5mg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.97447, 0.392201, -5.00542)
 
-[node name="FoodCrate" parent="." instance=ExtResource("30_am8m3")]
+[node name="StoveWithPot" parent="." instance=ExtResource("31_dv6fj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.27045, 0.260992, -3.81482)
+
+[node name="FoodCrate" parent="." instance=ExtResource("32_r8ffs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.34422, 0, -2.75199)
-using_tscn = true
-unique_name = "8UNNAMED_APPLIANCE"
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
 current_owner = 1
 
-[node name="FoodCrate2" parent="." instance=ExtResource("30_am8m3")]
+[node name="FoodCrate2" parent="." instance=ExtResource("32_r8ffs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.39644, 0, -1.84384)
-supply = ExtResource("28_g7qyv")
-supply_name = "Water"
-using_tscn = true
-unique_name = "88UNNAMED_APPLIANCE"
+model_scene = ExtResource("33_om36i")
+supply = ExtResource("30_cj5mg")
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
 current_owner = 1
-model_scene = ExtResource("31_o1oxj")
 
-[node name="bench" parent="." instance=ExtResource("21_wagc4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.07943, 0.727077, -8.94484)
-script = ExtResource("32_rfom3")
-using_tscn = true
-unique_name = "78UNNAMED_APPLIANCE"
-current_owner = 1
+[node name="Stove" parent="." instance=ExtResource("34_lpo6d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.16558, 0.793837, -4.00696)
+
+[node name="Tomato" parent="." instance=ExtResource("35_ewtc1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.67834, 0.772191, -2.01366)

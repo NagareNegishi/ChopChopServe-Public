@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cgmswtyy1joum"]
-
-[ext_resource type="PackedScene" uid="uid://djh8btu2rif0l" path="res://assets/newmodels/food/recipes/finished/Brownie.glb" id="1_6csg3"]
-
-[node name="Brownie" instance=ExtResource("1_6csg3")]

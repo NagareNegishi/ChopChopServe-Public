@@ -155,7 +155,7 @@ func put_from_player(item: Node) -> bool:
 	if not _can_accept(item):
 		return false
 	# transfer item to appliance
-	GlobalScript.player.remove_item() # if we only put item from players hand
+	GlobalScript.get_local_player().remove_item() # if we only put item from players hand
 	add_child(item)
 	contents.append(item)
 
@@ -177,27 +177,30 @@ func put_from_player(item: Node) -> bool:
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
-func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
+func player_has(item: Node) -> void: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
 #--------------------------------------------
 	print("Player has: ", item, ", Self: ", get_script().get_global_name())
 #--------------------------------------------
 	# If player has nothing, return false
 	if not item:
-		return false
+		return
 
 	# If player has plate: try to serve
 	if item is Plate:
-		return serve_to_plate(item)
+		serve_to_plate(item)
+		return
 
 	# If player has cookware: try to transfer contents
 	if item is Cookware:
 		if is_empty() and _can_accept_all(item.show_contents()):
-			return put_all(item.take_all())
+			put_all(item.take_all())
+			return
 		if item._can_accept_all(contents):
-			return item.put_all(take_all())
+			item.put_all(take_all())
+			return
 
 	# If item_in_hand exists: depend on if Blender can accept it
-	return put_from_player(item)
+	put_from_player(item)
 
 
 ## Check if the target can accept the current contents
@@ -246,7 +249,7 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	if not is_hovered:
 		highlight_component.hide_feedback()
 		return
-	var item = GlobalScript.player.item_in_hand
+	var item = GlobalScript.get_local_player().item_in_hand
 	#---------------------------------------------------------------------------
 	if item:
 		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())

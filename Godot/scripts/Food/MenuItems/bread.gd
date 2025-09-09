@@ -13,7 +13,9 @@ func _ready():
 	ingredient_states = {
 		"Dough": ["RAW","ROLLED", "BAKED"]
 	}
-	
-	cooked_mesh_good = null
+	is_available = true
+
+func _int():
+	cooked_mesh_good = $BreadPlain
 	cooked_mesh_bad = null
 	cooked_mesh_burnt = null

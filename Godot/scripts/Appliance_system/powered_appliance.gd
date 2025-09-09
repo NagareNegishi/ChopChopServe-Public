@@ -97,19 +97,47 @@ func _put_cookware(cookware: Cookware) -> void:
 		cookware.cook(power)
 
 
+## Fallback method to put item with re-parenting
+## @param item: The Node to place on this appliance
+func _put_with_reparent(item: Node) -> void:
+	contents.append(item)
+	item.reparent(self)
+	contents_names.append(item.name)
+	if item is Cookware:
+		_put_cookware(item)
+
+
+## Client-side method to put item, called by host
+## @param item_name: The name of the item to put
+## @param player_id: The id of the player who is putting the item
+@rpc("authority", "call_remote", "reliable")
+func _client_put(item_name: String, player_id: int) -> void:
+	# First try to find item in player's hand
+	var player = GlobalScript.get_local_player_by_id(player_id)
+	if player:
+		var item = player.item_in_hand
+		if item and item.name == item_name:
+			player.remove_item()
+			_put(item)
+			return
+	# If item not found in player's hand, try to find it in the current scene
+	var item = get_tree().current_scene.get_node_or_null(item_name)
+	if item:
+		_put_with_reparent(item)
+
+
 ## Remove and return the last item from this appliance
 ## @return: The Node that was removed, or null if nothing to take
 func take() -> Node:
-	if contents.is_empty():
+	if contents.is_empty() or contents_names.is_empty():
 		return null
 	var item = contents.pop_back()
-#-------------------------------------------------------------------------------
-	if not contents_names.is_empty():
-		contents_names.pop_back()
-#-------------------------------------------------------------------------------
 	if item is Cookware:
 		_take_cookware(item)
 	remove_child(item)
+	contents_names.pop_back()
+	if contents.is_empty():
+		stop_cook()
 	return item
 
 
@@ -123,6 +151,22 @@ func _take_cookware(cookware: Cookware) -> void:
 	cookware._toggle_interaction(true)
 
 
+## Client-side method to take item, called by host
+## @param item_name: The name of the item to take
+@rpc("authority", "call_remote", "reliable")
+func _client_take(item_name: String) -> void:
+	for i in range(contents.size()):
+		if contents[i].name == item_name:
+			var item = contents.pop_at(i)
+			if item is Cookware:
+				_take_cookware(item)
+			remove_child(item)
+			if contents.is_empty():
+				stop_cook()
+			get_tree().current_scene.add_child(item)
+			break
+
+
 ## Check if this appliance can accept the given item
 ## @param item: The Node to test for acceptance
 ## @return: True if item can be placed, false otherwise
@@ -134,7 +178,7 @@ func _can_accept(item: Node) -> bool:
 		print("Cannot accept item: ", get_script().get_global_name(), " is broken")
 		return false
 	if contents_names.size() >= capacity:
-		print("Cannot accept item: ", get_script().get_global_name(), " is at full capacity")
+		# print("Cannot accept item: ", get_script().get_global_name(), " is at full capacity")
 		return false
 	if not item.get_script():
 		print("Cannot accept item, item has no script")
@@ -261,121 +305,230 @@ func _on_cook_timer_timeout():
 
 ## For Player interaction --------------------------------------------------------------------------
 
-# TODO: need new way to transfer item ownership from player to appliance
-
+## Request to put an item onto this appliance from Player
+## @param item: The Node to place on this appliance
 func put_request(item: Node) -> void:
 	# locally check first to reduce network calls
 	if not _can_accept(item):
 		return
+	# host directly put item and notify clients
 	if ENetManager.is_host():
+		GlobalScript.get_local_player().remove_item()
 		_put(item)
+		_client_put.rpc(item.name, ENetManager.get_my_id())
+		_sync_contents.rpc(contents_names)
 		return
-	_put_as_host.rpc_id(1, ENetManager.get_peer_id(), item.name)
+	_put_as_host.rpc_id(1, ENetManager.get_my_id(), item.name)
 
 
+## Host-side method to handle put requests from clients
+## @param player_id: The id of the player who is putting the item
+## @param item_name: The name of the item to put
 @rpc("any_peer", "call_remote", "reliable")
 func _put_as_host(player_id: int, item_name: String) -> void:
 	if not ENetManager.is_host():
 		return
 	# host need check to prevent conflicts/ cheating
-	var item
-	match ENetManager.get_team(player_id):
-		1:
-			item = ApplianceManager.team1_items.get(item_name)
-		2:
-			item = ApplianceManager.team2_items.get(item_name)
-		_:
-			return
-	if not item:
-		print("Item not found: ", item_name)
+	var player = GlobalScript.get_local_player_by_id(player_id)
+	if not player:
+		print("Player not found with id: ", player_id)
 		return
+	var item = player.item_in_hand
 	if not _can_accept(item):
 		return
+	if item.name != item_name:
+		print("Item name mismatch: expected ", item_name, ", got ", item.name)
+		return
+	player.remove_item()
 	_put(item)
-	#notify_contents_changed.rpc(contents_names)
+	_client_put.rpc(item.name, player_id)
+	_sync_contents.rpc(contents_names)
 
 
-# ## Notify all players (except host) the update of contents
-# ## @param update: The updated contents names
-# @rpc("authority", "call_remote", "reliable")
-# func notify_contents_changed(update: Array[String]):
-# 	_set_contents_names(update)
+## Request to take an item from this appliance to Player
+func take_request() -> void:
+	# locally check first to reduce network calls
+	if contents.is_empty() or contents_names.is_empty():
+		return
+	_take_as_host.rpc_id(1, ENetManager.get_my_id())
 
 
+## Host-side method to handle take requests from clients
+## @param player_id: The id of the player who is taking the item
+@rpc("any_peer", "call_local", "reliable")
+func _take_as_host(player_id: int) -> void:
+	if not ENetManager.is_host():
+		return
+	# host need check to prevent conflicts/ cheating
+	if contents.is_empty() or contents_names.is_empty():
+		return
+	var item = take()
+	get_tree().current_scene.add_child(item)
+	_client_take.rpc(item.name)
+	_give_item_to_player.rpc(player_id, item.get_path())
+	_sync_contents.rpc(contents_names)
 
-## Place an item onto this appliance from Player
-## if we could remove Player dependency from this class, we can remove this method
-## @param item: The Node to place on this appliance
-## @return: True if placement was successful, false otherwise
-func put_from_player(item: Node) -> bool:
-	if not _can_accept(item):
-		return false
-	# transfer item to appliance
-	GlobalScript.player.remove_item()
-	contents.append(item)
-	add_child(item)
-#-------------------------------------------------------------------------------
-	contents_names.append(item.name)
-#-------------------------------------------------------------------------------
-	#--------------------------------------------
-	print("Put: ", item.get_script().get_global_name(), " onto: ", get_script().get_global_name())
-	print("Contents of ", get_script().get_global_name(), " are: ")
-	for content in contents:
-		print(" --- ", content.get_script().get_global_name())
-	#--------------------------------------------
-	if item is Cookware:
-		_put_cookware(item)
-	return true
+
+# Client-side method to give item to player, called by host
+## @param player_id: The id of the player who is taking the item
+## @param item_path: The NodePath of the item to give
+@rpc("authority", "call_local", "reliable")
+func _give_item_to_player(player_id: int, item_path: NodePath) -> void:
+	var item = get_node_or_null(item_path)
+	if item:
+		var player = GlobalScript.get_local_player_by_id(player_id)
+		if player:
+			player.pickup_item(item)
+
+
+## Sync contents names across network
+## @param update: The updated contents names array
+@rpc("authority", "call_remote", "reliable")
+func _sync_contents(update: Array[String]) -> void:
+	contents_names = update
 
 
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
-## @return: True if action is triggered, false otherwise
-func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
+func player_has(item: Node) -> void:
 #--------------------------------------------
-	print("Player has: ", item, ", Self: ", get_script().get_global_name())
+	print("Player with ID: ", ENetManager.get_my_id(), " has : ", item, ", Self: ", get_script().get_global_name())
 #--------------------------------------------
 	# If player has nothing: move item from appliance to player (if exists), return true
 	if not item:
-		var cookware = take()
-		if cookware:
-			print("Path before pickup: ", cookware.get_path())
-
-			get_tree().current_scene.add_child(cookware)
-			print("Path when at scene root: ", cookware.get_path())
-
-			GlobalScript.player.pickup_item(cookware)
-			print("Path after pickup: ", cookware.get_path())
-			# #----------------------------------------------------------------------
-			# print("Player took: ", cookware.get_script().get_global_name(), ", from: ", get_script().get_global_name())
-			# #----------------------------------------------------------------------
-			if contents.is_empty():
-				stop_cook()
-			return true
-		else:
-			print("No cookware to take from PoweredAppliance")
-			return false
-
+		take_request()
+		return
 	# If player has plate: try to serve food from Cookware
 	if item is Plate:
-		return serve_to_plate(item)
-
+		serve_request(item)
+		return
 	# If player has food: try to put it in Cookware
 	if item is Food:
-		for content in contents:
-			if content is Cookware:
-				return content.player_has(item)
-
+		contents[0].player_has(item)
+		return
 	# If player has cookware: try to transfer contents
 	if item is Cookware and not is_empty():
-		var cookware = contents[0]
-		if cookware.is_empty() and cookware._can_accept_all(item.show_contents()):
-			return cookware.put_all(item.take_all())
-		if item._can_accept_all(cookware.show_contents()):
-			return item.put_all(cookware.take_all())
-
+		transfer_request(item)
+		return
 	# If item_in_hand exists: depend on if appliance can accept it
-	return put_from_player(item)
+	put_request(item)
+
+
+## Check if the plate can accept the current contents
+## @param plate: The Node to check for acceptance
+## @return: True if the plate can accept the current contents, false otherwise
+func _check_plate(plate: Plate) -> bool:
+	if is_empty():
+		print("Nothing to serve from: ", get_script().get_global_name())
+		return false
+	if plate.is_ready() and not contents[0].is_empty():
+		return true
+	return false
+
+
+## Serve food from Cookware to Plate
+## @param plate: The Plate to serve food to
+func serve_request(plate: Plate) -> void:
+	# locally check first to reduce network calls
+	if not _check_plate(plate):
+		return
+	if ENetManager.is_host():
+		plate.add_list_items(contents[0].take_all()) # Method in Plate, takes Array of Food
+		_client_serve.rpc(ENetManager.get_my_id())
+		return
+	_serve_as_host.rpc_id(1, ENetManager.get_my_id())
+
+
+## Host-side method to handle serve requests from clients
+## @param player_id: The id of the player who is serving the food
+@rpc("any_peer", "call_remote", "reliable")
+func _serve_as_host(player_id: int) -> void:
+	if not ENetManager.is_host():
+		return
+	var plate = GlobalScript.get_local_player_by_id(player_id).item_in_hand
+	if not plate or not (plate is Plate):
+		print("Player is not holding a plate")
+		return
+	if not _check_plate(plate):
+		return
+	plate.add_list_items(contents[0].take_all()) # Method in Plate, takes Array of Food
+	_client_serve.rpc(player_id)
+
+
+## Client-side method to serve food to plate, called by host
+## @param player_id: The id of the player who is serving the food
+@rpc("authority", "call_remote", "reliable")
+func _client_serve(player_id: int) -> void:
+	var plate = GlobalScript.get_local_player_by_id(player_id).item_in_hand
+	if plate and plate is Plate and _check_plate(plate):
+		plate.add_list_items(contents[0].take_all())
+
+
+## Check if the cookware can accept the current contents
+## @param cookware: The Node to check for acceptance
+## @return: True if the cookware can accept the current contents, false otherwise
+func _check_cookware(player_cookware: Node) -> bool:
+	if not player_cookware or not (player_cookware is Cookware):
+		print("Cookware is null or not a cookware")
+		return false
+	if is_empty():
+		print("Nothing to serve from: ", get_script().get_global_name())
+		return false
+	var appliance_cookware = contents[0]
+	if appliance_cookware.is_empty():
+		return appliance_cookware._can_accept_all(player_cookware.show_contents())
+	return player_cookware._can_accept_all(appliance_cookware.show_contents())
+
+
+## Transfer food from Cookware to another Cookware
+## @param cookware: The Cookware to transfer food to / from
+func transfer_request(player_cookware: Cookware) -> void:
+	# locally check first to reduce network calls
+	if not _check_cookware(player_cookware):
+		return
+	if ENetManager.is_host():
+		var appliance_cookware = contents[0]
+		if appliance_cookware.is_empty():
+			appliance_cookware.put_all(player_cookware.take_all())
+			_client_transfer.rpc(ENetManager.get_my_id(), true)
+			return
+		player_cookware.put_all(appliance_cookware.take_all())
+		_client_transfer.rpc(ENetManager.get_my_id(), false)
+		return
+	_transfer_as_host.rpc_id(1, ENetManager.get_my_id())
+
+
+## Host-side method to handle transfer requests from clients
+## @param player_id: The id of the player who is transferring the food
+@rpc("any_peer", "call_remote", "reliable")
+func _transfer_as_host(player_id: int) -> void:
+	if not ENetManager.is_host():
+		return
+	var player_cookware = GlobalScript.get_local_player_by_id(player_id).item_in_hand
+	if not _check_cookware(player_cookware):
+		return
+	var appliance_cookware = contents[0]
+	if appliance_cookware.is_empty():
+		appliance_cookware.put_all(player_cookware.take_all())
+		_client_transfer.rpc(player_id, true)
+		return
+	player_cookware.put_all(appliance_cookware.take_all())
+	_client_transfer.rpc(player_id, false)
+
+
+## Client-side method to transfer food between cookwares, called by host
+## @param player_id: The id of the player who is transferring the food
+## @param taking: True if player is taking from appliance, false if giving to appliance
+@rpc("authority", "call_remote", "reliable")
+func _client_transfer(player_id: int, taking: bool) -> void:
+	var player_cookware = GlobalScript.get_local_player_by_id(player_id).item_in_hand
+	if not _check_cookware(player_cookware):
+		return
+	var appliance_cookware = contents[0]
+	if taking:
+		appliance_cookware.put_all(player_cookware.take_all())
+	else:
+		player_cookware.put_all(appliance_cookware.take_all())
 
 
 ## Check if the target can accept the current contents
@@ -398,58 +551,16 @@ func _check_target(target: Node) -> bool:
 	return false
 
 
-
-## Serve food from Cookware to Plate
-## @param plate: The Plate to serve food to
-## @return: True if serving was successful, false otherwise
-func serve_to_plate(plate: Plate) -> bool:
-	if not _check_target(plate):
-		return false
-	# if is_empty():
-	# 	print("Nothing to serve from: ", get_script().get_global_name())
-	# 	return false
-
-	# if not plate.is_ready(): # Method in Plate, checks if plate is ready
-	# 	print("Plate is not ready: ", plate.get_script().get_global_name())
-	# 	return false
-
-	var cookware = contents[0]
-	if cookware.is_empty():
-		print("Nothing to serve from: ", cookware.get_script().get_global_name())
-		return false
-
-	#cookware.finish_cook()
-	# print("Contents of : ", cookware.get_script().get_global_name(), " Before serving: ", cookware.contents)
-	plate.add_list_items(cookware.take_all()) # Method in Plate, takes Array of Food
-	# #----------------------------------------------------------------------
-	# print("Contents of : ", cookware.get_script().get_global_name(), " After serving: ", cookware.contents)
-	# print("Cookware :", cookware.get_script().get_global_name(), ", served to: ", plate.get_script().get_global_name())
-	# #----------------------------------------------------------------------
-	return true
-
-
 ## Give visual feedback when hovered
 ## @param is_hovered: Whether the item is hovered or not
 func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	if not is_hovered:
 		highlight_component.hide_feedback()
 		return
-
-
-#---------------------------------------------------------------
-	var player = get_tree().get_first_node_in_group("player")
-	if not player:
-		player = get_tree().current_scene.get_node("Player")
-
-	var item = player.item_in_hand
-#---------------------------------------------------------------
-
-
-	#var item = GlobalScript.player.item_in_hand
+	var item = GlobalScript.get_local_player().item_in_hand
 	#---------------------------------------------------------------------------
 	if item:
-		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())
-		print("Item name is:", item.name)
+		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name(), ", Item name is:", item.name)
 	#---------------------------------------------------------------------------
 	if not item:
 		highlight_component.set_state(ApplianceHighlight.HighlightState.HOVER)
@@ -482,3 +593,34 @@ func get_progress() -> float:
 	return most_progress
 #---------------------------------------------------------------------------------------------------
 
+
+# Non-networking methods for Player interaction ----------------------------------------------------
+# ## Place an item onto this appliance from Player
+# ## if we could remove Player dependency from this class, we can remove this method
+# ## @param item: The Node to place on this appliance
+# ## @return: True if placement was successful, false otherwise
+# func put_from_player(item: Node) -> bool:
+# 	if not _can_accept(item):
+# 		return false
+# 	# transfer item to appliance
+# 	GlobalScript.get_local_player().remove_item()
+# 	contents.append(item)
+# 	add_child(item)
+# 	contents_names.append(item.name)
+# 	if item is Cookware:
+# 		_put_cookware(item)
+# 	return true
+
+# ## Serve food from Cookware to Plate
+# ## @param plate: The Plate to serve food to
+# ## @return: True if serving was successful, false otherwise
+# func serve_to_plate(plate: Plate) -> bool:
+# 	if not _check_target(plate):
+# 		return false
+# 	var cookware = contents[0]
+# 	if cookware.is_empty():
+# 		print("Nothing to serve from: ", cookware.get_script().get_global_name())
+# 		return false
+# 	plate.add_list_items(cookware.take_all()) # Method in Plate, takes Array of Food
+# 	return true
+#---------------------------------------------------------------------------------------------------

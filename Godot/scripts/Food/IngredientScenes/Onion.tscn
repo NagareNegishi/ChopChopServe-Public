@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://g70mrwycep6w"]
+
+[ext_resource type="Script" uid="uid://b1yb1txtjo20t" path="res://scripts/Food/Ingredients/onion.gd" id="1_13wtr"]
+[ext_resource type="PackedScene" uid="uid://dtnpk4u885fvy" path="res://scripts/Food/IngredientScenes/chopped_onion.tscn" id="2_rhr1j"]
+[ext_resource type="PackedScene" uid="uid://b81a8e85s0pfn" path="res://scripts/Food/IngredientScenes/raw_onion.tscn" id="3_4rdqc"]
+[ext_resource type="PackedScene" uid="uid://cy1s0o2ip2hob" path="res://scenes/Interaction/InteractableComponent.tscn" id="4_qkvdt"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ypbfo"]
+
+[node name="Onion" type="RigidBody3D"]
+script = ExtResource("1_13wtr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.563515, 0)
+shape = SubResource("BoxShape3D_ypbfo")
+
+[node name="ChoppedOnion" parent="." instance=ExtResource("2_rhr1j")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+visible = false
+
+[node name="Onion" parent="." instance=ExtResource("3_4rdqc")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="InteractableComponent" parent="." instance=ExtResource("4_qkvdt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.558246, 0)
+is_pickup = true
+
+[connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]
+[connection signal="hovered" from="InteractableComponent" to="." method="_on_interactable_component_hovered"]
+[connection signal="interacted" from="InteractableComponent" to="." method="_on_interactable_component_interacted"]
+[connection signal="toggle_collision" from="InteractableComponent" to="." method="_on_interactable_component_toggle_collision"]

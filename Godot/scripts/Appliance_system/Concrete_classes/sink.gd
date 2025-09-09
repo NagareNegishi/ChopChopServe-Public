@@ -104,29 +104,22 @@ func _action() -> bool:
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
 func player_has(item: Node) -> void: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
-	# If player has nothing: move Plate from Sink to player (if exists), return true
+	# If player has nothing: move Plate from Sink to player (if exists)
 	if not item:
-		var plate = take()
-		if plate:
-			GlobalScript.get_local_player().pickup_item(plate)
-			#----------------------------------------------------------------------
-			print("Player took: ", plate.get_script().get_global_name(), ", from: ", get_script().get_global_name())
-			#----------------------------------------------------------------------
-			return
-		else:
-			print("No plate to take from Sink")
-			return
+		take_request()
+		return
 
 	# If Player has Pot, provide water
 	if item is Pot:
 		#--------------------------------------------
 		print("Provide water to pot")
+		#TODO: check what is goint on, I see the comment "item removed" after this
 		#--------------------------------------------
-		item.put(_provide_water())
+		item.put_request(_provide_water())
 		return
 
 	# If player has empty plate: depend on if sink can accept it
-	put_from_player(item)
+	put_request(item)
 
 
 ## Trigger action, if subclass has action

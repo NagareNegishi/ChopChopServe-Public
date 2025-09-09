@@ -1,8 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://0aex3yts1utd"]
+[gd_scene load_steps=4 format=3 uid="uid://0aex3yts1utd"]
 
 [ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="1_n4tm3"]
 [ext_resource type="PackedScene" uid="uid://iwgylemncmgr" path="res://assets/newmodels/furniture/BasicBench.glb" id="2_o34na"]
+[ext_resource type="Script" uid="uid://263f6vkv1ajj" path="res://scripts/Appliance_system/Concrete_classes/cabinet.gd" id="2_ws7b4"]
 
 [node name="Cabinet" instance=ExtResource("1_n4tm3")]
+script = ExtResource("2_ws7b4")
+capacity = 4
+action_interval = 1.0
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1
+cooking_style = 0
+model_scene = null
 
 [node name="BasicBench2" parent="." index="3" instance=ExtResource("2_o34na")]

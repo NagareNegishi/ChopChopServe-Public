@@ -66,26 +66,14 @@ func on_fire() -> void:
 
 ## For Player interaction --------------------------------------------------------------------------
 
-## Place an item onto this appliance
-## @param item: The Node to place on this appliance
-## @return: True if placement was successful, false otherwise
-func put_from_player(item: Node) -> bool:
-	if not _can_accept(item):
-		return false
-	return chopping_board.put_from_player(item)
-
-
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
 func player_has(item: Node) -> void:
 	if item:
-		if chopping_board.put_from_player(item):
-			print("Place :", item.get_script().get_global_name(), " onto chopping board")
-			return
-		print("Chopping board cannot accept:", item.get_script().get_global_name())
+		chopping_board.put_request(item)
 		return
-	GlobalScript.get_local_player().pickup_item(chopping_board.take())
+	chopping_board.take_request()
 
 
 ## Trigger action, if subclass has action
@@ -106,3 +94,15 @@ func take_food() -> Food:
 	assert(false, "ChopTable does not support take_food")
 	return null
 #-------------------------------------------------------------------------------
+
+
+
+# # Non-networking methods for Player interaction ----------------------------------------------------
+# ## Place an item onto this appliance
+# ## @param item: The Node to place on this appliance
+# ## @return: True if placement was successful, false otherwise
+# func put_from_player(item: Node) -> bool:
+# 	if not _can_accept(item):
+# 		return false
+# 	return chopping_board.put_from_player(item)
+# #---------------------------------------------------------------------------------------------------

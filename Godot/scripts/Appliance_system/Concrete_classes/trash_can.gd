@@ -81,9 +81,65 @@ func _can_accept(item: Node) -> bool:
 ## @return: True if action is triggered, false otherwise
 func player_has(item: Node) -> void: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
 	if item is Cookware:
-		throw_all(item)
+		throw_all_request(item)
 		return
-	throw(item)
+	throw_request(item)
+
+
+## NOTE: Throw away item does not require server validation, let clients handle it directly
+## Request to throw an item away from Player
+## @param item: The Node to throw away
+func throw_request(item: Node) -> void:
+	if not _can_accept(item):
+		return
+	if current_status != Status.IDLE:
+		return
+	_everyone_throw.rpc(ENetManager.get_my_id())
+
+
+## Client-side method to handle throw requests from clients
+## @param player_id: The id of the player who is throwing the item
+@rpc("any_peer", "call_local", "reliable")
+func _everyone_throw(player_id: int) -> void:
+	current_status = Status.USING
+	action_timer.start()
+	# Remove from player and destroy immediately
+	var item = GlobalScript.get_local_player_by_id(player_id).item_in_hand
+	if not item:
+		return
+	GlobalScript.get_local_player_by_id(player_id).remove_item()
+	print("Item removed: ", item, ", at: ", ENetManager.get_my_id())
+	item.queue_free()
+
+
+## NOTE: Throw away item does not require server validation, let clients handle it directly
+## Request to throw an item away from Player
+## @param from: The Node to throw away items from
+func throw_all_request(from: Node) -> void:
+	if current_status != Status.IDLE:
+		return
+	_everyone_throw_all.rpc(ENetManager.get_my_id(), from.name)
+
+
+## Trigger the throwing process from Plate or Cookware
+## Anything on the plate or cookware can be thrown away
+## @param player_id: The id of the player who is throwing the item
+## @param item_name: The name of the item to throw away from
+@rpc("any_peer", "call_local", "reliable")
+func _everyone_throw_all(player_id: int, item_name: String) -> void:
+	current_status = Status.USING
+	action_timer.start()
+	var from = GlobalScript.get_local_player_by_id(player_id).item_in_hand
+	if not from or from.name != item_name:
+		print("Player is not holding the expected item")
+		return
+	var items
+	if from is Plate:
+		print("Taking all items from Plate")
+	elif from is Cookware:
+		items = from.take_all()
+	for item in items:
+		item.queue_free()
 
 
 ## Give visual feedback when hovered

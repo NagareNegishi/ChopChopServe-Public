@@ -75,22 +75,54 @@ func take() -> Node:
 ## @return: True if action is triggered, false otherwise
 func player_has(item: Node) -> void: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
 	if not item:
-		var food = take()
-		if not food:
-			return
-		GlobalScript.get_local_player().pickup_item(food)
-		# #----------------------------------------------------------------------
-		# print("Player took food from FoodCrate: ", food.get_script().get_global_name())
-		# print("Player has: ", GlobalScript.player.item_in_hand.get_script().get_global_name())
-		# #----------------------------------------------------------------------
+		take_request()
 		return
+
 	if item is Cookware and item._can_accept(supply_instance):
 		var food = take()
 		if not food:
 			return
-		item.put(food)
+		item.put_request(food)
 		return
-	return
+
+
+## Client-side method to take item, called by host
+## @param item_name: The name of the item to take
+@rpc("authority", "call_remote", "reliable")
+func _client_take(item_name: String) -> void:
+	var item = take()
+	item.name = item_name
+	get_tree().current_scene.add_child(item)
+
+
+## Request to take an item from this appliance to Player
+func take_request() -> void:
+	_take_as_host.rpc_id(1, ENetManager.get_my_id())
+
+
+## Host-side method to handle take requests from clients
+## @param player_id: The id of the player who is taking the item
+@rpc("any_peer", "call_local", "reliable")
+func _take_as_host(player_id: int) -> void:
+	if not ENetManager.is_host():
+		return
+	# host need check to prevent conflicts/ cheating
+	var item = take()
+	get_tree().current_scene.add_child(item)
+	_client_take.rpc(item.name)
+	_give_item_to_player.rpc(player_id, item.get_path())
+
+
+# Client-side method to give item to player, called by host
+## @param player_id: The id of the player who is taking the item
+## @param item_path: The NodePath of the item to give
+@rpc("authority", "call_local", "reliable")
+func _give_item_to_player(player_id: int, item_path: NodePath) -> void:
+	var item = get_node_or_null(item_path)
+	if item:
+		var player = GlobalScript.get_local_player_by_id(player_id)
+		if player:
+			player.pickup_item(item)
 
 
 ## Give visual feedback when hovered
@@ -127,7 +159,6 @@ func take_at(_index: int) -> Node:
 func start_action() -> bool:
 	assert(false, "Food Crate does not support starting actions")
 	return false
-
 
 func put_from_player(_item: Node) -> bool:
 	assert(false, "Food Crate does not support putting items")

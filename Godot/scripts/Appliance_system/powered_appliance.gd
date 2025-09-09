@@ -120,10 +120,10 @@ func _client_put(item_name: String, player_id: int) -> void:
 			player.remove_item()
 			_put(item)
 			return
-	# If item not found in player's hand, try to find it in the current scene
-	var item = get_tree().current_scene.get_node_or_null(item_name)
-	if item:
-		_put_with_reparent(item)
+	# # If item not found in player's hand, try to find it in the current scene
+	# var item = get_tree().current_scene.get_node_or_null(item_name)
+	# if item:
+	# 	_put_with_reparent(item)
 
 
 ## Remove and return the last item from this appliance
@@ -303,7 +303,34 @@ func _on_cook_timer_timeout():
 #---------------------------------------------------------------------------------------------------
 
 
+
 ## For Player interaction --------------------------------------------------------------------------
+
+## Perform action depend on what player is holding
+## @param _item: The Node Player is holding
+func player_has(item: Node) -> void:
+#--------------------------------------------
+	print("Player with ID: ", ENetManager.get_my_id(), " has : ", item, ", Self: ", get_script().get_global_name())
+#--------------------------------------------
+	# If player has nothing: move item from appliance to player (if exists), return true
+	if not item:
+		take_request()
+		return
+	# If player has plate: try to serve food from Cookware
+	if item is Plate:
+		serve_request(item)
+		return
+	# If player has food: try to put it in Cookware
+	if item is Food:
+		contents[0].player_has(item)
+		return
+	# If player has cookware: try to transfer contents
+	if item is Cookware and not is_empty():
+		transfer_request(item)
+		return
+	# If item_in_hand exists: depend on if appliance can accept it
+	put_request(item)
+
 
 ## Request to put an item onto this appliance from Player
 ## @param item: The Node to place on this appliance
@@ -369,7 +396,7 @@ func _take_as_host(player_id: int) -> void:
 	_sync_contents.rpc(contents_names)
 
 
-# Client-side method to give item to player, called by host
+## Client-side method to give item to player, called by host
 ## @param player_id: The id of the player who is taking the item
 ## @param item_path: The NodePath of the item to give
 @rpc("authority", "call_local", "reliable")
@@ -386,32 +413,6 @@ func _give_item_to_player(player_id: int, item_path: NodePath) -> void:
 @rpc("authority", "call_remote", "reliable")
 func _sync_contents(update: Array[String]) -> void:
 	contents_names = update
-
-
-## Perform action depend on what player is holding
-## @param _item: The Node Player is holding
-func player_has(item: Node) -> void:
-#--------------------------------------------
-	print("Player with ID: ", ENetManager.get_my_id(), " has : ", item, ", Self: ", get_script().get_global_name())
-#--------------------------------------------
-	# If player has nothing: move item from appliance to player (if exists), return true
-	if not item:
-		take_request()
-		return
-	# If player has plate: try to serve food from Cookware
-	if item is Plate:
-		serve_request(item)
-		return
-	# If player has food: try to put it in Cookware
-	if item is Food:
-		contents[0].player_has(item)
-		return
-	# If player has cookware: try to transfer contents
-	if item is Cookware and not is_empty():
-		transfer_request(item)
-		return
-	# If item_in_hand exists: depend on if appliance can accept it
-	put_request(item)
 
 
 ## Check if the plate can accept the current contents

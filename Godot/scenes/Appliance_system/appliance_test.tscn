@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://bmcg5uk1crhrh"]
+[gd_scene load_steps=43 format=3 uid="uid://bmcg5uk1crhrh"]
 
 [ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_tckvl"]
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="2_yy0im"]
@@ -34,6 +34,7 @@
 [ext_resource type="PackedScene" uid="uid://b0ougk3d4jnku" path="res://scenes/Appliance_system/food_crate.tscn" id="32_r8ffs"]
 [ext_resource type="PackedScene" uid="uid://cn8yjuakgjsam" path="res://assets/newmodels/furniture/Sink.glb" id="33_om36i"]
 [ext_resource type="PackedScene" uid="uid://bqpdxpf2l7uw1" path="res://scenes/Appliance_system/stove.tscn" id="34_lpo6d"]
+[ext_resource type="PackedScene" uid="uid://dvn4ytv3ro6ec" path="res://scripts/Food/IngredientScenes/Tomato.tscn" id="35_ewtc1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_67eo6"]
 size = Vector3(1.11963, 1, 3.02759)
@@ -772,9 +773,6 @@ transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0, 0, -7
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 3, 0, -7)
 
 [node name="Oven" parent="NavigationRegion3D/== RSIDE ==/oven4" instance=ExtResource("27_34ge6")]
-using_tscn = false
-unique_name = "UNNAMED_APPLIANCE"
-current_owner = 1
 
 [node name="newblender3" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("20_yg0nm")]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 9, 0, -7)
@@ -803,13 +801,13 @@ layers = 2
 mesh = SubResource("BoxMesh_pwhdc")
 
 [node name="Plate" parent="." instance=ExtResource("29_o1oxj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.47223, 0.132272, -0.0941153)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.19246, 0.705777, -1.44999)
 
 [node name="Water" parent="." instance=ExtResource("30_cj5mg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.97447, 0.392201, -5.00542)
 
 [node name="StoveWithPot" parent="." instance=ExtResource("31_dv6fj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.27045, 0, -3.81482)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.27045, 0.260992, -3.81482)
 
 [node name="FoodCrate" parent="." instance=ExtResource("32_r8ffs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.34422, 0, -2.75199)
@@ -819,13 +817,14 @@ current_owner = 1
 
 [node name="FoodCrate2" parent="." instance=ExtResource("32_r8ffs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.39644, 0, -1.84384)
+model_scene = ExtResource("33_om36i")
 supply = ExtResource("30_cj5mg")
 using_tscn = false
 unique_name = "UNNAMED_APPLIANCE"
 current_owner = 1
-model_scene = ExtResource("33_om36i")
 
 [node name="Stove" parent="." instance=ExtResource("34_lpo6d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.16558, 0.454833, -4.00696)
-using_tscn = true
-unique_name = "STOVE_TEST!!"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.16558, 0.793837, -4.00696)
+
+[node name="Tomato" parent="." instance=ExtResource("35_ewtc1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.67834, 0.772191, -2.01366)

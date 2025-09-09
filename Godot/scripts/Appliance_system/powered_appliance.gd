@@ -388,10 +388,9 @@ func _sync_contents(update: Array[String]) -> void:
 	contents_names = update
 
 
-
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
-func player_has(item: Node) -> void: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
+func player_has(item: Node) -> void:
 #--------------------------------------------
 	print("Player with ID: ", ENetManager.get_my_id(), " has : ", item, ", Self: ", get_script().get_global_name())
 #--------------------------------------------
@@ -415,7 +414,6 @@ func player_has(item: Node) -> void: # we may need player or id as parameter for
 	put_request(item)
 
 
-
 ## Check if the plate can accept the current contents
 ## @param plate: The Node to check for acceptance
 ## @return: True if the plate can accept the current contents, false otherwise
@@ -436,6 +434,7 @@ func serve_request(plate: Plate) -> void:
 		return
 	if ENetManager.is_host():
 		plate.add_list_items(contents[0].take_all()) # Method in Plate, takes Array of Food
+		_client_serve.rpc(ENetManager.get_my_id())
 		return
 	_serve_as_host.rpc_id(1, ENetManager.get_my_id())
 
@@ -453,6 +452,16 @@ func _serve_as_host(player_id: int) -> void:
 	if not _check_plate(plate):
 		return
 	plate.add_list_items(contents[0].take_all()) # Method in Plate, takes Array of Food
+	_client_serve.rpc(player_id)
+
+
+## Client-side method to serve food to plate, called by host
+## @param player_id: The id of the player who is serving the food
+@rpc("authority", "call_remote", "reliable")
+func _client_serve(player_id: int) -> void:
+	var plate = GlobalScript.get_local_player_by_id(player_id).item_in_hand
+	if plate and plate is Plate and _check_plate(plate):
+		plate.add_list_items(contents[0].take_all())
 
 
 ## Check if the cookware can accept the current contents
@@ -481,8 +490,10 @@ func transfer_request(player_cookware: Cookware) -> void:
 		var appliance_cookware = contents[0]
 		if appliance_cookware.is_empty():
 			appliance_cookware.put_all(player_cookware.take_all())
+			_client_transfer.rpc(ENetManager.get_my_id(), true)
 			return
 		player_cookware.put_all(appliance_cookware.take_all())
+		_client_transfer.rpc(ENetManager.get_my_id(), false)
 		return
 	_transfer_as_host.rpc_id(1, ENetManager.get_my_id())
 
@@ -499,8 +510,25 @@ func _transfer_as_host(player_id: int) -> void:
 	var appliance_cookware = contents[0]
 	if appliance_cookware.is_empty():
 		appliance_cookware.put_all(player_cookware.take_all())
+		_client_transfer.rpc(player_id, true)
 		return
 	player_cookware.put_all(appliance_cookware.take_all())
+	_client_transfer.rpc(player_id, false)
+
+
+## Client-side method to transfer food between cookwares, called by host
+## @param player_id: The id of the player who is transferring the food
+## @param taking: True if player is taking from appliance, false if giving to appliance
+@rpc("authority", "call_remote", "reliable")
+func _client_transfer(player_id: int, taking: bool) -> void:
+	var player_cookware = GlobalScript.get_local_player_by_id(player_id).item_in_hand
+	if not _check_cookware(player_cookware):
+		return
+	var appliance_cookware = contents[0]
+	if taking:
+		appliance_cookware.put_all(player_cookware.take_all())
+	else:
+		player_cookware.put_all(appliance_cookware.take_all())
 
 
 ## Check if the target can accept the current contents

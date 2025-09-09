@@ -34,6 +34,14 @@ func put(item: Node) -> bool:
 
 ## Place an item onto this appliance
 ## @param item: The Node to place on this appliance
+func _put(item: Node) -> void:
+	super._put(item)
+	if item is Food:
+		_put_food(item)
+
+
+## Place an item onto this appliance
+## @param item: The Node to place on this appliance
 ## @return: True if placement was successful, false otherwise
 func put_all(items: Array) -> bool:
 	if not _can_accept_all(items):
@@ -41,21 +49,6 @@ func put_all(items: Array) -> bool:
 	for item in items:
 		put(item)
 	return true
-
-
-## Client-side method to put item, called by host
-## @param item_name: The name of the item to put
-## @param player_id: The id of the player who is putting the item
-@rpc("authority", "call_remote", "reliable")
-func _client_put(item_name: String, player_id: int) -> void:
-	# First try to find item in player's hand
-	var player = GlobalScript.get_local_player_by_id(player_id)
-	if player:
-		var item = player.item_in_hand
-		if item and item.name == item_name:
-			player.remove_item()
-			_put(item)
-			return
 
 
 ## Place food into the cookware
@@ -151,15 +144,7 @@ func _toggle_sizzle(sizzle: bool) -> void:
 
 ## For Player interaction --------------------------------------------------------------------------
 
-## Place an item onto this appliance from Player
-## if we could remove Player dependency from this class, we can remove this method
-## @param item: The Node to place on this appliance
-## @return: True if placement was successful, false otherwise
-func put_from_player(item: Node) -> bool:
-	var success = super.put_from_player(item)
-	if success: # and item is Food:
-		_put_food(item)
-	return success
+
 
 
 
@@ -195,3 +180,12 @@ func serve_to_plate(plate: Plate) -> bool:
 
 
 ## Non-networking methods for Player interaction ---------------------------------------------------
+## Place an item onto this appliance from Player
+## if we could remove Player dependency from this class, we can remove this method
+## @param item: The Node to place on this appliance
+## @return: True if placement was successful, false otherwise
+func put_from_player(item: Node) -> bool:
+	var success = super.put_from_player(item)
+	if success: # and item is Food:
+		_put_food(item)
+	return success

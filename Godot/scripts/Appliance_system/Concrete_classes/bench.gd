@@ -65,16 +65,13 @@ func put(item: Node) -> bool:
 ## @param index: Index of item to remove
 ## @return: The Node that was removed, or null if invalid index
 func take_at(index: int) -> Node:
-	if index < 0 or index >= contents.size():
+	if index < 0 or index >= contents.size() or index >= contents_names.size():
 		return null
 	var item = contents.pop_at(index)
 	remove_child(item)
-	# #--------------------------------------------
-	contents_names.remove_at(index)
-
-
-	# print(item.get_script().get_global_name(), ", is taken from: ", get_script().get_global_name())
-	# #--------------------------------------------
+	var update = contents_names.duplicate()
+	update.remove_at(index)
+	contents_names = update
 	return item
 
 
@@ -95,12 +92,6 @@ func _can_accept(item: Node) -> bool:
 	if not acceptable:
 		return false
 	return is_valid_food(item) or item is Equipment or item is Plate
-	# #--------------------------------------------
-	# var accepted = item is Food or item is Equipment or item is Plate
-	# if not accepted:
-	# 	print("Cannot accept : ", item.get_script().get_global_name())
-	# return accepted
-	# #--------------------------------------------
 
 
 ## Check if food item is valid for the Bench
@@ -130,6 +121,83 @@ func on_fire() -> void:
 
 ## For Player interaction --------------------------------------------------------------------------
 
+
+# TODO: need new way to transfer item ownership from player to appliance
+
+func put_request(item: Node) -> void:
+	# locally check first to reduce network calls
+	if not _can_accept(item):
+		return
+	if ENetManager.is_host():
+		GlobalScript.get_local_player().remove_item()
+		_put(item)
+		_sync_contents.rpc(contents_names)
+		print("put item: ", item.name, " as host")
+		return
+	_put_as_host.rpc_id(1, ENetManager.get_my_id(), item.name)
+	print("Send request to put item: ", item.name, " as client: ", ENetManager.get_my_id())
+
+
+@rpc("any_peer", "call_remote", "reliable")
+func _put_as_host(player_id: int, item_name: String) -> void:
+	if not ENetManager.is_host():
+		return
+	# host need check to prevent conflicts/ cheating
+	var player = GlobalScript.get_local_player_by_id(player_id)
+	if not player:
+		print("Player not found with id: ", player_id)
+		return
+	var item = player.item_in_hand
+	if not item:
+		print("Item not found: ", item_name)
+		return
+	if not _can_accept(item):
+		return
+	player.remove_item()
+	_put(item)
+	print("put item: ", item.name, " as host")
+	_sync_contents.rpc(contents_names)
+
+
+
+func take_request() -> void:
+	# locally check first to reduce network calls
+	if contents.is_empty() or contents_names.is_empty():
+		return
+	_take_as_host.rpc_id(1, ENetManager.get_my_id())
+
+
+
+@rpc("any_peer", "call_local", "reliable")
+func _take_as_host(player_id: int) -> void:
+	if not ENetManager.is_host():
+		return
+	# host need check to prevent conflicts/ cheating
+	if contents.is_empty() or contents_names.is_empty():
+		return
+	var item = take()
+	print("take item: ", item.name, " as host")
+
+	_sync_contents.rpc(contents_names)
+	get_tree().current_scene.add_child(item)
+	_give_item_to_player.rpc_id(player_id, item.get_path())
+
+
+@rpc("authority", "call_local", "reliable")
+func _give_item_to_player(item_path: NodePath) -> void:
+	# This runs on the requesting client
+	var item = get_node_or_null(item_path)
+	if item:
+		GlobalScript.get_local_player().pickup_item(item)
+
+
+@rpc("authority", "call_remote", "reliable")
+func _sync_contents(update: Array[String]) -> void:
+	contents_names = update
+
+
+
+
 ## Place an item onto this appliance from Player
 ## if we could remove Player dependency from this class, we can remove this method
 ## @param item: The Node to place on this appliance
@@ -144,7 +212,7 @@ func put_from_player(item: Node) -> bool:
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
-func player_has(item: Node) -> bool:
+func player_has(item: Node) -> void:
 #--------------------------------------------
 	print("Player has: ", item, ", Self: ", get_script().get_global_name())
 #--------------------------------------------
@@ -152,27 +220,28 @@ func player_has(item: Node) -> bool:
 	if not item:
 		var taken = take()
 		if taken:
-			GlobalScript.player.pickup_item(taken)
+			GlobalScript.get_local_player().pickup_item(taken)
 			# #----------------------------------------------------------------------
 			# print("Player took: ", taken.get_script().get_global_name(), ", from: ", get_script().get_global_name())
 			# #----------------------------------------------------------------------
-			return true
+			return
 		else:
 			print("Nothing to take from Bench")
-			return false
+			return
 
 	# If player has food: try to put it in Cookware
 	if item is Food:
 		for content in contents:
 			if content is Cookware:
-				return content.player_has(item)
+				content.player_has(item)
+				return
 
 	# If player has plate: try to serve food from Cookware
 	if item is Plate and serve_to_plate(item):
-		return true
+		return
 
 	# If item_in_hand exists: depend on if appliance can accept it
-	return put_from_player(item)
+	put_from_player(item)
 
 
 ## Serve food from Cookware to Plate

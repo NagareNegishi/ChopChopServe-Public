@@ -34,6 +34,14 @@ func put(item: Node) -> bool:
 
 ## Place an item onto this appliance
 ## @param item: The Node to place on this appliance
+func _put(item: Node) -> void:
+	super._put(item)
+	if item is Food:
+		_put_food(item)
+
+
+## Place an item onto this appliance
+## @param item: The Node to place on this appliance
 ## @return: True if placement was successful, false otherwise
 func put_all(items: Array) -> bool:
 	if not _can_accept_all(items):
@@ -66,14 +74,22 @@ func _average_food() -> float:
 	var total = 0.0
 	for food in contents:
 		total += food.get_cook_time(cooking_style)
-		print("Total cooking time in cookware: ", total)#!!!!!!!!!!!!!!
 	var average = total / contents.size()
-	print("Average cooking time in cookware: ", average)#!!!!!!!!!!!!!!
 	for food in contents:
-		print("Setting food cook time from: ", food.get_cook_time(cooking_style), " to average: ", average) #!!!!!!!!!!!!!!
 		food.set_cook_time(average, cooking_style)
-		print("After setting food cook time: ", food.get_cook_time(cooking_style))#!!!!!!!!!!!!!!
 	return average
+
+
+## Remove and return all items
+## @return: Array of all items that were removed
+func take_all() -> Array[Node]:
+	finish_cook()
+	var all_items = contents
+	for item in all_items:
+		remove_child(item)
+	contents = []
+	contents_names = []
+	return all_items
 
 
 ## Check if this appliance can accept the all given items
@@ -100,11 +116,11 @@ func cook(power: int) -> bool:
 	power_receiving = power
 	for food in contents:
 		food.startCooking(int(power_receiving * coefficient), cooking_style)
-		#-----------------------------------------------------------------------
-		print(get_script().get_global_name(), " start cooking ", food.get_script().get_global_name(),
-		 " with power: ", int(power_receiving * coefficient), ", Style is: ",
-		ApplianceFactory.CookingStyle.keys()[cooking_style], ", Food cook time: ", food.get_cook_time(cooking_style))
-		#----------------------------------------------------------------------
+		# #-----------------------------------------------------------------------
+		# print(get_script().get_global_name(), " start cooking ", food.get_script().get_global_name(),
+		#  " with power: ", int(power_receiving * coefficient), ", Style is: ",
+		# ApplianceFactory.CookingStyle.keys()[cooking_style], ", Food cook time: ", food.get_cook_time(cooking_style))
+		# #----------------------------------------------------------------------
 	_toggle_sizzle(true)
 	return true
 
@@ -128,28 +144,18 @@ func _toggle_sizzle(sizzle: bool) -> void:
 
 ## For Player interaction --------------------------------------------------------------------------
 
-## Place an item onto this appliance from Player
-## if we could remove Player dependency from this class, we can remove this method
-## @param item: The Node to place on this appliance
-## @return: True if placement was successful, false otherwise
-func put_from_player(item: Node) -> bool:
-	var success = super.put_from_player(item)
-	if success: # and item is Food:
-		_put_food(item)
-	return success
 
 
-# TODO??
-# if we don't want to serve food to plate, when cookware is floor or not specified location
-# we can comment out method below:
+
 
 ## Perform action depend on what player is holding
 ## @param item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
-func player_has(item: Node) -> bool:
+func player_has(item: Node) -> void:
 	if item is Plate:
-		return serve_to_plate(item)
-	return super.player_has(item)
+		serve_to_plate(item)
+		return
+	super.player_has(item)
 
 
 ## Serve food from Cookware to Plate
@@ -164,10 +170,22 @@ func serve_to_plate(plate: Plate) -> bool:
 		print("Plate is not ready: ", plate.get_script().get_global_name())
 		return false
 
-	# finish_cook()
 	plate.add_list_items(take_all())	# Method in Plate, takes Array of Food
 	#----------------------------------------------------------------------
 	print("Cookware :", get_script().get_global_name(), ", served to: ", plate.get_script().get_global_name())
 	#----------------------------------------------------------------------
 	return true
 ## -------------------------------------------------------------------------------------------------
+
+
+
+## Non-networking methods for Player interaction ---------------------------------------------------
+## Place an item onto this appliance from Player
+## if we could remove Player dependency from this class, we can remove this method
+## @param item: The Node to place on this appliance
+## @return: True if placement was successful, false otherwise
+func put_from_player(item: Node) -> bool:
+	var success = super.put_from_player(item)
+	if success: # and item is Food:
+		_put_food(item)
+	return success

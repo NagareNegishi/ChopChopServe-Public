@@ -1,4 +1,12 @@
 ## Auto loaded as: ENetManager
+
+
+
+#TODO: Do not concern the disconnected player,
+# no need to track offline player, once disconnected, they are gone
+# if someone disconnected -> don't wait -> back to lobby directly
+
+
 extends Node
 
 enum GameProgress {

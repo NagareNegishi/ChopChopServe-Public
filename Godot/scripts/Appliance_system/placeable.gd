@@ -183,7 +183,6 @@ func resize_model():
 	if current_size != Vector3.ZERO:
 		var scale_factor = size / current_size
 		model_instance.scale = scale_factor
-		model_instance.position = Vector3.ZERO # Keep model centered
 
 
 ## Update size and automatically refresh collision shape

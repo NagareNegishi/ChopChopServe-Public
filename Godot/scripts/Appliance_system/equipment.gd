@@ -144,6 +144,17 @@ func set_can_use(value: bool):
 
 ## For Player interaction --------------------------------------------------------------------------
 
+## Perform action depend on what player is holding
+## @param _item: The Node Player is holding
+## @return: True if action is triggered, false otherwise
+func player_has(item: Node) -> void:
+	# If player has nothing: let them take self, return true
+	if not item:
+		pickup_request()
+		return
+	put_request(item)
+
+
 ## Request to put an item onto this appliance from Player
 ## @param item: The Node to place on this appliance
 func put_request(item: Node) -> void:
@@ -217,16 +228,6 @@ func _give_item_to_player(player_id: int, item_path: NodePath) -> void:
 		if player:
 			player.pickup_item(item)
 
-
-## Perform action depend on what player is holding
-## @param _item: The Node Player is holding
-## @return: True if action is triggered, false otherwise
-func player_has(item: Node) -> void: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
-	# If player has nothing: let them take self, return true
-	if not item:
-		pickup_request()
-		return
-	put_request(item)
 ## -------------------------------------------------------------------------------------------------
 
 
@@ -236,12 +237,13 @@ func player_has(item: Node) -> void: # we may need player or id as parameter for
 ## if we could remove Player dependency from this class, we can remove this method
 ## @param item: The Node to place on this appliance
 ## @return: True if placement was successful, false otherwise
-func put_from_player(item: Node) -> bool:
-	if not _can_accept(item):
-		return false
-	# transfer item to appliance
-	GlobalScript.get_local_player().remove_item()
-	contents.append(item)
-	add_child(item)
-	contents_names.append(item.name)
-	return true
+# func put_from_player(item: Node) -> bool:
+# 	if not _can_accept(item):
+# 		return false
+# 	# transfer item to appliance
+# 	GlobalScript.get_local_player().remove_item()
+# 	contents.append(item)
+# 	add_child(item)
+# 	contents_names.append(item.name)
+# 	return true
+#---------------------------------------------------------------------------------------------------

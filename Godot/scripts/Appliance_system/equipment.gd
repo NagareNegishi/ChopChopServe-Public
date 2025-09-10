@@ -147,7 +147,7 @@ func set_can_use(value: bool):
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
-func player_has(item: Node) -> void: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
+func player_has(item: Node) -> void:
 	# If player has nothing: let them take self, return true
 	if not item:
 		pickup_request()

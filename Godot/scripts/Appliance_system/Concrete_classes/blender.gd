@@ -138,7 +138,7 @@ func stop_cook() -> bool:
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
-func player_has(item: Node) -> void: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
+func player_has(item: Node) -> void:
 #--------------------------------------------
 	print("Player has: ", item, ", Self: ", get_script().get_global_name())
 #--------------------------------------------

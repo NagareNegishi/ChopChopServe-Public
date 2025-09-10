@@ -69,7 +69,7 @@ func _ready():
 	cook_timer.timeout.connect(_on_timer_timeout)
 
 func _on_timer_timeout():
-	print("=== TIMER TICK === is_cooking:", is_cooking, " current_appliance:", current_appliance, " time_power:", time_power)
+	#print("=== TIMER TICK === is_cooking:", is_cooking, " current_appliance:", current_appliance, " time_power:", time_power)
 	if is_cooking:
 		# Process cooking based on current appliance type
 		match current_appliance:
@@ -164,13 +164,13 @@ func freeze():
 
 # -------------------------END OF COOKING TYPES---------------------------------
 func check_processed(s: foodState, time_a:int, time_b:int, stop:bool):
-	print("Cook time remaining: ", time_a, " on food item: ", food_name)
+	# print("Cook time remaining: ", time_a, " on food item: ", food_name)
 	if(time_a <= 0 && time_a > time_b):
 		state = s;
 		if !previous_states.has(convert_enum_to_string(state)):
 			previous_states.append(convert_enum_to_string(state))
 		is_cooked = true
-		print("Food is done ", food_name)
+		# print("Food is done ", food_name)
 		#emit_signal("changed_food_state")
 		if stop:
 			stop_cooking()

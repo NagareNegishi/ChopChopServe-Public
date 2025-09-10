@@ -10,10 +10,10 @@ supply = null
 supply_name = "Tomato"
 capacity = 4
 action_interval = 1.0
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1
 cooking_style = 0
 model_scene = null
-
-[node name="CollisionShape3D" parent="." index="0"]
-debug_color = Color(1, 0.764706, 0.192157, 1)
 
 [node name="FoodCrate" parent="." index="3" instance=ExtResource("3_vim2w")]

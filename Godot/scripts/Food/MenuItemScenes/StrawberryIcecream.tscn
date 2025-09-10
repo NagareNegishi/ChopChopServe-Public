@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=4 uid="uid://c4rwiq4wxsroo"]
+[gd_scene load_steps=7 format=4 uid="uid://c4rwiq4wxsroo"]
 
 [ext_resource type="Script" uid="uid://c1ihew1w3qp63" path="res://scripts/Food/MenuItems/icecream_strawberry.gd" id="1_b3hbk"]
 [ext_resource type="Material" uid="uid://d1mru8ywyt58h" path="res://assets/newmodels/texturemap.tres" id="2_phptd"]
+[ext_resource type="Texture2D" uid="uid://dt4ecwtbq7yby" path="res://assets/newmodels/food/recipes/tainted/IceCreamStrawIck_TextureMapGreen.png" id="3_phptd"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_y4rlx"]
 _surfaces = [{
@@ -37,6 +38,9 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_y4rlx")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p36td"]
+albedo_texture = ExtResource("3_phptd")
+
 [node name="StrawIcecream" type="Node3D"]
 script = ExtResource("1_b3hbk")
 
@@ -44,3 +48,10 @@ script = ExtResource("1_b3hbk")
 transform = Transform3D(-0.542471, 0, -4.74243e-08, 0, 0.542471, 0, 4.74243e-08, 0, -0.542471, 0, 0, 0)
 mesh = SubResource("ArrayMesh_5tw1p")
 skeleton = NodePath("")
+
+[node name="IceCreamStrawberry2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.542471, 0, -4.74243e-08, 0, 0.542471, 0, 4.74243e-08, 0, -0.542471, 0, 0, 0)
+visible = false
+mesh = SubResource("ArrayMesh_5tw1p")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_p36td")

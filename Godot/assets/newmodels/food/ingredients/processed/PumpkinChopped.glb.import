@@ -13,8 +13,8 @@ dest_files=["res://.godot/imported/PumpkinChopped.glb-ca2c35051a404aef35981e4170
 
 [params]
 
-nodes/root_type=""
-nodes/root_name=""
+nodes/root_type="Node3D"
+nodes/root_name="ChoppedPumpkin"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false

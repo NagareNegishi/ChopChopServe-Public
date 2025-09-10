@@ -1,6 +1,7 @@
-[gd_scene load_steps=30 format=3 uid="uid://bg2l1urkd7kjy"]
+[gd_scene load_steps=29 format=3 uid="uid://bg2l1urkd7kjy"]
 
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="3_l1ni4"]
+[ext_resource type="PackedScene" uid="uid://bk7ovilp788kq" path="res://scripts/Player/spawn_point.tscn" id="4_dok52"]
 [ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="4_gs5vi"]
 [ext_resource type="PackedScene" uid="uid://dxhfqm13c85ar" path="res://assets/models/decorations/table.glb" id="5_7dw3l"]
 [ext_resource type="PackedScene" uid="uid://hxrvqyggbykc" path="res://assets/models/NuFurniture/Bench.glb" id="7_hgfpf"]
@@ -15,12 +16,10 @@
 [ext_resource type="PackedScene" uid="uid://b7x0xycilg7vt" path="res://assets/models/NuFurniture/newblender.glb" id="15_uq20t"]
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="16_0ny5b"]
 [ext_resource type="PackedScene" uid="uid://b64oudiukwpwa" path="res://assets/models/NuFurniture/nufridge.glb" id="16_ciehn"]
-[ext_resource type="Script" uid="uid://c52li82tp4c6f" path="res://scripts/Player/spawn_point.gd" id="17_pk2le"]
 [ext_resource type="PackedScene" uid="uid://dythb8xw31t1c" path="res://assets/models/infrastructure/wall.glb" id="17_tg3k6"]
 [ext_resource type="PackedScene" uid="uid://dvn4ytv3ro6ec" path="res://scripts/Food/IngredientScenes/Tomato.tscn" id="18_7dw3l"]
 [ext_resource type="PackedScene" uid="uid://br76j8t76ne2x" path="res://scripts/order_system/Plate.tscn" id="19_yfgsi"]
 [ext_resource type="PackedScene" uid="uid://nrfjhpm1sa30" path="res://assets/newmodels/furniture/Fridge.glb" id="22_dok52"]
-[ext_resource type="PackedScene" uid="uid://br3jfy6v5habq" path="res://UI/UI_Thinking.tscn" id="22_romb4"]
 [ext_resource type="PackedScene" uid="uid://o3tvfl5dgcnq" path="res://assets/newmodels/food/recipes/finished/BreadGarlic.glb" id="23_dok52"]
 
 [sub_resource type="Environment" id="Environment_ikll6"]
@@ -31,6 +30,9 @@ tonemap_exposure = 1.15
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ihmv3"]
 size = Vector3(30, 0.03, 30)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pwhdc"]
+size = Vector3(30, 0.05, 30)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_67eo6"]
 size = Vector3(1.11963, 1, 3.02759)
@@ -43,9 +45,6 @@ radius = 0.712891
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pk2le"]
 size = Vector3(0.429199, 4.9848, 20.9254)
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_dok52"]
-viewport_path = NodePath("Sprite3D/SubViewport")
 
 [node name="JohnoTestScene" type="Node3D"]
 
@@ -61,26 +60,22 @@ script = ExtResource("15_67eo6")
 spawns = [NodePath("../SpawnPoint"), NodePath("../SpawnPoint2"), NodePath("../SpawnPoint3"), NodePath("../SpawnPoint4")]
 network_player = ExtResource("16_0ny5b")
 
-[node name="SpawnPoint2" type="Marker3D" parent="== SPAWNS =="]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7776, 0.646901, -7.09901)
-script = ExtResource("17_pk2le")
-priority = 1
+[node name="SpawnPoint4" parent="== SPAWNS ==" instance=ExtResource("4_dok52")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.18968, 0.0703411, -6.94067)
+team = 2
 
-[node name="SpawnPoint" type="Marker3D" parent="== SPAWNS =="]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.47811, 0.589429, 7.13225)
-script = ExtResource("17_pk2le")
+[node name="SpawnPoint3" parent="== SPAWNS ==" instance=ExtResource("4_dok52")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.43216, 0.105512, -6.79754)
+team = 1
+
+[node name="SpawnPoint2" parent="== SPAWNS ==" instance=ExtResource("4_dok52")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.32709, 0.0703411, 7.13018)
 team = 1
 priority = 1
 
-[node name="SpawnPoint3" type="Marker3D" parent="== SPAWNS =="]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.17353, 0.646901, -7.18314)
-script = ExtResource("17_pk2le")
-team = 1
-priority = 2
-
-[node name="SpawnPoint4" type="Marker3D" parent="== SPAWNS =="]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.24178, 0.589429, 7.04812)
-script = ExtResource("17_pk2le")
+[node name="SpawnPoint" parent="== SPAWNS ==" instance=ExtResource("4_dok52")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.02985, 0.0351706, 6.98705)
+team = 2
 priority = 1
 
 [node name="== LIGHTING ==" type="Node" parent="."]
@@ -100,6 +95,10 @@ environment = SubResource("Environment_ikll6")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="== LEVEL ==/Floor"]
 shape = SubResource("BoxShape3D_ihmv3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="== LEVEL ==/Floor"]
+layers = 2
+mesh = SubResource("BoxMesh_pwhdc")
 
 [node name="== WALLS ==" type="Node" parent="== LEVEL =="]
 
@@ -640,13 +639,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.74152, 0.015, 1.93723)
 
 [node name="Fridge2" parent="." instance=ExtResource("22_dok52")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.49233, 0.0940047, 3.7874)
-
-[node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.03569, 0.854156, 2.04663)
-billboard = 1
-texture = SubResource("ViewportTexture_dok52")
-
-[node name="SubViewport" type="SubViewport" parent="Sprite3D"]
-transparent_bg = true
-
-[node name="Control" parent="Sprite3D/SubViewport" instance=ExtResource("22_romb4")]

@@ -158,15 +158,11 @@ func _input(event):
 
 
 func _on_test_appliance_created(appliance: Appliance):
-	var player = get_tree().get_first_node_in_group("player")
-	if not player:
-		player = get_tree().current_scene.get_node("Player")
-	if not player:
-		print("DEBUG: Current scene children: ")
-		for child in get_tree().current_scene.get_children():
-			print("  - ", child.name, " (", child.get_script(), ")")
+	var player_id = ENetManager.get_my_id()
+	print("DEBUG: My ID is ", player_id)
+
+	var player = GlobalScript.get_local_player_by_id(player_id)
 	if player:
-		print("DEBUG: Player found, positioning appliance")
 		# Get player's position and forward direction
 		var player_pos = player.global_position
 		var player_forward = -player.global_transform.basis.z
@@ -176,6 +172,6 @@ func _on_test_appliance_created(appliance: Appliance):
 		spawn_position.y = 1.0
 		get_tree().current_scene.add_child(appliance)
 		appliance.global_position = spawn_position
-		print("DEBUG: Appliance added to scene at: ", appliance.global_position)
+		# print("DEBUG: Appliance added to scene at: ", appliance.global_position)
 	else:
 		print("DEBUG: No player found!")

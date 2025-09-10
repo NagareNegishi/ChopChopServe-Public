@@ -6,7 +6,6 @@ func _ready() -> void:
 	var local_player : Player = GlobalScript.get_local_player()
 	set_reputation(1, ReputationSystem.total_rep_team.get(1))
 	set_reputation(2, ReputationSystem.total_rep_team.get(2))
-	
 	ReputationSystem.reputation_changed.connect(set_reputation)
 	CurrencySystem.currency_changed.connect(set_money)
 

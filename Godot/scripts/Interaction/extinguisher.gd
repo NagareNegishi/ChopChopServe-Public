@@ -21,9 +21,8 @@ func _physics_process(_delta: float) -> void:
 	_extingush()
 
 func _can_extingush() -> bool:
-	var appliance : Appliance = $ExtinguishRange.get_collider()
 	return (!$ExtinguishRange.is_colliding() && 
-	appliance)
+	$ExtinguishRange.get_collider() is Appliance)
 
 
 ## Will extingush the fire from appliance the line trace is hitting if valid
@@ -37,7 +36,7 @@ func _extingush() -> void:
 ## @param is_action if the player is using the action input
 ## @return void
 func _on_interactable_component_action_use(is_action: bool) -> void:
-	rpc_id(1, "server_action", is_action)
+	rpc("server_action", is_action)
 
 
 @rpc("authority", "call_local")

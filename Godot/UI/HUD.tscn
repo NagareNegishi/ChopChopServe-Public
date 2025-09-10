@@ -1,10 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://dg3km4t6mbwwg"]
+[gd_scene load_steps=13 format=3 uid="uid://dg3km4t6mbwwg"]
 
 [ext_resource type="Script" uid="uid://djull4qell3bf" path="res://scripts/UI/HUD.gd" id="1_f2wx0"]
 [ext_resource type="PackedScene" uid="uid://b6huce6rberg3" path="res://UI/UI_Reputation.tscn" id="2_ijstf"]
 [ext_resource type="FontFile" uid="uid://dxc6n0umgi0q4" path="res://assets/fonts/Jua-Regular.ttf" id="3_4n7mi"]
 [ext_resource type="Texture2D" uid="uid://b4qjni3x30ew" path="res://assets/textures/HUD/YBottle.png" id="4_f2wx0"]
 [ext_resource type="PackedScene" uid="uid://cpf68rvd2ht5y" path="res://UI/UI_GameState.tscn" id="4_uk570"]
+[ext_resource type="PackedScene" uid="uid://enciph3o5na6" path="res://UI/UI_SabotageNode.tscn" id="6_gppie"]
+[ext_resource type="Texture2D" uid="uid://buf4joxpmeoqd" path="res://assets/textures/Controls/keyboard_1.png" id="7_ixkb2"]
+[ext_resource type="Texture2D" uid="uid://bw4uq8pmr1ia6" path="res://assets/textures/Controls/keyboard_2.png" id="8_mms7u"]
+[ext_resource type="Texture2D" uid="uid://dwqngqcqkgkn7" path="res://assets/textures/Controls/keyboard_3.png" id="9_281ki"]
+[ext_resource type="Texture2D" uid="uid://dlnedfofn7vuv" path="res://assets/textures/Controls/keyboard_4.png" id="10_w37wn"]
+[ext_resource type="Texture2D" uid="uid://bgmq0j2s80owe" path="res://assets/textures/Controls/keyboard_5.png" id="11_kg6a8"]
+[ext_resource type="Texture2D" uid="uid://biey5fnva1muj" path="res://assets/textures/Controls/keyboard_6.png" id="12_8ip7y"]
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -183,5 +190,56 @@ theme_override_constants/shadow_outline_size = 1
 theme_override_fonts/font = ExtResource("3_4n7mi")
 theme_override_font_sizes/font_size = 30
 text = "Server"
+
+[node name="VBoxContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -195.0
+offset_top = -63.0
+offset_right = 195.0
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 18
+
+[node name="UiSabotageNode" parent="VBoxContainer" instance=ExtResource("6_gppie")]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+key_texture = ExtResource("7_ixkb2")
+
+[node name="UiSabotageNode2" parent="VBoxContainer" instance=ExtResource("6_gppie")]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+key_texture = ExtResource("8_mms7u")
+cost = 200.0
+
+[node name="UiSabotageNode3" parent="VBoxContainer" instance=ExtResource("6_gppie")]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+key_texture = ExtResource("9_281ki")
+cost = 300.0
+
+[node name="UiSabotageNode4" parent="VBoxContainer" instance=ExtResource("6_gppie")]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+key_texture = ExtResource("10_w37wn")
+cost = 400.0
+
+[node name="UiSabotageNode5" parent="VBoxContainer" instance=ExtResource("6_gppie")]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+key_texture = ExtResource("11_kg6a8")
+cost = 600.0
+
+[node name="UiSabotageNode6" parent="VBoxContainer" instance=ExtResource("6_gppie")]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+key_texture = ExtResource("12_8ip7y")
+cost = 600.0
 
 [editable path="Team2Rep"]

@@ -18,9 +18,7 @@ func _ready():
 	# action_interval = 1.0
 	_setup_visual_effects()
 	_set_affixes()
-	if water_scene and water_scene.can_instantiate():
-		print("Sink water scene preloaded successfully")
-	else:
+	if not (water_scene and water_scene.can_instantiate()):
 		push_error("Failed to preload water scene in Sink")
 
 
@@ -105,29 +103,23 @@ func _action() -> bool:
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
-func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
-	# If player has nothing: move Plate from Sink to player (if exists), return true
+func player_has(item: Node) -> void:
+	# If player has nothing: move Plate from Sink to player (if exists)
 	if not item:
-		var plate = take()
-		if plate:
-			GlobalScript.player.pickup_item(plate)
-			#----------------------------------------------------------------------
-			print("Player took: ", plate.get_script().get_global_name(), ", from: ", get_script().get_global_name())
-			#----------------------------------------------------------------------
-			return true
-		else:
-			print("No plate to take from Sink")
-			return false
+		take_request()
+		return
 
 	# If Player has Pot, provide water
 	if item is Pot:
 		#--------------------------------------------
 		print("Provide water to pot")
+		#TODO: check what is goint on, I see the comment "item removed" after this
 		#--------------------------------------------
-		return item.put(_provide_water())
+		item.put_request(_provide_water())
+		return
 
 	# If player has empty plate: depend on if sink can accept it
-	return put_from_player(item)
+	put_request(item)
 
 
 ## Trigger action, if subclass has action
@@ -146,7 +138,7 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	if not is_hovered:
 		highlight_component.hide_feedback()
 		return
-	var item = GlobalScript.player.item_in_hand
+	var item = GlobalScript.get_local_player().item_in_hand
 	#---------------------------------------------------------------------------
 	if item:
 		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())

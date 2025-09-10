@@ -29,7 +29,7 @@ func _ready():
 	super._ready()
 	interactable_component.is_pickup = false
 	cooking_style = ApplianceFactory.CookingStyle.CHOP
-	valid_food = ["Fish", "Tomato", "Potato"] # Confirm later!!!!!!!!!!!!!!
+	valid_food = ["Fish", "Tomato", "Potato", "Onion","Cheese"] # Confirm later!!!!!!!!!!!!!!
 	capacity = 1 # one item only
 	coefficient = 1.0
 
@@ -77,7 +77,7 @@ func put_from_player(item: Node) -> bool:
 	if not _can_accept(item):
 		return false
 	# transfer item to appliance
-	GlobalScript.player.remove_item()
+	GlobalScript.get_local_player().remove_item()
 	contents.append(item)
 	add_child(item)
 	item.position = Vector3(0.0, size.y * 0.5, 0.0)

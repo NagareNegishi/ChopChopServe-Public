@@ -179,14 +179,18 @@ func set_appliance_owner(team_number: int) -> void:
 
 
 
-
+## Update contents names and refresh contents array
+## @param new_names: The new array of contents names
 func _set_contents_names(new_names: Array[String]):
-	print("I am : ", get_script().get_global_name(), ", Setting contents names is triggered with: ", new_names)
+	print("I am : ", get_script().get_global_name(), ", Setting contents names is triggered with: ", new_names, "------ My ID is: ", ENetManager.get_my_id())
 	contents_names = new_names
 	_update_contents()
 
 
+## Update contents array based on contents names
 func _update_contents():
+	print("=================================================================")
+	print("before update, contents is: ", contents)
 	contents.clear()
 	for item_name in contents_names:
 		var item = get_node_or_null(NodePath(item_name))
@@ -195,11 +199,7 @@ func _update_contents():
 			print("Found item: ", item.get_script().get_global_name())
 			contents.append(item)
 		else:
-			push_warning("Item '", item_name, "' not found as child of ", name)
-
-
-
-
+			print("Item '", item_name, "' not found as child of ", name)
 
 
 
@@ -207,16 +207,15 @@ func _update_contents():
 
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
-## @return: True if action is triggered, false otherwise
-func player_has(_item: Node) -> bool:
+func player_has(_item: Node) -> void:
 	assert(false, "player_has() must be implemented in " + get_class())
-	return false
+
 
 
 ## Called when interacted with and will make the player pick this item up
 ## @return void
 func _on_interactable_component_interacted() -> void:
-	player_has(GlobalScript.player.item_in_hand)
+	player_has(GlobalScript.get_local_player().item_in_hand)
 
 
 ## Let toggle collision
@@ -240,21 +239,10 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	if not is_hovered:
 		highlight_component.hide_feedback()
 		return
-
-#---------------------------------------------------------------
-	var player = get_tree().get_first_node_in_group("player")
-	if not player:
-		player = get_tree().current_scene.get_node("Player")
-
-	var item = player.item_in_hand
-#---------------------------------------------------------------
-
-
-
-	# var item = GlobalScript.player.item_in_hand
+	var item = GlobalScript.get_local_player().item_in_hand
 	#---------------------------------------------------------------------------
 	if item:
-		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())
+		print("Player with ID: ", ENetManager.get_my_id(), " has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())
 	#---------------------------------------------------------------------------
 	if not item:
 		highlight_component.set_state(ApplianceHighlight.HighlightState.HOVER)

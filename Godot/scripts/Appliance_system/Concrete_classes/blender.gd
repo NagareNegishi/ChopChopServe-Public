@@ -11,7 +11,7 @@ func _init():
 func _ready():
 	super._ready()
 	cooking_style = ApplianceFactory.CookingStyle.BLEND
-	valid_classes = ["Tomato", "Water", "Milk","Cocoa","Flour"]
+	valid_classes = ["Tomato", "Water", "Milk", "Cocoa", "Flour", "Vanilla Icecream", "Strawberry"]
 	capacity = 4
 	power = 1
 	add_to_group("Appliance")

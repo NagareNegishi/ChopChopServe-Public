@@ -12,7 +12,7 @@ func _init():
 	
 	ingredient_states = {
 		"Vanilla Icecream": ["RAW","BLENDED"],
-		"Strawberry": ["RAW","CHOPPED","BLENDED"]
+		"Strawberry": ["RAW","BLENDED"]
 	}
 	
 	is_available=true
@@ -20,5 +20,5 @@ func _init():
 
 func _ready():
 	cooked_mesh_good = $IceCreamStrawberry
-	cooked_mesh_bad = null
+	cooked_mesh_bad = $IceCreamStrawberry2
 	cooked_mesh_burnt = null

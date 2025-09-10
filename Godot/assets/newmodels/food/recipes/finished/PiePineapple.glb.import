@@ -13,8 +13,8 @@ dest_files=["res://.godot/imported/PiePineapple.glb-5aed2d4295c28e8fc2c257888b49
 
 [params]
 
-nodes/root_type=""
-nodes/root_name=""
+nodes/root_type="Node3D"
+nodes/root_name="PineapplePie"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false

@@ -7,9 +7,9 @@ func _ready():
 	# cook time is same as super class
 	# can cook is same as super class
 	raw_mesh = $Cheese
-	spoiled_mesh = null
-	cooked_mesh = null
-	burnt_mesh = null
+	spoiled_mesh = $SpoiledCheese
+	cooked_mesh = $CheeseSliced
+	burnt_mesh = $BurntCheese
 	chopped_mesh = $CheeseSliced
 	
 	add_to_group("Food")

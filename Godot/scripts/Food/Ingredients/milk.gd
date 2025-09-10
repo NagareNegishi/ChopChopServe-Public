@@ -12,3 +12,5 @@ func _ready():
 	add_to_group("Food")
 	on_state_change()
 	# Spoil time same as super class
+	
+	print("Name of ingredient: ", food_name, " Position: ", global_position, " ID: ", ENetManager.get_my_id())

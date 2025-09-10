@@ -147,22 +147,20 @@ shape = SubResource("CapsuleShape3D_l2ndj")
 transform = Transform3D(-7.64949e-09, 0, -0.175, 0, 0.175, 0, 0.175, 0, -7.64949e-09, 0, -0.556445, 0)
 
 [node name="Clothes_001" parent="Mesh/Armature" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0402468, -2.55521, 0.06441)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0402468, -2.1967, 0.06441)
 
 [node name="Skeleton3D" parent="Mesh/Armature" index="1"]
-bones/1/position = Vector3(-0.0285939, 0.8167, -0.0113688)
-bones/2/rotation = Quaternion(0.0245074, 1.19173e-07, -2.50558e-09, 0.9997)
-bones/3/position = Vector3(-3.85431, 2.21987, 2.02331e-09)
+bones/3/position = Vector3(-3.85431, 2.46216, 2.79993e-14)
 bones/3/rotation = Quaternion(-3.89966e-08, 2.25142e-09, 0.998338, 0.0576379)
 bones/4/rotation = Quaternion(-1.13927e-09, 8.31912e-08, 0.00706236, 0.999975)
 bones/5/rotation = Quaternion(-3.2693e-11, -3.49708e-07, -0.00031076, 1)
-bones/6/position = Vector3(3.85431, 2.1922, 2.25437e-09)
+bones/6/position = Vector3(3.85431, 2.46216, -4.22451e-16)
 bones/6/rotation = Quaternion(3.89966e-08, 2.25142e-09, 0.998338, -0.0576379)
 bones/7/rotation = Quaternion(1.35973e-09, 2.70658e-07, -0.00706199, 0.999975)
 bones/8/rotation = Quaternion(-1.42488e-10, -4.14868e-09, 0.000310395, 1)
-bones/9/position = Vector3(-0.745343, 0.846898, -0.0113688)
+bones/9/position = Vector3(-0.745343, 0.911673, -0.0113688)
 bones/9/rotation = Quaternion(-0.707104, -0.0031089, 0.7071, -0.0021288)
-bones/10/position = Vector3(0.688155, 0.834323, -0.0113688)
+bones/10/position = Vector3(0.688155, 0.911673, -0.0113688)
 bones/10/rotation = Quaternion(0.707102, -0.00261885, 0.707102, 0.00261885)
 
 [node name="InteractArea" type="Area3D" parent="Mesh"]

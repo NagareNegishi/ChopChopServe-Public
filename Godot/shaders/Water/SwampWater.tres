@@ -1,0 +1,101 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://cnd7ix4cfrxi"]
+
+[sub_resource type="Shader" id="Shader_3pt03"]
+code = "shader_type spatial;
+render_mode cull_disabled, blend_add, unshaded;
+uniform float time_speed = 1.0;
+//time specifically for the wave noise texture
+uniform float surface_speed = 1.0;
+uniform float spin = 0.0; //Twisting motion of the water
+uniform float brightness = 0.6;
+uniform float color_intensity = 0.0;
+//Tiling frequency of the noise accross the mesh
+uniform float horizontal_frequency = 2.0;
+uniform float vertical_frequency = 2.0;
+//overall size muliplier
+uniform float size = 3.0;
+//affects total size
+uniform float banding_bias = 0.6;
+
+uniform sampler2D wave_texture;
+uniform sampler2D noise_texture;
+//wave height, use for ocean waves
+uniform float wave_height = 0.5;
+//water surface height variation based on the noise texture
+uniform float texture_height = 0.5;
+//preset band colors
+uniform vec4 color1 : source_color = vec4(0.59, 0.761, 1.0, 1.0);
+uniform vec4 color2 : source_color = vec4(0.274, 0.474, 0.98, 1.0);
+uniform vec4 color3 : source_color = vec4(0.059, 0.389, 0.85, 1.0);
+uniform vec4 color4 : source_color = vec4(0.0, 0.267, 1.0, 1.0);
+
+void vertex() {
+	float time = -TIME * time_speed;
+	VERTEX += NORMAL * wave_height * texture(wave_texture, vec2(UV.x + time * surface_speed, UV.y + time * surface_speed)).r;
+	VERTEX += NORMAL * texture_height * texture(noise_texture,vec2(UV.x * horizontal_frequency + spin * (time /2.0), (UV.y * vertical_frequency) + time)).r;;
+}
+
+void fragment() {
+	float time = -TIME * time_speed;
+
+// Calculate dot product of normals and combine with noise texture value
+	float normal_facing = dot(NORMAL, VIEW);
+	float noise_value = texture(noise_texture,vec2(UV.x * horizontal_frequency + spin * (time /2.0), (UV.y * vertical_frequency) + time)).r;
+	normal_facing += (noise_value -0.5 + size) * 0.3;
+
+	float band = normal_facing * 3.0 * banding_bias;
+	vec4 band_color = vec4(0,0,0,0);
+	if (band <= 1.5) {
+		discard;
+	}
+	else if(band <= 2.0){
+		band_color = mix(color1, color2, -0.01 / (band-2.01)); //Mixes the color bands to make a slight gradient
+	}
+	else if (band <= 2.5) {
+		band_color = mix(color2, color3, -0.01 / (band-2.51));
+	}
+	else if (band <= 2.9) {
+		band_color = mix(color3, color4, -0.01 / (band-2.91));
+	}
+	else if (band >= 0.0) {
+		band_color = color4;
+	}
+	//Final color adjestment
+	ALBEDO = clamp(brightness * (vec3(1.0, 1.0, 1.0) - (band_color.xyz * -color_intensity)) * band_color.xyz, vec3(0.0, 0.0, 0.0), vec3(brightness, brightness, brightness));
+}"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_tro6f"]
+noise_type = 3
+frequency = 0.0461
+fractal_octaves = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_48fm6"]
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_tro6f")
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_okivq"]
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_tro6f")
+
+[resource]
+render_priority = 0
+shader = SubResource("Shader_3pt03")
+shader_parameter/time_speed = 0.01
+shader_parameter/surface_speed = 0.01
+shader_parameter/spin = 0.0
+shader_parameter/brightness = 0.6
+shader_parameter/color_intensity = 0.0
+shader_parameter/horizontal_frequency = 1.0
+shader_parameter/vertical_frequency = 1.0
+shader_parameter/size = 3.0
+shader_parameter/banding_bias = 0.6
+shader_parameter/wave_texture = SubResource("NoiseTexture2D_okivq")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_48fm6")
+shader_parameter/wave_height = 0.005
+shader_parameter/texture_height = 0.005
+shader_parameter/color1 = Color(1, 1, 1, 1)
+shader_parameter/color2 = Color(0.207843, 0.713726, 0.588235, 1)
+shader_parameter/color3 = Color(0.0392157, 0.560784, 0.447059, 1)
+shader_parameter/color4 = Color(0, 0.313726, 0.254902, 1)

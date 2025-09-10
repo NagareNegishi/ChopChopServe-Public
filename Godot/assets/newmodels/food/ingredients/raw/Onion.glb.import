@@ -13,8 +13,8 @@ dest_files=["res://.godot/imported/Onion.glb-ffe25dd2539e110f34a376be1891f0b1.sc
 
 [params]
 
-nodes/root_type=""
-nodes/root_name=""
+nodes/root_type="MeshInstance3D"
+nodes/root_name="Onion"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false

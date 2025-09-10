@@ -13,8 +13,8 @@ dest_files=["res://.godot/imported/Cocoa.glb-f4ea00b87c9cf79490bff3caee23ab74.sc
 
 [params]
 
-nodes/root_type=""
-nodes/root_name=""
+nodes/root_type="MeshInstance3D"
+nodes/root_name="Cocoa"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false

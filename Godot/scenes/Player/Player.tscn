@@ -1,9 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://ckxyscw51v3du"]
+[gd_scene load_steps=33 format=3 uid="uid://ckxyscw51v3du"]
 
 [ext_resource type="Script" uid="uid://0wecred12v33" path="res://scripts/Player/player.gd" id="1_3qydi"]
-[ext_resource type="PackedScene" uid="uid://bu4i2rvstrdvh" path="res://assets/hat.fbx" id="2_bvqhm"]
-[ext_resource type="PackedScene" uid="uid://d2rfm5fkxeeic" path="res://assets/Frog.fbx" id="2_q3lat"]
+[ext_resource type="PackedScene" uid="uid://d4fmw7rcfjnsg" path="res://assets/newmodels/animations/Froggo.glb" id="2_xcisb"]
 [ext_resource type="Texture2D" uid="uid://ds43xburqmhn0" path="res://assets/textures/misc/CircleTexture.png" id="4_ved6o"]
+[ext_resource type="Script" uid="uid://b3odgdfvtu6" path="res://scripts/Player/player_state.gd" id="5_socpp"]
 [ext_resource type="Script" uid="uid://b1a2y0am2avrj" path="res://scripts/Player/player_controller.gd" id="5_xcisb"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l2ndj"]
@@ -12,6 +12,113 @@ height = 1.06912
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_q3lat"]
 size = Vector3(2.74022, 3, 3)
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xcisb"]
+animation = &"IdleAnimation"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fxc31"]
+animation = &"IdleAnimation"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_puxyr"]
+animation = &"IdleHolding"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_mmokv"]
+advance_mode = 2
+advance_condition = &"idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dqp0f"]
+advance_mode = 2
+advance_condition = &"idle_item"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_tl8lu"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qt7jd"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_cd157"]
+states/End/position = Vector2(670, 99.3333)
+states/IdleAnimation/node = SubResource("AnimationNodeAnimation_fxc31")
+states/IdleAnimation/position = Vector2(498.667, 34.6667)
+states/IdleHolding/node = SubResource("AnimationNodeAnimation_puxyr")
+states/IdleHolding/position = Vector2(499.407, 156)
+states/Start/position = Vector2(326, 100.074)
+transitions = ["Start", "IdleAnimation", SubResource("AnimationNodeStateMachineTransition_mmokv"), "Start", "IdleHolding", SubResource("AnimationNodeStateMachineTransition_dqp0f"), "IdleAnimation", "End", SubResource("AnimationNodeStateMachineTransition_tl8lu"), "IdleHolding", "End", SubResource("AnimationNodeStateMachineTransition_qt7jd")]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mmokv"]
+animation = &"Walking"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dqp0f"]
+animation = &"WalkingHandsout"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_cd157"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8djf2"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_lbts4"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dqefj"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_8djf2"]
+states/End/position = Vector2(640.667, 84)
+states/Start/position = Vector2(230, 85.3333)
+states/Walking/node = SubResource("AnimationNodeAnimation_mmokv")
+states/Walking/position = Vector2(420.667, 12)
+states/WalkingHandsout/node = SubResource("AnimationNodeAnimation_dqp0f")
+states/WalkingHandsout/position = Vector2(435.333, 156)
+transitions = ["Start", "Walking", SubResource("AnimationNodeStateMachineTransition_cd157"), "Start", "WalkingHandsout", SubResource("AnimationNodeStateMachineTransition_8djf2"), "Walking", "End", SubResource("AnimationNodeStateMachineTransition_lbts4"), "WalkingHandsout", "End", SubResource("AnimationNodeStateMachineTransition_dqefj")]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_socpp"]
+animation = &"Walking"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_socpp"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fxc31"]
+xfade_time = 0.1
+advance_mode = 2
+advance_condition = &"is_moving"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xcisb"]
+xfade_time = 0.1
+advance_mode = 2
+advance_condition = &"is_idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_puxyr"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5gcuk"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_socpp"]
+states/IdleAnimation/node = SubResource("AnimationNodeAnimation_xcisb")
+states/IdleAnimation/position = Vector2(412, 86)
+states/SM_IDLE/node = SubResource("AnimationNodeStateMachine_cd157")
+states/SM_IDLE/position = Vector2(289.333, 183.444)
+states/SM_Walking/node = SubResource("AnimationNodeStateMachine_8djf2")
+states/SM_Walking/position = Vector2(602.667, 182.111)
+states/Start/position = Vector2(238, 85.3333)
+states/Walking/node = SubResource("AnimationNodeAnimation_socpp")
+states/Walking/position = Vector2(623.333, 3.33333)
+transitions = ["Start", "IdleAnimation", SubResource("AnimationNodeStateMachineTransition_socpp"), "IdleAnimation", "Walking", SubResource("AnimationNodeStateMachineTransition_fxc31"), "Walking", "IdleAnimation", SubResource("AnimationNodeStateMachineTransition_xcisb"), "SM_IDLE", "SM_Walking", SubResource("AnimationNodeStateMachineTransition_puxyr"), "SM_Walking", "SM_IDLE", SubResource("AnimationNodeStateMachineTransition_5gcuk")]
+graph_offset = Vector2(-108, 144.574)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_fxc31"]
+properties/0/path = NodePath(".:player_id")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:player_name")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:team")
+properties/2/spawn = true
+properties/2/replication_mode = 1
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ved6o"]
 properties/0/path = NodePath(".:position")
@@ -22,7 +129,10 @@ properties/1/spawn = true
 properties/1/replication_mode = 1
 properties/2/path = NodePath("Mesh:rotation")
 properties/2/spawn = true
-properties/2/replication_mode = 1
+properties/2/replication_mode = 2
+properties/3/path = NodePath("Decal:modulate")
+properties/3/spawn = true
+properties/3/replication_mode = 2
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_xcisb"]
 
@@ -30,14 +140,30 @@ properties/2/replication_mode = 1
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
 script = ExtResource("1_3qydi")
 
-[node name="hat" parent="." instance=ExtResource("2_bvqhm")]
-transform = Transform3D(0.155, 0, 0, 0, 0.155, 0, 0, 0, 0.155, 0, 0.358834, 0)
-
 [node name="PlayerCollision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_l2ndj")
 
-[node name="Mesh" parent="." instance=ExtResource("2_q3lat")]
-transform = Transform3D(-7.64949e-09, 0, -0.175, 0, 0.175, 0, 0.175, 0, -7.64949e-09, 0, -0.568662, 0)
+[node name="Mesh" parent="." instance=ExtResource("2_xcisb")]
+transform = Transform3D(-7.64949e-09, 0, -0.175, 0, 0.175, 0, 0.175, 0, -7.64949e-09, 0, -0.556445, 0)
+
+[node name="Clothes_001" parent="Mesh/Armature" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0402468, -2.55521, 0.06441)
+
+[node name="Skeleton3D" parent="Mesh/Armature" index="1"]
+bones/1/position = Vector3(-0.0285939, 0.8167, -0.0113688)
+bones/2/rotation = Quaternion(0.0245074, 1.19173e-07, -2.50558e-09, 0.9997)
+bones/3/position = Vector3(-3.85431, 2.21987, 2.02331e-09)
+bones/3/rotation = Quaternion(-3.89966e-08, 2.25142e-09, 0.998338, 0.0576379)
+bones/4/rotation = Quaternion(-1.13927e-09, 8.31912e-08, 0.00706236, 0.999975)
+bones/5/rotation = Quaternion(-3.2693e-11, -3.49708e-07, -0.00031076, 1)
+bones/6/position = Vector3(3.85431, 2.1922, 2.25437e-09)
+bones/6/rotation = Quaternion(3.89966e-08, 2.25142e-09, 0.998338, -0.0576379)
+bones/7/rotation = Quaternion(1.35973e-09, 2.70658e-07, -0.00706199, 0.999975)
+bones/8/rotation = Quaternion(-1.42488e-10, -4.14868e-09, 0.000310395, 1)
+bones/9/position = Vector3(-0.745343, 0.846898, -0.0113688)
+bones/9/rotation = Quaternion(-0.707104, -0.0031089, 0.7071, -0.0021288)
+bones/10/position = Vector3(0.688155, 0.834323, -0.0113688)
+bones/10/rotation = Quaternion(0.707102, -0.00261885, 0.707102, 0.00261885)
 
 [node name="InteractArea" type="Area3D" parent="Mesh"]
 transform = Transform3D(-1.16884e-07, 0.0186302, 2.3488, 0, 1.42888, -0.0306244, -2.674, -8.14351e-10, -1.02669e-07, -0.000434988, 3.34623, 6.77052)
@@ -60,6 +186,15 @@ emission_energy = 0.0
 upper_fade = 0.00226391
 cull_mask = 1048574
 
+[node name="AnimationTree" type="AnimationTree" parent="."]
+root_node = NodePath("../Mesh")
+tree_root = SubResource("AnimationNodeStateMachine_socpp")
+anim_player = NodePath("../Mesh/AnimationPlayer")
+parameters/conditions/is_idle = false
+parameters/conditions/is_moving = false
+parameters/SM_IDLE/conditions/idle = false
+parameters/SM_IDLE/conditions/idle_item = false
+
 [node name="DashCooldown" type="Timer" parent="."]
 wait_time = 0.2
 one_shot = true
@@ -71,6 +206,11 @@ autostart = true
 [node name="MoveParticles" type="Timer" parent="."]
 wait_time = 0.15
 autostart = true
+
+[node name="PlayerState" type="MultiplayerSynchronizer" parent="."]
+root_path = NodePath(".")
+replication_config = SubResource("SceneReplicationConfig_fxc31")
+script = ExtResource("5_socpp")
 
 [node name="MultiplayerSync" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_ved6o")
@@ -85,3 +225,5 @@ script = ExtResource("5_xcisb")
 [connection signal="timeout" from="DashCooldown" to="." method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="CheckInteractables" to="." method="_on_check_interactables_timeout"]
 [connection signal="timeout" from="MoveParticles" to="." method="_on_move_particles_timeout"]
+
+[editable path="Mesh"]

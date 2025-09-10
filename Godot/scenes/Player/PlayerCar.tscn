@@ -1,20 +1,14 @@
-[gd_scene load_steps=12 format=3 uid="uid://bv68n23xtnfpl"]
+[gd_scene load_steps=11 format=3 uid="uid://bv68n23xtnfpl"]
 
 [ext_resource type="Script" uid="uid://2ow6xvs5s1fr" path="res://scripts/Player/player_car.gd" id="1_3ede1"]
 [ext_resource type="Material" uid="uid://d4heeyo73xso3" path="res://materials/Frog.tres" id="1_jvgwu"]
 [ext_resource type="Script" uid="uid://biiujf8x58pl6" path="res://scripts/Player/player_car_controller.gd" id="3_eoqrs"]
-[ext_resource type="Script" uid="uid://c0buedgtp4uf8" path="res://scenes/Player/camera_lag.gd" id="3_gyd8d"]
+[ext_resource type="PackedScene" uid="uid://cqlbcyk00caqq" path="res://scenes/Player/truckmove.tscn" id="3_fgk6e"]
+[ext_resource type="Script" uid="uid://c0buedgtp4uf8" path="res://scripts/Player/camera_lag.gd" id="3_gyd8d"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jvgwu"]
 radius = 0.303941
 height = 1.42979
-
-[sub_resource type="BoxMesh" id="BoxMesh_0dldl"]
-size = Vector3(0.5, 0.5, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_gyd8d"]
-radius = 0.06
-height = 0.1
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gyd8d"]
 size = Vector3(1.15012, 0.519043, 1.80826)
@@ -41,6 +35,7 @@ properties/1/spawn = true
 properties/1/replication_mode = 1
 
 [node name="PlayerCar" type="CharacterBody3D"]
+transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0)
 script = ExtResource("1_3ede1")
 
 [node name="Collision" type="CollisionShape3D" parent="."]
@@ -50,11 +45,9 @@ shape = SubResource("CapsuleShape3D_jvgwu")
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.232001)
 material_override = ExtResource("1_jvgwu")
-mesh = SubResource("BoxMesh_0dldl")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Mesh"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00233293, 0, -0.507763)
-mesh = SubResource("SphereMesh_gyd8d")
+[node name="TRUCKMOVE" parent="Mesh" instance=ExtResource("3_fgk6e")]
+transform = Transform3D(-0.1, 0, -8.74228e-09, 0, 0.1, 0, 8.74228e-09, 0, -0.1, 0.00127363, -0.159358, 0.0458335)
 
 [node name="InteractArea" type="Area3D" parent="Mesh"]
 
@@ -67,8 +60,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.104557, 0.578925)
 
 [node name="SpringArm" type="SpringArm3D" parent="."]
 transform = Transform3D(0.422618, -0.851651, 0.309976, 0, 0.34202, 0.939693, -0.906308, -0.397131, 0.144544, 0, 0, 0.232001)
+collision_mask = 0
 shape = SubResource("SeparationRayShape3D_0dldl")
-spring_length = 10.0
+spring_length = 7.0
 script = ExtResource("3_gyd8d")
 lag_speed = 2.0
 

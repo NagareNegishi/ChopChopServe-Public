@@ -29,7 +29,8 @@ func _ready():
 	super._ready()
 	interactable_component.is_pickup = false
 	cooking_style = ApplianceFactory.CookingStyle.CHOP
-	valid_food = ["Fish", "Tomato", "Potato", "Onion","Cheese"] # Confirm later!!!!!!!!!!!!!!
+	valid_food = ["Fish", "Tomato", "Potato", "Onion", "Cheese", "Apple", "Garlic", "Ham", 
+				  "Mushroom", "Pineapple", "Pumpkin", "Strawberry"] # Confirm later!!!!!!!!!!!!!!
 	capacity = 1 # one item only
 	coefficient = 1.0
 

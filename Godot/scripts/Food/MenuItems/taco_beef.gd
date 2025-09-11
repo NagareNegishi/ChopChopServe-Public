@@ -11,8 +11,8 @@ func _ready():
 	ingredients = ["Dough", "Beef", "Tomato"]
 	
 	ingredient_states = {
-		"Beef": ["RAW","COOKED"],
-		"Dough": ["RAW","ROLLED", "COOKED"],
+		"Beef": ["RAW","FRIED"],
+		"Dough": ["RAW", "BAKED"],
 		"Tomato":["RAW","CHOPPED"]
 	}
 	
@@ -20,5 +20,5 @@ func _ready():
 
 func _init():
 	cooked_mesh_good = $TacoBeef
-	cooked_mesh_bad = null
-	cooked_mesh_burnt = null
+	cooked_mesh_bad = $BadQualityBeefTaco
+	cooked_mesh_burnt = $BurntBeefTaco

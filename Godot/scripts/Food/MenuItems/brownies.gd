@@ -19,5 +19,5 @@ func _init():
 
 func _ready():
 	cooked_mesh_good = $Brownie
-	cooked_mesh_bad = null
-	cooked_mesh_burnt = null
+	cooked_mesh_bad = $BadQualityBrownie
+	cooked_mesh_burnt = $BurntBrownie

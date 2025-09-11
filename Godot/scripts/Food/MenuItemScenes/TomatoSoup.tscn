@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=4 uid="uid://hfxkmecbe3vs"]
+[gd_scene load_steps=9 format=4 uid="uid://hfxkmecbe3vs"]
 
 [ext_resource type="Script" uid="uid://b4hmajvjiipma" path="res://scripts/Food/MenuItems/soup_tomato.gd" id="1_qv208"]
 
@@ -98,6 +98,12 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_bsbrx")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qv208"]
+albedo_color = Color(0.204104, 0.438423, 0.137481, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jwmsq"]
+albedo_color = Color(0.230315, 0.230315, 0.230315, 1)
+
 [node name="TomatoSoup" type="Node3D"]
 script = ExtResource("1_qv208")
 
@@ -105,3 +111,17 @@ script = ExtResource("1_qv208")
 transform = Transform3D(0.53083, 0, 0, 0, 0.53083, 0, 0, 0, 0.53083, 0, 0, 0)
 mesh = SubResource("ArrayMesh_ps35m")
 skeleton = NodePath("")
+
+[node name="BadQualityTomatoSoup" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.53083, 0, 0, 0, 0.53083, 0, 0, 0, 0.53083, 0, 0, 0)
+visible = false
+mesh = SubResource("ArrayMesh_ps35m")
+skeleton = NodePath("")
+surface_material_override/2 = SubResource("StandardMaterial3D_qv208")
+
+[node name="BurntTomatoSoup" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.281781, 0, 0, 0, 0.281781, 0, 0, 0, 0.281781, 0, 0, 0)
+visible = false
+mesh = SubResource("ArrayMesh_ps35m")
+skeleton = NodePath("")
+surface_material_override/2 = SubResource("StandardMaterial3D_jwmsq")

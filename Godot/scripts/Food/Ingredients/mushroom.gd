@@ -5,10 +5,10 @@ func _ready():
 	food_name = "Mushroom"
 	spoil_time = 70
 	raw_mesh = $Mushroom
-	spoiled_mesh = null
-	cooked_mesh = null
-	burnt_mesh = null
-	chopped_mesh = null
+	spoiled_mesh = $SpoiledMushroom
+	cooked_mesh = $MushroomChopped
+	burnt_mesh = $BurntMushroom
+	chopped_mesh = $MushroomChopped
 	# coook time is 50 same as super class
 	# can cook is true same as super class
 	

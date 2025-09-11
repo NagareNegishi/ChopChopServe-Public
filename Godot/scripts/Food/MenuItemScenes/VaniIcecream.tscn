@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=4 uid="uid://bdbl32vyojhuk"]
+[gd_scene load_steps=7 format=4 uid="uid://bdbl32vyojhuk"]
 
 [ext_resource type="Script" uid="uid://bttll35g52g6p" path="res://scripts/Food/MenuItems/icecream_vani.gd" id="1_py6vc"]
 [ext_resource type="Material" uid="uid://d1mru8ywyt58h" path="res://assets/newmodels/texturemap.tres" id="2_s5ryl"]
+[ext_resource type="Texture2D" uid="uid://5vm16xtxx50j" path="res://assets/newmodels/food/recipes/tainted/IceCreamVanillaIck_TextureMapGreen.png" id="3_s5ryl"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_ttyqi"]
 _surfaces = [{
@@ -37,6 +38,9 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_ttyqi")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7fjwh"]
+albedo_texture = ExtResource("3_s5ryl")
+
 [node name="VaniIcecream" type="Node3D"]
 script = ExtResource("1_py6vc")
 
@@ -44,3 +48,10 @@ script = ExtResource("1_py6vc")
 transform = Transform3D(-0.542471, 0, -4.74243e-08, 0, 0.542471, 0, 4.74243e-08, 0, -0.542471, 0, 0, 0)
 mesh = SubResource("ArrayMesh_32a0x")
 skeleton = NodePath("")
+
+[node name="IceCreamVanilla2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.542471, 0, -4.74243e-08, 0, 0.542471, 0, 4.74243e-08, 0, -0.542471, 0, 0, 0)
+visible = false
+mesh = SubResource("ArrayMesh_32a0x")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_7fjwh")

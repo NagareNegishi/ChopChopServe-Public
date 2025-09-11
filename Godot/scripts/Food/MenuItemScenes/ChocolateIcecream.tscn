@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=4 uid="uid://qfmd2b1iqcra"]
+[gd_scene load_steps=7 format=4 uid="uid://qfmd2b1iqcra"]
 
-[ext_resource type="Script" uid="uid://bttll35g52g6p" path="res://scripts/Food/MenuItems/icecream_vani.gd" id="1_bhxo5"]
+[ext_resource type="Script" uid="uid://bnhiwxsqlockn" path="res://scripts/Food/MenuItems/icecream_chocolate.gd" id="1_24fd0"]
 [ext_resource type="Material" uid="uid://d1mru8ywyt58h" path="res://assets/newmodels/texturemap.tres" id="2_kvdi4"]
+[ext_resource type="Texture2D" uid="uid://c3nlyrp2bpw0f" path="res://assets/newmodels/food/recipes/tainted/IceCreamChocIck_TextureMapGreen.png" id="3_fbnxm"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_eii4n"]
 _surfaces = [{
@@ -37,10 +38,20 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_eii4n")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nmap1"]
+albedo_texture = ExtResource("3_fbnxm")
+
 [node name="ChocIcecream" type="Node3D"]
-script = ExtResource("1_bhxo5")
+script = ExtResource("1_24fd0")
 
 [node name="IceCreamChoc" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.542471, 0, 0, 0, 0.542471, 0, 0, 0, 0.542471, 0, 0, 0)
 mesh = SubResource("ArrayMesh_l0k0o")
 skeleton = NodePath("")
+
+[node name="IceCreamChoc2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.542471, 0, 0, 0, 0.542471, 0, 0, 0, 0.542471, 0, 0, 0)
+visible = false
+mesh = SubResource("ArrayMesh_l0k0o")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_nmap1")

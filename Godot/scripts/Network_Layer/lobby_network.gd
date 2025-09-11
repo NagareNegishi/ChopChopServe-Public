@@ -120,8 +120,6 @@ func _on_leave_pressed():
 			"player_id": my_id
 		})
 		await get_tree().create_timer(0.1).timeout # Small delay to ensure message is sent
-		# network_layer.leave_game()
-	# back_to_main_menu()
 
 
 ## Signal Handlers from ENetManager, assign teams and display
@@ -142,15 +140,10 @@ func _start_game() -> void:
 ##----------------------------------------------------------------------------------
 ## need more logic here.
 ## can Lobby scene take over? or should we create a new scene for the game?
-	_change_scene("res://scenes/Appliance_system/Appliance_test.tscn")
+	SceneManager.change_scene(SceneManager.Scene.TEST)
 ##----------------------------------------------------------------------------------
 
 
 ## Back to Main Menu
 func _back_to_main_menu() -> void:
-	_change_scene("res://scenes/Network_Layer/main_menu.tscn")
-
-
-## Helper Functions to Change Scenes
-func _change_scene(scene_path: String):
-	get_tree().call_deferred("change_scene_to_file", scene_path)
+	SceneManager.change_scene(SceneManager.Scene.MAIN_MENU)

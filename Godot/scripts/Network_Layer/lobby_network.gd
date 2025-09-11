@@ -142,7 +142,7 @@ func _start_game() -> void:
 ##----------------------------------------------------------------------------------
 ## need more logic here.
 ## can Lobby scene take over? or should we create a new scene for the game?
-	_change_scene("res://scenes/Appliance_system/Appliance_test.tscn")
+	_change_scene("res://Milestone3Submission.tscn")
 ##----------------------------------------------------------------------------------
 
 

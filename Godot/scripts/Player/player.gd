@@ -24,6 +24,8 @@ var can_dash : bool = true
 @onready var item_point = $Mesh/ItemPoint
 @onready var check_interactables : Timer = $CheckInteractables
 @onready var anim_tree : AnimationTree = $AnimationTree
+@onready var body_mesh : MeshInstance3D = $Mesh/Armature/Skeleton3D/Frog
+
 
 func _enter_tree() -> void:
 	scale = Vector3(1,1,1)
@@ -46,18 +48,21 @@ func _ready() -> void:
 	anim_tree["parameters/SM_IDLE/conditions/holding"] = false
 	anim_tree["parameters/SM_ACTION/conditions/chopping"] = false
 	
-	if multiplayer.get_unique_id() == name.to_int():
-		$Decal.modulate = GlobalScript.player_outline_colours.get(
+	var colour : Color = GlobalScript.player_outline_colours.get(
 			ENetManager.get_player_list().find(name.to_int()))
-		set_team(randi() % 2 + 1)
+	var material : Material = StandardMaterial3D.new()
+		
+	body_mesh.material_override = material
+	$Decal.modulate = colour
+	body_mesh.set_surface_override_material(1, material)
+	body_mesh.get_active_material(1).albedo_color = colour
 	
-	else:
+	if !multiplayer.get_unique_id() == name.to_int():
 		check_interactables.stop()
 	
 	for i in range(10):
 		var particle = move_particle.instantiate()
 		MOVE_PARTICLES_POOL.append(particle)
-	
 
 
 func set_speed(new_speed : float) -> void:

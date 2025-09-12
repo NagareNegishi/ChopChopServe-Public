@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=4 uid="uid://rbfg0cpnt07s"]
+[gd_scene load_steps=8 format=4 uid="uid://rbfg0cpnt07s"]
 
 [ext_resource type="Script" uid="uid://bxj6mwco3uf30" path="res://scripts/Food/MenuItems/onion_rings.gd" id="1_6s1et"]
 [ext_resource type="Material" uid="uid://d1mru8ywyt58h" path="res://assets/newmodels/texturemap.tres" id="2_nuhyb"]
+[ext_resource type="Texture2D" uid="uid://b1w4o30cf1akf" path="res://assets/newmodels/food/recipes/tainted/OnionRingsIck_TextureMapGreen.png" id="3_nuhyb"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_jwr33"]
 _surfaces = [{
@@ -37,6 +38,12 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_jwr33")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_56j5s"]
+albedo_texture = ExtResource("3_nuhyb")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0tv64"]
+albedo_color = Color(0.176419, 0.176419, 0.176419, 1)
+
 [node name="OnionRings" type="Node3D"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 script = ExtResource("1_6s1et")
@@ -45,3 +52,17 @@ script = ExtResource("1_6s1et")
 transform = Transform3D(-0.0513433, 0.00576071, 0.0385522, 0.00254361, 0.0552638, -0.00770025, -0.0390499, -0.00397451, -0.0511906, 0, 0, 0)
 mesh = SubResource("ArrayMesh_1eoa7")
 skeleton = NodePath("")
+
+[node name="BadQualityOnionRings" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.0513433, 0.00576071, 0.0385522, 0.00254361, 0.0552638, -0.00770025, -0.0390499, -0.00397451, -0.0511906, 0, 0, 0)
+visible = false
+mesh = SubResource("ArrayMesh_1eoa7")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_56j5s")
+
+[node name="BurntOnionRings" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.0513433, 0.00576071, 0.0385522, 0.00254361, 0.0552638, -0.00770025, -0.0390499, -0.00397451, -0.0511906, 0, 0, 0)
+visible = false
+mesh = SubResource("ArrayMesh_1eoa7")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_0tv64")

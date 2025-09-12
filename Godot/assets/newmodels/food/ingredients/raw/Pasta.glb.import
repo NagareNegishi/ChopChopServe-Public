@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/Pasta.glb-f237f229c43b95a0af12d4858570b8e9.sc
 
 [params]
 
-nodes/root_type="MeshInstance3D"
+nodes/root_type="RigidBody3D"
 nodes/root_name="Pasta"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0

@@ -22,5 +22,5 @@ func _ready():
 
 func _init():
 	cooked_mesh_good = $SoupPumpkin
-	cooked_mesh_bad = null
-	cooked_mesh_burnt = null
+	cooked_mesh_bad = $BadQualityPumpkinSoup
+	cooked_mesh_burnt = $BurntSoup

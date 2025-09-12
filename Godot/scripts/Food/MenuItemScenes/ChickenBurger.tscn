@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=4 uid="uid://depeuqst6pos6"]
+[gd_scene load_steps=7 format=4 uid="uid://depeuqst6pos6"]
 
 [ext_resource type="Script" uid="uid://8s7okxvhxiec" path="res://scripts/Food/MenuItems/burger_chicken.gd" id="1_hirbf"]
 [ext_resource type="Material" uid="uid://d1mru8ywyt58h" path="res://assets/newmodels/texturemap.tres" id="2_1ql6h"]
@@ -37,6 +37,12 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_slbiy")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l5p2g"]
+albedo_color = Color(0.406992, 0.560851, 0.3347, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k348p"]
+albedo_color = Color(0.18359, 0.18359, 0.18359, 1)
+
 [node name="ChickenBurger" type="Node3D"]
 script = ExtResource("1_hirbf")
 
@@ -44,3 +50,17 @@ script = ExtResource("1_hirbf")
 transform = Transform3D(0.0529319, 0.0013414, -0.00698511, -0.0165975, 0.00441456, -0.00271071, 0.00587477, 0.000385984, 0.0552778, 0, 0, 0)
 mesh = SubResource("ArrayMesh_vrgvt")
 skeleton = NodePath("")
+
+[node name="BadQualityChickenBurger" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.0529319, 0.0013414, -0.00698511, -0.0165975, 0.00441456, -0.00271071, 0.00587477, 0.000385984, 0.0552778, 0, 0, 0)
+visible = false
+mesh = SubResource("ArrayMesh_vrgvt")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_l5p2g")
+
+[node name="BurntChickenBurger" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.0529319, 0.0013414, -0.00698511, -0.0165975, 0.00441456, -0.00271071, 0.00587477, 0.000385984, 0.0552778, 0, 0, 0)
+visible = false
+mesh = SubResource("ArrayMesh_vrgvt")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_k348p")

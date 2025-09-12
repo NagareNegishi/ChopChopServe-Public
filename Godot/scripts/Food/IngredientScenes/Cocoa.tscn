@@ -49,10 +49,11 @@ mesh = SubResource("ArrayMesh_bt316")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.34113, 0)
 shape = SubResource("BoxShape3D_tkic3")
 
 [node name="InteractableComponent" parent="." instance=ExtResource("3_5c7ov")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.00561047, 0.160834, 0)
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.00561047, 0.348424, 0)
 is_pickup = true
 
 [connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]

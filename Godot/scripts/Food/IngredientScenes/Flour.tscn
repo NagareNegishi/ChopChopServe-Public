@@ -44,10 +44,11 @@ shadow_mesh = SubResource("ArrayMesh_3klxa")
 script = ExtResource("1_tv7yx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.517977, 0)
 shape = SubResource("BoxShape3D_vem8e")
 
 [node name="InteractableComponent" parent="." instance=ExtResource("3_6kr4p")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00561047, 0.00504118, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00561047, 0.523018, 0)
 is_pickup = true
 
 [node name="Flour2" type="MeshInstance3D" parent="."]

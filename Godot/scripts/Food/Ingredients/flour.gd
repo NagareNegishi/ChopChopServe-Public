@@ -12,3 +12,5 @@ func _ready():
 	chopped_mesh = null
 	add_to_group("Food")
 	on_state_change()
+	
+	print("Name of ingredient: ", food_name, " Position: ", global_position, " ID: ", ENetManager.get_my_id())

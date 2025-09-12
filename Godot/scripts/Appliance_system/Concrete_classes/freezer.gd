@@ -10,7 +10,7 @@ func _init():
 ## Setup the freezer properties
 func _ready():
 	super._ready()
-	cooking_style = ApplianceFactory.CookingStyle.FREEZE
+	# cooking_style = ApplianceFactory.CookingStyle.FREEZE
 	valid_classes = ["Pot"] # Only one Pot allowed
 	capacity = 1
 	power = 1

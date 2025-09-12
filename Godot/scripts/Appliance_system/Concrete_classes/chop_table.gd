@@ -80,6 +80,7 @@ func player_has(item: Node) -> void:
 func _on_interactable_component_action_use(_is_action: bool) -> void:
 	if _is_action:
 		chopping_board.cook(1)
+		print("Player ID: ", ENetManager.get_my_id() ,", chop!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 	else:
 		chopping_board.finish_cook()
 #---------------------------------------------------------------------------------------------------

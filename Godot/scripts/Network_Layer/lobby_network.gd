@@ -31,7 +31,7 @@ func _ready():
 	slots = [slot1, slot2, slot3, slot4]
 
 	ENetManager.player_list_updated.connect(_on_player_list_updated)
-	ENetManager.disconnected_from_server.connect(_back_to_main_menu)
+	# ENetManager.disconnected_from_server.connect(_back_to_main_menu)
 	ENetManager.back_to_main_menu.connect(_back_to_main_menu)
 	ENetManager.team_assigned.connect(_on_team_assigned)
 	ENetManager.game_started.connect(_start_game)

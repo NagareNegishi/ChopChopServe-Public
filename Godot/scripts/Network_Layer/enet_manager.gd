@@ -17,13 +17,14 @@ signal game_paused(is_paused: bool)
 signal game_reset()
 
 
-const PAUSE_TIME : float = 5.0
+const PAUSE_TIME : float = 3.0
 var enet_layer: ENetNetworkLayer
 var player_list: Array[int] = []
 var team1: Array[int] = []
 var team2: Array[int] = []
 var current_state: GameProgress = GameProgress.LOBBY
 var pause_timer: Timer = null
+var popup_scene: PackedScene = preload("res://scenes/Network_Layer/network_popup.tscn")
 
 
 ## Setup
@@ -45,7 +46,13 @@ func _on_player_joined(player_id: int):
 
 	# case new client joining after the game has started
 	if current_state == GameProgress.IN_GAME:
-		print("Sorry, you cannot join the game in progress.")
+		enet_layer.send_to(player_id, {
+		"type": "notification",
+		"message": "Sorry, you cannot join the game in progress.",
+		"duration": 2.0
+		})
+		await get_tree().create_timer(2.0).timeout
+		
 		enet_layer.send_to(player_id, {
 		"type": "you_are_leaving"
 		})
@@ -89,10 +96,24 @@ func player_leaves_intentionally(player_id: int):
 
 	# If host is leaving, shut down the server
 	if player_id == enet_layer.get_my_id():
+		enet_layer.broadcast_except(enet_layer.get_my_id(), {
+		"type": "notification",
+		"message": "Server shutting down.",
+		"duration": 1.0
+		})
+		await get_tree().create_timer(1.0).timeout
+
 		clear_player_list()
 		back_to_main_menu.emit()
 		enet_layer.leave_game()
 	else:
+		enet_layer.send_to(player_id, {
+		"type": "notification",
+		"message": "You are leaving the game.",
+		"duration": 1.0
+		})
+		await get_tree().create_timer(1.0).timeout
+
 		enet_layer.send_to(player_id, {
 		"type": "you_are_leaving"
 		})
@@ -112,13 +133,13 @@ func _on_player_left(player_id: int):
 	player_list_updated.emit(player_list)
 
 	if current_state == GameProgress.IN_GAME:
-		print("Game paused due to player disconnection!")
 		current_state = GameProgress.PAUSED
 		enet_layer.broadcast_except(enet_layer.get_my_id(), {
 			"type": "game_paused",
 			"is_paused": true
 		})
 		game_paused.emit(true)
+		show_notification("Game paused due to player disconnection!\nReturning to lobby...", 3.0)
 
 		# Start timer to reset game if not resumed in time
 		pause_timer = Timer.new()
@@ -129,12 +150,13 @@ func _on_player_left(player_id: int):
 		pause_timer.start()
 
 
-
 ## Clear all game state
 func _on_disconnected_from_server():
-	print("Disconnected from server - returning to menu")
+	show_notification("Disconnected from server - returning to menu", 2.0)
 	clear_player_list()
 	current_state = GameProgress.LOBBY
+
+	await get_tree().create_timer(1.0).timeout
 	disconnected_from_server.emit()
 
 
@@ -163,10 +185,12 @@ func _on_data_received(_from_id: int, data: Dictionary):
 		"game_starting":
 			current_state = GameProgress.IN_GAME
 			game_started.emit()
+			show_notification("Game Started!", 1.0)
 
 		"game_paused":
 			if (data.is_paused):
 				current_state = GameProgress.PAUSED
+				show_notification("Game paused due to player disconnection!\nReturning to lobby...", 3.0)
 			else:
 				current_state = GameProgress.IN_GAME
 			game_paused.emit(data.is_paused)
@@ -174,6 +198,10 @@ func _on_data_received(_from_id: int, data: Dictionary):
 		"game_reset":
 			current_state = GameProgress.LOBBY
 			game_paused.emit(false)
+
+		"notification":
+			if data.has("message") and data.has("duration"):
+				show_notification(data.message, data.duration)
 
 		_:
 			print("Unknown message type: ", data.get("type"))
@@ -293,12 +321,23 @@ func _reset_game() -> void:
 	if pause_timer:
 		pause_timer.queue_free()
 		pause_timer = null
-	
 
-	print("Resetting game - returning all players to lobby")
 	current_state = GameProgress.LOBBY
 	reset_teams()
 	enet_layer.broadcast_except(enet_layer.get_my_id(), {
 		"type": "game_reset"
 	})
 	game_reset.emit()
+
+
+## Show a temporary notification popup
+## @param message: The message to display
+## @param duration: How long to display before fading out
+func show_notification(message: String, duration: float = 3.0):
+	var popup = popup_scene.instantiate()
+	get_tree().current_scene.add_child(popup)
+	popup.setup(message, duration)
+	await get_tree().process_frame
+	var viewport_size = get_viewport().size
+	popup.position.x = (viewport_size.x - popup.size.x) / 2
+	popup.position.y = (viewport_size.y - popup.size.y) / 2

@@ -36,6 +36,7 @@ var waiting: bool = false
 ## Setup
 func _ready():
 	ENetManager.game_reset.connect(_on_game_reset)
+	ENetManager.disconnected_from_server.connect(_back_to_main_menu)
 
 
 ## Change Scene
@@ -124,3 +125,8 @@ func change_scene_all_players(scene: Scene) -> void:
 func _on_game_reset():
 	if ENetManager.is_host():
 		change_scene_all_players(Scene.LOBBY_TEST)
+
+
+## Back to Main Menu
+func _back_to_main_menu() -> void:
+	change_scene(Scene.MAIN_MENU)

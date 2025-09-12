@@ -35,7 +35,7 @@ var waiting: bool = false
 
 ## Setup
 func _ready():
-	ENetManager.enet_layer.player_left.connect(_on_player_disconnected)
+	ENetManager.game_reset.connect(_on_game_reset)
 
 
 ## Change Scene
@@ -120,9 +120,7 @@ func change_scene_all_players(scene: Scene) -> void:
 	change_scene(scene)
 
 
-## Handle player disconnection, Host only
-## @param player_id: The ID of the disconnected player
-func _on_player_disconnected(player_id: int):
+## Handle game reset, Host only
+func _on_game_reset():
 	if ENetManager.is_host():
-		print("Player %d disconnected - returning all players to lobby" % player_id)
 		change_scene_all_players(Scene.LOBBY_TEST)

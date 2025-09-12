@@ -1,12 +1,5 @@
 ## Auto loaded as: ENetManager
-
-
-
-#TODO: Do not concern the disconnected player,
-# no need to track offline player, once disconnected, they are gone
-# if someone disconnected -> don't wait -> back to lobby directly
-
-
+## enet_manager.gd (autoload)
 extends Node
 
 enum GameProgress {
@@ -21,15 +14,16 @@ signal disconnected_from_server()
 signal back_to_main_menu()
 signal game_started()
 signal game_paused(is_paused: bool)
+signal game_reset()
 
 
-const MAX_WAITING : float = 120.0
+const PAUSE_TIME : float = 5.0
 var enet_layer: ENetNetworkLayer
 var player_list: Array[int] = []
 var team1: Array[int] = []
 var team2: Array[int] = []
-var offline_players: Array[int] = []
 var current_state: GameProgress = GameProgress.LOBBY
+var pause_timer: Timer = null
 
 
 ## Setup
@@ -46,21 +40,7 @@ func _ready():
 ## @param player_id: The ID of the player who joined
 func _on_player_joined(player_id: int):
 	# Only the host handles player management
-	if not enet_layer.is_host():
-		return
-
-	# case client coming back from disconnection
-	if player_id in offline_players:
-		offline_players.erase(player_id)
-		print("Player " + str(player_id) + " reconnected!")
-		if offline_players.is_empty():
-			print("Game resumed.")
-			current_state = GameProgress.IN_GAME
-			enet_layer.broadcast_except(enet_layer.get_my_id(), {
-				"type": "game_paused",
-				"is_paused": false
-			})
-			game_paused.emit(false)
+	if not is_host():
 		return
 
 	# case new client joining after the game has started
@@ -81,25 +61,31 @@ func _on_player_joined(player_id: int):
 		player_list_updated.emit(player_list)
 
 
+## Remove player from list and notify all clients, Host only
+## @param player_id: The ID of the player to remove
+func _remove_player_from_list(player_id: int):
+	print("Player left: " + str(player_id))
+	player_list.erase(player_id)
+	team1.erase(player_id)
+	team2.erase(player_id)
+	enet_layer.broadcast_except(enet_layer.get_my_id(), {
+		"type": "player_list_update",
+		"players": player_list
+	})
+
+
 ## Update Player List when a player intentionally leaves, and host shares it
+## NOTE: player can only leave intentionally in LOBBY state
 ## This function can be use for kicking players too
 ## @param player_id: The ID of the player who left
 func player_leaves_intentionally(player_id: int):
-	if not enet_layer.is_host():
+	if not is_host():
 		push_warning("player_leaves_intentionally() should only be called by host")
 		return
 	if player_id == -1:
 		print("Player can not leave - Invalid player ID")
 		return
-	print("Player left: " + str(player_id))
-	player_list.erase(player_id)
-	team1.erase(player_id)
-	team2.erase(player_id)
-	offline_players.erase(player_id)
-	enet_layer.broadcast_except(enet_layer.get_my_id(), {
-		"type": "player_list_update",
-		"players": player_list
-	})
+	_remove_player_from_list(player_id)
 
 	# If host is leaving, shut down the server
 	if player_id == enet_layer.get_my_id():
@@ -114,13 +100,18 @@ func player_leaves_intentionally(player_id: int):
 
 
 ## Update Player List when a player accidentally leaves, and host shares it
+## NOTE: This could happen in any state
 ## @param player_id: The ID of the player who left
 func _on_player_left(player_id: int):
+	if not is_host(): # only host ever receives player_left, but for explicitly
+		return
+	# Do not concern players who are not in this game
 	if player_id not in player_list:
 		return
-	if player_id not in offline_players:
-		offline_players.append(player_id)
-	if enet_layer.is_host() and current_state == GameProgress.IN_GAME:
+	_remove_player_from_list(player_id)
+	player_list_updated.emit(player_list)
+
+	if current_state == GameProgress.IN_GAME:
 		print("Game paused due to player disconnection!")
 		current_state = GameProgress.PAUSED
 		enet_layer.broadcast_except(enet_layer.get_my_id(), {
@@ -128,6 +119,15 @@ func _on_player_left(player_id: int):
 			"is_paused": true
 		})
 		game_paused.emit(true)
+
+		# Start timer to reset game if not resumed in time
+		pause_timer = Timer.new()
+		pause_timer.wait_time = PAUSE_TIME
+		pause_timer.one_shot = true
+		pause_timer.timeout.connect(_reset_game)
+		add_child(pause_timer)
+		pause_timer.start()
+
 
 
 ## Clear all game state
@@ -170,6 +170,10 @@ func _on_data_received(_from_id: int, data: Dictionary):
 			else:
 				current_state = GameProgress.IN_GAME
 			game_paused.emit(data.is_paused)
+
+		"game_reset":
+			current_state = GameProgress.LOBBY
+			game_paused.emit(false)
 
 		_:
 			print("Unknown message type: ", data.get("type"))
@@ -230,12 +234,17 @@ func clear_player_list():
 	player_list.clear()
 	team1.clear()
 	team2.clear()
-	offline_players.clear()
+
+
+## Clear team assignments
+func reset_teams():
+	team1.clear()
+	team2.clear()
 
 
 ## Shuffle players into two teams and broadcast the assignment
 func shuffle_players():
-	if not enet_layer.is_host():
+	if not is_host():
 		push_warning("shuffle_players() should only be called by host")
 		return
 	if player_list.size() % 2 != 0:
@@ -245,7 +254,7 @@ func shuffle_players():
 	team2.clear()
 	var shuffled = player_list.duplicate()
 	shuffled.shuffle()
-	var team_size = shuffled.size() / 2
+	var team_size = int(shuffled.size() / 2.0)
 	team1 = shuffled.slice(0, team_size)
 	team2 = shuffled.slice(team_size)
 	enet_layer.broadcast_except(enet_layer.get_my_id(), {
@@ -262,7 +271,7 @@ func can_start_game() -> bool:
 	return team1.size() == team2.size() and not team1.is_empty()
 
 
-## Start the game
+## Start the game, only host can call this
 func start_game() -> void:
 	if not can_start_game():
 		push_warning("Cannot start game - teams not ready!")
@@ -274,3 +283,22 @@ func start_game() -> void:
 	game_started.emit()
 
 
+## Reset the game after pause due to disconnection, Host only
+func _reset_game() -> void:
+	if not is_host():
+		push_warning("reset_game() should only be called by host")
+		return
+
+	# clean up timer
+	if pause_timer:
+		pause_timer.queue_free()
+		pause_timer = null
+	
+
+	print("Resetting game - returning all players to lobby")
+	current_state = GameProgress.LOBBY
+	reset_teams()
+	enet_layer.broadcast_except(enet_layer.get_my_id(), {
+		"type": "game_reset"
+	})
+	game_reset.emit()

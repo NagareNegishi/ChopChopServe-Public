@@ -41,9 +41,9 @@ func _ready():
 
 	if network_layer.is_host():
 		is_host = true
-		current_players = ENetManager.get_player_list()
-		_update_player_list()
 
+	current_players = ENetManager.get_player_list()
+	_update_player_list()
 	_set_role_label()
 	_set_team_label(my_team)
 	_set_buttons()
@@ -128,6 +128,8 @@ func _on_team_assigned(team1: Array[int], team2: Array[int]) -> void:
 		my_team = 1
 	elif my_id in team2:
 		my_team = 2
+	else:
+		my_team = -1
 	_set_team_label(my_team)
 	if is_host:
 		start_button.disabled = not ENetManager.can_start_game()

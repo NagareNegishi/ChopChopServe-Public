@@ -91,10 +91,8 @@ func join_game(connection_info: String) -> bool:
 func leave_game():
 	if peer:
 		if state == ConnectionState.HOST:
-			# player_left.emit(my_id)
 			print("Server shutdown")
 		elif state == ConnectionState.CONNECTED:
-			# disconnected.emit()
 			print("Client with network ID: ", my_id, " is going to leave")
 		else:
 			print("Stop connecting")

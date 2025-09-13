@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://cdkyf70jhtj1n"]
+[gd_scene load_steps=28 format=3 uid="uid://cdkyf70jhtj1n"]
 
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_qfo0q"]
 [ext_resource type="PackedScene" uid="uid://bhr122fytw4th" path="res://assets/CityPacks/gltf/road_straight.gltf" id="1_u1byf"]
@@ -22,7 +22,6 @@
 [ext_resource type="PackedScene" uid="uid://2i6yelxqgfre" path="res://assets/CityPacks/gltf/building_B.gltf" id="20_0wnb8"]
 [ext_resource type="PackedScene" uid="uid://dleafo37pi7md" path="res://assets/CityPacks/gltf/building_D.gltf" id="21_wmdyb"]
 [ext_resource type="PackedScene" uid="uid://dpbjfwr1e1ei" path="res://assets/CityPacks/gltf/car_sedan.gltf" id="22_rdyjb"]
-[ext_resource type="PackedScene" uid="uid://c1cxpjboctiju" path="res://assets/CityPacks/gltf/car_hatchback.gltf" id="23_nq5uu"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w6hnu"]
 size = Vector3(30, 0.03, 30)
@@ -570,6 +569,3 @@ transform = Transform3D(-2.18557e-07, 0, 5, 0, 5, 0, -5, 0, -2.18557e-07, -24, 0
 
 [node name="car_sedan2" parent="." instance=ExtResource("22_rdyjb")]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -15, 1, 9)
-
-[node name="car_hatchback2" parent="." instance=ExtResource("23_nq5uu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 2)

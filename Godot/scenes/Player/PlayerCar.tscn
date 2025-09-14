@@ -6,9 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://cqlbcyk00caqq" path="res://scenes/Player/truckmove.tscn" id="3_fgk6e"]
 [ext_resource type="Script" uid="uid://c0buedgtp4uf8" path="res://scripts/Player/camera_lag.gd" id="3_gyd8d"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jvgwu"]
-radius = 0.303941
-height = 1.42979
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fgk6e"]
+radius = 0.191647
+height = 1.02757
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gyd8d"]
 size = Vector3(1.15012, 0.519043, 1.80826)
@@ -38,9 +38,9 @@ properties/1/replication_mode = 1
 transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0)
 script = ExtResource("1_3ede1")
 
-[node name="Collision" type="CollisionShape3D" parent="."]
-transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, 0, 0.021431, 0.232001)
-shape = SubResource("CapsuleShape3D_jvgwu")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.0854169, 0.996345, 0, -0.996345, 0.0854169, 0, 0.0254813, 0.252746)
+shape = SubResource("CapsuleShape3D_fgk6e")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.232001)

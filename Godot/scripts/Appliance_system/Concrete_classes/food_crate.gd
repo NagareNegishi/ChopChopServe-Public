@@ -79,10 +79,7 @@ func player_has(item: Node) -> void:
 		return
 
 	if item is Cookware and item._can_accept(supply_instance):
-		var food = take()
-		if not food:
-			return
-		item.put_request(food)
+		transfer_request(item)
 		return
 
 
@@ -123,6 +120,43 @@ func _give_item_to_player(player_id: int, item_path: NodePath) -> void:
 		var player = GlobalScript.get_local_player_by_id(player_id)
 		if player:
 			player.pickup_item(item)
+
+
+## Transfer food from FoodCrate to Cookware
+## @param cookware: The Cookware to transfer food to
+func transfer_request(player_cookware: Cookware) -> void:
+	var food = take()
+	if not food:
+		return
+	if ENetManager.is_host():
+		player_cookware._put(food)
+		_client_transfer.rpc(ENetManager.get_my_id(), food.name)
+		return
+	_transfer_as_host.rpc_id(1, ENetManager.get_my_id())
+
+
+## Host-side method to handle transfer requests from clients
+## @param player_id: The id of the player who is transferring the food
+@rpc("any_peer", "call_remote", "reliable")
+func _transfer_as_host(player_id: int) -> void:
+	if not ENetManager.is_host():
+		return
+	var player_cookware = GlobalScript.get_local_player_by_id(player_id).item_in_hand
+	if player_cookware is Cookware and player_cookware._can_accept(supply_instance):
+		var food = take()
+		player_cookware._put(food)
+		_client_transfer.rpc(player_id, food.name)
+
+
+## Client-side method to transfer food, called by host
+## @param player_id: The id of the player who is transferring the food
+@rpc("authority", "call_remote", "reliable")
+func _client_transfer(player_id: int, food_name: String) -> void:
+	var player_cookware = GlobalScript.get_local_player_by_id(player_id).item_in_hand
+	if player_cookware is Cookware and player_cookware._can_accept(supply_instance):
+		var food = take()
+		food.name = food_name
+		player_cookware._put(food)
 
 
 ## Give visual feedback when hovered

@@ -81,7 +81,7 @@ func _movement(delta : float) -> void:
 
 	#rotates mesh
 	$Mesh.rotation.y += turn_input_avg * turn_speed * delta
-		
+	$CollisionShape3D.rotation.y += turn_input_avg * turn_speed * delta
 	#print(move_input_avg, turn_input_avg)
 	
 	if move_input_avg: #handles logic if player is moving 

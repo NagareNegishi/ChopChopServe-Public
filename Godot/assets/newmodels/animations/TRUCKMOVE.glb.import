@@ -1881,6 +1881,23 @@ _subresources={
 "save_to_file/enabled": true,
 "save_to_file/path": "res://assets/newmodels/animations/TRUCKMOVE_Circle_007.tres"
 }
+},
+"nodes": {
+"PATH:Circle": {
+"physics/shape_type": 2
+},
+"PATH:Circle_001": {
+"physics/shape_type": 0
+},
+"PATH:Circle_002": {
+"physics/shape_type": 0
+},
+"PATH:Circle_005": {
+"physics/shape_type": 0
+},
+"PATH:Circle_006": {
+"physics/shape_type": 0
+}
 }
 }
 gltf/naming_version=1

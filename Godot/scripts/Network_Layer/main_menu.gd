@@ -5,10 +5,11 @@ extends Control
 var network_layer: ENetNetworkLayer
 # Menu UI elements
 @onready var menu = $Menu
-@onready var create_button = $Menu/HostContainer/CreateButton
+@onready var create_button = $Menu/ButtonsContainer/HostButton#$Menu/HostContainer/CreateButton
 @onready var host_public_ip_input = $Menu/HostContainer/HostPublicIPInput
-@onready var join_button = $Menu/ClientContainer/JoinButton
+@onready var join_button = $Menu/ButtonsContainer/JoinButton#$Menu/ClientContainer/JoinButton
 @onready var ip_input = $Menu/ClientContainer/ClientIPInput
+@onready var exit_button = $Menu/ButtonsContainer/ExitButton
 
 
 ## Initialization
@@ -17,6 +18,7 @@ func _ready():
 	create_button.pressed.connect(_on_create_pressed)
 	join_button.pressed.connect(_on_join_pressed)
 	network_layer.connected.connect(_switch_to_lobby)
+	exit_button.pressed.connect(_exit_game)
 
 
 ## Create Lobby
@@ -44,3 +46,6 @@ func _switch_to_lobby():
 	# 	print("=== HOST CONNECTION INFO ===")
 	# 	print("Share with friends: " + network_layer.get_connection_info())
 	# 	print("============================")
+
+func _exit_game():
+	get_tree().quit()

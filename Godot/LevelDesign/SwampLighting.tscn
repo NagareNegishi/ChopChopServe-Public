@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://dys1qdkpi62i0"]
+[gd_scene load_steps=44 format=3 uid="uid://dys1qdkpi62i0"]
 
 [ext_resource type="Material" uid="uid://cnd7ix4cfrxi" path="res://shaders/Water/SwampWater.tres" id="1_kl1pt"]
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="2_fb8tl"]
@@ -29,6 +29,8 @@
 [ext_resource type="PackedScene" uid="uid://da8w1hkv45npq" path="res://assets/NaturePack/Plant_3.fbx" id="27_66y2c"]
 [ext_resource type="PackedScene" uid="uid://5kqjoe26ij5a" path="res://assets/NaturePack/Plant_4.fbx" id="28_w4yh3"]
 [ext_resource type="PackedScene" uid="uid://c8mn5s6ndr0ki" path="res://assets/NaturePack/Plant_1.fbx" id="29_tjry6"]
+[ext_resource type="PackedScene" uid="uid://b1unktw7nwuy7" path="res://assets/NaturePack/WoodLog_Moss.fbx" id="30_w4yh3"]
+[ext_resource type="PackedScene" uid="uid://c3ln5gh4r07rw" path="res://assets/NaturePack/TreeStump_Moss.fbx" id="31_vcrof"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w6hnu"]
 size = Vector3(30, 0.03, 30)
@@ -341,305 +343,343 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5, 0,
 [node name="Background" type="Node3D" parent="."]
 transform = Transform3D(-0.99899, 0, -0.0449445, 0, 1, 0, 0.0449445, 0, -0.99899, -5.50636, 0.288126, 21.2311)
 
-[node name="Rock_Moss_7" parent="Background" instance=ExtResource("14_a51gl")]
-transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, -6.40644, -0.0459126, 7.17137)
-
-[node name="Rock_Moss_6" parent="Background" instance=ExtResource("15_jjilc")]
-transform = Transform3D(-0.246221, 0, -0.969214, 0, 1, 0, 0.969214, 0, -0.246221, -5.70509, -0.273126, 7.613)
-
-[node name="Rock_Moss_9" parent="Background" instance=ExtResource("15_jjilc")]
-transform = Transform3D(-0.991269, 0, -0.131858, 0, 1, 0, 0.131858, 0, -0.991269, -6.79298, -0.273126, 5.00347)
-
-[node name="Rock_Moss_5" parent="Background" instance=ExtResource("16_ndyhk")]
-transform = Transform3D(-0.523034, 0, -0.852312, 0, 1, 0, 0.852312, 0, -0.523034, -4.95654, -0.37071, 7.92081)
-
-[node name="Rock_Moss_22" parent="Background" instance=ExtResource("16_ndyhk")]
-transform = Transform3D(-0.999781, 0, -0.0209075, 0, 1, 0, 0.0209075, 0, -0.999781, -6.79633, -0.32721, 4.18264)
-
-[node name="Rock_Moss_4" parent="Background" instance=ExtResource("17_e41aj")]
-transform = Transform3D(-0.106281, 0, -0.994336, 0, 1, 0, 0.994336, 0, -0.106281, -4.14324, 0, 8.30593)
-
-[node name="Rock_Moss_10" parent="Background" instance=ExtResource("17_e41aj")]
-transform = Transform3D(0.794775, 0, -0.606904, 0, 1, 0, 0.606904, 0, 0.794775, -1.6228, 0, 7.41645)
-
-[node name="Rock_Moss_11" parent="Background" instance=ExtResource("16_ndyhk")]
-transform = Transform3D(0.706848, 0, -0.707366, 0, 1, 0, 0.707366, 0, 0.706848, -1.12859, -0.37071, 6.68085)
-
-[node name="Rock_Moss_8" parent="Background" instance=ExtResource("17_e41aj")]
-transform = Transform3D(-0.979565, 0, -0.201129, 0, 1, 0, 0.201129, 0, -0.979565, -6.57956, 0, 6.14975)
-
-[node name="Rock_Moss_3" parent="Background" instance=ExtResource("18_lmy4t")]
-transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, -3.33987, -0.271081, 8.13755)
-
-[node name="Rock_Moss_18" parent="Background" instance=ExtResource("18_lmy4t")]
-transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, 0.239743, -0.271081, 2.79386)
-
-[node name="Rock_Moss_12" parent="Background" instance=ExtResource("18_lmy4t")]
-transform = Transform3D(-0.887188, 0, 0.461408, 0, 1, 0, -0.461408, 0, -0.887188, -0.661637, -0.271081, 5.75562)
-
-[node name="Rock_Moss_2" parent="Background" instance=ExtResource("19_fwwnp")]
-transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, -2.7183, -0.136029, 8.07427)
-
-[node name="Rock_Moss_14" parent="Background" instance=ExtResource("17_e41aj")]
-transform = Transform3D(-0.906359, 0, 0.422507, 0, 1, 0, -0.422507, 0, -0.906359, -0.0453348, 0, 3.84639)
-
-[node name="Rock_Moss_15" parent="Background" instance=ExtResource("18_lmy4t")]
-transform = Transform3D(0.365981, 0, 0.930622, 0, 1, 0, -0.930622, 0, 0.365981, -0.146144, -0.271081, 4.661)
-
-[node name="Rock_Moss_16" parent="Background" instance=ExtResource("19_fwwnp")]
-transform = Transform3D(0.365981, 0, 0.930622, 0, 1, 0, -0.930622, 0, 0.365981, -0.28753, -0.136029, 5.26958)
-
-[node name="Rock_Moss_1" parent="Background" instance=ExtResource("20_7ojpi")]
-transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, -2.28493, -0.101291, 7.8412)
-
-[node name="Rock_Moss_17" parent="Background" instance=ExtResource("20_7ojpi")]
-transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, 0.167127, -0.101291, 3.2144)
-
-[node name="Rock_Moss_23" parent="Background" instance=ExtResource("17_e41aj")]
-transform = Transform3D(1, 0, -3.72529e-09, 0, 1, 0, 3.72529e-09, 0, 1, 0, 0, 0)
-
-[node name="Rock_Moss_24" parent="Background" instance=ExtResource("18_lmy4t")]
-transform = Transform3D(0.061484, 0, -0.998108, 0, 1, 0, 0.998108, 0, 0.061484, -0.252807, -0.271081, -0.780916)
-
-[node name="Rock_Moss_25" parent="Background" instance=ExtResource("20_7ojpi")]
-transform = Transform3D(0.924433, 0, 0.381345, 0, 1, 0, -0.381345, 0, 0.924433, 0.0744543, -0.101291, 0.662579)
-
-[node name="Rock_Moss_13" parent="Background" instance=ExtResource("20_7ojpi")]
-transform = Transform3D(-0.80367, 0, 0.595075, 0, 1, 0, -0.595075, 0, -0.80367, -0.892313, -0.101291, 6.23201)
-
-[node name="Rock_Moss_19" parent="Background" instance=ExtResource("16_ndyhk")]
-transform = Transform3D(0.982613, 0, -0.185666, 0, 1, 0, 0.185666, 0, 0.982613, 0.368657, -0.37071, 2.14872)
-
-[node name="Rock_Moss_20" parent="Background" instance=ExtResource("18_lmy4t")]
-transform = Transform3D(-0.992876, 0, -0.119149, 0, 1, 0, 0.119149, 0, -0.992876, 0.232643, -0.271081, 1.1213)
-
-[node name="Rock_Moss_21" parent="Background" instance=ExtResource("20_7ojpi")]
-transform = Transform3D(-0.999265, 0, 0.0383354, 0, 1, 0, -0.0383354, 0, -0.999265, 0.310729, -0.101291, 1.64481)
-
-[node name="Willow_3" parent="Background" instance=ExtResource("21_gxibg")]
-transform = Transform3D(0.754712, 0, 1.85214, 0, 2, 0, -1.85214, 0, 0.754712, 2.01596, -0.260212, 7.54267)
-
-[node name="Willow_4" parent="Background" instance=ExtResource("22_1uhqc")]
-transform = Transform3D(0.982355, 0, -1.74212, 0, 2, 0, 1.74212, 0, 0.982355, -7.79388, -0.246028, 4.65231)
-
-[node name="Willow_11" parent="Background" instance=ExtResource("22_1uhqc")]
-transform = Transform3D(-0.765077, 0, 1.84788, 0, 2, 0, -1.84788, 0, -0.765077, -12.2913, -0.246028, 32.4924)
-
-[node name="Willow_12" parent="Background" instance=ExtResource("22_1uhqc")]
-transform = Transform3D(1.73908, 0, 0.987732, 0, 2, 0, -0.987732, 0, 1.73908, 2.89597, -0.246028, 42.5284)
-
-[node name="Willow_7" parent="Background" instance=ExtResource("22_1uhqc")]
-transform = Transform3D(1.99974, 0, 0.0323921, 0, 2, 0, -0.0323921, 0, 1.99974, 2.71969, -0.246029, 29.3047)
-
-[node name="Willow_17" parent="Background" instance=ExtResource("22_1uhqc")]
-transform = Transform3D(1.11572, 0, 1.65987, 0, 2, 0, -1.65987, 0, 1.11572, 6.03798, -0.246029, 1.35027)
-
-[node name="Willow_2" parent="Background" instance=ExtResource("23_k8rnb")]
-transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, 1.22751, -0.288126, 0.0470543)
-
-[node name="Willow_19" parent="Background" instance=ExtResource("23_k8rnb")]
-transform = Transform3D(-0.888665, 0, 0.458556, 0, 1, 0, -0.458556, 0, -0.888665, 4.83802, -0.288128, 32.0409)
-
-[node name="Willow_8" parent="Background" instance=ExtResource("23_k8rnb")]
-transform = Transform3D(0.502067, 0, 1.41348, 0, 1.5, 0, -1.41348, 0, 0.502067, 6.09191, -0.288126, 16.772)
-
-[node name="Lilypad" parent="Background" instance=ExtResource("24_g2bww")]
-transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, -4.09918, -0.129725, 5.48502)
-
-[node name="Lilypad2" parent="Background" instance=ExtResource("24_g2bww")]
-transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, -2.21754, -0.129724, 35.3328)
-
-[node name="Willow_5" parent="Background" instance=ExtResource("23_k8rnb")]
-transform = Transform3D(0.998823, 0, -1.11909, 0, 1.5, 0, 1.11909, 0, 0.998823, -13.1966, -0.288124, 10.231)
-
-[node name="Willow_9" parent="Background" instance=ExtResource("23_k8rnb")]
-transform = Transform3D(-0.900735, 0, 1.19945, 0, 1.5, 0, -1.19945, 0, -0.900735, 1.70829, -0.288124, 33.17)
-
-[node name="Willow_14" parent="Background" instance=ExtResource("23_k8rnb")]
-transform = Transform3D(0.541386, 0, -1.39889, 0, 1.5, 0, 1.39889, 0, 0.541386, -18.7542, -0.27566, 11.611)
-
-[node name="Willow_6" parent="Background" instance=ExtResource("21_gxibg")]
-transform = Transform3D(-1.28892, 0, -0.767255, 0, 1.5, 0, 0.767255, 0, -1.28892, 2.52847, -0.260213, 11.1805)
-
-[node name="Willow_21" parent="Background" instance=ExtResource("21_gxibg")]
-transform = Transform3D(-1.28892, 0, -0.767255, 0, 1.5, 0, 0.767255, 0, -1.28892, -18.089, -0.260213, 30.0237)
-
-[node name="Willow_13" parent="Background" instance=ExtResource("21_gxibg")]
-transform = Transform3D(-1.28892, 0, -0.767255, 0, 1.5, 0, 0.767255, 0, -1.28892, -18.2977, -0.260213, 13.4606)
-
-[node name="Willow_10" parent="Background" instance=ExtResource("21_gxibg")]
-transform = Transform3D(0.187272, 0, 1.48826, 0, 1.5, 0, -1.48826, 0, 0.187272, -5.1606, -0.260213, 34.971)
-
-[node name="Willow_18" parent="Background" instance=ExtResource("21_gxibg")]
-transform = Transform3D(1.28775, 0.0251394, 0.768794, 0.0211705, 1.49747, -0.0844281, -0.768913, 0.0833327, 1.28523, 7.77974, -0.260214, 7.76381)
-
 [node name="SwampWater" type="MeshInstance3D" parent="Background"]
 transform = Transform3D(-36.2095, 2.49159, 1.06873e-07, -6.74548e-07, -1.93099e-07, -1.37173, -9.02207, -10.997, 1.84319e-07, -3.28525, -0.288126, 2.94327)
 mesh = SubResource("SphereMesh_et00d")
 skeleton = NodePath("")
-
-[node name="Rock_Moss_26" parent="Background" instance=ExtResource("14_a51gl")]
-transform = Transform3D(0.84528, 0, 0.534323, 0, 1, 0, -0.534323, 0, 0.84528, -0.238844, -0.0459117, 33.1617)
-
-[node name="Rock_Moss_27" parent="Background" instance=ExtResource("15_jjilc")]
-transform = Transform3D(-0.352168, 0, 0.935937, 0, 1, 0, -0.935937, 0, -0.352168, -1.06675, -0.273125, 33.2003)
-
-[node name="Rock_Moss_28" parent="Background" instance=ExtResource("15_jjilc")]
-transform = Transform3D(0.737855, 0, 0.674959, 0, 1, 0, -0.674959, 0, 0.737855, 1.31783, -0.273125, 34.7192)
-
-[node name="Rock_Moss_29" parent="Background" instance=ExtResource("16_ndyhk")]
-transform = Transform3D(-0.0582261, 0, 0.998303, 0, 1, 0, -0.998303, 0, -0.0582261, -1.85687, -0.370709, 33.3758)
-
-[node name="Rock_Moss_30" parent="Background" instance=ExtResource("16_ndyhk")]
-transform = Transform3D(0.808278, 0, 0.588801, 0, 1, 0, -0.588801, 0, 0.808278, 1.7899, -0.327209, 35.3907)
-
-[node name="Rock_Moss_31" parent="Background" instance=ExtResource("17_e41aj")]
-transform = Transform3D(-0.481341, 0, 0.876533, 0, 1, 0, -0.876533, 0, -0.481341, -2.74431, 9.53674e-07, 33.5249)
-
-[node name="Rock_Moss_51" parent="Background" instance=ExtResource("15_jjilc")]
-transform = Transform3D(0.266498, 0, -0.963835, 0, 1, 0, 0.963835, 0, 0.266498, -0.0904455, -0.273125, 43.6072)
-
-[node name="Rock_Moss_52" parent="Background" instance=ExtResource("16_ndyhk")]
-transform = Transform3D(-0.0318644, 0, -0.999492, 0, 1, 0, 0.999492, 0, -0.0318644, 0.712265, -0.370709, 43.5035)
-
-[node name="Rock_Moss_63" parent="Background" instance=ExtResource("16_ndyhk")]
-transform = Transform3D(-0.972214, 0, 0.23409, 0, 1, 0, -0.23409, 0, -0.972214, 3.3839, -0.370709, 41.5255)
-
-[node name="Rock_Moss_53" parent="Background" instance=ExtResource("17_e41aj")]
-transform = Transform3D(0.400493, 0, -0.9163, 0, 1, 0, 0.9163, 0, 0.400493, 1.60952, 9.53674e-07, 43.4349)
-
-[node name="Rock_Moss_32" parent="Background" instance=ExtResource("17_e41aj")]
-transform = Transform3D(-0.999054, 0, 0.04348, 0, 1, 0, -0.04348, 0, -0.999054, -4.30352, 9.53674e-07, 35.6957)
-
-[node name="Rock_Moss_33" parent="Background" instance=ExtResource("16_ndyhk")]
-transform = Transform3D(-0.984359, 0, 0.176174, 0, 1, 0, -0.176174, 0, -0.984359, -4.28838, -0.370709, 36.5818)
-
-[node name="Rock_Moss_34" parent="Background" instance=ExtResource("17_e41aj")]
-transform = Transform3D(0.688646, 0, 0.725098, 0, 1, 0, -0.725098, 0, 0.688646, 0.487318, 9.53674e-07, 33.9008)
-
-[node name="Rock_Moss_35" parent="Background" instance=ExtResource("18_lmy4t")]
-transform = Transform3D(0.84528, 0, 0.534323, 0, 1, 0, -0.534323, 0, 0.84528, -3.30712, -0.27108, 34.1224)
-
-[node name="Rock_Moss_36" parent="Background" instance=ExtResource("18_lmy4t")]
-transform = Transform3D(0.84528, 0, 0.534323, 0, 1, 0, -0.534323, 0, 0.84528, -3.1885, -0.27108, 40.5531)
-
-[node name="Rock_Moss_37" parent="Background" instance=ExtResource("18_lmy4t")]
-transform = Transform3D(0.99168, 0, 0.128726, 0, 1, 0, -0.128726, 0, 0.99168, -4.14246, -0.27108, 37.6079)
-
-[node name="Rock_Moss_38" parent="Background" instance=ExtResource("19_fwwnp")]
-transform = Transform3D(0.84528, 0, 0.534323, 0, 1, 0, -0.534323, 0, 0.84528, -3.78089, -0.136028, 34.5297)
-
-[node name="Rock_Moss_39" parent="Background" instance=ExtResource("17_e41aj")]
-transform = Transform3D(0.985166, 0, 0.171602, 0, 1, 0, -0.171602, 0, 0.985166, -3.55643, 9.53674e-07, 39.5266)
-
-[node name="Rock_Moss_40" parent="Background" instance=ExtResource("18_lmy4t")]
-transform = Transform3D(0.23185, 0, -0.972751, 0, 1, 0, 0.972751, 0, 0.23185, -3.93949, -0.27108, 38.8007)
-
-[node name="Rock_Moss_41" parent="Background" instance=ExtResource("19_fwwnp")]
-transform = Transform3D(0.23185, 0, -0.972751, 0, 1, 0, 0.972751, 0, 0.23185, -4.17147, -0.136028, 38.2205)
-
-[node name="Rock_Moss_60" parent="Background" instance=ExtResource("17_e41aj")]
-transform = Transform3D(0.99815, 0, -0.0607873, 0, 1, 0, 0.0607873, 0, 0.99815, 3.67762, 9.53674e-07, 40.6117)
-
-[node name="Rock_Moss_61" parent="Background" instance=ExtResource("18_lmy4t")]
-transform = Transform3D(0.000698056, 0, -0.999999, 0, 1, 0, 0.999999, 0, 0.000698056, 3.47275, -0.27108, 39.8168)
-
-[node name="Rock_Moss_62" parent="Background" instance=ExtResource("19_fwwnp")]
-transform = Transform3D(0.000698056, 0, -0.999999, 0, 1, 0, 0.999999, 0, 0.000698056, 3.38117, -0.136028, 39.1988)
-
-[node name="Rock_Moss_42" parent="Background" instance=ExtResource("20_7ojpi")]
-transform = Transform3D(0.84528, 0, 0.534323, 0, 1, 0, -0.534323, 0, 0.84528, -4.00317, -0.101291, 34.9687)
-
-[node name="Rock_Moss_43" parent="Background" instance=ExtResource("20_7ojpi")]
-transform = Transform3D(0.84528, 0, 0.534323, 0, 1, 0, -0.534323, 0, 0.84528, -3.36938, -0.101291, 40.1666)
-
-[node name="Rock_Moss_44" parent="Background" instance=ExtResource("17_e41aj")]
-transform = Transform3D(-0.820411, 0, -0.571773, 0, 1, 0, 0.571773, 0, -0.820411, -1.39436, 9.53674e-07, 42.7082)
-
-[node name="Rock_Moss_45" parent="Background" instance=ExtResource("18_lmy4t")]
-transform = Transform3D(-0.621134, 0, 0.783704, 0, 1, 0, -0.783704, 0, -0.621134, -0.740447, -0.27108, 43.2043)
-
-[node name="Rock_Moss_64" parent="Background" instance=ExtResource("18_lmy4t")]
-transform = Transform3D(-0.621134, 0, 0.783704, 0, 1, 0, -0.783704, 0, -0.621134, 2.20857, -0.27108, 42.8171)
-
-[node name="Rock_Moss_46" parent="Background" instance=ExtResource("20_7ojpi")]
-transform = Transform3D(-0.540372, 0, -0.841426, 0, 1, 0, 0.841426, 0, -0.540372, -1.83429, -0.101291, 42.2071)
-
-[node name="Rock_Moss_47" parent="Background" instance=ExtResource("20_7ojpi")]
-transform = Transform3D(0.999588, 0, -0.0286893, 0, 1, 0, 0.0286893, 0, 0.999588, -4.22559, -0.10129, 37.0851)
-
-[node name="Rock_Moss_54" parent="Background" instance=ExtResource("18_lmy4t")]
-transform = Transform3D(-0.858915, 0, -0.512118, 0, 1, 0, 0.512118, 0, -0.858915, 2.46357, -0.27108, 36.3457)
-
-[node name="Rock_Moss_55" parent="Background" instance=ExtResource("19_fwwnp")]
-transform = Transform3D(-0.599233, 0, 0.800574, 0, 1, 0, -0.800574, 0, -0.599233, 2.24679, -0.213471, 35.7719)
-
-[node name="Rock_Moss_57" parent="Background" instance=ExtResource("15_jjilc")]
-transform = Transform3D(-0.952699, 0, -0.303917, 0, 1, 0, 0.303917, 0, -0.952699, 3.24986, -0.273125, 38.5316)
-
-[node name="Rock_Moss_58" parent="Background" instance=ExtResource("16_ndyhk")]
-transform = Transform3D(-0.980567, 0, -0.196186, 0, 1, 0, 0.196186, 0, -0.980567, 3.10239, -0.327209, 37.7241)
-
-[node name="Rock_Moss_59" parent="Background" instance=ExtResource("19_fwwnp")]
-transform = Transform3D(0.208884, 0, -0.97794, 0, 1, 0, 0.97794, 0, 0.208884, 2.84715, -0.213471, 37.1866)
-
-[node name="Rock_Moss_56" parent="Background" instance=ExtResource("20_7ojpi")]
-transform = Transform3D(-0.928712, 0, -0.3708, 0, 1, 0, 0.3708, 0, -0.928712, 2.74753, -0.101291, 36.7923)
-
-[node name="Rock_Moss_65" parent="Background" instance=ExtResource("20_7ojpi")]
-transform = Transform3D(-0.928712, 0, -0.3708, 0, 1, 0, 0.3708, 0, -0.928712, 3.09486, -0.101291, 42.0145)
-
-[node name="Rock_Moss_48" parent="Background" instance=ExtResource("16_ndyhk")]
-transform = Transform3D(-0.912306, 0, -0.409509, 0, 1, 0, 0.409509, 0, -0.912306, -2.9254, -0.370709, 41.1561)
-
-[node name="Rock_Moss_49" parent="Background" instance=ExtResource("18_lmy4t")]
-transform = Transform3D(0.746441, 0, 0.665452, 0, 1, 0, -0.665452, 0, 0.746441, -2.22635, -0.27108, 41.9212)
-
-[node name="Rock_Moss_50" parent="Background" instance=ExtResource("20_7ojpi")]
-transform = Transform3D(0.841727, 0, 0.539902, 0, 1, 0, -0.539902, 0, 0.841727, -2.58974, -0.10129, 41.5364)
 
 [node name="SwampWater2" type="MeshInstance3D" parent="Background"]
 transform = Transform3D(34.8652, 4.24368, -1.93068e-07, -6.74548e-07, -1.93099e-07, -1.37173, -13.3018, 10.4467, -9.01104e-08, -0.381987, -0.288125, 38.415)
 mesh = SubResource("SphereMesh_et00d")
 skeleton = NodePath("")
 
-[node name="Node3D" type="Node3D" parent="Background"]
+[node name="Rocks" type="Node3D" parent="Background"]
 
-[node name="Willow_15" parent="Background" instance=ExtResource("25_xoyml")]
+[node name="Rock_Moss_26" parent="Background/Rocks" instance=ExtResource("14_a51gl")]
+transform = Transform3D(0.84528, 0, 0.534323, 0, 1, 0, -0.534323, 0, 0.84528, -0.238844, -0.0459117, 33.1617)
+
+[node name="Rock_Moss_27" parent="Background/Rocks" instance=ExtResource("15_jjilc")]
+transform = Transform3D(-0.352168, 0, 0.935937, 0, 1, 0, -0.935937, 0, -0.352168, -1.06675, -0.273125, 33.2003)
+
+[node name="Rock_Moss_28" parent="Background/Rocks" instance=ExtResource("15_jjilc")]
+transform = Transform3D(0.737855, 0, 0.674959, 0, 1, 0, -0.674959, 0, 0.737855, 1.31783, -0.273125, 34.7192)
+
+[node name="Rock_Moss_29" parent="Background/Rocks" instance=ExtResource("16_ndyhk")]
+transform = Transform3D(-0.0582261, 0, 0.998303, 0, 1, 0, -0.998303, 0, -0.0582261, -1.85687, -0.370709, 33.3758)
+
+[node name="Rock_Moss_30" parent="Background/Rocks" instance=ExtResource("16_ndyhk")]
+transform = Transform3D(0.808278, 0, 0.588801, 0, 1, 0, -0.588801, 0, 0.808278, 1.7899, -0.327209, 35.3907)
+
+[node name="Rock_Moss_31" parent="Background/Rocks" instance=ExtResource("17_e41aj")]
+transform = Transform3D(-0.481341, 0, 0.876533, 0, 1, 0, -0.876533, 0, -0.481341, -2.74431, 9.53674e-07, 33.5249)
+
+[node name="Rock_Moss_51" parent="Background/Rocks" instance=ExtResource("15_jjilc")]
+transform = Transform3D(0.266498, 0, -0.963835, 0, 1, 0, 0.963835, 0, 0.266498, -0.0904455, -0.273125, 43.6072)
+
+[node name="Rock_Moss_52" parent="Background/Rocks" instance=ExtResource("16_ndyhk")]
+transform = Transform3D(-0.0318644, 0, -0.999492, 0, 1, 0, 0.999492, 0, -0.0318644, 0.712265, -0.370709, 43.5035)
+
+[node name="Rock_Moss_63" parent="Background/Rocks" instance=ExtResource("16_ndyhk")]
+transform = Transform3D(-0.972214, 0, 0.23409, 0, 1, 0, -0.23409, 0, -0.972214, 3.3839, -0.370709, 41.5255)
+
+[node name="Rock_Moss_53" parent="Background/Rocks" instance=ExtResource("17_e41aj")]
+transform = Transform3D(0.400493, 0, -0.9163, 0, 1, 0, 0.9163, 0, 0.400493, 1.60952, 9.53674e-07, 43.4349)
+
+[node name="Rock_Moss_32" parent="Background/Rocks" instance=ExtResource("17_e41aj")]
+transform = Transform3D(-0.999054, 0, 0.04348, 0, 1, 0, -0.04348, 0, -0.999054, -4.30352, 9.53674e-07, 35.6957)
+
+[node name="Rock_Moss_33" parent="Background/Rocks" instance=ExtResource("16_ndyhk")]
+transform = Transform3D(-0.984359, 0, 0.176174, 0, 1, 0, -0.176174, 0, -0.984359, -4.28838, -0.370709, 36.5818)
+
+[node name="Rock_Moss_34" parent="Background/Rocks" instance=ExtResource("17_e41aj")]
+transform = Transform3D(0.688646, 0, 0.725098, 0, 1, 0, -0.725098, 0, 0.688646, 0.487318, 9.53674e-07, 33.9008)
+
+[node name="Rock_Moss_35" parent="Background/Rocks" instance=ExtResource("18_lmy4t")]
+transform = Transform3D(0.84528, 0, 0.534323, 0, 1, 0, -0.534323, 0, 0.84528, -3.30712, -0.27108, 34.1224)
+
+[node name="Rock_Moss_36" parent="Background/Rocks" instance=ExtResource("18_lmy4t")]
+transform = Transform3D(0.84528, 0, 0.534323, 0, 1, 0, -0.534323, 0, 0.84528, -3.1885, -0.27108, 40.5531)
+
+[node name="Rock_Moss_37" parent="Background/Rocks" instance=ExtResource("18_lmy4t")]
+transform = Transform3D(0.99168, 0, 0.128726, 0, 1, 0, -0.128726, 0, 0.99168, -4.14246, -0.27108, 37.6079)
+
+[node name="Rock_Moss_38" parent="Background/Rocks" instance=ExtResource("19_fwwnp")]
+transform = Transform3D(0.84528, 0, 0.534323, 0, 1, 0, -0.534323, 0, 0.84528, -3.78089, -0.136028, 34.5297)
+
+[node name="Rock_Moss_39" parent="Background/Rocks" instance=ExtResource("17_e41aj")]
+transform = Transform3D(0.985166, 0, 0.171602, 0, 1, 0, -0.171602, 0, 0.985166, -3.55643, 9.53674e-07, 39.5266)
+
+[node name="Rock_Moss_40" parent="Background/Rocks" instance=ExtResource("18_lmy4t")]
+transform = Transform3D(0.23185, 0, -0.972751, 0, 1, 0, 0.972751, 0, 0.23185, -3.93949, -0.27108, 38.8007)
+
+[node name="Rock_Moss_41" parent="Background/Rocks" instance=ExtResource("19_fwwnp")]
+transform = Transform3D(0.23185, 0, -0.972751, 0, 1, 0, 0.972751, 0, 0.23185, -4.17147, -0.136028, 38.2205)
+
+[node name="Rock_Moss_60" parent="Background/Rocks" instance=ExtResource("17_e41aj")]
+transform = Transform3D(0.99815, 0, -0.0607873, 0, 1, 0, 0.0607873, 0, 0.99815, 3.67762, 9.53674e-07, 40.6117)
+
+[node name="Rock_Moss_61" parent="Background/Rocks" instance=ExtResource("18_lmy4t")]
+transform = Transform3D(0.000698056, 0, -0.999999, 0, 1, 0, 0.999999, 0, 0.000698056, 3.47275, -0.27108, 39.8168)
+
+[node name="Rock_Moss_62" parent="Background/Rocks" instance=ExtResource("19_fwwnp")]
+transform = Transform3D(0.000698056, 0, -0.999999, 0, 1, 0, 0.999999, 0, 0.000698056, 3.38117, -0.136028, 39.1988)
+
+[node name="Rock_Moss_42" parent="Background/Rocks" instance=ExtResource("20_7ojpi")]
+transform = Transform3D(0.84528, 0, 0.534323, 0, 1, 0, -0.534323, 0, 0.84528, -4.00317, -0.101291, 34.9687)
+
+[node name="Rock_Moss_43" parent="Background/Rocks" instance=ExtResource("20_7ojpi")]
+transform = Transform3D(0.84528, 0, 0.534323, 0, 1, 0, -0.534323, 0, 0.84528, -3.36938, -0.101291, 40.1666)
+
+[node name="Rock_Moss_44" parent="Background/Rocks" instance=ExtResource("17_e41aj")]
+transform = Transform3D(-0.820411, 0, -0.571773, 0, 1, 0, 0.571773, 0, -0.820411, -1.39436, 9.53674e-07, 42.7082)
+
+[node name="Rock_Moss_45" parent="Background/Rocks" instance=ExtResource("18_lmy4t")]
+transform = Transform3D(-0.621134, 0, 0.783704, 0, 1, 0, -0.783704, 0, -0.621134, -0.740447, -0.27108, 43.2043)
+
+[node name="Rock_Moss_64" parent="Background/Rocks" instance=ExtResource("18_lmy4t")]
+transform = Transform3D(-0.621134, 0, 0.783704, 0, 1, 0, -0.783704, 0, -0.621134, 2.20857, -0.27108, 42.8171)
+
+[node name="Rock_Moss_46" parent="Background/Rocks" instance=ExtResource("20_7ojpi")]
+transform = Transform3D(-0.540372, 0, -0.841426, 0, 1, 0, 0.841426, 0, -0.540372, -1.83429, -0.101291, 42.2071)
+
+[node name="Rock_Moss_47" parent="Background/Rocks" instance=ExtResource("20_7ojpi")]
+transform = Transform3D(0.999588, 0, -0.0286893, 0, 1, 0, 0.0286893, 0, 0.999588, -4.22559, -0.10129, 37.0851)
+
+[node name="Rock_Moss_54" parent="Background/Rocks" instance=ExtResource("18_lmy4t")]
+transform = Transform3D(-0.858915, 0, -0.512118, 0, 1, 0, 0.512118, 0, -0.858915, 2.46357, -0.27108, 36.3457)
+
+[node name="Rock_Moss_55" parent="Background/Rocks" instance=ExtResource("19_fwwnp")]
+transform = Transform3D(-0.599233, 0, 0.800574, 0, 1, 0, -0.800574, 0, -0.599233, 2.24679, -0.213471, 35.7719)
+
+[node name="Rock_Moss_57" parent="Background/Rocks" instance=ExtResource("15_jjilc")]
+transform = Transform3D(-0.952699, 0, -0.303917, 0, 1, 0, 0.303917, 0, -0.952699, 3.24986, -0.273125, 38.5316)
+
+[node name="Rock_Moss_58" parent="Background/Rocks" instance=ExtResource("16_ndyhk")]
+transform = Transform3D(-0.980567, 0, -0.196186, 0, 1, 0, 0.196186, 0, -0.980567, 3.10239, -0.327209, 37.7241)
+
+[node name="Rock_Moss_59" parent="Background/Rocks" instance=ExtResource("19_fwwnp")]
+transform = Transform3D(0.208884, 0, -0.97794, 0, 1, 0, 0.97794, 0, 0.208884, 2.84715, -0.213471, 37.1866)
+
+[node name="Rock_Moss_56" parent="Background/Rocks" instance=ExtResource("20_7ojpi")]
+transform = Transform3D(-0.928712, 0, -0.3708, 0, 1, 0, 0.3708, 0, -0.928712, 2.74753, -0.101291, 36.7923)
+
+[node name="Rock_Moss_65" parent="Background/Rocks" instance=ExtResource("20_7ojpi")]
+transform = Transform3D(-0.928712, 0, -0.3708, 0, 1, 0, 0.3708, 0, -0.928712, 3.09486, -0.101291, 42.0145)
+
+[node name="Rock_Moss_48" parent="Background/Rocks" instance=ExtResource("16_ndyhk")]
+transform = Transform3D(-0.912306, 0, -0.409509, 0, 1, 0, 0.409509, 0, -0.912306, -2.9254, -0.370709, 41.1561)
+
+[node name="Rock_Moss_49" parent="Background/Rocks" instance=ExtResource("18_lmy4t")]
+transform = Transform3D(0.746441, 0, 0.665452, 0, 1, 0, -0.665452, 0, 0.746441, -2.22635, -0.27108, 41.9212)
+
+[node name="Rock_Moss_50" parent="Background/Rocks" instance=ExtResource("20_7ojpi")]
+transform = Transform3D(0.841727, 0, 0.539902, 0, 1, 0, -0.539902, 0, 0.841727, -2.58974, -0.10129, 41.5364)
+
+[node name="Rock_Moss_7" parent="Background/Rocks" instance=ExtResource("14_a51gl")]
+transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, -6.40644, -0.0459126, 7.17137)
+
+[node name="Rock_Moss_6" parent="Background/Rocks" instance=ExtResource("15_jjilc")]
+transform = Transform3D(-0.246221, 0, -0.969214, 0, 1, 0, 0.969214, 0, -0.246221, -5.70509, -0.273126, 7.613)
+
+[node name="Rock_Moss_9" parent="Background/Rocks" instance=ExtResource("15_jjilc")]
+transform = Transform3D(-0.991269, 0, -0.131858, 0, 1, 0, 0.131858, 0, -0.991269, -6.79298, -0.273126, 5.00347)
+
+[node name="Rock_Moss_5" parent="Background/Rocks" instance=ExtResource("16_ndyhk")]
+transform = Transform3D(-0.523034, 0, -0.852312, 0, 1, 0, 0.852312, 0, -0.523034, -4.95654, -0.37071, 7.92081)
+
+[node name="Rock_Moss_22" parent="Background/Rocks" instance=ExtResource("16_ndyhk")]
+transform = Transform3D(-0.999781, 0, -0.0209075, 0, 1, 0, 0.0209075, 0, -0.999781, -6.79633, -0.32721, 4.18264)
+
+[node name="Rock_Moss_4" parent="Background/Rocks" instance=ExtResource("17_e41aj")]
+transform = Transform3D(-0.106281, 0, -0.994336, 0, 1, 0, 0.994336, 0, -0.106281, -4.14324, 0, 8.30593)
+
+[node name="Rock_Moss_10" parent="Background/Rocks" instance=ExtResource("17_e41aj")]
+transform = Transform3D(0.794775, 0, -0.606904, 0, 1, 0, 0.606904, 0, 0.794775, -1.6228, 0, 7.41645)
+
+[node name="Rock_Moss_11" parent="Background/Rocks" instance=ExtResource("16_ndyhk")]
+transform = Transform3D(0.706848, 0, -0.707366, 0, 1, 0, 0.707366, 0, 0.706848, -1.12859, -0.37071, 6.68085)
+
+[node name="Rock_Moss_8" parent="Background/Rocks" instance=ExtResource("17_e41aj")]
+transform = Transform3D(-0.979565, 0, -0.201129, 0, 1, 0, 0.201129, 0, -0.979565, -6.57956, 0, 6.14975)
+
+[node name="Rock_Moss_3" parent="Background/Rocks" instance=ExtResource("18_lmy4t")]
+transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, -3.33987, -0.271081, 8.13755)
+
+[node name="Rock_Moss_18" parent="Background/Rocks" instance=ExtResource("18_lmy4t")]
+transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, 0.239743, -0.271081, 2.79386)
+
+[node name="Rock_Moss_12" parent="Background/Rocks" instance=ExtResource("18_lmy4t")]
+transform = Transform3D(-0.887188, 0, 0.461408, 0, 1, 0, -0.461408, 0, -0.887188, -0.661637, -0.271081, 5.75562)
+
+[node name="Rock_Moss_2" parent="Background/Rocks" instance=ExtResource("19_fwwnp")]
+transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, -2.7183, -0.136029, 8.07427)
+
+[node name="Rock_Moss_14" parent="Background/Rocks" instance=ExtResource("17_e41aj")]
+transform = Transform3D(-0.906359, 0, 0.422507, 0, 1, 0, -0.422507, 0, -0.906359, -0.0453348, 0, 3.84639)
+
+[node name="Rock_Moss_15" parent="Background/Rocks" instance=ExtResource("18_lmy4t")]
+transform = Transform3D(0.365981, 0, 0.930622, 0, 1, 0, -0.930622, 0, 0.365981, -0.146144, -0.271081, 4.661)
+
+[node name="Rock_Moss_16" parent="Background/Rocks" instance=ExtResource("19_fwwnp")]
+transform = Transform3D(0.365981, 0, 0.930622, 0, 1, 0, -0.930622, 0, 0.365981, -0.28753, -0.136029, 5.26958)
+
+[node name="Rock_Moss_1" parent="Background/Rocks" instance=ExtResource("20_7ojpi")]
+transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, -2.28493, -0.101291, 7.8412)
+
+[node name="Rock_Moss_17" parent="Background/Rocks" instance=ExtResource("20_7ojpi")]
+transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, 0.167127, -0.101291, 3.2144)
+
+[node name="Rock_Moss_23" parent="Background/Rocks" instance=ExtResource("17_e41aj")]
+transform = Transform3D(1, 0, -3.72529e-09, 0, 1, 0, 3.72529e-09, 0, 1, 0, 0, 0)
+
+[node name="Rock_Moss_24" parent="Background/Rocks" instance=ExtResource("18_lmy4t")]
+transform = Transform3D(0.061484, 0, -0.998108, 0, 1, 0, 0.998108, 0, 0.061484, -0.252807, -0.271081, -0.780914)
+
+[node name="Rock_Moss_25" parent="Background/Rocks" instance=ExtResource("20_7ojpi")]
+transform = Transform3D(0.924433, 0, 0.381345, 0, 1, 0, -0.381345, 0, 0.924433, 0.0744548, -0.101291, 0.662579)
+
+[node name="Rock_Moss_13" parent="Background/Rocks" instance=ExtResource("20_7ojpi")]
+transform = Transform3D(-0.80367, 0, 0.595075, 0, 1, 0, -0.595075, 0, -0.80367, -0.892313, -0.101291, 6.23201)
+
+[node name="Rock_Moss_19" parent="Background/Rocks" instance=ExtResource("16_ndyhk")]
+transform = Transform3D(0.982613, 0, -0.185666, 0, 1, 0, 0.185666, 0, 0.982613, 0.368657, -0.37071, 2.14872)
+
+[node name="Rock_Moss_20" parent="Background/Rocks" instance=ExtResource("18_lmy4t")]
+transform = Transform3D(-0.992876, 0, -0.119149, 0, 1, 0, 0.119149, 0, -0.992876, 0.232644, -0.271081, 1.1213)
+
+[node name="Rock_Moss_21" parent="Background/Rocks" instance=ExtResource("20_7ojpi")]
+transform = Transform3D(-0.999265, 0, 0.0383354, 0, 1, 0, -0.0383354, 0, -0.999265, 0.31073, -0.101291, 1.64481)
+
+[node name="Foliage" type="Node3D" parent="Background"]
+
+[node name="Willow_15" parent="Background/Foliage" instance=ExtResource("25_xoyml")]
 transform = Transform3D(-1.30078, 0, 0.746982, 0, 1.5, 0, -0.746982, 0, -1.30078, -18.3243, -0.265192, 27.6653)
 
-[node name="Willow_20" parent="Background" instance=ExtResource("25_xoyml")]
+[node name="Willow_20" parent="Background/Foliage" instance=ExtResource("25_xoyml")]
 transform = Transform3D(-0.549263, 0, -1.39582, 0, 1.5, 0, 1.39582, 0, -0.549263, -3.32431, -0.265194, 41.667)
 
-[node name="Willow_16" parent="Background" instance=ExtResource("25_xoyml")]
+[node name="Willow_16" parent="Background/Foliage" instance=ExtResource("25_xoyml")]
 transform = Transform3D(0.691275, 0, 1.33122, 0, 1.5, 0, -1.33122, 0, 0.691275, 3.38836, -0.265192, 9.12838)
 
-[node name="Plant_2" parent="Background" instance=ExtResource("26_tjry6")]
+[node name="Plant_2" parent="Background/Foliage" instance=ExtResource("26_tjry6")]
 transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, -5.60388, -0.27292, 4.62721)
 
-[node name="Plant_8" parent="Background" instance=ExtResource("26_tjry6")]
+[node name="Plant_16" parent="Background/Foliage" instance=ExtResource("26_tjry6")]
+transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, -16.5511, -0.27292, 29.8085)
+
+[node name="Plant_17" parent="Background/Foliage" instance=ExtResource("26_tjry6")]
+transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, -16.0255, -0.27292, 12.6247)
+
+[node name="Plant_8" parent="Background/Foliage" instance=ExtResource("26_tjry6")]
 transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, -5.04435, -0.27292, 10.3319)
 
-[node name="Plant_3" parent="Background" instance=ExtResource("26_tjry6")]
+[node name="Plant_3" parent="Background/Foliage" instance=ExtResource("26_tjry6")]
 transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, -1.38782, -0.27292, 4.9235)
 
-[node name="Plant_4" parent="Background" instance=ExtResource("27_66y2c")]
+[node name="Plant_4" parent="Background/Foliage" instance=ExtResource("27_66y2c")]
 transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, -7.15737, -0.253896, 9.06787)
 
-[node name="Plant_6" parent="Background" instance=ExtResource("27_66y2c")]
+[node name="Plant_6" parent="Background/Foliage" instance=ExtResource("27_66y2c")]
 transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, -6.89098, -0.253896, 33.352)
 
-[node name="Plant_5" parent="Background" instance=ExtResource("28_w4yh3")]
+[node name="Plant_15" parent="Background/Foliage" instance=ExtResource("27_66y2c")]
+transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, 1.29972, -0.253896, 44.6952)
+
+[node name="Plant_5" parent="Background/Foliage" instance=ExtResource("28_w4yh3")]
 transform = Transform3D(-0.799191, 0, 0.0359556, 0, 0.8, 0, -0.0359556, 0, -0.799191, -0.109252, -0.267032, 9.11349)
 
-[node name="Plant_9" parent="Background" instance=ExtResource("28_w4yh3")]
+[node name="Plant_9" parent="Background/Foliage" instance=ExtResource("28_w4yh3")]
 transform = Transform3D(-0.799191, 0, 0.0359556, 0, 0.8, 0, -0.0359556, 0, -0.799191, -9.42986, -0.267032, 31.8418)
 
-[node name="Plant_7" parent="Background" instance=ExtResource("28_w4yh3")]
+[node name="Plant_14" parent="Background/Foliage" instance=ExtResource("28_w4yh3")]
+transform = Transform3D(-0.799191, 0, 0.0359556, 0, 0.8, 0, -0.0359556, 0, -0.799191, 4.93403, -0.267033, 38.2813)
+
+[node name="Plant_12" parent="Background/Foliage" instance=ExtResource("28_w4yh3")]
+transform = Transform3D(-0.799191, 0, 0.0359556, 0, 0.8, 0, -0.0359556, 0, -0.799191, -10.7685, -0.267032, 9.46479)
+
+[node name="Plant_7" parent="Background/Foliage" instance=ExtResource("28_w4yh3")]
 transform = Transform3D(-0.799191, 0, 0.0359556, 0, 0.8, 0, -0.0359556, 0, -0.799191, -0.712606, -0.267032, 38.9456)
 
-[node name="Plant_1" parent="Background" instance=ExtResource("29_tjry6")]
-transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, -2.50917, -0.245073, 9.33755)
+[node name="Plant_1" parent="Background/Foliage" instance=ExtResource("29_tjry6")]
+transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, -2.94365, -0.245073, 9.18683)
 
-[node name="Plant_10" parent="Background" instance=ExtResource("29_tjry6")]
+[node name="Plant_11" parent="Background/Foliage" instance=ExtResource("29_tjry6")]
+transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, -14.0165, -0.245073, 10.5904)
+
+[node name="Plant_13" parent="Background/Foliage" instance=ExtResource("29_tjry6")]
+transform = Transform3D(-0.834184, 0, 0.551485, 0, 1, 0, -0.551485, 0, -0.834184, -12.1915, -0.245074, 31.4381)
+
+[node name="Plant_10" parent="Background/Foliage" instance=ExtResource("29_tjry6")]
 transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, -5.12911, -0.245074, 32.7896)
+
+[node name="Willow_3" parent="Background/Foliage" instance=ExtResource("21_gxibg")]
+transform = Transform3D(0.754712, 0, 1.85214, 0, 2, 0, -1.85214, 0, 0.754712, 2.01596, -0.260212, 7.54267)
+
+[node name="Willow_4" parent="Background/Foliage" instance=ExtResource("22_1uhqc")]
+transform = Transform3D(0.982355, 0, -1.74212, 0, 2, 0, 1.74212, 0, 0.982355, -7.79388, -0.246028, 4.65231)
+
+[node name="Willow_11" parent="Background/Foliage" instance=ExtResource("22_1uhqc")]
+transform = Transform3D(-0.765077, 0, 1.84788, 0, 2, 0, -1.84788, 0, -0.765077, -12.2913, -0.246028, 32.4924)
+
+[node name="Willow_12" parent="Background/Foliage" instance=ExtResource("22_1uhqc")]
+transform = Transform3D(1.73908, 0, 0.987732, 0, 2, 0, -0.987732, 0, 1.73908, 2.89597, -0.246028, 42.5284)
+
+[node name="Willow_7" parent="Background/Foliage" instance=ExtResource("22_1uhqc")]
+transform = Transform3D(1.99974, 0, 0.0323921, 0, 2, 0, -0.0323921, 0, 1.99974, 2.71969, -0.246029, 29.3047)
+
+[node name="Willow_17" parent="Background/Foliage" instance=ExtResource("22_1uhqc")]
+transform = Transform3D(1.11572, 0, 1.65987, 0, 2, 0, -1.65987, 0, 1.11572, 6.03798, -0.246029, 1.35027)
+
+[node name="Willow_2" parent="Background/Foliage" instance=ExtResource("23_k8rnb")]
+transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, 1.22751, -0.288126, 0.0470543)
+
+[node name="Willow_19" parent="Background/Foliage" instance=ExtResource("23_k8rnb")]
+transform = Transform3D(-0.888665, 0, 0.458556, 0, 1, 0, -0.458556, 0, -0.888665, 4.83802, -0.288128, 32.0409)
+
+[node name="Willow_8" parent="Background/Foliage" instance=ExtResource("23_k8rnb")]
+transform = Transform3D(0.502067, 0, 1.41348, 0, 1.5, 0, -1.41348, 0, 0.502067, 6.09191, -0.288126, 16.772)
+
+[node name="Lilypad" parent="Background/Foliage" instance=ExtResource("24_g2bww")]
+transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, -4.09918, -0.129725, 5.48502)
+
+[node name="Lilypad2" parent="Background/Foliage" instance=ExtResource("24_g2bww")]
+transform = Transform3D(-0.998989, 0, 0.0449445, 0, 1, 0, -0.0449445, 0, -0.998989, -2.21754, -0.129724, 35.3328)
+
+[node name="Willow_5" parent="Background/Foliage" instance=ExtResource("23_k8rnb")]
+transform = Transform3D(0.998823, 0, -1.11909, 0, 1.5, 0, 1.11909, 0, 0.998823, -13.1966, -0.288124, 10.231)
+
+[node name="Willow_9" parent="Background/Foliage" instance=ExtResource("23_k8rnb")]
+transform = Transform3D(-0.900735, 0, 1.19945, 0, 1.5, 0, -1.19945, 0, -0.900735, 1.70829, -0.288124, 33.17)
+
+[node name="Willow_14" parent="Background/Foliage" instance=ExtResource("23_k8rnb")]
+transform = Transform3D(0.541386, 0, -1.39889, 0, 1.5, 0, 1.39889, 0, 0.541386, -18.7542, -0.27566, 11.611)
+
+[node name="Willow_6" parent="Background/Foliage" instance=ExtResource("21_gxibg")]
+transform = Transform3D(-1.28892, 0, -0.767255, 0, 1.5, 0, 0.767255, 0, -1.28892, 2.52847, -0.260213, 11.1805)
+
+[node name="Willow_21" parent="Background/Foliage" instance=ExtResource("21_gxibg")]
+transform = Transform3D(-1.28892, 0, -0.767255, 0, 1.5, 0, 0.767255, 0, -1.28892, -18.089, -0.260213, 30.0237)
+
+[node name="Willow_13" parent="Background/Foliage" instance=ExtResource("21_gxibg")]
+transform = Transform3D(-1.28892, 0, -0.767255, 0, 1.5, 0, 0.767255, 0, -1.28892, -18.2977, -0.260213, 13.4606)
+
+[node name="Willow_10" parent="Background/Foliage" instance=ExtResource("21_gxibg")]
+transform = Transform3D(0.187272, 0, 1.48826, 0, 1.5, 0, -1.48826, 0, 0.187272, -5.1606, -0.260213, 34.971)
+
+[node name="Willow_18" parent="Background/Foliage" instance=ExtResource("21_gxibg")]
+transform = Transform3D(1.28775, 0.0251394, 0.768794, 0.0211705, 1.49747, -0.0844281, -0.768913, 0.0833327, 1.28523, 7.77974, -0.260214, 7.76381)
+
+[node name="WoodLog_Moss" parent="Background/Foliage" instance=ExtResource("30_w4yh3")]
+transform = Transform3D(-0.713005, 0, -0.701158, 0, 1, 0, 0.701158, 0, -0.713005, -1.03625, -0.271743, 10.1831)
+
+[node name="WoodLog_Moss2" parent="Background/Foliage" instance=ExtResource("30_w4yh3")]
+transform = Transform3D(-0.53419, 0, 0.845364, 0, 1, 0, -0.845364, 0, -0.53419, -1.76747, -0.271743, 31.1862)
+
+[node name="TreeStump_Moss" parent="Background/Foliage" instance=ExtResource("31_vcrof")]
+transform = Transform3D(-0.201727, 0, 0.979441, 0, 1, 0, -0.979441, 0, -0.201727, -3.66051, -0.266628, 32.824)
+
+[node name="TreeStump_Moss3" parent="Background/Foliage" instance=ExtResource("31_vcrof")]
+transform = Transform3D(-0.201727, 0, 0.979441, 0, 1, 0, -0.979441, 0, -0.201727, -14.8157, -0.266628, 30.864)
+
+[node name="TreeStump_Moss2" parent="Background/Foliage" instance=ExtResource("31_vcrof")]
+transform = Transform3D(-0.519549, 0, -0.85444, 0, 1, 0, 0.85444, 0, -0.519549, 0.557608, -0.266628, 11.6453)

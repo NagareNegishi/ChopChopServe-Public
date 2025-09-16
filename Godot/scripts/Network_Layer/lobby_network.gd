@@ -31,7 +31,7 @@ func _ready():
 	slots = [slot1, slot2, slot3, slot4]
 
 	ENetManager.player_list_updated.connect(_on_player_list_updated)
-	ENetManager.disconnected_from_server.connect(_back_to_main_menu)
+	# ENetManager.disconnected_from_server.connect(_back_to_main_menu)
 	ENetManager.back_to_main_menu.connect(_back_to_main_menu)
 	ENetManager.team_assigned.connect(_on_team_assigned)
 	ENetManager.game_started.connect(_start_game)
@@ -41,9 +41,9 @@ func _ready():
 
 	if network_layer.is_host():
 		is_host = true
-		current_players = ENetManager.get_player_list()
-		_update_player_list()
 
+	current_players = ENetManager.get_player_list()
+	_update_player_list()
 	_set_role_label()
 	_set_team_label(my_team)
 	_set_buttons()
@@ -120,8 +120,6 @@ func _on_leave_pressed():
 			"player_id": my_id
 		})
 		await get_tree().create_timer(0.1).timeout # Small delay to ensure message is sent
-		# network_layer.leave_game()
-	# back_to_main_menu()
 
 
 ## Signal Handlers from ENetManager, assign teams and display
@@ -130,6 +128,8 @@ func _on_team_assigned(team1: Array[int], team2: Array[int]) -> void:
 		my_team = 1
 	elif my_id in team2:
 		my_team = 2
+	else:
+		my_team = -1
 	_set_team_label(my_team)
 	if is_host:
 		start_button.disabled = not ENetManager.can_start_game()
@@ -142,15 +142,10 @@ func _start_game() -> void:
 ##----------------------------------------------------------------------------------
 ## need more logic here.
 ## can Lobby scene take over? or should we create a new scene for the game?
-	_change_scene("res://scenes/Appliance_system/Appliance_test.tscn")
+	SceneManager.change_scene(SceneManager.Scene.TEST)
 ##----------------------------------------------------------------------------------
 
 
 ## Back to Main Menu
 func _back_to_main_menu() -> void:
-	_change_scene("res://scenes/Network_Layer/main_menu.tscn")
-
-
-## Helper Functions to Change Scenes
-func _change_scene(scene_path: String):
-	get_tree().call_deferred("change_scene_to_file", scene_path)
+	SceneManager.change_scene(SceneManager.Scene.MAIN_MENU)

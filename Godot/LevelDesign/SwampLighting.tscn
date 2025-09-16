@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://dys1qdkpi62i0"]
+[gd_scene load_steps=47 format=3 uid="uid://dys1qdkpi62i0"]
 
 [ext_resource type="Material" uid="uid://cnd7ix4cfrxi" path="res://shaders/Water/SwampWater.tres" id="1_kl1pt"]
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="2_fb8tl"]
@@ -96,6 +96,24 @@ material = ExtResource("1_kl1pt")
 radius = 0.1
 radial_segments = 6
 rings = 4
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_w4yh3"]
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+spread = 5.0
+gravity = Vector3(0, -11, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vcrof"]
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.341176, 0.541176, 0.529412, 1)
+roughness = 0.3
+emission_enabled = true
+emission = Color(0.341176, 0.541176, 0.529412, 1)
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_ty3c0"]
+material = SubResource("StandardMaterial3D_vcrof")
+size = Vector2(0.03, 0.03)
 
 [node name="BradleyTestScene" type="Node3D"]
 
@@ -683,3 +701,12 @@ transform = Transform3D(-0.201727, 0, 0.979441, 0, 1, 0, -0.979441, 0, -0.201727
 
 [node name="TreeStump_Moss2" parent="Background/Foliage" instance=ExtResource("31_vcrof")]
 transform = Transform3D(-0.519549, 0, -0.85444, 0, 1, 0, 0.85444, 0, -0.519549, 0.557608, -0.266628, 11.6453)
+
+[node name="Rain" type="GPUParticles3D" parent="."]
+transform = Transform3D(14.2909, 0, 0, 0, 1.31253, 0, 0, 0, 22.5732, -2.81774, 13.0117, 0)
+amount = 500
+lifetime = 1.3
+speed_scale = 0.9
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_w4yh3")
+draw_pass_1 = SubResource("QuadMesh_ty3c0")

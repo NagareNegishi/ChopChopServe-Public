@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://dpdrqqhoutpc3"]
+[gd_scene load_steps=64 format=3 uid="uid://dpdrqqhoutpc3"]
 
 [ext_resource type="Texture2D" uid="uid://ceokogexj8qsw" path="res://Particles/hapy.jpg" id="1_l7qkd"]
 [ext_resource type="Texture2D" uid="uid://ihsa1e40m7kc" path="res://Particles/sad-emoji.png" id="2_1x3w2"]
@@ -310,6 +310,22 @@ material = ExtResource("3_1x3w2")
 radial_segments = 10
 rings = 3
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_acvn8"]
+emission_shape = 1
+emission_sphere_radius = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jtpir"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.341176, 0.541176, 0.529412, 0.356863)
+roughness = 0.3
+refraction_enabled = true
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_7whca"]
+material = SubResource("StandardMaterial3D_jtpir")
+size = Vector2(0.01, 0.01)
+
 [node name="Node3D" type="Node3D"]
 
 [node name="Smoke" type="GPUParticles3D" parent="."]
@@ -502,3 +518,10 @@ draw_pass_1 = SubResource("SphereMesh_acvn8")
 transform = Transform3D(-0.352926, 0, 0.00366266, 0, 0.057688, 0, -0.00356662, 0, -0.362429, -0.00420278, 0.0399855, -0.000147462)
 mesh = SubResource("SphereMesh_7whca")
 skeleton = NodePath("../MeshInstance3D13")
+
+[node name="Rain" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.6878, -0.0486439, 0)
+amount = 100
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_acvn8")
+draw_pass_1 = SubResource("QuadMesh_7whca")

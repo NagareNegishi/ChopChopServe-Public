@@ -15,8 +15,6 @@ func _init():
 		"Water": ["RAW","BOILED"]
 	}
 	is_available = true
-	# This is the appliance it is to be collected in 
-	#appliance = "Bowl"
 
 func _ready():
 	cooked_mesh_good = $TomatoSoup

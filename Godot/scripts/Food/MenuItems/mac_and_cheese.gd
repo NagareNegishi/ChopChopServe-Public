@@ -12,7 +12,7 @@ func _init():
 	
 	ingredient_states = {
 		"Pasta": ["RAW","BOILED","BAKED"],
-		"Cheese": ["RAW", "BLENDED", "BAKED"]
+		"Cheese": ["RAW", "CHOPPED", "BAKED"]
 	}
 	
 	is_available=true

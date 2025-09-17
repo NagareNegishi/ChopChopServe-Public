@@ -7,7 +7,7 @@ static var _auto_register = MenuItem.register(SteakAndChips)
 @warning_ignore("unused_private_class_variable")
 static var _type_register = MenuItem.register_type(MenuItem.mains, SteakAndChips.new())
 
-func _ready():
+func _init():
 	ingredients = ["Beef", "Potato"]
 	
 	ingredient_states = {
@@ -17,7 +17,7 @@ func _ready():
 	
 	is_available=true
 
-func _init():
+func _ready():
 	cooked_mesh_good = $SteakChips
 	cooked_mesh_bad = $BadQualitySteakChips
 	cooked_mesh_burnt = $BurntSteakChips

@@ -33,6 +33,8 @@ var current_cooking_style: ApplianceFactory.CookingStyle
 
 var is_cooking = false # Decides whether or not it should be cooking the ingredient
 var is_cooked : bool = false
+var l # current collision layer
+var m # current collision mask
 
 # --------------------------- COOKING TIMES -----------------------------------
 var BOILED_time = 30 # How long it takes to cook 
@@ -341,6 +343,12 @@ func current_visibility(changeTo: bool):
 		push_error("No mesh passed to current_visibility() in food.gd")
 	current_mesh.visible = changeTo
 
-func change_collisions():
-	self.collision_layer = 0
-	self.collision_mask = 0
+func change_collisions(turn_off:bool): 
+	if turn_off:
+		l = self.collision_layer
+		m = self.collision_mask
+		self.collision_layer = 0
+		self.collision_mask = 0
+	else:
+		self.collision_layer = l
+		self.collision_mask = m

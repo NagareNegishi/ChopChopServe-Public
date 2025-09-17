@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://bajtcauh5e5xi"]
+[gd_scene load_steps=4 format=3 uid="uid://bajtcauh5e5xi"]
 
 [ext_resource type="Script" uid="uid://bv1fic7goj5rs" path="res://scripts/Network_Layer/main_menu.gd" id="1_5gu6x"]
+[ext_resource type="FontFile" uid="uid://dxc6n0umgi0q4" path="res://assets/fonts/Jua-Regular.ttf" id="2_36fig"]
+[ext_resource type="PackedScene" uid="uid://2qlfolqgl2hl" path="res://UI/UI_CustomButton.tscn" id="3_36fig"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -20,34 +22,70 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HostContainer" type="VBoxContainer" parent="Menu"]
+[node name="Disclamer" type="Label" parent="Menu"]
 layout_mode = 0
-offset_left = 200.0
-offset_top = 400.0
-offset_right = 400.0
-offset_bottom = 480.0
+offset_left = 183.0
+offset_top = 350.0
+offset_right = 360.0
+offset_bottom = 375.0
+theme_override_colors/font_color = Color(0.992157, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_36fig")
+theme_override_font_sizes/font_size = 10
+text = "*will make graphic for title*"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="CreateButton" type="Button" parent="Menu/HostContainer"]
-layout_mode = 2
-text = "Host Game"
+[node name="Title" type="Label" parent="Menu"]
+layout_mode = 0
+offset_left = 115.0
+offset_top = 54.0
+offset_right = 422.0
+offset_bottom = 360.0
+theme_override_fonts/font = ExtResource("2_36fig")
+theme_override_font_sizes/font_size = 100
+text = " CHOP 
+ CHOP 
+SERVE"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="HostPublicIPInput" type="LineEdit" parent="Menu/HostContainer"]
+[node name="HostPublicIPInput" type="LineEdit" parent="Menu"]
+visible = false
 layout_mode = 2
+offset_left = 335.0
+offset_top = 407.0
+offset_right = 447.0
+offset_bottom = 438.0
 placeholder_text = "[Public IP]"
 alignment = 1
 
-[node name="ClientContainer" type="VBoxContainer" parent="Menu"]
-layout_mode = 0
-offset_left = 600.0
-offset_top = 400.0
-offset_right = 800.0
-offset_bottom = 480.0
-
-[node name="JoinButton" type="Button" parent="Menu/ClientContainer"]
+[node name="ClientIPInput" type="LineEdit" parent="Menu"]
+visible = false
 layout_mode = 2
-text = "Join Game"
-
-[node name="ClientIPInput" type="LineEdit" parent="Menu/ClientContainer"]
-layout_mode = 2
+offset_left = 334.0
+offset_top = 457.0
+offset_right = 534.0
+offset_bottom = 488.0
 placeholder_text = "[Server Address]"
 alignment = 1
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="Menu"]
+layout_mode = 0
+offset_left = 201.0
+offset_top = 399.0
+offset_right = 324.0
+offset_bottom = 569.0
+theme_override_constants/separation = -2
+
+[node name="HostButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
+layout_mode = 2
+text = "HOST"
+
+[node name="JoinButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
+layout_mode = 2
+text = "JOIN
+"
+
+[node name="ExitButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
+layout_mode = 2
+text = "EXIT"

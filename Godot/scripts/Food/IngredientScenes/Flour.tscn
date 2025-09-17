@@ -51,7 +51,7 @@ shape = SubResource("BoxShape3D_vem8e")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00561047, 0.523018, 0)
 is_pickup = true
 
-[node name="Flour2" type="MeshInstance3D" parent="."]
+[node name="Flour" type="MeshInstance3D" parent="."]
 transform = Transform3D(-3.25841e-08, 0, 0.17, 0, 0.238, 0, -0.2, 0, -2.76965e-08, 0, 0, 0)
 mesh = SubResource("ArrayMesh_ixt2d")
 skeleton = NodePath("")

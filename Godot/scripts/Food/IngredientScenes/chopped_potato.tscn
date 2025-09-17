@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://1c75jsgv3bud"]
-
-[ext_resource type="PackedScene" uid="uid://bvv7o5ipcxhbh" path="res://assets/newmodels/food/ingredients/processed/PotatoChopped.glb" id="1_m5kmg"]
-
-[node name="ChoppedPotato" instance=ExtResource("1_m5kmg")]

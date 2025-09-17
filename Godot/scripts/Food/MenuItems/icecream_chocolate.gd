@@ -15,6 +15,9 @@ func _ready():
 		"Cocoa": ["RAW","BLENDED"]
 	}
 	
-	cooked_mesh_good = null
-	cooked_mesh_bad = null
+	is_available = true
+
+func _init():
+	cooked_mesh_good = $IceCreamChoc
+	cooked_mesh_bad = $IceCreamChoc2
 	cooked_mesh_burnt = null

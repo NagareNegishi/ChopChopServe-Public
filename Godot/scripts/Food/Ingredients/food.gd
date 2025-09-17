@@ -67,6 +67,8 @@ func _ready():
 	cook_timer.wait_time = 1.0
 	cook_timer.one_shot = false
 	cook_timer.timeout.connect(_on_timer_timeout)
+	
+	
 
 func _on_timer_timeout():
 	#print("=== TIMER TICK === is_cooking:", is_cooking, " current_appliance:", current_appliance, " time_power:", time_power)
@@ -158,21 +160,27 @@ func mix():
 	MIXED_time -= time_power * cook_timer.wait_time 
 	check_processed(foodState.MIXED, MIXED_time, 0, true)
 
-func freeze():
+func freeze(): # NOT needed anymore??
 	FROZEN_time -= time_power * cook_timer.wait_time 
 	check_processed(foodState.FROZEN, FROZEN_time, 0, true)
 
 # -------------------------END OF COOKING TYPES---------------------------------
 func check_processed(s: foodState, time_a:int, time_b:int, stop:bool):
-	# print("Cook time remaining: ", time_a, " on food item: ", food_name)
-	if(time_a <= 0 && time_a > time_b):
+
+	print("Cook time remaining: ", time_a, " on food item: ", food_name)
+	if(time_a <= 0 && time_a >= time_b):
+
 		state = s;
 		if !previous_states.has(convert_enum_to_string(state)):
 			previous_states.append(convert_enum_to_string(state))
 		is_cooked = true
-		# print("Food is done ", food_name)
+
+		print("Food: ", food_name, " and its previous states: ", previous_states)
+		print("Food is done ", food_name)
+
 		#emit_signal("changed_food_state")
-		if stop:
+		if stop == true:
+			print("Stop cooking in if statement")
 			stop_cooking()
 		on_state_change()
 

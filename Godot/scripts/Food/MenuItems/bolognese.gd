@@ -11,15 +11,15 @@ func _init():
 	ingredients = ["Beef", "Pasta", "Tomato"]
 	
 	ingredient_states = {
-		"Beef": ["RAW","COOKED"],
+		"Beef": ["RAW","FRIED"],
 		"Pasta": ["RAW","BOILED"],
-		"Tomato":["RAW","BLENDED","COOKED"]
+		"Tomato":["RAW","MIXED","FRIED"]
 	}
 	#appliance = "Bowl"
 	is_available=true
 
 func _ready():
 	cooked_mesh_good = $SpagBol
-	cooked_mesh_bad = null
-	cooked_mesh_burnt = null
+	cooked_mesh_bad = $BadQualitySpagBol
+	cooked_mesh_burnt = $BurntSpagBol
 	

@@ -8,3 +8,5 @@ func _ready():
 	mixed_mesh = $Cocoa
 	add_to_group("Food")
 	on_state_change()
+	
+	print("Name of ingredient: ", food_name, " Position: ", global_position, " ID: ", ENetManager.get_my_id())

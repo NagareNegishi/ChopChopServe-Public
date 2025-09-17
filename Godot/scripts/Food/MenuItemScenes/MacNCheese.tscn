@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=4 uid="uid://c8kod3l3j1ldw"]
+[gd_scene load_steps=9 format=4 uid="uid://c8kod3l3j1ldw"]
 
 [ext_resource type="Script" uid="uid://jajbvax46rm0" path="res://scripts/Food/MenuItems/mac_and_cheese.gd" id="1_7wbvi"]
 [ext_resource type="Material" uid="uid://d1mru8ywyt58h" path="res://assets/newmodels/texturemap.tres" id="2_agydx"]
+[ext_resource type="Texture2D" uid="uid://b6evjw2fax5hh" path="res://assets/newmodels/food/recipes/tainted/MacnCheeseIck_TextureMapGreen.png" id="3_8gglh"]
+[ext_resource type="Texture2D" uid="uid://dv0nejyrr8b1w" path="res://assets/newmodels/food/recipes/burnt/MacnCheeseBurnt_TextureMap.png" id="4_ybmbm"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_frclv"]
 _surfaces = [{
@@ -37,6 +39,13 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_frclv")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8y715"]
+albedo_texture = ExtResource("3_8gglh")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fkvfm"]
+albedo_color = Color(0.32355, 0.312286, 0.3026, 1)
+albedo_texture = ExtResource("4_ybmbm")
+
 [node name="MacNCheese" type="Node3D"]
 script = ExtResource("1_7wbvi")
 
@@ -44,3 +53,17 @@ script = ExtResource("1_7wbvi")
 transform = Transform3D(0.0302308, 0, -0.0206248, 0, 0.00481771, 0, 0.0206248, 0, 0.0302308, 0, 0, 0)
 mesh = SubResource("ArrayMesh_ncrtv")
 skeleton = NodePath("")
+
+[node name="BadQualityMacNCheese" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.0302308, 0, -0.0206248, 0, 0.00481771, 0, 0.0206248, 0, 0.0302308, 0, 0, 0)
+visible = false
+mesh = SubResource("ArrayMesh_ncrtv")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_8y715")
+
+[node name="BurntMacNCheese" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.0302308, 0, -0.0206248, 0, 0.00481771, 0, 0.0206248, 0, 0.0302308, 0, 0, 0)
+visible = false
+mesh = SubResource("ArrayMesh_ncrtv")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_fkvfm")

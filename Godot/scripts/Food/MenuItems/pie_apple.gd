@@ -12,9 +12,12 @@ func _ready():
 	
 	ingredient_states = {
 		"Apple": ["RAW","CHOPPED", "BAKED"],
-		"Dough": ["RAW","ROLLED", "BAKED"]
+		"Dough": ["RAW", "BAKED"]
 	}
 	
-	cooked_mesh_good = null
-	cooked_mesh_bad = null
-	cooked_mesh_burnt = null
+	is_available = true
+
+func _init():
+	cooked_mesh_good = $ApplePie
+	cooked_mesh_bad = $BadQualityApplePie
+	cooked_mesh_burnt = $BurntApplePie

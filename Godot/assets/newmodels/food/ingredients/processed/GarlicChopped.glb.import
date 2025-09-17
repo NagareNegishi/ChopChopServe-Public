@@ -13,8 +13,8 @@ dest_files=["res://.godot/imported/GarlicChopped.glb-bc9586e6800de64f2091bac186d
 
 [params]
 
-nodes/root_type=""
-nodes/root_name=""
+nodes/root_type="Node3D"
+nodes/root_name="ChoppedCarlic"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false

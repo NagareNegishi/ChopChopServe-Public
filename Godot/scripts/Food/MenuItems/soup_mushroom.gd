@@ -15,11 +15,9 @@ func _ready():
 		"Water": ["RAW","BOILED"]
 	}
 	
-	# This is the appliance it is to be collected in 
-	#appliance = "Bowl"
-	
-	cooked_mesh_good = null
-	cooked_mesh_bad = null
-	cooked_mesh_burnt = null
-	
-	register(self)
+	is_available = true
+
+func _init():
+	cooked_mesh_good = $SoupMushroom
+	cooked_mesh_bad = $BadQualityMushSoup
+	cooked_mesh_burnt = $BurntSoup

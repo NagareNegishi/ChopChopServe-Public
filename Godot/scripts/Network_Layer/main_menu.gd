@@ -5,10 +5,10 @@ extends Control
 var network_layer: ENetNetworkLayer
 # Menu UI elements
 @onready var menu = $Menu
-@onready var create_button = $Menu/ButtonsContainer/HostButton#$Menu/HostContainer/CreateButton
-@onready var host_public_ip_input = $Menu/HostContainer/HostPublicIPInput
-@onready var join_button = $Menu/ButtonsContainer/JoinButton#$Menu/ClientContainer/JoinButton
-@onready var ip_input = $Menu/ClientContainer/ClientIPInput
+@onready var create_button = $Menu/ButtonsContainer/HostButton
+@onready var host_public_ip_input = $Menu/HostPublicIPInput
+@onready var join_button = $Menu/ButtonsContainer/JoinButton
+@onready var ip_input =$Menu/HostPublicIPInput
 @onready var exit_button = $Menu/ButtonsContainer/ExitButton
 
 

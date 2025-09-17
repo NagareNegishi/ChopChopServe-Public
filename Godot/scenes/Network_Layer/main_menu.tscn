@@ -50,6 +50,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="HostPublicIPInput" type="LineEdit" parent="Menu"]
+visible = false
 layout_mode = 2
 offset_left = 335.0
 offset_top = 407.0
@@ -59,6 +60,7 @@ placeholder_text = "[Public IP]"
 alignment = 1
 
 [node name="ClientIPInput" type="LineEdit" parent="Menu"]
+visible = false
 layout_mode = 2
 offset_left = 334.0
 offset_top = 457.0
@@ -77,22 +79,13 @@ theme_override_constants/separation = -2
 
 [node name="HostButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
 layout_mode = 2
-theme_override_colors/font_hover_pressed_color = Color(0.692965, 0.653417, 0.537388, 1)
-theme_override_colors/font_hover_color = Color(0.894101, 0.87343, 0.812088, 1)
-theme_override_colors/font_color = Color(0.980392, 0.976471, 0.964706, 1)
 text = "HOST"
 
 [node name="JoinButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
 layout_mode = 2
-theme_override_colors/font_hover_pressed_color = Color(0.692965, 0.653417, 0.537388, 1)
-theme_override_colors/font_hover_color = Color(0.894101, 0.87343, 0.812088, 1)
-theme_override_colors/font_color = Color(0.980392, 0.976471, 0.964706, 1)
 text = "JOIN
 "
 
 [node name="ExitButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
 layout_mode = 2
-theme_override_colors/font_hover_pressed_color = Color(0.692965, 0.653417, 0.537388, 1)
-theme_override_colors/font_hover_color = Color(0.894101, 0.87343, 0.812088, 1)
-theme_override_colors/font_color = Color(0.980392, 0.976471, 0.964706, 1)
 text = "EXIT"

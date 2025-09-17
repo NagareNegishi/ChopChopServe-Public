@@ -13,7 +13,8 @@ enum Scene {
 	# remove later
 	SETTINGS,
 	LOBBY_TEST,
-	TEST
+	TEST,
+	JOHNO_TEST
 }
 
 const SCENE_PATHS = {
@@ -22,7 +23,8 @@ const SCENE_PATHS = {
 	Scene.Food_Court: "res://Milestone3Submission.tscn",
 	Scene.SETTINGS: "", # Will be added later
 	Scene.LOBBY_TEST: "res://scenes/Network_Layer/lobby_network.tscn",
-	Scene.TEST: "res://scenes/Appliance_system/Appliance_test.tscn"
+	Scene.TEST: "res://scenes/Appliance_system/Appliance_test.tscn",
+	Scene.JOHNO_TEST: "res://JohnoTestScene.tscn"
 }
 
 var current_scene: Scene = Scene.MAIN_MENU

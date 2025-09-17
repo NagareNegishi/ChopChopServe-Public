@@ -318,6 +318,9 @@ func server_drop_item(player_path : String, is_throw : bool) -> bool:
 func _client_drop_item(player_path : String, is_throw : bool) -> bool:
 	var player : Node3D = get_tree().current_scene.get_node(player_path)
 	
+	if player.item_in_hand && is_in_group("Food"):
+		player.item_in_hand.change_collision(false)
+	
 	if player.item_in_hand.get_parent():
 		player.item_in_hand.get_parent().remove_child(player.item_in_hand)
 		
@@ -481,11 +484,11 @@ func _final_drop(item: Node3D) -> void:
 ## Assigns the player a team
 ## @param team the teamm you want to assign the player
 ## @return void
-func set_team(team : GlobalScript.Team):
+func set_team(team : int):
 	player_state.team = team
 
 
 ## Gets the team on the player
 ## @return GlobalScript.Team what team the player is assigned
-func get_team() -> GlobalScript.Team:
+func get_team() -> int:
 	return player_state.team

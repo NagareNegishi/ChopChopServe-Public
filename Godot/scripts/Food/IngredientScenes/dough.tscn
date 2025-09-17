@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=4 uid="uid://co5dkfcyuxj16"]
+[gd_scene load_steps=9 format=4 uid="uid://co5dkfcyuxj16"]
 
 [ext_resource type="Script" uid="uid://dmcdbb0xyaenp" path="res://scripts/Food/Ingredients/dough.gd" id="1_dchqa"]
 [ext_resource type="Material" uid="uid://d1mru8ywyt58h" path="res://assets/newmodels/texturemap.tres" id="2_76s6b"]
@@ -38,6 +38,12 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_qcuog")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_82nma"]
+albedo_color = Color(0.486275, 0.741176, 0.380392, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t7sf3"]
+albedo_color = Color(0.140447, 0.140447, 0.140447, 1)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_y3ybv"]
 
 [node name="Dough" type="RigidBody3D"]
@@ -47,6 +53,20 @@ script = ExtResource("1_dchqa")
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
 mesh = SubResource("ArrayMesh_fraoe")
 skeleton = NodePath("")
+
+[node name="SpoiledDough" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+visible = false
+mesh = SubResource("ArrayMesh_fraoe")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_82nma")
+
+[node name="BurntDough" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+visible = false
+mesh = SubResource("ArrayMesh_fraoe")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_t7sf3")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.468339, 0)

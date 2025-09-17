@@ -8,7 +8,7 @@ static var _auto_register = MenuItem.register(MushroomTaco)
 static var _type_register = MenuItem.register_type(MenuItem.mains, MushroomTaco.new())
 
 
-func _ready():
+func _init():
 	ingredients = ["Dough", "Mushroom", "Tomato"]
 	
 	ingredient_states = {
@@ -19,7 +19,8 @@ func _ready():
 	
 	is_available= true
 
-func _init():
+func _ready():
 	cooked_mesh_good = $TacoMushroom
 	cooked_mesh_bad = $BadQualityMushTaco
 	cooked_mesh_burnt = $BurntMushTaco
+	

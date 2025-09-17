@@ -43,7 +43,7 @@ shadow_mesh = SubResource("ArrayMesh_h3vw4")
 [node name="Cocoa" type="RigidBody3D"]
 script = ExtResource("1_n6biq")
 
-[node name="Cocoa2" type="MeshInstance3D" parent="."]
+[node name="Cocoa" type="MeshInstance3D" parent="."]
 transform = Transform3D(-3.25841e-08, 0, 0.17, 0, 0.238, 0, -0.2, 0, -2.76965e-08, 0, 0, 0)
 mesh = SubResource("ArrayMesh_bt316")
 skeleton = NodePath("")

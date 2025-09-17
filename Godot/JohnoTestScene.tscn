@@ -1,6 +1,7 @@
 [gd_scene load_steps=29 format=3 uid="uid://bg2l1urkd7kjy"]
 
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="3_l1ni4"]
+[ext_resource type="PackedScene" uid="uid://bk7ovilp788kq" path="res://scripts/Player/spawn_point.tscn" id="4_dok52"]
 [ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="4_gs5vi"]
 [ext_resource type="PackedScene" uid="uid://dxhfqm13c85ar" path="res://assets/models/decorations/table.glb" id="5_7dw3l"]
 [ext_resource type="PackedScene" uid="uid://hxrvqyggbykc" path="res://assets/models/NuFurniture/Bench.glb" id="7_hgfpf"]
@@ -15,11 +16,11 @@
 [ext_resource type="PackedScene" uid="uid://b7x0xycilg7vt" path="res://assets/models/NuFurniture/newblender.glb" id="15_uq20t"]
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="16_0ny5b"]
 [ext_resource type="PackedScene" uid="uid://b64oudiukwpwa" path="res://assets/models/NuFurniture/nufridge.glb" id="16_ciehn"]
-[ext_resource type="Script" uid="uid://c52li82tp4c6f" path="res://scripts/Player/spawn_point.gd" id="17_pk2le"]
 [ext_resource type="PackedScene" uid="uid://dythb8xw31t1c" path="res://assets/models/infrastructure/wall.glb" id="17_tg3k6"]
 [ext_resource type="PackedScene" uid="uid://dvn4ytv3ro6ec" path="res://scripts/Food/IngredientScenes/Tomato.tscn" id="18_7dw3l"]
-[ext_resource type="Shader" uid="uid://b22unitrdiinr" path="res://shaders/load.gdshader" id="18_hgfpf"]
-[ext_resource type="Texture2D" uid="uid://2pguohnmuvmw" path="res://assets/textures/HUD/cHEFhAT.png" id="19_7vqgh"]
+[ext_resource type="PackedScene" uid="uid://br76j8t76ne2x" path="res://scripts/order_system/Plate.tscn" id="19_yfgsi"]
+[ext_resource type="PackedScene" uid="uid://nrfjhpm1sa30" path="res://assets/newmodels/furniture/Fridge.glb" id="22_dok52"]
+[ext_resource type="PackedScene" uid="uid://o3tvfl5dgcnq" path="res://assets/newmodels/food/recipes/finished/BreadGarlic.glb" id="23_dok52"]
 
 [sub_resource type="Environment" id="Environment_ikll6"]
 ambient_light_energy = 1.5
@@ -45,13 +46,6 @@ radius = 0.712891
 [sub_resource type="BoxShape3D" id="BoxShape3D_pk2le"]
 size = Vector3(0.429199, 4.9848, 20.9254)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_romb4"]
-shader = ExtResource("18_hgfpf")
-shader_parameter/mask_tex = ExtResource("19_7vqgh")
-shader_parameter/scale = 0.01
-shader_parameter/softness = 0.0
-shader_parameter/mask_tex_size = Vector2(280, 245)
-
 [node name="JohnoTestScene" type="Node3D"]
 
 [node name="== PLAYERS ==" type="Node" parent="."]
@@ -66,29 +60,31 @@ script = ExtResource("15_67eo6")
 spawns = [NodePath("../SpawnPoint"), NodePath("../SpawnPoint2"), NodePath("../SpawnPoint3"), NodePath("../SpawnPoint4")]
 network_player = ExtResource("16_0ny5b")
 
-[node name="SpawnPoint2" type="Marker3D" parent="== SPAWNS =="]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7776, 0.114945, -7.09901)
-script = ExtResource("17_pk2le")
+[node name="SpawnPoint4" parent="== SPAWNS ==" instance=ExtResource("4_dok52")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.18968, 0.0703411, -6.94067)
+team = 2
 
-[node name="SpawnPoint" type="Marker3D" parent="== SPAWNS =="]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.47811, 0.0574727, 7.13225)
-script = ExtResource("17_pk2le")
+[node name="SpawnPoint3" parent="== SPAWNS ==" instance=ExtResource("4_dok52")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.43216, 0.105512, -6.79754)
+team = 1
 
-[node name="SpawnPoint3" type="Marker3D" parent="== SPAWNS =="]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.17353, 0.114945, -7.18314)
-script = ExtResource("17_pk2le")
+[node name="SpawnPoint2" parent="== SPAWNS ==" instance=ExtResource("4_dok52")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.32709, 0.0703411, 7.13018)
+team = 1
+priority = 1
 
-[node name="SpawnPoint4" type="Marker3D" parent="== SPAWNS =="]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.24178, 0.0574727, 7.04812)
-script = ExtResource("17_pk2le")
+[node name="SpawnPoint" parent="== SPAWNS ==" instance=ExtResource("4_dok52")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.02985, 0.0351706, 6.98705)
+team = 2
+priority = 1
 
 [node name="== LIGHTING ==" type="Node" parent="."]
 
 [node name="Sun" type="DirectionalLight3D" parent="== LIGHTING =="]
 transform = Transform3D(0.00272365, -0.563709, 0.825969, -0.00265669, 0.825965, 0.563715, -0.999993, -0.00372971, 0.000752039, 14.8973, 10.793, 0.0817995)
 shadow_enabled = true
-shadow_opacity = 0.61
-shadow_blur = 1.4
+shadow_opacity = 0.46
+shadow_blur = 0.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="== LIGHTING =="]
 environment = SubResource("Environment_ikll6")
@@ -623,23 +619,23 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.53571, 0.482358, 0)
 
 [node name="HUD" parent="== HUD ==" instance=ExtResource("4_gs5vi")]
 
-[node name="ColorRect" type="ColorRect" parent="== HUD =="]
-material = SubResource("ShaderMaterial_romb4")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
-
 [node name="Camera" type="Camera3D" parent="."]
 transform = Transform3D(-4.37114e-08, -0.819152, 0.573576, 0, 0.573576, 0.819152, -1, 3.58063e-08, -2.50718e-08, 11, 10, 0)
 
 [node name="Tomato" parent="." instance=ExtResource("18_7dw3l")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55889, 0.0573251, 0.475907)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.28731, 0.0573251, -3.92756)
 
 [node name="Tomato2" parent="." instance=ExtResource("18_7dw3l")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.57998, 0.0529738, -0.577666)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.74539, 0.0529738, -4.79293)
 
 [node name="Tomato3" parent="." instance=ExtResource("18_7dw3l")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55905, 0.0520719, -0.0814413)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.72446, 0.0520719, -4.2967)
+
+[node name="Plate" parent="." instance=ExtResource("19_yfgsi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.82093, 0.015, 0.95368)
+
+[node name="BreadGarlic2" parent="." instance=ExtResource("23_dok52")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.74152, 0.015, 1.93723)
+
+[node name="Fridge2" parent="." instance=ExtResource("22_dok52")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.49233, 0.0940047, 3.7874)

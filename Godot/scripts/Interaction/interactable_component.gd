@@ -10,6 +10,7 @@ signal toggle_collision(turn_on : bool)
 
 var can_be_interacted : bool = true
 
+
 ## Emits signal that this component has been interacted with
 ## @return void
 func interact() -> void:

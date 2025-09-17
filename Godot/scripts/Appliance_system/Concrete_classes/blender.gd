@@ -11,9 +11,10 @@ func _init():
 func _ready():
 	super._ready()
 	cooking_style = ApplianceFactory.CookingStyle.BLEND
-	valid_classes = ["Tomato", "Water"]
+	valid_classes = ["Tomato", "Water", "Milk", "Cocoa", "Flour", "Vanilla Icecream", "Strawberry"]
 	capacity = 4
 	power = 1
+	add_to_group("Appliance")
 
 
 ## Override upgradable setup in concrete appliances
@@ -25,34 +26,33 @@ func _setup_upgradable():
 
 ## Place an item onto this appliance
 ## @param item: The Node to place on this appliance
-## @return: True if placement was successful, false otherwise
-func put(item: Node) -> bool:
-	if not _can_accept(item):
-		return false
-	# transfer item to appliance
-	GlobalScript.player.remove_item() # if we only put item from players hand
-	add_child(item)
+func _put(item: Node) -> void:
 	contents.append(item)
-	#--------------------------------------------
-	print("Put: ", item.get_script().get_global_name(), " onto: ", get_script().get_global_name())
-	print("Contents of ", get_script().get_global_name(), " are: ")
-	for content in contents:
-		print(" --- ", content.get_script().get_global_name())
-	#--------------------------------------------
-	if item is Food:
-		_put_food(item)
+	add_child(item)
+	contents_names.append(item.name)
+	_put_food(item) # Blender only takes Food
+
+
+## Place an item onto this appliance
+## @param item: The Node to place on this appliance
+## @return: True if placement was successful, false otherwise
+func put_all(items: Array) -> bool:
+	if not _can_accept_all(items):
+		return false
+	for item in items:
+		put(item)
 	return true
 
 
 ## Place food into the blender
 ## @param food: The Food item to place into the blender
 func _put_food(food: Food) -> void:
-	food.current_visibility(false)
+	#food.current_visibility(false)
 	food.change_collisions()
 	if current_status == Status.COOKING:
 		_average_food()
 		food.startCooking(power, cooking_style)
-	print("Food placed in blender: ", food.get_script().get_global_name(), ", Food cook time: ", food.get_cook_time(cooking_style))
+	# print("Food placed in blender: ", food.get_script().get_global_name(), ", Food cook time: ", food.get_cook_time(cooking_style))
 
 
 ## Average cooking time of food in cookware
@@ -85,7 +85,25 @@ func take_all() -> Array[Node]:
 	for item in all_items:
 		remove_child(item)
 	contents = []
+	contents_names = []
+	stop_cook()
 	return all_items
+
+
+## Check if this appliance can accept the all given items
+## @param items: The Array of Nodes to test for acceptance
+## @return: True if all items can be placed, false otherwise
+func _can_accept_all(items: Array) -> bool:
+	if items.is_empty():
+		print("Cannot accept items, its empty")
+		return false
+	if contents.size() + items.size() > capacity:
+		print("Cannot accept items: ", get_script().get_global_name(), " is at full capacity")
+		return false
+	for item in items:
+		if not item.get_script().get_global_name() in valid_classes:
+			return false
+	return true
 
 
 ## Perform cooking logic
@@ -109,51 +127,184 @@ func stop_cook() -> bool:
 	for item in contents:
 		if item is Food:
 			item.stop_cooking()
-	#----------------------------------------------------------------------
-	print("stop_cook() is called in: ", get_script().get_global_name())
-	#----------------------------------------------------------------------
+	# #----------------------------------------------------------------------
+	# print("stop_cook() is called in: ", get_script().get_global_name())
+	# #----------------------------------------------------------------------
 	return true
 
 
-#---------------------------------------------------------------------------------------------------
+## For Player interaction --------------------------------------------------------------------------
 
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
-func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
+func player_has(item: Node) -> void:
 #--------------------------------------------
 	print("Player has: ", item, ", Self: ", get_script().get_global_name())
 #--------------------------------------------
 	# If player has nothing, return false
 	if not item:
-		return false
-
+		return
 	# If player has plate: try to serve
 	if item is Plate:
-		return serve_to_plate(item)
-
+		serve_request(item)
+		return
+	# If player has cookware: try to transfer contents
+	if item is Cookware:
+		transfer_request(item)
+		return
 	# If item_in_hand exists: depend on if Blender can accept it
-	return put(item)
+	put_request(item)
+
+
+## Check if the plate can accept the current contents
+## @param plate: The Node to check for acceptance
+## @return: True if the plate can accept the current contents, false otherwise
+func _check_plate(plate: Plate) -> bool:
+	if is_empty():
+		print("Nothing to serve from: ", get_script().get_global_name())
+		return false
+	if plate.is_ready():
+		return true
+	return false
 
 
 ## Serve food from Cookware to Plate
 ## @param plate: The Plate to serve food to
-## @return: True if serving was successful, false otherwise
-func serve_to_plate(plate: Plate) -> bool:
-	if contents.is_empty():
+func serve_request(plate: Plate) -> void:
+	# locally check first to reduce network calls
+	if not _check_plate(plate):
+		return
+	if ENetManager.is_host():
+		plate.add_list_items(take_all()) # Method in Plate, takes Array of Food
+		_client_serve.rpc(ENetManager.get_my_id())
+		return
+	_serve_as_host.rpc_id(1, ENetManager.get_my_id())
+
+
+## Host-side method to handle serve requests from clients
+## @param player_id: The id of the player who is serving the food
+@rpc("any_peer", "call_remote", "reliable")
+func _serve_as_host(player_id: int) -> void:
+	if not ENetManager.is_host():
+		return
+	var plate = GlobalScript.get_local_player_by_id(player_id).item_in_hand
+	if not plate or not (plate is Plate):
+		print("Player is not holding a plate")
+		return
+	if not _check_plate(plate):
+		return
+	plate.add_list_items(take_all()) # Method in Plate, takes Array of Food
+	_client_serve.rpc(player_id)
+
+
+## Client-side method to serve food to plate, called by host
+## @param player_id: The id of the player who is serving the food
+@rpc("authority", "call_remote", "reliable")
+func _client_serve(player_id: int) -> void:
+	var plate = GlobalScript.get_local_player_by_id(player_id).item_in_hand
+	if plate and plate is Plate and _check_plate(plate):
+		plate.add_list_items(take_all())
+
+
+## Check if the cookware can accept the current contents
+## @param cookware: The Node to check for acceptance
+## @return: True if the cookware can accept the current contents, false otherwise
+func _check_cookware(player_cookware: Node) -> bool:
+	if not player_cookware or not (player_cookware is Cookware):
+		print("Cookware is null or not a cookware")
+		return false
+	if is_empty():
+		return _can_accept_all(player_cookware.show_contents())
+	return player_cookware._can_accept_all(contents)
+
+
+## Transfer food from Cookware to another Cookware
+## @param cookware: The Cookware to transfer food to / from
+func transfer_request(player_cookware: Cookware) -> void:
+	# locally check first to reduce network calls
+	if not _check_cookware(player_cookware):
+		return
+	if ENetManager.is_host():
+		if is_empty():
+			put_all(player_cookware.take_all())
+			_client_transfer.rpc(ENetManager.get_my_id(), true)
+			return
+		player_cookware.put_all(take_all())
+		_client_transfer.rpc(ENetManager.get_my_id(), false)
+		return
+	_transfer_as_host.rpc_id(1, ENetManager.get_my_id())
+
+
+## Host-side method to handle transfer requests from clients
+## @param player_id: The id of the player who is transferring the food
+@rpc("any_peer", "call_remote", "reliable")
+func _transfer_as_host(player_id: int) -> void:
+	if not ENetManager.is_host():
+		return
+	var player_cookware = GlobalScript.get_local_player_by_id(player_id).item_in_hand
+	if not _check_cookware(player_cookware):
+		return
+	if is_empty():
+		put_all(player_cookware.take_all())
+		_client_transfer.rpc(player_id, true)
+		return
+	player_cookware.put_all(take_all())
+	_client_transfer.rpc(player_id, false)
+
+
+## Client-side method to transfer food between cookwares, called by host
+## @param player_id: The id of the player who is transferring the food
+## @param taking: True if player is taking from appliance, false if giving to appliance
+@rpc("authority", "call_remote", "reliable")
+func _client_transfer(player_id: int, taking: bool) -> void:
+	var player_cookware = GlobalScript.get_local_player_by_id(player_id).item_in_hand
+	if not _check_cookware(player_cookware):
+		return
+	if taking:
+		put_all(player_cookware.take_all())
+	else:
+		player_cookware.put_all(take_all())
+
+
+## InteractableComponent Signal Handlers -----------------------------------------------------------
+## Check if the target can accept the current contents
+## @param target: The Node to check for acceptance
+## @return: True if the target can accept the current contents, false otherwise
+func _check_target(target: Node) -> bool:
+	if is_empty():
+		if target is Cookware:
+			return _can_accept_all(target.show_contents())
 		print("Nothing to serve from: ", get_script().get_global_name())
 		return false
+	if target is Plate and target.is_ready():
+		# maybe check capacity here??? or no need? depend on how plate handle capacity
+		return true
+	if target is Cookware:
+		return target._can_accept_all(contents)
+	return false
 
-	if not plate.is_ready(): # Method in Plate, checks if plate is ready
-		print("Plate is not ready: ", plate.get_script().get_global_name())
-		return false
 
-	plate.add_list_items(take_all()) # Method in Plate, takes Array of Food
-	stop_cook()
-	#----------------------------------------------------------------------
-	print("Blender, served to: ", plate.get_script().get_global_name())
-	#----------------------------------------------------------------------
-	return true
+## Give visual feedback when hovered
+## @param is_hovered: Whether the item is hovered or not
+func _on_interactable_component_hovered(is_hovered: bool) -> void:
+	if not is_hovered:
+		highlight_component.hide_feedback()
+		return
+	var item = GlobalScript.get_local_player().item_in_hand
+	#---------------------------------------------------------------------------
+	if item:
+		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())
+		print("Item name is:", item.name)
+	#---------------------------------------------------------------------------
+	if not item:
+		highlight_component.set_state(ApplianceHighlight.HighlightState.HOVER)
+		return
+	if item is Plate or item is Cookware:
+		highlight_component.show_feedback(_check_target(item))
+		return
+	highlight_component.show_feedback(_can_accept(item))
+## -------------------------------------------------------------------------------------------------
 
 
 # Functions for Sabotage System---------------------------------------------------------------------
@@ -169,21 +320,28 @@ func get_progress() -> float:
 #---------------------------------------------------------------------------------------------------
 
 
-## InteractableComponent Signal Handlers -----------------------------------------------------------
-## Give visual feedback when hovered
-## @param is_hovered: Whether the item is hovered or not
-func _on_interactable_component_hovered(is_hovered: bool) -> void:
-	if not is_hovered:
-		highlight_component.hide_feedback()
-		return
-	var item = GlobalScript.player.item_in_hand
-	#---------------------------------------------------------------------------
-	if item:
-		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())
-	#---------------------------------------------------------------------------
-	if not item:
-		highlight_component.set_state(ApplianceHighlight.HighlightState.HOVER)
-		return
-	var can_accept = _can_accept(item)
-	highlight_component.show_feedback(can_accept)
-## -------------------------------------------------------------------------------------------------
+# # Non-networking methods for Player interaction ----------------------------------------------------
+# ## Place an item onto this appliance
+# ## @param item: The Node to place on this appliance
+# ## @return: True if placement was successful, false otherwise
+# func put_from_player(item: Node) -> bool:
+# 	if not _can_accept(item):
+# 		return false
+# 	# transfer item to appliance
+# 	GlobalScript.get_local_player().remove_item() # if we only put item from players hand
+# 	add_child(item)
+# 	contents.append(item)
+# 	contents_names.append(item.name)
+# 	if item is Food:
+# 		_put_food(item)
+# 	return true
+
+# ## Serve food from Cookware to Plate
+# ## @param plate: The Plate to serve food to
+# ## @return: True if serving was successful, false otherwise
+# func serve_to_plate(plate: Plate) -> bool:
+# 	if not _check_target(plate):
+# 		return false
+# 	plate.add_list_items(take_all()) # Method in Plate, takes Array of Food
+# 	return true
+# #---------------------------------------------------------------------------------------------------

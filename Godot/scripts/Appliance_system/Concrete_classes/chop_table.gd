@@ -23,8 +23,11 @@ func _setup_interactable():
 func _add_chopping_board() -> void:
 	capacity = 1
 	item_slots.clear()
-	chopping_board = ApplianceManager.request_appliance("chopping_board", current_owner)
+	chopping_board = ApplianceFactory._create_appliance("chopping_board")
+	chopping_board.set_appliance_owner(current_owner)
+	chopping_board.name = name + "_chopping_board"
 	add_child(chopping_board)
+	ApplianceManager.register_appliance(chopping_board, current_owner, chopping_board.name)
 	var board_position = Vector3(0.0, size.y * 0.5, 0.0)
 	chopping_board.position = board_position
 	chopping_board.lock()
@@ -61,21 +64,16 @@ func on_fire() -> void:
 		item.queue_free()
 
 
+## For Player interaction --------------------------------------------------------------------------
+
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
-func player_has(item: Node) -> bool:
+func player_has(item: Node) -> void:
 	if item:
-		if chopping_board.put(item):
-			print("Place :", item.get_script().get_global_name(), " onto chopping board")
-			return true
-		print("Chopping board cannot accept:", item.get_script().get_global_name())
-		return false
-	#------------------------------------------------------------------------------------
-	# let player pick up directly??
-	GlobalScript.player.pickup_item(chopping_board.take())
-	#------------------------------------------------------------------------------------
-	return true
+		chopping_board.put_request(item)
+		return
+	chopping_board.take_request()
 
 
 ## Trigger action, if subclass has action
@@ -84,7 +82,7 @@ func _on_interactable_component_action_use(_is_action: bool) -> void:
 		chopping_board.cook(1)
 	else:
 		chopping_board.finish_cook()
-
+#---------------------------------------------------------------------------------------------------
 
 
 ## Override unsupported methods to prevent misuse ------------------------------
@@ -96,3 +94,15 @@ func take_food() -> Food:
 	assert(false, "ChopTable does not support take_food")
 	return null
 #-------------------------------------------------------------------------------
+
+
+
+# # Non-networking methods for Player interaction ----------------------------------------------------
+# ## Place an item onto this appliance
+# ## @param item: The Node to place on this appliance
+# ## @return: True if placement was successful, false otherwise
+# func put_from_player(item: Node) -> bool:
+# 	if not _can_accept(item):
+# 		return false
+# 	return chopping_board.put_from_player(item)
+# #---------------------------------------------------------------------------------------------------

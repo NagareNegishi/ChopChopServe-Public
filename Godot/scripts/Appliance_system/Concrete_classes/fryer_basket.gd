@@ -11,9 +11,11 @@ func _init():
 func _ready():
 	super._ready()
 	cooking_style = ApplianceFactory.CookingStyle.DEEP_FRY
-	valid_food = ["Fish", "Tomato"] # Confirm later!!!!!!!!!!!!!!
+	valid_food = ["Fish", "Tomato", "Potato", "Onion"] # Confirm later!!!!!!!!!!!!!!
 	capacity = 4
 	coefficient = 1.0
+	
+	add_to_group("Appliance")
 
 
 ## Override upgradable setup in concrete appliances

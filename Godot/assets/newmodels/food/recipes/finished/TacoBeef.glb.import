@@ -13,8 +13,8 @@ dest_files=["res://.godot/imported/TacoBeef.glb-95462f513db4877f8e8cd3ee1fd26c87
 
 [params]
 
-nodes/root_type=""
-nodes/root_name=""
+nodes/root_type="MeshInstance3D"
+nodes/root_name="BeefTaco"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false

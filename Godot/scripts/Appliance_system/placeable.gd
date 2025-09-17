@@ -141,10 +141,15 @@ func setup_multiplayer_sync():
 	if multiplayer_sync:
 		if not multiplayer_sync.replication_config:
 			var config = SceneReplicationConfig.new()
-			config.add_property(NodePath(".:position")) 
-			config.add_property(NodePath(".:rotation"))
-			config.add_property(NodePath(".:size"))
+			_add_sync_properties(config)
 			multiplayer_sync.replication_config = config
+
+
+## Add synchronization properties for the placeable object
+func _add_sync_properties(config: SceneReplicationConfig):
+	config.add_property(NodePath(".:position"))
+	config.add_property(NodePath(".:rotation"))
+	config.add_property(NodePath(".:size"))
 
 
 ## Align the size of the Placeable to the model
@@ -178,7 +183,6 @@ func resize_model():
 	if current_size != Vector3.ZERO:
 		var scale_factor = size / current_size
 		model_instance.scale = scale_factor
-		model_instance.position = Vector3.ZERO # Keep model centered
 
 
 ## Update size and automatically refresh collision shape

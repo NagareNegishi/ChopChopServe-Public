@@ -16,15 +16,36 @@ func _init():
 func _ready():
 	super._ready()
 	capacity = 4
+	_set_affixes()
 	# _setup_item_slots()
 	if plate_scene and plate_scene.can_instantiate():
 		print("Cabinet plate scene preloaded successfully")
 	else:
 		push_error("Failed to preload plate scene in Cabinet")
 	for i in range(capacity):
-		var plate = plate_scene.instantiate()
-		add_child(plate)
-		put(plate)
+		put(_provide_plate())
+
+
+## Provide plate, register it with unique name
+## @return: The Plate instance provided
+func _provide_plate() -> Plate:
+	var plate = plate_scene.instantiate()
+	plate.name = prefix + plate.get_script().get_global_name() + str(supply_count)
+	supply_count += 1
+	ApplianceManager.register_item(plate, current_owner, plate.name)
+	return plate
+
+
+## Add synchronization properties for the placeable object
+func _add_sync_properties(config: SceneReplicationConfig):
+	super._add_sync_properties(config)
+	config.add_property(NodePath(".:supply_count"))
+
+
+## Override upgradable setup in concrete appliances
+func _setup_upgradable():
+	super._setup_upgradable()
+	enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
 
 
 # ## Setup cookware slots, should be overridden by subclasses
@@ -44,31 +65,37 @@ func _can_accept(item: Node) -> bool:
 	return item is Plate and item.is_ready() # maybe we need different method to check clean and empty
 
 
-## Override upgradable setup in concrete appliances
-func _setup_upgradable():
-	super._setup_upgradable()
-	enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
-
-
+## For Player interaction --------------------------------------------------------------------------
 
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
-func player_has(item: Node) -> bool: # we may need player or id as parameter for multiplier!!!!!!!!!!!!!!!!!!
-	# If player has nothing: move Plate from Cabinet to player (if exists), return true
+func player_has(item: Node) -> void:
+	# If player has nothing: try to move Plate from Cabinet to player
 	if not item:
-		var plate = take()
-		if plate:
-			GlobalScript.player.pickup_item(plate)
-			#----------------------------------------------------------------------
-			print("Player took: ", plate.get_script().get_global_name(), ", from: ", get_script().get_global_name())
-			#----------------------------------------------------------------------
-			return true
-		else:
-			print("No plate to take from Cabinet")
-			return false
+		take_request()
+		return
 	# If player has empty plate: depend on if cabinet can accept it
-	return put(item)
+	put_request(item)
+
+
+## Give visual feedback when hovered
+## @param is_hovered: Whether the item is hovered or not
+func _on_interactable_component_hovered(is_hovered: bool) -> void:
+	if not is_hovered:
+		highlight_component.hide_feedback()
+		return
+	var item = GlobalScript.get_local_player().item_in_hand
+	#---------------------------------------------------------------------------
+	if item:
+		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())
+	#---------------------------------------------------------------------------
+	if not item:
+		highlight_component.show_feedback(true)
+		return
+	var can_accept = _can_accept(item)
+	highlight_component.show_feedback(can_accept)
+#---------------------------------------------------------------------------------------------------
 
 
 ## Override unsupported methods to prevent misuse ------------------------------
@@ -76,3 +103,8 @@ func start_action() -> bool:
 	assert(false, "Cabinet does not support starting actions")
 	return false
 #-------------------------------------------------------------------------------
+
+
+
+
+

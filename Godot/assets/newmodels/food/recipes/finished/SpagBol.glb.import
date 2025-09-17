@@ -13,8 +13,8 @@ dest_files=["res://.godot/imported/SpagBol.glb-054882094d083936cf98c7f36ae8e7c7.
 
 [params]
 
-nodes/root_type=""
-nodes/root_name=""
+nodes/root_type="MeshInstance3D"
+nodes/root_name="Sgapbol"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false
@@ -41,4 +41,4 @@ _subresources={
 }
 }
 gltf/naming_version=1
-gltf/embedded_image_handling=0
+gltf/embedded_image_handling=1

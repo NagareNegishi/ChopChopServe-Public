@@ -9,10 +9,10 @@ script = ExtResource("2_0e7nx")
 capacity = 1
 valid_classes = Array[String]([])
 cook_interval = 1.0
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1
 cooking_style = 0
 model_scene = ExtResource("3_6qjqx")
-
-[node name="CollisionShape3D" parent="." index="0"]
-debug_color = Color(1, 0.764706, 0.192157, 1)
 
 [node name="StoveSingle" parent="." index="3" instance=ExtResource("3_6qjqx")]

@@ -7,7 +7,7 @@ static var _auto_register = MenuItem.register(BeefTaco)
 @warning_ignore("unused_private_class_variable")
 static var _type_register = MenuItem.register_type(MenuItem.mains, BeefTaco.new())
 
-func _ready():
+func _init():
 	ingredients = ["Dough", "Beef", "Tomato"]
 	
 	ingredient_states = {
@@ -18,7 +18,7 @@ func _ready():
 	
 	is_available = true
 
-func _init():
+func _ready():
 	cooked_mesh_good = $TacoBeef
 	cooked_mesh_bad = $BadQualityBeefTaco
 	cooked_mesh_burnt = $BurntBeefTaco

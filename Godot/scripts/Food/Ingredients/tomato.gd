@@ -6,7 +6,7 @@ class_name Tomato
 
 func _ready():
 	food_name = "Tomato"
-	raw_mesh = $RawTomato
+	raw_mesh = $Tomato
 	spoiled_mesh = $SpoiledTomato
 	cooked_mesh = $ChoppedTomato
 	burnt_mesh = $BurntTomato

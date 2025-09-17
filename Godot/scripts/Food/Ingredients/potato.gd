@@ -8,7 +8,7 @@ func _ready():
 	spoiled_mesh = $SpoiledPotato
 	cooked_mesh = $ChoppedPotato
 	burnt_mesh = $BurntPotato
-	chopped_mesh = $PotatoChips
+	chopped_mesh = $ChoppedPotato
 	# cook time same as sxuper class
 	
 	

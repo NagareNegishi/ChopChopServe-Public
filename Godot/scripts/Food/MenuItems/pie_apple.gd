@@ -7,7 +7,7 @@ static var _auto_register = MenuItem.register(ApplePie)
 @warning_ignore("unused_private_class_variable")
 static var _type_register = MenuItem.register_type(MenuItem.deserts, ApplePie.new())
 
-func _ready():
+func _init():
 	ingredients = ["Dough","Apple"]
 	
 	ingredient_states = {
@@ -17,7 +17,7 @@ func _ready():
 	
 	is_available = true
 
-func _init():
+func _ready():
 	cooked_mesh_good = $ApplePie
 	cooked_mesh_bad = $BadQualityApplePie
 	cooked_mesh_burnt = $BurntApplePie

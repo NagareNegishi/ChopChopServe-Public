@@ -17,7 +17,7 @@ func _init():
 	
 	is_available = true
 
-func _read():
+func _ready():
 	cooked_mesh_good = $IceCreamChoc
 	cooked_mesh_bad = $IceCreamChoc2
 	cooked_mesh_burnt = null

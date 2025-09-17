@@ -44,11 +44,12 @@ func put_all(items: Array) -> bool:
 	return true
 
 
+#TODO connect signal about progress bar
 ## Place food into the blender
 ## @param food: The Food item to place into the blender
 func _put_food(food: Food) -> void:
 	#food.current_visibility(false)
-	food.change_collisions()
+	food.change_collisions() #TODO add true
 	if current_status == Status.COOKING:
 		_average_food()
 		food.startCooking(power, cooking_style)

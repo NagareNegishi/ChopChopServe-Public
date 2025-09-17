@@ -29,14 +29,15 @@ func _can_extingush() -> bool:
 ## @return void
 func _extingush() -> void:
 	var appliance : Appliance = $ExtinguishRange.get_collider()
-	print("extingush needs to be implemented")
+
 
 
 ## Overidden: Enables Extishuger line trace and foam if action is being used
 ## @param is_action if the player is using the action input
 ## @return void
 func _on_interactable_component_action_use(is_action: bool) -> void:
-	rpc("server_action", is_action)
+	$ExtinguishRange.enabled = true if is_action else false
+	$ExtinguishRange/GPUParticles3D.emitting = is_action
 
 
 @rpc("authority", "call_local")

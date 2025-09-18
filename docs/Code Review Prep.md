@@ -3,8 +3,19 @@
 
 If coding with Godot editor: Project Settings → Debug → Settings → Verbose Stdout
 
+Potential quick tool "gdtoolkit" (but it's not great):
+1. pip install gdtoolkit
+2. Navigate to that file directory
+3. python -m gdtoolkit.linter ????????.gd
 
-## In general
+```
+gdlint your_file.gd  # See what issues exist
+gdformat --diff your_file.gd  # Shows what WOULD change without changing
+gdformat your_file.gd  # Actually makes changes
+```
+
+
+## Template comment in general
 
 ```
 #[REVIEW][PERFORMANCE] N+1 query pattern here - consider batching

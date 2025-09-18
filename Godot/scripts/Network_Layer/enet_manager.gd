@@ -170,7 +170,11 @@ func _on_data_received(_from_id: int, data: Dictionary):
 			else:
 				current_state = GameProgress.IN_GAME
 			game_paused.emit(data.is_paused)
-
+		
+		"spawn_customer":
+			var food_court = get_tree().get_first_node_in_group("FoodCourt")
+			if food_court:
+				food_court.spawn_customer_from_network(data)
 		_:
 			print("Unknown message type: ", data.get("type"))
 
@@ -272,5 +276,3 @@ func start_game() -> void:
 		"type": "game_starting"
 	})
 	game_started.emit()
-
-

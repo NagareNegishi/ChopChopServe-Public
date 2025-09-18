@@ -4,8 +4,8 @@ extends Control
 @onready var cur_label = $CurrencyNumber
 
 func _ready() -> void:
-	ReputationSystem.reputation_changed.connect(_on_reputation_changed)
-	CurrencySystem.currency_changed.connect(_on_currency_changed)
+	#ReputationSystem.reputation_changed.connect(_on_reputation_changed)
+	#CurrencySystem.currency_changed.connect(_on_currency_changed)
 	GamePhases.cook_timer_on.connect(_on_cook_timer_on)
 	GamePhases.prep_timer_on.connect(_on_prep_timer_on)
 

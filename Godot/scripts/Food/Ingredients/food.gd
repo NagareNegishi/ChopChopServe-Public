@@ -33,6 +33,8 @@ var current_cooking_style: ApplianceFactory.CookingStyle
 
 var is_cooking = false # Decides whether or not it should be cooking the ingredient
 var is_cooked : bool = false
+var l # current collision layer
+var m # current collision mask
 
 # --------------------------- COOKING TIMES -----------------------------------
 var BOILED_time = 30 # How long it takes to cook 
@@ -71,7 +73,7 @@ func _ready():
 	
 
 func _on_timer_timeout():
-	print("=== TIMER TICK === is_cooking:", is_cooking, " current_appliance:", current_appliance, " time_power:", time_power)
+	#print("=== TIMER TICK === is_cooking:", is_cooking, " current_appliance:", current_appliance, " time_power:", time_power)
 	if is_cooking:
 		# Process cooking based on current appliance type
 		match current_appliance:
@@ -166,14 +168,18 @@ func freeze(): # NOT needed anymore??
 
 # -------------------------END OF COOKING TYPES---------------------------------
 func check_processed(s: foodState, time_a:int, time_b:int, stop:bool):
+
 	print("Cook time remaining: ", time_a, " on food item: ", food_name)
 	if(time_a <= 0 && time_a >= time_b):
+
 		state = s;
 		if !previous_states.has(convert_enum_to_string(state)):
 			previous_states.append(convert_enum_to_string(state))
 		is_cooked = true
+
 		print("Food: ", food_name, " and its previous states: ", previous_states)
 		print("Food is done ", food_name)
+
 		#emit_signal("changed_food_state")
 		if stop == true:
 			print("Stop cooking in if statement")
@@ -341,6 +347,12 @@ func current_visibility(changeTo: bool):
 		push_error("No mesh passed to current_visibility() in food.gd")
 	current_mesh.visible = changeTo
 
-func change_collisions():
-	self.collision_layer = 0
-	self.collision_mask = 0
+func change_collisions(turn_off:bool): 
+	if turn_off:
+		l = self.collision_layer
+		m = self.collision_mask
+		self.collision_layer = 0
+		self.collision_mask = 0
+	else:
+		self.collision_layer = l
+		self.collision_mask = m

@@ -18,7 +18,6 @@ enum CookingStyle {
 	PAN_FRY,     # Frying Pan
 	BOIL,        # Pot
 	BLEND,       # Blender - mixing/blending
-	FREEZE,      # Freezer - cooling/freezing
 	CHOP         # Cutting Board with Knife - chopping
 }
 

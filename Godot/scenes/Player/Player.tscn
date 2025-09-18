@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://ckxyscw51v3du"]
+[gd_scene load_steps=38 format=3 uid="uid://ckxyscw51v3du"]
 
 [ext_resource type="Script" uid="uid://0wecred12v33" path="res://scripts/Player/player.gd" id="1_3qydi"]
 [ext_resource type="PackedScene" uid="uid://d4fmw7rcfjnsg" path="res://assets/newmodels/animations/Froggo.glb" id="2_xcisb"]
@@ -13,8 +13,18 @@ height = 1.06912
 [sub_resource type="BoxShape3D" id="BoxShape3D_q3lat"]
 size = Vector3(2.74022, 3, 3)
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xcisb"]
-animation = &"IdleAnimation"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_socpp"]
+animation = &"Chopping"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qt7jd"]
+advance_mode = 2
+advance_condition = &"chopping"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_fxc31"]
+states/Chopping/node = SubResource("AnimationNodeAnimation_socpp")
+states/Chopping/position = Vector2(424.667, 107.407)
+states/Start/position = Vector2(266.667, 107.333)
+transitions = ["Start", "Chopping", SubResource("AnimationNodeStateMachineTransition_qt7jd")]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fxc31"]
 animation = &"IdleAnimation"
@@ -24,28 +34,28 @@ animation = &"IdleHolding"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_mmokv"]
 advance_mode = 2
-advance_condition = &"idle"
+advance_condition = &"empty"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dqp0f"]
 advance_mode = 2
-advance_condition = &"idle_item"
+advance_condition = &"holding"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_tl8lu"]
-switch_mode = 2
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xcisb"]
 advance_mode = 2
+advance_condition = &"holding"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qt7jd"]
-switch_mode = 2
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_socpp"]
 advance_mode = 2
+advance_condition = &"empty"
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_cd157"]
 states/End/position = Vector2(670, 99.3333)
 states/IdleAnimation/node = SubResource("AnimationNodeAnimation_fxc31")
-states/IdleAnimation/position = Vector2(498.667, 34.6667)
+states/IdleAnimation/position = Vector2(479.399, 16.6667)
 states/IdleHolding/node = SubResource("AnimationNodeAnimation_puxyr")
-states/IdleHolding/position = Vector2(499.407, 156)
+states/IdleHolding/position = Vector2(480.074, 178.667)
 states/Start/position = Vector2(326, 100.074)
-transitions = ["Start", "IdleAnimation", SubResource("AnimationNodeStateMachineTransition_mmokv"), "Start", "IdleHolding", SubResource("AnimationNodeStateMachineTransition_dqp0f"), "IdleAnimation", "End", SubResource("AnimationNodeStateMachineTransition_tl8lu"), "IdleHolding", "End", SubResource("AnimationNodeStateMachineTransition_qt7jd")]
+transitions = ["Start", "IdleAnimation", SubResource("AnimationNodeStateMachineTransition_mmokv"), "Start", "IdleHolding", SubResource("AnimationNodeStateMachineTransition_dqp0f"), "IdleAnimation", "IdleHolding", SubResource("AnimationNodeStateMachineTransition_xcisb"), "IdleHolding", "IdleAnimation", SubResource("AnimationNodeStateMachineTransition_socpp")]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mmokv"]
 animation = &"Walking"
@@ -55,59 +65,80 @@ animation = &"WalkingHandsout"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_cd157"]
 advance_mode = 2
+advance_condition = &"empty"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8djf2"]
 advance_mode = 2
+advance_condition = &"holding"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_lbts4"]
+switch_mode = 2
 advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dqefj"]
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_8djf2"]
-states/End/position = Vector2(640.667, 84)
-states/Start/position = Vector2(230, 85.3333)
-states/Walking/node = SubResource("AnimationNodeAnimation_mmokv")
-states/Walking/position = Vector2(420.667, 12)
-states/WalkingHandsout/node = SubResource("AnimationNodeAnimation_dqp0f")
-states/WalkingHandsout/position = Vector2(435.333, 156)
-transitions = ["Start", "Walking", SubResource("AnimationNodeStateMachineTransition_cd157"), "Start", "WalkingHandsout", SubResource("AnimationNodeStateMachineTransition_8djf2"), "Walking", "End", SubResource("AnimationNodeStateMachineTransition_lbts4"), "WalkingHandsout", "End", SubResource("AnimationNodeStateMachineTransition_dqefj")]
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_socpp"]
-animation = &"Walking"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_socpp"]
+switch_mode = 2
 advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fxc31"]
-xfade_time = 0.1
+advance_mode = 2
+advance_condition = &"holding"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_afv41"]
+advance_mode = 2
+advance_condition = &"empty"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_8djf2"]
+states/End/position = Vector2(606.667, 77.3333)
+states/Start/position = Vector2(269.333, 78.6666)
+states/Walking/node = SubResource("AnimationNodeAnimation_mmokv")
+states/Walking/position = Vector2(434.222, 11.3333)
+states/WalkingHandsout/node = SubResource("AnimationNodeAnimation_dqp0f")
+states/WalkingHandsout/position = Vector2(435.333, 156)
+transitions = ["Start", "Walking", SubResource("AnimationNodeStateMachineTransition_cd157"), "Start", "WalkingHandsout", SubResource("AnimationNodeStateMachineTransition_8djf2"), "Walking", "End", SubResource("AnimationNodeStateMachineTransition_lbts4"), "WalkingHandsout", "End", SubResource("AnimationNodeStateMachineTransition_dqefj"), "Walking", "WalkingHandsout", SubResource("AnimationNodeStateMachineTransition_fxc31"), "WalkingHandsout", "Walking", SubResource("AnimationNodeStateMachineTransition_afv41")]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_puxyr"]
+xfade_time = 0.2
 advance_mode = 2
 advance_condition = &"is_moving"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xcisb"]
-xfade_time = 0.1
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5gcuk"]
+xfade_time = 0.2
 advance_mode = 2
 advance_condition = &"is_idle"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_puxyr"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_tl8lu"]
 advance_mode = 2
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5gcuk"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_3nxk0"]
+priority = 0
 advance_mode = 2
+advance_condition = &"action"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2aixn"]
+resource_name = "unaction"
+priority = 0
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_miygw"]
+priority = 0
+advance_mode = 2
+advance_condition = &"action"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_m1hey"]
+advance_mode = 2
+advance_condition = &"unaction"
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_socpp"]
-states/IdleAnimation/node = SubResource("AnimationNodeAnimation_xcisb")
-states/IdleAnimation/position = Vector2(412, 86)
+states/End/position = Vector2(918, 184.61)
+states/SM_ACTION/node = SubResource("AnimationNodeStateMachine_fxc31")
+states/SM_ACTION/position = Vector2(655.333, 184.331)
 states/SM_IDLE/node = SubResource("AnimationNodeStateMachine_cd157")
-states/SM_IDLE/position = Vector2(289.333, 183.444)
+states/SM_IDLE/position = Vector2(280, 181.771)
 states/SM_Walking/node = SubResource("AnimationNodeStateMachine_8djf2")
-states/SM_Walking/position = Vector2(602.667, 182.111)
-states/Start/position = Vector2(238, 85.3333)
-states/Walking/node = SubResource("AnimationNodeAnimation_socpp")
-states/Walking/position = Vector2(623.333, 3.33333)
-transitions = ["Start", "IdleAnimation", SubResource("AnimationNodeStateMachineTransition_socpp"), "IdleAnimation", "Walking", SubResource("AnimationNodeStateMachineTransition_fxc31"), "Walking", "IdleAnimation", SubResource("AnimationNodeStateMachineTransition_xcisb"), "SM_IDLE", "SM_Walking", SubResource("AnimationNodeStateMachineTransition_puxyr"), "SM_Walking", "SM_IDLE", SubResource("AnimationNodeStateMachineTransition_5gcuk")]
-graph_offset = Vector2(-108, 144.574)
+states/SM_Walking/position = Vector2(476, -49.6012)
+states/Start/position = Vector2(84, 184.673)
+transitions = ["SM_IDLE", "SM_Walking", SubResource("AnimationNodeStateMachineTransition_puxyr"), "SM_Walking", "SM_IDLE", SubResource("AnimationNodeStateMachineTransition_5gcuk"), "Start", "SM_IDLE", SubResource("AnimationNodeStateMachineTransition_tl8lu"), "SM_IDLE", "SM_ACTION", SubResource("AnimationNodeStateMachineTransition_3nxk0"), "SM_ACTION", "SM_IDLE", SubResource("AnimationNodeStateMachineTransition_2aixn"), "SM_Walking", "SM_ACTION", SubResource("AnimationNodeStateMachineTransition_miygw"), "SM_ACTION", "SM_Walking", SubResource("AnimationNodeStateMachineTransition_m1hey")]
+graph_offset = Vector2(-329, 29.574)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_fxc31"]
 properties/0/path = NodePath(".:player_id")
@@ -133,6 +164,9 @@ properties/2/replication_mode = 2
 properties/3/path = NodePath("Decal:modulate")
 properties/3/spawn = true
 properties/3/replication_mode = 2
+properties/4/path = NodePath("AnimationTree:anim_player")
+properties/4/spawn = true
+properties/4/replication_mode = 1
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_xcisb"]
 
@@ -147,6 +181,7 @@ shape = SubResource("CapsuleShape3D_l2ndj")
 transform = Transform3D(-7.64949e-09, 0, -0.175, 0, 0.175, 0, 0.175, 0, -7.64949e-09, 0, -0.556445, 0)
 
 [node name="Clothes_001" parent="Mesh/Armature" index="0"]
+<<<<<<< HEAD
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0402468, -2.25649, 0.06441)
 
 [node name="Skeleton3D" parent="Mesh/Armature" index="1"]
@@ -163,6 +198,23 @@ bones/8/rotation = Quaternion(-1.42488e-10, -4.14868e-09, 0.000310395, 1)
 bones/9/position = Vector3(-0.745343, 0.906476, -0.0113688)
 bones/9/rotation = Quaternion(-0.707104, -0.0031089, 0.7071, -0.0021288)
 bones/10/position = Vector3(0.688155, 0.905467, -0.0113688)
+=======
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0402468, -2.38199, 0.0644097)
+
+[node name="Skeleton3D" parent="Mesh/Armature" index="1"]
+bones/2/rotation = Quaternion(0.000402912, 1.19209e-07, -4.80308e-11, 1)
+bones/3/position = Vector3(-3.85431, 2.46216, 2.79993e-14)
+bones/3/rotation = Quaternion(-3.89966e-08, 2.25142e-09, 0.998338, 0.0576379)
+bones/4/rotation = Quaternion(-1.13927e-09, 8.31912e-08, 0.00706236, 0.999975)
+bones/5/rotation = Quaternion(-3.2693e-11, -3.49708e-07, -0.00031076, 1)
+bones/6/position = Vector3(3.85431, 2.46216, -4.22451e-16)
+bones/6/rotation = Quaternion(3.89966e-08, 2.25142e-09, 0.998338, -0.0576379)
+bones/7/rotation = Quaternion(1.35973e-09, 2.70658e-07, -0.00706199, 0.999975)
+bones/8/rotation = Quaternion(-1.42488e-10, -4.14868e-09, 0.000310395, 1)
+bones/9/position = Vector3(-0.745343, 0.911673, -0.0113688)
+bones/9/rotation = Quaternion(-0.707104, -0.0031089, 0.7071, -0.0021288)
+bones/10/position = Vector3(0.688155, 0.911673, -0.0113688)
+>>>>>>> 132166cdc5c87e881fed92cc8c36da42cf636b1e
 bones/10/rotation = Quaternion(0.707102, -0.00261885, 0.707102, 0.00261885)
 
 [node name="InteractArea" type="Area3D" parent="Mesh"]
@@ -173,7 +225,7 @@ transform = Transform3D(0.999994, -5.5507e-17, 3.55326e-15, 4.63147e-17, 1, 0, 3
 shape = SubResource("BoxShape3D_q3lat")
 
 [node name="ItemPoint" type="Node3D" parent="Mesh"]
-transform = Transform3D(1, -7.2778e-10, -6.04657e-12, 7.2778e-10, 0.999861, 0.0166497, -6.07159e-12, -0.0166497, 0.999861, 1.3638e-07, 3.24767, 3.12001)
+transform = Transform3D(1, -7.2778e-10, -6.04317e-12, 7.2778e-10, 0.999861, 0.0166497, -6.07159e-12, -0.0166497, 0.999861, 1.3638e-07, 3.24767, 3.12001)
 
 [node name="movePoint" type="Node3D" parent="Mesh"]
 transform = Transform3D(6, -8.73215e-09, -1.45263e-10, 8.73215e-09, 5.99667, 0.199769, -1.45548e-10, -0.199769, 5.99667, -5.68745e-08, 0.714802, -1.30114)
@@ -190,10 +242,15 @@ cull_mask = 1048574
 root_node = NodePath("../Mesh")
 tree_root = SubResource("AnimationNodeStateMachine_socpp")
 anim_player = NodePath("../Mesh/AnimationPlayer")
-parameters/conditions/is_idle = false
+parameters/conditions/action = false
+parameters/conditions/is_idle = true
 parameters/conditions/is_moving = false
-parameters/SM_IDLE/conditions/idle = false
-parameters/SM_IDLE/conditions/idle_item = false
+parameters/conditions/unaction = false
+parameters/SM_ACTION/conditions/chopping = false
+parameters/SM_IDLE/conditions/empty = true
+parameters/SM_IDLE/conditions/holding = false
+parameters/SM_Walking/conditions/empty = false
+parameters/SM_Walking/conditions/holding = false
 
 [node name="DashCooldown" type="Timer" parent="."]
 wait_time = 0.2

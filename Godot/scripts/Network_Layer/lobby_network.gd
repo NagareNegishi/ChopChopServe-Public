@@ -142,7 +142,7 @@ func _start_game() -> void:
 ##----------------------------------------------------------------------------------
 ## need more logic here.
 ## can Lobby scene take over? or should we create a new scene for the game?
-	SceneManager.change_scene(SceneManager.Scene.JOHNO_TEST)
+	SceneManager.change_scene(SceneManager.Scene.JESS_TEST)
 ##----------------------------------------------------------------------------------
 
 

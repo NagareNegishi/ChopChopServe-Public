@@ -1,4 +1,4 @@
-[gd_scene load_steps=77 format=3 uid="uid://brax13qxb8tj2"]
+[gd_scene load_steps=78 format=3 uid="uid://brax13qxb8tj2"]
 
 [ext_resource type="PackedScene" uid="uid://bv68n23xtnfpl" path="res://scenes/Player/PlayerCar.tscn" id="1_2io33"]
 [ext_resource type="Material" uid="uid://dwgftkho746av" path="res://LevelDesign/SwampFog.tres" id="1_d2eau"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="4_55i4u"]
 [ext_resource type="PackedScene" uid="uid://386cia5dig43" path="res://assets/NaturePack/Willow_4.fbx" id="5_2io33"]
 [ext_resource type="Material" uid="uid://8a2o8qga7q64" path="res://shaders/Water/WaterOpenworldAlt.tres" id="5_mpt4u"]
-[ext_resource type="MeshLibrary" uid="uid://bc2c7fksdc6nh" path="res://LevelDesign/Tilemap.tres" id="6_4qp8e"]
 [ext_resource type="PackedScene" uid="uid://x0o0oxbumdxi" path="res://assets/NaturePack/Willow_2.fbx" id="6_38v8k"]
 [ext_resource type="Shader" uid="uid://c46kta255prk4" path="res://shaders/Water/WaterOpenWorld.gdshader" id="6_mpt4u"]
 [ext_resource type="PackedScene" uid="uid://dxiqfig0wnu0t" path="res://assets/NaturePack/Willow_1.fbx" id="7_8t6q8"]
@@ -51,6 +50,8 @@
 [ext_resource type="PackedScene" uid="uid://bfyl14i4p2lc0" path="res://assets/NaturePack/Rock_2.fbx" id="47_jxeiq"]
 [ext_resource type="PackedScene" uid="uid://bnwj0rmha5lt" path="res://assets/newmodels/decorations/umbrella.glb" id="48_4hvn4"]
 [ext_resource type="PackedScene" uid="uid://cb3xkgms4ctwo" path="res://assets/CityPacks/gltf/trafficlight_A.gltf" id="51_00kn3"]
+[ext_resource type="PackedScene" uid="uid://bm407of4lb0ta" path="res://assets/NaturePack/Bush_2.fbx" id="51_s0hg4"]
+[ext_resource type="PackedScene" uid="uid://1day6rx5reie" path="res://assets/NaturePack/Bush_1.fbx" id="52_00kn3"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w6hnu"]
 size = Vector3(30, 0.03, 30)
@@ -198,11 +199,6 @@ transform = Transform3D(-4.37114e-08, -0.819152, 0.573576, 0, 0.573576, 0.819152
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Control" parent="CanvasLayer" instance=ExtResource("4_55i4u")]
-
-[node name="GridMap" type="GridMap" parent="."]
-mesh_library = ExtResource("6_4qp8e")
-cell_size = Vector3(1, 0.25, 0.5)
-metadata/_editor_floor_ = Vector3(0, 0, 0)
 
 [node name="Node3D" type="Node3D" parent="."]
 
@@ -863,6 +859,9 @@ transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -15.804, 0.144847, 10.1
 [node name="Plant_9" parent="Swamp/Foliage" instance=ExtResource("16_gf84l")]
 transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -8.4191, 0.144846, 22.9343)
 
+[node name="Plant_15" parent="Swamp/Foliage" instance=ExtResource("11_gf84l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -1)
+
 [node name="Rocks" type="Node3D" parent="Swamp"]
 
 [node name="Rock_Moss_2" parent="Swamp/Rocks" instance=ExtResource("18_unvvj")]
@@ -1275,3 +1274,9 @@ transform = Transform3D(-1.31134e-07, 0, -3, 0, 3, 0, 3, 0, -1.31134e-07, -6.048
 
 [node name="trafficlight_C2" parent="." instance=ExtResource("23_vhbyp")]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -5.85279, 0.3, -30.8411)
+
+[node name="Bush_2" parent="." instance=ExtResource("51_s0hg4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 2)
+
+[node name="Bush_1" parent="." instance=ExtResource("52_00kn3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 3)

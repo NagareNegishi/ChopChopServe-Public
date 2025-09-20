@@ -35,7 +35,8 @@ import_script/path=""
 _subresources={
 "nodes": {
 "PATH:Plant_1": {
-"generate/physics": true
+"generate/physics": true,
+"physics/layer": 2
 }
 }
 }

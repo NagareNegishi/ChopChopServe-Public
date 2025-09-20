@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://c8bjd53t4fgr1"]
+[gd_scene load_steps=0 format=3 uid="uid://c8bjd53t4fgr1"]
 
 [node name="UiPause" type="Control"]
 layout_mode = 3

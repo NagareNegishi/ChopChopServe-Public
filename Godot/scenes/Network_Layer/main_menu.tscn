@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bajtcauh5e5xi"]
+[gd_scene load_steps=5 format=3 uid="uid://bajtcauh5e5xi"]
 
 [ext_resource type="Script" uid="uid://bv1fic7goj5rs" path="res://scripts/Network_Layer/main_menu.gd" id="1_5gu6x"]
 [ext_resource type="FontFile" uid="uid://dxc6n0umgi0q4" path="res://assets/fonts/Jua-Regular.ttf" id="2_36fig"]
 [ext_resource type="PackedScene" uid="uid://2qlfolqgl2hl" path="res://UI/UI_CustomButton.tscn" id="3_36fig"]
+[ext_resource type="Texture2D" uid="uid://6d0vtqnqvqw0" path="res://assets/textures/Menu/Title2.png" id="4_0ltv3"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -23,6 +24,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Disclamer" type="Label" parent="Menu"]
+visible = false
 layout_mode = 0
 offset_left = 183.0
 offset_top = 350.0
@@ -36,6 +38,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Title" type="Label" parent="Menu"]
+visible = false
 layout_mode = 0
 offset_left = 115.0
 offset_top = 54.0
@@ -89,3 +92,8 @@ text = "JOIN
 [node name="ExitButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
 layout_mode = 2
 text = "EXIT"
+
+[node name="Title2" type="Sprite2D" parent="."]
+position = Vector2(239, 197)
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("4_0ltv3")

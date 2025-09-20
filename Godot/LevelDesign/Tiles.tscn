@@ -53,6 +53,3 @@ current_owner = 1
 [node name="StoveWithPot" parent="." instance=ExtResource("13_y1648")]
 
 [node name="TrashCan" parent="." instance=ExtResource("14_h77kh")]
-using_tscn = false
-unique_name = "UNNAMED_APPLIANCE"
-current_owner = 1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://cg15jg7ymkii6"]
+[gd_scene load_steps=12 format=4 uid="uid://d1figbbjco6jp"]
 
 [ext_resource type="Script" uid="uid://be2cfx8m026fm" path="res://scripts/Food/Ingredients/beef.gd" id="1_4vj1n"]
 [ext_resource type="Material" uid="uid://d1mru8ywyt58h" path="res://assets/newmodels/texturemap.tres" id="2_4vj1n"]

@@ -7,7 +7,5 @@ func _ready():
 	# cook time is same as super class
 	# can cook is same as super class
 	raw_mesh = null
-	spoiled_mesh = null
-	cooked_mesh = null
-	burnt_mesh = null
-	chopped_mesh = null
+	add_to_group("Food")
+	on_state_change()

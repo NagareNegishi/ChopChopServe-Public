@@ -31,6 +31,9 @@ current_owner = 1
 [node name="FoodCrate" parent="." instance=ExtResource("5_u07qb")]
 
 [node name="Freezer" parent="." instance=ExtResource("6_7binn")]
+supplies = Array[PackedScene]([])
+supply_names = Array[String](["Tomato"])
+action_interval = 1.0
 using_tscn = false
 unique_name = "UNNAMED_APPLIANCE"
 current_owner = 1

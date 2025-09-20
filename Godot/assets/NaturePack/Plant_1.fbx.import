@@ -36,7 +36,8 @@ _subresources={
 "nodes": {
 "PATH:Plant_1": {
 "generate/physics": true,
-"physics/layer": 2
+"physics/layer": 2,
+"physics/shape_type": 1
 }
 }
 }

@@ -1,0 +1,201 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fswiss\fcharset0 Helvetica-Bold;\f2\fswiss\fcharset0 Helvetica-Oblique;
+}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww16160\viewh13420\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Code Review Notes - 19/09/2025\
+\
+
+\f1\b Emma
+\f0\b0 :\
+- Don\'92t need to export the meshes at the start of food\
+- maybe change the cooking times of the things to be singular\
+- look it into the spoling of food function:\
+	- make a spoiling function to call\
+	- does it being chopped spot the thing from getting spolied?\
+	- can water, flour or coco spoil? - make a decision around that\
+- move the spoiling ingredent up within in the code file\
+- Is ther a better way to change an enum to stings?\
+- EVERYONE TODO: add titles/ explainations at the front of your functions?\
+- implement a potentual function to start a fire on the appliance when the food gets burnt (maybe add it later tho)\
+- EVERYONE TODO: Change the function names to snakecases !!\
+- do you want to be able to rechop something ??\
+	- update the start_cooking match appliance_type thing so it does or doesn\'92t work\
+	- at the moment if they take something out, and then put it back on it wont burnt it but that could be changed so that it does. \
+	- maybe make it so it they can\'92t put cooked things into the appliances?\
+- Change the way the plate excepts things, so that you can make food with the burnt things (currently it doesn\'92t accept burnt things, you can only make a bad quality thing)\
+	- change the matching of the food item states so burnt things can get through onto the plate?\
+- make a push error for the match_menu_items function insread of just a print out.\
+- remember to change the names of the items in the preload\'85.class, if they change so we don\'92t get any errors\
+- why are we using objects rather then godot resources?\
+	- resources are data containers that we don\'92t need to instansiate\
+	- can they extend a class? \'97> we don\'92t know : this probs to hard to implement now tho\
+- need to workout weither all the ingrediences are available at all times or not (linking to the game loop)\
+	- remember there is currently a bool for is_available but don\'92t used properly atm\
+\
+\
+
+\f1\b Josh
+\f0\b0 :\
+- When are we going to use this building thing?\
+	- something to do with buying appliances\
+	- need to make the levels less full to begin with so theres more places to customise\
+-  what do we need to register under the server?\
+	- Its currently only half being used\
+	- its function is to register things to the kernel\
+	- not used much but it could be helpful to others\
+	- sometihng so you don\'92t ned to use the tree\
+- Add a thing to give a maxium or minium number of customers per day etc (might already have but update/ change it)\
+	- it stops adding the customer to the que at certian time (i think)\
+- Does food court work for other levels and stuff?\
+	- it can work for other levels\
+	- you just need to change where the tables are plus where the customers spaw and despawn\
+- will food court handle day and stuff?\
+	- yes, it will go in the _process?\
+- how long are the days going to be?\
+	- 2 mins (maybe to short)\
+	- need lots of time to make all the different food times\
+	- change the time after doing some testing?\
+- Bascially: we need to figure out the day timeline / the rounds workingness !!!!\
+- do we want to make foodcourt as the core loop?\
+	- something else above the foodcourt to handle it\
+	- set number of phases or sometihng or does it change\
+	- timer to tell the game to move from phase to phase etc\
+- do we want to have one customer come in to serve but does both teams need to serve them before the next phase starts and then more customers can come in or just when you personally finish, the next comsters come in?\
+	- limited time to pratice servering the customer (30 sec) and it ends after that time or if you serve the two customers before moving on\
+	- leaning towards waiting for both teams to finish.\
+	- does it go in prep phase or what?\
+- do we want reciet tabs to be able to see how to make the meals?\
+	- like papas pizzaria and stuff?\
+	- might be good so the players don\'92t need to remember aoo the different meals\
+- maybe make the food crate more of an inventory rather than have the food crate stuff?\
+	- for better functionallity rather then having to go back and forth\
+\
+\
+
+\f1\b Jessica
+\f0\b0 :\
+- check if you use the player id \
+- look into the reputation for the days and stuff\
+	- Need to add a system for deciding who wins each day and then eventually the round etc\
+- will each team does one sabotage at a time but can both do the one sabotage at the same time\
+- figure out how rep should minus from sabotage\
+- look into excecuting sabotage as repeated/copied code\
+- figure out when player is dashing through water to trigger the drop item (or something similar)\
+- connect the water spill to a team so that only the teams whos been sabotaged will minus rep\
+- better way to get team id?? (use the server or player stuff?)\
+- there is a diff way to burn food in appliance in ignite thing? have a look maybe commet out to use your own\
+- Need to look into the functionality of the sabotage system as a whole:\
+	- can you do multiple at the same time?\
+	- should there be lock on it, when can you do it etc\
+\
+\
+
+\f1\b Johno
+\f0\b0 :\
+- are we going to have name tags above the head or just have the colours?\
+	- colours are present but want to change it so players can choose what one\
+	- and maybe add outfits and stuff\
+- wanting to potentally make it so the physics is only on the server\
+- does each clinet do the phisics for all players or just yours?\
+- EVERYONE TODO?: create functions for if statements to create nicer if loops\
+- maybe change the server_pickup to work with the kernel stuff instead of trees but it works so eh\
+- there is pre coded function to find the current parent and relocate it - maybe look into that to potentually using it in the code\
+- we all seem to have our own turn_off_collisions functions: get rid of/ comnine them together? : TODO\
+- need to change the movement to work with multiple different cars\
+- need to look into some of the hardcoding, making sure it reflects the other sections of the code\
+-  the sauce bottle lines don\'92t update yet but will in the future\
+- is there a defult texture?\
+	- might want one so that if there isn\'92t one found it doesn\'92t crash/ error\
+- order bar needs to be changed potentually\
+	- going from the same side as other bars\
+	- include a timer so we can see what it is doing\
+\
+\
+
+\f1\b Nagare
+\f0\b0 :\
+- do we need the tool class? add or get rid of it later\
+- need to add the upgrate stuff into the game?\
+- do we need to control the direction etc\
+- collions layer stuff needs to be properly used as it was expected to\
+- model size and location in association of the appliacne might need to be reworked\
+- why do we have so many scales?\
+	- all of the different foods assest have different scales\
+	- means we have to all manually change the scale to fit\
+	- do we need to make them all them same (like create a function to do it?)\
+- update and decide the pricing system\
+	- applainces and food\
+	- do we want the them to all have a flat fee or nah\
+- the comment dashes:\
+	- is there a reason for \'97\'97 vs \'97\'97\'97\'97\'97\
+	- cause its there to show dugging questions\
+- maybe try and split power_appliance into two files because it is quite long and it might be nice to tidy up. but not a priority\
+- need to work on when to spread the fire\
+	- at what number does the fire spread to the next bench etc\
+- upgrade the fire extinguisher so that it can put fires out faster?\
+- when on the bench is on fire then the food is being erased\
+	- if something is on fire then sabotage code needs to destory the food in the oven not burn it !!\
+- add more too / figure out the scene_manager scene options we can go to\
+\
+\
+
+\f2\i Food Crates / ingredients:
+\f0\i0 \
+- We want it to show all of the food options at all times so that they can mess up\
+- do you pause to pickout the things?\
+	- It might take up so much screen space\
+- walk up to the food crate, UI pops up, you get to chose from the optoins, it gets up in your hand, then you can walk away to use it\
+- we just need somehwere to get food from\'85\
+- 
+\f1\b Just have everything in the fridge
+\f0\b0 ? make it bigger then the other appliances so that it stands out\
+- you can\'92t put things in the fridge but can take things out.\
+- does it cost to take food out?\
+- 
+\f1\b have limited food stocks
+\f0\b0 ? so each team gets like 100 tomatos, and then you would have to pay for the new stock\
+	- this could lead to problems within the game play if players aren\'92t getting as much money from food as they need to pay for ingredients\
+- depending on how long the day is you might not use up the stock\'85\
+- have a set number that is very low (5ish) so that they have to buy more stock?\
+\
+
+\f2\i Cooking / game loop:
+\f0\i0 \
+- how long do you want it to take to cook each dish?\
+	- at the moment about a minute\
+- how long do you want the days to be\'92?\
+	- we want to aim for like 5-10 mins (we want quick days but also want them to be able to actually be able to make all the foods and stuff)\
+- do we want to cut down the cook times to begin?\
+	- could take them down by like 10 seconds \
+	- might come into problems later with upgrading tho\
+- do we want the food to be able to be cooked straight away when they put it in the objects? (for faster game play)\
+- how many appliances do we have? would that lower the chance of multi tasking and not be able to have lots of things going at the same time?\
+- make sure we keep it to only being two kitchens !!\
+- 
+\f1\b make the days ~5 minutes 
+\f0\b0 but change it later after testing\
+- 
+\f1\b 5 days per week
+\f0\b0 \
+- whoever has the most rep at the end of each day gets the win, then its who ever has the most wins at the end of the week wins the round.\
+-
+\f1\b  overall: \
+	- 
+\f0\b0 just make the dishes faster \
+	- get rid of the crate switch sabotage\
+	- maybe change it for another sabotage around changing the player controls so their rights and lefts are different etc\
+	- make a much quciker game loop overall\
+	- make the kitchens bigger, so we can have more space for the ktichens\
+- do we want customers to order on item or multiple items?\
+	- maybe instead of 5 or just two?\
+	- like starter+main not main+main\
+- they order again once they have been served\
+	- so they order the soup, get it and then after that they order ice cream \
+	- you give the food, they get their happy bubbles, you get $$, and rep then they ask for more stuff x2\
+- everyone to make their own goals for next time\
+- player testing soon!\
+- we need to assign the fridge to someone, we need to get started on it so we know it\'92ll actually get done in time :)}

@@ -1,0 +1,88 @@
+[gd_scene load_steps=5 format=3 uid="uid://bkiho50cm2cj8"]
+
+[ext_resource type="Script" uid="uid://dby241x7depct" path="res://scripts/UI/ui_present.gd" id="1_3jkq6"]
+[ext_resource type="Texture2D" uid="uid://bpww3wiaqof13" path="res://icon.svg" id="1_4mul5"]
+[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/DefaultTheme.tres" id="2_fn4x2"]
+[ext_resource type="Texture2D" uid="uid://ch6v2rhv6xhkx" path="res://assets/textures/Controls/keyboard_j.png" id="3_e58pj"]
+
+[node name="UiPresent" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3jkq6")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = -280.0
+offset_top = -131.0
+offset_right = 256.0
+offset_bottom = 46.0
+color = Color(0.0705882, 0.0705882, 0.0705882, 0.54902)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -263.0
+offset_top = -109.0
+offset_right = 228.0
+offset_bottom = 31.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 40
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_4mul5")
+expand_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("2_fn4x2")
+theme_override_colors/font_color = Color(0.945098, 0.356863, 0.298039, 1)
+theme_override_constants/outline_size = 13
+theme_override_font_sizes/font_size = 120
+text = "$200"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+layout_mode = 0
+offset_left = -31.64
+offset_top = 54.36
+offset_right = 32.36
+offset_bottom = 118.36
+scale = Vector2(2.7, 2.7)
+pivot_offset = Vector2(32, 32)
+max_value = 1.0
+step = 0.01
+value = 0.41
+fill_mode = 4
+texture_progress = ExtResource("3_e58pj")
+tint_progress = Color(0.980392, 0.980392, 0.980392, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = -16.0001
+offset_top = 55.0
+offset_right = 23.9999
+offset_bottom = 116.0
+color = Color(0.980392, 0.980392, 0.980392, 1)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+self_modulate = Color(0.0705882, 0.0705882, 0.0705882, 1)
+layout_mode = 0
+offset_left = -69.64
+offset_top = 17.36
+offset_right = 71.36
+offset_bottom = 158.36
+texture = ExtResource("3_e58pj")

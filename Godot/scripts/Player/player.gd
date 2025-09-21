@@ -56,6 +56,10 @@ func _ready() -> void:
 	$Decal.modulate = colour
 	body_mesh.set_surface_override_material(1, material)
 	body_mesh.get_active_material(1).albedo_color = colour
+	$Mesh/Armature/Skeleton3D/RightHand.set_surface_override_material(1, material)
+	$Mesh/Armature/Skeleton3D/RightHand.get_active_material(1).albedo_colour = colour
+	$Mesh/Armature/Skeleton3D/LeftHand.set_surface_override_material(1, material)
+	$Mesh/Armature/Skeleton3D/LeftHand.get_active_material(1).albedo_colour = colour
 	
 	if !multiplayer.get_unique_id() == name.to_int():
 		check_interactables.stop()

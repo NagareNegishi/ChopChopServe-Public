@@ -1,10 +1,11 @@
-[gd_scene load_steps=38 format=3 uid="uid://ckxyscw51v3du"]
+[gd_scene load_steps=40 format=3 uid="uid://ckxyscw51v3du"]
 
 [ext_resource type="Script" uid="uid://0wecred12v33" path="res://scripts/Player/player.gd" id="1_3qydi"]
 [ext_resource type="PackedScene" uid="uid://d4fmw7rcfjnsg" path="res://assets/newmodels/animations/Froggo.glb" id="2_xcisb"]
 [ext_resource type="Texture2D" uid="uid://ds43xburqmhn0" path="res://assets/textures/misc/CircleTexture.png" id="4_ved6o"]
 [ext_resource type="Script" uid="uid://b3odgdfvtu6" path="res://scripts/Player/player_state.gd" id="5_socpp"]
 [ext_resource type="Script" uid="uid://b1a2y0am2avrj" path="res://scripts/Player/player_controller.gd" id="5_xcisb"]
+[ext_resource type="PackedScene" uid="uid://00wjsq6ak2e6" path="res://UI/UI_NameTag.tscn" id="6_socpp"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l2ndj"]
 radius = 0.524702
@@ -170,6 +171,9 @@ properties/4/replication_mode = 1
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_xcisb"]
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_socpp"]
+viewport_path = NodePath("NameTag/SubViewport")
+
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
 script = ExtResource("1_3qydi")
@@ -181,21 +185,22 @@ shape = SubResource("CapsuleShape3D_l2ndj")
 transform = Transform3D(-7.64949e-09, 0, -0.175, 0, 0.175, 0, 0.175, 0, -7.64949e-09, 0, -0.556445, 0)
 
 [node name="Clothes_001" parent="Mesh/Armature" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0402468, -2.38199, 0.0644097)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0402468, -2.43882, 0.0644098)
 
 [node name="Skeleton3D" parent="Mesh/Armature" index="1"]
-bones/2/rotation = Quaternion(0.000402912, 1.19209e-07, -4.80308e-11, 1)
-bones/3/position = Vector3(-3.85431, 2.46216, 2.79993e-14)
+bones/1/position = Vector3(-0.0285939, 0.934027, -0.0113688)
+bones/2/rotation = Quaternion(0.00804054, 1.19205e-07, -9.58507e-10, 0.999968)
+bones/3/position = Vector3(-3.85431, 2.38267, 7.14682e-10)
 bones/3/rotation = Quaternion(-3.89966e-08, 2.25142e-09, 0.998338, 0.0576379)
 bones/4/rotation = Quaternion(-1.13927e-09, 8.31912e-08, 0.00706236, 0.999975)
 bones/5/rotation = Quaternion(-3.2693e-11, -3.49708e-07, -0.00031076, 1)
-bones/6/position = Vector3(3.85431, 2.46216, -4.22451e-16)
+bones/6/position = Vector3(3.85431, 2.37359, 7.96295e-10)
 bones/6/rotation = Quaternion(3.89966e-08, 2.25142e-09, 0.998338, -0.0576379)
 bones/7/rotation = Quaternion(1.35973e-09, 2.70658e-07, -0.00706199, 0.999975)
 bones/8/rotation = Quaternion(-1.42488e-10, -4.14868e-09, 0.000310395, 1)
-bones/9/position = Vector3(-0.745343, 0.911673, -0.0113688)
+bones/9/position = Vector3(-0.745343, 0.890422, -0.0113688)
 bones/9/rotation = Quaternion(-0.707104, -0.0031089, 0.7071, -0.0021288)
-bones/10/position = Vector3(0.688155, 0.911673, -0.0113688)
+bones/10/position = Vector3(0.688155, 0.886297, -0.0113688)
 bones/10/rotation = Quaternion(0.707102, -0.00261885, 0.707102, 0.00261885)
 
 [node name="InteractArea" type="Area3D" parent="Mesh"]
@@ -257,6 +262,17 @@ replication_config = SubResource("SceneReplicationConfig_ved6o")
 root_path = NodePath(".")
 replication_config = SubResource("SceneReplicationConfig_xcisb")
 script = ExtResource("5_xcisb")
+
+[node name="NameTag" type="Sprite3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 1.13921, 0)
+billboard = 1
+texture = SubResource("ViewportTexture_socpp")
+
+[node name="SubViewport" type="SubViewport" parent="NameTag"]
+transparent_bg = true
+size = Vector2i(287, 47)
+
+[node name="UiNameTag" parent="NameTag/SubViewport" instance=ExtResource("6_socpp")]
 
 [connection signal="area_entered" from="Mesh/InteractArea" to="." method="_on_interact_area_area_entered"]
 [connection signal="area_exited" from="Mesh/InteractArea" to="." method="_on_interact_area_area_exited"]

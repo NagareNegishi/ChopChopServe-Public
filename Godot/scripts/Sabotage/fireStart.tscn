@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bq2c75mlrpn41"]
+
+[ext_resource type="Script" uid="uid://trybir26nvej" path="res://scripts/Sabotage/fireStart.gd" id="1_2t2s3"]
+
+[node name="fireStart" type="Node3D"]
+script = ExtResource("1_2t2s3")

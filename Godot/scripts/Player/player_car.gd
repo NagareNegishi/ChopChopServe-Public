@@ -2,10 +2,12 @@ class_name PlayerCar
 extends CharacterBody3D
 
 
-@export var speed : float = 3
+@export var speed : float = 8
 @export var turn_speed : float = 3
-@export var acceleration : float = 15
-@export var decceleration : float = 30
+@export var acceleration : float = 10
+@export var decceleration : float = 40
+@export var camera_length : float = 7
+
 
 var turn_input_avg : int = 0
 var move_input_avg : int = 0
@@ -25,7 +27,7 @@ func _ready() -> void:
 	for i in range(10):
 		var particle = move_particle.instantiate()
 		MOVE_PARTICLES_POOL.append(particle)
-
+	$SpringArm.spring_length = camera_length
 # Runs every process frame
 # @param delta time to proces frame
 # @return void
@@ -79,7 +81,7 @@ func _movement(delta : float) -> void:
 
 	#rotates mesh
 	$Mesh.rotation.y += turn_input_avg * turn_speed * delta
-		
+	$CollisionShape3D.rotation.y += turn_input_avg * turn_speed * delta
 	#print(move_input_avg, turn_input_avg)
 	
 	if move_input_avg: #handles logic if player is moving 

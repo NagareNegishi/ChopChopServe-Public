@@ -4,8 +4,8 @@ extends Control
 @onready var cur_label = $CurrencyNumber
 
 func _ready() -> void:
-	ReputationSystem.reputation_changed.connect(_on_reputation_changed)
-	CurrencySystem.currency_changed.connect(_on_currency_changed)
+	#ReputationSystem.reputation_changed.connect(_on_reputation_changed)
+	#CurrencySystem.currency_changed.connect(_on_currency_changed)
 	GamePhases.cook_timer_on.connect(_on_cook_timer_on)
 	GamePhases.prep_timer_on.connect(_on_prep_timer_on)
 
@@ -18,17 +18,17 @@ func _on_currency_changed(new_currency: int) -> void:
 
 # On Reputation buttons pressed
 func _on_add_rep_button_pressed() -> void:
-	ReputationSystem.add_reputation(20)
+	ReputationSystem.add_reputation(1, 20)
 
 func _on_minus_rep_button_pressed() -> void:
-	ReputationSystem.minus_reputation(20)
+	ReputationSystem.minus_reputation(2,20)
 
 # On Currency buttons pressed
 func _on_minus_cur_button_pressed() -> void:
-	CurrencySystem.minus_currency(150)
+	CurrencySystem.minus_currency(2, 150)
 
 func _on_add_cur_button_pressed() -> void:
-	CurrencySystem.add_currency(200)
+	CurrencySystem.add_currency(1, 200)
 
 
 # Cook Timer Stuff

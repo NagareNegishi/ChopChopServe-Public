@@ -18,7 +18,7 @@ func _ready():
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 	multiplayer.connection_failed.connect(_on_connection_failed)
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
-	multiplayer.server_disconnected.connect(_on_server_disconnected)
+	multiplayer.server_disconnected.connect(_on_disconnected_from_server)
 
 
 ## Create a server with default settings. Server is also player 1.
@@ -91,11 +91,9 @@ func join_game(connection_info: String) -> bool:
 func leave_game():
 	if peer:
 		if state == ConnectionState.HOST:
-			player_left.emit(my_id)
 			print("Server shutdown")
 		elif state == ConnectionState.CONNECTED:
-			disconnected.emit()
-			print("Client with network ID %d disconnected" % my_id)
+			print("Client with network ID: ", my_id, " is going to leave")
 		else:
 			print("Stop connecting")
 		
@@ -104,10 +102,11 @@ func leave_game():
 		peer = null
 		state = ConnectionState.DISCONNECTED
 		my_id = -1
-		print("Left game and disconnected")
+		print(my_id," left game and disconnected")
 
 
 ## Handle peer connection (when someone joins)
+## "A new peer has connected to the same network as me"
 func _on_peer_connected(id: int):
 	print("Peer connected: %d" % id)
 	if state == ConnectionState.HOST:
@@ -119,6 +118,7 @@ func _on_peer_connected(id: int):
 
 
 ## Handle peer disconnection (when someone leaves)
+## "A peer that was part of our network has left"
 func _on_peer_disconnected(id: int):
 	print("Peer disconnected: %d" % id)
 	if state == ConnectionState.HOST:
@@ -143,7 +143,8 @@ func _on_connected_to_server():
 
 
 ## Handle server disconnection (server went down unexpectedly)
-func _on_server_disconnected():
+## "I (a client) have lost connection to the server", Host never receives this
+func _on_disconnected_from_server():
 	print("Server disconnected unexpectedly")
 	if state != ConnectionState.DISCONNECTED:
 		disconnected.emit()

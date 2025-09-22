@@ -46,7 +46,7 @@ func match_menu_items(input_ingredients: Array):
 func check_items(pass_ingredients: Array, required_ingredients: Array, food_instance: MenuItem) -> bool:
 	#print("in check items")
 	if pass_ingredients.size() != required_ingredients.size():
-		print("Size mismatch - returning false")
+		# print("Size mismatch - returning false")
 		return false
 	
 	var required_counts = {}

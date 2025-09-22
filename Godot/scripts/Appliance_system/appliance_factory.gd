@@ -18,7 +18,6 @@ enum CookingStyle {
 	PAN_FRY,     # Frying Pan
 	BOIL,        # Pot
 	BLEND,       # Blender - mixing/blending
-	FREEZE,      # Freezer - cooling/freezing
 	CHOP         # Cutting Board with Knife - chopping
 }
 
@@ -32,6 +31,8 @@ var book: Dictionary = {}
 func _ready():
 	_register_appliances()
 	# print_book()
+
+	ApplianceManager.appliance_created.connect(_on_test_appliance_created)
 
 
 ## Note: only used by ApplianceManager
@@ -108,34 +109,6 @@ func print_book():
 		print("- %s -> %s (Price: %d)" % [appliance_name, info.script.get_global_name(), info.price])
 
 
-## Spawn appliance in front of the player for testing
-func spawn_test_appliance(appliance_type: String):
-	var appliance = _create_appliance(appliance_type)
-	if not appliance:
-		print("Failed to spawn: ", appliance_type)
-		return
-	
-	# Find the player node
-	var player = get_tree().get_first_node_in_group("player")
-	if not player:
-		player = get_tree().current_scene.get_node("Player")
-	if player:
-		# Get player's position and forward direction
-		var player_pos = player.global_position
-		var player_forward = -player.global_transform.basis.z
-		# Spawn distance in front of player
-		var spawn_distance = 2.0  # Adjust this value as needed
-		var spawn_position = player_pos + (player_forward * spawn_distance)
-		spawn_position.y = 1.0
-		get_tree().current_scene.add_child(appliance)
-		appliance.global_position = spawn_position
-		# print("Spawned %s in front of player at: %s" % [appliance_type, spawn_position])
-	else:
-		get_tree().current_scene.add_child(appliance)
-		appliance.global_position = Vector3(0, 0, 0)
-		print("Player not found! Spawned %s at origin" % appliance_type)
-
-
 const TEST_APPLIANCES = [
 	"stove_with_pot",      # Numpad 1
 	"oven",    # Numpad 2
@@ -148,6 +121,7 @@ const TEST_APPLIANCES = [
 	"trash_can",   # Numpad 9
 	"stove_with_pan"  # Numpad 0
 ]
+
 
 func _input(event):
 	if event is InputEventKey and event.pressed:
@@ -175,8 +149,28 @@ func _input(event):
 				appliance_index = 8
 			KEY_KP_0:
 				appliance_index = 9
-		
+
 		# Spawn the corresponding appliance
 		if appliance_index >= 0 and appliance_index < TEST_APPLIANCES.size():
-			spawn_test_appliance(TEST_APPLIANCES[appliance_index])
+			ApplianceManager.request_appliance(TEST_APPLIANCES[appliance_index], 0)
 			print("Numpad %d pressed - spawning %s" % [appliance_index + 1, TEST_APPLIANCES[appliance_index]])
+
+
+func _on_test_appliance_created(appliance: Appliance):
+	var player_id = ENetManager.get_my_id()
+	print("DEBUG: My ID is ", player_id)
+
+	var player = GlobalScript.get_local_player_by_id(player_id)
+	if player:
+		# Get player's position and forward direction
+		var player_pos = player.global_position
+		var player_forward = -player.global_transform.basis.z
+		# Spawn distance in front of player
+		var spawn_distance = 2.0  # Adjust this value as needed
+		var spawn_position = player_pos + (player_forward * spawn_distance)
+		spawn_position.y = 1.0
+		get_tree().current_scene.add_child(appliance)
+		appliance.global_position = spawn_position
+		# print("DEBUG: Appliance added to scene at: ", appliance.global_position)
+	else:
+		print("DEBUG: No player found!")

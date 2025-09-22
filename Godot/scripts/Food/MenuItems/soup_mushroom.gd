@@ -7,7 +7,7 @@ static var _auto_register = MenuItem.register(MushroomSoup)
 @warning_ignore("unused_private_class_variable")
 static var _type_register = MenuItem.register_type(MenuItem.starters, MushroomSoup.new())
 
-func _ready():
+func _init():
 	ingredients = ["Mushroom", "Mushroom", "Mushroom", "Water"]
 	
 	ingredient_states = {
@@ -15,11 +15,9 @@ func _ready():
 		"Water": ["RAW","BOILED"]
 	}
 	
-	# This is the appliance it is to be collected in 
-	#appliance = "Bowl"
-	
-	cooked_mesh_good = null
-	cooked_mesh_bad = null
-	cooked_mesh_burnt = null
-	
-	register(self)
+	is_available = true
+
+func _ready():
+	cooked_mesh_good = $SoupMushroom
+	cooked_mesh_bad = $BadQualityMushSoup
+	cooked_mesh_burnt = $BurntSoup

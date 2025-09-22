@@ -1,7 +1,6 @@
 class_name Player 
 extends CharacterBody3D
 
-const SPEED : float = 4.0
 const ACCELERATION : float = 100
 const DECELERATION : float = 60
 const DASH_DURATION : float = 0.025
@@ -11,6 +10,7 @@ const ANGULAR_ACCELERATION : float = 15
 const PUSH_FORCE : float = 0.3
 const THROW_STRENGTH : float = 40
 
+var speed : float = 4.0
 var MOVE_PARTICLES_POOL = []
 var _direction : Vector3 = Vector3.FORWARD
 var _items_in_interactable_area = []
@@ -20,33 +20,72 @@ var item_in_hand : Node3D = null
 var can_dash : bool = true
 
 @onready var controller : PlayerController = $Controller
+@onready var player_state : PlayerState = $PlayerState
+@onready var item_point = $Mesh/ItemPoint
+@onready var check_interactables : Timer = $CheckInteractables
+@onready var anim_tree : AnimationTree = $AnimationTree
+@onready var body_mesh : MeshInstance3D = $Mesh/Armature/Skeleton3D/Frog
+
 
 func _enter_tree() -> void:
-	set_multiplayer_authority(name.to_int())
 	scale = Vector3(1,1,1)
 	
+
 
 ## Called when the node enters the scene tree for the first time.
 ## @return void
 func _ready() -> void:
 	$DashCooldown.wait_time = DASH_COOLDOWN
-
-## Had conflict here, first one was from Player-Controller, I will comment out the one was in main--------------------------------------------------
-	$Decal.modulate = GlobalScript.player_outline_colours.get(1)
-	# $Decal.modulate = GlobalScript.player_colours.get(1)
-##-----------------------------------------------------------------------------------------------------------------------
-
+	player_state.player_id = name.to_int()
+	call_deferred("set_multiplayer_authority", name.to_int())
+	
+	#Sets the default animation values
+	anim_tree["parameters/conditions/is_idle"] = true
+	anim_tree["parameters/conditions/is_moving"] = false
+	anim_tree["parameters/SM_Walking/conditions/empty"] = true
+	anim_tree["parameters/SM_IDLE/conditions/empty"] = true
+	anim_tree["parameters/SM_Walking/conditions/holding"] = false
+	anim_tree["parameters/SM_IDLE/conditions/holding"] = false
+	anim_tree["parameters/SM_ACTION/conditions/chopping"] = false
+	
+	var colour : Color = GlobalScript.player_outline_colours.get(
+			ENetManager.get_player_list().find(name.to_int()))
+	var material : Material = StandardMaterial3D.new()
+		
+	body_mesh.material_override = material
+	$Decal.modulate = colour
+	body_mesh.set_surface_override_material(1, material)
+	body_mesh.get_active_material(1).albedo_color = colour
+	
+	if !multiplayer.get_unique_id() == name.to_int():
+		check_interactables.stop()
 	
 	for i in range(10):
 		var particle = move_particle.instantiate()
 		MOVE_PARTICLES_POOL.append(particle)
 
+
+func set_speed(new_speed : float) -> void:
+	speed = max(new_speed, 0)
+
+
 ## Functionailty that happens every frame
 ## @param delta the times it takes per frame to render
 ## @return void
 func _physics_process(delta: float) -> void:
-	#if !is_multiplayer_authority():
-		#return
+	if ENetManager.is_host():
+		collision_check()
+	
+	if velocity == Vector3.ZERO:
+		anim_tree["parameters/conditions/is_idle"] = true
+		anim_tree["parameters/conditions/is_moving"] = false
+	else:
+		anim_tree["parameters/conditions/is_moving"] = true
+		anim_tree["parameters/conditions/is_idle"] = false
+	
+	if multiplayer.get_unique_id() != name.to_int():
+		return
+	
 	# Add the gravity.
 	if !is_on_floor():
 		velocity += get_gravity() * delta
@@ -54,6 +93,13 @@ func _physics_process(delta: float) -> void:
 	_inputs()
 	_movement(delta)
 	_rotate_player(delta)
+	
+
+func collision_check() -> void:
+	for i in get_slide_collision_count():
+		var collider = get_slide_collision(i)
+		if collider.get_collider() is RigidBody3D:
+			collider.get_collider().apply_central_impulse(-collider.get_normal() * PUSH_FORCE)
 
 
 ## Rotates player to the direction they are moving
@@ -61,28 +107,25 @@ func _physics_process(delta: float) -> void:
 ## @return void
 func _rotate_player(delta: float) -> void:
 	if(_direction.length() > 0):
-		$Mesh.rotation.y = lerp_angle($Mesh.rotation.y, atan2(_direction.x, _direction.z), delta * ANGULAR_ACCELERATION)
+		$Mesh.rotation.y = lerp_angle($Mesh.rotation.y, 
+		atan2(_direction.x, _direction.z), delta * ANGULAR_ACCELERATION)
 
 
 ## Handles movement logic for player
 ## @param delta the delta from process physics
 ## @return void
 func _movement(delta : float) -> void:
-	_direction = (transform.basis * Vector3(controller.input_dir.x, 0, controller.input_dir.y)).normalized()
+	_direction = (transform.basis * 
+	Vector3(controller.input_dir.x, 0, controller.input_dir.y)).normalized()
 	
 	if _direction:
-		velocity.x = move_toward(velocity.x, _direction.x * SPEED, ACCELERATION * delta)
-		velocity.z = move_toward(velocity.z, _direction.z * SPEED, ACCELERATION * delta)
+		velocity.x = move_toward(velocity.x, _direction.x * speed, ACCELERATION * delta)
+		velocity.z = move_toward(velocity.z, _direction.z * speed, ACCELERATION * delta)
 	else:
-		velocity.x = move_toward(velocity.x, 0, DECELERATION * SPEED)
-		velocity.z = move_toward(velocity.z, 0, DECELERATION * SPEED)
-		
-	move_and_slide()
+		velocity.x = move_toward(velocity.x, 0, DECELERATION * speed)
+		velocity.z = move_toward(velocity.z, 0, DECELERATION * speed)
 	
-	for i in get_slide_collision_count():
-		var collider = get_slide_collision(i)
-		if collider.get_collider() is RigidBody3D:
-			collider.get_collider().apply_central_impulse(-collider.get_normal() * PUSH_FORCE)
+	move_and_slide()
 
 
 ## Allows player to dash again after cooldown finshed
@@ -93,7 +136,8 @@ func _on_dash_timer_timeout() -> void:
 ## Performs the dash and starts the dash cooldown
 ## @return void
 func _dash(is_forward : bool) -> void:
-	
+	if !velocity:
+		return
 	var dash_tween = create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	
 	# If player moving it will launch in direction of movement 
@@ -119,7 +163,7 @@ func _inputs() -> void:
 		_interact()
 		
 	if Input.is_action_just_pressed("Throw"):
-		_throw()
+		server_drop_item(get_path(), true)
 		
 	if Input.is_action_just_pressed("Action"):
 		_action(true)
@@ -128,10 +172,7 @@ func _inputs() -> void:
 		_action(false)
 
 
-## Handles when the player interacts
-## @return void
 func _interact() -> void:
-		
 	if (((item_in_hand is Plate  || item_in_hand is Cookware) && _closest_item != null) && 
 	(_closest_item.get_parent() is Food || _closest_item.get_parent() is Appliance)):
 		_closest_item.interact()
@@ -139,7 +180,7 @@ func _interact() -> void:
 	
 	elif (item_in_hand != null && (_closest_item == null || 
 	_closest_item != null && _closest_item.is_pickup)):
-		drop_item(false)
+		server_drop_item(self.get_path(), false)
 	
 	if _closest_item == null:
 		return
@@ -154,7 +195,6 @@ func _throw() -> void:
 		return
 	
 	drop_item(true)
-	
 
 
 ## Handles logic when player uses an action
@@ -167,9 +207,10 @@ func _action(is_active : bool) -> void:
 	if _closest_item == null || item_in_hand != null:
 		return
 	
-	_closest_item.action(is_active)
-		
+	anim_tree["parameters/SM_ACTION/conditions/chopping"] = true if (
+		is_active && _closest_item.get_parent() is ChoppingBoard) else false
 	
+	_closest_item.action(is_active)
 
 
 ## Sets what item the player is holding
@@ -182,6 +223,9 @@ func pickup_item(item : Node3D) -> bool:
 	if(!item.get_node("InteractableComponent").is_pickup):
 		push_error("not pickup")
 		return false
+	
+	if item_in_hand:
+		drop_item(false)
 	
 	item.global_position = Vector3(0,0,0)
 	item.global_rotation = Vector3(0,0,0)
@@ -204,9 +248,111 @@ func pickup_item(item : Node3D) -> bool:
 	
 	return true
 
+
+@rpc("authority", "call_local")
+func server_pickup(player_name : String, item_name : String) -> void:
+	var player : Node3D = get_tree().current_scene.get_node(player_name)
+	var item : Node3D = get_tree().current_scene.get_node(item_name)
+	
+	if !item or !player:
+		return
+	
+	rpc("_client_pickup", player_name, item_name)
+	
+	
+## Sets what item the player is holding
+## @return bool if successfully picked up
+@rpc("any_peer", "call_local")
+func _client_pickup(player_path : String, item_path : String) -> bool:
+	var item : Node3D = get_tree().current_scene.get_node(item_path)
+	var player : Node3D = get_tree().current_scene.get_node(player_path)
+	
+	if(item == null):
+		push_error("item invalid")
+		return false
+	
+	if(!item.get_node("InteractableComponent").is_pickup):
+		push_error("not pickup")
+		return false
+	
+	if player.item_in_hand:
+		player.rpc("server_drop_item", false)
+	
+	item.global_position = Vector3(0,0,0)
+	item.global_rotation = Vector3(0,0,0)
+#----------------------------------------------------------
+# Added small change here
+	if item.get_parent():
+		item.get_parent().remove_child(item)
+#----------------------------------------------------------
+	if item.has_method("turnOnPhysics"):
+		item.turnOnPhysics(false)
+	
+	if item.has_node("InteractableComponent"):
+		item.get_node("InteractableComponent").turn_on_collision(false)
+	
+	player.anim_tree["parameters/SM_Walking/conditions/empty"] = false
+	player.anim_tree["parameters/SM_IDLE/conditions/empty"] = false
+	player.anim_tree["parameters/SM_Walking/conditions/holding"] = true
+	player.anim_tree["parameters/SM_IDLE/conditions/holding"] = true
+	player.item_point.add_child(item)
+	player.call_deferred("_final_pickup", item)
+
+	
+	item_in_hand = item
+	
+	return true
+
+
+@rpc("authority", "call_local")
+func server_drop_item(player_path : String, is_throw : bool) -> bool:
+	var player : Node3D = get_tree().current_scene.get_node(player_path)
+	print("print")
+	if(player.item_in_hand == null):
+		return false
+	rpc("_client_drop_item", player_path, is_throw)
+	return true
+
+
+@rpc("any_peer", "call_local")
+func _client_drop_item(player_path : String, is_throw : bool) -> bool:
+	var player : Node3D = get_tree().current_scene.get_node(player_path)
+	
+	if player.item_in_hand && is_in_group("Food"):
+		player.item_in_hand.change_collision(false)
+	
+	if player.item_in_hand.get_parent():
+		player.item_in_hand.get_parent().remove_child(player.item_in_hand)
+		
+	if player.item_in_hand.has_node("InteractableComponent"):
+		player.item_in_hand.get_node("InteractableComponent").turn_on_collision(true)
+	
+	get_tree().get_current_scene().add_child(player.item_in_hand)
+	player.call_deferred("_final_drop", player.item_in_hand)
+	
+
+	player._action(false)
+
+	if player.item_in_hand.has_method("turnOnPhysics"):
+		player.item_in_hand.turnOnPhysics(true)
+
+	if is_throw && player.item_in_hand is AbstractThrowable:
+		player.item_in_hand.linear_velocity = $Mesh.global_transform.basis.z * THROW_STRENGTH
+		
+	print("Item dropped ", player.item_in_hand)
+	player.anim_tree["parameters/SM_Walking/conditions/empty"] = true
+	player.anim_tree["parameters/SM_IDLE/conditions/empty"] = true
+	player.anim_tree["parameters/SM_Walking/conditions/holding"] = false
+	player.anim_tree["parameters/SM_IDLE/conditions/holding"] = false
+	player.item_in_hand = null
+	return true
+
+
+
 ## drops item in hand in front of player
 ## @return bool if dropped item succesfully
 func drop_item(is_throw : bool) -> bool:
+	
 	if(item_in_hand == null):
 		return false
 	
@@ -227,9 +373,9 @@ func drop_item(is_throw : bool) -> bool:
 
 	if is_throw && item_in_hand is AbstractThrowable:
 		item_in_hand.linear_velocity = $Mesh.global_transform.basis.z * THROW_STRENGTH
-
+		
+	print("Item dropped ", item_in_hand)
 	item_in_hand = null
-	print("Ahhh")
 	return true
 
 
@@ -298,9 +444,11 @@ func _on_move_particles_timeout() -> void:
 		
 	particle_ref.global_transform = $Mesh/movePoint.global_transform
 
+
 ## Removes current item from the playes hand and its parent
 ## @return Node3D the item that was removed from the players hand
 func remove_item() -> Node3D:
+	#return item_in_hand
 	if item_in_hand == null:
 		return null
 		
@@ -313,8 +461,9 @@ func remove_item() -> Node3D:
 	
 	var res = item_in_hand
 	item_in_hand = null
+	print("Item removed")
 	return res
-	
+
 
 ## Handles the scale of the item when item is picked up
 ## @return void
@@ -330,3 +479,16 @@ func _final_drop(item: Node3D) -> void:
 	item.scale = ($Mesh/ItemPoint.global_transform.basis.get_scale() / scale)
 	item.global_position = $Mesh/ItemPoint.global_position + $Mesh.global_transform.basis.z * 2.5
 	item.global_rotation = $Mesh/ItemPoint.global_rotation
+
+
+## Assigns the player a team
+## @param team the teamm you want to assign the player
+## @return void
+func set_team(team : int):
+	player_state.team = team
+
+
+## Gets the team on the player
+## @return GlobalScript.Team what team the player is assigned
+func get_team() -> int:
+	return player_state.team

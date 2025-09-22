@@ -13,8 +13,8 @@ dest_files=["res://.godot/imported/AppleSliced.glb-220455e882578cd8ea76d43bd75fc
 
 [params]
 
-nodes/root_type=""
-nodes/root_name=""
+nodes/root_type="Node3D"
+nodes/root_name="ChoppedApple"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false
@@ -41,4 +41,4 @@ _subresources={
 }
 }
 gltf/naming_version=1
-gltf/embedded_image_handling=0
+gltf/embedded_image_handling=1

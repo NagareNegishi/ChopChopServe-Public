@@ -1,6 +1,8 @@
-[gd_scene load_steps=54 format=3 uid="uid://dpdrqqhoutpc3"]
+[gd_scene load_steps=64 format=3 uid="uid://dpdrqqhoutpc3"]
 
-[ext_resource type="Texture2D" uid="uid://bx6m3o5gtj1u3" path="res://Particles/hapy.jpg" id="1_l7qkd"]
+[ext_resource type="Texture2D" uid="uid://ceokogexj8qsw" path="res://Particles/hapy.jpg" id="1_l7qkd"]
+[ext_resource type="Texture2D" uid="uid://ihsa1e40m7kc" path="res://Particles/sad-emoji.png" id="2_1x3w2"]
+[ext_resource type="Material" uid="uid://c5cgp40o6fxiq" path="res://shaders/Water/WaterSabotage.tres" id="3_1x3w2"]
 [ext_resource type="Texture2D" uid="uid://24gc7h8nhp8p" path="res://Particles/Skull_and_Crossbones.svg.png" id="3_cwed3"]
 
 [sub_resource type="Curve" id="Curve_1xyps"]
@@ -155,6 +157,7 @@ size = Vector2(0.2, 0.2)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vuhl4"]
 vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("2_1x3w2")
 billboard_mode = 1
 billboard_keep_scale = true
 
@@ -280,6 +283,49 @@ material = SubResource("StandardMaterial3D_cwed3")
 radius = 0.025
 height = 0.05
 
+[sub_resource type="Curve" id="Curve_7f1fg"]
+_data = [Vector2(0, 0.748303), 0.0, 0.0, 0, 0, Vector2(0.980972, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_1x3w2"]
+curve = SubResource("Curve_7f1fg")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2qv8e"]
+direction = Vector3(0, 1, 0)
+spread = 8.0
+initial_velocity_min = 2.0
+initial_velocity_max = 3.0
+scale_curve = SubResource("CurveTexture_1x3w2")
+collision_mode = 2
+
+[sub_resource type="SphereMesh" id="SphereMesh_acvn8"]
+material = ExtResource("3_1x3w2")
+radius = 0.025
+height = 0.05
+radial_segments = 4
+rings = 2
+
+[sub_resource type="SphereMesh" id="SphereMesh_7whca"]
+material = ExtResource("3_1x3w2")
+radial_segments = 10
+rings = 3
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_acvn8"]
+emission_shape = 1
+emission_sphere_radius = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jtpir"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.341176, 0.541176, 0.529412, 0.356863)
+roughness = 0.3
+refraction_enabled = true
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_7whca"]
+material = SubResource("StandardMaterial3D_jtpir")
+size = Vector2(0.01, 0.01)
+
 [node name="Node3D" type="Node3D"]
 
 [node name="Smoke" type="GPUParticles3D" parent="."]
@@ -362,6 +408,12 @@ font_size = 18
 [node name="Text10" type="Label3D" parent="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.40876, 0.141365, -0.189272)
 text = "Fireflies
+"
+font_size = 18
+
+[node name="Text11" type="Label3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.42522, 0.141365, -0.189272)
+text = "WaterSprout
 "
 font_size = 18
 
@@ -452,3 +504,24 @@ draw_pass_1 = SubResource("SphereMesh_jtpir")
 [node name="FireflyAttractor" type="GPUParticlesAttractorSphere3D" parent="Fireflies"]
 transform = Transform3D(0.271653, 0, 0, 0, 0.191246, 0, 0, 0, 0.242991, 0, 0.00363755, 0)
 strength = 0.25
+
+[node name="WaterSprout" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.41952, -0.0486439, 0)
+amount = 50
+lifetime = 0.5
+speed_scale = 0.5
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_2qv8e")
+draw_pass_1 = SubResource("SphereMesh_acvn8")
+
+[node name="WaterPuddle" type="MeshInstance3D" parent="WaterSprout"]
+transform = Transform3D(-0.352926, 0, 0.00366266, 0, 0.057688, 0, -0.00356662, 0, -0.362429, -0.00420278, 0.0399855, -0.000147462)
+mesh = SubResource("SphereMesh_7whca")
+skeleton = NodePath("../MeshInstance3D13")
+
+[node name="Rain" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.6878, -0.0486439, 0)
+amount = 100
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_acvn8")
+draw_pass_1 = SubResource("QuadMesh_7whca")

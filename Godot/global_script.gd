@@ -20,3 +20,26 @@ func _ready() -> void:
 		
 	if get_tree().get_current_scene().has_node("HUD"):
 		ui_game_state = get_tree().get_current_scene().get_node("HUD")
+
+
+func get_random_team() -> GlobalScript.Team:
+	return GlobalScript.Team.TEAM1 if (randf() <= 0.5) else GlobalScript.Team.TEAM2
+
+func get_local_player() -> Player:
+	var my_id = multiplayer.get_unique_id()
+	if !get_tree().current_scene.get_node("== PLAYERS =="):
+		return null
+	
+	for child : Player in get_tree().current_scene.get_node("== PLAYERS ==").get_children():
+		if child.get_multiplayer_authority() == my_id:
+			return child
+	return null
+
+func get_local_player_by_id(player_id : int) -> Player:
+	if !get_tree().current_scene.get_node("== PLAYERS =="):
+		return null
+	
+	for child : Player in get_tree().current_scene.get_node("== PLAYERS ==").get_children():
+		if child.get_multiplayer_authority() == player_id:
+			return child
+	return null

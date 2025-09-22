@@ -10,6 +10,7 @@ signal toggle_collision(turn_on : bool)
 
 var can_be_interacted : bool = true
 
+
 ## Emits signal that this component has been interacted with
 ## @return void
 func interact() -> void:
@@ -21,7 +22,12 @@ func interact() -> void:
 ## @return void
 func action(in_use : bool) -> void:
 	if has_action:
-		emit_signal("action_use", in_use)
+		rpc("_client_action", in_use)
+		
+
+@rpc("any_peer", "call_local")
+func _client_action(in_use : bool):
+	emit_signal("action_use", in_use)
 
 
 ## Emits signal that the player is hovering over this object

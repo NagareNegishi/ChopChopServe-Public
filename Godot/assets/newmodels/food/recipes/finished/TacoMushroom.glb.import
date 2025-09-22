@@ -13,8 +13,8 @@ dest_files=["res://.godot/imported/TacoMushroom.glb-426f82c89987224a7b9c4602eb44
 
 [params]
 
-nodes/root_type=""
-nodes/root_name=""
+nodes/root_type="Node3D"
+nodes/root_name="MushTaco"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false

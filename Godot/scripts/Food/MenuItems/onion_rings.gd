@@ -7,13 +7,15 @@ static var _auto_register = MenuItem.register(OnionRings)
 @warning_ignore("unused_private_class_variable")
 static var _type_register = MenuItem.register_type(MenuItem.starters, OnionRings.new())
 
-func _ready():
+func _init():
 	ingredients = ["Onion", "Onion"]
 	
 	ingredient_states = {
 		"Onion": ["RAW","CHOPPED", "FRIED"]
 	}
-	
-	cooked_mesh_good = null
-	cooked_mesh_bad = null
-	cooked_mesh_burnt = null
+	is_available = true
+
+func _ready():
+	cooked_mesh_good = $OnionRings
+	cooked_mesh_bad = $BadQualityOnionRings
+	cooked_mesh_burnt = $BurntOnionRings

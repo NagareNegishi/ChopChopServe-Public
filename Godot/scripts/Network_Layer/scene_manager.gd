@@ -15,7 +15,8 @@ enum Scene {
 	LOBBY_TEST,
 	TEST,
 	JOHNO_TEST,
-    JESS_TEST
+    JESS_TEST,
+	EMMA_TEST
 }
 
 const SCENE_PATHS = {
@@ -26,7 +27,8 @@ const SCENE_PATHS = {
 	Scene.LOBBY_TEST: "res://scenes/Network_Layer/lobby_network.tscn",
 	Scene.TEST: "res://scenes/Appliance_system/Appliance_test.tscn",
 	Scene.JOHNO_TEST: "res://JohnoTestScene.tscn",
-    Scene.JESS_TEST: "res://JessTestScene6.tscn"
+    Scene.JESS_TEST: "res://JessTestScene6.tscn",
+	Scene.EMMA_TEST: "res://scripts/Food/testingSceneEmma2.tscn"
 }
 
 var current_scene: Scene = Scene.MAIN_MENU

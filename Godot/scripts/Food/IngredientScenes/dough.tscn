@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://co5dkfcyuxj16"]
+[gd_scene load_steps=9 format=4 uid="uid://cderq8jb8woc7"]
 
 [ext_resource type="Script" uid="uid://dmcdbb0xyaenp" path="res://scripts/Food/Ingredients/dough.gd" id="1_dchqa"]
 [ext_resource type="Material" uid="uid://d1mru8ywyt58h" path="res://assets/newmodels/texturemap.tres" id="2_76s6b"]

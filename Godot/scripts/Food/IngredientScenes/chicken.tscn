@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://chmeyqgu2qqka"]
+[gd_scene load_steps=12 format=4 uid="uid://ti73pjm3d8bo"]
 
 [ext_resource type="Script" uid="uid://672sqw56ukmr" path="res://scripts/Food/Ingredients/chicken.gd" id="1_fefbg"]
 [ext_resource type="Material" uid="uid://d1mru8ywyt58h" path="res://assets/newmodels/texturemap.tres" id="2_fmy4q"]

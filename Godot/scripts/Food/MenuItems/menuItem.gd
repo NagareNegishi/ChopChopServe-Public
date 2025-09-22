@@ -34,6 +34,7 @@ static func get_subclasses() -> Array:
 func match_menu_items(input_ingredients: Array):
 	#print("in match menu")
 	for subclass in subclasses:
+		print(subclass)
 		var instance = subclass.new()
 		if check_items(input_ingredients, instance.ingredients, instance):
 			#print("in check items if")
@@ -85,3 +86,6 @@ func check_states(input_ingredient: Food, food_instance: MenuItem)->bool:
 			print("Missing required state: ", required_state)
 			return false
 	return true
+
+func mesh_visibility(name: MeshInstance3D, turn_on: bool):
+	name.visible = turn_on

@@ -1,37 +1,55 @@
-[gd_scene load_steps=12 format=3 uid="uid://buboxgutwg20q"]
+[gd_scene load_steps=15 format=3 uid="uid://buboxgutwg20q"]
 
-[ext_resource type="PackedScene" uid="uid://iwgylemncmgr" path="res://assets/newmodels/furniture/BasicBench.glb" id="1_ypcyp"]
-[ext_resource type="PackedScene" uid="uid://bkyr8mtgvuk3g" path="res://assets/newmodels/furniture/BenchPlate2.glb" id="2_57hm3"]
-[ext_resource type="PackedScene" uid="uid://ho847w7nyk3w" path="res://assets/newmodels/furniture/DeepestFryer.glb" id="3_jvidw"]
-[ext_resource type="PackedScene" uid="uid://di1h1y3g30eka" path="res://assets/newmodels/furniture/FoodCrate.glb" id="4_n5eyu"]
-[ext_resource type="PackedScene" uid="uid://tajg5ju03o3b" path="res://assets/newmodels/furniture/Freezer.glb" id="5_w2mc8"]
-[ext_resource type="PackedScene" uid="uid://nrfjhpm1sa30" path="res://assets/newmodels/furniture/Fridge.glb" id="6_vgkl0"]
-[ext_resource type="PackedScene" uid="uid://465ulms0kb50" path="res://assets/newmodels/furniture/Oven.glb" id="7_pp23w"]
-[ext_resource type="PackedScene" uid="uid://dhusooo8pbkf6" path="res://assets/newmodels/furniture/RecyclingBin.glb" id="8_u07qb"]
-[ext_resource type="PackedScene" uid="uid://cn8yjuakgjsam" path="res://assets/newmodels/furniture/Sink.glb" id="9_7binn"]
-[ext_resource type="PackedScene" uid="uid://cj0nxxg4mqi4x" path="res://assets/newmodels/furniture/Stove2.glb" id="10_ebqvf"]
-[ext_resource type="PackedScene" uid="uid://d4bn5pltpfukp" path="res://assets/newmodels/furniture/StoveSingle.glb" id="11_7218b"]
+[ext_resource type="PackedScene" uid="uid://b5nb1nxo1r1kb" path="res://scenes/Appliance_system/bench.tscn" id="1_n5eyu"]
+[ext_resource type="PackedScene" uid="uid://cw5uvt35a87nt" path="res://scenes/Appliance_system/blender.tscn" id="2_w2mc8"]
+[ext_resource type="PackedScene" uid="uid://0aex3yts1utd" path="res://scenes/Appliance_system/cabinet.tscn" id="3_vgkl0"]
+[ext_resource type="PackedScene" uid="uid://df6cemvjo3grw" path="res://scenes/Appliance_system/chop_table.tscn" id="4_pp23w"]
+[ext_resource type="PackedScene" uid="uid://b0ougk3d4jnku" path="res://scenes/Appliance_system/food_crate.tscn" id="5_u07qb"]
+[ext_resource type="PackedScene" uid="uid://byoj62jkvm385" path="res://scenes/Appliance_system/freezer.tscn" id="6_7binn"]
+[ext_resource type="PackedScene" uid="uid://dbeboubu5gkhe" path="res://scenes/Appliance_system/fryer.tscn" id="7_ebqvf"]
+[ext_resource type="PackedScene" uid="uid://dlk0mbdfg2cmq" path="res://scenes/Appliance_system/oven.tscn" id="8_7218b"]
+[ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="9_6njly"]
+[ext_resource type="PackedScene" uid="uid://bakeesqt3byva" path="res://scenes/Appliance_system/sink.tscn" id="10_q8lio"]
+[ext_resource type="PackedScene" uid="uid://bqpdxpf2l7uw1" path="res://scenes/Appliance_system/stove.tscn" id="11_ppgv8"]
+[ext_resource type="PackedScene" uid="uid://pee1rah6hbep" path="res://scenes/Appliance_system/stove_with_pan.tscn" id="12_x5acf"]
+[ext_resource type="PackedScene" uid="uid://krj0gwn31x8u" path="res://scenes/Appliance_system/stove_with_pot.tscn" id="13_y1648"]
+[ext_resource type="PackedScene" uid="uid://dt4wue57mdx1d" path="res://scenes/Appliance_system/trash_can.tscn" id="14_h77kh"]
 
 [node name="Node3D" type="Node3D"]
 
-[node name="BasicBench2" parent="." instance=ExtResource("1_ypcyp")]
+[node name="Bench" parent="." instance=ExtResource("1_n5eyu")]
 
-[node name="BenchPlate2" parent="." instance=ExtResource("2_57hm3")]
+[node name="Blender" parent="." instance=ExtResource("2_w2mc8")]
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1
 
-[node name="DeepestFryer" parent="." instance=ExtResource("3_jvidw")]
+[node name="Cabinet" parent="." instance=ExtResource("3_vgkl0")]
 
-[node name="FoodCrate" parent="." instance=ExtResource("4_n5eyu")]
+[node name="ChopTable" parent="." instance=ExtResource("4_pp23w")]
 
-[node name="Freezer2" parent="." instance=ExtResource("5_w2mc8")]
+[node name="FoodCrate" parent="." instance=ExtResource("5_u07qb")]
 
-[node name="Fridge2" parent="." instance=ExtResource("6_vgkl0")]
+[node name="Freezer" parent="." instance=ExtResource("6_7binn")]
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1
 
-[node name="Oven2" parent="." instance=ExtResource("7_pp23w")]
+[node name="Fryer" parent="." instance=ExtResource("7_ebqvf")]
 
-[node name="RecyclingBin" parent="." instance=ExtResource("8_u07qb")]
+[node name="Oven" parent="." instance=ExtResource("8_7218b")]
 
-[node name="Sink2" parent="." instance=ExtResource("9_7binn")]
+[node name="Placeable" parent="." instance=ExtResource("9_6njly")]
 
-[node name="Stove2" parent="." instance=ExtResource("10_ebqvf")]
+[node name="Sink" parent="." instance=ExtResource("10_q8lio")]
 
-[node name="StoveSingle" parent="." instance=ExtResource("11_7218b")]
+[node name="Stove" parent="." instance=ExtResource("11_ppgv8")]
+
+[node name="StoveWithPan" parent="." instance=ExtResource("12_x5acf")]
+
+[node name="StoveWithPot" parent="." instance=ExtResource("13_y1648")]
+
+[node name="TrashCan" parent="." instance=ExtResource("14_h77kh")]
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1

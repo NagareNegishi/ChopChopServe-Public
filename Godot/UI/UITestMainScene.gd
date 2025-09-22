@@ -64,7 +64,7 @@ func _on_currency_changed(teamID: int, new_currency: float) -> void:
 func _on_water_spill_pressed() -> void:
 	var teamID = _get_player_teamID()
 	print("\n teamID \n")
-	SabotageSystem.request_sabotage.rpc_id(1, teamID, 1)
+	SabotageSystem.request_sabotage.rpc_id(1, teamID, SabotageSystem.SabotageType.WATER_SPILL)
 
 # Fire Start
 # Might need to request another variable in this
@@ -76,19 +76,13 @@ func _on_fire_pressed() -> void:
 	#ENetManager.is_host()
 	# Need to make it work with the different teams
 	# need to not make this hardcoded
-	SabotageSystem.request_sabotage.rpc_id(1, teamID, 2)
+	SabotageSystem.request_sabotage.rpc_id(1, teamID, SabotageSystem.SabotageType.FIRE)
 	#SabotageSystem.request_sabotage.rpc_id(1, 1, 2)
-
-func _on_water_spill_pressed_2() -> void:
-	print("in the second one !!")
-	#pass # Replace with function body.
-
-# Do I actually need this?
-func _on_fire_pressed_2() -> void:
-	print("\n TEAM TWO \n")
-	print("\n \n ENetManager.get_my_id(): ", ENetManager.get_my_id())
-	SabotageSystem.request_sabotage.rpc_id(1, 2, 2)
-	pass # Replace with function body.
+# Turn Power off
+func _on_power_outage_pressed() -> void:
+	print("\n teamID \n")
+	var teamID = _get_player_teamID()
+	SabotageSystem.request_sabotage.rpc_id(1, teamID, SabotageSystem.SabotageType.POWER_OUTAGE)
 
 	#### teamID ####
 func _get_player_teamID() -> int:

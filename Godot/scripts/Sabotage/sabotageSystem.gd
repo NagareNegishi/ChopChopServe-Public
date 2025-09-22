@@ -1,4 +1,4 @@
-#class_name Sabotage_System
+class_name Sabotage_System
 extends Node
 
 # Don't currently actually use
@@ -10,9 +10,10 @@ signal sabotage_success(sabotage_type: int)
 signal sabotage_failed(reason: String)
 signal sabotage_sending_team(teamID: int)
 
+# Need to remove crateSwitch and maybe add something else?
+
 # Define Sabotage Types
 enum SabotageType {
-	CRATE_SWITCH,
 	WATER_SPILL,
 	FIRE,
 	FOOD_CRITIC,
@@ -22,7 +23,6 @@ enum SabotageType {
 
 # Costs of the sabotages
 const sabotage_costs = [	
-	400, # Crate Switch
 	450, # Water Spill
 	600, # Fire
 	700, # Critic
@@ -56,6 +56,7 @@ func request_sabotage(teamID: int, sabotage_type: int) -> void:
 	if not currency_system.check_currency(teamID, -cost):
 		# Fix this !!
 		##sabotage_failed.rpc_id(sender_id, "Not enough currency")
+		# Change this to a UI error popup
 		print("Not going to work sorry")
 		return
 
@@ -76,97 +77,42 @@ func request_sabotage(teamID: int, sabotage_type: int) -> void:
 			##sabotage_failed.rpc_id(sender_id, "No flammable appliances available")
 			return
 		# Call the execute Sabotage with a path
-		execute_sabotage.rpc(teamID, sabotage_type, chosen_path)
+		execute_sabotage.rpc(teamID, sabotage_type, chosen_path, Vector3(0, 0, 0))
 	# If, WATER_SPILL, get a position
 	elif sabotage_type == SabotageType.WATER_SPILL:
 		var position = get_random_spill_position(teamID)
 		# Call the execute Sabotage with position
-		execute_sabotage_with_position.rpc(teamID, sabotage_type, position)
+		execute_sabotage.rpc(teamID, sabotage_type, NodePath(""), position)
 	else:
 		# For now, otherwise just call the normal one
-		execute_sabotage.rpc(teamID, sabotage_type, NodePath(""))
+		execute_sabotage.rpc(teamID, sabotage_type, NodePath(""), Vector3(0, 0, 0))
 
-	# Broadcast sabotage to all clients
-	execute_sabotage.rpc(teamID, sabotage_type)
+# ------------------- Execute Sabotage Function ------------------- #
 
+# Call to run the Sabotages
 # Server call this
 @rpc("authority", "call_local", "reliable")
-# Actually run the sabotage
-# NORMAL + FIRE edition
-func execute_sabotage(teamID: int, sabotage_type: int, chosen_path: NodePath) -> void:
+func execute_sabotage(teamID: int, sabotage_type: int, chosen_path: NodePath, position: Vector3 ) -> void:
 	print("executing sabotage %s for team %s" % [sabotage_type, teamID])
 	##current_sabotage = sabotage_type
-	# Do the Sabotage with a path
-	_do_sabotage(teamID, sabotage_type, chosen_path)
+	# Do the basic Sabotage
+	_do_sabotage(teamID, sabotage_type, chosen_path, position)
 	# Signals
 	sabotage_success.emit(sabotage_type)
 	sabotage_sending_team.emit(teamID)
 
-# Server call this
-@rpc("authority", "call_local", "reliable")
-# Actually run the sabotage
-# WATER SPILL edition
-func execute_sabotage_with_position(teamID: int, sabotage_type: int, position: Vector3) -> void:
-	print("executing sabotage %s for team %s at position %s" % [sabotage_type, teamID, position])
-	##current_sabotage = sabotage_type
-	# Do the sabotage with a position
-	_do_sabotage_with_position(teamID, sabotage_type, position)
-	# Signals
-	sabotage_success.emit(sabotage_type)
-	sabotage_sending_team.emit(teamID)
+# ------------------- Do Sabotage Function ------------------- #
 
-# Enum getting for Sabotage Types
-# WATER_SPILL edition
-# Fix this up : could be done better?
-func _do_sabotage_with_position(teamID: int, sabotage_type: int, position: Vector3) -> void:
+# Enum getting for Sabotage Types to run
+func _do_sabotage(teamID: int, sabotage_type: int, chosen_path: NodePath, position: Vector3) -> void:
 	match sabotage_type:
-		SabotageType.CRATE_SWITCH:
-			print("crate stuff")
-			# Handle crate switch sabotage
-
-		# ------- Water Spill Stuff ------- #
-		
 		SabotageType.WATER_SPILL:
 			print("water stuff")
 			spawn_water_spill(teamID, 5.0, position)
-
-		# ------- Water Spill Stuff ------- #
-		SabotageType.FIRE:
-			print("fire stuff")
-			spawn_fire(teamID, _pick_flammable_appliance_path())
-		SabotageType.FOOD_CRITIC:
-			print("critic stuff")
-			spawn_food_critic()
-			# Handle food critic sabotage
-		SabotageType.RAT_SWARM:
-			print("rat stuff")
-			# Handle rat swarm sabotage
-		SabotageType.POWER_OUTAGE:
-			print("power stuff")
-
-	# Signals
-	sabotage_success.emit(sabotage_type)
-	sabotage_sending_team.emit(teamID)
-
-# Enum getting for Sabotage Types
-# NORMAL + FIRE edition
-# Fix this up : could be done better?
-func _do_sabotage(teamID: int, sabotage_type: int, chosen_path: NodePath) -> void:
-	match sabotage_type:
-		SabotageType.CRATE_SWITCH:
-			print("crate stuff")
-			# Handle crate switch sabotage
-		SabotageType.WATER_SPILL:
-			print("water stuff")
 			#spawn_water_spill(teamID, 5.0, ) # duration can be adjusted
-
-		# ------- Fire Start Stuff ------- #
-
 		SabotageType.FIRE:
 			print("fire stuff")
 			spawn_fire(teamID, chosen_path)
-
-		# ------- Fire Start Stuff ------- #
 		SabotageType.FOOD_CRITIC:
 			print("critic stuff")
 			spawn_food_critic()
@@ -176,24 +122,16 @@ func _do_sabotage(teamID: int, sabotage_type: int, chosen_path: NodePath) -> voi
 			# Handle rat swarm sabotage
 		SabotageType.POWER_OUTAGE:
 			print("power stuff")
+			spawn_power_outage(teamID)
 
 	# Signals
 	sabotage_success.emit(sabotage_type)
 	sabotage_sending_team.emit(teamID)
 
 
-# ------------------- Sabotage Functions ------------------- #
+# ------------------- Implement Sabotage Functions ------------------- #
 
-# ------- Crate Switch Stuff -------
-# UNUSED CURRENTLY
-func spawn_crate_switch() -> void:
-	print("spawning crate switch")
-	# findout whats happerning with the crate logic
-	# should be similar to the critic logic
-	# signal or call a function that does the switch
-	# 
-
-# ------- Water Spill Stuff -------
+# ------- Water Spill Stuff ------- #
 # Spawn a Water Spill
 func spawn_water_spill(teamID: int, duration: float, position: Vector3) -> void:
 	# TODO: Make sure position is vaild
@@ -206,6 +144,7 @@ func spawn_water_spill(teamID: int, duration: float, position: Vector3) -> void:
 	spill.global_position = position
 	##spill.global_position = get_random_spill_position(teamID)	
 	spill.start_timer(duration)
+	# Add something to use the team ID
 
 # Helper Function
 # Random position for the water spill
@@ -241,7 +180,7 @@ func get_random_spill_position(teamID: int) -> Vector3:
 	# Return a position for the spill
 	return centre + Vector3(offset_x, 0, offset_z)
 
-# ------- Fire Stuff -------
+# ------- Fire Stuff ------- #
 
 # Spawn a Fire
 func spawn_fire(teamID: int, chosen_path: NodePath) -> void:
@@ -304,7 +243,7 @@ func _pick_flammable_appliance_path() -> NodePath:
 	# but if the fire is still going when the timer ends
 	# then spread the fire to another appliance
 
-# ------- Food Critic Stuff -------
+# ------- Food Critic Stuff ------- #
 # UNUSED CURRENTLY
 func spawn_food_critic() -> void:
 	print("make a customer a critic")
@@ -314,12 +253,20 @@ func spawn_food_critic() -> void:
 	# Or:
 		# create a function in the npc and call it here
 
-# ------- Rat Swarm Stuff -------
+# ------- Rat Swarm Stuff ------- #
 # UNUSED CURRENTLY
 func spawn_rat_swarm() -> void:
 	print("spawning rat sparm")
 
-# ------- Power Outage Stuff -------
-# UNUSED CURRENTLY
-func spawn_power_outage() -> void:
+# ------- Power Outage Stuff ------- #
+func spawn_power_outage(teamID: int) -> void:
 	print("spawning power outage")
+	var power = preload("res://scripts/Sabotage/powerOutage.tscn").instantiate()
+	get_tree().get_current_scene().add_child(power)
+	power.turn_power_off(teamID)
+
+
+
+
+
+# IS THE A BUG AROUND STILL BEING ABLE TO COOK EVEN AFTER THE THING IS TURNED OFF?

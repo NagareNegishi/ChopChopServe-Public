@@ -65,7 +65,7 @@ func put(item: Node) -> bool:
 ## @param power: The power from PoweredAppliance
 func cook(power: int) -> bool:
 	for food in contents:
-		food.startCooking(int(power * coefficient), cooking_style)
+		food.start_cooking(int(power * coefficient), cooking_style)
 	return true
 
 

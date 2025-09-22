@@ -48,10 +48,10 @@ func put_all(items: Array) -> bool:
 ## @param food: The Food item to place into the blender
 func _put_food(food: Food) -> void:
 	#food.current_visibility(false)
-	food.change_collisions()
+	food.change_collisions(true)
 	if current_status == Status.COOKING:
 		_average_food()
-		food.startCooking(power, cooking_style)
+		food.start_cooking(power, cooking_style)
 	# print("Food placed in blender: ", food.get_script().get_global_name(), ", Food cook time: ", food.get_cook_time(cooking_style))
 
 

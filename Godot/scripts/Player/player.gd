@@ -322,8 +322,8 @@ func server_drop_item(player_path : String, is_throw : bool) -> bool:
 func _client_drop_item(player_path : String, is_throw : bool) -> bool:
 	var player : Node3D = get_tree().current_scene.get_node(player_path)
 	
-	if player.item_in_hand && is_in_group("Food"):
-		player.item_in_hand.change_collision(false)
+	if player.item_in_hand && player.item_in_hand.is_in_group("Food"):
+		player.item_in_hand.change_collisions(false)
 	
 	if player.item_in_hand.get_parent():
 		player.item_in_hand.get_parent().remove_child(player.item_in_hand)

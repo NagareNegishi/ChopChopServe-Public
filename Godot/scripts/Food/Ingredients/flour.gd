@@ -6,11 +6,5 @@ func _ready():
 	spoil_time = null
 	raw_mesh = $Flour
 	mixed_mesh = $Flour
-	spoiled_mesh = null
-	cooked_mesh = null
-	burnt_mesh = null
-	chopped_mesh = null
 	add_to_group("Food")
 	on_state_change()
-	
-	print("Name of ingredient: ", food_name, " Position: ", global_position, " ID: ", ENetManager.get_my_id())

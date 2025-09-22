@@ -8,11 +8,12 @@ static var _auto_register = MenuItem.register(Pancakes)
 static var _type_register = MenuItem.register_type(MenuItem.starters, Pancakes.new())
 
 func _ready():
-	ingredients = ["Flour", "Water", "Milk"]
+	ingredients = ["Flour", "Water", "Milk", "Egg"]
 	
 	ingredient_states = {
 		"Flour":["RAW","MIXED","FRIED"],
 		"Water":["RAW","MIXED","FRIED"],
+		"Egg":["RAW","MIXED","FRIED"],
 		"Milk":["RAW","MIXED","FRIED"]
 	}
 	

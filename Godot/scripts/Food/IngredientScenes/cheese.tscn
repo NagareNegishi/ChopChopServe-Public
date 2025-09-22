@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://dbxdxa002tyi7"]
+[gd_scene load_steps=12 format=4 uid="uid://17kjvtvjr0oj"]
 
 [ext_resource type="Script" uid="uid://lgq6h8p6c0yc" path="res://scripts/Food/Ingredients/cheese.gd" id="1_5xxd6"]
 [ext_resource type="Material" uid="uid://d1mru8ywyt58h" path="res://assets/newmodels/texturemap.tres" id="2_sssoj"]

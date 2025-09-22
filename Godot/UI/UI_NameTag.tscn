@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://00wjsq6ak2e6"]
+[gd_scene load_steps=3 format=3 uid="uid://00wjsq6ak2e6"]
 
 [ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/DefaultTheme.tres" id="1_0dynv"]
+[ext_resource type="Script" uid="uid://jmtbb8cpir0c" path="res://scripts/UI/ui_name_tag.gd" id="2_8y4e8"]
 
 [node name="UiNameTag" type="Control"]
 layout_mode = 3
@@ -12,6 +13,7 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_0dynv")
+script = ExtResource("2_8y4e8")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1

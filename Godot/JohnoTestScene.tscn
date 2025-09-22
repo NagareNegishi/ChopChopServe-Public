@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://bg2l1urkd7kjy"]
+[gd_scene load_steps=31 format=3 uid="uid://bg2l1urkd7kjy"]
 
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="3_l1ni4"]
 [ext_resource type="PackedScene" uid="uid://bk7ovilp788kq" path="res://scripts/Player/spawn_point.tscn" id="4_dok52"]
@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://nrfjhpm1sa30" path="res://assets/newmodels/furniture/Fridge.glb" id="22_dok52"]
 [ext_resource type="PackedScene" uid="uid://o3tvfl5dgcnq" path="res://assets/newmodels/food/recipes/finished/BreadGarlic.glb" id="23_dok52"]
 [ext_resource type="PackedScene" uid="uid://khm0c17s6335" path="res://scenes/Interaction/Present.tscn" id="23_rqa51"]
+[ext_resource type="PackedScene" uid="uid://lfcppt4wh0g4" path="res://scenes/Interaction/UpgradeHammer.tscn" id="24_rqa51"]
 
 [sub_resource type="Environment" id="Environment_ikll6"]
 ambient_light_energy = 1.5
@@ -643,3 +644,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.49233, 0.0940047, 3.7874)
 
 [node name="AbstractPickup" parent="." instance=ExtResource("23_rqa51")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.95503, 0.1815, -2.74807)
+
+[node name="Extinguisher" parent="." instance=ExtResource("24_rqa51")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.50572, 0.155591, 0.726777)

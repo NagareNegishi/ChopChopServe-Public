@@ -1,8 +1,10 @@
-extends AbstractThrowable
+class_name Present extends AbstractThrowable
 
 @onready var interact_timer : Timer = Timer.new()
 @onready var interact_component : InteractableComponent = $InteractableComponent
 @onready var details_ui : UIPresent = $Price/SubViewport/UiPresent
+
+var progress_amount : float
 
 func _ready() -> void:
 	interact_component.action_use.connect(_on_interactable_component_action_use)
@@ -14,8 +16,13 @@ func _ready() -> void:
 func _on_interactable_component_action_use(is_action: bool) -> void:
 	if is_action:
 		interact_timer.start()
-	else:
-		interact_timer.stop()
+	
+	progress_amount = 0.01 if is_action else -0.0025
 
 func _timeout():
-	pass
+	details_ui.add_progress(progress_amount)
+	
+	if details_ui.progress_bar.value >= 1:
+		details_ui.visible = false;
+	elif details_ui.progress_bar.value <= 0:
+		interact_timer.stop()

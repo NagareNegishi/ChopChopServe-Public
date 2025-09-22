@@ -1,11 +1,10 @@
-[gd_scene load_steps=21 format=3 uid="uid://ccrhifmjch5p0"]
+[gd_scene load_steps=20 format=3 uid="uid://ccrhifmjch5p0"]
 
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_kghoc"]
 [ext_resource type="PackedScene" uid="uid://d1iqitph17b80" path="res://scenes/Interaction/AbstractPickup.tscn" id="2_w08oj"]
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="3_owpx4"]
 [ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="4_0kmd3"]
 [ext_resource type="PackedScene" uid="uid://dxhfqm13c85ar" path="res://assets/models/decorations/table.glb" id="5_fkjcy"]
-[ext_resource type="MeshLibrary" uid="uid://bc2c7fksdc6nh" path="res://LevelDesign/Tilemap.tres" id="6_14r1b"]
 [ext_resource type="PackedScene" uid="uid://hxrvqyggbykc" path="res://assets/models/NuFurniture/Bench.glb" id="7_dustn"]
 [ext_resource type="PackedScene" uid="uid://bkbecho40n7y6" path="res://assets/models/NuFurniture/trashcan.glb" id="8_685ww"]
 [ext_resource type="PackedScene" uid="uid://v7nfkw4q5020" path="res://assets/models/NuFurniture/sink.2glb.glb" id="9_0xto1"]
@@ -67,7 +66,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, -2)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, -6)
 
 [node name="GridMap" type="GridMap" parent="."]
-mesh_library = ExtResource("6_14r1b")
 cell_size = Vector3(1, 0.25, 0.5)
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 

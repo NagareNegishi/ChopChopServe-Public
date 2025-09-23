@@ -14,7 +14,7 @@ func _init():
 ## Setup the sink properties
 func _ready():
 	super._ready()
-	capacity = 4
+	capacity = 1
 	# action_interval = 1.0
 	_setup_visual_effects()
 	_set_affixes()

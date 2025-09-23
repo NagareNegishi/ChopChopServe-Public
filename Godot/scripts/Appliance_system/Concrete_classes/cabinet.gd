@@ -15,7 +15,7 @@ func _init():
 ## Setup the Cabinet
 func _ready():
 	super._ready()
-	capacity = 4
+	capacity = 1
 	_set_affixes()
 	# _setup_item_slots()
 	if plate_scene and plate_scene.can_instantiate():

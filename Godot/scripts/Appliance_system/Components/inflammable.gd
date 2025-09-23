@@ -39,10 +39,6 @@ func _ready():
 	target.add_to_group("flammable")
 	_setup_timer()
 	_setup_visual_effects()
-	#----------------------------------------
-	# ignite()
-	#print("Inflammable component added to: ", target.get_script().get_global_name())
-	#----------------------------------------
 
 
 ## Setup fire timer
@@ -108,9 +104,9 @@ func extinguish(reduction: int) -> bool:
 		fire_timer.stop()
 		_stop_fire_effects()
 		fire_extinguished.emit(target)
-	#----------------------------------------
 	elif target is Bench:
 		target.current_status = target.Status.IDLE
+	#----------------------------------------
 	print("Fire extinguished on ", target.get_script().get_global_name(), "fire level: ", fire_level)
 	#----------------------------------------
 	return true

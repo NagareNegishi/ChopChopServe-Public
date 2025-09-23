@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://ca0weqnsfprkp"]
+[gd_scene load_steps=12 format=4 uid="uid://2nk2b4xo8igx"]
 
 [ext_resource type="Script" uid="uid://cfk2el0805tpr" path="res://scripts/Food/Ingredients/apple.gd" id="1_rh1pu"]
 [ext_resource type="Material" uid="uid://d1mru8ywyt58h" path="res://assets/newmodels/texturemap.tres" id="2_rydjj"]

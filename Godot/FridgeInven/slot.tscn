@@ -1,0 +1,50 @@
+[gd_scene load_steps=3 format=3 uid="uid://dwn8n3gva6leq"]
+
+[ext_resource type="Script" uid="uid://c1b7amphtm80o" path="res://FridgeInven/slot.gd" id="1_lswfr"]
+[ext_resource type="Texture2D" uid="uid://emc0ojm2by1v" path="res://assets/textures/misc/Cog.png" id="2_oqevm"]
+
+[node name="Slot" type="Button"]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(40, 40)
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_force_pass_scroll_events = false
+script = ExtResource("1_lswfr")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+color = Color(0.133196, 0.133196, 0.133196, 1)
+
+[node name="ColorRect" type="ColorRect" parent="ColorRect"]
+custom_minimum_size = Vector2(34, 34)
+layout_mode = 0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 37.0
+offset_bottom = 37.0
+mouse_filter = 2
+color = Color(0.821789, 0.821789, 0.821789, 1)
+
+[node name="item_texture" type="TextureRect" parent="ColorRect/ColorRect"]
+custom_minimum_size = Vector2(34, 34)
+layout_mode = 0
+offset_right = 34.0
+offset_bottom = 34.0
+mouse_filter = 2
+expand_mode = 1
+
+[node name="buy_texture" type="TextureRect" parent="ColorRect/ColorRect"]
+visible = false
+custom_minimum_size = Vector2(34, 34)
+layout_mode = 0
+offset_right = 34.0
+offset_bottom = 34.0
+mouse_filter = 2
+texture = ExtResource("2_oqevm")
+expand_mode = 1
+
+[connection signal="button_down" from="." to="." method="_on_button_down"]

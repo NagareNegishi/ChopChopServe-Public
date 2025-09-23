@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://dng7bhqoh76fy"]
+[gd_scene load_steps=13 format=4 uid="uid://c1kguhk1gskqm"]
 
 [ext_resource type="Script" uid="uid://dacn6f34yud4i" path="res://scripts/Food/Ingredients/pumpkin.gd" id="1_h0j00"]
 [ext_resource type="Material" uid="uid://d1mru8ywyt58h" path="res://assets/newmodels/texturemap.tres" id="1_mbmu7"]

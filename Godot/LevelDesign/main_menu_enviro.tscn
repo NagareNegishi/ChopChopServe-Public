@@ -1,0 +1,224 @@
+[gd_scene load_steps=15 format=3 uid="uid://cr6k46e2s2l27"]
+
+[ext_resource type="PackedScene" uid="uid://bajtcauh5e5xi" path="res://scenes/Network_Layer/main_menu.tscn" id="1_vm3wy"]
+[ext_resource type="PackedScene" uid="uid://bailsqnlqlti0" path="res://assets/CityPacks/CityRestaurantAnim2.glb" id="9_vm3wy"]
+[ext_resource type="PackedScene" uid="uid://cnxonjh7xlet5" path="res://assets/CityPacks/gltf/road_straight_crossing.gltf" id="12_grmhc"]
+[ext_resource type="PackedScene" uid="uid://bmqt6amoasnv7" path="res://assets/CityPacks/gltf/base.gltf" id="13_i0478"]
+[ext_resource type="PackedScene" uid="uid://2i6yelxqgfre" path="res://assets/CityPacks/gltf/building_B.gltf" id="14_4hwum"]
+[ext_resource type="PackedScene" uid="uid://dleafo37pi7md" path="res://assets/CityPacks/gltf/building_D.gltf" id="15_utqwv"]
+[ext_resource type="PackedScene" uid="uid://dpbjfwr1e1ei" path="res://assets/CityPacks/gltf/car_sedan.gltf" id="16_88w3i"]
+[ext_resource type="PackedScene" uid="uid://bhr122fytw4th" path="res://assets/CityPacks/gltf/road_straight.gltf" id="17_2dri8"]
+[ext_resource type="PackedScene" uid="uid://tpxr3ilucedw" path="res://assets/CityPacks/gltf/road_tsplit.gltf" id="18_icq1f"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w6hnu"]
+size = Vector3(30, 0.03, 30)
+
+[sub_resource type="BoxMesh" id="BoxMesh_w6hnu"]
+size = Vector3(30, 0.05, 30)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ad3b7"]
+sky_top_color = Color(0.540081, 0.0948352, 0.486115, 1)
+sky_horizon_color = Color(0.958096, 0.855453, 0.843266, 1)
+sky_energy_multiplier = 0.75
+
+[sub_resource type="Sky" id="Sky_07mic"]
+sky_material = SubResource("ProceduralSkyMaterial_ad3b7")
+
+[sub_resource type="Environment" id="Environment_vs73y"]
+background_mode = 2
+background_color = Color(0.486804, 0.263312, 0.0939578, 1)
+sky = SubResource("Sky_07mic")
+volumetric_fog_density = 0.03
+volumetric_fog_albedo = Color(0.939979, 0.746183, 0.685581, 1)
+volumetric_fog_anisotropy = 0.7
+volumetric_fog_length = 6.0
+
+[node name="BradleyTestScene" type="Node3D"]
+
+[node name="Platform" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Platform"]
+shape = SubResource("BoxShape3D_w6hnu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Platform"]
+transform = Transform3D(2.99406, -0.00806333, 0, 0.0241429, 0.999968, 0, 0, 0, 3.1856, 1, 0, 0)
+mesh = SubResource("BoxMesh_w6hnu")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_vs73y")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.157718, 0.949193, -0.272319, -0.00344962, 0.275239, 0.96137, 0.987478, 0.152565, -0.0401358, 3.02675, 3.87548, 6.79733)
+light_color = Color(0.996243, 0.610274, 0.474286, 1)
+light_energy = 2.0
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.224951, -0.135606, -0.964888, 0, 0.990268, -0.139173, 0.97437, -0.0313071, -0.222762, -21.4142, 11.9738, -9.09366)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MainMenu" parent="CanvasLayer" node_paths=PackedStringArray("froggo_building") instance=ExtResource("1_vm3wy")]
+froggo_building = NodePath("../../CityRestaurantAnim2/AnimationPlayer")
+
+[node name="Node3D3" type="Node3D" parent="."]
+
+[node name="Background" type="Node3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -16, 0, -6)
+
+[node name="road_straight_crossing2" parent="Background" instance=ExtResource("12_grmhc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="base3" parent="Background" instance=ExtResource("13_i0478")]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 1, 1.50347, -0.0423333, -2)
+
+[node name="base11" parent="Background" instance=ExtResource("13_i0478")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -0.0423333, -2.33333)
+
+[node name="base12" parent="Background" instance=ExtResource("13_i0478")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, -0.0423333, -2.33333)
+
+[node name="base13" parent="Background" instance=ExtResource("13_i0478")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, -0.0423333, -2.33333)
+
+[node name="base17" parent="Background" instance=ExtResource("13_i0478")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -0.0423333, 6.33333)
+
+[node name="base18" parent="Background" instance=ExtResource("13_i0478")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, -0.0423333, 6.33333)
+
+[node name="base19" parent="Background" instance=ExtResource("13_i0478")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, -0.0423333, 6.33333)
+
+[node name="base4" parent="Background" instance=ExtResource("13_i0478")]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 1, 1.50217, -0.0423333, 0)
+
+[node name="base5" parent="Background" instance=ExtResource("13_i0478")]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 1, 1.49648, -0.0423333, 2)
+
+[node name="base14" parent="Background" instance=ExtResource("13_i0478")]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 1, 1.49648, -0.0423333, 4)
+
+[node name="base15" parent="Background" instance=ExtResource("13_i0478")]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 1, 1.49749, -0.0423333, 6)
+
+[node name="base16" parent="Background" instance=ExtResource("13_i0478")]
+transform = Transform3D(1.66667, 0, 0, 0, 1.66667, 0, 0, 0, 1.66667, -2.66667, -0.0423333, 13.3333)
+
+[node name="base6" parent="Background" instance=ExtResource("13_i0478")]
+transform = Transform3D(-1, 0, -8.74227e-08, 0, 1, 0, 8.74227e-08, 0, -1, 10, -0.0423333, 2)
+
+[node name="base7" parent="Background" instance=ExtResource("13_i0478")]
+transform = Transform3D(-1, 0, -8.74227e-08, 0, 1, 0, 8.74227e-08, 0, -1, 10, -0.0423333, 0)
+
+[node name="base9" parent="Background" instance=ExtResource("13_i0478")]
+transform = Transform3D(-1, 0, -8.74227e-08, 0, 1, 0, 8.74227e-08, 0, -1, 10, -0.0423333, 6)
+
+[node name="base10" parent="Background" instance=ExtResource("13_i0478")]
+transform = Transform3D(-1, 0, -8.74227e-08, 0, 1, 0, 8.74227e-08, 0, -1, 10, -0.0423333, 4)
+
+[node name="base8" parent="Background" instance=ExtResource("13_i0478")]
+transform = Transform3D(-1, 0, -8.74227e-08, 0, 1, 0, 8.74227e-08, 0, -1, 10, -0.0423333, -2)
+
+[node name="building_B3" parent="Background" instance=ExtResource("14_4hwum")]
+transform = Transform3D(-1.66667, 0, -1.45705e-07, 0, 1.66667, 0, 1.45705e-07, 0, -1.66667, 6, 0, 10.6667)
+
+[node name="building_D2" parent="Background" instance=ExtResource("15_utqwv")]
+transform = Transform3D(-1.66667, 0, -1.45705e-07, 0, 1.66667, 0, 1.45705e-07, 0, -1.66667, 2.66667, 0, 10.6667)
+
+[node name="building_B4" parent="Background" instance=ExtResource("14_4hwum")]
+transform = Transform3D(-7.28523e-08, 0, 1.66667, 0, 1.66667, 0, -1.66667, 0, -7.28523e-08, -2.66667, 0, 6.66667)
+
+[node name="building_B6" parent="Background" instance=ExtResource("14_4hwum")]
+transform = Transform3D(-7.28523e-08, 0, 1.66667, 0, 1.66667, 0, -1.66667, 0, -7.28523e-08, -2.66667, 0, 10)
+
+[node name="building_D3" parent="Background" instance=ExtResource("15_utqwv")]
+transform = Transform3D(-7.28523e-08, 0, 1.66667, 0, 1.66667, 0, -1.66667, 0, -7.28523e-08, -2.66667, 0, 3.33333)
+
+[node name="building_B5" parent="Background" instance=ExtResource("14_4hwum")]
+transform = Transform3D(-7.28523e-08, 0, 1.66667, 0, 1.66667, 0, -1.66667, 0, -7.28523e-08, -2.66667, 0, 0)
+
+[node name="building_D4" parent="Background" instance=ExtResource("15_utqwv")]
+transform = Transform3D(-7.28523e-08, 0, 1.66667, 0, 1.66667, 0, -1.66667, 0, -7.28523e-08, -2.66667, 0, -3.33333)
+
+[node name="building_D5" parent="Background" instance=ExtResource("15_utqwv")]
+transform = Transform3D(-7.28525e-08, 0, 1.66667, 0, 1.66667, 0, -1.66667, 0, -7.28525e-08, -2.66667, 0, -6.66667)
+
+[node name="car_sedan2" parent="Background" instance=ExtResource("16_88w3i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.333333, 0.333333, 5.33333)
+
+[node name="road_straight2" parent="Background" instance=ExtResource("17_2dri8")]
+
+[node name="road_straight16" parent="Background" instance=ExtResource("17_2dri8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+
+[node name="road_straight17" parent="Background" instance=ExtResource("17_2dri8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
+
+[node name="road_straight6" parent="Background" instance=ExtResource("17_2dri8")]
+transform = Transform3D(-4.37113e-08, 0, -1, 0, 1, 0, 1, 0, -4.37113e-08, 2, 0, -4)
+
+[node name="road_straight7" parent="Background" instance=ExtResource("17_2dri8")]
+transform = Transform3D(-4.37113e-08, 0, -1, 0, 1, 0, 1, 0, -4.37113e-08, 4, 0, -4)
+
+[node name="road_straight10" parent="Background" instance=ExtResource("17_2dri8")]
+transform = Transform3D(-4.37113e-08, 0, -1, 0, 1, 0, 1, 0, -4.37113e-08, 2, 0, 8)
+
+[node name="road_straight11" parent="Background" instance=ExtResource("17_2dri8")]
+transform = Transform3D(-4.37113e-08, 0, -1, 0, 1, 0, 1, 0, -4.37113e-08, 4, 0, 8)
+
+[node name="road_straight12" parent="Background" instance=ExtResource("17_2dri8")]
+transform = Transform3D(-4.37113e-08, 0, -1, 0, 1, 0, 1, 0, -4.37113e-08, 6, 0, 8)
+
+[node name="road_straight13" parent="Background" instance=ExtResource("17_2dri8")]
+transform = Transform3D(-4.37113e-08, 0, -1, 0, 1, 0, 1, 0, -4.37113e-08, 8, 0, 8)
+
+[node name="road_straight8" parent="Background" instance=ExtResource("17_2dri8")]
+transform = Transform3D(-4.37113e-08, 0, -1, 0, 1, 0, 1, 0, -4.37113e-08, 6, 0, -4)
+
+[node name="road_straight9" parent="Background" instance=ExtResource("17_2dri8")]
+transform = Transform3D(-4.37113e-08, 0, -1, 0, 1, 0, 1, 0, -4.37113e-08, 8, 0, -4)
+
+[node name="road_straight3" parent="Background" instance=ExtResource("17_2dri8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+[node name="road_straight4" parent="Background" instance=ExtResource("17_2dri8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+
+[node name="road_straight5" parent="Background" instance=ExtResource("17_2dri8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+
+[node name="road_straight14" parent="Background" instance=ExtResource("17_2dri8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+
+[node name="road_straight15" parent="Background" instance=ExtResource("17_2dri8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12)
+
+[node name="road_tsplit2" parent="Background" instance=ExtResource("18_icq1f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+
+[node name="road_tsplit3" parent="Background" instance=ExtResource("18_icq1f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
+
+[node name="CityRestaurantAnim2" parent="." instance=ExtResource("9_vm3wy")]
+transform = Transform3D(-2.18557e-07, 0, -5, 0, 5, 0, 5, 0, -2.18557e-07, -7.30901, -0.397916, -0.0346355)
+
+[node name="Armature" parent="CityRestaurantAnim2" index="5"]
+transform = Transform3D(-0.045882, 0, -0.326624, 0, 0.329831, 0, 0.326624, 0, -0.045882, 0, 0, 0)
+
+[node name="Skeleton3D" parent="CityRestaurantAnim2/Armature" index="0"]
+bones/0/position = Vector3(-0.196043, 5.1541, 0.00389749)
+bones/1/rotation = Quaternion(-0.0478266, -0.210529, -0.0999599, 0.971287)
+bones/2/rotation = Quaternion(0.0429814, -0.0689655, -0.0794179, 0.993524)
+bones/4/position = Vector3(-3.44506, 2.50027, -0.101948)
+bones/4/rotation = Quaternion(-0.193448, 0.554174, 0.194261, 0.785959)
+bones/7/position = Vector3(3.56459, 2.49238, -0.304276)
+bones/7/rotation = Quaternion(-0.236342, 0.167206, 0.955503, 0.0565506)
+bones/8/rotation = Quaternion(0.0311378, -0.017554, -0.183534, 0.982363)
+bones/9/rotation = Quaternion(0.0611088, 0.0139302, -0.067709, 0.995735)
+bones/10/rotation = Quaternion(-0.707102, -0.0026188, 0.707102, -0.0026188)
+
+[node name="Hat" parent="CityRestaurantAnim2/Armature/Skeleton3D" index="0"]
+transform = Transform3D(-0.762018, 0.248143, 0.0528219, 0.249048, 0.765408, -0.00142304, -0.071997, 0.0213092, -0.56399, 6.55651e-07, 9.53674e-07, 7.45058e-09)
+
+[editable path="CityRestaurantAnim2"]

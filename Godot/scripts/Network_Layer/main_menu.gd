@@ -12,6 +12,7 @@ var network_layer: ENetNetworkLayer
 @onready var exit_button = $Menu/ButtonsContainer/ExitButton
 @onready var  error_message = $Menu/Error
 
+@export var froggo_building : AnimationPlayer
 
 ## Initialization
 func _ready():
@@ -19,8 +20,10 @@ func _ready():
 	create_button.pressed.connect(_on_create_pressed)
 	join_button.pressed.connect(_on_join_pressed)
 	network_layer.connected.connect(_switch_to_lobby)
-
 	exit_button.pressed.connect(_exit_game)
+	
+	if !froggo_building : return
+	froggo_building.play("ArmatureAction")
 
 
 ## Create Lobby

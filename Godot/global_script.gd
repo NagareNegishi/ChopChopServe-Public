@@ -1,8 +1,9 @@
 extends Node
 
-enum Team {
-	TEAM1,
-	TEAM2
+enum UpgradeType{
+	POWER,
+	COEFF,
+	CAP
 }
 
 var player : Player
@@ -22,9 +23,6 @@ func _ready() -> void:
 		ui_game_state = get_tree().get_current_scene().get_node("HUD")
 
 
-func get_random_team() -> GlobalScript.Team:
-	return GlobalScript.Team.TEAM1 if (randf() <= 0.5) else GlobalScript.Team.TEAM2
-
 func get_local_player() -> Player:
 	var my_id = multiplayer.get_unique_id()
 	if !get_tree().current_scene.get_node("== PLAYERS =="):
@@ -34,6 +32,7 @@ func get_local_player() -> Player:
 		if child.get_multiplayer_authority() == my_id:
 			return child
 	return null
+
 
 func get_local_player_by_id(player_id : int) -> Player:
 	if !get_tree().current_scene.get_node("== PLAYERS =="):

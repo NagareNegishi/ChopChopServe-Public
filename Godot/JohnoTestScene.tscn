@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://bg2l1urkd7kjy"]
+[gd_scene load_steps=35 format=3 uid="uid://bg2l1urkd7kjy"]
 
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="3_l1ni4"]
 [ext_resource type="PackedScene" uid="uid://bk7ovilp788kq" path="res://scripts/Player/spawn_point.tscn" id="4_dok52"]
@@ -18,8 +18,12 @@
 [ext_resource type="PackedScene" uid="uid://b64oudiukwpwa" path="res://assets/models/NuFurniture/nufridge.glb" id="16_ciehn"]
 [ext_resource type="PackedScene" uid="uid://dythb8xw31t1c" path="res://assets/models/infrastructure/wall.glb" id="17_tg3k6"]
 [ext_resource type="PackedScene" uid="uid://dvn4ytv3ro6ec" path="res://scripts/Food/IngredientScenes/Tomato.tscn" id="18_7dw3l"]
+[ext_resource type="PackedScene" uid="uid://bf35vdqr3y7n7" path="res://UI/UI_Test_Scene.tscn" id="18_8f40u"]
+[ext_resource type="PackedScene" uid="uid://df6cemvjo3grw" path="res://scenes/Appliance_system/chop_table.tscn" id="19_ak6bd"]
 [ext_resource type="PackedScene" uid="uid://br76j8t76ne2x" path="res://scripts/order_system/Plate.tscn" id="19_yfgsi"]
+[ext_resource type="PackedScene" uid="uid://bakeesqt3byva" path="res://scenes/Appliance_system/sink.tscn" id="20_3rstc"]
 [ext_resource type="PackedScene" uid="uid://nrfjhpm1sa30" path="res://assets/newmodels/furniture/Fridge.glb" id="22_dok52"]
+[ext_resource type="Script" uid="uid://b6ggajpal6won" path="res://scripts/Appliance_system/Concrete_classes/bench.gd" id="23_8f40u"]
 [ext_resource type="PackedScene" uid="uid://o3tvfl5dgcnq" path="res://assets/newmodels/food/recipes/finished/BreadGarlic.glb" id="23_dok52"]
 [ext_resource type="PackedScene" uid="uid://khm0c17s6335" path="res://scenes/Interaction/Present.tscn" id="23_rqa51"]
 [ext_resource type="PackedScene" uid="uid://lfcppt4wh0g4" path="res://scenes/Interaction/UpgradeHammer.tscn" id="24_rqa51"]
@@ -621,6 +625,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.53571, 0.482358, 0)
 
 [node name="HUD" parent="== HUD ==" instance=ExtResource("4_gs5vi")]
 
+[node name="UITestScene" parent="== HUD ==" instance=ExtResource("18_8f40u")]
+
+[node name="ChopTable" parent="== HUD ==" instance=ExtResource("19_ak6bd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.72746, 0.0150003, -5.48557)
+
+[node name="Sink" parent="== HUD ==" instance=ExtResource("20_3rstc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.60897, 0.0150003, -3.68053)
+
 [node name="Camera" type="Camera3D" parent="."]
 transform = Transform3D(-4.37114e-08, -0.819152, 0.573576, 0, 0.573576, 0.819152, -1, 3.58063e-08, -2.50718e-08, 11, 10, 0)
 
@@ -644,6 +656,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.49233, 0.0940047, 3.7874)
 
 [node name="AbstractPickup" parent="." instance=ExtResource("23_rqa51")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.95503, 0.1815, -2.74807)
+class_script = ExtResource("23_8f40u")
 
 [node name="Extinguisher" parent="." instance=ExtResource("24_rqa51")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.50572, 0.155591, 0.726777)

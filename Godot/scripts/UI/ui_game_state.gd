@@ -7,6 +7,7 @@ func _ready() -> void:
 	set_reputation(2, ReputationSystem.total_rep_team.get(2))
 	ReputationSystem.reputation_changed.connect(set_reputation)
 	CurrencySystem.currency_changed.connect(set_money)
+	set_money(ENetManager.get_my_team(), CurrencySystem.get_currency(ENetManager.get_my_team()))
 
 func set_reputation(teamID : int, new_reputation : int):
 	if teamID != 1 && teamID != 2:

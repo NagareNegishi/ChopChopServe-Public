@@ -25,7 +25,7 @@ var can_dash : bool = true
 @onready var check_interactables : Timer = $CheckInteractables
 @onready var anim_tree : AnimationTree = $AnimationTree
 @onready var body_mesh : MeshInstance3D = $Mesh/Armature/Skeleton3D/Frog
-
+@onready var name_tag : NameTag = $NameTag/SubViewport/UiNameTag
 
 func _enter_tree() -> void:
 	scale = Vector3(1,1,1)
@@ -42,6 +42,8 @@ func _ready() -> void:
 	#Sets the default animation values
 	anim_tree["parameters/conditions/is_idle"] = true
 	anim_tree["parameters/conditions/is_moving"] = false
+	anim_tree["parameters/conditions/action"] = false
+	anim_tree["parameters/conditions/unaction"] = false
 	anim_tree["parameters/SM_Walking/conditions/empty"] = true
 	anim_tree["parameters/SM_IDLE/conditions/empty"] = true
 	anim_tree["parameters/SM_Walking/conditions/holding"] = false
@@ -51,15 +53,13 @@ func _ready() -> void:
 	var colour : Color = GlobalScript.player_outline_colours.get(
 			ENetManager.get_player_list().find(name.to_int()))
 	var material : Material = StandardMaterial3D.new()
-		
-	body_mesh.material_override = material
+	material.albedo_color = colour
+	name_tag.set_color(name.to_int())
+	
 	$Decal.modulate = colour
 	body_mesh.set_surface_override_material(1, material)
-	body_mesh.get_active_material(1).albedo_color = colour
 	$Mesh/Armature/Skeleton3D/RightHand.set_surface_override_material(1, material)
-	$Mesh/Armature/Skeleton3D/RightHand.get_active_material(1).albedo_colour = colour
 	$Mesh/Armature/Skeleton3D/LeftHand.set_surface_override_material(1, material)
-	$Mesh/Armature/Skeleton3D/LeftHand.get_active_material(1).albedo_colour = colour
 	
 	if !multiplayer.get_unique_id() == name.to_int():
 		check_interactables.stop()
@@ -211,8 +211,18 @@ func _action(is_active : bool) -> void:
 	if _closest_item == null || item_in_hand != null:
 		return
 	
-	anim_tree["parameters/SM_ACTION/conditions/chopping"] = true if (
-		is_active && _closest_item.get_parent() is ChoppingBoard) else false
+	anim_tree["parameters/conditions/action"] = is_active
+	anim_tree["parameters/conditions/unaction"] = !is_active
+	
+	if is_active && _closest_item.get_parent() is ChopTable:
+		anim_tree["parameters/SM_ACTION/conditions/chopping"] = true
+		
+	elif is_active && _closest_item.get_parent() is Sink:
+		anim_tree["parameters/SM_ACTION/conditions/washing"] = true
+	
+	if !is_active:
+		anim_tree["parameters/SM_ACTION/conditions/washing"] = false
+		anim_tree["parameters/SM_ACTION/conditions/chopping"] = false
 	
 	_closest_item.action(is_active)
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=4 uid="uid://boyywodctva6h"]
 
-[ext_resource type="Script" uid="uid://c4c45mbhwtaoe" path="res://Scripts/Food/Ingredients/ham.gd" id="1_jmpei"]
+[ext_resource type="Script" uid="uid://c4c45mbhwtaoe" path="res://scripts/Food/Ingredients/ham.gd" id="1_jmpei"]
 [ext_resource type="Material" uid="uid://d1mru8ywyt58h" path="res://assets/newmodels/texturemap.tres" id="1_ugcep"]
 [ext_resource type="PackedScene" uid="uid://cy1s0o2ip2hob" path="res://scenes/Interaction/InteractableComponent.tscn" id="3_dxho6"]
 

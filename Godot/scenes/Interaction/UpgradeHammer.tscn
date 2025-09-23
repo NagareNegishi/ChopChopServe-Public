@@ -11,7 +11,7 @@ size = Vector3(0.529846, 1.49194, 1)
 script = ExtResource("2_otwws")
 
 [node name="MeshInstance3D" parent="." index="0"]
-transform = Transform3D(0.3, 0, 0, 0, 0.111, 0, 0, 0, 0.111, 0, 0, 0)
+transform = Transform3D(0.5, 0, 0, 0, 0.185, 0, 0, 0, 0.185, 0, 0, 0)
 mesh = ExtResource("3_otwws")
 
 [node name="CollisionShape3D" parent="." index="1"]

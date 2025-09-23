@@ -6,10 +6,11 @@ var network_layer: ENetNetworkLayer
 # Menu UI elements
 @onready var menu = $Menu
 @onready var create_button = $Menu/ButtonsContainer/HostButton
-@onready var host_public_ip_input = $Menu/HostPublicIPInput
+@onready var host_public_ip_input = $Menu/Note/VBox/IP/PublicIPInput
 @onready var join_button = $Menu/ButtonsContainer/JoinButton
-@onready var ip_input =$Menu/HostPublicIPInput
+@onready var ip_input = $Menu/Note/VBox/IP/PublicIPInput
 @onready var exit_button = $Menu/ButtonsContainer/ExitButton
+@onready var  error_message = $Menu/Error
 
 
 ## Initialization
@@ -18,6 +19,7 @@ func _ready():
 	create_button.pressed.connect(_on_create_pressed)
 	join_button.pressed.connect(_on_join_pressed)
 	network_layer.connected.connect(_switch_to_lobby)
+
 	exit_button.pressed.connect(_exit_game)
 
 

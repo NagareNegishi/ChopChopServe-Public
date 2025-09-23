@@ -18,6 +18,8 @@ var _closest_item : InteractableComponent = null
 var move_particle = preload("res://Particles/MoveParticles.tscn")
 var item_in_hand : Node3D = null
 var can_dash : bool = true
+var is_controls_disabled = false
+var is_inverted = false
 
 @onready var controller : PlayerController = $Controller
 @onready var player_state : PlayerState = $PlayerState
@@ -38,7 +40,7 @@ func _ready() -> void:
 	$DashCooldown.wait_time = DASH_COOLDOWN
 	player_state.player_id = name.to_int()
 	call_deferred("set_multiplayer_authority", name.to_int())
-	
+	invert_controls(false)
 	#Sets the default animation values
 	anim_tree["parameters/conditions/is_idle"] = true
 	anim_tree["parameters/conditions/is_moving"] = false
@@ -160,6 +162,7 @@ func _dash(is_forward : bool) -> void:
 ## Handles all the inputs
 ## @return void
 func _inputs() -> void:
+	if is_controls_disabled: return
 	if Input.is_action_just_pressed("Dash") && can_dash:
 		_dash(true)
 		
@@ -205,6 +208,7 @@ func _throw() -> void:
 ## @return void
 func _action(is_active : bool) -> void:
 	if item_in_hand != null && item_in_hand.get_node("InteractableComponent").has_action:
+		anim_tree["parameters/conditions/action"] = is_active
 		item_in_hand.get_node("InteractableComponent").action(is_active)
 		return
 	
@@ -495,14 +499,11 @@ func _final_drop(item: Node3D) -> void:
 	item.global_rotation = $Mesh/ItemPoint.global_rotation
 
 
-## Assigns the player a team
-## @param team the teamm you want to assign the player
-## @return void
-func set_team(team : int):
-	player_state.team = team
+func invert_controls(_invert : bool):
+	if _invert: controller.vector = Input.get_vector("Up", "Down", "Right", "Left")
+	if !_invert: controller.vector = Input.get_vector("Down", "Up", "Left", "Right")
+	is_inverted = _invert
 
 
-## Gets the team on the player
-## @return GlobalScript.Team what team the player is assigned
-func get_team() -> int:
-	return player_state.team
+func disable_controls(_disable : bool):
+	is_controls_disabled = _disable

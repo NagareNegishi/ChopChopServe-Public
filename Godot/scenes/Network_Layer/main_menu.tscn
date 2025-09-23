@@ -24,14 +24,37 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Note" type="ColorRect" parent="Menu"]
-layout_mode = 0
-offset_left = 795.0
-offset_top = 533.0
-offset_right = 1249.0
-offset_bottom = 730.0
+[node name="Note2" type="ColorRect" parent="Menu"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -361.0
+offset_top = -105.0
+offset_right = 22.0
+offset_bottom = 69.0
+grow_horizontal = 0
+grow_vertical = 0
 rotation = -0.0349066
-color = Color(0.977633, 0.957728, 0.930404, 1)
+color = Color(0.92549, 0.929412, 0.933333, 1)
+
+[node name="Note" type="ColorRect" parent="Menu"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -353.0
+offset_top = -97.0
+offset_right = 101.0
+offset_bottom = 100.0
+grow_horizontal = 0
+grow_vertical = 0
+rotation = -0.0349066
+color = Color(0.988235, 0.992157, 0.996078, 1)
 
 [node name="VBox" type="VBoxContainer" parent="Menu/Note"]
 layout_mode = 0
@@ -47,14 +70,17 @@ theme_override_constants/separation = 25
 [node name="Label" type="Label" parent="Menu/Note/VBox/Name"]
 layout_mode = 2
 theme = ExtResource("3_0ltv3")
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
 theme_override_constants/outline_size = 2
-text = "Name"
+theme_override_font_sizes/font_size = 26
+text = "NAME"
 
 [node name="Name" type="LineEdit" parent="Menu/Note/VBox/Name"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("3_0ltv3")
+theme_override_colors/font_color = Color(0.980392, 0.980392, 0.980392, 1)
+theme_override_font_sizes/font_size = 21
 theme_override_styles/normal = ExtResource("3_8cx7s")
 placeholder_text = "Froggo"
 alignment = 1
@@ -67,17 +93,20 @@ theme_override_constants/separation = 70
 [node name="Label" type="Label" parent="Menu/Note/VBox/IP"]
 layout_mode = 2
 theme = ExtResource("3_0ltv3")
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
 theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 26
 text = "IP"
 
 [node name="PublicIPInput" type="LineEdit" parent="Menu/Note/VBox/IP"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("3_0ltv3")
+theme_override_colors/font_color = Color(0.980392, 0.980392, 0.980392, 1)
+theme_override_font_sizes/font_size = 21
 theme_override_styles/focus = ExtResource("3_8cx7s")
 theme_override_styles/normal = ExtResource("3_8cx7s")
-placeholder_text = "[Public IP]"
+placeholder_text = "182.153.209.40"
 alignment = 1
 
 [node name="Title" type="Sprite2D" parent="Menu"]
@@ -86,11 +115,15 @@ scale = Vector2(0.45, 0.45)
 texture = ExtResource("4_0ltv3")
 
 [node name="ButtonsContainer" type="VBoxContainer" parent="Menu"]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
 offset_left = 110.0
-offset_top = 362.0
+offset_top = -288.0
 offset_right = 375.0
-offset_bottom = 532.0
+offset_bottom = -118.0
+grow_vertical = 0
 theme_override_constants/separation = -2
 
 [node name="HostButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]

@@ -219,6 +219,6 @@ bones/9/rotation = Quaternion(0.0611088, 0.0139302, -0.067709, 0.995735)
 bones/10/rotation = Quaternion(-0.707102, -0.0026188, 0.707102, -0.0026188)
 
 [node name="Hat" parent="CityRestaurantAnim2/Armature/Skeleton3D" index="0"]
-transform = Transform3D(-0.762018, 0.248143, 0.0528219, 0.249048, 0.765408, -0.00142304, -0.071997, 0.0213092, -0.56399, 6.55651e-07, 9.53674e-07, 7.45058e-09)
+transform = Transform3D(-0.762018, 0.248143, 0.0528217, 0.249048, 0.765408, -0.00142305, -0.0719968, 0.0213091, -0.56399, 2.42889e-06, 2.86102e-06, 3.72529e-07)
 
 [editable path="CityRestaurantAnim2"]

@@ -5,4 +5,4 @@ extends MultiplayerSynchronizer
 var vector : Vector2
 	
 func _process(delta: float) -> void:
-	input_dir = vector
+	input_dir = Input.get_vector("Up","Down","Right","Left")

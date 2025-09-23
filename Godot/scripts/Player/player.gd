@@ -162,6 +162,9 @@ func _dash(is_forward : bool) -> void:
 ## Handles all the inputs
 ## @return void
 func _inputs() -> void:
+	if Input.is_action_just_pressed("Pause"):
+		GlobalScript.get_pause_menu().toggle_visible(true)
+	
 	if is_controls_disabled: return
 	if Input.is_action_just_pressed("Dash") && can_dash:
 		_dash(true)
@@ -208,7 +211,6 @@ func _throw() -> void:
 ## @return void
 func _action(is_active : bool) -> void:
 	if item_in_hand != null && item_in_hand.get_node("InteractableComponent").has_action:
-		anim_tree["parameters/conditions/action"] = is_active
 		item_in_hand.get_node("InteractableComponent").action(is_active)
 		return
 	

@@ -30,13 +30,13 @@ sky_top_color = Color(0.540081, 0.0948352, 0.486115, 1)
 sky_horizon_color = Color(0.958096, 0.855453, 0.843266, 1)
 sky_energy_multiplier = 0.75
 
-[sub_resource type="Sky" id="Sky_07mic"]
+[sub_resource type="Sky" id="Sky_5ixo3"]
 sky_material = SubResource("ProceduralSkyMaterial_ad3b7")
 
 [sub_resource type="Environment" id="Environment_vs73y"]
 background_mode = 2
 background_color = Color(0.486804, 0.263312, 0.0939578, 1)
-sky = SubResource("Sky_07mic")
+sky = SubResource("Sky_5ixo3")
 volumetric_fog_density = 0.03
 volumetric_fog_albedo = Color(0.939979, 0.746183, 0.685581, 1)
 volumetric_fog_anisotropy = 0.7

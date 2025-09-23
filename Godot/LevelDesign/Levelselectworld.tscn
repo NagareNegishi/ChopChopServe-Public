@@ -1,4 +1,4 @@
-[gd_scene load_steps=83 format=3 uid="uid://brax13qxb8tj2"]
+[gd_scene load_steps=79 format=3 uid="uid://brax13qxb8tj2"]
 
 [ext_resource type="PackedScene" uid="uid://bv68n23xtnfpl" path="res://scenes/Player/PlayerCar.tscn" id="1_2io33"]
 [ext_resource type="Material" uid="uid://dwgftkho746av" path="res://LevelDesign/SwampFog.tres" id="1_d2eau"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="4_55i4u"]
 [ext_resource type="PackedScene" uid="uid://cw3ro4l6ywo8x" path="res://assets/newmodels/Mountain.glb" id="4_gfmxp"]
 [ext_resource type="PackedScene" uid="uid://386cia5dig43" path="res://assets/NaturePack/Willow_4.fbx" id="5_2io33"]
+[ext_resource type="PackedScene" uid="uid://dfpfglb1oru28" path="res://assets/Swampy/RoadSwampCorner.glb" id="5_d2ijq"]
 [ext_resource type="Material" uid="uid://8a2o8qga7q64" path="res://shaders/Water/WaterOpenworldAlt.tres" id="5_mpt4u"]
 [ext_resource type="PackedScene" uid="uid://x0o0oxbumdxi" path="res://assets/NaturePack/Willow_2.fbx" id="6_38v8k"]
 [ext_resource type="Shader" uid="uid://c46kta255prk4" path="res://shaders/Water/WaterOpenWorld.gdshader" id="6_mpt4u"]
@@ -54,12 +55,14 @@
 [ext_resource type="PackedScene" uid="uid://bfyl14i4p2lc0" path="res://assets/NaturePack/Rock_2.fbx" id="47_jxeiq"]
 [ext_resource type="PackedScene" uid="uid://bw37632k8e3to" path="res://assets/Swampy/FenceSwampFence2.glb" id="47_kguer"]
 [ext_resource type="PackedScene" uid="uid://bnwj0rmha5lt" path="res://assets/newmodels/decorations/umbrella.glb" id="48_4hvn4"]
+[ext_resource type="PackedScene" uid="uid://sie7pvckcbi7" path="res://assets/Beachy/BeachSpeedBoat.glb" id="49_kguer"]
 [ext_resource type="PackedScene" uid="uid://cb3xkgms4ctwo" path="res://assets/CityPacks/gltf/trafficlight_A.gltf" id="51_00kn3"]
 [ext_resource type="PackedScene" uid="uid://bm407of4lb0ta" path="res://assets/NaturePack/Bush_2.fbx" id="51_s0hg4"]
 [ext_resource type="PackedScene" uid="uid://1day6rx5reie" path="res://assets/NaturePack/Bush_1.fbx" id="52_00kn3"]
 [ext_resource type="PackedScene" uid="uid://b27tpsfdtbm3d" path="res://assets/Beachy/FenceBeachBoardWalkRamp.glb" id="56_iytpy"]
 [ext_resource type="PackedScene" uid="uid://ote03xslp2mk" path="res://assets/Beachy/FenceBeachPlankPath.glb" id="57_lyps1"]
 [ext_resource type="PackedScene" uid="uid://bnqti3cd67kf0" path="res://assets/Beachy/FenceBeachWire.glb" id="58_7dd6r"]
+[ext_resource type="PackedScene" uid="uid://bailsqnlqlti0" path="res://assets/CityPacks/CityRestaurantAnim2.glb" id="61_ps02h"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w6hnu"]
 size = Vector3(30, 0.03, 30)
@@ -102,33 +105,11 @@ volumetric_fog_sky_affect = 0.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_0qhj0"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_2io33"]
-
 [sub_resource type="SphereMesh" id="SphereMesh_u4l04"]
 material = ExtResource("25_o215m")
 radius = 0.1
 radial_segments = 6
 rings = 4
-
-[sub_resource type="Curve3D" id="Curve3D_u4l04"]
-_data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -13.9935, 0, -8.37839, 0, 0, 0, 0, 0, 0, 0, 0, -12, 0, 0, 0, 0, 0, 0, 4.66762, -0.0203896, -7.82268, 0, 0, 0, 0, 0, 0, 10.8739, -0.057415, 10.8807, 0, 0, 0, 0, 0, 0, 0.184366, -0.00477982, 10.92, 0, 0, 0, 0, 0, 0, -10.4376, 0.0354004, 6.99226, 0, 0, 0, 0, 0, 0, -13.0759, 0, -0.635715),
-"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0)
-}
-point_count = 7
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yh1w3"]
-albedo_color = Color(0.522476, 0.384581, 0.161531, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8t6q8"]
-albedo_color = Color(0.521569, 0.384314, 0.160784, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_0m1vj"]
-material = SubResource("StandardMaterial3D_8t6q8")
-
-[sub_resource type="BoxMesh" id="BoxMesh_u4l04"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_bldn6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3q3io"]
 render_priority = 0
@@ -230,6 +211,33 @@ transform = Transform3D(-20, 0, -4.76995e-07, 0, 20, 0, 4.76995e-07, 0, -20, -53
 [node name="Mountain3" parent="Node3D2" instance=ExtResource("4_gfmxp")]
 transform = Transform3D(-2.14569e-06, 0, -20, 0, 20, 0, 20, 0, -2.14569e-06, -52.4502, 0.0451218, -26.8765)
 
+[node name="RoadSwampCorner" parent="Node3D2" instance=ExtResource("5_d2ijq")]
+transform = Transform3D(-8.74228e-08, 0, 2, 0, 2, 0, -2, 0, -8.74228e-08, 8, 0, 31)
+
+[node name="RoadSwampCorner2" parent="Node3D2" instance=ExtResource("5_d2ijq")]
+transform = Transform3D(-8.74228e-08, 0, 2, 0, 2, 0, -2, 0, -8.74228e-08, -4, 0, 35)
+
+[node name="RoadSwampCorner3" parent="Node3D2" instance=ExtResource("5_d2ijq")]
+transform = Transform3D(-2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, -4, 0, 23)
+
+[node name="RoadSwampCorner5" parent="Node3D2" instance=ExtResource("5_d2ijq")]
+transform = Transform3D(2.62268e-07, 0, -2, 0, 2, 0, 2, 0, 2.62268e-07, -8, 0, 11)
+
+[node name="RoadSwampCorner4" parent="Node3D2" instance=ExtResource("5_d2ijq")]
+transform = Transform3D(2.62268e-07, 0, -2, 0, 2, 0, 2, 0, 2.62268e-07, -28, 0, 15)
+
+[node name="RoadSwampCorner6" parent="Node3D2" instance=ExtResource("5_d2ijq")]
+transform = Transform3D(2, 0, 3.49691e-07, 0, 2, 0, -3.49691e-07, 0, 2, -28, 0, 27)
+
+[node name="RoadSwampCorner8" parent="Node3D2" instance=ExtResource("5_d2ijq")]
+transform = Transform3D(-4.37114e-07, 0, 2, 0, 2, 0, -2, 0, -4.37114e-07, -20, 0, 27)
+
+[node name="RoadSwampCorner9" parent="Node3D2" instance=ExtResource("5_d2ijq")]
+transform = Transform3D(2.62268e-07, 0, -2, 0, 2, 0, 2, 0, 2.62268e-07, -20, 0, 23)
+
+[node name="RoadSwampCorner7" parent="Node3D2" instance=ExtResource("5_d2ijq")]
+transform = Transform3D(2, 0, 3.49691e-07, 0, 2, 0, -3.49691e-07, 0, 2, -24, 0, 35)
+
 [node name="Node3D3" type="Node3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D3"]
@@ -245,11 +253,6 @@ transform = Transform3D(-1.02285e-07, 0, -2.34, 0, 2.34, 0, 2.34, 0, -1.02285e-0
 mesh = SubResource("SphereMesh_0qhj0")
 
 [node name="City" type="Node3D" parent="."]
-
-[node name="MeshInstance3D52" type="MeshInstance3D" parent="City"]
-transform = Transform3D(-3.67176e-07, 0, -9.12, 0, 3.2634, 0, 8.4, 0, -3.98648e-07, -17, 1, -26)
-mesh = SubResource("BoxMesh_2io33")
-skeleton = NodePath("../../Node3D")
 
 [node name="Buildings" type="Node3D" parent="City"]
 
@@ -309,6 +312,18 @@ transform = Transform3D(-1.31134e-07, 0, 3, 0, 3, 0, -3, 0, -1.31134e-07, 3, 0, 
 
 [node name="base2" parent="City/Buildings" instance=ExtResource("28_3ftmd")]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -29, 0, -38)
+
+[node name="base3" parent="City/Buildings" instance=ExtResource("28_3ftmd")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -19, 0, -22)
+
+[node name="base12" parent="City/Buildings" instance=ExtResource("28_3ftmd")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -13, 0, -22)
+
+[node name="base13" parent="City/Buildings" instance=ExtResource("28_3ftmd")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -19, 0, -28)
+
+[node name="base14" parent="City/Buildings" instance=ExtResource("28_3ftmd")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -13, 0, -28)
 
 [node name="base4" parent="City/Buildings" instance=ExtResource("28_3ftmd")]
 transform = Transform3D(1, 0, 0, 0, 3, 0, 0, 0, 3, 11, 0, -38)
@@ -654,43 +669,14 @@ mesh = SubResource("SphereMesh_u4l04")
 skeleton = NodePath("")
 
 [node name="MeshInstance3D40" type="MeshInstance3D" parent="Swamp"]
-transform = Transform3D(-12.312, 6.10456, -3.50197e-08, -1.07635e-06, -3.08119e-07, -2.1888, -21.325, -3.52447, 1.30695e-07, -20, 0, 20)
+transform = Transform3D(-5.09853, 5.447, -5.41222e-08, -8.6108e-07, -2.46495e-07, -1.75104, -19.028, -1.45952, 9.37423e-08, -23, 0, 19)
 mesh = SubResource("SphereMesh_u4l04")
 skeleton = NodePath("")
-
-[node name="Path3D" type="Path3D" parent="Swamp"]
-curve = SubResource("Curve3D_u4l04")
-
-[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Swamp/Path3D"]
-transform = Transform3D(-0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, -0.965926, -17.9479, 0, 26.3994)
-polygon = PackedVector2Array(-1, 0, -1, 0.1, 1, 0.1)
-mode = 2
-path_node = NodePath("..")
-path_interval_type = 0
-path_interval = 1.0
-path_simplify_angle = 0.0
-path_rotation = 2
-path_rotation_accurate = false
-path_local = false
-path_continuous_u = true
-path_u_distance = 1.0
-path_joined = true
-material = SubResource("StandardMaterial3D_yh1w3")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Swamp"]
-transform = Transform3D(1.49444, 0, -10.0417, 0, 0.213, 0, 1.06656, 0, 14.0702, 2.13286, -0.0148377, 24.0942)
-mesh = SubResource("BoxMesh_0m1vj")
-skeleton = NodePath("../..")
-
-[node name="MeshInstance3D5" type="MeshInstance3D" parent="Swamp"]
-transform = Transform3D(1.77344, 0, -4.47395, 0, 0.213, 0, 0.475192, 0, 16.697, -10.8671, -0.0148377, 8.09416)
-mesh = SubResource("BoxMesh_0m1vj")
-skeleton = NodePath("../..")
 
 [node name="Trees" type="Node3D" parent="Swamp"]
 
 [node name="Willow_13" parent="Swamp/Trees" instance=ExtResource("7_8t6q8")]
-transform = Transform3D(-0.98947, 0, 0.144736, 0, 1, 0, -0.144736, 0, -0.98947, 0.955434, 0.0582429, 29.2258)
+transform = Transform3D(-0.98947, 0, 0.144736, 0, 1, 0, -0.144736, 0, -0.98947, 0.955434, 0.0582429, 35.2258)
 
 [node name="Willow_12" parent="Swamp/Trees" instance=ExtResource("6_38v8k")]
 transform = Transform3D(-0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, -15.443, 0.0999598, 18.6672)
@@ -699,7 +685,7 @@ transform = Transform3D(-0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, -15.443,
 transform = Transform3D(0.549431, 0, -0.835539, 0, 1, 0, 0.835539, 0, 0.549431, -14.0541, 0.0999598, 4.53746)
 
 [node name="Willow_10" parent="Swamp/Trees" instance=ExtResource("5_2io33")]
-transform = Transform3D(-0.824749, 0, -0.5655, 0, 1, 0, 0.5655, 0, -0.824749, -2.24575, 0.072099, 21.8575)
+transform = Transform3D(-0.824749, 0, -0.5655, 0, 1, 0, 0.5655, 0, -0.824749, 2.75425, 0.072099, 22.8575)
 
 [node name="Willow_17" parent="Swamp/Trees" instance=ExtResource("5_2io33")]
 transform = Transform3D(0.43542, 0, -0.900228, 0, 1, 0, 0.900228, 0, 0.43542, -17.5119, 0.0609715, 31.0159)
@@ -708,22 +694,22 @@ transform = Transform3D(0.43542, 0, -0.900228, 0, 1, 0, 0.900228, 0, 0.43542, -1
 transform = Transform3D(0.704325, 0, -0.709878, 0, 1, 0, 0.709878, 0, 0.704325, 3.53969, 0.0720986, 3.74347)
 
 [node name="Willow_23" parent="Swamp/Trees" instance=ExtResource("5_2io33")]
-transform = Transform3D(0.897797, 0, 0.44041, 0, 1, 0, -0.44041, 0, 0.897797, -29.2377, 0.0720986, 25.4401)
+transform = Transform3D(0.897797, 0, 0.44041, 0, 1, 0, -0.44041, 0, 0.897797, -31.2377, 0.0720986, 25.4401)
 
 [node name="Willow_5" parent="Swamp/Trees" instance=ExtResource("5_2io33")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.490869, 0.0720986, 7.81194)
 
 [node name="Willow_7" parent="Swamp/Trees" instance=ExtResource("5_2io33")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.70097, 0.0720996, 29.1914)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.70097, 0.0720996, 29.1914)
 
 [node name="Willow_21" parent="Swamp/Trees" instance=ExtResource("5_2io33")]
 transform = Transform3D(-0.600588, 0, -0.799559, 0, 1, 0, 0.799559, 0, -0.600588, -27.481, 0.0912398, 2.70882)
 
 [node name="Willow_6" parent="Swamp/Trees" instance=ExtResource("5_2io33")]
-transform = Transform3D(0.841247, 0, -0.540652, 0, 1, 0, 0.540652, 0, 0.841247, -8.37076, 0.0720986, 13.3827)
+transform = Transform3D(0.841247, 0, -0.540652, 0, 1, 0, 0.540652, 0, 0.841247, -4.37076, 0.0720986, 16.3827)
 
 [node name="Willow_25" parent="Swamp/Trees" instance=ExtResource("5_2io33")]
-transform = Transform3D(0.561781, 0, 0.827287, 0, 1, 0, -0.827287, 0, 0.561781, -25.7465, 0.0720986, 31.5283)
+transform = Transform3D(0.561781, 0, 0.827287, 0, 1, 0, -0.827287, 0, 0.561781, -27.7465, 0.0720986, 32.5283)
 
 [node name="Willow_20" parent="Swamp/Trees" instance=ExtResource("5_2io33")]
 transform = Transform3D(0.796319, 0, 0.604877, 0, 1, 0, -0.604877, 0, 0.796319, -27.6556, 0.0720986, 11.7947)
@@ -732,19 +718,19 @@ transform = Transform3D(0.796319, 0, 0.604877, 0, 1, 0, -0.604877, 0, 0.796319, 
 transform = Transform3D(0.880825, 0, -0.473443, 0, 1, 0, 0.473443, 0, 0.880825, -6.73274, 0.0999598, 5.20043)
 
 [node name="Willow_1" parent="Swamp/Trees" instance=ExtResource("7_8t6q8")]
-transform = Transform3D(0.844954, 0, 0.534839, 0, 1, 0, -0.534839, 0, 0.844954, 4.68583, 0.0582429, 13.7571)
+transform = Transform3D(0.844954, 0, 0.534839, 0, 1, 0, -0.534839, 0, 0.844954, 4.68583, 0.0582429, 14.7571)
 
 [node name="Willow_3" parent="Swamp/Trees" instance=ExtResource("8_0m1vj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.71668, 0.0579129, 21.6823)
 
 [node name="Willow_24" parent="Swamp/Trees" instance=ExtResource("8_0m1vj")]
-transform = Transform3D(0.746418, 0, -0.665478, 0, 1, 0, 0.665478, 0, 0.746418, -4.74759, 0.0579134, 35.451)
+transform = Transform3D(0.746418, 0, -0.665478, 0, 1, 0, 0.665478, 0, 0.746418, 3.25241, 0.0579134, 35.451)
 
 [node name="Willow_8" parent="Swamp/Trees" instance=ExtResource("8_0m1vj")]
-transform = Transform3D(-0.755454, 0, 0.655203, 0, 1, 0, -0.655203, 0, -0.755454, -14.0926, 0.0579129, 33.4291)
+transform = Transform3D(-0.755454, 0, 0.655203, 0, 1, 0, -0.655203, 0, -0.755454, -14.0926, 0.0579129, 31.4291)
 
 [node name="Willow_19" parent="Swamp/Trees" instance=ExtResource("8_0m1vj")]
-transform = Transform3D(-0.755454, 0, 0.655203, 0, 1, 0, -0.655203, 0, -0.755454, -25.2837, 0.0579124, 20.1436)
+transform = Transform3D(-0.755454, 0, 0.655203, 0, 1, 0, -0.655203, 0, -0.755454, -24.2837, 0.0579124, 17.1436)
 
 [node name="Willow_22" parent="Swamp/Trees" instance=ExtResource("8_0m1vj")]
 transform = Transform3D(-0.519176, 0, -0.854668, 0, 1, 0, 0.854668, 0, -0.519176, -20.4325, 0.0579124, 37.1776)
@@ -753,10 +739,10 @@ transform = Transform3D(-0.519176, 0, -0.854668, 0, 1, 0, 0.854668, 0, -0.519176
 transform = Transform3D(-0.999868, 0, -0.0162658, 0, 1, 0, 0.0162658, 0, -0.999868, -20.6739, 0.0579129, 4.6132)
 
 [node name="Willow_9" parent="Swamp/Trees" instance=ExtResource("15_ki10l")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.27882, 0.0529348, 18.4832)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.27882, 0.0529348, 19.4832)
 
 [node name="Willow_18" parent="Swamp/Trees" instance=ExtResource("15_ki10l")]
-transform = Transform3D(-0.0660824, 0, 0.997814, 0, 1, 0, -0.997814, 0, -0.0660824, -21.9263, 0.0529348, 23.5999)
+transform = Transform3D(-0.0660824, 0, 0.997814, 0, 1, 0, -0.997814, 0, -0.0660824, -23.9263, 0.0529348, 23.5999)
 
 [node name="Willow_11" parent="Swamp/Trees" instance=ExtResource("15_ki10l")]
 transform = Transform3D(-0.581754, 0, 0.813365, 0, 1, 0, -0.813365, 0, -0.581754, -0.77776, 0.0529348, 4.86648)
@@ -771,18 +757,18 @@ transform = Transform3D(-0.999413, 0, -0.0342716, 0, 1, 0, 0.0342716, 0, -0.9994
 transform = Transform3D(0.28338, 0, -0.959008, 0, 1, 0, 0.959008, 0, 0.28338, -8.81504, 0.117341, 31.9216)
 
 [node name="Willow_Dead_6" parent="Swamp/Trees" instance=ExtResource("17_5oaun")]
-transform = Transform3D(0.484245, 0, -0.874932, 0, 1, 0, 0.874932, 0, 0.484245, -4.27741, 0.117341, 12.6808)
+transform = Transform3D(0.484245, 0, -0.874932, 0, 1, 0, 0.874932, 0, 0.484245, -0.27741, 0.117341, 14.6808)
 
 [node name="Willow_Dead_5" parent="Swamp/Trees" instance=ExtResource("17_5oaun")]
-transform = Transform3D(0.972464, 0, 0.233055, 0, 1, 0, -0.233055, 0, 0.972464, -22.7725, 0.117341, 34.8565)
+transform = Transform3D(0.972464, 0, 0.233055, 0, 1, 0, -0.233055, 0, 0.972464, -24.7725, 0.117341, 37.8565)
 
 [node name="Foliage" type="Node3D" parent="Swamp"]
 
 [node name="WoodLog_Moss" parent="Swamp/Foliage" instance=ExtResource("9_4vkss")]
-transform = Transform3D(0.411573, 0, 0.437775, 0, 0.600865, 0, -0.437775, 0, 0.411573, -1.07313, 0.0463821, 25.2297)
+transform = Transform3D(0.411573, 0, 0.437775, 0, 0.600865, 0, -0.437775, 0, 0.411573, -0.07313, 0.0463821, 27.2297)
 
 [node name="WoodLog_Moss5" parent="Swamp/Foliage" instance=ExtResource("9_4vkss")]
-transform = Transform3D(4.1736e-05, 0, -0.8, 0, 0.8, 0, 0.8, 0, 4.1736e-05, -8.28672, 0.0463816, 26.8303)
+transform = Transform3D(4.1736e-05, 0, -0.8, 0, 0.8, 0, 0.8, 0, 4.1736e-05, -8.28672, 0.0463816, 25.8303)
 
 [node name="WoodLog_Moss2" parent="Swamp/Foliage" instance=ExtResource("9_4vkss")]
 transform = Transform3D(0.411573, 0, 0.437775, 0, 0.600865, 0, -0.437775, 0, 0.411573, 5.02487, 0.0463821, 6.29645)
@@ -800,7 +786,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.6654, 0.0452061, 16.306)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.0919, 0.0452061, 12.1378)
 
 [node name="Plant_14" parent="Swamp/Foliage" instance=ExtResource("10_ki10l")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.4768, 0.0452061, 22.531)
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -24.4768, 0.0452061, 21.531)
 
 [node name="Plant_3" parent="Swamp/Foliage" instance=ExtResource("10_ki10l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.44654, 0.0452056, 7.06635)
@@ -812,7 +798,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.75259, -0.0470667, 14.2687)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.0221, -0.0470667, 5.28712)
 
 [node name="TreeStump_Moss" parent="Swamp/Foliage" instance=ExtResource("12_4vkss")]
-transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -6.65507, 0.0153888, 26.8202)
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -6.65507, 0.0153888, 25.8202)
 
 [node name="WoodLog_Moss6" parent="Swamp/Foliage" instance=ExtResource("9_4vkss")]
 transform = Transform3D(-0.584873, 0, 0.545823, 0, 0.8, 0, -0.545823, 0, -0.584873, -27.732, 0.0364863, 8.01975)
@@ -821,10 +807,10 @@ transform = Transform3D(-0.584873, 0, 0.545823, 0, 0.8, 0, -0.545823, 0, -0.5848
 transform = Transform3D(-0.545854, 0, -0.584845, 0, 0.8, 0, 0.584845, 0, -0.545854, -28.8379, 0.00549348, 9.2195)
 
 [node name="TreeStump_Moss2" parent="Swamp/Foliage" instance=ExtResource("12_4vkss")]
-transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -2.34073, 0.0153888, 24.1034)
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -1.34073, 0.0153888, 26.1034)
 
 [node name="Plant_4" parent="Swamp/Foliage" instance=ExtResource("13_ki10l")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 4.4373, 0.0510934, 17.7055)
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 4.4373, 0.0510934, 20.7055)
 
 [node name="Plant_10" parent="Swamp/Foliage" instance=ExtResource("13_ki10l")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.1434, 0.0510934, 26.4346)
@@ -854,7 +840,7 @@ transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -6.86721, 0.144846, 31.
 transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -15.804, 0.144847, 10.1977)
 
 [node name="Plant_9" parent="Swamp/Foliage" instance=ExtResource("16_gf84l")]
-transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -10.4191, 0.144846, 20.9343)
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -10.4191, 0.144846, 19.9343)
 
 [node name="Bush_2" parent="Swamp/Foliage" instance=ExtResource("51_s0hg4")]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 10.4628, 0, 1.92759)
@@ -886,7 +872,7 @@ transform = Transform3D(-0.969398, 0, 0.245493, 0, 1, 0, -0.245493, 0, -0.969398
 transform = Transform3D(0.987849, 0, 0.155417, 0, 1, 0, -0.155417, 0, 0.987849, -8.26656, 0.0500146, 9.0645)
 
 [node name="Rock_Moss_7" parent="Swamp/Rocks" instance=ExtResource("19_4qp8e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0181561, 0.222786, 23.4398)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.981844, 0.222786, 25.4398)
 
 [node name="Rock_Moss_8" parent="Swamp/Rocks" instance=ExtResource("19_4qp8e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.4962, 0.222786, 6.56097)
@@ -909,6 +895,12 @@ transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -24, 0, 7)
 [node name="RoadSwampRoad11" parent="Swamp" instance=ExtResource("44_ps02h")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -24, 0, 11)
 
+[node name="RoadSwampRoad24" parent="Swamp" instance=ExtResource("44_ps02h")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -28, 0, 19)
+
+[node name="RoadSwampRoad25" parent="Swamp" instance=ExtResource("44_ps02h")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -28, 0, 23)
+
 [node name="RoadSwampRoad12" parent="Swamp" instance=ExtResource("44_ps02h")]
 transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, -20, 0, 15)
 
@@ -919,28 +911,40 @@ transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, -16, 0
 transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, -12, 0, 15)
 
 [node name="RoadSwampRoad15" parent="Swamp" instance=ExtResource("44_ps02h")]
-transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, -16, 0, 36)
+transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, -16, 0, 35)
+
+[node name="RoadSwampRoad27" parent="Swamp" instance=ExtResource("44_ps02h")]
+transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, -20, 0, 35)
+
+[node name="RoadSwampRoad28" parent="Swamp" instance=ExtResource("44_ps02h")]
+transform = Transform3D(2, 0, -2.13163e-14, 0, 2, 0, 2.13163e-14, 0, 2, -24, 0, 31)
 
 [node name="RoadSwampRoad16" parent="Swamp" instance=ExtResource("44_ps02h")]
-transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, -12, 0, 36)
+transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, -12, 0, 35)
 
 [node name="RoadSwampRoad19" parent="Swamp" instance=ExtResource("44_ps02h")]
-transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, -12, 0, 24)
+transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, -12, 0, 23)
+
+[node name="RoadSwampRoad23" parent="Swamp" instance=ExtResource("44_ps02h")]
+transform = Transform3D(2, 0, -2.13163e-14, 0, 2, 0, 2.13163e-14, 0, 2, -8, 0, 19)
 
 [node name="RoadSwampRoad20" parent="Swamp" instance=ExtResource("44_ps02h")]
-transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, -16, 0, 24)
+transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, -16, 0, 23)
 
 [node name="RoadSwampRoad17" parent="Swamp" instance=ExtResource("44_ps02h")]
-transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, -8, 0, 36)
+transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, -8, 0, 35)
 
 [node name="RoadSwampRoad18" parent="Swamp" instance=ExtResource("44_ps02h")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -4, 0, 28)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -4, 0, 27)
 
 [node name="RoadSwampRoad7" parent="Swamp" instance=ExtResource("44_ps02h")]
 transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, 4, 0, 11)
 
 [node name="RoadSwampRoad8" parent="Swamp" instance=ExtResource("44_ps02h")]
 transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, 0, 0, 11)
+
+[node name="RoadSwampRoad26" parent="Swamp" instance=ExtResource("44_ps02h")]
+transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, -4, 0, 11)
 
 [node name="RoadSwampRoad3" parent="Swamp" instance=ExtResource("44_ps02h")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 8, 0, 15)
@@ -954,6 +958,12 @@ transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 8, 0, 23)
 [node name="RoadSwampRoad6" parent="Swamp" instance=ExtResource("44_ps02h")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 8, 0, 27)
 
+[node name="RoadSwampRoad21" parent="Swamp" instance=ExtResource("44_ps02h")]
+transform = Transform3D(-8.74228e-08, 0, 2, 0, 2, 0, -2, 0, -8.74228e-08, 4, 0, 31)
+
+[node name="RoadSwampRoad22" parent="Swamp" instance=ExtResource("44_ps02h")]
+transform = Transform3D(-8.74228e-08, 0, 2, 0, 2, 0, -2, 0, -8.74228e-08, 0, 0, 31)
+
 [node name="RoadSwampRoadT" parent="Swamp" instance=ExtResource("45_p3fp8")]
 transform = Transform3D(-2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 8, 0, 11)
 
@@ -961,10 +971,16 @@ transform = Transform3D(-2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 8, 0, 
 transform = Transform3D(-8.74232e-08, 0, 2, 0, 2, 0, -2, 0, -8.74232e-08, -24, 0, 15)
 
 [node name="RoadSwampRoadT3" parent="Swamp" instance=ExtResource("45_p3fp8")]
-transform = Transform3D(2, 0, 4.40536e-13, 0, 2, 0, -4.40536e-13, 0, 2, -4, 0, 32)
+transform = Transform3D(2, 0, 4.40536e-13, 0, 2, 0, -4.40536e-13, 0, 2, -4, 0, 31)
 
 [node name="RoadSwampRoadT4" parent="Swamp" instance=ExtResource("45_p3fp8")]
-transform = Transform3D(-8.74232e-08, 0, 2, 0, 2, 0, -2, 0, -8.74232e-08, -8, 0, 24)
+transform = Transform3D(-8.74232e-08, 0, 2, 0, 2, 0, -2, 0, -8.74232e-08, -8, 0, 23)
+
+[node name="RoadSwampRoadT6" parent="Swamp" instance=ExtResource("45_p3fp8")]
+transform = Transform3D(2.38419e-07, 0, -2, 0, 2, 0, 2, 0, 2.38419e-07, -24, 0, 27)
+
+[node name="RoadSwampRoadT5" parent="Swamp" instance=ExtResource("45_p3fp8")]
+transform = Transform3D(-2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, -8, 0, 15)
 
 [node name="FenceSwampFence1" parent="Swamp" instance=ExtResource("46_d2ijq")]
 transform = Transform3D(-0.5, 0, -7.54979e-08, 0, 0.5, 0, 7.54979e-08, 0, -0.5, 4.8, 0, 1.1)
@@ -999,27 +1015,13 @@ transform = Transform3D(-0.5, 0, -7.54979e-08, 0, 0.5, 0, 7.54979e-08, 0, -0.5, 
 [node name="FenceSwampFence8" parent="Swamp" instance=ExtResource("47_kguer")]
 transform = Transform3D(-0.5, 0, -4.37114e-08, 0, 0.5, 0, 4.37114e-08, 0, -0.5, -20.7737, 0, 1.1)
 
+[node name="BeachSpeedBoat" parent="Swamp" instance=ExtResource("49_kguer")]
+transform = Transform3D(-6.55671e-08, 0, 1.5, 0, 1.5, 0, -1.5, 0, -6.55671e-08, 39, 0, 8)
+
+[node name="BeachSpeedBoat2" parent="Swamp" instance=ExtResource("49_kguer")]
+transform = Transform3D(1.96701e-07, 0, -1.5, 0, 1.5, 0, 1.5, 0, 1.96701e-07, 37, 0, -10)
+
 [node name="Beach" type="Node3D" parent="."]
-
-[node name="MeshInstance3D31" type="MeshInstance3D" parent="Beach"]
-transform = Transform3D(-1.9261e-07, 0, -1.52, 0, 1.86014, 0, 4.4064, 0, -6.64413e-08, 36, 0, -8)
-mesh = SubResource("BoxMesh_u4l04")
-skeleton = NodePath("")
-
-[node name="MeshInstance3D32" type="MeshInstance3D" parent="Beach"]
-transform = Transform3D(-2.31132e-08, 0, -0.608, 0, 1.95314, 0, 0.528768, 0, -2.65765e-08, 36, 2, -8)
-mesh = SubResource("CapsuleMesh_bldn6")
-skeleton = NodePath("")
-
-[node name="MeshInstance3D33" type="MeshInstance3D" parent="Beach"]
-transform = Transform3D(-1.9261e-07, 0, -1.52, 0, 1.86014, 0, 4.4064, 0, -6.64413e-08, 40, 0, 12)
-mesh = SubResource("BoxMesh_u4l04")
-skeleton = NodePath("")
-
-[node name="MeshInstance3D34" type="MeshInstance3D" parent="Beach"]
-transform = Transform3D(-2.31132e-08, 0, -0.608, 0, 1.95314, 0, 0.528768, 0, -2.65765e-08, 40, 2, 12)
-mesh = SubResource("CapsuleMesh_bldn6")
-skeleton = NodePath("")
 
 [node name="Trees" type="Node3D" parent="Beach"]
 
@@ -1328,6 +1330,12 @@ transform = Transform3D(1.48398, 0, 0.218658, 0, 1.5, 0, -0.218658, 0, 1.48398, 
 [node name="FenceBeachPlankPath9" parent="." instance=ExtResource("57_lyps1")]
 transform = Transform3D(1.4819, 0, -0.232298, 0, 1.5, 0, 0.232298, 0, 1.4819, 16.1394, 0.060459, 21.8155)
 
+[node name="FenceBeachPlankPath17" parent="." instance=ExtResource("57_lyps1")]
+transform = Transform3D(1.48398, 0, 0.218658, 0, 1.5, 0, -0.218658, 0, 1.48398, 16.3161, 0.060459, 35.2837)
+
+[node name="FenceBeachPlankPath18" parent="." instance=ExtResource("57_lyps1")]
+transform = Transform3D(1.4819, 0, -0.232298, 0, 1.5, 0, 0.232298, 0, 1.4819, 16.1394, 0.060459, 30.8155)
+
 [node name="FenceBeachPlankPath10" parent="." instance=ExtResource("57_lyps1")]
 transform = Transform3D(-1.48213, 0, 0.23085, 0, 1.5, 0, -0.23085, 0, -1.48213, 15.9294, 0.0724505, -5.73067)
 
@@ -1346,8 +1354,14 @@ transform = Transform3D(-1.49164, 0, -0.158121, 0, 1.5, 0, 0.158121, 0, -1.49164
 [node name="FenceBeachPlankPath14" parent="." instance=ExtResource("57_lyps1")]
 transform = Transform3D(-1.47123, 0, 0.292379, 0, 1.5, 0, -0.292379, 0, -1.47123, 16.3497, 0.060459, -23.6912)
 
+[node name="FenceBeachPlankPath19" parent="." instance=ExtResource("57_lyps1")]
+transform = Transform3D(-1.47123, 0, 0.292379, 0, 1.5, 0, -0.292379, 0, -1.47123, 16.3497, 0.060459, -32.6912)
+
 [node name="FenceBeachPlankPath3" parent="." instance=ExtResource("57_lyps1")]
 transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 15.6967, 0.0724495, -0.867483)
 
 [node name="FenceBeachPlankPath4" parent="." instance=ExtResource("57_lyps1")]
 transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 12.8512, 0.0724495, -0.877664)
+
+[node name="CityRestaurantAnim2" parent="." instance=ExtResource("61_ps02h")]
+transform = Transform3D(-8.74228e-08, 0, 2, 0, 2, 0, -2, 0, -8.74228e-08, -14, 0.1, -25)

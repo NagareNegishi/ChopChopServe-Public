@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://0aex3yts1utd" path="res://scenes/Appliance_system/cabinet.tscn" id="3_vgkl0"]
 [ext_resource type="PackedScene" uid="uid://df6cemvjo3grw" path="res://scenes/Appliance_system/chop_table.tscn" id="4_pp23w"]
 [ext_resource type="PackedScene" uid="uid://b0ougk3d4jnku" path="res://scenes/Appliance_system/food_crate.tscn" id="5_u07qb"]
-[ext_resource type="PackedScene" uid="uid://byoj62jkvm385" path="res://scenes/Appliance_system/freezer.tscn" id="6_7binn"]
+[ext_resource type="PackedScene" uid="uid://byoj62jkvm385" path="res://FridgeInven/freezer.tscn" id="6_7binn"]
 [ext_resource type="PackedScene" uid="uid://dbeboubu5gkhe" path="res://scenes/Appliance_system/fryer.tscn" id="7_ebqvf"]
 [ext_resource type="PackedScene" uid="uid://dlk0mbdfg2cmq" path="res://scenes/Appliance_system/oven.tscn" id="8_7218b"]
 [ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="9_6njly"]
@@ -31,12 +31,6 @@ current_owner = 1
 [node name="FoodCrate" parent="." instance=ExtResource("5_u07qb")]
 
 [node name="Freezer" parent="." instance=ExtResource("6_7binn")]
-supplies = Array[PackedScene]([])
-supply_names = Array[String](["Tomato"])
-action_interval = 1.0
-using_tscn = false
-unique_name = "UNNAMED_APPLIANCE"
-current_owner = 1
 
 [node name="Fryer" parent="." instance=ExtResource("7_ebqvf")]
 

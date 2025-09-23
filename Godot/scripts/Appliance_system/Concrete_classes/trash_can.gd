@@ -51,11 +51,11 @@ func throw_all(from: Node) -> bool:
 	action_timer.start()
 	var items
 	if from is Plate:
-		print("Taking all items from Plate")
+		from.remove_all()
 	elif from is Cookware:
 		items = from.take_all()
-	for item in items:
-		item.queue_free()
+		for item in items:
+			item.queue_free()
 	return true
 
 
@@ -129,11 +129,11 @@ func _everyone_throw_all(player_id: int, item_name: String) -> void:
 		return
 	var items
 	if from is Plate:
-		print("Taking all items from Plate")
+		from.remove_all()
 	elif from is Cookware:
 		items = from.take_all()
-	for item in items:
-		item.queue_free()
+		for item in items:
+			item.queue_free()
 
 
 ## Give visual feedback when hovered

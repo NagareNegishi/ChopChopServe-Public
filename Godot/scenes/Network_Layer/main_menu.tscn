@@ -2,13 +2,17 @@
 
 [ext_resource type="Script" uid="uid://bv1fic7goj5rs" path="res://scripts/Network_Layer/main_menu.gd" id="1_5gu6x"]
 [ext_resource type="FontFile" uid="uid://dxc6n0umgi0q4" path="res://assets/fonts/Jua-Regular.ttf" id="2_36fig"]
-[ext_resource type="PackedScene" uid="uid://2qlfolqgl2hl" path="res://UI/UI_CustomButton.tscn" id="3_36fig"]
+[ext_resource type="PackedScene" path="res://UI/UI_CustomButton.tscn" id="3_36fig"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -202.0
+offset_top = 42.0
+offset_right = -202.0
+offset_bottom = 42.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_5gu6x")

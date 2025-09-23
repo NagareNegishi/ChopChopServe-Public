@@ -4,11 +4,9 @@ class_name Cheese
 func _ready():
 	food_name = "Cheese"
 	spoil_time = 100
-	# cook time is same as super class
-	# can cook is same as super class
 	raw_mesh = $Cheese
 	spoiled_mesh = $SpoiledCheese
-	cooked_mesh = $CheeseSliced
+	cooked_mesh = $Cheese
 	burnt_mesh = $BurntCheese
 	chopped_mesh = $CheeseSliced
 	

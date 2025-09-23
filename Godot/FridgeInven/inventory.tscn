@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=3 uid="uid://bayntuwyuo4wh"]
+
+[ext_resource type="Script" uid="uid://d1dfku8geu6pa" path="res://FridgeInven/inventory.gd" id="1_egceb"]
+
+[node name="Inventory" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -902.0
+offset_bottom = -448.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.5, 1.5)
+mouse_filter = 2
+script = ExtResource("1_egceb")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 250.0
+offset_bottom = 200.0
+mouse_filter = 2
+color = Color(0.290196, 0.34902, 0.352941, 0.945098)
+
+[node name="GridContainer" type="GridContainer" parent="ColorRect"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 11.0
+offset_right = 234.0
+offset_bottom = 185.0
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 5
+columns = 5

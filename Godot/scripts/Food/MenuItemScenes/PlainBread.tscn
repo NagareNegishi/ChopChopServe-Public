@@ -48,19 +48,19 @@ albedo_color = Color(0.215902, 0.215902, 0.215902, 1)
 script = ExtResource("1_vncn2")
 
 [node name="BreadPlain" type="MeshInstance3D" parent="."]
-transform = Transform3D(-7.57887e-09, 0, 0.0635762, 0, 0.0635762, 0, -0.0635762, 0, -7.57887e-09, 0, 0, 0)
+transform = Transform3D(-1.62921e-08, 0, 0.1, 0, 0.1, 0, -0.1, 0, -1.62921e-08, 0, 0, 0)
 mesh = SubResource("ArrayMesh_3ojkv")
 skeleton = NodePath("")
 
 [node name="BadQualityPlainBread" type="MeshInstance3D" parent="."]
-transform = Transform3D(-7.57887e-09, 0, 0.0635762, 0, 0.0635762, 0, -0.0635762, 0, -7.57887e-09, 0, 0, 0)
+transform = Transform3D(-1.62921e-08, 0, 0.1, 0, 0.1, 0, -0.1, 0, -1.62921e-08, 0, 0, 0)
 visible = false
 mesh = SubResource("ArrayMesh_3ojkv")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_3vcle")
 
 [node name="BurntPlainBread" type="MeshInstance3D" parent="."]
-transform = Transform3D(-7.57887e-09, 0, 0.0635762, 0, 0.0635762, 0, -0.0635762, 0, -7.57887e-09, 0, 0, 0)
+transform = Transform3D(-1.62921e-08, 0, 0.1, 0, 0.1, 0, -0.1, 0, -1.62921e-08, 0, 0, 0)
 visible = false
 mesh = SubResource("ArrayMesh_3ojkv")
 skeleton = NodePath("")

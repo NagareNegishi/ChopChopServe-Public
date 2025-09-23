@@ -8,11 +8,12 @@ static var _auto_register = MenuItem.register(Brownie)
 static var _type_register = MenuItem.register_type(MenuItem.deserts, Brownie.new())
 
 func _init():
-	ingredients = ["Flour", "Cocoa", "Milk"]
+	ingredients = ["Flour", "Cocoa", "Milk", "Egg"]
 	
 	ingredient_states = {
 		"Flour": ["RAW","MIXED","BAKED"],
 		"Cocoa": ["RAW","MIXED","BAKED"],
+		"Egg": ["RAW","MIXED","BAKED"],
 		"Milk": ["RAW", "MIXED","BAKED"]
 	}
 	is_available = true

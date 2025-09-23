@@ -58,7 +58,7 @@ func _put_food(food: Food) -> void:
 	food.change_collisions(true)
 	if can_cook():
 		# _average_food() # depend on Food implementation ---------------------------
-		food.startCooking(int(power_receiving * coefficient), cooking_style)
+		food.start_cooking(int(power_receiving * coefficient), cooking_style)
 		_average_food()
 		_toggle_sizzle(true)
 	print("Food placed in cookware: ", food.get_script().get_global_name(), ", Cookware can cook: ", can_cook(), ", Food cook time: ", food.get_cook_time(cooking_style))
@@ -115,7 +115,7 @@ func cook(power: int) -> bool:
 		return false
 	power_receiving = power
 	for food in contents:
-		food.startCooking(int(power_receiving * coefficient), cooking_style)
+		food.start_cooking(int(power_receiving * coefficient), cooking_style)
 		# #-----------------------------------------------------------------------
 		# print(get_script().get_global_name(), " start cooking ", food.get_script().get_global_name(),
 		#  " with power: ", int(power_receiving * coefficient), ", Style is: ",

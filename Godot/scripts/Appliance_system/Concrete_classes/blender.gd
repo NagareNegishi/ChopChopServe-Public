@@ -21,7 +21,7 @@ func _ready():
 func _setup_upgradable():
 	super._setup_upgradable()
 	enable_upgrade("power", [1, 1, 1], [100, 200, 300])
-	enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
+	# enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
 
 
 ## Place an item onto this appliance

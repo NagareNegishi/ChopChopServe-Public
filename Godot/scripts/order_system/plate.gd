@@ -8,6 +8,7 @@ var preload_menuItems = preload("res://scripts/Food/MenuItems/menuItem.gd")
 var food_items :Array = []
 var has_menu_item: bool = false
 var quality_on_plate: Array = []
+var ingredient_total_floor_touch = 0
 #var ingredients = IngredientsEnum.Ingredients
 #var dish = DishEnum.new()
 var menu_instance
@@ -49,6 +50,7 @@ func add_item(food_node) -> void:
 	food_items.append(food_node)
 	disable_collision(food_node)
 	quality_on_plate.append(food_node.get_quality())
+	ingredient_total_floor_touch += food_node.get_floor_touch_time()
 	
 	var cell = find_next_free_cell()
 	if cell.x == -1:
@@ -121,12 +123,13 @@ func check_plate():
 	return 0
 
 func _set_quality(list: Array):
-	var number = 0
+	var total_quality = 0
 	for elem in list:
-		number += elem
-	number = number / list.size()
+		total_quality += elem
+	var average_quality = total_quality / list.size()
 	
-	quality = number
+	quality = average_quality - ingredient_total_floor_touch
+	print("Average quality: ", average_quality, " times touched floor: ", ingredient_total_floor_touch, " Final quality: ", quality)
 
 func get_quality():
 	return quality

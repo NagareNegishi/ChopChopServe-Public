@@ -51,6 +51,7 @@ theme_override_font_sizes/font_size = 13
 [node name="buy_texture" type="TextureRect" parent="ColorRect/ColorRect"]
 self_modulate = Color(1, 1, 1, 0.733333)
 custom_minimum_size = Vector2(34, 34)
+layout_mode = 0
 offset_right = 34.0
 offset_bottom = 34.0
 mouse_filter = 2

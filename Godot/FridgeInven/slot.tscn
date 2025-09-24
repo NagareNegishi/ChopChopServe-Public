@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dwn8n3gva6leq"]
+[gd_scene load_steps=4 format=3 uid="uid://dwn8n3gva6leq"]
 
 [ext_resource type="Script" uid="uid://c1b7amphtm80o" path="res://FridgeInven/slot.gd" id="1_lswfr"]
-[ext_resource type="Texture2D" uid="uid://emc0ojm2by1v" path="res://assets/textures/misc/Cog.png" id="2_oqevm"]
+[ext_resource type="Texture2D" uid="uid://b3fclbfnr7i7u" path="res://assets/textures/misc/grey_square.webp" id="2_oqevm"]
+[ext_resource type="FontFile" uid="uid://xtxshkei0cio" path="res://assets/fonts/VCR_OSD_MONO_1.001.ttf" id="3_msl6f"]
 
 [node name="Slot" type="Button"]
 self_modulate = Color(1, 1, 1, 0)
@@ -37,14 +38,42 @@ offset_bottom = 34.0
 mouse_filter = 2
 expand_mode = 1
 
-[node name="buy_texture" type="TextureRect" parent="ColorRect/ColorRect"]
-visible = false
-custom_minimum_size = Vector2(34, 34)
+[node name="Label" type="Label" parent="ColorRect/ColorRect/item_texture"]
+modulate = Color(0, 0, 0, 1)
 layout_mode = 0
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 13.0
+offset_bottom = 24.0
+theme_override_fonts/font = ExtResource("3_msl6f")
+theme_override_font_sizes/font_size = 13
+
+[node name="buy_texture" type="TextureRect" parent="ColorRect/ColorRect"]
+self_modulate = Color(1, 1, 1, 0.733333)
+custom_minimum_size = Vector2(34, 34)
 offset_right = 34.0
 offset_bottom = 34.0
 mouse_filter = 2
 texture = ExtResource("2_oqevm")
 expand_mode = 1
+
+[node name="Label" type="Label" parent="ColorRect/ColorRect/buy_texture"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 14.0
+offset_right = 28.0
+offset_bottom = 37.0
+theme_override_fonts/font = ExtResource("3_msl6f")
+text = "$5"
+
+[node name="Label2" type="Label" parent="ColorRect/ColorRect/buy_texture"]
+layout_mode = 0
+offset_top = 3.0
+offset_right = 43.0
+offset_bottom = 26.0
+theme_override_fonts/font = ExtResource("3_msl6f")
+theme_override_font_sizes/font_size = 8
+text = "Restock"
+uppercase = true
 
 [connection signal="button_down" from="." to="." method="_on_button_down"]

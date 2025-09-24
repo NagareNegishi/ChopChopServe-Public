@@ -7,6 +7,8 @@ class_name Slot
 
 @onready var item_text = $ColorRect/ColorRect/item_texture
 @onready var buy_text = $ColorRect/ColorRect/buy_texture
+@onready var buy_label = $ColorRect/ColorRect/buy_texture/Label
+@onready var amount_label = $ColorRect/ColorRect/item_texture/Label
 
 var AMOUNT
 
@@ -14,9 +16,7 @@ var need_to_buy: bool = false
 var buy_texture : Texture2D
 
 func _ready():
-	mouse_filter = Control.MOUSE_FILTER_STOP
-	item_text.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	buy_text.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	amount_label.text = "%d" %amount
 	AMOUNT = amount
 	update_slot(true)
 
@@ -32,6 +32,7 @@ func update_slot(flag:bool):
 		buy_text.hide()
 		item_text.show()
 	else:
+		buy_label.text = "$%d" %price
 		need_to_buy = true
 		buy_text.show()
 		item_text.hide()
@@ -45,9 +46,11 @@ func assign_item_text(text: Texture2D):
 func _on_button_down():
 	if !need_to_buy:
 			amount = amount - 1
+			amount_label.text = "%d" %amount
 			return inventory_item_name
 	else:
 		var team_id = ENetManager.get_my_team()
 		CurrencySystem.minus_currency(team_id, price)
 		amount = AMOUNT
+		amount_label.text = "%d" %amount
 		update_slot(true)

@@ -70,10 +70,20 @@ func on_fire() -> void:
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
 func player_has(item: Node) -> void:
-	if item:
-		chopping_board.put_request(item)
+	if not item:
+		chopping_board.take_request()
 		return
-	chopping_board.take_request()
+	if item is Plate:
+		chopping_board.serve_request(item)
+		return
+	chopping_board.put_request(item)
+
+	# new version have Food quality related error
+	# Previous working version --------------------------------------------
+	# if item:
+	# 	chopping_board.put_request(item)
+	# 	return
+	# chopping_board.take_request()
 
 
 ## Trigger action, if subclass has action

@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=4 uid="uid://b1twfl66m818r"]
 
-[ext_resource type="Script" uid="uid://cc0eifmld7pea" path="res://Scripts/Food/Ingredients/egg.gd" id="1_julgp"]
+[ext_resource type="Script" uid="uid://cc0eifmld7pea" path="res://scripts/Food/Ingredients/egg.gd" id="1_julgp"]
 [ext_resource type="Material" uid="uid://d1mru8ywyt58h" path="res://assets/newmodels/texturemap.tres" id="2_7oy6e"]
 [ext_resource type="PackedScene" uid="uid://cy1s0o2ip2hob" path="res://scenes/Interaction/InteractableComponent.tscn" id="3_7oy6e"]
 

@@ -56,6 +56,7 @@ func put_all(items: Array) -> bool:
 func _put_food(food: Food) -> void:
 	#food.current_visibility(false)
 	food.change_collisions(true)
+	food_placed.emit()
 	if can_cook():
 		# _average_food() # depend on Food implementation ---------------------------
 		food.start_cooking(int(power_receiving * coefficient), cooking_style)

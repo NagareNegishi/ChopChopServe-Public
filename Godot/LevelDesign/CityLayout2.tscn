@@ -101,7 +101,7 @@ mesh_library = ExtResource("4_b20f1")
 cell_size = Vector3(1, 1, 1)
 cell_center_y = false
 data = {
-"cells": PackedInt32Array(65535, 5, 655360, 65534, 5, 655360, 65535, 6, 1048576, 65535, 8, 1048576, 65530, 5, 655360, 65529, 5, 655360, 65529, 6, 1441792, 65529, 8, 1441792, 65532, 9, 0, 65533, 9, 0, 65534, 9, 3, 65533, 5, 655368, 65535, 7, 1048583, 65529, 7, 1441792, 65529, 65527, 1441792, 65529, 65528, 1441792, 65529, 65529, 1441792, 65529, 65530, 0, 65530, 65530, 0, 65534, 65530, 0, 65535, 65530, 0, 65535, 65529, 1048576, 65535, 65527, 1048576, 65533, 65526, 655360, 65532, 65526, 655360, 65535, 65528, 1048583, 65533, 65530, 8, 65534, 65526, 655363, 4, 5, 655360, 4, 6, 1441792, 4, 7, 1441799, 4, 8, 1441792, 5, 5, 655360, 5, 9, 3, 6, 5, 655368, 6, 9, 0, 7, 9, 0, 9, 5, 655360, 10, 5, 655360, 10, 6, 1048576, 10, 7, 1048576, 10, 8, 1048576, 4, 65527, 1441792, 4, 65528, 1441799, 4, 65529, 1441792, 4, 65530, 0, 5, 65526, 655363, 5, 65530, 0, 6, 65526, 655360, 6, 65530, 8, 7, 65526, 655360, 9, 65530, 0, 10, 65527, 1048576, 10, 65528, 1048576, 10, 65529, 1048576, 10, 65530, 0)
+"cells": PackedInt32Array(65535, 5, 655360, 65534, 5, 655360, 65530, 5, 655360, 65529, 5, 655360, 65529, 6, 1441792, 65529, 8, 1441792, 65532, 9, 0, 65533, 9, 0, 65534, 9, 3, 65533, 5, 655368, 65535, 7, 1048583, 65529, 7, 1441792, 65529, 65527, 1441792, 65529, 65528, 1441792, 65529, 65529, 1441792, 65529, 65530, 0, 65530, 65530, 0, 65534, 65530, 0, 65535, 65530, 0, 65533, 65526, 655360, 65532, 65526, 655360, 65535, 65528, 1048583, 65533, 65530, 8, 65534, 65526, 655363, 4, 5, 655360, 4, 7, 1441799, 5, 5, 655360, 5, 9, 3, 6, 5, 655368, 6, 9, 0, 7, 9, 0, 9, 5, 655360, 10, 5, 655360, 10, 6, 1048576, 10, 7, 1048576, 10, 8, 1048576, 4, 65528, 1441799, 4, 65530, 0, 5, 65526, 655363, 5, 65530, 0, 6, 65526, 655360, 6, 65530, 8, 7, 65526, 655360, 9, 65530, 0, 10, 65527, 1048576, 10, 65528, 1048576, 10, 65529, 1048576, 10, 65530, 0)
 }
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
@@ -135,16 +135,34 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10.5, 
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10.5, 0, 8.5)
 
 [node name="Bench10" parent="Node3D" instance=ExtResource("6_08y48")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4.5, 0, 6.5)
+transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, 3.5, 0, 7.5)
+
+[node name="Bench12" parent="Node3D" instance=ExtResource("6_08y48")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2.5, 0, 7.5)
+
+[node name="Bench15" parent="Node3D" instance=ExtResource("6_08y48")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0.5, 0, 7.5)
+
+[node name="Bench14" parent="Node3D" instance=ExtResource("6_08y48")]
+transform = Transform3D(1, 0, -1.42109e-14, 0, 1, 0, 1.42109e-14, 0, 1, 1.5, 0, 7.5)
+
+[node name="Bench16" parent="Node3D" instance=ExtResource("6_08y48")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.5, 0, -7.5)
+
+[node name="Bench18" parent="Node3D" instance=ExtResource("6_08y48")]
+transform = Transform3D(1, 0, -1.42109e-14, 0, 1, 0, 1.42109e-14, 0, 1, 1.5, 0, -7.5)
+
+[node name="Bench20" parent="Node3D" instance=ExtResource("6_08y48")]
+transform = Transform3D(1, 0, -1.42109e-14, 0, 1, 0, 1.42109e-14, 0, 1, 3.5, 0, -7.5)
+
+[node name="Bench22" parent="Node3D" instance=ExtResource("6_08y48")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2.5, 0, -7.5)
 
 [node name="Bench11" parent="Node3D" instance=ExtResource("6_08y48")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 5.5, 0, 5.5)
 
 [node name="Bench13" parent="Node3D" instance=ExtResource("6_08y48")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 4.5, 0, 5.5)
-
-[node name="Bench16" parent="Node3D" instance=ExtResource("6_08y48")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4.5, 0, 8.5)
 
 [node name="ChopTable" parent="Node3D" instance=ExtResource("7_0ioum")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0, 9.5)
@@ -167,14 +185,8 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.5, 
 [node name="Bench19" parent="Node3D" instance=ExtResource("6_08y48")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.5, 0, 5.5)
 
-[node name="Bench20" parent="Node3D" instance=ExtResource("6_08y48")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.5, 0, 6.5)
-
 [node name="Bench21" parent="Node3D" instance=ExtResource("6_08y48")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6.5, 0, 7.5)
-
-[node name="Bench22" parent="Node3D" instance=ExtResource("6_08y48")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.5, 0, 8.5)
 
 [node name="Bench23" parent="Node3D" instance=ExtResource("6_08y48")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6.5, 0, 6.5)
@@ -348,17 +360,11 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6.5, 
 [node name="Bench18" parent="Node3D3" instance=ExtResource("6_08y48")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6.5, 0, -8.5)
 
-[node name="Bench27" parent="Node3D3" instance=ExtResource("6_08y48")]
-transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -0.5, 0, -6.5)
-
 [node name="Bench37" parent="Node3D3" instance=ExtResource("6_08y48")]
 transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, -1.5, 0, -5.5)
 
 [node name="Bench38" parent="Node3D3" instance=ExtResource("6_08y48")]
 transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, -0.5, 0, -5.5)
-
-[node name="Bench39" parent="Node3D3" instance=ExtResource("6_08y48")]
-transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -0.5, 0, -8.5)
 
 [node name="ChopTable5" parent="Node3D3" instance=ExtResource("7_0ioum")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -3.5, 0, -9.5)
@@ -381,14 +387,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, -5.5)
 [node name="Bench41" parent="Node3D3" instance=ExtResource("6_08y48")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, -5.5)
 
-[node name="Bench42" parent="Node3D3" instance=ExtResource("6_08y48")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4.5, 0, -6.5)
-
 [node name="Bench43" parent="Node3D3" instance=ExtResource("6_08y48")]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 10.5, 0, -7.5)
-
-[node name="Bench44" parent="Node3D3" instance=ExtResource("6_08y48")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4.5, 0, -8.5)
 
 [node name="Bench45" parent="Node3D3" instance=ExtResource("6_08y48")]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 10.5, 0, -6.5)

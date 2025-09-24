@@ -141,19 +141,19 @@ transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
 shape = SubResource("BoxShape3D_w6hnu")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Platform"]
-transform = Transform3D(3.78729, 0, 0, 0, 1, 0, 0, 0, 3.0888, -18.4111, 0, -22.552)
+transform = Transform3D(3.78729, 0, 0, 0, 1, 0, 0, 0, 5.60576, -18.4111, 0, -41.0424)
 mesh = SubResource("BoxMesh_w6hnu")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="Platform"]
-transform = Transform3D(1.22442, 0, 0, 0, 1, 0, 0, 0, 6.19258, 18.981, 0.01, 0.433)
+transform = Transform3D(1.22442, 0, 0, 0, 1, 0, 0, 0, 10.5808, 18.981, 0.00999999, 0.56811)
 mesh = SubResource("BoxMesh_spsuo")
 
 [node name="MeshInstance3D4" type="MeshInstance3D" parent="Platform"]
-transform = Transform3D(3.90048, 0.0697565, 0, -0.272748, 0.997564, 0, 0, 0, 6.193, 57.4, -2.035, 0.433)
+transform = Transform3D(3.90048, 0.0697565, 0, -0.272748, 0.997564, 0, 0, 0, 10.5815, 57.4, -2.035, 0.56811)
 mesh = SubResource("BoxMesh_spsuo")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Platform"]
-transform = Transform3D(3.788, 0, 0, 0, 1.1, 0, 0, 0, 3.032, -18.391, 0, 23.259)
+transform = Transform3D(3.788, 0, 0, 0, 1.1, 0, 0, 0, 6.05463, -18.3069, -0.0670815, 46.1352)
 mesh = SubResource("BoxMesh_8t6q8")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -189,7 +189,7 @@ pixel_size = 0.1
 text = "SWAMP"
 
 [node name="Label3D2" type="Label3D" parent="Node3D"]
-transform = Transform3D(-4.2222e-08, -0.258819, 0.965926, -1.13133e-08, 0.965926, 0.258819, -1, 0, -4.37114e-08, -15, 7, -26)
+transform = Transform3D(-4.2222e-08, -0.258819, 0.965926, -1.13133e-08, 0.965926, 0.258819, -1, 0, -4.37114e-08, -15, 9.79186, -26)
 pixel_size = 0.1
 text = "City
 "
@@ -350,7 +350,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 3, 0, -1, 0, -4.37114e-08, 11, 0,
 transform = Transform3D(-8.74228e-08, 0.0348995, 0.999391, 0, 0.999391, -0.0348995, -2, -1.52551e-09, -4.36848e-08, 11, 0, -1)
 
 [node name="dumpster2" parent="City/Buildings" instance=ExtResource("14_4l3fe")]
-transform = Transform3D(0.31874, 0, 2.98302, 0, 3, 0, -2.98302, 0, 0.31874, -30.6383, 0.299971, -36.2778)
+transform = Transform3D(0.923963, 0, 2.85417, 0, 3, 0, -2.85417, 0, 0.923963, -28.1715, 0.299971, -34.8554)
 
 [node name="dumpster5" parent="City/Buildings" instance=ExtResource("14_4l3fe")]
 transform = Transform3D(2.67785, 0, -1.35245, 0, 3, 0, 1.35245, 0, 2.67785, 10.8296, 0.299971, -37.6279)
@@ -359,22 +359,22 @@ transform = Transform3D(2.67785, 0, -1.35245, 0, 3, 0, 1.35245, 0, 2.67785, 10.8
 transform = Transform3D(1.65447, 0, -0.835587, 0, 1.8535, 0, 0.835587, 0, 1.65447, 4.06441, 0.299971, -37.6279)
 
 [node name="dumpster4" parent="City/Buildings" instance=ExtResource("14_4l3fe")]
-transform = Transform3D(1.98613, 0, 2.24839, 0, 3, 0, -2.24839, 0, 1.98613, -29.974, 0.299971, -38.7179)
+transform = Transform3D(2.85502, 0, 0.921322, 0, 3, 0, -0.921322, 0, 2.85502, -26.3941, 0.299971, -36.9995)
 
 [node name="dumpster3" parent="City/Buildings" instance=ExtResource("14_4l3fe")]
-transform = Transform3D(2.99987, 0, 0.0282739, 0, 3, 0, -0.0282739, 0, 2.99987, -27.185, 0.299971, -39.8358)
+transform = Transform3D(2.96069, 0, -0.484089, 0, 3, 0, 0.484089, 0, 2.96069, -28.1897, 0.299971, -36.4896)
 
 [node name="box_B2" parent="City/Buildings" instance=ExtResource("15_3xxrs")]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -28.9512, 0.29997, -37.9544)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -26.1787, 0.29997, -35.3977)
 
 [node name="box_B3" parent="City/Buildings" instance=ExtResource("15_3xxrs")]
-transform = Transform3D(0.741403, 0, -2.90694, 0, 3, 0, 2.90694, 0, 0.741403, -28.2937, 0.29997, -38.2518)
+transform = Transform3D(0.741403, 0, -2.90694, 0, 3, 0, 2.90694, 0, 0.741403, -25.5212, 0.29997, -35.6951)
 
 [node name="box_B4" parent="City/Buildings" instance=ExtResource("15_3xxrs")]
-transform = Transform3D(-2.99697, 0, -0.134886, 0, 3, 0, 0.134886, 0, -2.99697, -28.1165, 0.299971, -37.1937)
+transform = Transform3D(-2.99697, 0, -0.134886, 0, 3, 0, 0.134886, 0, -2.99697, -26.9044, 0.299971, -34.055)
 
 [node name="box_B5" parent="City/Buildings" instance=ExtResource("15_3xxrs")]
-transform = Transform3D(-0.871355, 0, 2.87067, 0, 3, 0, -2.87067, 0, -0.871355, -28.76, 0.299971, -36.867)
+transform = Transform3D(-0.871355, 0, 2.87067, 0, 3, 0, -2.87067, 0, -0.871355, -27.1917, 0.299971, -35.0354)
 
 [node name="Foliage" type="Node3D" parent="City"]
 
@@ -1297,7 +1297,7 @@ transform = Transform3D(-2.18557e-08, 0, 0.5, 0, 0.5, 0, -0.5, 0, -2.18557e-08, 
 transform = Transform3D(-2.18557e-08, 0, 0.5, 0, 0.5, 0, -0.5, 0, -2.18557e-08, 10.0437, 0.0449996, 34.1607)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Beach"]
-transform = Transform3D(-1.23994, 0, 0.0222318, 0, 1, 0, -0.0125306, 0, -2.19989, 54.498, -0.09, -0.139)
+transform = Transform3D(-1.24882, 0, 0.0379848, 0, 1, 0, -0.0126203, 0, -3.75869, 54.498, -0.09, -0.409219)
 mesh = SubResource("PlaneMesh_5xw4e")
 skeleton = NodePath("../MeshInstance3D13")
 
@@ -1365,3 +1365,23 @@ transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 
 
 [node name="CityRestaurantAnim2" parent="." instance=ExtResource("61_ps02h")]
 transform = Transform3D(-8.74228e-08, 0, 2, 0, 2, 0, -2, 0, -8.74228e-08, -14, 0.1, -25)
+
+[node name="Armature" parent="CityRestaurantAnim2" index="5"]
+transform = Transform3D(-0.266545, 0, -0.194274, 0, 0.329831, 0, 0.194274, 0, -0.266545, 0, 0, 0)
+
+[node name="Skeleton3D" parent="CityRestaurantAnim2/Armature" index="0"]
+bones/0/position = Vector3(-0.196043, 5.1541, 0.00389749)
+bones/1/rotation = Quaternion(-0.0478266, -0.210529, -0.0999599, 0.971287)
+bones/2/rotation = Quaternion(0.0429814, -0.0689655, -0.0794179, 0.993524)
+bones/4/position = Vector3(-3.44506, 2.50027, -0.101948)
+bones/4/rotation = Quaternion(-0.193448, 0.554174, 0.194261, 0.785959)
+bones/7/position = Vector3(3.56459, 2.49238, -0.304276)
+bones/7/rotation = Quaternion(-0.236342, 0.167206, 0.955503, 0.0565506)
+bones/8/rotation = Quaternion(0.0311378, -0.017554, -0.183534, 0.982363)
+bones/9/rotation = Quaternion(0.0611088, 0.0139302, -0.067709, 0.995735)
+bones/10/rotation = Quaternion(-0.707102, -0.0026188, 0.707102, -0.0026188)
+
+[node name="Hat" parent="CityRestaurantAnim2/Armature/Skeleton3D" index="0"]
+transform = Transform3D(-0.762018, 0.248143, 0.0528219, 0.249048, 0.765408, -0.00142304, -0.071997, 0.0213092, -0.56399, 6.55651e-07, 9.53674e-07, 7.45058e-09)
+
+[editable path="CityRestaurantAnim2"]

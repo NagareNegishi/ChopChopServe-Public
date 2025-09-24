@@ -5,7 +5,7 @@ func _ready():
 	food_name = "Pummpkin"
 	raw_mesh = $Pumpkin
 	spoiled_mesh = $SpoiledPumpkin
-	cooked_mesh = $ChoppedPumpkin
+	cooked_mesh = $Pumpkin
 	burnt_mesh = $BurntPumpkin
 	chopped_mesh = $ChoppedPumpkin
 	# Cook time same as super class

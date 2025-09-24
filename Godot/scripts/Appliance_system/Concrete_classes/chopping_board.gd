@@ -29,8 +29,8 @@ func _ready():
 	super._ready()
 	interactable_component.is_pickup = false
 	cooking_style = ApplianceFactory.CookingStyle.CHOP
-	valid_food = ["Fish", "Tomato", "Potato", "Onion", "Cheese", "Apple", "Garlic", "Ham", 
-				  "Mushroom", "Pineapple", "Pumpkin", "Strawberry"] # Confirm later!!!!!!!!!!!!!!
+	valid_food = ["Fish", "Tomato", "Potato", "Onion", "Cheese", "Apple", "Garlic", "Ham",
+				"Mushroom", "Pineapple", "Pumpkin", "Strawberry"]
 	capacity = 1 # one item only
 	coefficient = 1.0
 
@@ -40,13 +40,6 @@ func _ready():
 func _setup_interactable():
 	super._setup_interactable()
 	interactable_component.has_action = true
-
-
-# ## Override upgradable setup in concrete appliances
-# func _setup_upgradable():
-# 	super._setup_upgradable()
-# 	enable_upgrade("coefficient", [0.2, 0.2, 0.2], [100, 200, 300])
-# 	# enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
 
 
 ## Place an item onto this appliance
@@ -65,7 +58,7 @@ func put(item: Node) -> bool:
 ## @param power: The power from PoweredAppliance
 func cook(power: int) -> bool:
 	for food in contents:
-		food.startCooking(int(power * coefficient), cooking_style)
+		food.start_cooking(int(power * coefficient), cooking_style)
 	return true
 
 

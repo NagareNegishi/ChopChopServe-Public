@@ -7,9 +7,11 @@ var preload_menuItems = preload("res://scripts/Food/MenuItems/menuItem.gd")
 
 var food_items :Array = []
 var has_menu_item: bool = false
+var quality_on_plate: Array = []
 #var ingredients = IngredientsEnum.Ingredients
 #var dish = DishEnum.new()
 var menu_instance
+var quality
 const GRID_SIZE = 3
 const CELL_SIZE = 0.2
 var grid: Array = []
@@ -44,9 +46,9 @@ func add_list_items(food_array: Array):
 		add_item(food)
 
 func add_item(food_node) -> void:
-	print("in add item")
 	food_items.append(food_node)
 	disable_collision(food_node)
+	quality_on_plate.append(food_node.get_quality())
 	
 	var cell = find_next_free_cell()
 	if cell.x == -1:
@@ -108,15 +110,26 @@ func check_plate():
 		print("food items is emptyw")
 		return 0
 	var menuitem = menu_instance.match_menu_items(food_items)
-	#print(menuitem)
 	if menuitem != null:
 		has_menu_item = true
+		_set_quality(quality_on_plate)
+		print("\n\n This is the quality of the menu item : ", quality,"\n\n")
 		display_menu_item(menuitem)
 		is_full = true
 		remove_all()
 		grid[1][1] = menuitem # Makes the meal we created the only thing on the plate
 	return 0
 
+func _set_quality(list: Array):
+	var number = 0
+	for elem in list:
+		number += elem
+	number = number / list.size()
+	
+	quality = number
+
+func get_quality():
+	return quality
 
 func display_menu_item(menuitem: MenuItem):
 	# Load the actual scene file
@@ -126,24 +139,11 @@ func display_menu_item(menuitem: MenuItem):
 	if menu_scene:
 		var menu_node = menu_scene.instantiate()
 		add_child(menu_node)
+		set_mesh(menu_node)
 		menu_node.transform.origin = Vector3(0, 0.05, 0)
 		menu_node.scale = Vector3(0.7, 0.7, 0.7)
 	else:
 		print("Could not load scene for: ", menuitem.get_script().get_global_name())
-
-# Function to set up the menu item's visual appearance
-func setup_menu_item_appearance(menuitem: MenuItem):
-	# You'll need to determine the quality/appearance based on your game logic
-	# For now, let's assume we show the "good" version
-	
-	if menuitem.cooked_mesh_good != null:
-		menuitem.cooked_mesh_good.visible = true
-		
-	if menuitem.cooked_mesh_bad != null:
-		menuitem.cooked_mesh_bad.visible = false
-		
-	if menuitem.cooked_mesh_burnt != null:
-		menuitem.cooked_mesh_burnt.visible = false
 
 
 # Makes it so when the player picks up the ingredient its collisions
@@ -210,3 +210,14 @@ func is_ready()->bool:
 		return false
 	
 	return true
+
+func set_mesh(food):
+	food.mesh_visibility(food.cooked_mesh_good, false)
+	food.mesh_visibility(food.cooked_mesh_bad, false)
+	food.mesh_visibility(food.cooked_mesh_burnt, false)
+	if quality >= 50:
+		food.mesh_visibility(food.cooked_mesh_good, true)
+	elif quality >= 10:
+		food.mesh_visibility(food.cooked_mesh_bad, true)
+	else:
+		food.mesh_visibility(food.cooked_mesh_burnt, true)

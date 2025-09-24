@@ -1,25 +1,25 @@
-[gd_scene load_steps=34 format=3 uid="uid://d0gukrfpslja6"]
+[gd_scene load_steps=36 format=3 uid="uid://d0gukrfpslja6"]
 
-[ext_resource type="PackedScene" uid="uid://dvn4ytv3ro6ec" path="res://scripts/Food/IngredientScenes/Tomato.tscn" id="1_akbwx"]
+[ext_resource type="PackedScene" uid="uid://dvn4ytv3ro6ec" path="res://scripts/Food/IngredientScenes/tomato.tscn" id="1_akbwx"]
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="2_l4sy3"]
 [ext_resource type="PackedScene" uid="uid://br76j8t76ne2x" path="res://scripts/order_system/Plate.tscn" id="4_bd52m"]
-[ext_resource type="PackedScene" uid="uid://dyuu05wnk05js" path="res://scripts/Food/IngredientScenes/Cocoa.tscn" id="5_edgn2"]
-[ext_resource type="PackedScene" uid="uid://drihqdubig0l3" path="res://scripts/Food/IngredientScenes/Flour.tscn" id="6_4jwbs"]
-[ext_resource type="PackedScene" uid="uid://buwb1io8j33ph" path="res://scripts/Food/IngredientScenes/Milk.tscn" id="7_4gwwl"]
-[ext_resource type="PackedScene" uid="uid://6d5c2oekevkx" path="res://scripts/Food/IngredientScenes/Fish.tscn" id="9_4gwwl"]
-[ext_resource type="PackedScene" uid="uid://ckiyjl6dexd4g" path="res://scripts/Food/IngredientScenes/Potato.tscn" id="9_eyb3j"]
-[ext_resource type="PackedScene" uid="uid://g70mrwycep6w" path="res://scripts/Food/IngredientScenes/Onion.tscn" id="10_eyb3j"]
-[ext_resource type="PackedScene" uid="uid://dbxdxa002tyi7" path="res://scripts/Food/IngredientScenes/Cheese.tscn" id="10_wf3k0"]
-[ext_resource type="PackedScene" uid="uid://co5dkfcyuxj16" path="res://scripts/Food/IngredientScenes/Dough.tscn" id="11_65dra"]
+[ext_resource type="PackedScene" uid="uid://dyuu05wnk05js" path="res://scripts/Food/IngredientScenes/cocoa.tscn" id="5_edgn2"]
+[ext_resource type="PackedScene" uid="uid://drihqdubig0l3" path="res://scripts/Food/IngredientScenes/flour.tscn" id="6_4jwbs"]
+[ext_resource type="PackedScene" uid="uid://buwb1io8j33ph" path="res://scripts/Food/IngredientScenes/milk.tscn" id="7_4gwwl"]
+[ext_resource type="PackedScene" uid="uid://6d5c2oekevkx" path="res://scripts/Food/IngredientScenes/fish.tscn" id="9_4gwwl"]
+[ext_resource type="PackedScene" uid="uid://ckiyjl6dexd4g" path="res://scripts/Food/IngredientScenes/potato.tscn" id="9_eyb3j"]
+[ext_resource type="PackedScene" uid="uid://g70mrwycep6w" path="res://scripts/Food/IngredientScenes/onion.tscn" id="10_eyb3j"]
+[ext_resource type="PackedScene" uid="uid://17kjvtvjr0oj" path="res://scripts/Food/IngredientScenes/cheese.tscn" id="10_wf3k0"]
+[ext_resource type="PackedScene" uid="uid://cderq8jb8woc7" path="res://scripts/Food/IngredientScenes/dough.tscn" id="11_65dra"]
 [ext_resource type="PackedScene" uid="uid://yxnyqri0ce2r" path="res://scripts/Food/IngredientScenes/pineapple.tscn" id="12_jbebj"]
-[ext_resource type="PackedScene" uid="uid://ca0weqnsfprkp" path="res://scripts/Food/IngredientScenes/Apple.tscn" id="12_q2x2l"]
-[ext_resource type="PackedScene" uid="uid://cg15jg7ymkii6" path="res://scripts/Food/IngredientScenes/Beef.tscn" id="13_dpj7y"]
-[ext_resource type="PackedScene" uid="uid://chmeyqgu2qqka" path="res://scripts/Food/IngredientScenes/Chicken.tscn" id="13_q2x2l"]
+[ext_resource type="PackedScene" uid="uid://2nk2b4xo8igx" path="res://scripts/Food/IngredientScenes/apple.tscn" id="12_q2x2l"]
+[ext_resource type="PackedScene" uid="uid://d1figbbjco6jp" path="res://scripts/Food/IngredientScenes/beef.tscn" id="13_dpj7y"]
+[ext_resource type="PackedScene" uid="uid://ti73pjm3d8bo" path="res://scripts/Food/IngredientScenes/chicken.tscn" id="13_q2x2l"]
 [ext_resource type="PackedScene" uid="uid://dxrh4o7v6ixy1" path="res://scripts/Food/IngredientScenes/garlic.tscn" id="14_dpj7y"]
-[ext_resource type="PackedScene" uid="uid://dng7bhqoh76fy" path="res://scripts/Food/IngredientScenes/Pumpkin.tscn" id="14_e0bv0"]
+[ext_resource type="PackedScene" uid="uid://c1kguhk1gskqm" path="res://scripts/Food/IngredientScenes/pumpkin.tscn" id="14_e0bv0"]
 [ext_resource type="PackedScene" uid="uid://c1mltfs2xf2xv" path="res://scripts/Food/IngredientScenes/mushroom.tscn" id="16_p1cp8"]
 [ext_resource type="PackedScene" uid="uid://dbqm4i10x565r" path="res://scripts/Food/IngredientScenes/Water.tscn" id="17_28ki5"]
-[ext_resource type="PackedScene" uid="uid://b23ol8n0xx3la" path="res://scripts/Food/IngredientScenes/Pasta.tscn" id="17_ogets"]
+[ext_resource type="PackedScene" uid="uid://b23ol8n0xx3la" path="res://scripts/Food/IngredientScenes/pasta.tscn" id="17_ogets"]
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="20_3wem2"]
 [ext_resource type="PackedScene" uid="uid://bk7ovilp788kq" path="res://scripts/Player/spawn_point.tscn" id="22_ftkft"]
 [ext_resource type="PackedScene" uid="uid://bhby0n47wy3nv" path="res://assets/models/infrastructure/wall.tscn" id="23_ftkft"]
@@ -31,6 +31,8 @@
 [ext_resource type="PackedScene" uid="uid://cw5uvt35a87nt" path="res://scenes/Appliance_system/blender.tscn" id="30_4sfqp"]
 [ext_resource type="PackedScene" uid="uid://b7x0xycilg7vt" path="res://assets/models/NuFurniture/newblender.glb" id="30_v43yt"]
 [ext_resource type="PackedScene" uid="uid://dlk0mbdfg2cmq" path="res://scenes/Appliance_system/oven.tscn" id="31_gu4mn"]
+[ext_resource type="PackedScene" uid="uid://byoj62jkvm385" path="res://FridgeInven/freezer.tscn" id="32_n0fk4"]
+[ext_resource type="PackedScene" uid="uid://bf35vdqr3y7n7" path="res://UI/UI_Test_Scene.tscn" id="33_nw41w"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_l4sy3"]
 size = Vector3(30, 0.03, 30)
@@ -101,7 +103,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.313353, 0.0762444, -4.8546)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.88417, 0.120995, -3.67398)
 
 [node name="Water" parent="." instance=ExtResource("17_28ki5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.72449, 0, 3.01983)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.64799, 0.459767, 5.32317)
 
 [node name="Mushroom" parent="." instance=ExtResource("16_p1cp8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.949, 0, -4.56809)
@@ -167,3 +169,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.84617, 0.4625, -7.97655)
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -6.79508, 0, -4.37533)
 
 [node name="Blender" parent="newblender3" instance=ExtResource("30_4sfqp")]
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1
+
+[node name="UITestScene" parent="." instance=ExtResource("33_nw41w")]
+
+[node name="Freezer" parent="." instance=ExtResource("32_n0fk4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.50049, 0.444808, -3.00859)

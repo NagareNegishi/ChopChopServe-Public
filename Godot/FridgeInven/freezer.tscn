@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://byoj62jkvm385"]
+
+[ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="1_3huqh"]
+[ext_resource type="Script" uid="uid://badegywm544j3" path="res://FridgeInven/freezer.gd" id="2_5atrp"]
+[ext_resource type="PackedScene" uid="uid://nrfjhpm1sa30" path="res://assets/newmodels/furniture/Fridge.glb" id="3_c36l1"]
+[ext_resource type="PackedScene" uid="uid://bayntuwyuo4wh" path="res://FridgeInven/inventory.tscn" id="4_0llbb"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_blwj8"]
+
+[node name="Freezer" instance=ExtResource("1_3huqh")]
+script = ExtResource("2_5atrp")
+
+[node name="CollisionShape3D" parent="." index="0"]
+debug_color = Color(1, 0.764706, 0.192157, 1)
+
+[node name="Fridge2" parent="." index="3" instance=ExtResource("3_c36l1")]
+
+[node name="Area3D" type="Area3D" parent="." index="4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
+transform = Transform3D(1.37776, 0, 0, 0, 1.37776, 0, 0, 0, 1.37776, 0, 0.88899, 0)
+shape = SubResource("BoxShape3D_blwj8")
+
+[node name="Inventory" parent="." index="5" instance=ExtResource("4_0llbb")]
+offset_left = 346.0
+offset_top = 118.0
+offset_right = -678.0
+offset_bottom = -430.0
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

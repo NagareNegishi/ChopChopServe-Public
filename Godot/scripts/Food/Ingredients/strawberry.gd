@@ -8,3 +8,6 @@ func _ready():
 	cooked_mesh = null
 	burnt_mesh = null
 	chopped_mesh = null
+	
+	add_to_group("Food")
+	on_state_change()

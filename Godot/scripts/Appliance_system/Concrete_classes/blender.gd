@@ -21,7 +21,7 @@ func _ready():
 func _setup_upgradable():
 	super._setup_upgradable()
 	enable_upgrade("power", [1, 1, 1], [100, 200, 300])
-	enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
+	# enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
 
 
 ## Place an item onto this appliance
@@ -48,10 +48,12 @@ func put_all(items: Array) -> bool:
 ## @param food: The Food item to place into the blender
 func _put_food(food: Food) -> void:
 	#food.current_visibility(false)
-	food.change_collision()
+
+	food.change_collisions(true)
+	food_placed.emit()
 	if current_status == Status.COOKING:
 		_average_food()
-		food.startCooking(power, cooking_style)
+		food.start_cooking(power, cooking_style)
 	# print("Food placed in blender: ", food.get_script().get_global_name(), ", Food cook time: ", food.get_cook_time(cooking_style))
 
 

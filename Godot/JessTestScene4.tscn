@@ -786,17 +786,9 @@ current_owner = 1
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 9, 0, -7)
 
 [node name="Blender" parent="NavigationRegion3D/== RSIDE ==/newblender3" instance=ExtResource("28_gbc3l")]
-collide_with = null
-size = null
-interaction_scale = null
-default_facing = null
-capacity = null
-valid_classes = null
-cook_interval = null
-cooking_style = null
-using_tscn = null
-unique_name = null
-current_owner = null
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1
 
 [node name="newblender4" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("20_75xcc")]
 transform = Transform3D(-1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, -6, 0, -7)

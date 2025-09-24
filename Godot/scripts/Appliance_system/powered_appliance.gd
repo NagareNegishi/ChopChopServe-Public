@@ -120,10 +120,10 @@ func _client_put(item_name: String, player_id: int) -> void:
 			player.remove_item()
 			_put(item)
 			return
-	# # If item not found in player's hand, try to find it in the current scene
-	# var item = get_tree().current_scene.get_node_or_null(item_name)
-	# if item:
-	# 	_put_with_reparent(item)
+	# If item not found in player's hand, try to find it in the current scene
+	var missing_item = get_tree().current_scene.get_node_or_null(item_name)
+	if missing_item:
+		_put_with_reparent(missing_item)
 
 
 ## Remove and return the last item from this appliance
@@ -195,9 +195,6 @@ func start_cook() -> bool:
 		push_warning("No items to cook")
 		return false
 	# cook_timer.start()
-	# #----------------------------------------------------------------------
-	# print("start_cook() is called in: ", get_script().get_global_name())
-	# #----------------------------------------------------------------------
 	_cook()
 	return true
 
@@ -212,9 +209,6 @@ func stop_cook() -> bool:
 		if item is Equipment:
 			item.finish_cook()
 	# cook_timer.stop()
-	# #----------------------------------------------------------------------
-	# print("stop_cook() is called in: ", get_script().get_global_name())
-	# #----------------------------------------------------------------------
 	return true
 
 
@@ -261,18 +255,22 @@ func repair() -> bool:
 
 
 ## Set the current status to off
+## Automatically stop cooking if applicable
 ## @return: True if status was changed
 func power_off() -> bool:
-	if current_status == Status.BROKEN:
+	if current_status == Status.BROKEN or current_status == Status.OFF:
 		return false
+	stop_cook()
 	return _set_status(Status.OFF)
 
 
-## Set the current status to idle
+## Set the current status to cooking
+## Automatically start cooking if applicable
 ## @return: True if status was changed
 func power_on() -> bool:
-	if current_status == Status.BROKEN:
+	if current_status != Status.OFF:
 		return false
+	start_cook()
 	return _set_status(Status.COOKING)
 
 

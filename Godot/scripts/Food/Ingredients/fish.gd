@@ -9,6 +9,5 @@ func _ready():
 	cooked_mesh = $CookedFish
 	burnt_mesh = $BurntFish
 	
-	
 	add_to_group("Food")
 	on_state_change()

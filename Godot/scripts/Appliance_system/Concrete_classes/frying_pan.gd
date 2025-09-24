@@ -10,15 +10,7 @@ func _init():
 func _ready():
 	super._ready()
 	cooking_style = ApplianceFactory.CookingStyle.PAN_FRY
-	valid_food = ["Fish", "Tomato", "Beef", "Chicken", "Fish", "Milk", "Water"] # Confirm later!!!!!!!!!!!!!!
+	valid_food = ["Fish", "Tomato", "Beef", "Chicken", "Fish", "Milk", "Water", "Mushroom"] # Confirm later!!!!!!!!!!!!!!
 	capacity = 4
 	coefficient = 1.0
 	add_to_group("Appliance")
-
-
-## Override upgradable setup in concrete appliances
-func _setup_upgradable():
-	super._setup_upgradable()
-	enable_upgrade("coefficient", [0.2, 0.2, 0.2], [100, 200, 300])
-	enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
-	

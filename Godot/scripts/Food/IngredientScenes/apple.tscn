@@ -110,11 +110,11 @@ skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_qr1fj")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.561164, 0)
+transform = Transform3D(0.441506, 0, 0, 0, 0.441506, 0, 0, 0, 0.441506, -0.00156671, 0.232583, 0)
 shape = SubResource("BoxShape3D_gv5uw")
 
 [node name="InteractableComponent" parent="." instance=ExtResource("3_unp5a")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00561047, 0.566205, 0)
+transform = Transform3D(0.441506, 0, 0, 0, 0.441506, 0, 0, 0, 0.441506, -0.00404376, 0.234809, 0)
 is_pickup = true
 
 [connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]

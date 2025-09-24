@@ -183,8 +183,6 @@ shape = SubResource("CapsuleShape3D_l2ndj")
 [node name="Mesh" parent="." instance=ExtResource("2_xcisb")]
 transform = Transform3D(-7.64949e-09, 0, -0.175, 0, 0.175, 0, 0.175, 0, -7.64949e-09, 0, -0.556445, 0)
 
-[node name="Clothes_001" parent="Mesh/Armature" index="0"]
-
 [node name="InteractArea" type="Area3D" parent="Mesh"]
 transform = Transform3D(-1.16884e-07, 0.0186302, 2.3488, 0, 1.42888, -0.0306244, -2.674, -8.14351e-10, -1.02669e-07, -0.000434988, 3.34623, 6.77052)
 

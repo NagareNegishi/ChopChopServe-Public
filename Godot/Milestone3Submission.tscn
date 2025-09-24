@@ -250,7 +250,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 8)
 script = ExtResource("6_5vug4")
 
 [node name="CustomerSpawnPoint" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.1394, 0.728576, -7.75501)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0704, 0.728576, 11.5328)
 
 [node name="CustomerExitPoint" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.84704, 0.728576, 6.63666)

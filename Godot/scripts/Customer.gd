@@ -158,11 +158,15 @@ func _npc_behavior(delta: float):
 											[])
 			if plate_served:
 				var food = plate_served.get_children().back()
-				if food == order[1]:
+				
+				if ("name_of_meal" in food
+					and food.name_of_meal == order[0].name_of_meal):
+					
 					_game_server.call_service(_table_target.id(), 
 												"remove_plate", 
 												[])
 					_time_till_leaving = 2
+					
 	
 	# Customers who reach the front of the queue should begin looking for tables
 	if _queued && _queue_target:

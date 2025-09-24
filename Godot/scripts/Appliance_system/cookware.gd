@@ -55,7 +55,7 @@ func put_all(items: Array) -> bool:
 ## @param food: The Food item to place into the cookware
 func _put_food(food: Food) -> void:
 	#food.current_visibility(false)
-	food.change_collisions()
+	food.change_collisions(true)
 	if can_cook():
 		# _average_food() # depend on Food implementation ---------------------------
 		food.startCooking(int(power_receiving * coefficient), cooking_style)

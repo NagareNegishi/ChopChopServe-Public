@@ -48,6 +48,7 @@ func put_all(items: Array) -> bool:
 ## @param food: The Food item to place into the blender
 func _put_food(food: Food) -> void:
 	#food.current_visibility(false)
+
 	food.change_collisions(true)
 	food_placed.emit()
 	if current_status == Status.COOKING:

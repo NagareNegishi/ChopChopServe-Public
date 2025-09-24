@@ -1,97 +1,109 @@
 class_name FoodCourt extends Node
 
-const SECOND_FROM_QUEUE_BACK = 3
 
-# Maximum times and timers relating to customers
-const NEW_CUSTOMER_DELAY : float = 1.5
-const QUEUE_CHECK_DELAY : float = 0.5
-var _time_since_last_customer : float = 0
-var _time_since_queue_check : float = 0.5
+const NEW_CUSTOMER_DELAY: float = 1.5
+const QUEUE_CHECK_DELAY: float = 0.5
+var _time_since_last_customer: float = 0.0
+var _time_since_queue_check: float = 0.0
 
-# Temp removed for alpha set up
-#var _game_server: Server # For communications with other services
+
 @onready var _game_server = get_node("/root/GameServer")
+@export var customer_scene: PackedScene
+@export var tables: Array[Table] = []
+@export var queue_spots: Array[QueueSpot] = []
+@export var customer_spawn_point: Node3D
+@export var customer_exit_point: Node3D
 
-var _next_id : int  = 0 # Allows for occupiables to be uniquely indentified
-var _id = "FoodCourt" # For unique indentification for other services
 
+var _next_customer_id_num: int = 0
 var number_of_restaurants = 2
 
-@export var tables : Array[Table] = [] # Where customers can order from
-@export var queue_spots: Array[QueueSpot] = [] # Where customers will queue
-@export var customer_spawn_point : Node3D # Where customers spawn
-@export var customer_exit_point : Node3D # Where customers leave food court to
-## Initialize restaurant with server and communication ids
-func initialize(game_server : Server, id : String) -> void:
-	_game_server = game_server
-	_id = id
 
-## Preprares restaurants occupiables for communications
 func _ready():
-	_game_server.register_service("FoodCourt", self) # For alpha use
+	# Add to a group to be easily found by ENetManager
+	add_to_group("FoodCourt")
+	_game_server.register_service(name, self)
+	
+	# Initialize tables and queue spots so they can be found by the game server
+	var _next_id = 0
 	for occupiable in tables + queue_spots:
-		occupiable.initialize(str(_id,"occupiable_",_next_id))
-		_game_server.register_service(str(_id,"occupiable_",_next_id), occupiable)
+		occupiable.initialize(str("FoodCourt", "occupiable_", _next_id))
+		_game_server.register_service(str("FoodCourt", "occupiable_", _next_id), occupiable)
 		_next_id += 1
 
-func get_exit_point():
-	return customer_exit_point
+func _process(delta: float):
+	if not is_multiplayer_authority():
+		return
 
-## Returns a randomly selected free table or null if all are occupied	
-func get_free_table():
-	# Checking for free tables
-	if !tables.filter(
-		func(table): 
-			return !await _game_server.call_service(table.id(), "occupied", [])):
-		return null
-		
-	# Occupying and returning random table
-	var table = tables.filter(
-		func(table): 
-			return !await _game_server.call_service(table.id(),
-													"occupied", [])).pick_random()
-	_game_server.call_service(table.id(), "set_occupied", [])
-	return table
-	
-## Returns the closest free spot to the front of the queue
-func get_free_queue_spot(customer = null):
-	for i in range(queue_spots.size()):
-		var occupant = await _game_server.call_service(queue_spots[i].id(), 
-													"occupied_with", [])
-		if !occupant || occupant == customer:
-			return queue_spots[i]
-
-## Checks whether a new customer should spawn or queue should move forward
-func _process(delta):
 	# Shifts queue if there are any gaps
 	_time_since_queue_check -= delta
 	if _time_since_queue_check < 0:
 		_time_since_queue_check = QUEUE_CHECK_DELAY
-		for i in range(0, queue_spots.size() - 1):
-			var occupant = await _game_server.call_service(queue_spots[i].id(),
-														"occupied_with", [])
-			if !occupant:
+		for i in range(queue_spots.size() - 1):
+			var occupant = await _game_server.call_service(queue_spots[i].id(), "occupied_with", [])
+			if not occupant:
 				shift_queue(i)
 				
-	# Spawns new customers when there is space in queue
 	_time_since_last_customer -= delta
-	if _time_since_last_customer < 0 && await get_free_queue_spot():
-		var new_customer = await _game_server.call_service("CustomerCreator",
-														"create_customer", [_id, number_of_restaurants])
-		add_child(new_customer)
-		new_customer.position = customer_spawn_point.position
+	if _time_since_last_customer < 0 and await get_free_queue_spot():
 		_time_since_last_customer += NEW_CUSTOMER_DELAY
+		var customer_id = "customer_%d" % _next_customer_id_num
+		_next_customer_id_num += 1
+		
+		# Ensure the spawn point exists
+		if not customer_spawn_point.is_inside_tree():
+			return 
+		
+		var spawn_position = customer_spawn_point.global_position
+		var food_court_id = self.name
+		# Call the RPC to spawn the customer on all clients (and the server)
+		spawn_customer.rpc(customer_id, spawn_position, food_court_id)
+		
+@rpc("any_peer", "call_local", "reliable")
+func spawn_customer(id: String, pos: Vector3, fc_id: String):
+	# prevent duplicate customers from being spawned
+	if get_node_or_null(id):
+		return
 
-## Gets each customer currently in queue to move forward
+	var new_customer = customer_scene.instantiate()
+	new_customer.name = id
+	new_customer._id = id
+	new_customer._food_court_id = fc_id
+	add_child(new_customer)
+	new_customer.global_position = pos
+	
+	# Tell the multiplayer system that the server (peer ID 1) has authority.
+	new_customer.set_multiplayer_authority(1)
+
+## Returns point customers despawn at
+func get_exit_point():
+	return customer_exit_point
+	
+## finds a table without a customer
+func get_free_table():
+	if not tables.filter(func(table): return not await _game_server.call_service(table.id(), "occupied", [])):
+		return null
+		
+	var table = tables.filter(func(table): return not await _game_server.call_service(table.id(), "occupied", [])).pick_random()
+	_game_server.call_service(table.id(), "set_occupied", [true])
+	return table
+
+## finds a queue spot without a customer
+func get_free_queue_spot(customer = null):
+	for i in range(queue_spots.size()):
+		var occupant = await _game_server.call_service(queue_spots[i].id(), "occupied_with", [])
+		if not occupant or occupant == customer:
+			return queue_spots[i]
+	return null
+
+## Shifts all customers in the queue closer to the front
 func shift_queue(start = 0):
 	for i in range(start, queue_spots.size()):
-		var occupant = await _game_server.call_service(queue_spots[i].id(),
-														"occupied_with", [])
+		var occupant = await _game_server.call_service(queue_spots[i].id(), "occupied_with", [])
 		if occupant:
-			_game_server.call_service(occupant, "move_up_queue", 
-										[queue_spots[i - 1]])
-	return null
-	
-## Returns true if customer is at the front of queue
+			var customer_node = _game_server.get_service( occupant)
+			if is_instance_valid(customer_node):
+				customer_node.move_up_queue(queue_spots[i - 1])
+## Indicates whether a given id matches the queues front
 func is_queue_front(id):
 	return queue_spots.front().id() == id

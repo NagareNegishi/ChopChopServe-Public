@@ -1,10 +1,10 @@
 class_name Pause extends Control
 
 #Buttons
-@onready var resume_button : CustomButton = $ButtonsContainer/ResumeButton
-@onready var customize_button : CustomButton = $ButtonsContainer/CustomizeButton
-@onready var recipes_button : CustomButton = $ButtonsContainer/Recipes
-@onready var quit_button : CustomButton = $ButtonsContainer/Quit
+@onready var resume_button : CustomButton = $NormalPause/ButtonsContainer/ResumeButton
+@onready var customize_button : CustomButton = $NormalPause/ButtonsContainer/CustomizeButton
+@onready var recipes_button : CustomButton = $NormalPause/ButtonsContainer/Recipes
+@onready var quit_button : CustomButton = $NormalPause/ButtonsContainer/Quit
 
 
 func _ready() -> void:
@@ -17,15 +17,14 @@ func _ready() -> void:
 func _quit():
 	get_tree().paused = false
 	if ENetManager.is_host():
-		ENetManager.player_leaves_intentionally(ENetManager.get_my_id())
+		ENetManager._reset_game()
 	else:
-		ENetManager.enet_layer.send_to(1, {
-			"type": "player_leaving_intentionally",
-			"player_id": ENetManager.get_my_id()
-		})
-		await get_tree().create_timer(0.1).timeout 
+		rpc("_disconnect_player", ENetManager.get_my_id()) 
 
-
+@rpc("any_peer", "call_local")
+func _disconnect_player(id : int):
+	if ENetManager.is_host():
+		ENetManager.player_leaves_intentionally(id)
 
 
 
@@ -43,4 +42,17 @@ func _recipes():
 
 func toggle_visible(tog : bool):
 	visible = tog
+	
+	
+	if ENetManager.is_host():
+		rpc("host_pause", tog)
+	else: 
+		GlobalScript.get_local_player().disable_controls(tog)
+
+@rpc("any_peer", "call_local")
+func host_pause(tog : bool):
+	visible = tog
+	$NormalPause.visible = !tog if !ENetManager.is_host() else tog
+	$HostPause.visible = tog if !ENetManager.is_host() else !tog
 	get_tree().paused = tog
+	

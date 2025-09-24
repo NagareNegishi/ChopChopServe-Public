@@ -2,6 +2,7 @@ class_name UpgradeHammer extends AbstractThrowable
 
 @onready var interact_comp : InteractableComponent = $InteractableComponent
 @onready var player : Player = GlobalScript.get_local_player()
+@onready var upgrade : Upgradable
 
 func _ready() -> void:
 	interact_comp.local_action_use.connect(_can_upgrade)
@@ -40,4 +41,7 @@ func _animation():
 
 
 func _upgrade():
+	pass
+
+func _set_new_upgrade():
 	pass

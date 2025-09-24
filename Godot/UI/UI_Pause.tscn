@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://c8bjd53t4fgr1"]
+[gd_scene load_steps=6 format=3 uid="uid://c8bjd53t4fgr1"]
 
 [ext_resource type="Shader" uid="uid://bdsj6gf6j8784" path="res://shaders/blur.gdshader" id="1_br1db"]
 [ext_resource type="Script" uid="uid://d3m2flqd5tk7n" path="res://scripts/UI/Pause.gd" id="1_gv73n"]
 [ext_resource type="PackedScene" uid="uid://2qlfolqgl2hl" path="res://UI/UI_CustomButton.tscn" id="2_kfr1u"]
+[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/DefaultTheme.tres" id="4_484kg"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kfr1u"]
 shader = ExtResource("1_br1db")
@@ -36,37 +37,66 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.0705882, 0.0705882, 0.0705882, 0.784314)
 
-[node name="ButtonsContainer" type="VBoxContainer" parent="."]
+[node name="NormalPause" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="NormalPause"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -132.5
-offset_top = -85.0
-offset_right = 132.5
-offset_bottom = 85.0
+offset_left = 423.5
+offset_top = 219.0
+offset_right = 688.5
+offset_bottom = 389.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 4
 
-[node name="ResumeButton" parent="ButtonsContainer" instance=ExtResource("2_kfr1u")]
+[node name="ResumeButton" parent="NormalPause/ButtonsContainer" instance=ExtResource("2_kfr1u")]
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "RESUME"
 
-[node name="CustomizeButton" parent="ButtonsContainer" instance=ExtResource("2_kfr1u")]
+[node name="CustomizeButton" parent="NormalPause/ButtonsContainer" instance=ExtResource("2_kfr1u")]
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "CUSTOMIZE"
 
-[node name="Recipes" parent="ButtonsContainer" instance=ExtResource("2_kfr1u")]
+[node name="Recipes" parent="NormalPause/ButtonsContainer" instance=ExtResource("2_kfr1u")]
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "RECIPES"
 
-[node name="Quit" parent="ButtonsContainer" instance=ExtResource("2_kfr1u")]
+[node name="Quit" parent="NormalPause/ButtonsContainer" instance=ExtResource("2_kfr1u")]
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "QUIT"
+
+[node name="HostPause" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="HostPause"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_484kg")
+text = "HOST HAS PAUSED"

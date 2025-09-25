@@ -8,7 +8,6 @@ func _ready():
 	spoiled_mesh = $SpoiledBeef
 	cooked_mesh = $BeefCooked
 	burnt_mesh = $BurntBeef
-	# Can cook is same as super class
 	
 	add_to_group("Food")
 	on_state_change()

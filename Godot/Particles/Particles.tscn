@@ -417,6 +417,12 @@ text = "WaterSprout
 "
 font_size = 18
 
+[node name="Text12" type="Label3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.6928, 0.141365, -0.189272)
+text = "Rain
+"
+font_size = 18
+
 [node name="Node3D2" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.89968, 0, 0)
 

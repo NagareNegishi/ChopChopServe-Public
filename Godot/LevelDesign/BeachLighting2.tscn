@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://g5y4cnxk5856"]
+[gd_scene load_steps=31 format=3 uid="uid://g5y4cnxk5856"]
 
 [ext_resource type="PackedScene" uid="uid://bakeesqt3byva" path="res://scenes/Appliance_system/sink.tscn" id="1_ldg50"]
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_shqg8"]
@@ -21,15 +21,16 @@
 [ext_resource type="PackedScene" uid="uid://bfyl14i4p2lc0" path="res://assets/NaturePack/Rock_2.fbx" id="19_q1cwv"]
 [ext_resource type="Shader" uid="uid://c46kta255prk4" path="res://shaders/Water/WaterOpenWorld.gdshader" id="20_i40ex"]
 [ext_resource type="PackedScene" uid="uid://b0ougk3d4jnku" path="res://scenes/Appliance_system/food_crate.tscn" id="21_lg5jw"]
+[ext_resource type="Script" uid="uid://denxn65anovd7" path="res://scripts/Appliance_system/placeable.gd" id="22_6wlo3"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w6hnu"]
 size = Vector3(30, 0.03, 30)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d8qn3"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6wlo3"]
 albedo_color = Color(1, 0.858824, 0.670588, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_w6hnu"]
-material = SubResource("StandardMaterial3D_d8qn3")
+material = SubResource("StandardMaterial3D_6wlo3")
 size = Vector3(30, 0.05, 30)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_uo5mb"]
@@ -37,18 +38,18 @@ sky_top_color = Color(0.636864, 0.781479, 0.982896, 1)
 sky_horizon_color = Color(0.882614, 0.802632, 0.91172, 1)
 sky_energy_multiplier = 0.8
 
-[sub_resource type="Sky" id="Sky_82t1l"]
+[sub_resource type="Sky" id="Sky_wiccc"]
 sky_material = SubResource("ProceduralSkyMaterial_uo5mb")
 
 [sub_resource type="Environment" id="Environment_yg7p6"]
 background_mode = 2
-sky = SubResource("Sky_82t1l")
+sky = SubResource("Sky_wiccc")
 volumetric_fog_density = 0.1
 volumetric_fog_albedo = Color(0.995162, 0.801059, 0.69608, 1)
 volumetric_fog_anisotropy = 0.7
 volumetric_fog_length = 6.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5xw4e"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b26ie"]
 render_priority = 0
 shader = ExtResource("20_i40ex")
 shader_parameter/out_color = Color(0.14902, 0.568627, 0.811765, 1)
@@ -60,7 +61,7 @@ shader_parameter/specular = 0.5
 shader_parameter/roughness = 0.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ul4i3"]
-material = SubResource("ShaderMaterial_5xw4e")
+material = SubResource("ShaderMaterial_b26ie")
 size = Vector2(50, 50)
 subdivide_width = 25
 subdivide_depth = 25
@@ -105,6 +106,7 @@ current = true
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Control" parent="CanvasLayer" instance=ExtResource("2_ldg50")]
+metadata/_edit_use_anchors_ = true
 
 [node name="table5" parent="." instance=ExtResource("3_6wlo3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 3)
@@ -322,6 +324,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.33652, 0, -4.16436)
 
 [node name="FoodCrate" parent="." instance=ExtResource("21_lg5jw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
+script = ExtResource("22_6wlo3")
 
 [node name="FoodCrate2" parent="." instance=ExtResource("21_lg5jw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
+script = ExtResource("22_6wlo3")

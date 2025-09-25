@@ -22,7 +22,6 @@ var is_controls_disabled = false
 var is_inverted = false
 
 @onready var controller : PlayerController = $Controller
-@onready var player_state : PlayerState = $PlayerState
 @onready var item_point = $Mesh/ItemPoint
 @onready var check_interactables : Timer = $CheckInteractables
 @onready var anim_tree : AnimationTree = $AnimationTree

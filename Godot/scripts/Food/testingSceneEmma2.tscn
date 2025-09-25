@@ -48,7 +48,7 @@ transform = Transform3D(0.604113, -0.606729, 0.51665, 0.0228132, 0.661228, 0.749
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-4.37114e-08, -0.980271, 0.197657, 0, 0.197657, 0.980271, -1, 4.2849e-08, -8.63987e-09, -2.43264, 0.703702, -5.76367)
 
-[node name="Platform" type="StaticBody3D" parent="."]
+[node name="Platform" type="StaticBody3D" parent="." groups=["Floor"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0183344, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Platform"]
@@ -88,7 +88,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.16022, -0.00333453, -2.867
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.05299, -0.00333453, -2.50632)
 
 [node name="Apple" parent="." instance=ExtResource("12_q2x2l")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3832, 0.0962147, -1.38977)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.78186, 0.0962147, 0.129893)
 
 [node name="Chicken" parent="." instance=ExtResource("13_q2x2l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.305621, 0.243847, -2.77165)

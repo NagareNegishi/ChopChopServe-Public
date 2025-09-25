@@ -118,6 +118,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00561047, 0.566205, 0)
 is_pickup = true
 
 [connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]
+[connection signal="body_entered" from="InteractableComponent" to="." method="_on_interactable_component_body_entered"]
 [connection signal="hovered" from="InteractableComponent" to="." method="_on_interactable_component_hovered"]
 [connection signal="interacted" from="InteractableComponent" to="." method="_on_interactable_component_interacted"]
 [connection signal="toggle_collision" from="InteractableComponent" to="." method="_on_interactable_component_toggle_collision"]

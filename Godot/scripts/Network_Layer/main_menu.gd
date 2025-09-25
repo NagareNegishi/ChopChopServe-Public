@@ -11,9 +11,15 @@ var network_layer: ENetNetworkLayer
 @onready var ip_input = $Menu/Note/VBox/IP/PublicIPInput
 @onready var exit_button = $Menu/ButtonsContainer/ExitButton
 @onready var  error_message = $Menu/Error
+@onready var name_input : LineEdit = $Menu/Note/VBox/Name/Name
 
 @export var froggo_building : AnimationPlayer
 
+
+enum ErrorType{
+	EMPTY_NAME
+	
+}
 ## Initialization
 func _ready():
 	network_layer = ENetManager.enet_layer
@@ -28,6 +34,9 @@ func _ready():
 
 ## Create Lobby
 func _on_create_pressed():
+	if name_input.text.length() <= 0 :
+		_pop_error(ErrorType.EMPTY_NAME) 
+		return
 	var public_ip = host_public_ip_input.text.strip_edges()
 	network_layer.create_game_with_ip(4, public_ip)
 
@@ -54,3 +63,9 @@ func _switch_to_lobby():
 
 func _exit_game():
 	get_tree().quit()
+
+
+func _pop_error(error : ErrorType):
+	match error:
+		ErrorType.EMPTY_NAME:
+			pass

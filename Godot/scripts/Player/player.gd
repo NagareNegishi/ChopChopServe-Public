@@ -183,7 +183,12 @@ func _inputs() -> void:
 
 
 func _interact() -> void:
-	if (((item_in_hand is Plate  || item_in_hand is Cookware) && _closest_item != null) && 
+	if _can_add_to_plate():
+		rpc("_client_add_plate", ENetManager.get_my_id(), 
+		_closest_item.get_parent().get_path())
+		return
+	
+	elif (((item_in_hand is Plate  || item_in_hand is Cookware) && _closest_item != null) && 
 	(_closest_item.get_parent() is Food || _closest_item.get_parent() is Appliance)):
 		_closest_item.interact()
 		return
@@ -197,6 +202,17 @@ func _interact() -> void:
 	 
 	_closest_item.interact()
 
+
+func _can_add_to_plate() -> bool:
+	return ((item_in_hand != null && item_in_hand is Plate) && 
+	(_closest_item != null && _closest_item.get_parent() is Food))
+
+@rpc("any_peer", "call_local")
+func _client_add_plate(player_id : int, item_path : String):
+	var player : Player = GlobalScript.get_local_player_by_id(player_id)
+	var item := get_tree().current_scene.get_node(item_path)
+	player.item_in_hand.add_item(item)
+	
 
 ## Handles the logic for when player throws item
 ## @return void
@@ -217,21 +233,29 @@ func _action(is_active : bool) -> void:
 	if _closest_item == null || item_in_hand != null:
 		return
 	
-	anim_tree["parameters/conditions/action"] = is_active
-	anim_tree["parameters/conditions/unaction"] = !is_active
-	
-	if is_active && _closest_item.get_parent() is ChopTable:
-		anim_tree["parameters/SM_ACTION/conditions/chopping"] = true
-		
-	elif is_active && _closest_item.get_parent() is Sink:
-		anim_tree["parameters/SM_ACTION/conditions/washing"] = true
-	
-	if !is_active:
-		anim_tree["parameters/SM_ACTION/conditions/washing"] = false
-		anim_tree["parameters/SM_ACTION/conditions/chopping"] = false
+	rpc("_client_action_anim",ENetManager.get_my_id(), is_active,
+	is_active && _closest_item.get_parent() is ChopTable,
+	is_active && _closest_item.get_parent() is Sink)
 	
 	_closest_item.action(is_active)
 
+
+@rpc("any_peer", "call_local")
+func _client_action_anim(player_id : int, is_active : bool, chop : bool, sink : bool):
+	var player : Player = GlobalScript.get_local_player_by_id(player_id)
+	player.anim_tree["parameters/conditions/action"] = is_active
+	player.anim_tree["parameters/conditions/unaction"] = !is_active
+	
+	if chop:
+		player.anim_tree["parameters/SM_ACTION/conditions/chopping"] = true
+		
+	elif sink:
+		player.anim_tree["parameters/SM_ACTION/conditions/washing"] = true
+	
+	if !is_active:
+		player.anim_tree["parameters/SM_ACTION/conditions/washing"] = false
+		player.anim_tree["parameters/SM_ACTION/conditions/chopping"] = false
+	
 
 ## Sets what item the player is holding
 ## @return bool if successfully picked up
@@ -480,6 +504,10 @@ func remove_item() -> Node3D:
 	item_in_hand.scale = $Mesh/ItemPoint.global_transform.basis.get_scale() / item_in_hand.global_transform.basis.get_scale()
 	
 	var res = item_in_hand
+	anim_tree["parameters/SM_Walking/conditions/empty"] = true
+	anim_tree["parameters/SM_IDLE/conditions/empty"] = true
+	anim_tree["parameters/SM_Walking/conditions/holding"] = false
+	anim_tree["parameters/SM_IDLE/conditions/holding"] = false
 	item_in_hand = null
 	print("Item removed")
 	return res

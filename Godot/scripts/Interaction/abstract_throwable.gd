@@ -15,6 +15,10 @@ func _process(_delta: float) -> void:
 	pass
 
 
+func _ready() -> void:
+	var interact : InteractableComponent = $InteractableComponent
+	
+
 ## Connect to singal: Called when interacted with and will make the player pick this item up
 ## @return void
 func _on_interactable_component_interacted() -> void:

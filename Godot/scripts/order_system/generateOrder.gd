@@ -47,6 +47,16 @@ func get_order():
 	return order
 
 
+func get_simple_order(starter_index: int):
+	order.clear() # Make sure there is nothing in the list already as precaution
+	check_food_avalibility(s, MI.starters)
+
+	# Put the order together
+	
+	if !s.is_empty():
+		order.append(food_generator(s, starter_index))
+	return order
+
 # Gets a random menuItem from a passed list
 # @param food_type is an array list of available food items of a certain type
 # @return a menuitem
@@ -54,6 +64,13 @@ func random_food_generator(food_type: Array)-> MenuItem:
 	if food_type.size() < 1:
 		return
 	return food_type.pick_random()
+
+## Method added to move randomisation into customer
+func food_generator(food_type: Array, index : int)-> MenuItem:
+	if food_type.size() < 1:
+		return
+	index = index % food_type.size()
+	return food_type[index]
 
 
 # Puts the available food_types into new arrays so that the npcs dont have access to anything they shouldn't

@@ -38,7 +38,7 @@ func _enter_tree() -> void:
 ## @return void
 func _ready() -> void:
 	$DashCooldown.wait_time = DASH_COOLDOWN
-	player_state.player_id = name.to_int()
+
 	call_deferred("set_multiplayer_authority", name.to_int())
 	invert_controls(false)
 	#Sets the default animation values

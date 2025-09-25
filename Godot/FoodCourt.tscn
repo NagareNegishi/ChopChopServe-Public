@@ -1,7 +1,7 @@
 [gd_scene load_steps=21 format=3 uid="uid://c7g26q0dlrfri"]
 
 [ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_6yifr"]
-[ext_resource type="PackedScene" uid="uid://ctjn6a51qelin" path="res://scripts/Food/MenuItemScenes/TomatoSoup.tscn" id="6_70611"]
+[ext_resource type="PackedScene" uid="uid://hfxkmecbe3vs" path="res://scripts/Food/MenuItemScenes/TomatoSoup.tscn" id="6_70611"]
 [ext_resource type="Script" uid="uid://dv1g0obwvkkkt" path="res://scripts/QueueSpot.gd" id="6_vijx5"]
 [ext_resource type="PackedScene" uid="uid://dxhfqm13c85ar" path="res://assets/models/decorations/table.glb" id="8_2ie35"]
 [ext_resource type="Script" uid="uid://dnns4dn8p042y" path="res://scripts/Table.gd" id="9_cw0ku"]

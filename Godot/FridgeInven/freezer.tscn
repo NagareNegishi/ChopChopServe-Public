@@ -10,9 +10,6 @@
 [node name="Freezer" instance=ExtResource("1_3huqh")]
 script = ExtResource("2_5atrp")
 
-[node name="CollisionShape3D" parent="." index="0"]
-debug_color = Color(1, 0.764706, 0.192157, 1)
-
 [node name="Fridge2" parent="." index="3" instance=ExtResource("3_c36l1")]
 
 [node name="Area3D" type="Area3D" parent="." index="4"]

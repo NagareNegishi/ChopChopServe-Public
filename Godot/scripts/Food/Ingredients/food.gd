@@ -10,14 +10,14 @@ signal changed_food_state
 signal cooking
 
 #Meshes
-@export var raw_mesh: MeshInstance3D = null
-@export var cooked_mesh: MeshInstance3D = null
-@export var spoiled_mesh: MeshInstance3D = null
-@export var burnt_mesh: MeshInstance3D = null
-@export var chopped_mesh: MeshInstance3D = null
-@export var frozen_mesh: MeshInstance3D = null
-@export var mixed_mesh: MeshInstance3D = null
-@export var texture : Texture2D = null
+var raw_mesh: MeshInstance3D = null
+var cooked_mesh: MeshInstance3D = null
+var spoiled_mesh: MeshInstance3D = null
+var burnt_mesh: MeshInstance3D = null
+var chopped_mesh: MeshInstance3D = null
+var frozen_mesh: MeshInstance3D = null
+var mixed_mesh: MeshInstance3D = null
+var texture : Texture2D = null
 
 
 
@@ -30,6 +30,7 @@ var quality : int = 100 # Measures the quality of the food
 var time_power : int # How much power/time the appliance is giving/using for the ingredient to be cooked
 var current_appliance = null # What appliance is currently being used
 var current_cooking_style: ApplianceFactory.CookingStyle
+
 var touched_floor_num = 0
 var is_cooking = false # Decides whether or not it should be cooking the ingredient
 var is_cooked : bool = false
@@ -99,7 +100,6 @@ func spoil_ingredient():
 		state = foodState.SPOILED
 		emit_signal("changed_food_state")
 		on_state_change()
-		#previous_states.append(state)
 		quality = 0
 
 

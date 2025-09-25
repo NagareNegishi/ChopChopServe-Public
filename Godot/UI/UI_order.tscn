@@ -1,18 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://tloru3qomb8r"]
+[gd_scene load_steps=5 format=3 uid="uid://tloru3qomb8r"]
 
 [ext_resource type="Script" uid="uid://ckmuq2kqhvio3" path="res://scripts/UI/ui_order.gd" id="1_8cmx7"]
 [ext_resource type="PackedScene" uid="uid://ckhue72bmvrjv" path="res://UI/UI_Progress.tscn" id="1_ib7mx"]
 [ext_resource type="Texture2D" uid="uid://chbbc8dxqfr1y" path="res://assets/textures/recipes/TomatoSoup.png" id="2_8cmx7"]
+[ext_resource type="Texture2D" uid="uid://cog5nd4v3i4si" path="res://assets/textures/recipes/Brownie.png" id="4_4cvu0"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -1.0
-offset_right = -1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.95, 0.95)
 script = ExtResource("1_8cmx7")
 
 [node name="UiProgress" parent="." instance=ExtResource("1_ib7mx")]
@@ -58,5 +60,5 @@ offset_right = 29.0
 offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_8cmx7")
+texture = ExtResource("4_4cvu0")
 expand_mode = 2

@@ -9,6 +9,8 @@ var food_items :Array = []
 var has_menu_item: bool = false
 var quality_on_plate: Array = []
 var floor_time_count = 0
+#var ingredients = IngredientsEnum.Ingredients
+#var dish = DishEnum.new()
 var menu_instance
 var quality
 const GRID_SIZE = 3
@@ -123,9 +125,10 @@ func check_plate():
 	return 0
 
 func _set_quality(list: Array):
-	var number = 0
+	var total_quality = 0
 	for elem in list:
 		number += elem
+    
 	var average_quality = number / list.size()
 	
 	quality = (average_quality - floor_time_count)

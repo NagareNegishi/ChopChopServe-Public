@@ -121,6 +121,7 @@ func _rotate_player(delta: float) -> void:
 ## @param delta the delta from process physics
 ## @return void
 func _movement(delta : float) -> void:
+	if is_controls_disabled: return
 	_direction = (transform.basis * 
 	Vector3(controller.input_dir.x, 0, controller.input_dir.y)).normalized()
 	

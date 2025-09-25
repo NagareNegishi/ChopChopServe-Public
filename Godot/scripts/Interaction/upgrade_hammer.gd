@@ -16,7 +16,7 @@ func _can_upgrade(is_action : bool):
 	
 	if !_can_purchase(appliance) :  return
 	
-	_animation()
+	rpc("_animation", GlobalScript.get_local_player().get_path())
 	_upgrade()
 	
 	
@@ -24,14 +24,16 @@ func _can_upgrade(is_action : bool):
 func _can_purchase(appliance : Appliance) -> bool:
 	return CurrencySystem.check_currency(ENetManager.get_my_team(), 200) 
 
-func _animation():
+@rpc("any_peer", "call_local")
+func _animation(player_path : String):
+	var player : Player = get_tree().current_scene.get_node(player_path)
 	player.anim_tree["parameters/conditions/action"] = true
 	player.anim_tree["parameters/conditions/unaction"] = false
 	player.anim_tree["parameters/SM_ACTION/conditions/whacking"] = true
 	player.disable_controls(true)
 	player.item_in_hand.visible = false
 	
-	await get_tree().create_timer(1.2).timeout
+	await get_tree().create_timer(1).timeout
 
 	player.disable_controls(false)
 	player.item_in_hand.visible = true
@@ -41,7 +43,8 @@ func _animation():
 
 
 func _upgrade():
-	pass
+	var appliance : Appliance = GlobalScript.get_local_player()._closest_item.get_parent() 
+	appliance.capacity_upgradable
 
 func _set_new_upgrade():
 	pass

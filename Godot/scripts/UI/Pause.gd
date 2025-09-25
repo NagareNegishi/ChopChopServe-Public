@@ -6,13 +6,16 @@ class_name Pause extends Control
 @onready var recipes_button : CustomButton = $NormalPause/ButtonsContainer/Recipes
 @onready var quit_button : CustomButton = $NormalPause/ButtonsContainer/Quit
 
+@onready var recipe_ui : Control = $Recipes
+@onready var host_ui : Control = $HostPause
+@onready var normal_ui : Control = $NormalPause
 
 func _ready() -> void:
 	resume_button.pressed.connect(_resume)
 	customize_button.pressed.connect(_customize)
 	recipes_button.pressed.connect(_recipes)
 	quit_button.pressed.connect(_quit)
-
+	recipe_ui.visible = false
 
 func _quit():
 	get_tree().paused = false
@@ -37,7 +40,9 @@ func _customize():
 
 
 func _recipes():
-	pass
+	normal_ui.visible = false
+	host_ui.visible = false
+	recipe_ui.visible = true
 
 
 func toggle_visible(tog : bool):
@@ -52,7 +57,7 @@ func toggle_visible(tog : bool):
 @rpc("any_peer", "call_local")
 func host_pause(tog : bool):
 	visible = tog
-	$NormalPause.visible = !tog if !ENetManager.is_host() else tog
-	$HostPause.visible = tog if !ENetManager.is_host() else !tog
+	normal_ui.visible = !tog if !ENetManager.is_host() else tog
+	host_ui.visible = tog if !ENetManager.is_host() else !tog
 	get_tree().paused = tog
 	

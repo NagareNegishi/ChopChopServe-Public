@@ -10,14 +10,14 @@ signal changed_food_state
 signal cooking
 
 #Meshes
-@export var raw_mesh: MeshInstance3D = null
-@export var cooked_mesh: MeshInstance3D = null
-@export var spoiled_mesh: MeshInstance3D = null
-@export var burnt_mesh: MeshInstance3D = null
-@export var chopped_mesh: MeshInstance3D = null
-@export var frozen_mesh: MeshInstance3D = null
-@export var mixed_mesh: MeshInstance3D = null
-@export var texture : Texture2D = null
+var raw_mesh: MeshInstance3D = null
+var cooked_mesh: MeshInstance3D = null
+var spoiled_mesh: MeshInstance3D = null
+var burnt_mesh: MeshInstance3D = null
+var chopped_mesh: MeshInstance3D = null
+var frozen_mesh: MeshInstance3D = null
+var mixed_mesh: MeshInstance3D = null
+var texture : Texture2D = null
 
 
 

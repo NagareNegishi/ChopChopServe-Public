@@ -30,6 +30,7 @@ SabotageSystem="*res://scripts/Sabotage/sabotageSystem.gd"
 MI="*res://scripts/Food/MenuItems/menuItem.gd"
 ENetManager="*res://scripts/Network_Layer/enet_manager.gd"
 SceneManager="*res://scripts/Network_Layer/scene_manager.gd"
+RatAttack="*res://scripts/Sabotage/ratAttack.gd"
 
 [display]
 

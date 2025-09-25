@@ -67,8 +67,8 @@ func check_currency(teamID: int, currency: float) -> bool:
 		push_error("Invalid TeamID")
 		return false
 	
-	return (team1_currency if teamID == 1 else team2_currency) 
-	+ currency >= 0
+	return (team1_currency if teamID == 1 else team2_currency) + currency >= 0
+
 @rpc("any_peer", "call_local")
 func _emit_singal(teamID : int, currency : int):
 	currency_changed.emit(teamID, currency)

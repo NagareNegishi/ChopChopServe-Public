@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/Rat.glb-290651145fb52e9da4fa0e2980c2cc00.scn"
 
 [params]
 
-nodes/root_type=""
+nodes/root_type="MeshInstance3D"
 nodes/root_name=""
 nodes/apply_root_scale=true
 nodes/root_scale=1.0

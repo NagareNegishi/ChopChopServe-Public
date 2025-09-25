@@ -60,6 +60,16 @@ func _on_currency_changed(teamID: int, new_currency: float) -> void:
 		cur_2.text = "Currency: %d" % new_currency
 
 ######## Sabotage ########
+
+	#### teamID ####
+func _get_player_teamID() -> int:
+	var my_id = ENetManager.get_my_id()
+
+	if my_id == 1 :
+		return 1
+	else:
+		return 2
+
 # Water Spill
 func _on_water_spill_pressed() -> void:
 	var teamID = _get_player_teamID()
@@ -83,12 +93,8 @@ func _on_power_outage_pressed() -> void:
 	print("\n teamID \n")
 	var teamID = _get_player_teamID()
 	SabotageSystem.request_sabotage.rpc_id(1, teamID, SabotageSystem.SabotageType.POWER_OUTAGE)
-
-	#### teamID ####
-func _get_player_teamID() -> int:
-	var my_id = ENetManager.get_my_id()
-
-	if my_id == 1 :
-		return 1
-	else:
-		return 2
+	
+func _on_rat_swarm_pressed() -> void:
+	print("\n RAT \n")
+	var teamID = _get_player_teamID()
+	SabotageSystem.request_sabotage.rpc_id(1, teamID, SabotageSystem.SabotageType.RAT_SWARM)

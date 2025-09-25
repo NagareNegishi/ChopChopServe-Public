@@ -1,8 +1,12 @@
 class_name Sabotage_System
 extends Node
 
+########### Do I need to make a global timer for the different sabotages ?? ##########
+
 # Don't currently actually use
 var current_sabotage
+
+@onready var mischief := []
 
 # Signals
 signal sabotage_success(sabotage_type: int)
@@ -17,6 +21,7 @@ enum SabotageType {
 	WATER_SPILL,
 	FIRE,
 	FOOD_CRITIC,
+	SWITCH_CONTROLS,
 	RAT_SWARM,
 	POWER_OUTAGE
 }
@@ -26,14 +31,30 @@ const sabotage_costs = [
 	450, # Water Spill
 	600, # Fire
 	700, # Critic
+	800, # Switch Player Controls
 	900, # Rat Swarm
 	1200 # Power Outage
 ]
+
+# Times of the sabotages
+# Maybe make this a thing that is passed when calling?
+const sabotage_times = [
+	10, # Water Spill
+	100, # Fire (forever)
+	100, # Critic (forever)
+	23, # Switch Player Controls
+	20, # Rat Swarm
+	15, # Power Outage
+]
+
+# Do I need to add an enum for the 'cost' of each sabotages reputation
 
 # Get Globals
 @onready var currency_system = CurrencySystem
 @onready var reputation_system = ReputationSystem
 @onready var global_script = GlobalScript
+@onready var rat_attack = RatAttack
+
 
 # ------------------- Requesting Sabotage Functions ------------------- #
 
@@ -80,9 +101,13 @@ func request_sabotage(teamID: int, sabotage_type: int) -> void:
 		execute_sabotage.rpc(teamID, sabotage_type, chosen_path, Vector3(0, 0, 0))
 	# If, WATER_SPILL, get a position
 	elif sabotage_type == SabotageType.WATER_SPILL:
-		var position = get_random_spill_position(teamID)
+		var position = get_random_position(teamID)
 		# Call the execute Sabotage with position
 		execute_sabotage.rpc(teamID, sabotage_type, NodePath(""), position)
+	elif sabotage_type == SabotageType.RAT_SWARM:
+		var position = get_random_position(teamID)
+		var chosen_path = find_object_path()
+		execute_sabotage.rpc(teamID, sabotage_type, chosen_path, position)
 	else:
 		# For now, otherwise just call the normal one
 		execute_sabotage.rpc(teamID, sabotage_type, NodePath(""), Vector3(0, 0, 0))
@@ -119,6 +144,7 @@ func _do_sabotage(teamID: int, sabotage_type: int, chosen_path: NodePath, positi
 			# Handle food critic sabotage
 		SabotageType.RAT_SWARM:
 			print("rat stuff")
+			spawn_rat_swarm(position, chosen_path)
 			# Handle rat swarm sabotage
 		SabotageType.POWER_OUTAGE:
 			print("power stuff")
@@ -142,18 +168,21 @@ func spawn_water_spill(teamID: int, duration: float, position: Vector3) -> void:
 	get_tree().get_current_scene().add_child(spill)
 	# Get the position of the Spill
 	spill.global_position = position
+	spill.send_position(position)
+	spill.spill()
 	##spill.global_position = get_random_spill_position(teamID)	
-	spill.start_timer(duration)
+	#spill.start_timer(duration)
 	# Add something to use the team ID
-
+	
+var floor_node
 # Helper Function
 # Random position for the water spill
-func get_random_spill_position(teamID: int) -> Vector3:
+func get_random_position(teamID: int) -> Vector3:
 
 	# Currently this just spawns on the specific sides of the floor
 	# Would like to so they don't spawn within appliances
 	# It takes note of things 
-	var floor_node = get_tree().get_current_scene().get_node("NavigationRegion3D/Floor")
+	floor_node = get_tree().get_current_scene().get_node("NavigationRegion3D/Floor")
 
 	# Remove this later
 	if not floor_node:
@@ -252,11 +281,32 @@ func spawn_food_critic() -> void:
 		# then deal with it in the npc script
 	# Or:
 		# create a function in the npc and call it here
-
+		
 # ------- Rat Swarm Stuff ------- #
 # UNUSED CURRENTLY
-func spawn_rat_swarm() -> void:
+func spawn_rat_swarm(position: Vector3, path: NodePath) -> void:
 	print("spawning rat sparm")
+	RatAttack.spawn_rat_mischief(position, path)
+	#var rat = preload("res://scripts/Sabotage/rat.tscn").instantiate()
+	#get_tree().get_current_scene()#.add_child(rat)
+	#rat.global_position = position
+	#mischief.append(rat)
+	#rat.add_to_mischief(rat)
+	#add_child(rat)
+var benches : Array = []
+
+func find_object_path() -> NodePath:
+	var appliances = get_tree().get_nodes_in_group("flammable")
+	# add a if statment about size here
+	for item in appliances:
+		#print("going through #1")
+		if item is Bench:
+			#print("====this is a bench===== ", item)
+			benches.append(item)
+	
+	var b = benches[randi() % benches.size()]
+	#print("Bench we have gone with is: ", b)
+	return b.get_path()
 
 # ------- Power Outage Stuff ------- #
 func spawn_power_outage(teamID: int) -> void:

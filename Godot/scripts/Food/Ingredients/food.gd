@@ -31,7 +31,7 @@ var time_power : int # How much power/time the appliance is giving/using for the
 var current_appliance = null # What appliance is currently being used
 var current_cooking_style: ApplianceFactory.CookingStyle
 
-var times_touched_floor : int = 0
+var touched_floor_num = 0
 var is_cooking = false # Decides whether or not it should be cooking the ingredient
 var is_cooked : bool = false
 var l # current collision layer
@@ -355,11 +355,9 @@ func change_collisions(turn_off:bool):
 		self.collision_layer = l
 		self.collision_mask = m
 
-
-# Uses to decrease the quality of the ingredients and minus that from the meal quality
 func _on_interactable_component_body_entered(body):
 	if body.is_in_group("Floor"):
-		times_touched_floor += 1
+		touched_floor_num += 1
 
-func get_floor_touch_time():
-	return times_touched_floor
+func get_floor_time():
+	return touched_floor_num

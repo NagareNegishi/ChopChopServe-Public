@@ -32,7 +32,7 @@ func _ready() -> void:
 # @param delta time to proces frame
 # @return void
 func _process(delta: float) -> void:
-	if !multiplayer.is_server():
+	if !ENetManager.is_host():
 		$ParticleTimer.stop()
 		return
 	

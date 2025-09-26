@@ -20,7 +20,7 @@ enum Scene {
 }
 
 const SCENE_PATHS = {
-	Scene.MAIN_MENU: "res://scenes/Network_Layer/main_menu.tscn",
+	Scene.MAIN_MENU: "res://LevelDesign/main_menu_enviro.tscn",
 	Scene.LOBBY: "res://LevelDesign/Levelselectworld.tscn", # Will be added later
 	Scene.Food_Court: "res://Milestone3Submission.tscn",
 	Scene.SETTINGS: "", # Will be added later

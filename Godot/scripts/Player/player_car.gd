@@ -8,9 +8,9 @@ extends CharacterBody3D
 @export var decceleration : float = 40
 @export var camera_length : float = 7
 
-
 var turn_input_avg : int = 0
 var move_input_avg : int = 0
+var input_disable : bool = false
 
 @onready var controller : PlayerCarController = $Controller
 @onready var camera : Camera3D = $SpringArm/Camera
@@ -80,11 +80,11 @@ func _movement(delta : float) -> void:
 	move_input_avg = clampi(move_input_avg, -1, 1)
 
 	#rotates mesh
-	$Mesh.rotation.y += turn_input_avg * turn_speed * delta
-	$CollisionShape3D.rotation.y += turn_input_avg * turn_speed * delta
-	#print(move_input_avg, turn_input_avg)
+	if !input_disable:
+		$Mesh.rotation.y += turn_input_avg * turn_speed * delta
+		$CollisionShape3D.rotation.y += turn_input_avg * turn_speed * delta
 	
-	if move_input_avg: #handles logic if player is moving 
+	if move_input_avg && !input_disable: #handles logic if player is moving 
 		var forward : Vector3 = -$Mesh.transform.basis.z.normalized()
 		
 		#halves the speed of player if in reverse
@@ -147,3 +147,6 @@ func _on_received_input(peer_id: int, move : int, turn : int):
 		"turn" : turn,
 		"time" : Time.get_ticks_msec()
 	}
+
+func disable_input(disable : bool):
+	input_disable = disable

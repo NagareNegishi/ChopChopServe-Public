@@ -1,6 +1,7 @@
-[gd_scene load_steps=82 format=3 uid="uid://brax13qxb8tj2"]
+[gd_scene load_steps=83 format=3 uid="uid://brax13qxb8tj2"]
 
 [ext_resource type="PackedScene" uid="uid://bv68n23xtnfpl" path="res://scenes/Player/PlayerCar.tscn" id="1_2io33"]
+[ext_resource type="PackedScene" uid="uid://c8bjd53t4fgr1" path="res://UI/UI_Pause.tscn" id="1_7dd6r"]
 [ext_resource type="Material" uid="uid://dwgftkho746av" path="res://LevelDesign/SwampFog.tres" id="1_d2eau"]
 [ext_resource type="PackedScene" uid="uid://cy8ahksvgtb76" path="res://UI/UI_LoadingScreen.tscn" id="1_kguer"]
 [ext_resource type="PackedScene" uid="uid://ctuxfj7asiapr" path="res://assets/CityPacks/gltf/building_A.gltf" id="1_xuksc"]
@@ -137,18 +138,22 @@ size = Vector2(94.205, 15.74)
 
 [node name="BradleyTestScene" type="Node3D"]
 
-[node name="=== UI ===" type="CanvasLayer" parent="."]
+[node name="== HUD ==" type="CanvasLayer" parent="."]
 
-[node name="Control" parent="=== UI ===" instance=ExtResource("2_lyps1")]
+[node name="HUD" parent="== HUD ==" instance=ExtResource("2_lyps1")]
 
-[node name="UILoadingScreen" parent="=== UI ===" instance=ExtResource("1_kguer")]
+[node name="UiPause" parent="== HUD ==" instance=ExtResource("1_7dd6r")]
+visible = false
+
+[node name="UILoadingScreen" parent="== HUD ==" instance=ExtResource("1_kguer")]
+visible = false
 
 [node name="== LEVEL SELECT ==" type="Node" parent="."]
 
 [node name="LevelSelectArea" parent="== LEVEL SELECT ==" node_paths=PackedStringArray("load_ui", "car") instance=ExtResource("64_kguer")]
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -14.9253, 1.86524, -24.7682)
 level = 6
-load_ui = NodePath("../../=== UI ===/UILoadingScreen")
+load_ui = NodePath("../../== HUD ==/UILoadingScreen")
 car = NodePath("../../PlayerCar")
 
 [node name="Platform" type="StaticBody3D" parent="."]

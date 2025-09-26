@@ -39,16 +39,23 @@ func _on_create_pressed():
 		return
 	var public_ip = host_public_ip_input.text.strip_edges()
 	network_layer.create_game_with_ip(4, public_ip)
+	GlobalScript.player_name = name_input.text
 
 
 ## Join Lobby
 func _on_join_pressed():
+	if name_input.text.length() <= 0 :
+		_pop_error(ErrorType.EMPTY_NAME) 
+		return
+	
 	var connection_info = ip_input.text.strip_edges()
 	if connection_info == "":
 		connection_info = "127.0.0.1:7000"
 	print("Joining lobby at: " + connection_info)
+	
 	if not network_layer.join_game(connection_info):
 		print("Failed to start connection.")
+	GlobalScript.player_name = name_input.text
 
 
 ## Switch to Lobby
@@ -68,4 +75,10 @@ func _exit_game():
 func _pop_error(error : ErrorType):
 	match error:
 		ErrorType.EMPTY_NAME:
-			pass
+			error_message.text = "Please Enter a Name"
+	
+	error_message.visible = true
+	
+	await get_tree().create_timer(4).timeout
+	
+	error_message.visible = false

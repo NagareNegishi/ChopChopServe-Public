@@ -44,7 +44,8 @@ func _animation(player_path : String):
 
 func _upgrade():
 	var appliance : Appliance = GlobalScript.get_local_player()._closest_item.get_parent() 
-	appliance.capacity_upgradable
+	appliance.capacity_upgradable.request_upgrade(ENetManager.get_my_id())
+	print("Request Upgrade")
 
 func _set_new_upgrade():
 	pass

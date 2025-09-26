@@ -26,7 +26,7 @@ var is_inverted = false
 @onready var check_interactables : Timer = $CheckInteractables
 @onready var anim_tree : AnimationTree = $AnimationTree
 @onready var body_mesh : MeshInstance3D = $Mesh/Armature/Skeleton3D/Frog
-@onready var name_tag : NameTag = $NameTag/SubViewport/UiNameTag
+@onready var name_tag : NameTag = $Mesh/NameTag/SubViewport/UiNameTag
 
 func _enter_tree() -> void:
 	scale = Vector3(1,1,1)
@@ -63,16 +63,31 @@ func _ready() -> void:
 	$Mesh/Armature/Skeleton3D/LeftHand.set_surface_override_material(1, material)
 	
 	if !multiplayer.get_unique_id() == name.to_int():
-		check_interactables.stop()
+		check_interactables.stop()	
 	
 	for i in range(10):
 		var particle = move_particle.instantiate()
 		MOVE_PARTICLES_POOL.append(particle)
+	
+	if !multiplayer.get_unique_id() == name.to_int() : return
+	
+	await get_tree().create_timer(0.1).timeout
+	rpc_id(1, "_server_set_name", name.to_int(), GlobalScript.player_name)
 
 
 func set_speed(new_speed : float) -> void:
 	speed = max(new_speed, 0)
 
+@rpc("any_peer", "call_local")
+func _set_player_name(id : int, p_name : String):
+	var player : Player = GlobalScript.get_local_player_by_id(id)
+	player.name_tag.set_tag(p_name)
+
+@rpc("authority", "call_local")
+func _server_set_name(id : int, p_name : String):
+	rpc("_set_player_name", id, p_name)
+	
+	
 
 ## Functionailty that happens every frame
 ## @param delta the times it takes per frame to render

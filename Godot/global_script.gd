@@ -10,7 +10,8 @@ var player : Player
 var player_colours = PackedColorArray([Color("ff94fc",1), Color("57ceff",1), Color("ff734f",1), Color("76ff61",1)]) # Colours: Pink, Blue, Red, Green
 var player_outline_colours = PackedColorArray([Color("f20cb5",1), Color("124dff",1), Color("e32f00",1), Color("1cd400",1)]) # Colours: Pink, Blue, Red, Green
 var ui_game_state : UIGameState 
-var _player_states : Dictionary = {}
+
+var player_name : String
 
 
 ## Called when the node enters the scene tree for the first time.
@@ -23,7 +24,7 @@ func _ready() -> void:
 	if get_tree().get_current_scene().has_node("HUD"):
 		ui_game_state = get_tree().get_current_scene().get_node("HUD")
 	
-	multiplayer.peer_connected.connect(_connect_to_server)
+	
 
 
 func get_local_player() -> Player:
@@ -49,6 +50,6 @@ func get_local_player_by_id(player_id : int) -> Player:
 func get_pause_menu() -> Pause:
 	return get_tree().current_scene.get_node("== HUD ==/UiPause")
 
-func _connect_to_server(id : int):
-	_player_states.get_or_add(id, PlayerState.new())
-	print(_player_states)
+
+
+#================== Player State ===============================

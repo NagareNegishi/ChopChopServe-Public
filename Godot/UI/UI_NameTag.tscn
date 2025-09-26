@@ -15,27 +15,21 @@ grow_vertical = 2
 theme = ExtResource("1_0dynv")
 script = ExtResource("2_8y4e8")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="Label" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -88.0
-offset_top = -20.0
-offset_right = 88.0
-offset_bottom = 20.0
+offset_left = -66.0
+offset_top = -15.0
+offset_right = 66.0
+offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 15
-
-[node name="ColorRect" type="ColorRect" parent="HBoxContainer"]
-custom_minimum_size = Vector2(40, 0)
-layout_mode = 2
-
-[node name="Label" type="Label" parent="HBoxContainer"]
-layout_mode = 2
 theme = ExtResource("1_0dynv")
 theme_override_constants/outline_size = 5
-text = "Player123"
+text = "*Default*"
+horizontal_alignment = 1
+vertical_alignment = 1

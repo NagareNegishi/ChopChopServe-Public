@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://chmeyqgu2qqka"]
+[gd_scene load_steps=12 format=4 uid="uid://ti73pjm3d8bo"]
 
 [ext_resource type="Script" uid="uid://672sqw56ukmr" path="res://scripts/Food/Ingredients/chicken.gd" id="1_fefbg"]
 [ext_resource type="Material" uid="uid://d1mru8ywyt58h" path="res://assets/newmodels/texturemap.tres" id="2_fmy4q"]
@@ -110,11 +110,11 @@ skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_agtlm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.574104, 0)
+transform = Transform3D(0.662515, 0, 0, 0, 0.662515, 0, 0, 0, 0.662515, 0, 0.316991, 0)
 shape = SubResource("BoxShape3D_agtlm")
 
 [node name="InteractableComponent" parent="." instance=ExtResource("3_h0s66")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00561047, 0.579145, 0)
+transform = Transform3D(0.662515, 0, 0, 0, 0.662515, 0, 0, 0, 0.662515, 0, 0.316991, 0)
 is_pickup = true
 
 [connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]

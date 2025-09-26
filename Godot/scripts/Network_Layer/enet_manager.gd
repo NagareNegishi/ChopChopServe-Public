@@ -194,7 +194,7 @@ func _on_data_received(_from_id: int, data: Dictionary):
 			else:
 				current_state = GameProgress.IN_GAME
 			game_paused.emit(data.is_paused)
-
+			
 		"game_reset":
 			current_state = GameProgress.LOBBY
 			game_paused.emit(false)
@@ -203,7 +203,7 @@ func _on_data_received(_from_id: int, data: Dictionary):
 			if data.has("message") and data.has("duration"):
 				show_notification(data.message, data.duration)
 
-		_:
+
 			print("Unknown message type: ", data.get("type"))
 
 
@@ -309,7 +309,6 @@ func start_game() -> void:
 		"type": "game_starting"
 	})
 	game_started.emit()
-
 
 ## Reset the game after pause due to disconnection, Host only
 func _reset_game() -> void:

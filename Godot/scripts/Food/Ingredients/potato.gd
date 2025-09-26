@@ -6,11 +6,9 @@ func _ready():
 	spoil_time = 150
 	raw_mesh = $Potato
 	spoiled_mesh = $SpoiledPotato
-	cooked_mesh = $ChoppedPotato
+	cooked_mesh = $Potato
 	burnt_mesh = $BurntPotato
 	chopped_mesh = $ChoppedPotato
-	# cook time same as sxuper class
-	
 	
 	add_to_group("Food")
 	on_state_change()

@@ -54,4 +54,4 @@ script = ExtResource("6_nrxyg")
 transform = Transform3D(-0.999966, 0, -0.00827288, -0.00639621, 0.634218, 0.773128, 0.00524681, 0.773154, -0.634196, 0, 1.44519, 0.392126)
 texture = SubResource("ViewportTexture_n227i")
 
-[connection signal="add_appliance" from="." to="SubViewport/TextureProgressBar2" method="_on_stove_with_pan_add_appliance"]
+[connection signal="add_appliance" from="." to="SubViewport/TextureProgressBar2" method="_on_add_appliance"]

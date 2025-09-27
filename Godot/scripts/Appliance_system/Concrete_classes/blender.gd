@@ -352,7 +352,3 @@ func get_progress() -> float:
 # 	plate.add_list_items(take_all()) # Method in Plate, takes Array of Food
 # 	return true
 # #---------------------------------------------------------------------------------------------------
-
-
-func _on_food_placed(contents):
-	pass # Replace with function body.

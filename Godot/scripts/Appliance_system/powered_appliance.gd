@@ -5,7 +5,8 @@ class_name PoweredAppliance
 extends Appliance
 
 signal status_changed(new_status: Status)
-signal add_appliance(this: PoweredAppliance)
+signal cookware_taken
+
 enum Status {
 	COOKING,
 	OFF,
@@ -96,8 +97,7 @@ func _put_cookware(cookware: Cookware) -> void:
 	cookware.power_receiving = power
 	if cookware.can_cook() and can_cook():
 		cookware.cook(power)
-	if emit_signal("add_appliance", cookware):
-		print("MEOWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW    ", cookware)
+	emit_signal("add_appliance", cookware, self)
 
 
 ## Fallback method to put item with re-parenting
@@ -152,6 +152,7 @@ func _take_cookware(cookware: Cookware) -> void:
 	cookware.unlock()
 	cookware.restore_original_transform()
 	cookware._toggle_interaction(true)
+	emit_signal("cookware_taken")
 
 
 ## Client-side method to take item, called by host

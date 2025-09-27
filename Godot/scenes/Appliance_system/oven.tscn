@@ -54,4 +54,4 @@ script = ExtResource("6_va5yc")
 transform = Transform3D(-0.999966, -3.60028e-10, -0.00827288, -0.00495588, 0.80071, 0.599031, 0.00662418, 0.599051, -0.800683, 0.005256, 0.923139, -0.0217192)
 texture = SubResource("ViewportTexture_favet")
 
-[connection signal="add_appliance" from="." to="SubViewport/TextureProgressBar2" method="_on_oven_add_appliance"]
+[connection signal="add_appliance" from="." to="SubViewport/TextureProgressBar2" method="_on_add_appliance"]

@@ -27,7 +27,7 @@ func _on_cookware_signal(c):
 func _on_food_signal():
 	value += 1
 	# Dont want the blender to turn orange because food cant burn in there
-	if value == max_value and cookware is not Blender: 
+	if value == max_value and (cookware is not Blender and cookware is not ChoppingBoard) : 
 		tint_progress = Color8(255,165,0)
 
 
@@ -37,20 +37,25 @@ func connect_cookware(c):
 	if c and c.is_in_group("Appliance"):
 		c.connect("food_placed",Callable(self, "_on_cookware_signal"))
 		cookware = c
+		if cookware.contents.size() > 0:
+			is_open = true
 		
 		if not cookware.is_connected("average_updated", Callable(self, "_on_average_updated")):
 			cookware.connect("new_average", Callable(self, "_on_average_updated"))
+	else:
+		push_error("In appliance progress bar -- connect_cookware() -- either there 
+		is nothing passed of it is not an appliance")
 
 
 # Connect the take_all signal so that when things are taken from cookware it makes the progress bar
 # disappear
 func connect_take_all(c):
 	if c and c.is_in_group("Appliance"):
-		c.connect("food_taken",Callable(self, "_on_food_taken"))
+		c.connect("food_taken",Callable(self, "_on_food_or_cookware_taken"))
 
 
 # Function to chnage boolean value when items are taken from the cookware or blender
-func _on_food_taken():
+func _on_food_or_cookware_taken():
 	is_open = false
 
 
@@ -70,6 +75,8 @@ func _on_average_updated(new_average: float) -> void:
 
 func get_max_value(cook_style: ApplianceFactory.CookingStyle):
 	match(cook_style):
+			ApplianceFactory.CookingStyle.CHOP:
+				return 3
 			ApplianceFactory.CookingStyle.BOIL:
 				return 15
 			ApplianceFactory.CookingStyle.BAKE:
@@ -81,22 +88,11 @@ func get_max_value(cook_style: ApplianceFactory.CookingStyle):
 			_:
 				push_error("No cooking style matched in appliance progress bar in get_max_value()")
 
-# Connecting cookware + blender signals to the progress bar
-func _on_fryer_add_appliance(c):
+# When there is an a cookware/equipment added to an appliance it connects to this method
+func _on_add_appliance(c, appliance):
 	connect_cookware(c)
 	connect_take_all(c)
-
-func _on_stove_add_appliance(c):
-	connect_cookware(c)
-	connect_take_all(c)
-
-func _on_stove_with_pan_add_appliance(c):
-	connect_cookware(c)
-	connect_take_all(c)
-
-func _on_stove_with_pot_add_appliance(c):
-	connect_cookware(c)
-	connect_take_all(c)
+	appliance.connect("cookware_taken", Callable(self, "_on_food_or_cookware_taken"))
 
 # Is different because this is PoweredAppliance and not Cookware
 func _on_blender_signal(c, blender):
@@ -105,6 +101,7 @@ func _on_blender_signal(c, blender):
 	_on_cookware_signal(c)
 	connect_take_all(blender)
 
-func _on_oven_add_appliance(c):
+
+func _on_chop_table_food_placed(c):
 	connect_cookware(c)
 	connect_take_all(c)

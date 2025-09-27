@@ -1,4 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://8a2o8qga7q64"]
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://c6svha1ojqeej"]
 
 [sub_resource type="Shader" id="Shader_4l3fe"]
 code = "shader_type spatial;
@@ -117,20 +117,20 @@ void fragment() {
 [resource]
 render_priority = 0
 shader = SubResource("Shader_4l3fe")
-shader_parameter/opacity = 0.35
-shader_parameter/ghost_color = Color(1, 1, 1, 1)
-shader_parameter/flicker_speed = 1.2
-shader_parameter/phase_frequency = 0.4
+shader_parameter/opacity = 1.5
+shader_parameter/ghost_color = Color(1, 1, 0, 1)
+shader_parameter/flicker_speed = 0.0
+shader_parameter/phase_frequency = 0.0
 shader_parameter/fresnel_strength = 0.8
-shader_parameter/fresnel_color = Color(1, 1, 1, 1)
-shader_parameter/wave_amplitude = 0.006
+shader_parameter/fresnel_color = Color(1, 1, 0, 1)
+shader_parameter/wave_amplitude = 0.0
 shader_parameter/wave_frequency = 19.397
-shader_parameter/wave_speed = 3.618
-shader_parameter/chroma_amount = 1.0
+shader_parameter/wave_speed = 0.0
+shader_parameter/chroma_amount = 10.0
 shader_parameter/points_enabled = true
-shader_parameter/point_field_scale = 4.377
-shader_parameter/point_size = 1.0
+shader_parameter/point_field_scale = 50.0
+shader_parameter/point_size = 0.008
 shader_parameter/point_intensity = 1.0
-shader_parameter/point_axis_speed = 0.051
-shader_parameter/point_move_mode = 1
+shader_parameter/point_axis_speed = 0.01
+shader_parameter/point_move_mode = 2
 shader_parameter/point_color = Color(1, 1, 1, 1)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://buboxgutwg20q"]
+[gd_scene load_steps=16 format=3 uid="uid://buboxgutwg20q"]
 
 [ext_resource type="PackedScene" uid="uid://b5nb1nxo1r1kb" path="res://scenes/Appliance_system/bench.tscn" id="1_n5eyu"]
 [ext_resource type="PackedScene" uid="uid://cw5uvt35a87nt" path="res://scenes/Appliance_system/blender.tscn" id="2_w2mc8"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://df6cemvjo3grw" path="res://scenes/Appliance_system/chop_table.tscn" id="4_pp23w"]
 [ext_resource type="PackedScene" uid="uid://b0ougk3d4jnku" path="res://scenes/Appliance_system/food_crate.tscn" id="5_u07qb"]
 [ext_resource type="PackedScene" uid="uid://byoj62jkvm385" path="res://FridgeInven/freezer.tscn" id="6_7binn"]
+[ext_resource type="Script" uid="uid://denxn65anovd7" path="res://scripts/Appliance_system/placeable.gd" id="6_w2mc8"]
 [ext_resource type="PackedScene" uid="uid://dbeboubu5gkhe" path="res://scenes/Appliance_system/fryer.tscn" id="7_ebqvf"]
 [ext_resource type="PackedScene" uid="uid://dlk0mbdfg2cmq" path="res://scenes/Appliance_system/oven.tscn" id="8_7218b"]
 [ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="9_6njly"]
@@ -20,15 +21,13 @@
 [node name="Bench" parent="." instance=ExtResource("1_n5eyu")]
 
 [node name="Blender" parent="." instance=ExtResource("2_w2mc8")]
-using_tscn = false
-unique_name = "UNNAMED_APPLIANCE"
-current_owner = 1
 
 [node name="Cabinet" parent="." instance=ExtResource("3_vgkl0")]
 
 [node name="ChopTable" parent="." instance=ExtResource("4_pp23w")]
 
 [node name="FoodCrate" parent="." instance=ExtResource("5_u07qb")]
+script = ExtResource("6_w2mc8")
 
 [node name="Freezer" parent="." instance=ExtResource("6_7binn")]
 

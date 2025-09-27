@@ -13,6 +13,13 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_vhq2q")
 
+[node name="ColorRect2" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 16.0
+offset_right = 105.0
+offset_bottom = 104.0
+
 [node name="PlayerList" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 7
@@ -97,6 +104,7 @@ theme_override_font_sizes/font_size = 13
 text = "Chop Chop Serve | Alpha Build"
 
 [node name="Server" type="Label" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 8.0
 offset_top = 7.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=83 format=3 uid="uid://brax13qxb8tj2"]
+[gd_scene load_steps=84 format=3 uid="uid://brax13qxb8tj2"]
 
 [ext_resource type="PackedScene" uid="uid://bv68n23xtnfpl" path="res://scenes/Player/PlayerCar.tscn" id="1_2io33"]
 [ext_resource type="PackedScene" uid="uid://c8bjd53t4fgr1" path="res://UI/UI_Pause.tscn" id="1_7dd6r"]
@@ -9,8 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://cw3ro4l6ywo8x" path="res://assets/newmodels/Mountain.glb" id="4_gfmxp"]
 [ext_resource type="PackedScene" uid="uid://386cia5dig43" path="res://assets/NaturePack/Willow_4.fbx" id="5_2io33"]
 [ext_resource type="PackedScene" uid="uid://dfpfglb1oru28" path="res://assets/Swampy/RoadSwampCorner.glb" id="5_d2ijq"]
-[ext_resource type="FontFile" uid="uid://dxc6n0umgi0q4" path="res://assets/fonts/Jua-Regular.ttf" id="5_iytpy"]
 [ext_resource type="Material" uid="uid://8a2o8qga7q64" path="res://shaders/Water/WaterOpenworldAlt.tres" id="5_mpt4u"]
+[ext_resource type="PackedScene" uid="uid://gu4ahqngwqip" path="res://UI/UI_LevelSelect.tscn" id="5_u8kom"]
 [ext_resource type="PackedScene" uid="uid://x0o0oxbumdxi" path="res://assets/NaturePack/Willow_2.fbx" id="6_38v8k"]
 [ext_resource type="Shader" uid="uid://c46kta255prk4" path="res://shaders/Water/WaterOpenWorld.gdshader" id="6_mpt4u"]
 [ext_resource type="PackedScene" uid="uid://dxiqfig0wnu0t" path="res://assets/NaturePack/Willow_1.fbx" id="7_8t6q8"]
@@ -67,6 +67,9 @@
 [ext_resource type="PackedScene" uid="uid://bnqti3cd67kf0" path="res://assets/Beachy/FenceBeachWire.glb" id="58_7dd6r"]
 [ext_resource type="PackedScene" uid="uid://bailsqnlqlti0" path="res://assets/CityPacks/CityRestaurantAnim2.glb" id="61_ps02h"]
 [ext_resource type="PackedScene" uid="uid://cky86yj522kph" path="res://scenes/Interaction/LevelSelectArea.tscn" id="64_kguer"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_uthtu"]
+viewport_path = NodePath("== LEVEL SELECT ==/LevelUI/SubViewport")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w6hnu"]
 size = Vector3(30, 0.03, 30)
@@ -156,6 +159,19 @@ level = 6
 load_ui = NodePath("../../== HUD ==/UILoadingScreen")
 car = NodePath("../../PlayerCar")
 
+[node name="LevelUI" type="Sprite3D" parent="== LEVEL SELECT =="]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.7438, 6.48597, -24.6602)
+billboard = 1
+no_depth_test = true
+texture = SubResource("ViewportTexture_uthtu")
+
+[node name="SubViewport" type="SubViewport" parent="== LEVEL SELECT ==/LevelUI"]
+transparent_bg = true
+size = Vector2i(1112, 847)
+
+[node name="UiLevelSelect" parent="== LEVEL SELECT ==/LevelUI/SubViewport" instance=ExtResource("5_u8kom")]
+level_name = "Froggo\\nBeach"
+
 [node name="Platform" type="StaticBody3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Platform"]
@@ -205,14 +221,6 @@ transform = Transform3D(-4.37114e-08, -0.819152, 0.573576, 0, 0.573576, 0.819152
 transform = Transform3D(-4.2222e-08, -0.258819, 0.965926, -1.13133e-08, 0.965926, 0.258819, -1, 0, -4.37114e-08, -18, 7, 24)
 pixel_size = 0.1
 text = "SWAMP"
-
-[node name="Label3D2" type="Label3D" parent="Node3D"]
-transform = Transform3D(-4.2222e-08, -0.258819, 0.965926, -1.13133e-08, 0.965926, 0.258819, -1, 0, -4.37114e-08, -15, 9.79186, -26)
-pixel_size = 0.1
-text = "City
-"
-font = ExtResource("5_iytpy")
-font_size = 50
 
 [node name="Label3D3" type="Label3D" parent="Node3D"]
 transform = Transform3D(-4.2222e-08, -0.258819, 0.965926, -1.13133e-08, 0.965926, 0.258819, -1, 0, -4.37114e-08, 31, 7, -1)

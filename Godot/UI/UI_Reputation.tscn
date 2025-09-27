@@ -27,7 +27,6 @@ offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.31, 0.5)
-max_value = 1.0
 step = 0.01
 value = 0.9
 texture_under = ExtResource("1_57m7m")
@@ -55,6 +54,6 @@ texture = ExtResource("2_tbt1i")
 flip_h = true
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.01
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -3,34 +3,32 @@ extends Control
 
 
 func _ready() -> void:
-	var local_player : Player = GlobalScript.get_local_player()
 	set_reputation(1, ReputationSystem.total_rep_team.get(1))
 	set_reputation(2, ReputationSystem.total_rep_team.get(2))
 	ReputationSystem.reputation_changed.connect(set_reputation)
 	CurrencySystem.currency_changed.connect(set_money)
+	set_money(ENetManager.get_my_team(), CurrencySystem.get_currency(ENetManager.get_my_team()))
 
-func set_reputation(team : int, amount : int) -> bool:
-	if team != 1 && team != 2:
-		return false
+func set_reputation(teamID : int, new_reputation : int):
+	if teamID != 1 && teamID != 2:
+		return
 	
-	amount = clamp(amount, 0, 100)
-	
-	match team:
+	match teamID:
 		1:
-			$Team1/Team1_Rep.text = str(amount)
+			$Team1/Team1_Rep.text = str(new_reputation)
 		2:
-			$Team2/Team2_Rep.text = str(amount)
+			$Team2/Team2_Rep.text = str(new_reputation)
 		_:
-			return false
+			return
 			
-	return true;
+	return
 
 
 func set_money(team : int, amount : int) -> bool:
-	if team != 1 && team != 2 || !GlobalScript.get_local_player():
+	if team != 1 && team != 2:
 		return false
 	
-	if GlobalScript.get_local_player().get_team() != team:
+	if ENetManager.get_my_team() != team:
 		return true
 	
 	$Main/Money.text = "$" + str(amount)

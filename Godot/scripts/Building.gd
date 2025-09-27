@@ -48,9 +48,20 @@ func place_building():
 	var mat = StandardMaterial3D.new()
 	mat.albedo_color = Color.GREEN
 	set_surface_override_material(0, mat)
+	ApplianceManager.request_appliance("blender", 1)
+	ApplianceManager.get_item("blender")
+
+
+func _update():
+	if !_is_collision_clone: # clones should not respond to inputs
+		if !_collision_clone: 
+			produce_collision_clone() 
+			_camera = get_viewport().get_camera_3d()
+			snap_to_grid()
 
 ## Uses mouse inputs to move building and decide its placement
 func _input(event):
+	return
 	if !_is_collision_clone: # clones should not respond to inputs
 		if !_collision_clone: 
 			produce_collision_clone() 

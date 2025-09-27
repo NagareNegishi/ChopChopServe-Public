@@ -3,6 +3,7 @@ class_name InteractableComponent extends Area3D
 signal interacted()
 signal hovered(is_hovered : bool)
 signal action_use(is_action : bool)
+signal local_action_use(is_action : bool)
 signal toggle_collision(turn_on : bool)
 
 @export var is_pickup : bool
@@ -22,6 +23,7 @@ func interact() -> void:
 ## @return void
 func action(in_use : bool) -> void:
 	if has_action:
+		emit_signal("local_action_use", in_use)
 		rpc("_client_action", in_use)
 		
 

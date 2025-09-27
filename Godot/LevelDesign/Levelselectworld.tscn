@@ -1,12 +1,15 @@
-[gd_scene load_steps=79 format=3 uid="uid://brax13qxb8tj2"]
+[gd_scene load_steps=83 format=3 uid="uid://brax13qxb8tj2"]
 
 [ext_resource type="PackedScene" uid="uid://bv68n23xtnfpl" path="res://scenes/Player/PlayerCar.tscn" id="1_2io33"]
+[ext_resource type="PackedScene" uid="uid://c8bjd53t4fgr1" path="res://UI/UI_Pause.tscn" id="1_7dd6r"]
 [ext_resource type="Material" uid="uid://dwgftkho746av" path="res://LevelDesign/SwampFog.tres" id="1_d2eau"]
+[ext_resource type="PackedScene" uid="uid://cy8ahksvgtb76" path="res://UI/UI_LoadingScreen.tscn" id="1_kguer"]
 [ext_resource type="PackedScene" uid="uid://ctuxfj7asiapr" path="res://assets/CityPacks/gltf/building_A.gltf" id="1_xuksc"]
-[ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="4_55i4u"]
+[ext_resource type="PackedScene" uid="uid://bqtbpncsp1lqe" path="res://UI/UI_LobbyHUD.tscn" id="2_lyps1"]
 [ext_resource type="PackedScene" uid="uid://cw3ro4l6ywo8x" path="res://assets/newmodels/Mountain.glb" id="4_gfmxp"]
 [ext_resource type="PackedScene" uid="uid://386cia5dig43" path="res://assets/NaturePack/Willow_4.fbx" id="5_2io33"]
 [ext_resource type="PackedScene" uid="uid://dfpfglb1oru28" path="res://assets/Swampy/RoadSwampCorner.glb" id="5_d2ijq"]
+[ext_resource type="FontFile" uid="uid://dxc6n0umgi0q4" path="res://assets/fonts/Jua-Regular.ttf" id="5_iytpy"]
 [ext_resource type="Material" uid="uid://8a2o8qga7q64" path="res://shaders/Water/WaterOpenworldAlt.tres" id="5_mpt4u"]
 [ext_resource type="PackedScene" uid="uid://x0o0oxbumdxi" path="res://assets/NaturePack/Willow_2.fbx" id="6_38v8k"]
 [ext_resource type="Shader" uid="uid://c46kta255prk4" path="res://shaders/Water/WaterOpenWorld.gdshader" id="6_mpt4u"]
@@ -63,6 +66,7 @@
 [ext_resource type="PackedScene" uid="uid://ote03xslp2mk" path="res://assets/Beachy/FenceBeachPlankPath.glb" id="57_lyps1"]
 [ext_resource type="PackedScene" uid="uid://bnqti3cd67kf0" path="res://assets/Beachy/FenceBeachWire.glb" id="58_7dd6r"]
 [ext_resource type="PackedScene" uid="uid://bailsqnlqlti0" path="res://assets/CityPacks/CityRestaurantAnim2.glb" id="61_ps02h"]
+[ext_resource type="PackedScene" uid="uid://cky86yj522kph" path="res://scenes/Interaction/LevelSelectArea.tscn" id="64_kguer"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w6hnu"]
 size = Vector3(30, 0.03, 30)
@@ -134,6 +138,24 @@ size = Vector2(94.205, 15.74)
 
 [node name="BradleyTestScene" type="Node3D"]
 
+[node name="== HUD ==" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="== HUD ==" instance=ExtResource("2_lyps1")]
+
+[node name="UiPause" parent="== HUD ==" instance=ExtResource("1_7dd6r")]
+visible = false
+
+[node name="UILoadingScreen" parent="== HUD ==" instance=ExtResource("1_kguer")]
+visible = false
+
+[node name="== LEVEL SELECT ==" type="Node" parent="."]
+
+[node name="LevelSelectArea" parent="== LEVEL SELECT ==" node_paths=PackedStringArray("load_ui", "car") instance=ExtResource("64_kguer")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -14.9253, 1.86524, -24.7682)
+level = 6
+load_ui = NodePath("../../== HUD ==/UILoadingScreen")
+car = NodePath("../../PlayerCar")
+
 [node name="Platform" type="StaticBody3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Platform"]
@@ -177,10 +199,6 @@ shadow_enabled = true
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-4.37114e-08, -0.819152, 0.573576, 0, 0.573576, 0.819152, -1, 3.58063e-08, -2.50718e-08, 23, 23, 0)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="Control" parent="CanvasLayer" instance=ExtResource("4_55i4u")]
-
 [node name="Node3D" type="Node3D" parent="."]
 
 [node name="Label3D" type="Label3D" parent="Node3D"]
@@ -193,6 +211,8 @@ transform = Transform3D(-4.2222e-08, -0.258819, 0.965926, -1.13133e-08, 0.965926
 pixel_size = 0.1
 text = "City
 "
+font = ExtResource("5_iytpy")
+font_size = 50
 
 [node name="Label3D3" type="Label3D" parent="Node3D"]
 transform = Transform3D(-4.2222e-08, -0.258819, 0.965926, -1.13133e-08, 0.965926, 0.258819, -1, 0, -4.37114e-08, 31, 7, -1)
@@ -239,10 +259,6 @@ transform = Transform3D(2.62268e-07, 0, -2, 0, 2, 0, 2, 0, 2.62268e-07, -20, 0, 
 transform = Transform3D(2, 0, 3.49691e-07, 0, 2, 0, -3.49691e-07, 0, 2, -24, 0, 35)
 
 [node name="Node3D3" type="Node3D" parent="."]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D3"]
-transform = Transform3D(-1.02285e-07, 0, -2.34, 0, 2.34, 0, 2.34, 0, -1.02285e-07, -9, 0, -26)
-mesh = SubResource("SphereMesh_0qhj0")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Node3D3"]
 transform = Transform3D(-1.02285e-07, 0, -2.34, 0, 2.34, 0, 2.34, 0, -1.02285e-07, -16, 0, 24)
@@ -1382,6 +1398,7 @@ bones/9/rotation = Quaternion(0.0611088, 0.0139302, -0.067709, 0.995735)
 bones/10/rotation = Quaternion(-0.707102, -0.0026188, 0.707102, -0.0026188)
 
 [node name="Hat" parent="CityRestaurantAnim2/Armature/Skeleton3D" index="0"]
-transform = Transform3D(-0.762018, 0.248143, 0.0528219, 0.249048, 0.765408, -0.00142304, -0.071997, 0.0213092, -0.56399, 6.55651e-07, 9.53674e-07, 7.45058e-09)
+transform = Transform3D(-0.762018, 0.248143, 0.0528217, 0.249048, 0.765408, -0.00142305, -0.0719968, 0.0213091, -0.56399, 2.42889e-06, 2.86102e-06, 3.72529e-07)
 
+[editable path="== LEVEL SELECT ==/LevelSelectArea"]
 [editable path="CityRestaurantAnim2"]

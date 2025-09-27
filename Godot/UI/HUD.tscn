@@ -111,6 +111,7 @@ offset_bottom = 57.0
 grow_horizontal = 1
 grow_vertical = 1
 scale = Vector2(-1, 1)
+teamID = 1
 
 [node name="Team2Rep" parent="." instance=ExtResource("2_ijstf")]
 layout_mode = 1
@@ -124,6 +125,7 @@ offset_bottom = 54.0
 grow_horizontal = 0
 grow_vertical = 1
 rotation = 0.00872665
+teamID = 2
 
 [node name="Sauce" parent="Team2Rep" index="0"]
 offset_left = -100.992

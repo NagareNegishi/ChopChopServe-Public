@@ -35,15 +35,15 @@ properties/1/spawn = true
 properties/1/replication_mode = 1
 
 [node name="PlayerCar" type="CharacterBody3D"]
-transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0)
+transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, -0.805909)
 script = ExtResource("1_3ede1")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.0854169, 0.996345, 0, -0.996345, 0.0854169, 0, 0.0254813, 0.252746)
+transform = Transform3D(1, 0, 0, 0, 0.0854169, 0.996345, 0, -0.996345, 0.0854169, 0, 0.0254813, -0.030876)
 shape = SubResource("CapsuleShape3D_fgk6e")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.232001)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0516209)
 material_override = ExtResource("1_jvgwu")
 
 [node name="TRUCKMOVE" parent="Mesh" instance=ExtResource("3_fgk6e")]
@@ -59,7 +59,8 @@ shape = SubResource("BoxShape3D_gyd8d")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.104557, 0.578925)
 
 [node name="SpringArm" type="SpringArm3D" parent="."]
-transform = Transform3D(0.422618, -0.851651, 0.309976, 0, 0.34202, 0.939693, -0.906308, -0.397131, 0.144544, 0, 0, 0.232001)
+transform = Transform3D(1.05655, -2.12913, 0.77494, 0, 0.85505, 2.34923, -2.26577, -0.992827, 0.36136, 0, 0, -0.129052)
+top_level = true
 collision_mask = 0
 shape = SubResource("SeparationRayShape3D_0dldl")
 spring_length = 7.0

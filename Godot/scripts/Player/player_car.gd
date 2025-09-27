@@ -28,6 +28,7 @@ func _ready() -> void:
 		var particle = move_particle.instantiate()
 		MOVE_PARTICLES_POOL.append(particle)
 	$SpringArm.spring_length = camera_length
+	set_multiplayer_authority(1)
 # Runs every process frame
 # @param delta time to proces frame
 # @return void
@@ -81,23 +82,17 @@ func _movement(delta : float) -> void:
 
 	#rotates mesh
 	if !input_disable:
-		$Mesh.rotation.y += turn_input_avg * turn_speed * delta
-		$CollisionShape3D.rotation.y += turn_input_avg * turn_speed * delta
+		rotation.y += turn_input_avg * turn_speed * delta
 	
 	if move_input_avg && !input_disable: #handles logic if player is moving 
-		var forward : Vector3 = -$Mesh.transform.basis.z.normalized()
+		var forward : Vector3 = -transform.basis.z.normalized()
+		var target_speed: float = (speed if move_input_avg == 1 else speed/2) * move_input_avg
+		var target_velo: Vector3 = forward * target_speed
 		
-		#halves the speed of player if in reverse
-		velocity.x = move_toward(velocity.x, 
-		forward.x * (speed if move_input_avg == 1 else speed/2) 
-		* move_input_avg, acceleration * delta)
-		
-		velocity.z = move_toward(velocity.z, 
-		forward.z * (speed if move_input_avg == 1 else speed/2) 
-		* move_input_avg, acceleration * delta)
+		velocity = velocity.move_toward(target_velo, acceleration * delta)
 	else: #declerates player if not moving 
-		velocity.x = move_toward(velocity.x, 0, decceleration * delta)
-		velocity.z = move_toward(velocity.z, 0, decceleration * delta)
+		velocity = velocity.move_toward(Vector3.ZERO, decceleration * delta)
+	
 	
 	move_and_slide()
 

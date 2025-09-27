@@ -4,17 +4,10 @@ extends MultiplayerSynchronizer
 @onready var move_input : int
 @onready var turn_input : int
 
-@onready var input_timer : Timer = Timer.new()
 
-func _ready() -> void:
-	add_child(input_timer)
-	input_timer.wait_time = 0.1
-	input_timer.timeout.connect(_send_input)
-	input_timer.autostart = true
-	input_timer.start()
-
-	
 func _process(delta: float) -> void:
+	if ENetManager.get_my_id() != multiplayer.get_unique_id(): return
+	
 	move_input = 0
 	turn_input = 0
 	
@@ -31,6 +24,8 @@ func _process(delta: float) -> void:
 		turn_input = clampi(turn_input - 1, -1, 1)
 	
 	if Input.is_action_just_pressed("Pause"): GlobalScript.get_pause_menu().toggle_visible(true)
+	_send_input()
+
 func _send_input():
 	rpc("_receive_input", multiplayer.get_unique_id(), move_input, turn_input)
 

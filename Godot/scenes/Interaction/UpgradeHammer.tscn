@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://lfcppt4wh0g4"]
+
+[ext_resource type="PackedScene" uid="uid://d1iqitph17b80" path="res://scenes/Interaction/AbstractPickup.tscn" id="1_mhxkh"]
+[ext_resource type="Script" uid="uid://cg3tuv2nsnun8" path="res://scripts/Interaction/upgrade_hammer.gd" id="2_otwws"]
+[ext_resource type="ArrayMesh" uid="uid://cua6sp03n6j11" path="res://assets/newmodels/items/UpgradeMallet_Cube_019.res" id="3_otwws"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_otwws"]
+size = Vector3(0.529846, 1.49194, 1)
+
+[node name="UpgradeHammer" instance=ExtResource("1_mhxkh")]
+script = ExtResource("2_otwws")
+
+[node name="MeshInstance3D" parent="." index="0"]
+transform = Transform3D(0.5, 0, 0, 0, 0.185, 0, 0, 0, 0.185, 0, 0, 0)
+mesh = ExtResource("3_otwws")
+
+[node name="CollisionShape3D" parent="." index="1"]
+transform = Transform3D(0.33, 0, 0, 0, 0.33, 0, 0, 0, 0.33, -0.000694882, 0.245375, 0)
+shape = SubResource("BoxShape3D_otwws")
+
+[node name="InteractableComponent" parent="." index="2"]
+transform = Transform3D(0.333, 0, 0, 0, 0.333, 0, 0, 0, 0.333, 0, 0.287053, 0)
+has_action = true

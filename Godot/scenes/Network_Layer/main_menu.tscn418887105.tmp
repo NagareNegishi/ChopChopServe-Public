@@ -1,0 +1,119 @@
+[gd_scene load_steps=6 format=3 uid="uid://bajtcauh5e5xi"]
+
+[ext_resource type="Script" uid="uid://bv1fic7goj5rs" path="res://scripts/Network_Layer/main_menu.gd" id="1_5gu6x"]
+[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/DefaultTheme.tres" id="3_0ltv3"]
+[ext_resource type="StyleBox" uid="uid://c0mya6u33ovd4" path="res://UI/Input.tres" id="3_8cx7s"]
+[ext_resource type="PackedScene" uid="uid://2qlfolqgl2hl" path="res://UI/UI_CustomButton.tscn" id="3_36fig"]
+[ext_resource type="Texture2D" uid="uid://6d0vtqnqvqw0" path="res://assets/textures/Menu/Title2.png" id="4_0ltv3"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5gu6x")
+metadata/_edit_group_ = true
+
+[node name="Menu" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Note" type="ColorRect" parent="Menu"]
+layout_mode = 0
+offset_left = 795.0
+offset_top = 533.0
+offset_right = 1249.0
+offset_bottom = 730.0
+rotation = -0.0349066
+color = Color(0.977633, 0.957728, 0.930404, 1)
+
+[node name="VBox" type="VBoxContainer" parent="Menu/Note"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 16.0
+offset_right = 331.0
+offset_bottom = 96.0
+
+[node name="Name" type="HBoxContainer" parent="Menu/Note/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="Label" type="Label" parent="Menu/Note/VBox/Name"]
+layout_mode = 2
+theme = ExtResource("3_0ltv3")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+text = "Name"
+
+[node name="Name" type="LineEdit" parent="Menu/Note/VBox/Name"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("3_0ltv3")
+theme_override_styles/normal = ExtResource("3_8cx7s")
+placeholder_text = "Froggo"
+alignment = 1
+max_length = 13
+
+[node name="IP" type="HBoxContainer" parent="Menu/Note/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 70
+
+[node name="Label" type="Label" parent="Menu/Note/VBox/IP"]
+layout_mode = 2
+theme = ExtResource("3_0ltv3")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+text = "IP"
+
+[node name="PublicIPInput" type="LineEdit" parent="Menu/Note/VBox/IP"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("3_0ltv3")
+theme_override_styles/focus = ExtResource("3_8cx7s")
+theme_override_styles/normal = ExtResource("3_8cx7s")
+placeholder_text = "[Public IP]"
+alignment = 1
+
+[node name="Title" type="Sprite2D" parent="Menu"]
+position = Vector2(209, 197)
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("4_0ltv3")
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="Menu"]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 362.0
+offset_right = 375.0
+offset_bottom = 532.0
+theme_override_constants/separation = -2
+
+[node name="HostButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
+layout_mode = 2
+text = "HOST GAME"
+
+[node name="JoinButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
+layout_mode = 2
+text = "JOIN GAME
+"
+
+[node name="ExitButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
+layout_mode = 2
+text = "EXIT GAME"
+
+[node name="Error" type="Label" parent="Menu"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 550.0
+offset_right = 408.0
+offset_bottom = 580.0
+theme = ExtResource("3_0ltv3")
+theme_override_colors/font_color = Color(0.945098, 0.356863, 0.298039, 1)
+text = "Game already being hosted"
+horizontal_alignment = 1
+vertical_alignment = 1

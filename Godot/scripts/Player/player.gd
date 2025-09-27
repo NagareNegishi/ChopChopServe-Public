@@ -18,14 +18,15 @@ var _closest_item : InteractableComponent = null
 var move_particle = preload("res://Particles/MoveParticles.tscn")
 var item_in_hand : Node3D = null
 var can_dash : bool = true
+var is_controls_disabled = false
+var is_inverted = false
 
 @onready var controller : PlayerController = $Controller
-@onready var player_state : PlayerState = $PlayerState
 @onready var item_point = $Mesh/ItemPoint
 @onready var check_interactables : Timer = $CheckInteractables
 @onready var anim_tree : AnimationTree = $AnimationTree
 @onready var body_mesh : MeshInstance3D = $Mesh/Armature/Skeleton3D/Frog
-
+@onready var name_tag : NameTag = $Mesh/NameTag/SubViewport/UiNameTag
 
 func _enter_tree() -> void:
 	scale = Vector3(1,1,1)
@@ -36,12 +37,14 @@ func _enter_tree() -> void:
 ## @return void
 func _ready() -> void:
 	$DashCooldown.wait_time = DASH_COOLDOWN
-	player_state.player_id = name.to_int()
+
 	call_deferred("set_multiplayer_authority", name.to_int())
-	
+	invert_controls(false)
 	#Sets the default animation values
 	anim_tree["parameters/conditions/is_idle"] = true
 	anim_tree["parameters/conditions/is_moving"] = false
+	anim_tree["parameters/conditions/action"] = false
+	anim_tree["parameters/conditions/unaction"] = false
 	anim_tree["parameters/SM_Walking/conditions/empty"] = true
 	anim_tree["parameters/SM_IDLE/conditions/empty"] = true
 	anim_tree["parameters/SM_Walking/conditions/holding"] = false
@@ -51,23 +54,40 @@ func _ready() -> void:
 	var colour : Color = GlobalScript.player_outline_colours.get(
 			ENetManager.get_player_list().find(name.to_int()))
 	var material : Material = StandardMaterial3D.new()
-		
-	body_mesh.material_override = material
+	material.albedo_color = colour
+	name_tag.set_color(name.to_int())
+	
 	$Decal.modulate = colour
 	body_mesh.set_surface_override_material(1, material)
-	body_mesh.get_active_material(1).albedo_color = colour
+	$Mesh/Armature/Skeleton3D/RightHand.set_surface_override_material(1, material)
+	$Mesh/Armature/Skeleton3D/LeftHand.set_surface_override_material(1, material)
 	
 	if !multiplayer.get_unique_id() == name.to_int():
-		check_interactables.stop()
+		check_interactables.stop()	
 	
 	for i in range(10):
 		var particle = move_particle.instantiate()
 		MOVE_PARTICLES_POOL.append(particle)
+	
+	if !multiplayer.get_unique_id() == name.to_int() : return
+	
+	await get_tree().create_timer(0.1).timeout
+	rpc_id(1, "_server_set_name", name.to_int(), GlobalScript.player_name)
 
 
 func set_speed(new_speed : float) -> void:
 	speed = max(new_speed, 0)
 
+@rpc("any_peer", "call_local")
+func _set_player_name(id : int, p_name : String):
+	var player : Player = GlobalScript.get_local_player_by_id(id)
+	player.name_tag.set_tag(p_name)
+
+@rpc("authority", "call_local")
+func _server_set_name(id : int, p_name : String):
+	rpc("_set_player_name", id, p_name)
+	
+	
 
 ## Functionailty that happens every frame
 ## @param delta the times it takes per frame to render
@@ -115,6 +135,7 @@ func _rotate_player(delta: float) -> void:
 ## @param delta the delta from process physics
 ## @return void
 func _movement(delta : float) -> void:
+	if is_controls_disabled: return
 	_direction = (transform.basis * 
 	Vector3(controller.input_dir.x, 0, controller.input_dir.y)).normalized()
 	
@@ -156,6 +177,10 @@ func _dash(is_forward : bool) -> void:
 ## Handles all the inputs
 ## @return void
 func _inputs() -> void:
+	if Input.is_action_just_pressed("Pause"):
+		GlobalScript.get_pause_menu().toggle_visible(true)
+	
+	if is_controls_disabled: return
 	if Input.is_action_just_pressed("Dash") && can_dash:
 		_dash(true)
 		
@@ -173,7 +198,12 @@ func _inputs() -> void:
 
 
 func _interact() -> void:
-	if (((item_in_hand is Plate  || item_in_hand is Cookware) && _closest_item != null) && 
+	if _can_add_to_plate():
+		rpc("_client_add_plate", ENetManager.get_my_id(), 
+		_closest_item.get_parent().get_path())
+		return
+	
+	elif (((item_in_hand is Plate  || item_in_hand is Cookware) && _closest_item != null) && 
 	(_closest_item.get_parent() is Food || _closest_item.get_parent() is Appliance)):
 		_closest_item.interact()
 		return
@@ -187,6 +217,17 @@ func _interact() -> void:
 	 
 	_closest_item.interact()
 
+
+func _can_add_to_plate() -> bool:
+	return ((item_in_hand != null && item_in_hand is Plate) && 
+	(_closest_item != null && _closest_item.get_parent() is Food))
+
+@rpc("any_peer", "call_local")
+func _client_add_plate(player_id : int, item_path : String):
+	var player : Player = GlobalScript.get_local_player_by_id(player_id)
+	var item := get_tree().current_scene.get_node(item_path)
+	player.item_in_hand.add_item(item)
+	
 
 ## Handles the logic for when player throws item
 ## @return void
@@ -207,11 +248,29 @@ func _action(is_active : bool) -> void:
 	if _closest_item == null || item_in_hand != null:
 		return
 	
-	anim_tree["parameters/SM_ACTION/conditions/chopping"] = true if (
-		is_active && _closest_item.get_parent() is ChoppingBoard) else false
+	rpc("_client_action_anim",ENetManager.get_my_id(), is_active,
+	is_active && _closest_item.get_parent() is ChopTable,
+	is_active && _closest_item.get_parent() is Sink)
 	
 	_closest_item.action(is_active)
 
+
+@rpc("any_peer", "call_local")
+func _client_action_anim(player_id : int, is_active : bool, chop : bool, sink : bool):
+	var player : Player = GlobalScript.get_local_player_by_id(player_id)
+	player.anim_tree["parameters/conditions/action"] = is_active
+	player.anim_tree["parameters/conditions/unaction"] = !is_active
+	
+	if chop:
+		player.anim_tree["parameters/SM_ACTION/conditions/chopping"] = true
+		
+	elif sink:
+		player.anim_tree["parameters/SM_ACTION/conditions/washing"] = true
+	
+	if !is_active:
+		player.anim_tree["parameters/SM_ACTION/conditions/washing"] = false
+		player.anim_tree["parameters/SM_ACTION/conditions/chopping"] = false
+	
 
 ## Sets what item the player is holding
 ## @return bool if successfully picked up
@@ -460,6 +519,10 @@ func remove_item() -> Node3D:
 	item_in_hand.scale = $Mesh/ItemPoint.global_transform.basis.get_scale() / item_in_hand.global_transform.basis.get_scale()
 	
 	var res = item_in_hand
+	anim_tree["parameters/SM_Walking/conditions/empty"] = true
+	anim_tree["parameters/SM_IDLE/conditions/empty"] = true
+	anim_tree["parameters/SM_Walking/conditions/holding"] = false
+	anim_tree["parameters/SM_IDLE/conditions/holding"] = false
 	item_in_hand = null
 	print("Item removed")
 	return res
@@ -481,14 +544,11 @@ func _final_drop(item: Node3D) -> void:
 	item.global_rotation = $Mesh/ItemPoint.global_rotation
 
 
-## Assigns the player a team
-## @param team the teamm you want to assign the player
-## @return void
-func set_team(team : int):
-	player_state.team = team
+func invert_controls(_invert : bool):
+	if _invert: controller.vector = Input.get_vector("Up", "Down", "Right", "Left")
+	if !_invert: controller.vector = Input.get_vector("Down", "Up", "Left", "Right")
+	is_inverted = _invert
 
 
-## Gets the team on the player
-## @return GlobalScript.Team what team the player is assigned
-func get_team() -> int:
-	return player_state.team
+func disable_controls(_disable : bool):
+	is_controls_disabled = _disable

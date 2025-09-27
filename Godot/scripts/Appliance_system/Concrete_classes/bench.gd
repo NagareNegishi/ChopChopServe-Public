@@ -225,5 +225,3 @@ func _client_serve(player_id: int, can_serve: int) -> void:
 # 	_position_item(item, contents.size() - 1)
 # 	return true
 # #---------------------------------------------------------------------------------------------------
-
-

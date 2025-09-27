@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://djfcyiaxcgwdy"]
+[gd_scene load_steps=42 format=3 uid="uid://djfcyiaxcgwdy"]
 
 [ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_kvujm"]
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="2_hn8pd"]
@@ -34,7 +34,6 @@
 [ext_resource type="PackedScene" uid="uid://krj0gwn31x8u" path="res://scenes/Appliance_system/stove_with_pot.tscn" id="31_b1dl0"]
 [ext_resource type="PackedScene" uid="uid://b0ougk3d4jnku" path="res://scenes/Appliance_system/food_crate.tscn" id="32_g8qa5"]
 [ext_resource type="PackedScene" uid="uid://cn8yjuakgjsam" path="res://assets/newmodels/furniture/Sink.glb" id="33_wnmvo"]
-[ext_resource type="PackedScene" uid="uid://bq2c75mlrpn41" path="res://scripts/Sabotage/fireStart.tscn" id="35_coll7"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_67eo6"]
 size = Vector3(1.11963, 1, 3.02759)
@@ -828,5 +827,3 @@ using_tscn = false
 unique_name = "UNNAMED_APPLIANCE"
 current_owner = 1
 model_scene = ExtResource("33_wnmvo")
-
-[node name="fireStart" parent="." instance=ExtResource("35_coll7")]

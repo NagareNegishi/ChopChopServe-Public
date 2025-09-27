@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/newblender.glb-87712efe869d53d1c21ac16adb38aa
 
 [params]
 
-nodes/root_type=""
+nodes/root_type="MeshInstance3D"
 nodes/root_name=""
 nodes/apply_root_scale=true
 nodes/root_scale=1.0

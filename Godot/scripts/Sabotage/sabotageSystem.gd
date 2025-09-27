@@ -1,8 +1,12 @@
-#class_name Sabotage_System
+class_name Sabotage_System
 extends Node
+
+########### Do I need to make a global timer for the different sabotages ?? ##########
 
 # Don't currently actually use
 var current_sabotage
+
+@onready var mischief := []
 
 # Signals
 signal sabotage_success(sabotage_type: int)
@@ -10,30 +14,47 @@ signal sabotage_success(sabotage_type: int)
 signal sabotage_failed(reason: String)
 signal sabotage_sending_team(teamID: int)
 
+# Need to remove crateSwitch and maybe add something else?
+
 # Define Sabotage Types
 enum SabotageType {
-	CRATE_SWITCH,
 	WATER_SPILL,
 	FIRE,
 	FOOD_CRITIC,
+	SWITCH_CONTROLS,
 	RAT_SWARM,
 	POWER_OUTAGE
 }
 
 # Costs of the sabotages
 const sabotage_costs = [	
-	400, # Crate Switch
 	450, # Water Spill
 	600, # Fire
 	700, # Critic
+	800, # Switch Player Controls
 	900, # Rat Swarm
 	1200 # Power Outage
 ]
+
+# Times of the sabotages
+# Maybe make this a thing that is passed when calling?
+const sabotage_times = [
+	10, # Water Spill
+	100, # Fire (forever)
+	100, # Critic (forever)
+	23, # Switch Player Controls
+	20, # Rat Swarm
+	15, # Power Outage
+]
+
+# Do I need to add an enum for the 'cost' of each sabotages reputation
 
 # Get Globals
 @onready var currency_system = CurrencySystem
 @onready var reputation_system = ReputationSystem
 @onready var global_script = GlobalScript
+@onready var rat_attack = RatAttack
+
 
 # ------------------- Requesting Sabotage Functions ------------------- #
 
@@ -56,6 +77,7 @@ func request_sabotage(teamID: int, sabotage_type: int) -> void:
 	if not currency_system.check_currency(teamID, -cost):
 		# Fix this !!
 		##sabotage_failed.rpc_id(sender_id, "Not enough currency")
+		# Change this to a UI error popup
 		print("Not going to work sorry")
 		return
 
@@ -76,124 +98,66 @@ func request_sabotage(teamID: int, sabotage_type: int) -> void:
 			##sabotage_failed.rpc_id(sender_id, "No flammable appliances available")
 			return
 		# Call the execute Sabotage with a path
-		execute_sabotage.rpc(teamID, sabotage_type, chosen_path)
+		execute_sabotage.rpc(teamID, sabotage_type, chosen_path, Vector3(0, 0, 0))
 	# If, WATER_SPILL, get a position
 	elif sabotage_type == SabotageType.WATER_SPILL:
-		var position = get_random_spill_position(teamID)
+		var position = get_random_position(teamID)
 		# Call the execute Sabotage with position
-		execute_sabotage_with_position.rpc(teamID, sabotage_type, position)
+		execute_sabotage.rpc(teamID, sabotage_type, NodePath(""), position)
+	elif sabotage_type == SabotageType.RAT_SWARM:
+		var position = get_random_position(teamID)
+		var chosen_path = find_object_path()
+		execute_sabotage.rpc(teamID, sabotage_type, chosen_path, position)
 	else:
 		# For now, otherwise just call the normal one
-		execute_sabotage.rpc(teamID, sabotage_type, NodePath(""))
+		execute_sabotage.rpc(teamID, sabotage_type, NodePath(""), Vector3(0, 0, 0))
 
-	# Broadcast sabotage to all clients
-	execute_sabotage.rpc(teamID, sabotage_type)
+# ------------------- Execute Sabotage Function ------------------- #
 
+# Call to run the Sabotages
 # Server call this
 @rpc("authority", "call_local", "reliable")
-# Actually run the sabotage
-# NORMAL + FIRE edition
-func execute_sabotage(teamID: int, sabotage_type: int, chosen_path: NodePath) -> void:
+func execute_sabotage(teamID: int, sabotage_type: int, chosen_path: NodePath, position: Vector3 ) -> void:
 	print("executing sabotage %s for team %s" % [sabotage_type, teamID])
 	##current_sabotage = sabotage_type
-	# Do the Sabotage with a path
-	_do_sabotage(teamID, sabotage_type, chosen_path)
+	# Do the basic Sabotage
+	_do_sabotage(teamID, sabotage_type, chosen_path, position)
 	# Signals
 	sabotage_success.emit(sabotage_type)
 	sabotage_sending_team.emit(teamID)
 
-# Server call this
-@rpc("authority", "call_local", "reliable")
-# Actually run the sabotage
-# WATER SPILL edition
-func execute_sabotage_with_position(teamID: int, sabotage_type: int, position: Vector3) -> void:
-	print("executing sabotage %s for team %s at position %s" % [sabotage_type, teamID, position])
-	##current_sabotage = sabotage_type
-	# Do the sabotage with a position
-	_do_sabotage_with_position(teamID, sabotage_type, position)
-	# Signals
-	sabotage_success.emit(sabotage_type)
-	sabotage_sending_team.emit(teamID)
+# ------------------- Do Sabotage Function ------------------- #
 
-# Enum getting for Sabotage Types
-# WATER_SPILL edition
-# Fix this up : could be done better?
-func _do_sabotage_with_position(teamID: int, sabotage_type: int, position: Vector3) -> void:
+# Enum getting for Sabotage Types to run
+func _do_sabotage(teamID: int, sabotage_type: int, chosen_path: NodePath, position: Vector3) -> void:
 	match sabotage_type:
-		SabotageType.CRATE_SWITCH:
-			print("crate stuff")
-			# Handle crate switch sabotage
-
-		# ------- Water Spill Stuff ------- #
-		
 		SabotageType.WATER_SPILL:
 			print("water stuff")
 			spawn_water_spill(teamID, 5.0, position)
-
-		# ------- Water Spill Stuff ------- #
-		SabotageType.FIRE:
-			print("fire stuff")
-			spawn_fire(teamID, _pick_flammable_appliance_path())
-		SabotageType.FOOD_CRITIC:
-			print("critic stuff")
-			spawn_food_critic()
-			# Handle food critic sabotage
-		SabotageType.RAT_SWARM:
-			print("rat stuff")
-			# Handle rat swarm sabotage
-		SabotageType.POWER_OUTAGE:
-			print("power stuff")
-
-	# Signals
-	sabotage_success.emit(sabotage_type)
-	sabotage_sending_team.emit(teamID)
-
-# Enum getting for Sabotage Types
-# NORMAL + FIRE edition
-# Fix this up : could be done better?
-func _do_sabotage(teamID: int, sabotage_type: int, chosen_path: NodePath) -> void:
-	match sabotage_type:
-		SabotageType.CRATE_SWITCH:
-			print("crate stuff")
-			# Handle crate switch sabotage
-		SabotageType.WATER_SPILL:
-			print("water stuff")
 			#spawn_water_spill(teamID, 5.0, ) # duration can be adjusted
-
-		# ------- Fire Start Stuff ------- #
-
 		SabotageType.FIRE:
 			print("fire stuff")
 			spawn_fire(teamID, chosen_path)
-
-		# ------- Fire Start Stuff ------- #
 		SabotageType.FOOD_CRITIC:
 			print("critic stuff")
 			spawn_food_critic()
 			# Handle food critic sabotage
 		SabotageType.RAT_SWARM:
 			print("rat stuff")
+			spawn_rat_swarm(position, chosen_path)
 			# Handle rat swarm sabotage
 		SabotageType.POWER_OUTAGE:
 			print("power stuff")
+			spawn_power_outage(teamID)
 
 	# Signals
 	sabotage_success.emit(sabotage_type)
 	sabotage_sending_team.emit(teamID)
 
 
-# ------------------- Sabotage Functions ------------------- #
+# ------------------- Implement Sabotage Functions ------------------- #
 
-# ------- Crate Switch Stuff -------
-# UNUSED CURRENTLY
-func spawn_crate_switch() -> void:
-	print("spawning crate switch")
-	# findout whats happerning with the crate logic
-	# should be similar to the critic logic
-	# signal or call a function that does the switch
-	# 
-
-# ------- Water Spill Stuff -------
+# ------- Water Spill Stuff ------- #
 # Spawn a Water Spill
 func spawn_water_spill(teamID: int, duration: float, position: Vector3) -> void:
 	# TODO: Make sure position is vaild
@@ -204,17 +168,21 @@ func spawn_water_spill(teamID: int, duration: float, position: Vector3) -> void:
 	get_tree().get_current_scene().add_child(spill)
 	# Get the position of the Spill
 	spill.global_position = position
+	spill.send_position(position)
+	spill.spill()
 	##spill.global_position = get_random_spill_position(teamID)	
-	spill.start_timer(duration)
-
+	#spill.start_timer(duration)
+	# Add something to use the team ID
+	
+var floor_node
 # Helper Function
 # Random position for the water spill
-func get_random_spill_position(teamID: int) -> Vector3:
+func get_random_position(teamID: int) -> Vector3:
 
 	# Currently this just spawns on the specific sides of the floor
 	# Would like to so they don't spawn within appliances
 	# It takes note of things 
-	var floor_node = get_tree().get_current_scene().get_node("NavigationRegion3D/Floor")
+	floor_node = get_tree().get_current_scene().get_node("NavigationRegion3D/Floor")
 
 	# Remove this later
 	if not floor_node:
@@ -241,7 +209,7 @@ func get_random_spill_position(teamID: int) -> Vector3:
 	# Return a position for the spill
 	return centre + Vector3(offset_x, 0, offset_z)
 
-# ------- Fire Stuff -------
+# ------- Fire Stuff ------- #
 
 # Spawn a Fire
 func spawn_fire(teamID: int, chosen_path: NodePath) -> void:
@@ -304,7 +272,7 @@ func _pick_flammable_appliance_path() -> NodePath:
 	# but if the fire is still going when the timer ends
 	# then spread the fire to another appliance
 
-# ------- Food Critic Stuff -------
+# ------- Food Critic Stuff ------- #
 # UNUSED CURRENTLY
 func spawn_food_critic() -> void:
 	print("make a customer a critic")
@@ -313,13 +281,42 @@ func spawn_food_critic() -> void:
 		# then deal with it in the npc script
 	# Or:
 		# create a function in the npc and call it here
-
-# ------- Rat Swarm Stuff -------
+		
+# ------- Rat Swarm Stuff ------- #
 # UNUSED CURRENTLY
-func spawn_rat_swarm() -> void:
+func spawn_rat_swarm(position: Vector3, path: NodePath) -> void:
 	print("spawning rat sparm")
+	RatAttack.spawn_rat_mischief(position, path)
+	#var rat = preload("res://scripts/Sabotage/rat.tscn").instantiate()
+	#get_tree().get_current_scene()#.add_child(rat)
+	#rat.global_position = position
+	#mischief.append(rat)
+	#rat.add_to_mischief(rat)
+	#add_child(rat)
+var benches : Array = []
 
-# ------- Power Outage Stuff -------
-# UNUSED CURRENTLY
-func spawn_power_outage() -> void:
+func find_object_path() -> NodePath:
+	var appliances = get_tree().get_nodes_in_group("flammable")
+	# add a if statment about size here
+	for item in appliances:
+		#print("going through #1")
+		if item is Bench:
+			#print("====this is a bench===== ", item)
+			benches.append(item)
+	
+	var b = benches[randi() % benches.size()]
+	#print("Bench we have gone with is: ", b)
+	return b.get_path()
+
+# ------- Power Outage Stuff ------- #
+func spawn_power_outage(teamID: int) -> void:
 	print("spawning power outage")
+	var power = preload("res://scripts/Sabotage/powerOutage.tscn").instantiate()
+	get_tree().get_current_scene().add_child(power)
+	power.turn_power_off(teamID)
+
+
+
+
+
+# IS THE A BUG AROUND STILL BEING ABLE TO COOK EVEN AFTER THE THING IS TURNED OFF?

@@ -4,8 +4,8 @@
 class_name Appliance
 extends Placeable
 
-signal food_placed()
-
+signal food_placed(contents)
+signal food_taken
 enum Owner {
 	NONE,
 	TEAM1,

@@ -14,3 +14,5 @@ func _ready():
 	valid_food = ["Fish", "Tomato", "Water", "Mushroom", "Onion", "Pasta", "Pumpkin"] # Confirm later!!!!!!!!!!!!!!
 	capacity = 4
 	coefficient = 1.0
+	
+	add_to_group("Appliance")

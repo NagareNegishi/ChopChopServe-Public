@@ -22,6 +22,51 @@ func _ready():
 	super._ready()
 	action_interval = 0.5
 	_set_affixes()
+	_add_inventory_ui()
+
+
+func _add_inventory_ui():
+	# Add a canvas layer to ensure UI is on top
+	var canvas_layer = CanvasLayer.new()
+	canvas_layer.layer = 100
+	canvas_layer.name = "InventoryLayer"
+	add_child(canvas_layer)
+	
+	var inventory_scene = preload("res://FridgeInven/inventory.tscn")
+	var inventory_ui = inventory_scene.instantiate()
+	inventory_ui.name = "Inventory"
+	canvas_layer.add_child(inventory_ui)
+
+	_setup_interaction_area()
+
+func _on_player_entered(body):
+	if body is Player and body.name.to_int() == ENetManager.get_my_id():
+		get_node("InventoryLayer/Inventory").open()
+
+func _on_player_exited(body):
+	if body is Player and body == GlobalScript.get_local_player():
+		get_node("InventoryLayer/Inventory").close()
+
+
+func _on_food_selected(food_name: String):
+	var player = GlobalScript.get_local_player()
+	var item_in_hand = player.item_in_hand if player else null
+	player_selected(item_in_hand, food_name)
+
+
+func _setup_interaction_area():
+	var area = Area3D.new()
+	var collision = CollisionShape3D.new()
+	var shape = BoxShape3D.new()
+	shape.size = Vector3(2, 1, 2)
+	collision.shape = shape
+	area.add_child(collision)
+	add_child(area)
+	
+	area.body_entered.connect(_on_player_entered)
+	area.body_exited.connect(_on_player_exited)
+
+
 
 
 ## Register all foods from the directory
@@ -44,7 +89,7 @@ static func _register_foods() -> void:
 				food_book[food_name] = food_scene
 				var sample = food_scene.instantiate()
 				food_instances[food_name] = sample
-				print("Registered: ", food_name)
+				# print("Registered: ", food_name)
 			else:
 				push_warning("Failed to load food scene: " + scene_path)
 		file_name = dir.get_next()
@@ -80,8 +125,10 @@ func provide_food(food_name: String) -> Node:
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
 func player_has(item: Node) -> void:
-	print("pop up UI here")
-	player_selected(item, "apple")
+	print("Do nothing")
+	return
+	# print("pop up UI here")
+	# player_selected(item, "Tomato")
 
 
 ## Perform action depend on what player is holding
@@ -95,7 +142,6 @@ func player_selected(item: Node, food_name: String) -> void:
 	if not item:
 		provide_request(food_name)
 		return
-
 	if item is Cookware and item._can_accept(food_instances.get(food_name)):
 		transfer_request(item, food_name)
 		return

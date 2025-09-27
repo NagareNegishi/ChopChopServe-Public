@@ -51,8 +51,17 @@ func add_slot(item_name: String, amount: int, price: int):
 	slot_instance.inventory_item_name = item_name
 	slot_instance.amount = amount
 	slot_instance.price = price
-	
+
+	# Try to connect to parent FoodFactory
+	var canvas_layer = get_parent()
+	var food_factory = canvas_layer.get_parent()
+	if food_factory and food_factory.has_method("_on_food_selected"):
+		slot_instance.food_requested.connect(food_factory._on_food_selected)
+	else:
+		print("ERROR: Could not find FoodFactory parent")
+
 	gridCont.add_child(slot_instance)
 
 func get_2D_texture(item_name: String) -> Texture2D:
 	return load("res://assets/textures/ingredients/"+ item_name +".png")
+

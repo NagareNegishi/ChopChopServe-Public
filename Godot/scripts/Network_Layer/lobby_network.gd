@@ -4,6 +4,7 @@ class_name LobbyNetwork
 
 @onready var role_label: Label = $RoleLabel
 @onready var team_label: Label = $TeamLabel
+@onready var ip_label: Label = $IPLabel
 @onready var buttons_container: Container = $ControlContainer
 @onready var shuffle_button: Button = $ControlContainer/ShuffleButton
 @onready var start_button: Button = $ControlContainer/StartButton
@@ -46,6 +47,7 @@ func _ready():
 	_update_player_list()
 	_set_role_label()
 	_set_team_label(my_team)
+	_set_ip_label()
 	_set_buttons()
 
 
@@ -63,6 +65,15 @@ func _set_team_label(team_number: int) -> void:
 		team_label.text = "Team: Unassigned"
 	else:
 		team_label.text = "Team: %d" % team_number
+
+
+## Set ip Label
+func _set_ip_label() -> void:
+	if is_host:
+		ip_label.show()
+		ip_label.text = "Share your IP: %s" % ENetManager.enet_layer.get_connection_info()
+	else:
+		ip_label.hide()
 
 
 ## Set Buttons
@@ -140,9 +151,10 @@ func _start_game() -> void:
 	buttons_container.hide()
 	player_list_root.hide()
 ##----------------------------------------------------------------------------------
-## need more logic here.
-## can Lobby scene take over? or should we create a new scene for the game?
-	SceneManager.change_scene(SceneManager.Scene.LOBBY)
+	# Actual scene
+	# SceneManager.change_scene(SceneManager.Scene.LOBBY)
+	# Test scene
+	SceneManager.change_scene(SceneManager.Scene.TEST)
 ##----------------------------------------------------------------------------------
 
 

@@ -62,11 +62,6 @@ func _on_join_pressed():
 func _switch_to_lobby():
 	SceneManager.change_scene(SceneManager.Scene.LOBBY_TEST)
 
-	# # Change this part to switch stage to bus
-	# if network_layer.is_host():
-	# 	print("=== HOST CONNECTION INFO ===")
-	# 	print("Share with friends: " + network_layer.get_connection_info())
-	# 	print("============================")
 
 func _exit_game():
 	get_tree().quit()

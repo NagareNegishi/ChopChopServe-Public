@@ -19,6 +19,7 @@ var move_particle = preload("res://Particles/MoveParticles.tscn")
 var item_in_hand : Node3D = null
 var can_dash : bool = true
 var is_controls_disabled = false
+var is_actoin_disabled = false
 var is_inverted = false
 
 @onready var controller : PlayerController = $Controller
@@ -32,6 +33,8 @@ func _enter_tree() -> void:
 	scale = Vector3(1,1,1)
 	
 
+func _sabotage(num):
+	SabotageSystem.request_sabotage(ENetManager.get_my_id(), num)
 
 ## Called when the node enters the scene tree for the first time.
 ## @return void
@@ -39,7 +42,6 @@ func _ready() -> void:
 	$DashCooldown.wait_time = DASH_COOLDOWN
 
 	call_deferred("set_multiplayer_authority", name.to_int())
-	invert_controls(false)
 	#Sets the default animation values
 	anim_tree["parameters/conditions/is_idle"] = true
 	anim_tree["parameters/conditions/is_moving"] = false
@@ -179,8 +181,16 @@ func _dash(is_forward : bool) -> void:
 func _inputs() -> void:
 	if Input.is_action_just_pressed("Pause"):
 		GlobalScript.get_pause_menu().toggle_visible(true)
-	
+		
+	if !is_actoin_disabled:
+		if Input.is_action_just_pressed("Action"):
+			_action(true)
+			
+		if Input.is_action_just_released("Action"):
+			_action(false)
+		
 	if is_controls_disabled: return
+	
 	if Input.is_action_just_pressed("Dash") && can_dash:
 		_dash(true)
 		
@@ -189,12 +199,12 @@ func _inputs() -> void:
 		
 	if Input.is_action_just_pressed("Throw"):
 		server_drop_item(get_path(), true)
-		
-	if Input.is_action_just_pressed("Action"):
-		_action(true)
-		
-	if Input.is_action_just_released("Action"):
-		_action(false)
+	
+	if Input.is_action_just_pressed("Sabotage1"): _sabotage(0)
+	elif Input.is_action_just_pressed("Sabotage2"): _sabotage(1)
+	elif Input.is_action_just_pressed("Sabotage3"): _sabotage(2)
+	elif Input.is_action_just_pressed("Sabotage4"): _sabotage(3)
+	elif Input.is_action_just_pressed("Sabotage5"): _sabotage(4)
 
 
 func _interact() -> void:
@@ -245,12 +255,23 @@ func _action(is_active : bool) -> void:
 		item_in_hand.get_node("InteractableComponent").action(is_active)
 		return
 	
-	if _closest_item == null || item_in_hand != null:
+	elif _closest_item == null || item_in_hand != null:
 		return
+	
+	
+		
+	if !_closest_item.has_action || (is_active && _closest_item.get_parent() is ChopTable && 
+	_closest_item.get_parent().chopping_board.contents.is_empty()) || (is_active 
+	&& _closest_item.get_parent() is Sink && _closest_item.get_parent().contents.is_empty()): return
+	
+	if _closest_item != null && (_closest_item.get_parent() is ChopTable or _closest_item.get_parent() is Sink):
+		disable_controls(is_active, false)
 	
 	rpc("_client_action_anim",ENetManager.get_my_id(), is_active,
 	is_active && _closest_item.get_parent() is ChopTable,
 	is_active && _closest_item.get_parent() is Sink)
+	
+	
 	
 	_closest_item.action(is_active)
 
@@ -302,6 +323,10 @@ func pickup_item(item : Node3D) -> bool:
 	$Mesh/ItemPoint.add_child(item)
 	call_deferred("_final_pickup", item)
 
+	anim_tree["parameters/SM_Walking/conditions/empty"] = false
+	anim_tree["parameters/SM_IDLE/conditions/empty"] = false
+	anim_tree["parameters/SM_Walking/conditions/holding"] = true
+	anim_tree["parameters/SM_IDLE/conditions/holding"] = true
 	
 	item_in_hand = item
 	
@@ -550,5 +575,6 @@ func invert_controls(_invert : bool):
 	is_inverted = _invert
 
 
-func disable_controls(_disable : bool):
+func disable_controls(_disable : bool, _action : bool):
 	is_controls_disabled = _disable
+	is_actoin_disabled = _action

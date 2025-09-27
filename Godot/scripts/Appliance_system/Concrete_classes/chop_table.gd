@@ -39,7 +39,7 @@ func _add_chopping_board() -> void:
 ## @return: True if placement was successful, false otherwise
 func put(item: Node) -> bool:
 	if not _can_accept(item):
-		return false
+		return false 
 	return chopping_board.put(item)
 
 

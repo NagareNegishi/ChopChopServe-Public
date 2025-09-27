@@ -30,12 +30,12 @@ func _animation(player_path : String):
 	player.anim_tree["parameters/conditions/action"] = true
 	player.anim_tree["parameters/conditions/unaction"] = false
 	player.anim_tree["parameters/SM_ACTION/conditions/whacking"] = true
-	player.disable_controls(true)
+	player.disable_controls(true, true)
 	player.item_in_hand.visible = false
 	
 	await get_tree().create_timer(1).timeout
 
-	player.disable_controls(false)
+	player.disable_controls(false, false)
 	player.item_in_hand.visible = true
 	player.anim_tree["parameters/SM_ACTION/conditions/whacking"] = false
 	player.anim_tree["parameters/conditions/unaction"] = true

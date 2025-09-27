@@ -6,8 +6,8 @@ class_name Food
 signal cooked
 @warning_ignore("unused_signal")
 signal changed_food_state
-@warning_ignore("unused_signal")
-signal cooking
+
+signal cooking()
 
 #Meshes
 var raw_mesh: MeshInstance3D = null
@@ -73,6 +73,7 @@ func _ready():
 
 func _on_timer_timeout():
 	if is_cooking:
+		cooking.emit()
 		match current_appliance:
 			ApplianceFactory.CookingStyle.CHOP:
 				chop()
@@ -201,7 +202,7 @@ func stop_cooking():
 	current_appliance = null
 
 
-func get_cooking_type(style: ApplianceFactory.CookingStyle):
+func get_cooking_style(style: ApplianceFactory.CookingStyle):
 	match(style):
 		ApplianceFactory.CookingStyle.BAKE:
 			return "BAKED"
@@ -246,7 +247,7 @@ func set_cook_time(time: float, style: ApplianceFactory.CookingStyle):
 
 # Lets the appliance get the cooking time of the ingredient
 func get_cook_time(style: ApplianceFactory.CookingStyle):
-	return get(get_cooking_type(style)+"_time")
+	return get(get_cooking_style(style)+"_time")
 
 func get_quality():
 	return quality

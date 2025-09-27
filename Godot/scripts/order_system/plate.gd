@@ -18,7 +18,7 @@ const CELL_SIZE = 0.2
 var grid: Array = []
 var is_dirty : bool = false
 var is_full : bool = false
-
+var number
 
 func _ready():
 	menu_instance = preload_menuItems.new()
@@ -128,7 +128,7 @@ func _set_quality(list: Array):
 	var total_quality = 0
 	for elem in list:
 		number += elem
-    
+	
 	var average_quality = number / list.size()
 	
 	quality = (average_quality - floor_time_count)

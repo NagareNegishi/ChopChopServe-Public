@@ -5,7 +5,7 @@ class_name PoweredAppliance
 extends Appliance
 
 signal status_changed(new_status: Status)
-
+signal add_appliance(this: PoweredAppliance)
 enum Status {
 	COOKING,
 	OFF,
@@ -80,6 +80,7 @@ func _put(item: Node) -> void:
 	contents.append(item)
 	add_child(item)
 	contents_names.append(item.name)
+	
 	if item is Cookware:
 		_put_cookware(item)
 
@@ -95,6 +96,8 @@ func _put_cookware(cookware: Cookware) -> void:
 	cookware.power_receiving = power
 	if cookware.can_cook() and can_cook():
 		cookware.cook(power)
+	if emit_signal("add_appliance", cookware):
+		print("MEOWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW    ", cookware)
 
 
 ## Fallback method to put item with re-parenting

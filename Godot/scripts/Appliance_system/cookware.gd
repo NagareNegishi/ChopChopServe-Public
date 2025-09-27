@@ -4,6 +4,8 @@
 class_name Cookware
 extends Equipment
 
+signal new_average(average: float)
+
 var power_receiving: int = 0
 var sizzle_particles: ParticleController
 
@@ -56,14 +58,13 @@ func put_all(items: Array) -> bool:
 func _put_food(food: Food) -> void:
 	#food.current_visibility(false)
 	food.change_collisions(true)
-	food_placed.emit()
+	emit_signal("food_placed", contents)
 	if can_cook():
 		# _average_food() # depend on Food implementation ---------------------------
 		food.start_cooking(int(power_receiving * coefficient), cooking_style)
 		_average_food()
 		_toggle_sizzle(true)
 	print("Food placed in cookware: ", food.get_script().get_global_name(), ", Cookware can cook: ", can_cook(), ", Food cook time: ", food.get_cook_time(cooking_style))
-
 
 ## Average cooking time of food in cookware
 ## Only subclass of Food should be in Cookware
@@ -78,6 +79,7 @@ func _average_food() -> float:
 	var average = total / contents.size()
 	for food in contents:
 		food.set_cook_time(average, cooking_style)
+	emit_signal("new_average", average)
 	return average
 
 
@@ -90,6 +92,7 @@ func take_all() -> Array[Node]:
 		remove_child(item)
 	contents = []
 	contents_names = []
+	emit_signal("food_taken")
 	return all_items
 
 

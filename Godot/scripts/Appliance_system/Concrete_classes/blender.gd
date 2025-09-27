@@ -14,6 +14,7 @@ func _ready():
 	valid_classes = ["Tomato", "Water", "Milk", "Cocoa", "Flour", "Vanilla Icecream", "Strawberry"]
 	capacity = 4
 	power = 1
+	
 	add_to_group("Appliance")
 
 
@@ -50,7 +51,10 @@ func _put_food(food: Food) -> void:
 	#food.current_visibility(false)
 
 	food.change_collisions(true)
-	food_placed.emit()
+	if emit_signal("food_placed", contents, self):
+		print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY")
+		print("\n\n", contents)
+		print(self,"\n\n")
 	if current_status == Status.COOKING:
 		_average_food()
 		food.start_cooking(power, cooking_style)
@@ -89,6 +93,7 @@ func take_all() -> Array[Node]:
 	contents = []
 	contents_names = []
 	stop_cook()
+	emit_signal("food_taken")
 	return all_items
 
 
@@ -347,3 +352,7 @@ func get_progress() -> float:
 # 	plate.add_list_items(take_all()) # Method in Plate, takes Array of Food
 # 	return true
 # #---------------------------------------------------------------------------------------------------
+
+
+func _on_food_placed(contents):
+	pass # Replace with function body.

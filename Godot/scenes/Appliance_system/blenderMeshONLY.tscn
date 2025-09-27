@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://p5bueh2iq7ap"]
+
+[ext_resource type="PackedScene" uid="uid://b7x0xycilg7vt" path="res://assets/models/NuFurniture/newblender.glb" id="1_uha7g"]
+
+[node name="newblender" instance=ExtResource("1_uha7g")]

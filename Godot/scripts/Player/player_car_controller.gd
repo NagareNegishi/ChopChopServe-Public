@@ -24,11 +24,12 @@ func _process(delta: float) -> void:
 		turn_input = clampi(turn_input - 1, -1, 1)
 	
 	if Input.is_action_just_pressed("Pause"): GlobalScript.get_pause_menu().toggle_visible(true)
-	_send_input()
+	if move_input || turn_input: _send_input()
 
 func _send_input():
 	rpc("_receive_input", multiplayer.get_unique_id(), move_input, turn_input)
 
 @rpc("any_peer", "call_local")
 func _receive_input(sender_id : int, move : int, turn : int):
+	if !ENetManager.is_host(): return
 	get_parent()._on_received_input(sender_id, move, turn)

@@ -104,7 +104,6 @@ theme_override_font_sizes/font_size = 13
 text = "Chop Chop Serve | Alpha Build"
 
 [node name="Server" type="Label" parent="."]
-visible = false
 layout_mode = 0
 offset_left = 8.0
 offset_top = 7.0

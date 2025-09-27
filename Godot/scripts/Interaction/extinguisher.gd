@@ -5,8 +5,8 @@ class_name Extinguisher extends AbstractThrowable
 func _ready() -> void:
 	$ExtinguishRange.enabled = false
 	$ExtinguishRange/GPUParticles3D.emitting = false
-	if !multiplayer.is_server():
-		set_physics_process(false)
+	#if !multiplayer.is_server():
+		#set_physics_process(false)
 
 
 
@@ -47,5 +47,4 @@ func _extingush() -> void:
 func _on_interactable_component_action_use(is_action: bool) -> void:
 
 	$ExtinguishRange/GPUParticles3D.emitting = is_action
-	if !ENetManager.is_host(): return
 	$ExtinguishRange.enabled = true if is_action else false

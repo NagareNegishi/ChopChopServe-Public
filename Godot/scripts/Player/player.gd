@@ -34,7 +34,7 @@ func _enter_tree() -> void:
 	
 
 func _sabotage(num):
-	SabotageSystem.request_sabotage(ENetManager.get_my_id(), num)
+	SabotageSystem.rpc("request_sabotage", ENetManager.get_my_team(), num)
 
 ## Called when the node enters the scene tree for the first time.
 ## @return void
@@ -159,7 +159,7 @@ func _on_dash_timer_timeout() -> void:
 ## Performs the dash and starts the dash cooldown
 ## @return void
 func _dash(is_forward : bool) -> void:
-	if !velocity:
+	if !velocity || !is_on_floor():
 		return
 	var dash_tween = create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	

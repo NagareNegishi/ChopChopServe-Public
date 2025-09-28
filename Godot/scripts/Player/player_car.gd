@@ -9,8 +9,8 @@ extends CharacterBody3D
 @export var camera_length : float = 7
 
 var input_disable : bool = false
-var turn_input : int
-var move_input : int
+var turn_input_avg : int = 0
+var move_input_avg : int = 0
 
 @onready var controller : PlayerCarController = $Controller
 @onready var camera : Camera3D = $SpringArm/Camera
@@ -47,31 +47,51 @@ func _process(delta: float) -> void:
 # @param delta time to proces frame
 # @return void
 func _movement(delta : float) -> void:
-	_clear_inputs()
-	var lowest_input
-	turn_input = 0
-	move_input = 0
+	#resets average
+	turn_input_avg = 0
+	move_input_avg = 0
 	
-	if !player_inputs.is_empty():
-		lowest_input = player_inputs.keys().reduce(func(a, b):
-			return a if player_inputs[a].time < player_inputs[b].time else b)
+	var move_zero_count = 0
+	var turn_zero_count = 0
+	
+	#adds all turn and move inputs
+	for key in player_inputs.keys():
+		turn_input_avg += player_inputs[key].turn
+		move_input_avg += player_inputs[key].move
 		
-		turn_input = player_inputs[lowest_input].turn
-		move_input = player_inputs[lowest_input].move
+		#tracks how many players arent requesting to move
+		if player_inputs[key].move == 0:
+			move_zero_count += 1
 		
+		#tracks how many players arent requesting to turn
+		if player_inputs[key].turn == 0:
+			turn_zero_count += 1
+	
+	#averages inputs if at least one player is requesting to move
+	if (player_inputs.size() - move_zero_count) != 0:
+		turn_input_avg /= (player_inputs.size() - move_zero_count)
+	
+	#averages inputs if at least one player is requesting to turn
+	if (player_inputs.size() - turn_zero_count) != 0:
+		move_input_avg /= (player_inputs.size() - turn_zero_count)
+	
+	#clamps average bewteen -1 and 1
+	turn_input_avg = clampi(turn_input_avg, -1, 1)
+	move_input_avg = clampi(move_input_avg, -1, 1)
 
 	#rotates mesh
 	if !input_disable:
-		rotation.y += turn_input * turn_speed * delta
+		rotation.y += turn_input_avg * turn_speed * delta
 	
-	if move_input || !input_disable: #handles logic if player is moving 
+	if move_input_avg && !input_disable: #handles logic if player is moving 
 		var forward : Vector3 = -transform.basis.z.normalized()
-		var target_speed: float = (speed if move_input == 1 else speed/2) * move_input
-		var target_velo: Vector3 = forward * target_speed
 		
-		velocity = velocity.move_toward(target_velo, acceleration * delta)
+		velocity = velocity.move_toward(
+		forward * (speed if move_input_avg == 1 else speed/2) 
+		* move_input_avg, acceleration * delta)
 	else: #declerates player if not moving 
-		velocity = velocity.move_toward(Vector3.ZERO, decceleration * delta)
+		velocity = velocity.move_toward(velocity, decceleration * delta)
+		velocity = velocity.move_toward(velocity, decceleration * delta)
 	
 	
 	move_and_slide()
@@ -80,7 +100,7 @@ func _movement(delta : float) -> void:
 # @return void
 @rpc("authority")
 func _on_particle_timer_timeout() -> void:
-	if (velocity == Vector3.ZERO || move_input == -1) && turn_input == 0:
+	if (velocity == Vector3.ZERO || move_input_avg == -1) && turn_input_avg == 0:
 		return
 	
 	var particle_index : int = -1

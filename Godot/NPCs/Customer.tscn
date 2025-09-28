@@ -1,29 +1,28 @@
-[gd_scene load_steps=8 format=3 uid="uid://hlnawqai2mw4"]
+[gd_scene load_steps=7 format=3 uid="uid://hlnawqai2mw4"]
 
 [ext_resource type="Script" uid="uid://bvyjm5mpgpywa" path="res://scripts/Customer.gd" id="1_3max8"]
 [ext_resource type="PackedScene" uid="uid://tloru3qomb8r" path="res://UI/UI_order.tscn" id="2_v706b"]
 [ext_resource type="PackedScene" uid="uid://br3jfy6v5habq" path="res://UI/UI_Thinking.tscn" id="3_8qaux"]
+[ext_resource type="PackedScene" uid="uid://bhij60dxhiycs" path="res://assets/newmodels/animations/customers/Customer1.glb" id="4_gijdy"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_esrsq"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_d3gdk"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tlalx"]
-albedo_color = Color(0.239216, 1, 1, 1)
-
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_3max8"]
-properties/0/path = NodePath("Mesh:rotation")
+properties/0/path = NodePath(".:synced_position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
-properties/1/path = NodePath(".:synced_position")
+properties/1/path = NodePath(".:customer_state")
 properties/1/spawn = true
 properties/1/replication_mode = 1
-properties/2/path = NodePath(".:customer_state")
+properties/2/path = NodePath(".:order_gen_number")
 properties/2/spawn = true
 properties/2/replication_mode = 1
-properties/3/path = NodePath(".:order_gen_number")
+properties/3/path = NodePath(".:rotation")
 properties/3/spawn = true
 properties/3/replication_mode = 1
+properties/4/path = NodePath(".:_time_till_leaving")
+properties/4/spawn = true
+properties/4/replication_mode = 1
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
@@ -33,11 +32,6 @@ overhead_ui_thinking = ExtResource("3_8qaux")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_esrsq")
-
-[node name="Mesh" type="MeshInstance3D" parent="."]
-mesh = SubResource("CapsuleMesh_d3gdk")
-skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_tlalx")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 avoidance_enabled = true
@@ -58,3 +52,6 @@ replication_config = SubResource("SceneReplicationConfig_3max8")
 
 [node name="OverheadUIAnchor" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1624, 0)
+
+[node name="Mesh" parent="." instance=ExtResource("4_gijdy")]
+transform = Transform3D(0.195, 0, 0, 0, 0.195, 0, 0, 0, 0.195, 0, -0.943593, 0)

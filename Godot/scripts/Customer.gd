@@ -37,7 +37,7 @@ const POSITION_IN_FRONT_OF_TABLE: Vector3 = Vector3(0, 0.25, 0.5)
 @onready var ui_anchor: Marker3D = $OverheadUIAnchor
 
 # Might get changed back to const at some point
-var MAXIMUM_SEATING_TIME: float = randf_range(100.0, 300.0)
+const MAXIMUM_SEATING_TIME: float = 250
 
 var _table_target: Node3D = null
 var _queue_target: Node3D = null
@@ -46,7 +46,7 @@ var _queued = false
 var _food_court_id
 var _restaurant_number: int
 var order: Array
-var _time_till_leaving: float = MAXIMUM_SEATING_TIME
+@export var _time_till_leaving: float = MAXIMUM_SEATING_TIME
 var _time_till_order: float = MAXIMUM_ORDER_THINK_TIME
 var _stuck_timer: float = 0.0
 
@@ -61,7 +61,7 @@ func _initialize():
 func _on_tree_exiting():
 	if _game_server:
 		_game_server.unregister_service(_id)
-		
+	
 func _ready():
 	hide()
 	super._ready()
@@ -98,6 +98,7 @@ func _process(_delta):
 	
 ## Ensures ui layers are seen in correct place when appropriate 
 func position_ui(ui: Control):
+	print(is_multiplayer_authority())
 	var camera = get_viewport().get_camera_3d()
 	
 	if not camera:
@@ -118,6 +119,7 @@ func _physics_process(delta: float):
 		if _is_pathfinding and _nav_agent:
 			velocity = _nav_agent.get_velocity()
 			move_and_slide()
+			_rotate_npc(delta)
 		synced_position = position
 			
 ## Customers will either:
@@ -162,9 +164,7 @@ func _npc_behavior(delta: float):
 				if ("name_of_meal" in food
 					and food.name_of_meal == order[0].name_of_meal):
 					
-					_game_server.call_service(_table_target.id(), 
-												"remove_plate", 
-												[])
+					_table_target.rpc("remove_plate")
 					_time_till_leaving = 2
 					
 	
@@ -178,7 +178,7 @@ func _npc_behavior(delta: float):
 											"get_exit_point", 
 											[])
 	if exit and _current_target == exit and !_is_pathfinding: 
-		queue_free()
+		rpc("despawn")
 	
 ## Attempt to accquire unoccupied table to navigate towards
 func check_tables() -> void:
@@ -246,14 +246,25 @@ func _update_pathfinding(delta: float) -> void:
 	var _distance_to_target = global_position.distance_to(_nav_agent.target_position)
 	if (_nav_agent.is_navigation_finished() 
 		|| _distance_to_target <= PATHFINDING_DISTANCE_THRESHOLD):
-		if _table_target: # Tweens customer's position in front of table
+		
+		if _table_target:
+			
+			var target_position = _nav_agent.target_position + POSITION_IN_FRONT_OF_TABLE
+			
+			var look_at_point = _table_target.global_position
+			look_at_point.y = target_position.y
+			# future transform of where customer tweens to
+			var future_transform = Transform3D(Basis(), target_position)
+			var final_transform = future_transform.looking_at(look_at_point, Vector3.UP)
+			var target_rotation_y = final_transform.basis.get_euler().y - PI
+			
 			var tween = create_tween()
 			tween.set_ease(Tween.EASE_OUT)
 			tween.set_trans(Tween.TRANS_CUBIC)
-			tween.tween_property(self, "global_position", 
-								(_nav_agent.target_position 
-								+ POSITION_IN_FRONT_OF_TABLE), 
-								0.5)
+			
+			tween.parallel().tween_property(self, "global_position", target_position, 0.5)
+			tween.parallel().tween_property(self, "rotation:y", target_rotation_y, 0.5)
+			
 		_seated = _table_target	
 		_queued = _queue_target
 		_is_pathfinding = false
@@ -280,3 +291,11 @@ func _update_pathfinding(delta: float) -> void:
 		# If the agent is moving freely, reset the timer.
 		_stuck_timer = 0.0
 	
+@rpc("any_peer", "call_local")
+func despawn():
+	queue_free()
+	if is_instance_valid(overhead_ui_thinking_instance):
+		overhead_ui_order_instance.queue_free()
+	if is_instance_valid(overhead_ui_order_instance):
+		overhead_ui_order_instance.queue_free()
+		

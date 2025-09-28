@@ -6,6 +6,11 @@ extends Equipment
 
 signal new_average(average: float)
 
+@onready var cookware_ui_scene : PackedScene = preload("res://UI/UI_Contents.tscn")
+@onready var sprite_ref : Sprite3D = Sprite3D.new()
+@onready var viewport : SubViewport = SubViewport.new()
+
+var cookware_ui : UIContents
 var power_receiving: int = 0
 var sizzle_particles: ParticleController
 
@@ -14,6 +19,7 @@ func _ready():
 	super._ready()
 	interactable_component.is_pickup = true
 	_setup_visual_effects()
+	_setup_cookware_ui()
 
 
 ## Setup visual effects
@@ -58,6 +64,7 @@ func put_all(items: Array) -> bool:
 func _put_food(food: Food) -> void:
 	#food.current_visibility(false)
 	food.change_collisions(true)
+	cookware_ui.add_food(food)
 	emit_signal("food_placed", contents)
 	if can_cook():
 		# _average_food() # depend on Food implementation ---------------------------
@@ -93,6 +100,7 @@ func take_all() -> Array[Node]:
 		remove_child(item)
 	contents = []
 	contents_names = []
+	cookware_ui.clear()
 	emit_signal("food_taken")
 	return all_items
 
@@ -262,3 +270,16 @@ func _give_item_to_player(player_id: int, item_path: NodePath) -> void:
 @rpc("authority", "call_remote", "reliable")
 func _sync_contents(update: Array[String]) -> void:
 	contents_names = update
+
+
+func _setup_cookware_ui():
+	if self is ChoppingBoard: return
+	
+	cookware_ui = cookware_ui_scene.instantiate()
+	viewport.transparent_bg = true
+	sprite_ref.texture = viewport.get_texture()
+	sprite_ref.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	self.add_child(sprite_ref)
+	sprite_ref.add_child(viewport)
+	viewport.add_child(cookware_ui)
+	sprite_ref.global_position += Vector3(0,0.5,0)

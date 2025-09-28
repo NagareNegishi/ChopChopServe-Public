@@ -1,6 +1,9 @@
 class_name Player 
 extends CharacterBody3D
 
+signal comp_hovered(cop : InteractableComponent)
+signal item_dropped(item : Node3D)
+
 const ACCELERATION : float = 100
 const DECELERATION : float = 60
 const DASH_DURATION : float = 0.025
@@ -428,7 +431,9 @@ func _client_drop_item(player_path : String, is_throw : bool) -> bool:
 	player.anim_tree["parameters/SM_IDLE/conditions/empty"] = true
 	player.anim_tree["parameters/SM_Walking/conditions/holding"] = false
 	player.anim_tree["parameters/SM_IDLE/conditions/holding"] = false
+	emit_signal("item_dropped", player.item_in_hand)
 	player.item_in_hand = null
+
 	return true
 
 
@@ -459,6 +464,7 @@ func drop_item(is_throw : bool) -> bool:
 		item_in_hand.linear_velocity = $Mesh.global_transform.basis.z * THROW_STRENGTH
 		
 	print("Item dropped ", item_in_hand)
+	emit_signal("item_dropped", item_in_hand)
 	item_in_hand = null
 	return true
 
@@ -500,6 +506,7 @@ func _on_check_interactables_timeout() -> void:
 			closest_item = item
 	
 	if(_closest_item != closest_item):
+		emit_signal("comp_hovered", closest_item)
 		closest_item.hover(true)
 	
 	_closest_item = closest_item

@@ -19,6 +19,7 @@ var move_particle = preload("res://Particles/MoveParticles.tscn")
 var MOVE_PARTICLES_POOL = []
 
 var  player_inputs := {}
+var time_now : int = 0
 
 ## Called when the node enters the scene tree for the first time.
 ## @return void
@@ -29,22 +30,26 @@ func _ready() -> void:
 	$SpringArm.spring_length = camera_length
 	set_multiplayer_authority(1)
 	if !ENetManager.is_host(): $ParticleTimer.stop()
-	
-	
-# Runs every process frame
-# @param delta time to proces frame
-# @return void
+	time_now = Time.get_ticks_msec()
+	rpc("_set_time_now", time_now)
+
+
+@rpc("any_peer", "call_local")
+func _set_time_now(cur : int):
+	time_now = cur
+
+
+## Runs every process frame
+## @param delta time to proces frame
+## @return void
 func _process(delta: float) -> void:
-
-	
 	_movement(delta)
-
 	
 	if !is_on_floor():
 		velocity += get_gravity() * delta
 
 
-# Handles the movement logic for the car
+## Handles the movement logic for the car
 # @param delta time to proces frame
 # @return void
 func _movement(delta : float) -> void:
@@ -119,10 +124,11 @@ func _spawn_particle(index : int) -> void:
 
 # adds input into player_input
 func _on_received_input(peer_id: int, move : int, turn : int, time : int):
+	
 	player_inputs[peer_id] = {
 		"move" : move,
 		"turn" : turn,
-		"time" : time
+		"time" : time_now - time
 	}
 
 func disable_input(disable : bool):
@@ -130,4 +136,4 @@ func disable_input(disable : bool):
 
 
 func _reduce(a : int, b : int): 
-	return a if player_inputs[a].time > player_inputs[b].time else b
+	return a if player_inputs[a].time < player_inputs[b].time else b

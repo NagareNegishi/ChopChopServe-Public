@@ -22,6 +22,7 @@ func _ready():
 	super._ready()
 	action_interval = 0.5
 	_set_affixes()
+	_add_inventory_ui()
 
 
 ## Register all foods from the directory
@@ -44,7 +45,7 @@ static func _register_foods() -> void:
 				food_book[food_name] = food_scene
 				var sample = food_scene.instantiate()
 				food_instances[food_name] = sample
-				print("Registered: ", food_name)
+				# print("Registered: ", food_name)
 			else:
 				push_warning("Failed to load food scene: " + scene_path)
 		file_name = dir.get_next()
@@ -74,15 +75,59 @@ func provide_food(food_name: String) -> Node:
 	return _create_food(food_name)
 
 
+## For Inventory UI --------------------------------------------------------------------------------
+
+## Add inventory UI to the scene
+func _add_inventory_ui():
+	# Add a canvas layer to ensure UI is on top of other elements
+	var canvas_layer = CanvasLayer.new()
+	canvas_layer.name = "InventoryLayer"
+	add_child(canvas_layer)
+	var inventory_scene = preload("res://FridgeInven/inventory.tscn")
+	var inventory_ui = inventory_scene.instantiate()
+	inventory_ui.name = "Inventory"
+	canvas_layer.layer = inventory_ui.layer_depth
+	canvas_layer.add_child(inventory_ui)
+	_setup_interaction_area()
+
+
+## Set up an interaction area to open/close the inventory
+func _setup_interaction_area():
+	var area = Area3D.new()
+	var collision = CollisionShape3D.new()
+	var shape = BoxShape3D.new()
+	shape.size = Vector3(2, 1, 2)
+	collision.shape = shape
+	area.add_child(collision)
+	add_child(area)
+	area.body_entered.connect(_on_player_entered)
+	area.body_exited.connect(_on_player_exited)
+
+
+## Open inventory when player is near
+## @param body: The body that entered the area
+func _on_player_entered(body):
+	if body is Player and body.name.to_int() == ENetManager.get_my_id():
+		get_node("InventoryLayer/Inventory").open()
+
+
+## Close inventory when player leaves
+## @param body: The body that exited the area
+func _on_player_exited(body):
+	if body is Player and body == GlobalScript.get_local_player():
+		get_node("InventoryLayer/Inventory").close()
+
+
+## Handle food selection from inventory UI
+## @param food_name: The name of the food selected
+func _on_food_selected(food_name: String):
+	var player = GlobalScript.get_local_player()
+	if not player:
+		return
+	player_selected(player.item_in_hand, food_name)
+
+
 ## For Player interaction --------------------------------------------------------------------------
-
-## Perform action depend on what player is holding
-## @param _item: The Node Player is holding
-## @return: True if action is triggered, false otherwise
-func player_has(item: Node) -> void:
-	print("pop up UI here")
-	player_selected(item, "apple")
-
 
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
@@ -90,12 +135,12 @@ func player_has(item: Node) -> void:
 ## @return: True if action is triggered, false otherwise
 func player_selected(item: Node, food_name: String) -> void:
 	if not food_name in food_book:
-		push_error("Unknown food: " + food_name)
+		print("Unknown food: " + food_name)
+		print("Known foods: ", food_book.keys())
 		return
 	if not item:
 		provide_request(food_name)
 		return
-
 	if item is Cookware and item._can_accept(food_instances.get(food_name)):
 		transfer_request(item, food_name)
 		return
@@ -187,10 +232,6 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 		highlight_component.hide_feedback()
 		return
 	var item = GlobalScript.get_local_player().item_in_hand
-	#---------------------------------------------------------------------------
-	if item:
-		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())
-	#---------------------------------------------------------------------------
 	if not item:
 		highlight_component.show_feedback(true)
 		return
@@ -199,7 +240,6 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 			highlight_component.show_feedback(false)
 		else:
 			highlight_component.show_feedback(true)
-#---------------------------------------------------------------------------------------------------
 
 
 ## Override unsupported methods to prevent misuse ------------------------------
@@ -214,6 +254,9 @@ func take() -> Node:
 func start_action() -> bool:
 	assert(false, "Food Crate does not support starting actions")
 	return false
+
+func player_has(_item: Node) -> void:
+	return
 
 func put_from_player(_item: Node) -> bool:
 	assert(false, "Food Crate does not support putting items")

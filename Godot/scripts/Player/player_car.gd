@@ -5,7 +5,7 @@ extends CharacterBody3D
 @export var speed : float = 8
 @export var turn_speed : float = 3
 @export var acceleration : float = 10
-@export var decceleration : float = 40
+@export var decceleration : float = 5
 @export var camera_length : float = 7
 
 var input_disable : bool = false
@@ -32,9 +32,7 @@ func _ready() -> void:
 # @param delta time to proces frame
 # @return void
 func _process(delta: float) -> void:
-	if !ENetManager.is_host():
-		$ParticleTimer.stop()
-		return
+
 	
 	_movement(delta)
 	_clear_inputs()
@@ -90,8 +88,8 @@ func _movement(delta : float) -> void:
 		forward * (speed if move_input_avg == 1 else speed/2) 
 		* move_input_avg, acceleration * delta)
 	else: #declerates player if not moving 
-		velocity = velocity.move_toward(velocity, decceleration * delta)
-		velocity = velocity.move_toward(velocity, decceleration * delta)
+		velocity = velocity.move_toward(Vector3.ZERO, decceleration * delta)
+		velocity = velocity.move_toward(Vector3.ZERO, decceleration * delta)
 	
 	
 	move_and_slide()
@@ -142,6 +140,6 @@ func _on_received_input(peer_id: int, move : int, turn : int):
 		"turn" : turn,
 		"time" : Time.get_ticks_msec()
 	}
-	print(player_inputs)
+
 func disable_input(disable : bool):
 	input_disable = disable

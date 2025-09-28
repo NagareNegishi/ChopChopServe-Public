@@ -35,7 +35,7 @@ properties/1/spawn = true
 properties/1/replication_mode = 1
 
 [node name="PlayerCar" type="CharacterBody3D"]
-transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, -0.805909)
+transform = Transform3D(-1.09278e-07, 0, 2.5, 0, 2.5, 0, -2.5, 0, -1.09278e-07, 0, 0, -0.805909)
 script = ExtResource("1_3ede1")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -59,7 +59,7 @@ shape = SubResource("BoxShape3D_gyd8d")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.104557, 0.578925)
 
 [node name="SpringArm" type="SpringArm3D" parent="."]
-transform = Transform3D(1.05655, -2.12913, 0.77494, 0, 0.85505, 2.34923, -2.26577, -0.992827, 0.36136, 0, 0, -0.129052)
+transform = Transform3D(1.05655, -2.12913, 0.77494, 0, 0.85505, 2.34923, -2.26577, -0.992827, 0.36136, -3.55271e-15, 0, -0.129052)
 top_level = true
 collision_mask = 0
 shape = SubResource("SeparationRayShape3D_0dldl")
@@ -69,6 +69,7 @@ lag_speed = 2.0
 
 [node name="Camera" type="Camera3D" parent="SpringArm"]
 transform = Transform3D(1, 0, 0, 0, 1, -6.14082e-16, 0, -6.14082e-16, 1, 1.48876e-07, -0.00366807, 9.94806)
+current = true
 fov = 90.0
 
 [node name="ParticleTimer" type="Timer" parent="."]

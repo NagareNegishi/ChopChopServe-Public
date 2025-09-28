@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://geqq8dhkrryc"]
+[gd_scene load_steps=5 format=3 uid="uid://geqq8dhkrryc"]
 
 [ext_resource type="Texture2D" uid="uid://2pguohnmuvmw" path="res://assets/textures/HUD/cHEFhAT.png" id="1_3hohr"]
 [ext_resource type="Script" uid="uid://cgb3gdc7yi0s1" path="res://scripts/UI/ui_player_join.gd" id="1_u8vah"]
 [ext_resource type="Texture2D" uid="uid://bpnik5eevb8f7" path="res://assets/textures/HUD/Chef.png" id="2_gjcho"]
+[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/DefaultTheme.tres" id="4_u8vah"]
 
 [node name="UiPlayerJoin" type="Control"]
 layout_mode = 3
@@ -92,3 +93,45 @@ offset_right = 26.0
 offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -38.0
+offset_top = 35.0
+offset_right = 39.0
+offset_bottom = 51.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Team" type="ColorRect" parent="ColorRect2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.5
+offset_top = -6.0
+offset_right = 36.5
+offset_bottom = 6.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.828005, 0.828002, 0.837635, 1)
+
+[node name="Label" type="Label" parent="ColorRect2"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 75.0
+offset_bottom = 13.0
+theme = ExtResource("4_u8vah")
+theme_override_colors/font_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
+theme_override_font_sizes/font_size = 10
+text = "Test"
+horizontal_alignment = 1
+vertical_alignment = 1

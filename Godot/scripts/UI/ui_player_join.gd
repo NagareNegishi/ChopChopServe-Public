@@ -2,7 +2,7 @@ class_name PlayerJoin
 extends Control
 
 const max_rand_rotation : float = 0
-const TEST_NAMES := ["MitchyCakez", "StrawberryFrog", "RubbishCanDan", "Meep"]
+@onready var team : ColorRect = $ColorRect2/Team
 
 static var id : int = 1
 
@@ -16,4 +16,11 @@ func change_colour(id : int) -> void:
 	$BG_Inner.modulate = GlobalScript.player_colours.get(id - 1)
 	$ColorRect.modulate = GlobalScript.player_outline_colours.get(id - 1)
 	$BG_Outline.modulate = GlobalScript.player_outline_colours.get(id - 1)
+
+func set_from_id(id : int):
+	var team = ENetManager.get_team2()
 	
+	$ColorRect2.modulate = Color("fff6ae") if team.has(id) else Color("f6a19e")
+
+func _set_name():
+	pass

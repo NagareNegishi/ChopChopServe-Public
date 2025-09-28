@@ -2,6 +2,8 @@ class_name UpgradeHammer extends AbstractThrowable
 
 @onready var interact_comp : InteractableComponent = $InteractableComponent
 @onready var player : Player = GlobalScript.get_local_player()
+@onready var upgrade_effect : GPUParticles3D 
+@onready var _upgrade_effect_scene : PackedScene
 
 var upgrade_library : Dictionary[Appliance, Upgradable] = {} #Dict of all appliances and their chosen upgrade
 var _comp : InteractableComponent #Used purely so player can upgrade with needing rehover ovetr appliance
@@ -25,7 +27,9 @@ func _can_upgrade(is_action : bool):
 	!GlobalScript.get_local_player()._closest_item.get_parent() is Appliance): return
 	var appliance : Appliance = GlobalScript.get_local_player()._closest_item.get_parent() 
 	
-	if appliance == null || !(appliance is Appliance): return
+	if (appliance == null || !(appliance is Appliance) || 
+	(appliance.current_owner != 0 && appliance.current_owner != ENetManager.get_my_team())): 
+		return
 	
 	if !upgrade_library.has(appliance) || !_can_purchase(appliance):  return
 	

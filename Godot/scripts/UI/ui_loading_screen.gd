@@ -3,7 +3,11 @@ extends Control
 
 var hints : Array[String] = ["No frogs were harmed in development",
 							"Watch out for wild rats!",
-							"Fire is pretty scary"]
+							"Fire is pretty scary",
+							"Killer Tomatos about",
+							"Can you do the infamous back dash?",
+							"We love CoPo",
+							"You can check recipes at any time in the pause menu"]
 
 @onready var hint_timer : Timer = Timer.new()
 @onready var test_timer : Timer = Timer.new()
@@ -28,20 +32,18 @@ func _ready() -> void:
 	add_child(hint_timer)
 	add_child(test_timer)
 	add_child(fadeout_timer)
-	
+	self.set_as_top_level(true)
 	#Sets the wait times for timers
 	hint_timer.wait_time = 0.05
 	fadeout_timer.wait_time = 1.5
-	test_timer.wait_time = 5
+	test_timer.wait_time = 7
 	
 	#Connecting all signals
 	load_anim_player.animation_finished.connect(_animation_finshed)
 	hint_timer.timeout.connect(_show_hint)
 	test_timer.timeout.connect(remove)
 	fadeout_timer.timeout.connect(_show_screen)
-	
-	
-	
+
 
 
 ## Removes the UI from screen
@@ -51,7 +53,7 @@ func remove() -> void:
 	load_anim_player.play("FroggoFadeIn",-1, -2, true)
 	floor_anim_player.play("ScaleIn", -1, -2, true)
 	fadeout_timer.start()
-	
+	test_timer.stop()
 
 func play():
 	load_anim_player.play("LoadIn", -1, 4.5)
@@ -83,3 +85,4 @@ func _animation_finshed(anim_name : String):
 ## @return void
 func _show_screen():
 	load_anim_player.play("LoadIn", -1, -1.4, true)
+	fadeout_timer.stop()

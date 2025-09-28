@@ -24,3 +24,4 @@ func _init():
 	cooked_mesh_good = $Pancakes
 	cooked_mesh_bad = $BadQualityPancakes
 	cooked_mesh_burnt = $BurntPancakes
+	ui_texture = load("res://assets/textures/recipes/Pancakes.png")

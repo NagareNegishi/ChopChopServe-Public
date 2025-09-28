@@ -22,4 +22,4 @@ func _ready():
 	cooked_mesh_good = $SpagBol
 	cooked_mesh_bad = $BadQualitySpagBol
 	cooked_mesh_burnt = $BurntSpagBol
-	
+	ui_texture = load("res://assets/textures/recipes/Bolognse.png")

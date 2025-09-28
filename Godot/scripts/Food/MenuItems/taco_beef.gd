@@ -22,3 +22,4 @@ func _ready():
 	cooked_mesh_good = $TacoBeef
 	cooked_mesh_bad = $BadQualityBeefTaco
 	cooked_mesh_burnt = $BurntBeefTaco
+	ui_texture = load("res://assets/textures/recipes/BeefTaco.png")

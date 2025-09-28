@@ -21,3 +21,4 @@ func _ready():
 	cooked_mesh_good = $BreadGarlic
 	cooked_mesh_bad = $BadQualityGarlicBread
 	cooked_mesh_burnt = $BurntGarlicBread
+	ui_texture = load("res://assets/textures/recipes/GarlicBread.png")

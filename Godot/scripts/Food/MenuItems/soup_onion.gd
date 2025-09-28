@@ -22,3 +22,4 @@ func _ready():
 	cooked_mesh_good = $SoupOnion
 	cooked_mesh_bad = $BadQualityOnionSoup
 	cooked_mesh_burnt = $BurntSoup
+	ui_texture = load("res://assets/textures/recipes/OnionSoup.png")

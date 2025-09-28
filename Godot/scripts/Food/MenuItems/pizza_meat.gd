@@ -24,3 +24,4 @@ func _ready():
 	cooked_mesh_good = $PizzaPep
 	cooked_mesh_bad = $BadQualityPepPizza
 	cooked_mesh_burnt = $BurntPepPizza
+	ui_texture = load("res://assets/textures/recipes/PepperoniPizza.png")

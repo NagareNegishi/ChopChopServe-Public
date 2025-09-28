@@ -24,3 +24,4 @@ func _ready():
 	cooked_mesh_good = $PizzaHawaii
 	cooked_mesh_bad = $BadQualityHawaiPizza
 	cooked_mesh_burnt = $BurntHawaiPizza
+	ui_texture = load("res://assets/textures/recipes/HawaiianPizza.png")

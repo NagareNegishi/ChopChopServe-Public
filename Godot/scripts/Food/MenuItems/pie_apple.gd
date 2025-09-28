@@ -21,3 +21,4 @@ func _ready():
 	cooked_mesh_good = $ApplePie
 	cooked_mesh_bad = $BadQualityApplePie
 	cooked_mesh_burnt = $BurntApplePie
+	ui_texture = load("res://assets/textures/recipes/ApplePie.png")

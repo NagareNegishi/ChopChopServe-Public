@@ -20,5 +20,6 @@ func _init():
 
 func _ready():
 	cooked_mesh_good = $PizzaCheese
-	cooked_mesh_bad = null
-	cooked_mesh_burnt = null
+	cooked_mesh_bad = $BadQualityCheesePizza
+	cooked_mesh_burnt = $BurntCheesePizza
+	ui_texture = load("res://assets/textures/recipes/CheesePizza.png")

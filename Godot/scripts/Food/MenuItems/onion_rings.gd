@@ -19,3 +19,4 @@ func _ready():
 	cooked_mesh_good = $OnionRings
 	cooked_mesh_bad = $BadQualityOnionRings
 	cooked_mesh_burnt = $BurntOnionRings
+	ui_texture = load("res://assets/textures/recipes/OnionRings.png")

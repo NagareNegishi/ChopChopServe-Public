@@ -20,3 +20,4 @@ func _ready():
 	cooked_mesh_good = $FishAndChips
 	cooked_mesh_bad = $BadQualityFishNChips
 	cooked_mesh_burnt = $BurntFishNChips
+	ui_texture = load("res://assets/textures/recipes/FishnChips.png")

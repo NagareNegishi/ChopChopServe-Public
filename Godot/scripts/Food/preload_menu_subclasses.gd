@@ -29,3 +29,5 @@ func _ready():
 	preload("res://scripts/Food/MenuItems/taco_beef.gd")
 	preload("res://scripts/Food/MenuItems/taco_chicken.gd")
 	preload("res://scripts/Food/MenuItems/taco_mushroom.gd")
+	preload("res://scripts/Food/MenuItems/pancakes.gd")
+	

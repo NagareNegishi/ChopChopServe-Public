@@ -595,35 +595,3 @@ func get_progress() -> float:
 		most_progress = min(most_progress, cookware._average_food())
 	return most_progress
 #---------------------------------------------------------------------------------------------------
-
-
-# Non-networking methods for Player interaction ----------------------------------------------------
-# ## Place an item onto this appliance from Player
-# ## if we could remove Player dependency from this class, we can remove this method
-# ## @param item: The Node to place on this appliance
-# ## @return: True if placement was successful, false otherwise
-# func put_from_player(item: Node) -> bool:
-# 	if not _can_accept(item):
-# 		return false
-# 	# transfer item to appliance
-# 	GlobalScript.get_local_player().remove_item()
-# 	contents.append(item)
-# 	add_child(item)
-# 	contents_names.append(item.name)
-# 	if item is Cookware:
-# 		_put_cookware(item)
-# 	return true
-
-# ## Serve food from Cookware to Plate
-# ## @param plate: The Plate to serve food to
-# ## @return: True if serving was successful, false otherwise
-# func serve_to_plate(plate: Plate) -> bool:
-# 	if not _check_target(plate):
-# 		return false
-# 	var cookware = contents[0]
-# 	if cookware.is_empty():
-# 		print("Nothing to serve from: ", cookware.get_script().get_global_name())
-# 		return false
-# 	plate.add_list_items(cookware.take_all()) # Method in Plate, takes Array of Food
-# 	return true
-#---------------------------------------------------------------------------------------------------

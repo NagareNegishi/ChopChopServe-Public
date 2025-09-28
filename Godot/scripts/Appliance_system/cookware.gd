@@ -66,6 +66,7 @@ func _put_food(food: Food) -> void:
 		_toggle_sizzle(true)
 	print("Food placed in cookware: ", food.get_script().get_global_name(), ", Cookware can cook: ", can_cook(), ", Food cook time: ", food.get_cook_time(cooking_style))
 
+
 ## Average cooking time of food in cookware
 ## Only subclass of Food should be in Cookware
 ## Note: Do not call when contents is empty (Food has different default cooking time)
@@ -261,31 +262,3 @@ func _give_item_to_player(player_id: int, item_path: NodePath) -> void:
 @rpc("authority", "call_remote", "reliable")
 func _sync_contents(update: Array[String]) -> void:
 	contents_names = update
-
-
-## Non-networking methods for Player interaction ---------------------------------------------------
-# ## Place an item onto this appliance from Player
-# ## if we could remove Player dependency from this class, we can remove this method
-# ## @param item: The Node to place on this appliance
-# ## @return: True if placement was successful, false otherwise
-# func put_from_player(item: Node) -> bool:
-# 	var success = super.put_from_player(item)
-# 	if success: # and item is Food:
-# 		_put_food(item)
-# 	return success
-
-# ## Serve food from Cookware to Plate
-# ## @param plate: The Plate to serve food to
-# ## @return: True if serving was successful, false otherwise
-# func serve_to_plate(plate: Plate) -> bool:
-# 	if contents.is_empty():
-# 		print("Nothing to serve from: ", get_script().get_global_name())
-# 		return false
-
-# 	if not plate.is_ready():	# Method in Plate, checks if plate is ready
-# 		print("Plate is not ready: ", plate.get_script().get_global_name())
-# 		return false
-
-# 	plate.add_list_items(take_all())	# Method in Plate, takes Array of Food
-# 	return true
-## -------------------------------------------------------------------------------------------------

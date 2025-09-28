@@ -116,7 +116,7 @@ const TEST_APPLIANCES = [
 	"blender",    # Numpad 4
 	"chop_table",      # Numpad 5
 	"cabinet",       # Numpad 6
-	"food_crate",       # Numpad 7
+	"food_factory",       # Numpad 7
 	"sink",      # Numpad 8
 	"trash_can",   # Numpad 9
 	"stove_with_pan"  # Numpad 0

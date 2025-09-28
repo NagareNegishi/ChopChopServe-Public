@@ -152,7 +152,7 @@ func mix():
 
 # -------------------------END OF COOKING TYPES---------------------------------
 func check_processed(current_state: foodState, time_a:int, time_b:int, stop:bool):
-	print("Cook time remaining: ", time_a, " on food item: ", food_name)
+	#print("Cook time remaining: ", time_a, " on food item: ", food_name)
 	if(time_a <= 0 && time_a >= time_b):
 		state = current_state;
 		

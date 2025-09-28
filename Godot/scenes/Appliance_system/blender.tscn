@@ -54,4 +54,5 @@ texture = SubResource("ViewportTexture_yc0qb")
 
 [node name="newblender" parent="." index="5" instance=ExtResource("6_f4din")]
 
+[connection signal="cookware_taken" from="." to="SubViewport/TextureProgressBar2" method="_on_food_taken"]
 [connection signal="food_placed" from="." to="SubViewport/TextureProgressBar2" method="_on_blender_signal"]

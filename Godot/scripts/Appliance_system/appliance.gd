@@ -6,6 +6,7 @@ extends Placeable
 
 signal food_placed(contents)
 signal food_taken
+signal add_appliance(cookware)
 enum Owner {
 	NONE,
 	TEAM1,

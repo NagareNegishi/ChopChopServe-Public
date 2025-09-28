@@ -18,7 +18,7 @@ var move_input_avg : int = 0
 var move_particle = preload("res://Particles/MoveParticles.tscn")
 var MOVE_PARTICLES_POOL = []
 
-var  player_inputs = {}
+var  player_inputs := {}
 
 ## Called when the node enters the scene tree for the first time.
 ## @return void
@@ -38,7 +38,7 @@ func _process(delta: float) -> void:
 
 	
 	_movement(delta)
-	_clear_inputs()
+
 	
 	if !is_on_floor():
 		velocity += get_gravity() * delta
@@ -51,34 +51,23 @@ func _movement(delta : float) -> void:
 	#resets average
 	turn_input_avg = 0
 	move_input_avg = 0
-	
-	var move_zero_count = 0
-	var turn_zero_count = 0
-	
+
 	#adds all turn and move inputs
 	for key in player_inputs.keys():
 		turn_input_avg += player_inputs[key].turn
 		move_input_avg += player_inputs[key].move
-		
-		#tracks how many players arent requesting to move
-		if player_inputs[key].move == 0:
-			move_zero_count += 1
-		
-		#tracks how many players arent requesting to turn
-		if player_inputs[key].turn == 0:
-			turn_zero_count += 1
-	
-	#averages inputs if at least one player is requesting to move
-	#if (player_inputs.size() - move_zero_count) != 0:
-		#turn_input_avg /= (player_inputs.size() - move_zero_count)
-	#
-	##averages inputs if at least one player is requesting to turn
-	#if (player_inputs.size() - turn_zero_count) != 0:
-		#move_input_avg /= (player_inputs.size() - turn_zero_count)
 	
 	#clamps average bewteen -1 and 1
 	turn_input_avg = clampi(turn_input_avg, -1, 1)
 	move_input_avg = clampi(move_input_avg, -1, 1)
+	
+	if turn_input_avg == 0 && player_inputs.size() >= 2:
+		var lowest_key : int = player_inputs.keys().reduce(_reduce)
+		turn_input_avg = player_inputs[lowest_key].turn
+	
+	if move_input_avg == 0 && player_inputs.size() >= 2:
+		var lowest_key : int = player_inputs.keys().reduce(_reduce)
+		move_input_avg = player_inputs[lowest_key].move
 	
 	#rotates mesh
 	if !input_disable:
@@ -91,7 +80,6 @@ func _movement(delta : float) -> void:
 		forward * (speed if move_input_avg == 1 else speed/2) 
 		* move_input_avg, acceleration * delta)
 	else: #declerates player if not moving 
-		velocity = velocity.move_toward(Vector3.ZERO, decceleration * delta)
 		velocity = velocity.move_toward(Vector3.ZERO, decceleration * delta)
 	
 	
@@ -127,22 +115,19 @@ func _spawn_particle(index : int) -> void:
 
 	particle.global_transform = $Mesh/ParticleSpawn.global_transform
 	
-# clears inputs stored in player_inputs if 
-# they are pressed within given timeframe
-# @return void 
-func _clear_inputs():
-	var now = Time.get_ticks_msec()
-	for key in player_inputs.keys():
-		if now - player_inputs[key].time > 200:
-			player_inputs.erase(key)
+
 
 # adds input into player_input
-func _on_received_input(peer_id: int, move : int, turn : int):
+func _on_received_input(peer_id: int, move : int, turn : int, time : int):
 	player_inputs[peer_id] = {
 		"move" : move,
 		"turn" : turn,
-		"time" : Time.get_ticks_msec()
+		"time" : time
 	}
 
 func disable_input(disable : bool):
 	input_disable = disable
+
+
+func _reduce(a : int, b : int): 
+	return a if player_inputs[a].time > player_inputs[b].time else b

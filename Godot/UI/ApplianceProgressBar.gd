@@ -4,6 +4,7 @@ var cookware
 var food_item
 var is_open: bool
 var contents: Array
+var applianceInstance
 
 func _process(_delta):
 	change_visibility(is_open)
@@ -55,8 +56,25 @@ func connect_take_all(c):
 
 
 # Function to chnage boolean value when items are taken from the cookware or blender
-func _on_food_or_cookware_taken():
+func _on_food_or_cookware_taken(item):
 	is_open = false
+	
+	if item and item.is_in_group("Appliance"):
+		if cookware.is_connected("food_placed", Callable(self, "_on_cookware_signal")):
+			cookware.disconnect("food_placed", Callable(self, "_on_cookware_signal"))
+		if cookware.is_connected("food_taken", Callable(self, "_on_food_or_cookware_taken")):
+			cookware.disconnect("food_taken", Callable(self, "_on_food_or_cookware_taken"))
+		if cookware.is_connected("new_average", Callable(self, "_on_average_updated")):
+			cookware.disconnect("new_average", Callable(self, "_on_average_updated"))
+	
+	if food_item and food_item.is_connected("cooking", Callable(self, "_on_food_signal")):
+		#if value == max_value:
+			#progress_bar_reset()
+		food_item.disconnect("cooking", Callable(self, "_on_food_signal"))
+		
+	
+	cookware = null
+	food_item = null
 
 
 # Returns the cooking style of the cookware + blender
@@ -65,7 +83,10 @@ func get_cooking_style():
 
 
 func change_visibility(turn_on: bool):
-	visible = turn_on
+	if turn_on:
+		show()
+	else:
+		hide()
 
 
 # When another ingredient is added to the cookware get new value of the progress bar
@@ -90,9 +111,13 @@ func get_max_value(cook_style: ApplianceFactory.CookingStyle):
 
 # When there is an a cookware/equipment added to an appliance it connects to this method
 func _on_add_appliance(c, appliance):
+	print("Cookware added backKKKKKKKKKKK    ", c)
 	connect_cookware(c)
 	connect_take_all(c)
 	appliance.connect("cookware_taken", Callable(self, "_on_food_or_cookware_taken"))
+	
+	if c.contents.size() > 0:
+		_on_cookware_signal(c.contents)
 
 # Is different because this is PoweredAppliance and not Cookware
 func _on_blender_signal(c, blender):
@@ -105,3 +130,6 @@ func _on_blender_signal(c, blender):
 func _on_chop_table_food_placed(c):
 	connect_cookware(c)
 	connect_take_all(c)
+
+func progress_bar_reset():
+	value = 0

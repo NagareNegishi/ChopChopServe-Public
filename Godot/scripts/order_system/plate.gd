@@ -18,7 +18,7 @@ const CELL_SIZE = 0.2
 var grid: Array = []
 var is_dirty : bool = false
 var is_full : bool = false
-var number
+var number: int = 0
 
 func _ready():
 	menu_instance = preload_menuItems.new()
@@ -125,9 +125,14 @@ func check_plate():
 	return 0
 
 func _set_quality(list: Array):
+	if list.size()<=0:
+		push_error("Nothing in list")
+	
 	var total_quality = 0
 	for elem in list:
-		number += elem
+		print("NUMBER: ",number)
+		print("ELEM: ", elem)
+		number = number + elem
 	
 	var average_quality = number / list.size()
 	

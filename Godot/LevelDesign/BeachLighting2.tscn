@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://g5y4cnxk5856"]
+[gd_scene load_steps=34 format=3 uid="uid://g5y4cnxk5856"]
 
 [ext_resource type="PackedScene" uid="uid://bakeesqt3byva" path="res://scenes/Appliance_system/sink.tscn" id="1_ldg50"]
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_shqg8"]
@@ -22,6 +22,9 @@
 [ext_resource type="Shader" uid="uid://c46kta255prk4" path="res://shaders/Water/WaterOpenWorld.gdshader" id="20_i40ex"]
 [ext_resource type="PackedScene" uid="uid://b0ougk3d4jnku" path="res://scenes/Appliance_system/food_crate.tscn" id="21_lg5jw"]
 [ext_resource type="Script" uid="uid://denxn65anovd7" path="res://scripts/Appliance_system/placeable.gd" id="22_6wlo3"]
+[ext_resource type="PackedScene" uid="uid://crx0marg1hk52" path="res://assets/Beachy/FenceBeachPlank.glb" id="23_kdffh"]
+[ext_resource type="PackedScene" uid="uid://ote03xslp2mk" path="res://assets/Beachy/FenceBeachPlankPath.glb" id="24_v5sy6"]
+[ext_resource type="PackedScene" uid="uid://bdavcjsmotl0h" path="res://assets/Beachy/FenceBeachPlank4.glb" id="25_jd0au"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w6hnu"]
 size = Vector3(30, 0.03, 30)
@@ -49,7 +52,7 @@ volumetric_fog_albedo = Color(0.995162, 0.801059, 0.69608, 1)
 volumetric_fog_anisotropy = 0.7
 volumetric_fog_length = 6.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5xw4e"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lg5jw"]
 render_priority = 0
 shader = ExtResource("20_i40ex")
 shader_parameter/out_color = Color(0.14902, 0.568627, 0.811765, 1)
@@ -61,7 +64,7 @@ shader_parameter/specular = 0.5
 shader_parameter/roughness = 0.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ul4i3"]
-material = SubResource("ShaderMaterial_5xw4e")
+material = SubResource("ShaderMaterial_lg5jw")
 size = Vector2(50, 50)
 subdivide_width = 25
 subdivide_depth = 25
@@ -83,10 +86,10 @@ transform = Transform3D(2.99311, -0.0677541, 0, 0.203262, 0.997702, 0, 0, 0, 3, 
 mesh = SubResource("BoxMesh_w6hnu")
 
 [node name="Sink" parent="Platform" instance=ExtResource("1_ldg50")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6.5, 2, 8)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6.5, 2, 7)
 
 [node name="Sink2" parent="Platform" instance=ExtResource("1_ldg50")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6.5, 2, -8)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6.5, 2, -7)
 
 [node name="Player" parent="." instance=ExtResource("1_shqg8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.48897, 0.562044, 0)
@@ -274,22 +277,7 @@ transform = Transform3D(-0.46, 0, -6.94581e-08, 0, 0.46, 0, 6.94581e-08, 0, -0.4
 transform = Transform3D(-0.46, 0, -6.94581e-08, 0, 0.46, 0, 6.94581e-08, 0, -0.46, 4.06335, 0.0150003, 9.80714)
 
 [node name="FenceBeachWire3" parent="Background/Objects" instance=ExtResource("17_mlfds")]
-transform = Transform3D(-0.46, 0, -6.94581e-08, 0, 0.46, 0, 6.94581e-08, 0, -0.46, -0.0436897, 0.0150003, 9.80714)
-
-[node name="FenceBeachWire4" parent="Background/Objects" instance=ExtResource("17_mlfds")]
-transform = Transform3D(-0.46, 0, -6.94581e-08, 0, 0.46, 0, 6.94581e-08, 0, -0.46, -4.1498, 0.0150003, 9.80714)
-
-[node name="FenceBeachWire9" parent="Background/Objects" instance=ExtResource("17_mlfds")]
-transform = Transform3D(-2.01072e-08, 0, 0.46, 0, 0.46, 0, -0.46, 0, -2.01072e-08, -6.14943, 1.97828, 6.37653)
-
-[node name="FenceBeachWire10" parent="Background/Objects" instance=ExtResource("17_mlfds")]
-transform = Transform3D(-2.01072e-08, 0, 0.46, 0, 0.46, 0, -0.46, 0, -2.01072e-08, -6.14943, 1.97828, 2.26774)
-
-[node name="FenceBeachWire11" parent="Background/Objects" instance=ExtResource("17_mlfds")]
-transform = Transform3D(-2.01072e-08, 0, 0.46, 0, 0.46, 0, -0.46, 0, -2.01072e-08, -6.06338, 2.015, -2.08563)
-
-[node name="FenceBeachWire12" parent="Background/Objects" instance=ExtResource("17_mlfds")]
-transform = Transform3D(-2.01072e-08, 0, 0.46, 0, 0.46, 0, -0.46, 0, -2.01072e-08, -6.06338, 2.015, -6.19442)
+transform = Transform3D(-0.444326, 0, 0.119057, 0, 0.46, 0, -0.119057, 0, -0.444326, -0.0436897, 0.0150003, 9.30842)
 
 [node name="FenceBeachWire13" parent="Background/Objects" instance=ExtResource("17_mlfds")]
 transform = Transform3D(-2.01072e-08, 0, -0.46, 0, 0.46, 0, 0.46, 0, -2.01072e-08, 10.2435, 0.0150013, -3.55879)
@@ -310,10 +298,7 @@ transform = Transform3D(0.46, 0, 0, 0, 0.46, 0, 0, 0, 0.46, 8.09288, 0.0150003, 
 transform = Transform3D(0.46, 0, 0, 0, 0.46, 0, 0, 0, 0.46, 3.98077, 0.0150003, -9.61154)
 
 [node name="FenceBeachWire7" parent="Background/Objects" instance=ExtResource("17_mlfds")]
-transform = Transform3D(0.46, 0, 0, 0, 0.46, 0, 0, 0, 0.46, -0.126274, 0.0150003, -9.61154)
-
-[node name="FenceBeachWire8" parent="Background/Objects" instance=ExtResource("17_mlfds")]
-transform = Transform3D(0.46, 0, 0, 0, 0.46, 0, 0, 0, 0.46, -4.23239, 0.0150003, -9.61154)
+transform = Transform3D(0.444326, 0, 0.119057, 0, 0.46, 0, -0.119057, 0, 0.444326, -0.126274, 0.0150003, -9.10468)
 
 [node name="Rocks" type="Node3D" parent="Background"]
 
@@ -365,3 +350,51 @@ script = ExtResource("22_6wlo3")
 [node name="FoodCrate2" parent="." instance=ExtResource("21_lg5jw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -1)
 script = ExtResource("22_6wlo3")
+
+[node name="FenceBeachPlank" parent="." instance=ExtResource("23_kdffh")]
+transform = Transform3D(-2.01072e-08, 0, 0.46, 0, 0.46, 0, -0.46, 0, -2.01072e-08, -3.1681, 1.978, 6.377)
+
+[node name="FenceBeachPlank5" parent="." instance=ExtResource("23_kdffh")]
+transform = Transform3D(-0.4, 0, 3.49691e-08, 0, 0.4, 0, -3.49691e-08, 0, -0.4, -1.43251, 2.07811, 8.77614)
+
+[node name="FenceBeachPlank6" parent="." instance=ExtResource("23_kdffh")]
+transform = Transform3D(-0.363686, 0.166531, 3.17944e-08, 0.166531, 0.363686, -1.45586e-08, -3.49691e-08, 0, -0.4, 1.99485, 1.29931, 8.77614)
+
+[node name="FenceBeachPlank7" parent="." instance=ExtResource("23_kdffh")]
+transform = Transform3D(-0.4, 0, 3.49691e-08, 0, 0.4, 0, -3.49691e-08, 0, -0.4, -1.43251, 2.07811, -8.31741)
+
+[node name="FenceBeachPlank8" parent="." instance=ExtResource("23_kdffh")]
+transform = Transform3D(-0.363686, 0.166531, 3.17944e-08, 0.166531, 0.363686, -1.45586e-08, -3.49691e-08, 0, -0.4, 1.99485, 1.29931, -8.31741)
+
+[node name="FenceBeachPlank2" parent="." instance=ExtResource("23_kdffh")]
+transform = Transform3D(-2.01072e-08, 0, 0.46, 0, 0.46, 0, -0.46, 0, -2.01072e-08, -3.1681, 1.978, 2.29845)
+
+[node name="FenceBeachPlank3" parent="." instance=ExtResource("23_kdffh")]
+transform = Transform3D(-2.01072e-08, 0, 0.46, 0, 0.46, 0, -0.46, 0, -2.01072e-08, -3.1681, 1.978, -1.8277)
+
+[node name="FenceBeachPlank4" parent="." instance=ExtResource("23_kdffh")]
+transform = Transform3D(-2.01072e-08, 0, 0.46, 0, 0.46, 0, -0.46, 0, -2.01072e-08, -3.1681, 1.978, -5.90625)
+
+[node name="FenceBeachPlankPath" parent="." instance=ExtResource("24_v5sy6")]
+transform = Transform3D(-4.37114e-08, 1, 0, -0.990866, -4.33121e-08, -0.134851, -0.134851, -5.89452e-09, 0.990866, 0.16498, 0.326233, 5.45545)
+
+[node name="FenceBeachPlankPath5" parent="." instance=ExtResource("24_v5sy6")]
+transform = Transform3D(-0.125342, -0.0407926, 0.991275, -0.992098, -0.000386651, -0.125462, 0.00550121, -0.999168, -0.0404218, 3.27794, 0.0690444, 5.24313)
+
+[node name="FenceBeachPlankPath3" parent="." instance=ExtResource("24_v5sy6")]
+transform = Transform3D(-4.37114e-08, 1, 0, -0.999564, -4.36923e-08, 0.0295267, 0.0295267, 1.29065e-09, 0.999564, 0.16498, 0.127041, -0.702763)
+
+[node name="FenceBeachPlankPath4" parent="." instance=ExtResource("24_v5sy6")]
+transform = Transform3D(-4.37114e-08, 1, 0, -0.992667, -4.33909e-08, 0.120882, 0.120882, 5.28391e-09, 0.992667, 0.16498, 0.650017, -3.34104)
+
+[node name="FenceBeachPlankPath2" parent="." instance=ExtResource("24_v5sy6")]
+transform = Transform3D(-4.37114e-08, 1, 0, -0.978732, -4.27817e-08, 0.205145, 0.205145, 8.96718e-09, 0.978732, 0.1937, 0.625285, 2.76818)
+
+[node name="FenceBeachPlank9" parent="." instance=ExtResource("25_jd0au")]
+transform = Transform3D(0.579317, -0.175626, 0.795957, -0.813792, -0.179973, 0.552587, 0.0462021, -0.967866, -0.247185, 1.14779, 0.212769, 5.42195)
+
+[node name="FenceBeachPlankPath6" parent="." instance=ExtResource("24_v5sy6")]
+transform = Transform3D(0.125232, -0.0637503, -0.990077, -0.992099, -0.000386646, -0.125462, 0.00761543, 0.997966, -0.0632949, 0.765527, 0.0690444, -4.98709)
+
+[node name="FenceBeachPlank10" parent="." instance=ExtResource("25_jd0au")]
+transform = Transform3D(-0.571327, 0.0736147, -0.817414, -0.813792, -0.179973, 0.552587, -0.106434, 0.980913, 0.162731, 2.9027, 0.212769, -4.94254)

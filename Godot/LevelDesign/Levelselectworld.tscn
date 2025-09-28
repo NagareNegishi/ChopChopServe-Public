@@ -1,4 +1,4 @@
-[gd_scene load_steps=83 format=3 uid="uid://brax13qxb8tj2"]
+[gd_scene load_steps=85 format=3 uid="uid://brax13qxb8tj2"]
 
 [ext_resource type="PackedScene" uid="uid://bv68n23xtnfpl" path="res://scenes/Player/PlayerCar.tscn" id="1_2io33"]
 [ext_resource type="PackedScene" uid="uid://c8bjd53t4fgr1" path="res://UI/UI_Pause.tscn" id="1_7dd6r"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://dfpfglb1oru28" path="res://assets/Swampy/RoadSwampCorner.glb" id="5_d2ijq"]
 [ext_resource type="FontFile" uid="uid://dxc6n0umgi0q4" path="res://assets/fonts/Jua-Regular.ttf" id="5_iytpy"]
 [ext_resource type="Material" uid="uid://8a2o8qga7q64" path="res://shaders/Water/WaterOpenworldAlt.tres" id="5_mpt4u"]
+[ext_resource type="Material" uid="uid://c6svha1ojqeej" path="res://LevelDesign/Zone.tres" id="5_u8kom"]
 [ext_resource type="PackedScene" uid="uid://x0o0oxbumdxi" path="res://assets/NaturePack/Willow_2.fbx" id="6_38v8k"]
 [ext_resource type="Shader" uid="uid://c46kta255prk4" path="res://shaders/Water/WaterOpenWorld.gdshader" id="6_mpt4u"]
 [ext_resource type="PackedScene" uid="uid://dxiqfig0wnu0t" path="res://assets/NaturePack/Willow_1.fbx" id="7_8t6q8"]
@@ -67,6 +68,11 @@
 [ext_resource type="PackedScene" uid="uid://bnqti3cd67kf0" path="res://assets/Beachy/FenceBeachWire.glb" id="58_7dd6r"]
 [ext_resource type="PackedScene" uid="uid://bailsqnlqlti0" path="res://assets/CityPacks/CityRestaurantAnim2.glb" id="61_ps02h"]
 [ext_resource type="PackedScene" uid="uid://cky86yj522kph" path="res://scenes/Interaction/LevelSelectArea.tscn" id="64_kguer"]
+
+[sub_resource type="TorusMesh" id="TorusMesh_uthtu"]
+material = ExtResource("5_u8kom")
+inner_radius = 0.991
+ring_segments = 3
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w6hnu"]
 size = Vector3(30, 0.03, 30)
@@ -150,11 +156,28 @@ visible = false
 
 [node name="== LEVEL SELECT ==" type="Node" parent="."]
 
+[node name="Zone2" type="MeshInstance3D" parent="== LEVEL SELECT =="]
+transform = Transform3D(5.29349, 0, 0, 0, 208.673, 0, 0, 0, 5.29349, 33.7801, 2.6039, -0.802038)
+mesh = SubResource("TorusMesh_uthtu")
+skeleton = NodePath("../LevelSelectArea")
+
+[node name="Zone3" type="MeshInstance3D" parent="== LEVEL SELECT =="]
+transform = Transform3D(5.29349, 0, 0, 0, 208.673, 0, 0, 0, 5.29349, -14.5896, 0.633474, 23.8251)
+mesh = SubResource("TorusMesh_uthtu")
+skeleton = NodePath("../LevelSelectArea")
+
 [node name="LevelSelectArea" parent="== LEVEL SELECT ==" node_paths=PackedStringArray("load_ui", "car") instance=ExtResource("64_kguer")]
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -14.9253, 1.86524, -24.7682)
 level = 6
 load_ui = NodePath("../../== HUD ==/UILoadingScreen")
 car = NodePath("../../PlayerCar")
+
+[node name="CollisionShape3D" parent="== LEVEL SELECT ==/LevelSelectArea" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.580652, 0.373383, 0.493759)
+
+[node name="Zone" type="MeshInstance3D" parent="== LEVEL SELECT ==/LevelSelectArea"]
+transform = Transform3D(8.82248, 0, 0, 0, 347.788, 0, 0, 0, 8.82248, -1.0322, -1.75679, 0.133724)
+mesh = SubResource("TorusMesh_uthtu")
 
 [node name="Platform" type="StaticBody3D" parent="."]
 

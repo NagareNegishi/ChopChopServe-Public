@@ -11,6 +11,8 @@ func _init():
 func _ready():
 	super._ready()
 	cooking_style = ApplianceFactory.CookingStyle.BOIL
-	valid_food = ["Fish", "Tomato", "Water", "Mushroom", "Onion", "Pasta", "Pumpkin"] # Confirm later!!!!!!!!!!!!!!
+	valid_food = ["Fish", "Tomato", "Water", "Mushroom", "Onion", "Pasta", "Pumpkin"]
 	capacity = 4
 	coefficient = 1.0
+	
+	add_to_group("Appliance")

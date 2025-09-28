@@ -98,7 +98,6 @@ func _process(_delta):
 	
 ## Ensures ui layers are seen in correct place when appropriate 
 func position_ui(ui: Control):
-	print(is_multiplayer_authority())
 	var camera = get_viewport().get_camera_3d()
 	
 	if not camera:

@@ -38,6 +38,7 @@ var enabled: bool = false
 
 ## Initialize the component
 func _ready():
+	upgrade_requested.connect(_on_upgrade_requested)
 	target = get_parent()
 	if not target:
 		assert(false, "Upgradable component must have a parent.")
@@ -100,9 +101,9 @@ func upgrade() -> bool:
 
 # Something like this should happen with currency manager-----------------------
 
-# func _on_upgrade_requested(player_id: int, cost: int, upgradable: Upgradable):
-#     if MoneyManager.has_enough_money(player_id, cost):
-#         MoneyManager.deduct_money(player_id, cost)
-#         upgradable.upgrade()
-#     else:
-#         print("Not enough money!")
+func _on_upgrade_requested(player_id: int, cost: int, upgradable: Upgradable):
+	if CurrencySystem.check_currency(ENetManager.get_my_team(), cost):
+		CurrencySystem.minus_currency(ENetManager.get_my_team(), cost)
+		print("Upgraded: ", upgradable.upgrade())
+	else:
+		print("Not enough money!")

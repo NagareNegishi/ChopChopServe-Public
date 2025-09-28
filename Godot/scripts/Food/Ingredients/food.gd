@@ -6,18 +6,18 @@ class_name Food
 signal cooked
 @warning_ignore("unused_signal")
 signal changed_food_state
-@warning_ignore("unused_signal")
-signal cooking
+
+signal cooking()
 
 #Meshes
-@export var raw_mesh: MeshInstance3D = null
-@export var cooked_mesh: MeshInstance3D = null
-@export var spoiled_mesh: MeshInstance3D = null
-@export var burnt_mesh: MeshInstance3D = null
-@export var chopped_mesh: MeshInstance3D = null
-@export var frozen_mesh: MeshInstance3D = null
-@export var mixed_mesh: MeshInstance3D = null
-@export var texture : Texture2D = null
+var raw_mesh: MeshInstance3D = null
+var cooked_mesh: MeshInstance3D = null
+var spoiled_mesh: MeshInstance3D = null
+var burnt_mesh: MeshInstance3D = null
+var chopped_mesh: MeshInstance3D = null
+var frozen_mesh: MeshInstance3D = null
+var mixed_mesh: MeshInstance3D = null
+var texture : Texture2D = null
 
 
 
@@ -31,7 +31,7 @@ var time_power : int # How much power/time the appliance is giving/using for the
 var current_appliance = null # What appliance is currently being used
 var current_cooking_style: ApplianceFactory.CookingStyle
 
-var times_touched_floor : int = 0
+var touched_floor_num = 0
 var is_cooking = false # Decides whether or not it should be cooking the ingredient
 var is_cooked : bool = false
 var l # current collision layer
@@ -73,6 +73,7 @@ func _ready():
 
 func _on_timer_timeout():
 	if is_cooking:
+		cooking.emit()
 		match current_appliance:
 			ApplianceFactory.CookingStyle.CHOP:
 				chop()
@@ -201,7 +202,7 @@ func stop_cooking():
 	current_appliance = null
 
 
-func get_cooking_type(style: ApplianceFactory.CookingStyle):
+func get_cooking_style(style: ApplianceFactory.CookingStyle):
 	match(style):
 		ApplianceFactory.CookingStyle.BAKE:
 			return "BAKED"
@@ -246,7 +247,7 @@ func set_cook_time(time: float, style: ApplianceFactory.CookingStyle):
 
 # Lets the appliance get the cooking time of the ingredient
 func get_cook_time(style: ApplianceFactory.CookingStyle):
-	return get(get_cooking_type(style)+"_time")
+	return get(get_cooking_style(style)+"_time")
 
 func get_quality():
 	return quality
@@ -355,11 +356,9 @@ func change_collisions(turn_off:bool):
 		self.collision_layer = l
 		self.collision_mask = m
 
-
-# Uses to decrease the quality of the ingredients and minus that from the meal quality
 func _on_interactable_component_body_entered(body):
 	if body.is_in_group("Floor"):
-		times_touched_floor += 1
+		touched_floor_num += 1
 
-func get_floor_touch_time():
-	return times_touched_floor
+func get_floor_time():
+	return touched_floor_num

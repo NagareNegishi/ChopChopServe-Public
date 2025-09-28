@@ -8,7 +8,7 @@ var preload_menuItems = preload("res://scripts/Food/MenuItems/menuItem.gd")
 var food_items :Array = []
 var has_menu_item: bool = false
 var quality_on_plate: Array = []
-var ingredient_total_floor_touch = 0
+var floor_time_count = 0
 #var ingredients = IngredientsEnum.Ingredients
 #var dish = DishEnum.new()
 var menu_instance
@@ -18,7 +18,7 @@ const CELL_SIZE = 0.2
 var grid: Array = []
 var is_dirty : bool = false
 var is_full : bool = false
-
+var number
 
 func _ready():
 	menu_instance = preload_menuItems.new()
@@ -50,7 +50,7 @@ func add_item(food_node) -> void:
 	food_items.append(food_node)
 	disable_collision(food_node)
 	quality_on_plate.append(food_node.get_quality())
-	ingredient_total_floor_touch += food_node.get_floor_touch_time()
+	floor_time_count += food_node.get_floor_time()
 	
 	var cell = find_next_free_cell()
 	if cell.x == -1:
@@ -77,7 +77,7 @@ func add_item(food_node) -> void:
 	
 	# Try positioning at the plate's center first
 	food_node.transform.origin = Vector3(x_offset, 0.05, z_offset)  # Start with center
-	check_plate()
+	check_plate.rpc()
 
 # This has been made so that we can add the different ingredients to the plate visually
 func get_items():
@@ -104,6 +104,7 @@ func give_all()->Array:
 
 # This checks if the plate contains a dish, when it does contain a dish it removes everything and
 # replaces the list of ingredients with only the found meal
+@rpc("any_peer","call_local","reliable")
 func check_plate():
 	print(grid)
 	for item in food_items:
@@ -112,6 +113,7 @@ func check_plate():
 		print("food items is emptyw")
 		return 0
 	var menuitem = menu_instance.match_menu_items(food_items)
+	
 	if menuitem != null:
 		has_menu_item = true
 		_set_quality(quality_on_plate)
@@ -125,11 +127,16 @@ func check_plate():
 func _set_quality(list: Array):
 	var total_quality = 0
 	for elem in list:
-		total_quality += elem
-	var average_quality = total_quality / list.size()
+		number += elem
 	
-	quality = average_quality - ingredient_total_floor_touch
-	print("Average quality: ", average_quality, " times touched floor: ", ingredient_total_floor_touch, " Final quality: ", quality)
+	var average_quality = number / list.size()
+	
+	quality = (average_quality - floor_time_count)
+	# Make sure its not negative
+	if quality < 0:
+		quality = 0
+	
+	print("QUALITY: ", quality, "TIMES FLOOR TOUCHED: ", floor_time_count)
 
 func get_quality():
 	return quality

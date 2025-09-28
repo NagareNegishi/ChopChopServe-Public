@@ -29,7 +29,8 @@ func _process(delta: float) -> void:
 		
 	if Input.is_action_pressed("Right"):
 		turn_input = clampi(turn_input - 1, -1, 1)
-
+	
+	if Input.is_action_just_pressed("Pause"): GlobalScript.get_pause_menu().toggle_visible(true)
 func _send_input():
 	rpc("_receive_input", multiplayer.get_unique_id(), move_input, turn_input)
 

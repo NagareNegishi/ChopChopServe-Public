@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cky86yj522kph"]
+
+[ext_resource type="Script" uid="uid://c1d6a1k8o783d" path="res://scripts/Interaction/level_select_area.gd" id="1_wv8v3"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_hb6k5"]
+height = 4.14655
+radius = 8.2417
+
+[node name="LevelSelectArea" type="Area3D"]
+script = ExtResource("1_wv8v3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.373383, 0)
+shape = SubResource("CylinderShape3D_hb6k5")
+debug_color = Color(1, 0.137292, 0.14594, 1)

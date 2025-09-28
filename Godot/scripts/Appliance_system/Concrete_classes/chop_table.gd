@@ -32,6 +32,7 @@ func _add_chopping_board() -> void:
 	chopping_board.position = board_position
 	chopping_board.lock()
 	chopping_board._toggle_interaction(false)
+	emit_signal("add_appliance", chopping_board)
 
 
 ## Place an item onto this appliance

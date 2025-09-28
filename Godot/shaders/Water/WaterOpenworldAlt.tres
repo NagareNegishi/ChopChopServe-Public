@@ -1,142 +1,136 @@
-[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://8a2o8qga7q64"]
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://8a2o8qga7q64"]
 
 [sub_resource type="Shader" id="Shader_4l3fe"]
-code = "// NOTE: Shader automatically converted from Godot Engine 4.4.1.stable's StandardMaterial3D.
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_always, cull_back, unshaded;
 
-shader_type spatial;
-render_mode blend_mix, depth_draw_always, cull_back, diffuse_burley, specular_schlick_ggx;
+group_uniforms render;
 
-uniform vec4 albedo : source_color;
-uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable;
-uniform ivec2 albedo_texture_size;
-uniform float point_size : hint_range(0.1, 128.0, 0.1);
+uniform sampler2D screen_texture : hint_screen_texture, filter_linear_mipmap;
+uniform sampler2D albedo_texture;
 
-uniform float roughness : hint_range(0.0, 1.0);
-uniform sampler2D texture_metallic : hint_default_white, filter_linear_mipmap, repeat_enable;
-uniform vec4 metallic_texture_channel;
-uniform sampler2D texture_roughness : hint_roughness_r, filter_linear_mipmap, repeat_enable;
+uniform float opacity : hint_range(0.0, 2.0) = 0.35;
+uniform vec4 ghost_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
 
-uniform float specular : hint_range(0.0, 1.0, 0.01);
-uniform float metallic : hint_range(0.0, 1.0, 0.01);
+uniform float flicker_speed : hint_range(0.0, 5.0) = 1.2;
+uniform float phase_frequency : hint_range(0.0, 1.0) = 0.4;
 
-uniform sampler2D texture_refraction : filter_linear_mipmap, repeat_enable;
-uniform float refraction : hint_range(-1.0, 1.0, 0.001);
-uniform vec4 refraction_texture_channel;
-uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_linear_mipmap;
-uniform sampler2D depth_texture : hint_depth_texture, repeat_disable, filter_nearest;
+uniform float fresnel_strength : hint_range(0.0, 1.5) = 0.8;
+uniform vec3 fresnel_color : source_color = vec3(1.0, 1.0, 1.0);
 
-uniform sampler2D texture_normal : hint_roughness_normal, filter_linear_mipmap, repeat_enable;
-uniform float normal_scale : hint_range(-16.0, 16.0);
-varying vec3 uv1_triplanar_pos;
+uniform float wave_amplitude: hint_range(0.0, 0.01) = 0.006;
+uniform float wave_frequency: hint_range(0.0, 20.0) = 19.397;
+uniform float wave_speed: hint_range(0.0, 10.0) = 3.618;
+uniform float chroma_amount: hint_range(0.0, 10.0) = 1.0;
 
-uniform float uv1_blend_sharpness : hint_range(0.0, 150.0, 0.001);
-varying vec3 uv1_power_normal;
+group_uniforms points;
 
-uniform vec3 uv1_scale;
-uniform vec3 uv1_offset;
-uniform vec3 uv2_scale;
-uniform vec3 uv2_offset;
+uniform bool points_enabled = true;
+uniform float point_field_scale: hint_range(1.0, 50.0) = 4.377;
+uniform float point_size: hint_range(0.001, 0.008) = 0.008;
+uniform float point_intensity: hint_range(0.0, 1.0) = 1.0;
+uniform float point_axis_speed: hint_range(0.0, 0.5) = 0.051;
+uniform int point_move_mode: hint_range(0, 3) = 1;
+uniform vec3 point_color : source_color = vec3(1.0, 1.0, 1.0);
 
-void vertex() {
-	vec3 normal = MODEL_NORMAL_MATRIX * NORMAL;
-
-	TANGENT = vec3(0.0, 0.0, -1.0) * abs(normal.x);
-	TANGENT += vec3(1.0, 0.0, 0.0) * abs(normal.y);
-	TANGENT += vec3(1.0, 0.0, 0.0) * abs(normal.z);
-	TANGENT = inverse(MODEL_NORMAL_MATRIX) * normalize(TANGENT);
-
-	BINORMAL = vec3(0.0, 1.0, 0.0) * abs(normal.x);
-	BINORMAL += vec3(0.0, 0.0, -1.0) * abs(normal.y);
-	BINORMAL += vec3(0.0, 1.0, 0.0) * abs(normal.z);
-	BINORMAL = inverse(MODEL_NORMAL_MATRIX) * normalize(BINORMAL);
-
-	// UV1 Triplanar: Enabled (with World Triplanar)
-	uv1_power_normal = pow(abs(normal), vec3(uv1_blend_sharpness));
-	uv1_triplanar_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz * uv1_scale + uv1_offset + TIME *0.004;
-	uv1_power_normal /= dot(uv1_power_normal, vec3(1.0));
-	uv1_triplanar_pos *= vec3(1.0, -1.0, 1.0);
-}
-
-vec4 triplanar_texture(sampler2D p_sampler, vec3 p_weights, vec3 p_triplanar_pos) {
-	vec4 samp = vec4(0.0);
-	samp += texture(p_sampler, p_triplanar_pos.xy) * p_weights.z;
-	samp += texture(p_sampler, p_triplanar_pos.xz) * p_weights.y;
-	samp += texture(p_sampler, p_triplanar_pos.zy * vec2(-1.0, 1.0)) * p_weights.x;
-	return samp;
+// Función de ruido
+float random(vec2 st) {
+    return fract(sin(dot(st, vec2(12.9898, 78.233))) * 43758.5453123);
 }
 
 void fragment() {
-	vec4 albedo_tex = triplanar_texture(texture_albedo, uv1_power_normal, uv1_triplanar_pos);
-	ALBEDO = albedo.rgb * albedo_tex.rgb;
+    vec2 wave_offset = vec2(
+        sin(SCREEN_UV.y * wave_frequency + TIME * wave_speed),
+        sin(SCREEN_UV.x * wave_frequency + TIME * wave_speed)
+    ) * wave_amplitude;
 
-	float metallic_tex = dot(triplanar_texture(texture_metallic, uv1_power_normal, uv1_triplanar_pos), metallic_texture_channel);
-	METALLIC = metallic_tex * metallic;
-	SPECULAR = specular;
+    vec2 distorted_uv = SCREEN_UV + wave_offset;
 
-	vec4 roughness_texture_channel = vec4(1.0, 0.0, 0.0, 0.0);
-	float roughness_tex = dot(triplanar_texture(texture_roughness, uv1_power_normal, uv1_triplanar_pos), roughness_texture_channel);
-	ROUGHNESS = roughness_tex * roughness;
+    vec2 red_uv   = distorted_uv + wave_offset * chroma_amount;
+    vec2 blue_uv  = distorted_uv - wave_offset * chroma_amount;
+    vec2 green_uv = distorted_uv;
 
-	// Normal Map: Enabled
-	NORMAL_MAP = triplanar_texture(texture_normal, uv1_power_normal, uv1_triplanar_pos).rgb;
-	NORMAL_MAP_DEPTH = normal_scale;
+    float r = texture(screen_texture, red_uv).r;
+    float g = texture(screen_texture, green_uv).g;
+    float b = texture(screen_texture, blue_uv).b;
+    vec3 screen_color = vec3(r, g, b);
 
-	// Refraction: Enabled (with normal map texture)
-	vec3 unpacked_normal = NORMAL_MAP;
-	unpacked_normal.xy = unpacked_normal.xy * 2.0 - 1.0;
-	unpacked_normal.z = sqrt(max(0.0, 1.0 - dot(unpacked_normal.xy, unpacked_normal.xy)));
-	vec3 ref_normal = normalize(mix(
-			NORMAL,
-			TANGENT * unpacked_normal.x + BINORMAL * unpacked_normal.y + NORMAL * unpacked_normal.z,
-			NORMAL_MAP_DEPTH));
-	vec2 ref_ofs = SCREEN_UV - ref_normal.xy * dot(triplanar_texture(texture_refraction, uv1_power_normal, uv1_triplanar_pos), refraction_texture_channel) * refraction;
+    float flicker = sin(TIME * flicker_speed) * 0.5 + 0.5;
+    float phase = sin(TIME * phase_frequency * 6.2831) * 0.5 + 0.5;
 
-	float ref_amount = 1.0 - albedo.a * albedo_tex.a;
+    float fresnel_factor = pow(1.0 - dot(NORMAL, VIEW), 2.0) * fresnel_strength;
+    vec3 fresnel = fresnel_color * fresnel_factor;
 
-	float refraction_depth_tex = textureLod(depth_texture, ref_ofs, 0.0).r;
-	vec4 refraction_view_pos = INV_PROJECTION_MATRIX * vec4(SCREEN_UV * 2.0 - 1.0, refraction_depth_tex, 1.0);
-	refraction_view_pos.xyz /= refraction_view_pos.w;
+    vec4 base_texture = texture(albedo_texture, UV);
+    vec3 base_color = base_texture.rgb * ghost_color.rgb;
 
-	// If the depth buffer is lower then the model's Z position, use the refracted UV, otherwise use the normal screen UV.
-	// At low depth differences, decrease refraction intensity to avoid sudden discontinuities.
-	EMISSION += textureLod(screen_texture, mix(SCREEN_UV, ref_ofs, smoothstep(0.0, 1.0, VERTEX.z - refraction_view_pos.z)), ROUGHNESS * 8.0).rgb * ref_amount * EXPOSURE;
-	ALBEDO *= 1.0 - ref_amount;
-	// Force transparency on the material (required for refraction).
-	ALPHA = 1.0;
+    float point_accum = 0.0;
+    if (points_enabled) {
+        vec2 moving_uv = UV;
+        vec2 offset = vec2(0.0);
+        if (point_move_mode == 0) {
+            offset = vec2(0.0, TIME * point_axis_speed);
+        } else if (point_move_mode == 1) {
+            offset = vec2(TIME * point_axis_speed, 0.0);
+        } else if (point_move_mode == 2) {
+            offset = vec2(TIME * point_axis_speed);
+        } else if (point_move_mode == 3) {
+            offset = vec2(
+                sin(TIME * point_axis_speed * 1.3),
+                cos(TIME * point_axis_speed * 1.7)
+            );
+        }
+
+        moving_uv = fract(moving_uv + offset);
+        vec2 grid_uv = moving_uv * point_field_scale;
+        vec2 id = floor(grid_uv);
+        vec2 f = fract(grid_uv) - 0.5;
+
+        for (int j = -1; j <= 1; j++) {
+            for (int i = -1; i <= 1; i++) {
+                vec2 neighbor = vec2(float(i), float(j));
+                vec2 cell_id = id + neighbor;
+                vec2 point_pos = vec2(random(cell_id), random(cell_id * 1.3)) - 0.5;
+                float d = length(f - point_pos);
+                float point = 1.0 - smoothstep(point_size * 0.5, point_size, d);
+                point_accum += point;
+            }
+        }
+
+        point_accum = clamp(point_accum, 0.0, 1.0);
+    }
+
+    vec4 final_color = vec4(base_color, ghost_color.a);
+    final_color.rgb = mix(final_color.rgb, screen_color, 0.6);
+    final_color.rgb += fresnel;
+    final_color.rgb = mix(final_color.rgb, point_color, point_intensity * point_accum);
+
+    float final_alpha = ghost_color.a * opacity * flicker * phase;
+    final_color.a = clamp(final_alpha, 0.0, 1.0);
+
+    EMISSION = final_color.rgb;
+    ALBEDO = final_color.rgb;
+    ALPHA = final_color.a;
 }
 "
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_mpt4u"]
-noise_type = 2
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5xw4e"]
-seamless = true
-seamless_blend_skirt = 1.0
-as_normal_map = true
-noise = SubResource("FastNoiseLite_mpt4u")
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ia2ov"]
-seamless = true
-as_normal_map = true
-noise = SubResource("FastNoiseLite_mpt4u")
 
 [resource]
 render_priority = 0
 shader = SubResource("Shader_4l3fe")
-shader_parameter/albedo = Color(0.317647, 0.701961, 0.94902, 0.439216)
-shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/opacity = 0.35
+shader_parameter/ghost_color = Color(1, 1, 1, 1)
+shader_parameter/flicker_speed = 1.2
+shader_parameter/phase_frequency = 0.4
+shader_parameter/fresnel_strength = 0.8
+shader_parameter/fresnel_color = Color(1, 1, 1, 1)
+shader_parameter/wave_amplitude = 0.006
+shader_parameter/wave_frequency = 19.397
+shader_parameter/wave_speed = 3.618
+shader_parameter/chroma_amount = 1.0
+shader_parameter/points_enabled = true
+shader_parameter/point_field_scale = 4.377
 shader_parameter/point_size = 1.0
-shader_parameter/roughness = 0.0
-shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
-shader_parameter/specular = 0.5
-shader_parameter/metallic = 0.0
-shader_parameter/texture_refraction = SubResource("NoiseTexture2D_ia2ov")
-shader_parameter/refraction = 0.05
-shader_parameter/refraction_texture_channel = Vector4(1, 0, 0, 0)
-shader_parameter/texture_normal = SubResource("NoiseTexture2D_5xw4e")
-shader_parameter/normal_scale = 1.0
-shader_parameter/uv1_blend_sharpness = 1.0
-shader_parameter/uv1_scale = Vector3(0.01, 0, 0.01)
-shader_parameter/uv1_offset = Vector3(0, 0, 0)
-shader_parameter/uv2_scale = Vector3(1, 1, 1)
-shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/point_intensity = 1.0
+shader_parameter/point_axis_speed = 0.051
+shader_parameter/point_move_mode = 1
+shader_parameter/point_color = Color(1, 1, 1, 1)

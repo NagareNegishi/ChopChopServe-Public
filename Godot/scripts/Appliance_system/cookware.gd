@@ -4,6 +4,8 @@
 class_name Cookware
 extends Equipment
 
+signal new_average(average: float)
+
 var power_receiving: int = 0
 var sizzle_particles: ParticleController
 
@@ -56,7 +58,7 @@ func put_all(items: Array) -> bool:
 func _put_food(food: Food) -> void:
 	#food.current_visibility(false)
 	food.change_collisions(true)
-	food_placed.emit()
+	emit_signal("food_placed", contents)
 	if can_cook():
 		# _average_food() # depend on Food implementation ---------------------------
 		food.start_cooking(int(power_receiving * coefficient), cooking_style)
@@ -78,6 +80,7 @@ func _average_food() -> float:
 	var average = total / contents.size()
 	for food in contents:
 		food.set_cook_time(average, cooking_style)
+	emit_signal("new_average", average)
 	return average
 
 
@@ -90,6 +93,7 @@ func take_all() -> Array[Node]:
 		remove_child(item)
 	contents = []
 	contents_names = []
+	emit_signal("food_taken")
 	return all_items
 
 
@@ -258,31 +262,3 @@ func _give_item_to_player(player_id: int, item_path: NodePath) -> void:
 @rpc("authority", "call_remote", "reliable")
 func _sync_contents(update: Array[String]) -> void:
 	contents_names = update
-
-
-## Non-networking methods for Player interaction ---------------------------------------------------
-# ## Place an item onto this appliance from Player
-# ## if we could remove Player dependency from this class, we can remove this method
-# ## @param item: The Node to place on this appliance
-# ## @return: True if placement was successful, false otherwise
-# func put_from_player(item: Node) -> bool:
-# 	var success = super.put_from_player(item)
-# 	if success: # and item is Food:
-# 		_put_food(item)
-# 	return success
-
-# ## Serve food from Cookware to Plate
-# ## @param plate: The Plate to serve food to
-# ## @return: True if serving was successful, false otherwise
-# func serve_to_plate(plate: Plate) -> bool:
-# 	if contents.is_empty():
-# 		print("Nothing to serve from: ", get_script().get_global_name())
-# 		return false
-
-# 	if not plate.is_ready():	# Method in Plate, checks if plate is ready
-# 		print("Plate is not ready: ", plate.get_script().get_global_name())
-# 		return false
-
-# 	plate.add_list_items(take_all())	# Method in Plate, takes Array of Food
-# 	return true
-## -------------------------------------------------------------------------------------------------

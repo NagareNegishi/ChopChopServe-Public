@@ -16,6 +16,7 @@ func take() -> Node:
 	var item = super.take()
 	if item and item is Food:
 		item.scale /= food_scale_factor
+	emit_signal("food_taken")
 	return item
 # -----------------------------------------------------------------------------
 
@@ -33,6 +34,8 @@ func _ready():
 				"Mushroom", "Pineapple", "Pumpkin", "Strawberry"]
 	capacity = 1 # one item only
 	coefficient = 1.0
+	
+	add_to_group("Appliance")
 
 
 ## Add interactable component to this class

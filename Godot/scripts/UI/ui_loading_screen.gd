@@ -1,7 +1,9 @@
 class_name LoadingScreen
 extends Control
 
-var hints : Array[String] = ["You can throw items with [image]"]
+var hints : Array[String] = ["No frogs were harmed in development",
+							"Watch out for wild rats!",
+							"Fire is pretty scary"]
 
 @onready var hint_timer : Timer = Timer.new()
 @onready var test_timer : Timer = Timer.new()
@@ -38,8 +40,7 @@ func _ready() -> void:
 	test_timer.timeout.connect(remove)
 	fadeout_timer.timeout.connect(_show_screen)
 	
-	load_anim_player.play("LoadIn", -1, 4.5)
-	test_timer.start()
+	
 	
 
 
@@ -51,6 +52,11 @@ func remove() -> void:
 	floor_anim_player.play("ScaleIn", -1, -2, true)
 	fadeout_timer.start()
 	
+
+func play():
+	load_anim_player.play("LoadIn", -1, 4.5)
+	test_timer.start()
+
 
 
 ## Shows hint message on screen and starts playing the froggo animation

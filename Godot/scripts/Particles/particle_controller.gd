@@ -5,14 +5,16 @@ enum EffectType {
 	SIZZLE,
 	BUBBLE,
 	FIRE,
-	SMOKE
+	SMOKE,
+	WATER_SPROUT
 }
 
 const PARTICLE_SCENE = {
 	EffectType.SIZZLE: preload("res://scenes/Particle_effect/sizzle.tscn"),
 	EffectType.BUBBLE: preload("res://scenes/Particle_effect/bubble.tscn"),
 	EffectType.FIRE: preload("res://scenes/Particle_effect/fire.tscn"),
-	EffectType.SMOKE: preload("res://scenes/Particle_effect/smoke.tscn")
+	EffectType.SMOKE: preload("res://scenes/Particle_effect/smoke.tscn"),
+	EffectType.WATER_SPROUT: preload("res://scenes/Particle_effect/waterSprout.tscn")
 }
 
 @export var current_effect: EffectType = EffectType.SIZZLE

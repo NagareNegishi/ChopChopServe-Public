@@ -119,7 +119,8 @@ func _give_item_to_player(player_id: int, item_path: NodePath) -> void:
 	if item:
 		var player = GlobalScript.get_local_player_by_id(player_id)
 		if player:
-			player.pickup_item(item)
+			player.server_pickup(player.get_path(), item.get_path())
+			
 
 
 ## Transfer food from FoodCrate to Cookware

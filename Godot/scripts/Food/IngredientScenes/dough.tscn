@@ -69,14 +69,15 @@ skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_t7sf3")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.468339, 0)
+transform = Transform3D(0.844018, 0, 0, 0, 0.844018, 0, 0, 0, 0.844018, 0, 0.431026, 0)
 shape = SubResource("BoxShape3D_y3ybv")
 
 [node name="InteractableComponent" parent="." instance=ExtResource("3_6lhhf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00561047, 0.47338, 0)
+transform = Transform3D(0.844018, 0, 0, 0, 0.844018, 0, 0, 0, 0.844018, 0, 0.431026, 0)
 is_pickup = true
 
 [connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]
+[connection signal="body_entered" from="InteractableComponent" to="." method="_on_interactable_component_body_entered"]
 [connection signal="hovered" from="InteractableComponent" to="." method="_on_interactable_component_hovered"]
 [connection signal="interacted" from="InteractableComponent" to="." method="_on_interactable_component_interacted"]
 [connection signal="toggle_collision" from="InteractableComponent" to="." method="_on_interactable_component_toggle_collision"]

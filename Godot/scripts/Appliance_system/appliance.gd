@@ -4,8 +4,9 @@
 class_name Appliance
 extends Placeable
 
-signal food_placed()
-
+signal food_placed(contents)
+signal food_taken
+signal add_appliance(cookware)
 enum Owner {
 	NONE,
 	TEAM1,
@@ -30,7 +31,7 @@ var capacity_upgradable: Upgradable
 
 var contents: Array[Node] = []
 var contents_names: Array[String] = []: set = _set_contents_names
-var price: int = 100
+static var price: int = 100
 
 
 ## Setup the appliance

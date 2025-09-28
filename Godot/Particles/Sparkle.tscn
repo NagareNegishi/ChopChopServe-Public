@@ -1,7 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://cj11rhsifmj8p"]
+[gd_scene load_steps=8 format=3 uid="uid://biyhxkjfrp6mx"]
 
-[ext_resource type="Script" uid="uid://do4ntsgkoitwj" path="res://scripts/Particles/move_particles.gd" id="1_wvidf"]
-[ext_resource type="Material" uid="uid://dixjtd4xhgsyq" path="res://materials/LightGrey.tres" id="2_wvidf"]
+[ext_resource type="Script" uid="uid://do4ntsgkoitwj" path="res://scripts/Particles/move_particles.gd" id="1_40ocy"]
+[ext_resource type="Material" uid="uid://dixjtd4xhgsyq" path="res://materials/LightGrey.tres" id="2_svbu2"]
 
 [sub_resource type="Curve" id="Curve_wvidf"]
 _data = [Vector2(0.252, 1), 0.0, 0.0, 0, 0, Vector2(0.644, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.393039), 0.0, 0.0, 0, 0]
@@ -29,11 +29,11 @@ height = 0.05
 radial_segments = 6
 rings = 6
 
-[node name="Sparkle" type="Node3D"]
-script = ExtResource("1_wvidf")
+[node name="MoveParticles" type="Node3D"]
+script = ExtResource("1_40ocy")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
-material_override = ExtResource("2_wvidf")
+material_override = ExtResource("2_svbu2")
 emitting = false
 amount = 12
 lifetime = 0.3

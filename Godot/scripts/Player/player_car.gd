@@ -28,6 +28,9 @@ func _ready() -> void:
 		MOVE_PARTICLES_POOL.append(particle)
 	$SpringArm.spring_length = camera_length
 	set_multiplayer_authority(1)
+	if !ENetManager.is_host(): $ParticleTimer.stop()
+	
+	
 # Runs every process frame
 # @param delta time to proces frame
 # @return void
@@ -39,7 +42,7 @@ func _process(delta: float) -> void:
 	
 	if !is_on_floor():
 		velocity += get_gravity() * delta
-	
+
 
 # Handles the movement logic for the car
 # @param delta time to proces frame
@@ -66,17 +69,17 @@ func _movement(delta : float) -> void:
 			turn_zero_count += 1
 	
 	#averages inputs if at least one player is requesting to move
-	if (player_inputs.size() - move_zero_count) != 0:
-		turn_input_avg /= (player_inputs.size() - move_zero_count)
-	
-	#averages inputs if at least one player is requesting to turn
-	if (player_inputs.size() - turn_zero_count) != 0:
-		move_input_avg /= (player_inputs.size() - turn_zero_count)
+	#if (player_inputs.size() - move_zero_count) != 0:
+		#turn_input_avg /= (player_inputs.size() - move_zero_count)
+	#
+	##averages inputs if at least one player is requesting to turn
+	#if (player_inputs.size() - turn_zero_count) != 0:
+		#move_input_avg /= (player_inputs.size() - turn_zero_count)
 	
 	#clamps average bewteen -1 and 1
 	turn_input_avg = clampi(turn_input_avg, -1, 1)
 	move_input_avg = clampi(move_input_avg, -1, 1)
-
+	
 	#rotates mesh
 	if !input_disable:
 		rotation.y += turn_input_avg * turn_speed * delta

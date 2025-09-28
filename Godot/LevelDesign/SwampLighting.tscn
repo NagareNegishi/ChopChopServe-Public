@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="3_jbxoo"]
 [ext_resource type="PackedScene" uid="uid://bqpdxpf2l7uw1" path="res://scenes/Appliance_system/stove.tscn" id="3_ypanj"]
 [ext_resource type="PackedScene" uid="uid://dxhfqm13c85ar" path="res://assets/models/decorations/table.glb" id="4_wlc25"]
-[ext_resource type="PackedScene" uid="uid://b0ougk3d4jnku" path="res://scenes/Appliance_system/food_crate.tscn" id="4_yx2km"]
+[ext_resource type="PackedScene" uid="uid://b0ougk3d4jnku" path="res://scenes/Appliance_system/food_factory.tscn" id="4_yx2km"]
 [ext_resource type="PackedScene" uid="uid://bakeesqt3byva" path="res://scenes/Appliance_system/sink.tscn" id="5_a51gl"]
 [ext_resource type="Script" uid="uid://denxn65anovd7" path="res://scripts/Appliance_system/placeable.gd" id="5_ty3c0"]
 [ext_resource type="PackedScene" uid="uid://b5nb1nxo1r1kb" path="res://scenes/Appliance_system/bench.tscn" id="9_jjilc"]

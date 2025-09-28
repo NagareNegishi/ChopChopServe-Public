@@ -29,7 +29,7 @@
 [ext_resource type="PackedScene" uid="uid://dlk0mbdfg2cmq" path="res://scenes/Appliance_system/oven.tscn" id="25_4qsnr"]
 [ext_resource type="PackedScene" uid="uid://cw5uvt35a87nt" path="res://scenes/Appliance_system/blender.tscn" id="26_ttrxq"]
 [ext_resource type="PackedScene" uid="uid://krj0gwn31x8u" path="res://scenes/Appliance_system/stove_with_pot.tscn" id="29_xho1v"]
-[ext_resource type="PackedScene" uid="uid://b0ougk3d4jnku" path="res://scenes/Appliance_system/food_crate.tscn" id="30_bota8"]
+[ext_resource type="PackedScene" uid="uid://b0ougk3d4jnku" path="res://scenes/Appliance_system/food_factory.tscn" id="30_bota8"]
 [ext_resource type="PackedScene" uid="uid://cn8yjuakgjsam" path="res://assets/newmodels/furniture/Sink.glb" id="31_gnhd6"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_67eo6"]

@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0ougk3d4jnku"]
+
+[ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="1_nq4fg"]
+[ext_resource type="Script" uid="uid://bxy0fop3xjvqr" path="res://scripts/Appliance_system/Concrete_classes/food_factory.gd" id="2_vim2w"]
+[ext_resource type="PackedScene" uid="uid://nrfjhpm1sa30" path="res://assets/newmodels/furniture/Fridge.glb" id="3_wu4ye"]
+
+[node name="FoodFactory" instance=ExtResource("1_nq4fg")]
+script = ExtResource("2_vim2w")
+capacity = 4
+action_interval = 1.0
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1
+cooking_style = 0
+model_scene = null
+
+[node name="Fridge2" parent="." index="3" instance=ExtResource("3_wu4ye")]

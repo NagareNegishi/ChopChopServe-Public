@@ -82,6 +82,7 @@ theme = ExtResource("3_0ltv3")
 theme_override_colors/font_color = Color(0.980392, 0.980392, 0.980392, 1)
 theme_override_font_sizes/font_size = 21
 theme_override_styles/normal = ExtResource("3_8cx7s")
+text = "Placeholder!!"
 placeholder_text = "Froggo"
 alignment = 1
 max_length = 13

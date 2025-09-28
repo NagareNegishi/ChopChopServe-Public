@@ -56,6 +56,7 @@ func _position_item(item: Node, slot_index: int):
 func _put(item: Node) -> void:
 	super._put(item)
 	_position_item(item, contents.size() - 1)
+	print("Placed item on Bench: ", item.get_script().get_global_name())
 
 
 ## Remove and return item at specific index
@@ -132,8 +133,10 @@ func player_has(item: Node) -> void:
 				return
 	# If player has plate: try to serve food from Cookware
 	if item is Plate:
-		serve_request(item)
-		return
+		var can_serve = _can_serve_to_plate(item)
+		if can_serve != -1:
+			serve_request(item, can_serve)
+			return
 	# If item_in_hand exists: depend on if appliance can accept it
 	put_request(item)
 
@@ -163,11 +166,7 @@ func _can_serve_to_plate(plate: Plate) -> int:
 
 ## Serve food from Cookware to Plate
 ## @param plate: The Plate to serve food to
-func serve_request(plate: Plate) -> void:
-	# locally check first to reduce network calls
-	var can_serve = _can_serve_to_plate(plate)
-	if can_serve == -1:
-		return
+func serve_request(plate: Plate, can_serve: int) -> void:
 	if ENetManager.is_host():
 		if can_serve == 1:
 			plate.add_list_items([take()])
@@ -211,17 +210,3 @@ func _client_serve(player_id: int, can_serve: int) -> void:
 		plate.add_list_items([take()])
 	elif can_serve == 2:
 		plate.add_list_items(contents[0].take_all())
-
-
-
-# # Non-networking methods for Player interaction ----------------------------------------------------
-# ## Place an item onto this appliance from Player
-# ## if we could remove Player dependency from this class, we can remove this method
-# ## @param item: The Node to place on this appliance
-# ## @return: True if placement was successful, false otherwise
-# func put_from_player(item: Node) -> bool:
-# 	if not super.put_from_player(item):
-# 		return false
-# 	_position_item(item, contents.size() - 1)
-# 	return true
-# #---------------------------------------------------------------------------------------------------

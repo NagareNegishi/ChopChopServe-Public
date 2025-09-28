@@ -1,5 +1,7 @@
 extends Control
 
+@export var layer_depth: int = 100
+
 var is_open: bool = false
 @onready var gridCont = $ColorRect/GridContainer
 
@@ -55,7 +57,7 @@ func add_slot(item_name: String, amount: int, price: int):
 	# Try to connect to parent FoodFactory
 	var canvas_layer = get_parent()
 	var food_factory = canvas_layer.get_parent()
-	if food_factory and food_factory.has_method("_on_food_selected"):
+	if food_factory and food_factory is FoodFactory:
 		slot_instance.food_requested.connect(food_factory._on_food_selected)
 	else:
 		print("ERROR: Could not find FoodFactory parent")

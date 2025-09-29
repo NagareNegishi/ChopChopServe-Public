@@ -21,7 +21,7 @@ func _on_detection_area_body_entered(body: Node3D):
 	body.reparent(self)
 	body.global_position = self.global_position + Vector3(0, 0.5, 0)
 	body.freeze = true
-
+@rpc ("any_peer", "call_local", "reliable")
 func remove_plate():
 	if current_plate:
 		remove_child(current_plate)

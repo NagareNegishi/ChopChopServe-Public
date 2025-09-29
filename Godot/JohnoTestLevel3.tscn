@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://bkdgdjjlsc7rx"]
+[gd_scene load_steps=38 format=3 uid="uid://bkdgdjjlsc7rx"]
 
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_cmmn0"]
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="1_om5gj"]
@@ -17,7 +17,6 @@
 [ext_resource type="PackedScene" uid="uid://dbeboubu5gkhe" path="res://scenes/Appliance_system/fryer.tscn" id="13_pf82k"]
 [ext_resource type="PackedScene" uid="uid://bsrscw5j31qi" path="res://assets/NaturePack/PalmTree_2.fbx" id="14_lau84"]
 [ext_resource type="PackedScene" uid="uid://0aex3yts1utd" path="res://scenes/Appliance_system/cabinet.tscn" id="14_q0vpy"]
-[ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="15_8whfs"]
 [ext_resource type="PackedScene" uid="uid://i0f5xv10ol81" path="res://assets/NaturePack/PalmTree_1.fbx" id="15_ggry0"]
 [ext_resource type="PackedScene" uid="uid://bnwj0rmha5lt" path="res://assets/newmodels/decorations/umbrella.glb" id="16_8h8fx"]
 [ext_resource type="PackedScene" uid="uid://bnqti3cd67kf0" path="res://assets/Beachy/FenceBeachWire.glb" id="17_y387d"]
@@ -27,8 +26,6 @@
 [ext_resource type="PackedScene" uid="uid://dxlbcu6oeo8f6" path="res://assets/Beachy/FenceBeachRamp.glb" id="22_vda8q"]
 [ext_resource type="PackedScene" uid="uid://bacjqrmridknc" path="res://assets/Beachy/FenceBeachBoardWalk.glb" id="23_t7ckm"]
 [ext_resource type="PackedScene" uid="uid://bev73qms8mo6h" path="res://scenes/Appliance_system/food_crate_test.tscn" id="27_83y2r"]
-[ext_resource type="PackedScene" uid="uid://lfcppt4wh0g4" path="res://scenes/Interaction/UpgradeHammer.tscn" id="27_g18sh"]
-[ext_resource type="PackedScene" uid="uid://dvn4ytv3ro6ec" path="res://scripts/Food/IngredientScenes/Tomato.tscn" id="28_pf82k"]
 [ext_resource type="Script" uid="uid://dnns4dn8p042y" path="res://scripts/Table.gd" id="31_t7ckm"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rci3a"]
@@ -255,9 +252,6 @@ current_owner = 2
 [node name="Cabinet2" parent="NavigationRegion3D/Node3D" instance=ExtResource("14_q0vpy")]
 transform = Transform3D(-1, 0, -8.70787e-08, 0, 1, 0, 8.70787e-08, 0, -1, 9.11146, 0.364, -8.65982)
 
-[node name="Extinguisher" parent="NavigationRegion3D/Node3D" instance=ExtResource("15_8whfs")]
-transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999984, 1.39337, 0.497372, -3.53961)
-
 [node name="Node3D3" type="Node3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 4.65661e-10, 0, 1, 0, -4.65661e-10, 0, 1, 0.446792, 0, 0.628139)
 
@@ -296,10 +290,10 @@ transform = Transform3D(0.25, 0, -2.32831e-10, 0, 0.3, 0, 2.32831e-10, 0, 0.25, 
 transform = Transform3D(0.25, 0, -2.32831e-10, 0, 0.3, 0, 2.32831e-10, 0, 0.25, 3.25673, 0.561436, -1.80574)
 
 [node name="umbrella17" parent="NavigationRegion3D/Background/Objects" instance=ExtResource("16_8h8fx")]
-transform = Transform3D(0.25, 0, -2.32831e-10, 0, 0.3, 0, 2.32831e-10, 0, 0.25, 6.26807, 0.561436, 2.11754)
+transform = Transform3D(0.25, 0, -3.49246e-10, 0, 0.3, 0, 3.49246e-10, 0, 0.25, 8.3819, 0.561436, 2.12924)
 
 [node name="umbrella18" parent="NavigationRegion3D/Background/Objects" instance=ExtResource("16_8h8fx")]
-transform = Transform3D(0.25, 0, -2.32831e-10, 0, 0.3, 0, 2.32831e-10, 0, 0.25, 6.25658, 0.561436, -1.80036)
+transform = Transform3D(0.25, 0, -3.49246e-10, 0, 0.3, 0, 3.49246e-10, 0, 0.25, 8.37041, 0.561436, -1.78866)
 
 [node name="FenceBeachWire" parent="NavigationRegion3D/Background/Objects" instance=ExtResource("17_y387d")]
 transform = Transform3D(-0.46, 0, -6.94581e-08, 0, 0.46, 0, 6.94581e-08, 0, -0.46, 8.17546, 0.0150003, 9.80714)
@@ -396,9 +390,6 @@ transform = Transform3D(1, 0, 4.65661e-10, 0, 1, 0, -4.65661e-10, 0, 1, -3.88973
 [node name="FenceBeachBoardWalk2" parent="NavigationRegion3D" instance=ExtResource("23_t7ckm")]
 transform = Transform3D(1, 0, 4.65661e-10, 0, 1, 0, -4.65661e-10, 0, 1, -3.88973, 0, -3.53622)
 
-[node name="UpgradeHammer" parent="NavigationRegion3D" instance=ExtResource("27_g18sh")]
-transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999984, 1.73954, 0.0163647, 3.99775)
-
 [node name="Floor" type="StaticBody3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 4.65661e-10, 0, 1, 0, -4.65661e-10, 0, 1, 1.30674, 0, 0.628139)
 
@@ -419,13 +410,9 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6.5, 
 [node name="Sink2" parent="NavigationRegion3D/Floor" instance=ExtResource("6_iso5m")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6.5, 2.4, -8)
 
-[node name="FoodFactory" parent="NavigationRegion3D" instance=ExtResource("27_83y2r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.37621, 0.345, 2.24429)
-supply = ExtResource("28_pf82k")
-
 [node name="FoodFactory2" parent="NavigationRegion3D" instance=ExtResource("27_83y2r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.36861, 0.345, 0.312314)
-supply = ExtResource("28_pf82k")
+transform = Transform3D(1, 0, -1.39698e-09, 0, 1, 0, 1.39698e-09, 0, 1, 6.53305, 0.345, -1.52527)
+catergory = 1
 
 [node name="CustomerSpawner" type="MultiplayerSpawner" parent="."]
 spawn_path = NodePath("../CustomerSpawnPoint")
@@ -437,7 +424,7 @@ transform = Transform3D(1, 0, -4.65661e-10, 0, 1, 0, 4.65661e-10, 0, 1, 11.8854,
 transform = Transform3D(1, 0, -4.65661e-10, 0, 1, 0, 4.65661e-10, 0, 1, 12.208, 0.728576, -3.25253)
 
 [node name="TableBody8" type="StaticBody3D" parent="." node_paths=PackedStringArray("detection_area")]
-transform = Transform3D(1, 0, -1.86265e-09, 0, 1, 0, 1.86265e-09, 0, 1, 6.79036, 9.53674e-07, 2.0079)
+transform = Transform3D(1, 0, -2.32831e-09, 0, 1, 0, 2.32831e-09, 0, 1, 8.90418, 9.53674e-07, 2.0196)
 script = ExtResource("31_t7ckm")
 detection_area = NodePath("Area3D")
 
@@ -456,7 +443,7 @@ transform = Transform3D(1, 0, -2.32831e-09, 0, 1, 0, 2.32831e-09, 0, 1, -0.49974
 shape = SubResource("CylinderShape3D_hte61")
 
 [node name="TableBody7" type="StaticBody3D" parent="." node_paths=PackedStringArray("detection_area")]
-transform = Transform3D(1, 0, -4.65661e-10, 0, 1, 0, 4.65661e-10, 0, 1, 6.74104, 4.76837e-07, -1.86438)
+transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 9.31323e-10, 0, 1, 8.85487, 4.76837e-07, -1.85268)
 script = ExtResource("31_t7ckm")
 detection_area = NodePath("Area3D")
 

@@ -7,19 +7,48 @@ class_name FoodCrateUpdate
 extends UnPoweredAppliance
 
 @export_group("Supply Settings")
-@export var supply: PackedScene
-@export var supply_name: String = "Tomato" # "Water"
+var supply: PackedScene
+
 @export var catergory : Catergory
+@export var current_index : float = 0
+@onready var wait_timer : Timer = Timer.new()
 
 var food_directory: String = "res://scripts/Food/IngredientScenes/"
 var supply_instance: Node
-
+var _switched : bool
+ 
+const wait_time = 0.3
 enum Catergory{
-	Fridge,
-	Vege,
-	Fruit,
-	Pantry
+	FRIDGE,
+	VEGE,
+	FRUIT,
+	PANTRY
 }
+
+
+const FOOD_ORDER = {
+	Catergory.FRIDGE: [preload("res://scripts/Food/IngredientScenes/beef.tscn"),
+					   preload("res://scripts/Food/IngredientScenes/chicken.tscn"),
+					   preload("res://scripts/Food/IngredientScenes/Fish.tscn"),
+					   preload("res://scripts/Food/IngredientScenes/Milk.tscn")],
+					
+	Catergory.VEGE: [preload("res://scripts/Food/IngredientScenes/garlic.tscn"),
+					preload("res://scripts/Food/IngredientScenes/mushroom.tscn"),
+					preload("res://scripts/Food/IngredientScenes/Onion.tscn"),
+					preload("res://scripts/Food/IngredientScenes/Potato.tscn")],
+	
+	Catergory.FRUIT: [preload("res://scripts/Food/IngredientScenes/apple.tscn"),
+					 preload("res://scripts/Food/IngredientScenes/pineapple.tscn"),
+					 preload("res://scripts/Food/IngredientScenes/Tomato.tscn"),
+					 preload("res://scripts/Food/IngredientScenes/pumpkin.tscn")],
+					
+	Catergory.PANTRY: [ preload("res://scripts/Food/IngredientScenes/Cocoa.tscn"),
+					   preload("res://scripts/Food/IngredientScenes/Flour.tscn"),
+					   preload("res://scripts/Food/IngredientScenes/Pasta.tscn"),
+					   preload("res://scripts/Food/IngredientScenes/cheese.tscn"),
+					   preload("res://scripts/Food/IngredientScenes/dough.tscn")]
+}
+
 
 ## Setup the model instance
 func _init():
@@ -30,9 +59,8 @@ func _init():
 ## Set up the FoodCrate
 func _ready():
 	super._ready()
-	interactable_component.has_action = true
-	#interactable_component.action_use()
 	action_interval = 0.5 # small interval to avoid rapid item taking
+	_timer_setup()
 	_set_affixes()
 	_initialize_supply()
 
@@ -45,10 +73,11 @@ func _add_sync_properties(config: SceneReplicationConfig):
 
 ## Initialize the supply
 func _initialize_supply():
+	interactable_component.has_action = true
 	if supply and supply.can_instantiate():
 		supply_instance = supply.instantiate()
 		return
-	set_supply(supply_name)
+	supply = FOOD_ORDER[catergory][current_index]
 
 
 # Set the supply script for the food crate
@@ -72,7 +101,7 @@ func take() -> Node:
 	action_timer.start()
 
 	var food = supply.instantiate()
-	food.name = prefix + supply_name + str(supply_count)
+	food.name = prefix + str(supply_count)
 	supply_count += 1
 	ApplianceManager.register_item(food, current_owner, food.name)
 	return food
@@ -202,7 +231,6 @@ func take_at(_index: int) -> Node:
 	return null
 
 func start_action() -> bool:
-	assert(false, "Food Crate does not support starting actions")
 	return false
 
 func put_from_player(_item: Node) -> bool:
@@ -211,5 +239,36 @@ func put_from_player(_item: Node) -> bool:
 #-------------------------------------------------------------------------------
 
 
-func _action():
-	pass
+## Switches the current catergofy of the food crate
+func _switch_catergory():
+	_switched = true
+	catergory = catergory + 1 if catergory < Catergory.size() - 1 else 0
+	wait_timer.stop()
+	current_index = 0
+	supply = FOOD_ORDER[catergory][current_index]
+	print("SWITCHED TOO: ", catergory)
+
+
+## Sets up the timer for how long the player needs to wait
+func _timer_setup():
+	add_child(wait_timer)
+	wait_timer.wait_time = wait_time
+	wait_timer.autostart = false
+	wait_timer.timeout.connect(_switch_catergory)
+
+
+func _on_interactable_component_action_use(_is_action: bool) -> void:
+	if _is_action: 
+		wait_timer.start() #Starts timer to check if to switch catergory
+		return
+	
+	wait_timer.stop()
+	
+	if(_switched): 
+		_switched = false 
+		return
+	
+	#Chnages the food within catergory
+	var size : int = FOOD_ORDER[catergory].size()
+	current_index = current_index + 1 if (current_index < size - 1) else 0
+	supply = FOOD_ORDER[catergory][current_index]

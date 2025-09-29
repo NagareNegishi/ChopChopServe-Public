@@ -113,6 +113,8 @@ func take() -> Node:
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
 func player_has(item: Node) -> void:
+	if item && item is Food:
+		pass
 	if not item:
 		take_request()
 		return
@@ -122,6 +124,10 @@ func player_has(item: Node) -> void:
 		return
 
 
+func _delete_food(item_path : String):
+	pass
+	
+	
 ## Client-side method to take item, called by host
 ## @param item_name: The name of the item to take
 @rpc("authority", "call_remote", "reliable")

@@ -1,8 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://bev73qms8mo6h"]
+[gd_scene load_steps=6 format=3 uid="uid://bev73qms8mo6h"]
 
 [ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="1_fh1u4"]
 [ext_resource type="Script" uid="uid://drw1ejyko02d6" path="res://scripts/Appliance_system/Unused_classes/food_crate_update.gd" id="2_fh1u4"]
-[ext_resource type="PackedScene" uid="uid://di1h1y3g30eka" path="res://assets/newmodels/furniture/FoodCrate.glb" id="3_fh1u4"]
+[ext_resource type="ArrayMesh" uid="uid://bpj4bercxrwxn" path="res://assets/newmodels/furniture/FoodCrate_Cube_026.res" id="3_fh1u4"]
+[ext_resource type="PackedScene" uid="uid://c8b2kiudgb4nt" path="res://UI/UI_FoodCrate.tscn" id="4_22vov"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_r34q6"]
+viewport_path = NodePath("SubViewport")
 
 [node name="FoodFactory" instance=ExtResource("1_fh1u4")]
 script = ExtResource("2_fh1u4")
@@ -16,4 +20,18 @@ current_owner = 1
 cooking_style = 0
 model_scene = null
 
-[node name="FoodCrate" parent="." index="3" instance=ExtResource("3_fh1u4")]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="3"]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0.0226097, 0, 0)
+mesh = ExtResource("3_fh1u4")
+skeleton = NodePath("")
+
+[node name="SubViewport" type="SubViewport" parent="." index="4"]
+transparent_bg = true
+size = Vector2i(225, 100)
+
+[node name="UiFoodCrate" parent="SubViewport" index="0" instance=ExtResource("4_22vov")]
+
+[node name="Sprite3D" type="Sprite3D" parent="." index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.138368, 1.26014, 0)
+billboard = 1
+texture = SubResource("ViewportTexture_r34q6")

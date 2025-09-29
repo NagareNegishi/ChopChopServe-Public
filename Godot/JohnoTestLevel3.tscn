@@ -1,5 +1,6 @@
-[gd_scene load_steps=38 format=3 uid="uid://bkdgdjjlsc7rx"]
+[gd_scene load_steps=39 format=3 uid="uid://bkdgdjjlsc7rx"]
 
+[ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_8whfs"]
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_cmmn0"]
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="1_om5gj"]
 [ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="2_m6tjv"]
@@ -83,6 +84,7 @@ radius = 0.655273
 
 [node name="JohnoTestLevel3" type="Node3D"]
 transform = Transform3D(0.999985, 0, 0.00553267, 0, 1, 0, -0.00553267, 0, 0.999985, 0, 0, 0)
+script = ExtResource("1_8whfs")
 
 [node name="== PLAYERS ==" type="Node" parent="."]
 
@@ -411,7 +413,7 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6.5, 
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6.5, 2.4, -8)
 
 [node name="FoodFactory2" parent="NavigationRegion3D" instance=ExtResource("27_83y2r")]
-transform = Transform3D(1, 0, -1.39698e-09, 0, 1, 0, 1.39698e-09, 0, 1, 6.53305, 0.345, -1.52527)
+transform = Transform3D(1, 0, -1.86265e-09, 0, 1, 0, 1.86265e-09, 0, 1, 6.53305, 0.300027, -1.52527)
 catergory = 1
 
 [node name="CustomerSpawner" type="MultiplayerSpawner" parent="."]

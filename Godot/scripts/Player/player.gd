@@ -262,7 +262,7 @@ func _action(is_active : bool) -> void:
 		return
 	
 	
-		
+	
 	if !_closest_item.has_action || (is_active && _closest_item.get_parent() is ChopTable && 
 	_closest_item.get_parent().chopping_board.contents.is_empty()) || (is_active 
 	&& _closest_item.get_parent() is Sink && _closest_item.get_parent().contents.is_empty()): return
@@ -270,7 +270,8 @@ func _action(is_active : bool) -> void:
 	if _closest_item != null && (_closest_item.get_parent() is ChopTable or _closest_item.get_parent() is Sink):
 		disable_controls(is_active, false)
 	
-	rpc("_client_action_anim",ENetManager.get_my_id(), is_active,
+	if _closest_item.get_parent() is not FoodCrateUpdate:
+		rpc("_client_action_anim",ENetManager.get_my_id(), is_active,
 	is_active && _closest_item.get_parent() is ChopTable,
 	is_active && _closest_item.get_parent() is Sink)
 	

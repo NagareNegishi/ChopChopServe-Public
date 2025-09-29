@@ -12,7 +12,7 @@ var supply: PackedScene
 @export var catergory : Catergory
 @export var current_index : float = 0
 @onready var wait_timer : Timer = Timer.new()
-
+@onready var cat_ui : FoodCrateCat = 	$SubViewport/UiFoodCrate
 var food_directory: String = "res://scripts/Food/IngredientScenes/"
 var supply_instance: Node
 var _switched : bool
@@ -202,10 +202,12 @@ func _client_transfer(player_id: int, food_name: String) -> void:
 ## Give visual feedback when hovered
 ## @param is_hovered: Whether the item is hovered or not
 func _on_interactable_component_hovered(is_hovered: bool) -> void:
+	$Sprite3D.visible = is_hovered
 	if not is_hovered:
 		highlight_component.hide_feedback()
 		return
 	var item = GlobalScript.get_local_player().item_in_hand
+	
 	#---------------------------------------------------------------------------
 	if item:
 		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())
@@ -243,10 +245,13 @@ func put_from_player(_item: Node) -> bool:
 func _switch_catergory():
 	_switched = true
 	catergory = catergory + 1 if catergory < Catergory.size() - 1 else 0
-	wait_timer.stop()
+	wait_timer.start()
 	current_index = 0
 	supply = FOOD_ORDER[catergory][current_index]
+	
 	print("SWITCHED TOO: ", catergory)
+	cat_ui.next_cat()
+
 
 
 ## Sets up the timer for how long the player needs to wait

@@ -44,10 +44,21 @@ shadow_mesh = SubResource("ArrayMesh_418mp")
 script = ExtResource("1_julgp")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.569856, 0)
 shape = SubResource("BoxShape3D_julgp")
 
 [node name="Egg" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.0765224, 0, 0, 0, 0.0765224, 0, 0, 0, 0.0765224, 0, 0, 0)
+mesh = SubResource("ArrayMesh_lxbdw")
+skeleton = NodePath("")
+
+[node name="SpoiledMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.0765224, 0, 0, 0, 0.0765224, 0, 0, 0, 0.0765224, 0, 0, 0)
+mesh = SubResource("ArrayMesh_lxbdw")
+skeleton = NodePath("")
+
+[node name="BurntMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
 mesh = SubResource("ArrayMesh_lxbdw")
 skeleton = NodePath("")
 

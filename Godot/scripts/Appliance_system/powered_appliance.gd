@@ -152,7 +152,7 @@ func _take_cookware(cookware: Cookware) -> void:
 	cookware.unlock()
 	cookware.restore_original_transform()
 	cookware._toggle_interaction(true)
-	emit_signal("cookware_taken")
+	emit_signal("cookware_taken", cookware)
 
 
 ## Client-side method to take item, called by host

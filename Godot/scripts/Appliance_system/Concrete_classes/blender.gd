@@ -11,7 +11,7 @@ func _init():
 func _ready():
 	super._ready()
 	cooking_style = ApplianceFactory.CookingStyle.BLEND
-	valid_classes = ["Tomato", "Water", "Milk", "Cocoa", "Flour", "Vanilla Icecream", "Strawberry"]
+	valid_classes = ["Tomato", "Water", "Milk", "Cocoa", "Flour", "Vanilla Icecream", "Strawberry", "Egg"]
 	capacity = 4
 	power = 1
 	
@@ -48,13 +48,8 @@ func put_all(items: Array) -> bool:
 ## Place food into the blender
 ## @param food: The Food item to place into the blender
 func _put_food(food: Food) -> void:
-	#food.current_visibility(false)
-
 	food.change_collisions(true)
-	if emit_signal("food_placed", contents, self):
-		print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY")
-		print("\n\n", contents)
-		print(self,"\n\n")
+	emit_signal("food_placed", contents, self)
 	if current_status == Status.COOKING:
 		_average_food()
 		food.start_cooking(power, cooking_style)
@@ -93,7 +88,7 @@ func take_all() -> Array[Node]:
 	contents = []
 	contents_names = []
 	stop_cook()
-	emit_signal("food_taken")
+	emit_signal("food_taken", contents)
 	return all_items
 
 

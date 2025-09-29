@@ -12,7 +12,7 @@ func _ready():
 	super._ready()
 	cooking_style = ApplianceFactory.CookingStyle.BAKE
 	valid_food = ["Fish", "Tomato", "Potato", "Flour", "Cocoa", "Milk", "Dough", "Cheese",
-					"Apple", "Beef", "Garlic", "Ham", "Pasta", "Pineapple", "Pumpkin"]
+					"Apple", "Beef", "Garlic", "Ham", "Pasta", "Pineapple", "Pumpkin","Egg"]
 	capacity = 4
 	coefficient = 1.0
 	

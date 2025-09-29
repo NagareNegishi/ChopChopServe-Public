@@ -100,7 +100,7 @@ func take_all() -> Array[Node]:
 		remove_child(item)
 	contents = []
 	contents_names = []
-	cookware_ui.clear()
+	if self is not ChoppingBoard: cookware_ui.clear()
 	emit_signal("food_taken")
 	return all_items
 

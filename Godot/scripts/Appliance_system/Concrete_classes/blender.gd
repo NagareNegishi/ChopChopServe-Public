@@ -11,9 +11,10 @@ func _init():
 func _ready():
 	super._ready()
 	cooking_style = ApplianceFactory.CookingStyle.BLEND
-	valid_classes = ["Tomato", "Water", "Milk", "Cocoa", "Flour", "Vanilla Icecream", "Strawberry"]
+	valid_classes = ["Tomato", "Water", "Milk", "Cocoa", "Flour", "Vanilla Icecream", "Strawberry", "Egg"]
 	capacity = 4
 	power = 1
+	
 	add_to_group("Appliance")
 
 
@@ -21,7 +22,7 @@ func _ready():
 func _setup_upgradable():
 	super._setup_upgradable()
 	enable_upgrade("power", [1, 1, 1], [100, 200, 300])
-	enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
+	# enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
 
 
 ## Place an item onto this appliance
@@ -47,11 +48,11 @@ func put_all(items: Array) -> bool:
 ## Place food into the blender
 ## @param food: The Food item to place into the blender
 func _put_food(food: Food) -> void:
-	#food.current_visibility(false)
-	food.change_collisions()
+	food.change_collisions(true)
+	emit_signal("food_placed", contents, self)
 	if current_status == Status.COOKING:
 		_average_food()
-		food.startCooking(power, cooking_style)
+		food.start_cooking(power, cooking_style)
 	# print("Food placed in blender: ", food.get_script().get_global_name(), ", Food cook time: ", food.get_cook_time(cooking_style))
 
 
@@ -87,6 +88,7 @@ func take_all() -> Array[Node]:
 	contents = []
 	contents_names = []
 	stop_cook()
+	emit_signal("food_taken", contents)
 	return all_items
 
 

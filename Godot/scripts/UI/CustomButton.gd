@@ -15,6 +15,8 @@ func _ready() -> void:
 	
 	self.scale = normal_size
 	self.pivot_offset = self.size/2
+	get_tree().root.size_changed.connect(_on_window_resized)
+	
 	
 func _hovered() -> void:
 	if tween: tween.kill()
@@ -30,3 +32,8 @@ func _unhovered() -> void:
 	tween.tween_property(
 		self, "scale", normal_size, 0.1
 	)
+
+
+func _on_window_resized():
+	self.scale = normal_size
+	self.pivot_offset = self.size/2

@@ -21,7 +21,7 @@ func _physics_process(_delta: float) -> void:
 	_extingush()
 
 func _can_extingush() -> bool:
-	return (!$ExtinguishRange.is_colliding() && 
+	return ($ExtinguishRange.is_colliding() && 
 	$ExtinguishRange.get_collider() is Appliance)
 
 
@@ -29,6 +29,14 @@ func _can_extingush() -> bool:
 ## @return void
 func _extingush() -> void:
 	var appliance : Appliance = $ExtinguishRange.get_collider()
+	
+	if (!"inflammable_component" in appliance): return
+
+	var component : Inflammable = appliance.inflammable_component
+	
+	if component	.fire_level <= 0: return
+	
+	component.extinguish(1)
 
 
 

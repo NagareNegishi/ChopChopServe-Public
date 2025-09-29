@@ -13,7 +13,7 @@ func _ready() -> void:
 	CurrencySystem.currency_changed.connect(currency_update)
 
 func currency_update(teamID : int, new_currency : float):
-	if teamID != GlobalScript.get_local_player().get_team():
+	if teamID != 1:
 		return
 	
 	var font_color : Color = Color("b4f5a4") if new_currency >= cost else Color("b6b6b6c8")

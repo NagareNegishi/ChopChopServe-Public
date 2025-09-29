@@ -2,7 +2,6 @@ class_name Fryer
 extends PoweredAppliance
 
 var inflammable_component: Inflammable
-
 ## Setup the model instance
 func _init():
 	super._init()
@@ -25,7 +24,6 @@ func _ready():
 func _setup_upgradable():
 	super._setup_upgradable()
 	enable_upgrade("power", [1, 1, 1], [100, 200, 300])
-	enable_upgrade("capacity", [1], [80])
 
 
 ## Setup inflammable component

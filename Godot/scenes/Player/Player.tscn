@@ -1,10 +1,10 @@
-[gd_scene load_steps=38 format=3 uid="uid://ckxyscw51v3du"]
+[gd_scene load_steps=42 format=3 uid="uid://ckxyscw51v3du"]
 
 [ext_resource type="Script" uid="uid://0wecred12v33" path="res://scripts/Player/player.gd" id="1_3qydi"]
-[ext_resource type="PackedScene" uid="uid://d4fmw7rcfjnsg" path="res://assets/newmodels/animations/Froggo.glb" id="2_xcisb"]
+[ext_resource type="PackedScene" uid="uid://0f0s5ysujrp4" path="res://assets/newmodels/animations/Please.glb" id="2_fxc31"]
 [ext_resource type="Texture2D" uid="uid://ds43xburqmhn0" path="res://assets/textures/misc/CircleTexture.png" id="4_ved6o"]
-[ext_resource type="Script" uid="uid://b3odgdfvtu6" path="res://scripts/Player/player_state.gd" id="5_socpp"]
 [ext_resource type="Script" uid="uid://b1a2y0am2avrj" path="res://scripts/Player/player_controller.gd" id="5_xcisb"]
+[ext_resource type="PackedScene" uid="uid://00wjsq6ak2e6" path="res://UI/UI_NameTag.tscn" id="6_socpp"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l2ndj"]
 radius = 0.524702
@@ -13,18 +13,42 @@ height = 1.06912
 [sub_resource type="BoxShape3D" id="BoxShape3D_q3lat"]
 size = Vector3(2.74022, 3, 3)
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_socpp"]
+viewport_path = NodePath("Mesh/NameTag/SubViewport")
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_socpp"]
 animation = &"Chopping"
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tl8lu"]
+animation = &"Washing"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qt7jd"]
+animation = &"Whacking"
+
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qt7jd"]
+xfade_time = 0.5
 advance_mode = 2
 advance_condition = &"chopping"
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5tklm"]
+advance_mode = 2
+advance_condition = &"whacking"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_g055u"]
+advance_mode = 2
+advance_condition = &"washing"
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_fxc31"]
 states/Chopping/node = SubResource("AnimationNodeAnimation_socpp")
-states/Chopping/position = Vector2(424.667, 107.407)
-states/Start/position = Vector2(266.667, 107.333)
-transitions = ["Start", "Chopping", SubResource("AnimationNodeStateMachineTransition_qt7jd")]
+states/Chopping/position = Vector2(474.889, 8.07367)
+states/End/position = Vector2(673.333, 130.667)
+states/Start/position = Vector2(296.667, 123.185)
+states/Washing/node = SubResource("AnimationNodeAnimation_tl8lu")
+states/Washing/position = Vector2(468, 226)
+states/Whacking/node = SubResource("AnimationNodeAnimation_qt7jd")
+states/Whacking/position = Vector2(467.333, 124)
+transitions = ["Start", "Chopping", SubResource("AnimationNodeStateMachineTransition_qt7jd"), "Start", "Whacking", SubResource("AnimationNodeStateMachineTransition_5tklm"), "Start", "Washing", SubResource("AnimationNodeStateMachineTransition_g055u")]
+graph_offset = Vector2(-325, 41)
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fxc31"]
 animation = &"IdleAnimation"
@@ -51,11 +75,12 @@ advance_condition = &"empty"
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_cd157"]
 states/End/position = Vector2(670, 99.3333)
 states/IdleAnimation/node = SubResource("AnimationNodeAnimation_fxc31")
-states/IdleAnimation/position = Vector2(479.399, 16.6667)
+states/IdleAnimation/position = Vector2(478.96, 18)
 states/IdleHolding/node = SubResource("AnimationNodeAnimation_puxyr")
 states/IdleHolding/position = Vector2(480.074, 178.667)
 states/Start/position = Vector2(326, 100.074)
 transitions = ["Start", "IdleAnimation", SubResource("AnimationNodeStateMachineTransition_mmokv"), "Start", "IdleHolding", SubResource("AnimationNodeStateMachineTransition_dqp0f"), "IdleAnimation", "IdleHolding", SubResource("AnimationNodeStateMachineTransition_xcisb"), "IdleHolding", "IdleAnimation", SubResource("AnimationNodeStateMachineTransition_socpp")]
+graph_offset = Vector2(-182, -22)
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mmokv"]
 animation = &"Walking"
@@ -118,6 +143,7 @@ advance_condition = &"action"
 resource_name = "unaction"
 priority = 0
 advance_mode = 2
+advance_condition = &"unaction"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_miygw"]
 priority = 0
@@ -138,34 +164,23 @@ states/SM_Walking/node = SubResource("AnimationNodeStateMachine_8djf2")
 states/SM_Walking/position = Vector2(476, -49.6012)
 states/Start/position = Vector2(84, 184.673)
 transitions = ["SM_IDLE", "SM_Walking", SubResource("AnimationNodeStateMachineTransition_puxyr"), "SM_Walking", "SM_IDLE", SubResource("AnimationNodeStateMachineTransition_5gcuk"), "Start", "SM_IDLE", SubResource("AnimationNodeStateMachineTransition_tl8lu"), "SM_IDLE", "SM_ACTION", SubResource("AnimationNodeStateMachineTransition_3nxk0"), "SM_ACTION", "SM_IDLE", SubResource("AnimationNodeStateMachineTransition_2aixn"), "SM_Walking", "SM_ACTION", SubResource("AnimationNodeStateMachineTransition_miygw"), "SM_ACTION", "SM_Walking", SubResource("AnimationNodeStateMachineTransition_m1hey")]
-graph_offset = Vector2(-329, 29.574)
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_fxc31"]
-properties/0/path = NodePath(".:player_id")
-properties/0/spawn = true
-properties/0/replication_mode = 1
-properties/1/path = NodePath(".:player_name")
-properties/1/spawn = true
-properties/1/replication_mode = 1
-properties/2/path = NodePath(".:team")
-properties/2/spawn = true
-properties/2/replication_mode = 1
+graph_offset = Vector2(-284, 12.574)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ved6o"]
 properties/0/path = NodePath(".:position")
-properties/0/spawn = true
+properties/0/spawn = false
 properties/0/replication_mode = 1
 properties/1/path = NodePath(".:velocity")
-properties/1/spawn = true
+properties/1/spawn = false
 properties/1/replication_mode = 1
 properties/2/path = NodePath("Mesh:rotation")
-properties/2/spawn = true
+properties/2/spawn = false
 properties/2/replication_mode = 2
 properties/3/path = NodePath("Decal:modulate")
-properties/3/spawn = true
+properties/3/spawn = false
 properties/3/replication_mode = 2
 properties/4/path = NodePath("AnimationTree:anim_player")
-properties/4/spawn = true
+properties/4/spawn = false
 properties/4/replication_mode = 1
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_xcisb"]
@@ -177,26 +192,30 @@ script = ExtResource("1_3qydi")
 [node name="PlayerCollision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_l2ndj")
 
-[node name="Mesh" parent="." instance=ExtResource("2_xcisb")]
-transform = Transform3D(-7.64949e-09, 0, -0.175, 0, 0.175, 0, 0.175, 0, -7.64949e-09, 0, -0.556445, 0)
+[node name="Mesh" parent="." instance=ExtResource("2_fxc31")]
+transform = Transform3D(-7.64949e-09, 0, -0.175, 0, 0.175, 0, 0.175, 0, -7.64949e-09, 0, -0.556, 0)
 
 [node name="Clothes_001" parent="Mesh/Armature" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0402468, -2.38199, 0.0644097)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0402468, -2.35843, 0.06441)
 
 [node name="Skeleton3D" parent="Mesh/Armature" index="1"]
-bones/2/rotation = Quaternion(0.000402912, 1.19209e-07, -4.80308e-11, 1)
-bones/3/position = Vector3(-3.85431, 2.46216, 2.79993e-14)
-bones/3/rotation = Quaternion(-3.89966e-08, 2.25142e-09, 0.998338, 0.0576379)
-bones/4/rotation = Quaternion(-1.13927e-09, 8.31912e-08, 0.00706236, 0.999975)
-bones/5/rotation = Quaternion(-3.2693e-11, -3.49708e-07, -0.00031076, 1)
-bones/6/position = Vector3(3.85431, 2.46216, -4.22451e-16)
-bones/6/rotation = Quaternion(3.89966e-08, 2.25142e-09, 0.998338, -0.0576379)
-bones/7/rotation = Quaternion(1.35973e-09, 2.70658e-07, -0.00706199, 0.999975)
-bones/8/rotation = Quaternion(-1.42488e-10, -4.14868e-09, 0.000310395, 1)
-bones/9/position = Vector3(-0.745343, 0.911673, -0.0113688)
-bones/9/rotation = Quaternion(-0.707104, -0.0031089, 0.7071, -0.0021288)
-bones/10/position = Vector3(0.688155, 0.911673, -0.0113688)
-bones/10/rotation = Quaternion(0.707102, -0.00261885, 0.707102, 0.00261885)
+bones/1/position = Vector3(-0.0285939, 0.928713, -0.0113688)
+bones/2/rotation = Quaternion(0.00878652, 1.19205e-07, 5.52148e-09, 0.999961)
+bones/3/position = Vector3(-0.745343, 0.888451, -0.0113688)
+bones/3/rotation = Quaternion(-0.707104, -0.0031089, 0.7071, -0.0021288)
+bones/4/position = Vector3(0.688155, 0.883943, -0.0113688)
+bones/4/rotation = Quaternion(0.707102, -0.00261885, 0.707102, 0.00261885)
+bones/5/position = Vector3(-3.85431, 1.25356, -1.90897e-06)
+bones/5/rotation = Quaternion(-3.8277e-08, 1.63253e-09, 0.998338, 0.0576378)
+bones/6/rotation = Quaternion(-1.58162e-09, 8.31638e-08, 0.00706234, 0.999975)
+bones/7/rotation = Quaternion(-3.37245e-11, -3.49707e-07, -0.000310751, 1)
+bones/8/position = Vector3(3.85431, 1.24364, -1.90915e-06)
+bones/8/rotation = Quaternion(3.8277e-08, 1.63253e-09, 0.998338, -0.0576378)
+bones/9/rotation = Quaternion(9.17367e-10, 2.70685e-07, -0.00706197, 0.999975)
+bones/10/rotation = Quaternion(-1.43519e-10, -4.15075e-09, 0.000310391, 1)
+
+[node name="Knife" parent="Mesh" index="1"]
+transform = Transform3D(-0.290235, 0.94775, 0.132413, -0.453393, -0.0143335, -0.891195, -0.842732, -0.318692, 0.433863, -2.4536, -7.97635, -2.99241)
 
 [node name="InteractArea" type="Area3D" parent="Mesh"]
 transform = Transform3D(-1.16884e-07, 0.0186302, 2.3488, 0, 1.42888, -0.0306244, -2.674, -8.14351e-10, -1.02669e-07, -0.000434988, 3.34623, 6.77052)
@@ -210,6 +229,17 @@ transform = Transform3D(1, -7.2778e-10, -6.04317e-12, 7.2778e-10, 0.999861, 0.01
 
 [node name="movePoint" type="Node3D" parent="Mesh"]
 transform = Transform3D(6, -8.73215e-09, -1.45263e-10, 8.73215e-09, 5.99667, 0.199769, -1.45548e-10, -0.199769, 5.99667, -5.68745e-08, 0.714802, -1.30114)
+
+[node name="NameTag" type="Sprite3D" parent="Mesh"]
+transform = Transform3D(5.71429, 0, -1.42109e-13, 0, 5.71429, 0, 1.42109e-13, 0, 5.71429, 0, 9.68691, 0)
+billboard = 1
+texture = SubResource("ViewportTexture_socpp")
+
+[node name="SubViewport" type="SubViewport" parent="Mesh/NameTag"]
+transparent_bg = true
+size = Vector2i(287, 47)
+
+[node name="UiNameTag" parent="Mesh/NameTag/SubViewport" instance=ExtResource("6_socpp")]
 
 [node name="Decal" type="Decal" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00576666, -0.495518, 0)
@@ -228,6 +258,8 @@ parameters/conditions/is_idle = true
 parameters/conditions/is_moving = false
 parameters/conditions/unaction = false
 parameters/SM_ACTION/conditions/chopping = false
+parameters/SM_ACTION/conditions/washing = false
+parameters/SM_ACTION/conditions/whacking = false
 parameters/SM_IDLE/conditions/empty = true
 parameters/SM_IDLE/conditions/holding = false
 parameters/SM_Walking/conditions/empty = false
@@ -244,11 +276,6 @@ autostart = true
 [node name="MoveParticles" type="Timer" parent="."]
 wait_time = 0.15
 autostart = true
-
-[node name="PlayerState" type="MultiplayerSynchronizer" parent="."]
-root_path = NodePath(".")
-replication_config = SubResource("SceneReplicationConfig_fxc31")
-script = ExtResource("5_socpp")
 
 [node name="MultiplayerSync" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_ved6o")

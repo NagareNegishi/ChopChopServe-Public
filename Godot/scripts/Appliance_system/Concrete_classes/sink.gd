@@ -14,7 +14,7 @@ func _init():
 ## Setup the sink properties
 func _ready():
 	super._ready()
-	capacity = 4
+	capacity = 1
 	# action_interval = 1.0
 	_setup_visual_effects()
 	_set_affixes()
@@ -88,7 +88,7 @@ func _action() -> bool:
 	if current_status != Status.USING:
 		assert(false, "Do not call wash() unless status is USING")
 		return false
-	
+
 	for item in contents:
 		# if item is Plate:
 		if item.has_method("clean"):
@@ -108,18 +108,54 @@ func player_has(item: Node) -> void:
 	if not item:
 		take_request()
 		return
-
 	# If Player has Pot, provide water
 	if item is Pot:
-		#--------------------------------------------
-		print("Provide water to pot")
-		#TODO: check what is goint on, I see the comment "item removed" after this
-		#--------------------------------------------
-		item.put_request(_provide_water())
+		supply_water_request(item)
 		return
-
 	# If player has empty plate: depend on if sink can accept it
 	put_request(item)
+
+
+## Supply water from Sink to Pot
+## @param pot: The Pot to supply water to
+func supply_water_request(pot: Pot) -> void:
+	# locally check first to reduce network calls
+	if pot.is_full():
+		return
+	if ENetManager.is_host():
+		var water = _provide_water()
+		pot._put(water)
+		_client_supply_water.rpc(ENetManager.get_my_id(), water.name)
+		pot._sync_contents.rpc(pot.contents_names)
+		return
+	_supply_water_as_host.rpc_id(1, ENetManager.get_my_id())
+
+
+## Host-side method to handle water supply requests from clients
+## @param player_id: The id of the player who is requesting water
+@rpc("any_peer", "call_remote", "reliable")
+func _supply_water_as_host(player_id: int) -> void:
+	if not ENetManager.is_host():
+		return
+	var pot = GlobalScript.get_local_player_by_id(player_id).item_in_hand
+	if not pot or not (pot is Pot) or pot.is_full():
+		return
+	var water = _provide_water()
+	pot._put(water)
+	_client_supply_water.rpc(player_id, water.name)
+	pot._sync_contents.rpc(pot.contents_names)
+
+
+## Client-side method to supply water, called by host
+## @param player_id: The id of the player who requested water
+## @param water_name: The unique name of the water item
+@rpc("authority", "call_remote", "reliable")
+func _client_supply_water(player_id: int, water_name: String) -> void:
+	var pot = GlobalScript.get_local_player_by_id(player_id).item_in_hand
+	if pot and pot is Pot and not pot.is_full():
+		var water = water_scene.instantiate() # Skip registration, already done by host
+		water.name = water_name
+		pot._put(water)
 
 
 ## Trigger action, if subclass has action

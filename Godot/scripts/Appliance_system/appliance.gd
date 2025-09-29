@@ -4,6 +4,9 @@
 class_name Appliance
 extends Placeable
 
+signal food_placed(contents)
+signal food_taken
+signal add_appliance(cookware)
 enum Owner {
 	NONE,
 	TEAM1,
@@ -24,11 +27,11 @@ var interactable_component: InteractableComponent
 var highlight_component: ApplianceHighlight
 var power_upgradable: Upgradable
 var capacity_upgradable: Upgradable
-var coefficient_upgradable: Upgradable
+# var coefficient_upgradable: Upgradable
 
 var contents: Array[Node] = []
 var contents_names: Array[String] = []: set = _set_contents_names
-var price: int = 100
+static var price: int = 100
 
 
 ## Setup the appliance
@@ -85,11 +88,11 @@ func _setup_upgradable():
 	capacity_upgradable.upgradable_property = "capacity"
 	capacity_upgradable.upgrade_mode = Upgradable.UpgradeMode.ADD
 	add_child(capacity_upgradable)
-	# Create coefficient upgradable
-	coefficient_upgradable = Upgradable.new()
-	coefficient_upgradable.upgradable_property = "coefficient"
-	coefficient_upgradable.upgrade_mode = Upgradable.UpgradeMode.ADD
-	add_child(coefficient_upgradable)
+	# # Create coefficient upgradable
+	# coefficient_upgradable = Upgradable.new()
+	# coefficient_upgradable.upgradable_property = "coefficient"
+	# coefficient_upgradable.upgrade_mode = Upgradable.UpgradeMode.ADD
+	# add_child(coefficient_upgradable)
 
 
 ## Enable specific upgrade type
@@ -118,14 +121,14 @@ func enable_upgrade(type: String, values: Array, costs: Array[int]) -> bool:
 			#print("Capacity upgrade enabled for: ", get_script().get_global_name())
 			#-------------------------------------------------------------------
 			return true
-		"coefficient":
-			coefficient_upgradable.upgrade_values = values
-			coefficient_upgradable.upgrade_costs = costs
-			coefficient_upgradable.enabled = true
-			#-------------------------------------------------------------------
-			#print("Coefficient upgrade enabled for: ", get_script().get_global_name())
-			#-------------------------------------------------------------------
-			return true
+		# "coefficient":
+		# 	coefficient_upgradable.upgrade_values = values
+		# 	coefficient_upgradable.upgrade_costs = costs
+		# 	coefficient_upgradable.enabled = true
+		# 	#-------------------------------------------------------------------
+		# 	#print("Coefficient upgrade enabled for: ", get_script().get_global_name())
+		# 	#-------------------------------------------------------------------
+		# 	return true
 		_:
 			assert(false, "Unknown upgrade type: " + type)
 			return false

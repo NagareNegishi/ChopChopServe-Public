@@ -14,7 +14,4 @@ current_owner = 1
 cooking_style = 0
 model_scene = null
 
-[node name="CollisionShape3D" parent="." index="0"]
-debug_color = Color(1, 0.0352941, 0.00784314, 1)
-
 [node name="BasicBench2" parent="." index="3" instance=ExtResource("2_o34na")]

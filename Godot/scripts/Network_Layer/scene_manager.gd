@@ -14,17 +14,21 @@ enum Scene {
 	SETTINGS,
 	LOBBY_TEST,
 	TEST,
-	JOHNO_TEST
+	JOHNO_TEST,
+	JESS_TEST,
+	EMMA_TEST
 }
 
 const SCENE_PATHS = {
-	Scene.MAIN_MENU: "res://scenes/Network_Layer/main_menu.tscn",
-	Scene.LOBBY: "", # Will be added later
+	Scene.MAIN_MENU: "res://LevelDesign/main_menu_enviro.tscn",
+	Scene.LOBBY: "res://LevelDesign/Levelselectworld.tscn", # Will be added later
 	Scene.Food_Court: "res://Milestone3Submission.tscn",
 	Scene.SETTINGS: "", # Will be added later
 	Scene.LOBBY_TEST: "res://scenes/Network_Layer/lobby_network.tscn",
 	Scene.TEST: "res://scenes/Appliance_system/Appliance_test.tscn",
-	Scene.JOHNO_TEST: "res://JohnoTestScene.tscn"
+	Scene.JOHNO_TEST: "res://JohnoTestLevel3.tscn",
+	Scene.JESS_TEST: "res://JessTestScene6.tscn",
+	Scene.EMMA_TEST: "res://scripts/Food/testingSceneEmma2.tscn"
 }
 
 var current_scene: Scene = Scene.MAIN_MENU

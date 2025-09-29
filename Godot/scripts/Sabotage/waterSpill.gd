@@ -1,4 +1,4 @@
-extends Area3D
+extends Node3D
 
 @export var duration: float = 10.0
 @export var slow_down: float = 0.5
@@ -6,27 +6,50 @@ extends Area3D
 @onready var reputation_system = ReputationSystem
 var sabotaged_teamID: int
 
+var pos
+
+var water_particles: ParticleController
+
 signal in_water_spill()
 signal customer_down()
 
 func _ready() -> void:
 	# Connect to body entered signal
-	body_entered.connect(_on_body_entered)
+	pass
+	#body_entered.connect(_on_body_entered)
+
+# Set up the visual effects
+# Taken from inflammable
+func _setup_visual_effects():
+	if water_particles:
+		return # don't double-create
+	water_particles = ParticleController.create_with_effect(ParticleController.EffectType.WATER_SPROUT)
+	water_particles.position = pos
+	add_child(water_particles)
+	water_particles.set_scale_multiplier(6.0)
+
+# get the position of the spill
+# send it from the sabotage system
+func send_position(spill_pos : Vector3):
+	pos = spill_pos
 
 # Set which team is being sabotaged
 func set_sabotaged_team(teamID: int) -> void:
 	print("Water spill sabotaging team: ", teamID)
 	sabotaged_teamID = teamID
 
-func start_timer(seconds: float) -> void:
+#func start_timer(seconds: float) -> void:
+func start_timer() -> void:
+	print("\n \n starting the timer")
 	var timer = Timer.new()
-	timer.wait_time = seconds
+	timer.wait_time = 20.0
 	timer.one_shot = true
 	add_child(timer)
 	timer.timeout.connect(_on_timer_timeout)
 	timer.start()
 
 func _on_timer_timeout() -> void:
+	print("\n \n the fire has ended")
 	queue_free()
 
 # Handle customer fall on server only to avoid duplicate effects
@@ -77,3 +100,16 @@ func _on_body_entered(body: Node3D) -> void:
 		
 	else:
 		print("Unknown body entered water: ", body)
+
+
+func spill() -> bool:
+	print("\n \n spilling now")
+	_setup_visual_effects()
+	_start_water_effects()
+	start_timer()
+	# add a signal here
+	return true
+
+func _start_water_effects() -> void:
+	print("\n \n starting the effects")
+	water_particles.play()

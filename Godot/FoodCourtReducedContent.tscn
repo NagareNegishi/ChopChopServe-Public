@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dv1g0obwvkkkt" path="res://scripts/QueueSpot.gd" id="2_mgaxr"]
 [ext_resource type="PackedScene" uid="uid://dxhfqm13c85ar" path="res://assets/models/decorations/table.glb" id="3_14ypp"]
 [ext_resource type="Script" uid="uid://dnns4dn8p042y" path="res://scripts/Table.gd" id="4_tkej6"]
-[ext_resource type="PackedScene" uid="uid://ctjn6a51qelin" path="res://scripts/Food/MenuItemScenes/TomatoSoup.tscn" id="5_arbov"]
+[ext_resource type="PackedScene" uid="uid://hfxkmecbe3vs" path="res://scripts/Food/MenuItemScenes/TomatoSoup.tscn" id="5_arbov"]
 [ext_resource type="PackedScene" uid="uid://bhby0n47wy3nv" path="res://assets/models/infrastructure/wall.tscn" id="16_nm0hi"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_pqq6p"]

@@ -1,11 +1,11 @@
 extends MenuItem
-class_name CheesePizza
+class_name pizza_cheese
 
 # Registers this class in the correct arrays in the superclass
 @warning_ignore("unused_private_class_variable")
-static var _auto_register = MenuItem.register(CheesePizza)
+static var _auto_register = MenuItem.register(pizza_cheese)
 @warning_ignore("unused_private_class_variable")
-static var _type_register = MenuItem.register_type(MenuItem.mains, CheesePizza.new())
+static var _type_register = MenuItem.register_type(MenuItem.mains, pizza_cheese.new())
 
 func _init():
 	ingredients = ["Dough", "Cheese", "Tomato"]
@@ -22,4 +22,5 @@ func _ready():
 	cooked_mesh_good = $PizzaCheese
 	cooked_mesh_bad = $BadQualityCheesePizza
 	cooked_mesh_burnt = $BurntCheesePizza
+	name_of_meal = "pizza_cheese"
 	ui_texture = load("res://assets/textures/recipes/CheesePizza.png")

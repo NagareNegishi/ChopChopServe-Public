@@ -68,8 +68,8 @@ func _on_food_or_cookware_taken(item):
 			cookware.disconnect("new_average", Callable(self, "_on_average_updated"))
 	
 	if food_item and food_item.is_connected("cooking", Callable(self, "_on_food_signal")):
-		#if value == max_value:
-			#progress_bar_reset()
+		if value == max_value:
+			progress_bar_reset()
 		food_item.disconnect("cooking", Callable(self, "_on_food_signal"))
 		
 	

@@ -1,11 +1,11 @@
 extends MenuItem
-class_name OnionSoup
+class_name soup_onion
 
 # Registers this class in the correct arrays in the superclass
 @warning_ignore("unused_private_class_variable")
-static var _auto_register = MenuItem.register(OnionSoup)
+static var _auto_register = MenuItem.register(soup_onion)
 @warning_ignore("unused_private_class_variable")
-static var _type_register = MenuItem.register_type(MenuItem.starters,  OnionSoup.new())
+static var _type_register = MenuItem.register_type(MenuItem.starters,  soup_onion.new())
 
 func _init():
 	ingredients = ["Onion", "Onion", "Onion", "Water"]
@@ -22,4 +22,5 @@ func _ready():
 	cooked_mesh_good = $SoupOnion
 	cooked_mesh_bad = $BadQualityOnionSoup
 	cooked_mesh_burnt = $BurntSoup
+	name_of_meal = "soup_onion"
 	ui_texture = load("res://assets/textures/recipes/OnionSoup.png")

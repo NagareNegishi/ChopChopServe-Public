@@ -29,6 +29,8 @@ static func register_type(list_name: Array, food_item):
 static func get_subclasses() -> Array:
 	return subclasses
 
+func get_meal_name():
+	return name_of_meal
 
 # Needs to check if the list matches any of the MenuItems
 func match_menu_items(input_ingredients: Array):

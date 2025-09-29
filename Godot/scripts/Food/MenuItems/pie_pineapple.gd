@@ -1,11 +1,11 @@
 extends MenuItem
-class_name PineapplePie
+class_name pie_pineapple
 
 # Registers this class in the correct arrays in the superclass
 @warning_ignore("unused_private_class_variable")
-static var _auto_register = MenuItem.register(PineapplePie)
+static var _auto_register = MenuItem.register(pie_pineapple)
 @warning_ignore("unused_private_class_variable")
-static var _type_register = MenuItem.register_type(MenuItem.deserts, PineapplePie.new())
+static var _type_register = MenuItem.register_type(MenuItem.deserts, pie_pineapple.new())
 
 func _init():
 	ingredients = ["Dough","Pineapple"]
@@ -21,4 +21,5 @@ func _ready():
 	cooked_mesh_good = $PiePineapple
 	cooked_mesh_bad = $BadQualityPineapplePie
 	cooked_mesh_burnt = $BurntPineapplePie
+	name_of_meal = "pie_pineapple"
 	ui_texture = load("res://assets/textures/recipes/PineapplePie.png")

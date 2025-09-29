@@ -1,11 +1,11 @@
 extends MenuItem
-class_name BeefTaco
+class_name taco_beef
 
 # Registers this class in the correct arrays in the superclass
 @warning_ignore("unused_private_class_variable")
-static var _auto_register = MenuItem.register(BeefTaco)
+static var _auto_register = MenuItem.register(taco_beef)
 @warning_ignore("unused_private_class_variable")
-static var _type_register = MenuItem.register_type(MenuItem.mains, BeefTaco.new())
+static var _type_register = MenuItem.register_type(MenuItem.mains, taco_beef.new())
 
 func _init():
 	ingredients = ["Dough", "Beef", "Tomato"]
@@ -22,4 +22,5 @@ func _ready():
 	cooked_mesh_good = $TacoBeef
 	cooked_mesh_bad = $BadQualityBeefTaco
 	cooked_mesh_burnt = $BurntBeefTaco
+	name_of_meal = "taco_beef"
 	ui_texture = load("res://assets/textures/recipes/BeefTaco.png")

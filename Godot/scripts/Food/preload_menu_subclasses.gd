@@ -3,7 +3,7 @@ extends Node
 func _ready():
 	preload("res://scripts/Food/MenuItems/bolognese.gd")
 	preload("res://scripts/Food/MenuItems/bread.gd")
-	preload("res://scripts/Food/MenuItems/brownies.gd")
+	preload("res://scripts/Food/MenuItems/brownie.gd")
 	preload("res://scripts/Food/MenuItems/burger_beef.gd")
 	preload("res://scripts/Food/MenuItems/burger_chicken.gd")
 	preload("res://scripts/Food/MenuItems/burger_fish.gd")

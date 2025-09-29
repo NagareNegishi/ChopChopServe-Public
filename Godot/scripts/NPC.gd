@@ -49,10 +49,11 @@ func _movement(delta: float) -> void:
 
 ## Ensures npc rotated to allign with movement towards target
 func _rotate_npc(delta: float) -> void:
-	if _target_direction.length() > 0 and has_node("Mesh"):
-		$Mesh.rotation.y = lerp_angle($Mesh.rotation.y,
-							atan2(_target_direction.x, _target_direction.z),
-							delta * ANGULAR_ACCELERATION)
+	if _target_direction.length() > 0 and _is_pathfinding:
+		var target_angle = atan2(_target_direction.x, _target_direction.z)
+		self.rotation.y = lerp_angle(self.rotation.y,
+						   target_angle,
+						   delta * ANGULAR_ACCELERATION)
 
 ## Setter for agent's target direction
 func set_direction(direction: Vector3) -> void:

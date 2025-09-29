@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://dt5hnx2rcjaxo"]
+
+[ext_resource type="PackedScene" uid="uid://br76j8t76ne2x" path="res://scripts/order_system/Plate.tscn" id="1_xilvm"]
+[ext_resource type="PackedScene" uid="uid://hfxkmecbe3vs" path="res://scripts/Food/MenuItemScenes/TomatoSoup.tscn" id="2_t6l57"]
+
+[node name="Plate" instance=ExtResource("1_xilvm")]
+
+[node name="TomatoSoup" parent="." index="5" instance=ExtResource("2_t6l57")]

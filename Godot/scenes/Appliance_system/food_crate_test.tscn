@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://bev73qms8mo6h"]
+
+[ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="1_fh1u4"]
+[ext_resource type="Script" uid="uid://drw1ejyko02d6" path="res://scripts/Appliance_system/Unused_classes/food_crate_update.gd" id="2_fh1u4"]
+[ext_resource type="Script" uid="uid://4dhqggh2cr0d" path="res://scripts/Interaction/interactable_component.gd" id="3_22vov"]
+[ext_resource type="PackedScene" uid="uid://di1h1y3g30eka" path="res://assets/newmodels/furniture/FoodCrate.glb" id="3_fh1u4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r34q6"]
+
+[node name="FoodFactory" instance=ExtResource("1_fh1u4")]
+script = ExtResource("2_fh1u4")
+supply = null
+supply_name = "Tomato"
+catergory = 0
+capacity = 4
+action_interval = 1.0
+using_tscn = false
+unique_name = "UNNAMED_APPLIANCE"
+current_owner = 1
+cooking_style = 0
+model_scene = null
+
+[node name="InteractableComponent" type="Area3D" parent="." index="1"]
+script = ExtResource("3_22vov")
+metadata/_custom_type_script = "uid://4dhqggh2cr0d"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractableComponent" index="0"]
+shape = SubResource("BoxShape3D_r34q6")
+
+[node name="FoodCrate" parent="." index="4" instance=ExtResource("3_fh1u4")]

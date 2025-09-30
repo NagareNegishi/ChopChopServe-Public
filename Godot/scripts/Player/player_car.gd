@@ -5,7 +5,7 @@ extends CharacterBody3D
 @export var speed : float = 8
 @export var turn_speed : float = 3
 @export var acceleration : float = 10
-@export var decceleration : float = 5
+@export var decceleration : float = 7.5
 @export var camera_length : float = 7
 
 var input_disable : bool = false

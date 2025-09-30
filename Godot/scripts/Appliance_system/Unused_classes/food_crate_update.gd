@@ -11,14 +11,19 @@ var supply: PackedScene
 
 @export var catergory : Catergory
 @export var current_index : float = 0
+
 @onready var wait_timer : Timer = Timer.new()
+@onready var crate : MeshInstance3D = $Crate
+@onready var material : Material = StandardMaterial3D.new()
+@onready var slots : Array[MeshInstance3D] = [$Food/Slot1, $Food/Slot2, $Food/Slot3, $Food/Slot4]
+
 var food_directory: String = "res://scripts/Food/IngredientScenes/"
 var supply_instance: Node
 var _switched : bool
 var action_held : bool
+
 const wait_time = 0.3
-@onready var crate : MeshInstance3D = $Crate
-@onready var material : Material = StandardMaterial3D.new()
+
 enum Catergory{
 	FRIDGE,
 	VEGE,
@@ -27,6 +32,7 @@ enum Catergory{
 }
 
 const FOOD_ORDER = {
+	
 	Catergory.FRIDGE: [preload("res://scripts/Food/IngredientScenes/beef.tscn"),
 					   preload("res://scripts/Food/IngredientScenes/chicken.tscn"),
 					   preload("res://scripts/Food/IngredientScenes/Fish.tscn"),
@@ -49,7 +55,18 @@ const FOOD_ORDER = {
 					   preload("res://scripts/Food/IngredientScenes/dough.tscn")]
 }
 
-
+static var TRANSFORMS = {
+	PreloadMenuSubclasses.Ingredient.GARLIC: 
+	[Transform3D(Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0)),
+	Transform3D(Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0)),
+	Transform3D(Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0)),
+	Transform3D(Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0)),],
+	PreloadMenuSubclasses.Ingredient.TOMATO: 
+	[Transform3D(Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0)),
+	Transform3D(Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0)),
+	Transform3D(Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0)),
+	Transform3D(Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0))]
+}
 ## Setup the model instance
 func _init():
 	super._init()
@@ -290,6 +307,7 @@ func _on_interactable_component_action_use(_is_action: bool) -> void:
 	var size : int = FOOD_ORDER[catergory].size()
 	current_index = current_index + 1 if (current_index < size - 1) else 0
 	supply = FOOD_ORDER[catergory][current_index]
+	_set_mesh_ingredient()
 
 func _set_mesh():
 	$Fridge.visible = true if catergory == Catergory.FRIDGE else false
@@ -306,6 +324,9 @@ func _set_mesh():
 	
 	crate.set_surface_override_material(1, material)
 
+func _set_mesh_ingredient():
+	pass
+	
 @rpc("any_peer", "call_local")
 func _destroy(item_path : String):
 	var item = get_tree().current_scene.get_node(item_path)

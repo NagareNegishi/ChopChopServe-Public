@@ -1,11 +1,11 @@
 extends MenuItem
-class_name pancakes
+#class_name pancakes
 
 # Registers this class in the correct arrays in the superclass
 @warning_ignore("unused_private_class_variable")
-static var _auto_register = MenuItem.register(pancakes)
+#static var _auto_register = MenuItem.register(pancakes)
 @warning_ignore("unused_private_class_variable")
-static var _type_register = MenuItem.register_type(MenuItem.starters, pancakes.new())
+#static var _type_register = MenuItem.register_type(MenuItem.starters, pancakes.new())
 
 func _ready():
 	ingredients = ["Flour", "Water", "Milk", "Egg"]

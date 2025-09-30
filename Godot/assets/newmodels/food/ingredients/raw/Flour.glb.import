@@ -38,6 +38,16 @@ _subresources={
 "use_external/enabled": true,
 "use_external/path": "uid://d1mru8ywyt58h"
 }
+},
+"meshes": {
+"Flour_Cube_013": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/newmodels/food/ingredients/raw/Flour_Cube_013.res"
+}
 }
 }
 gltf/naming_version=1

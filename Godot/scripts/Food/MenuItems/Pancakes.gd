@@ -18,11 +18,10 @@ func _ready():
 	}
 	
 	is_available=true
-
+	name_of_meal = "pancakes"
+	ui_texture = load("res://assets/textures/recipes/Pancakes.png")
 
 func _init():
 	cooked_mesh_good = $Pancakes
 	cooked_mesh_bad = $BadQualityPancakes
 	cooked_mesh_burnt = $BurntPancakes
-	name_of_meal = "pancakes"
-	ui_texture = load("res://assets/textures/recipes/Pancakes.png")

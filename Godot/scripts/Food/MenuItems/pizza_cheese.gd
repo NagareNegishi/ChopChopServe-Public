@@ -17,10 +17,10 @@ func _init():
 	}
 	
 	is_available = true
-
+	name_of_meal = "pizza_cheese"
+	ui_texture = load("res://assets/textures/recipes/CheesePizza.png")
+	
 func _ready():
 	cooked_mesh_good = $PizzaCheese
 	cooked_mesh_bad = $BadQualityCheesePizza
 	cooked_mesh_burnt = $BurntCheesePizza
-	name_of_meal = "pizza_cheese"
-	ui_texture = load("res://assets/textures/recipes/CheesePizza.png")

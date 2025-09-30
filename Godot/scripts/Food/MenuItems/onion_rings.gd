@@ -14,10 +14,10 @@ func _init():
 		"Onion": ["RAW","CHOPPED", "FRIED"]
 	}
 	is_available = true
-
+	name_of_meal = "onion_rings"
+	ui_texture = load("res://assets/textures/recipes/OnionRings.png")
+	
 func _ready():
 	cooked_mesh_good = $OnionRings
 	cooked_mesh_bad = $BadQualityOnionRings
 	cooked_mesh_burnt = $BurntOnionRings
-	name_of_meal = "onion_rings"
-	ui_texture = load("res://assets/textures/recipes/OnionRings.png")

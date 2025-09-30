@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://tqlmk00ju4gv"]
+[gd_scene load_steps=42 format=3 uid="uid://tqlmk00ju4gv"]
 
 [ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_d7dv3"]
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="2_efp6k"]
@@ -34,7 +34,6 @@
 [ext_resource type="PackedScene" uid="uid://krj0gwn31x8u" path="res://scenes/Appliance_system/stove_with_pot.tscn" id="29_l1235"]
 [ext_resource type="PackedScene" uid="uid://b0ougk3d4jnku" path="res://scenes/Appliance_system/food_factory.tscn" id="30_wk08a"]
 [ext_resource type="PackedScene" uid="uid://cn8yjuakgjsam" path="res://assets/newmodels/furniture/Sink.glb" id="31_frgwe"]
-[ext_resource type="PackedScene" uid="uid://dt5hnx2rcjaxo" path="res://TestSoupPlate.tscn" id="34_gggs0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_67eo6"]
 size = Vector3(1.11963, 1, 3.02759)
@@ -802,6 +801,3 @@ model_scene = ExtResource("31_frgwe")
 
 [node name="CustomerSpawner" type="MultiplayerSpawner" parent="."]
 spawn_path = NodePath("../CustomerSpawnPoint")
-
-[node name="Plate2" parent="." instance=ExtResource("34_gggs0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.31516, 0.0149999, -1.43066)

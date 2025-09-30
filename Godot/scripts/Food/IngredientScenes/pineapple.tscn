@@ -79,13 +79,15 @@ albedo_color = Color(0.140447, 0.140447, 0.140447, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c1aqt"]
 albedo_texture = ExtResource("3_h0rpj")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_oxi4d"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_h0rpj"]
+radius = 0.24341
+height = 0.685575
 
 [node name="Pineapple" type="RigidBody3D"]
 script = ExtResource("1_ht0b7")
 
 [node name="Pineapple" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.03, 0, 0, 0, 0.0334547, -0.00241834, 0, 0.0253926, 0.00318616, 0, 0, 0)
+transform = Transform3D(0.06, 0, 0, 0, 0.0669094, -0.00483668, 0, 0.0507852, 0.00637232, 0, 0, 0)
 mesh = SubResource("ArrayMesh_lbd4v")
 skeleton = NodePath("")
 
@@ -110,11 +112,11 @@ skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_c1aqt")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.468339, 0)
-shape = SubResource("BoxShape3D_oxi4d")
+transform = Transform3D(1, -0.000226893, 0, 0.000226893, 1, 0, 0, 0, 1, 0, 0.325556, 0.00978974)
+shape = SubResource("CapsuleShape3D_h0rpj")
 
 [node name="InteractableComponent" parent="." instance=ExtResource("3_05cuj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00561047, 0.47338, 0)
+transform = Transform3D(0.475, 0, 0, 0, 0.475, 0, 0, 0, 0.475, -0.00561047, 0.303763, 0)
 is_pickup = true
 
 [connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]

@@ -38,26 +38,33 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_3klxa")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_vem8e"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tv7yx"]
+radius = 0.142068
+height = 0.51627
 
 [node name="Flour" type="RigidBody3D"]
 script = ExtResource("1_tv7yx")
 
 [node name="Flour" type="MeshInstance3D" parent="."]
-transform = Transform3D(-3.25841e-08, 0, 0.17, 0, 0.238, 0, -0.2, 0, -2.76965e-08, 0, 0, 0)
+transform = Transform3D(0.3, 0, 0, 0, 0.357, 0, 0, 0, 0.255, 0, 0, 0)
 mesh = SubResource("ArrayMesh_ixt2d")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.517977, 0)
-shape = SubResource("BoxShape3D_vem8e")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.233841, 0)
+shape = SubResource("CapsuleShape3D_tv7yx")
 
 [node name="InteractableComponent" parent="." instance=ExtResource("3_6kr4p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00561047, 0.523018, 0)
 is_pickup = true
+
+[node name="CollisionShape3D" parent="InteractableComponent" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00566864, -0.130371, 0.01651)
 
 [connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]
 [connection signal="body_entered" from="InteractableComponent" to="." method="_on_interactable_component_body_entered"]
 [connection signal="hovered" from="InteractableComponent" to="." method="_on_interactable_component_hovered"]
 [connection signal="interacted" from="InteractableComponent" to="." method="_on_interactable_component_interacted"]
 [connection signal="toggle_collision" from="InteractableComponent" to="." method="_on_interactable_component_toggle_collision"]
+
+[editable path="InteractableComponent"]

@@ -12,19 +12,19 @@ var supply: PackedScene
 @export var catergory : Catergory
 @export var current_index : float = 0
 @onready var wait_timer : Timer = Timer.new()
-@onready var cat_ui : FoodCrateCat = 	$SubViewport/UiFoodCrate
 var food_directory: String = "res://scripts/Food/IngredientScenes/"
 var supply_instance: Node
 var _switched : bool
- 
+var action_held : bool
 const wait_time = 0.3
+@onready var crate : MeshInstance3D = $Crate
+@onready var material : Material = StandardMaterial3D.new()
 enum Catergory{
 	FRIDGE,
 	VEGE,
 	FRUIT,
 	PANTRY
 }
-
 
 const FOOD_ORDER = {
 	Catergory.FRIDGE: [preload("res://scripts/Food/IngredientScenes/beef.tscn"),
@@ -54,6 +54,8 @@ const FOOD_ORDER = {
 func _init():
 	super._init()
 	model_scene = preload("res://assets/models/NuFurniture/FoodCrater.glb")
+	self.freeze = true
+	self.sleeping = true
 
 
 ## Set up the FoodCrate
@@ -63,6 +65,8 @@ func _ready():
 	_timer_setup()
 	_set_affixes()
 	_initialize_supply()
+	_set_mesh()
+	
 
 
 ## Add synchronization properties for the placeable object
@@ -113,9 +117,12 @@ func take() -> Node:
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
 func player_has(item: Node) -> void:
-	if item && item is Food:
-		pass
-	if not item:
+	if item && item is Food && item.state == Food.foodState.RAW:
+		var player : Player = GlobalScript.get_local_player()
+		player.server_drop_item(player.get_path(), false)
+		rpc("_destroy", item.get_path())
+		
+	if not item && !action_held:
 		take_request()
 		return
 
@@ -208,7 +215,6 @@ func _client_transfer(player_id: int, food_name: String) -> void:
 ## Give visual feedback when hovered
 ## @param is_hovered: Whether the item is hovered or not
 func _on_interactable_component_hovered(is_hovered: bool) -> void:
-	$Sprite3D.visible = is_hovered
 	if not is_hovered:
 		highlight_component.hide_feedback()
 		return
@@ -256,7 +262,7 @@ func _switch_catergory():
 	supply = FOOD_ORDER[catergory][current_index]
 	
 	print("SWITCHED TOO: ", catergory)
-	cat_ui.next_cat()
+	_set_mesh()
 
 
 
@@ -269,6 +275,7 @@ func _timer_setup():
 
 
 func _on_interactable_component_action_use(_is_action: bool) -> void:
+	action_held = _is_action
 	if _is_action: 
 		wait_timer.start() #Starts timer to check if to switch catergory
 		return
@@ -283,3 +290,23 @@ func _on_interactable_component_action_use(_is_action: bool) -> void:
 	var size : int = FOOD_ORDER[catergory].size()
 	current_index = current_index + 1 if (current_index < size - 1) else 0
 	supply = FOOD_ORDER[catergory][current_index]
+
+func _set_mesh():
+	$Fridge.visible = true if catergory == Catergory.FRIDGE else false
+	$Crate.visible = true if catergory != Catergory.FRIDGE else false
+	match catergory:
+		Catergory.PANTRY:
+			material.albedo_color = Color(Color.SADDLE_BROWN)
+		Catergory.VEGE:
+			material.albedo_color = Color(Color.WEB_GREEN)
+		Catergory.FRUIT:
+			material.albedo_color = Color(Color.CRIMSON)
+		Catergory.FRIDGE:
+			pass
+	
+	crate.set_surface_override_material(1, material)
+
+@rpc("any_peer", "call_local")
+func _destroy(item_path : String):
+	var item = get_tree().current_scene.get_node(item_path)
+	item.queue_free()

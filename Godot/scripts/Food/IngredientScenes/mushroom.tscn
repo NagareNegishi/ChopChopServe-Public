@@ -79,13 +79,14 @@ albedo_texture = ExtResource("3_3qxsp")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ig0p6"]
 albedo_color = Color(0.136826, 0.136826, 0.136826, 1)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_3qxsp"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_3qxsp"]
+radius = 0.32101
 
 [node name="Mushroom" type="RigidBody3D"]
 script = ExtResource("1_3kaxk")
 
 [node name="Mushroom" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0, 0)
 mesh = SubResource("ArrayMesh_r4ngr")
 skeleton = NodePath("")
 
@@ -110,8 +111,8 @@ skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_ig0p6")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.468339, 0)
-shape = SubResource("BoxShape3D_3qxsp")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00852823, 0.300914, 0)
+shape = SubResource("SphereShape3D_3qxsp")
 
 [node name="InteractableComponent" parent="." instance=ExtResource("2_3kaxk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00561047, 0.47338, 0)

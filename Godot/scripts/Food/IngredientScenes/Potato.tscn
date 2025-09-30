@@ -84,13 +84,15 @@ shadow_mesh = SubResource("ArrayMesh_7p2aq")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e4dn7"]
 albedo_color = Color(0.117647, 0.117647, 0.117647, 1)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_prflu"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ou20t"]
+radius = 0.429027
+height = 1.26704
 
 [node name="Potato2" type="RigidBody3D"]
 script = ExtResource("1_xba6o")
 
 [node name="Potato" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.372, 0, 0, 0)
+transform = Transform3D(-1.09278e-08, 0, 0.465, 0, 0.25, 0, -0.25, 0, -2.03258e-08, 0, 0, 0)
 mesh = SubResource("ArrayMesh_ilgog")
 skeleton = NodePath("")
 
@@ -115,11 +117,11 @@ skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_e4dn7")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.521372, 0, 0, 0, 0.521372, 0, 0, 0, 0.521372, 0, 0.289664, 0)
-shape = SubResource("BoxShape3D_prflu")
+transform = Transform3D(-2.27899e-08, 0.521054, 0.0181956, 0, 0.0181956, -0.521054, -0.521372, -2.2776e-08, -7.95355e-10, 0.00369263, 0.244925, 0.0113449)
+shape = SubResource("CapsuleShape3D_ou20t")
 
 [node name="InteractableComponent" parent="." instance=ExtResource("4_ou20t")]
-transform = Transform3D(0.521372, 0, 0, 0, 0.521372, 0, 0, 0, 0.521372, 0, 0.289946, 0)
+transform = Transform3D(0.521372, 0, 0, 0, 0.521372, 0, 0, 0, 0.521372, 0, 0.181059, 0)
 is_pickup = true
 
 [connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]

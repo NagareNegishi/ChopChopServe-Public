@@ -507,6 +507,7 @@ func _on_check_interactables_timeout() -> void:
 			closest_item = item
 	
 	if(_closest_item != closest_item):
+		if _closest_item : _closest_item.hover(false)
 		emit_signal("comp_hovered", closest_item)
 		closest_item.hover(true)
 	

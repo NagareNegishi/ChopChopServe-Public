@@ -489,7 +489,7 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6.5, 
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6.5, 2.4, -8)
 
 [node name="FoodFactory2" parent="NavigationRegion3D" instance=ExtResource("27_83y2r")]
-transform = Transform3D(1, 0, -2.32831e-09, 0, 1, 0, 2.32831e-09, 0, 1, 5.42861, 0.300027, -4.36529)
+transform = Transform3D(1, 0, -3.72529e-09, 0, 1, 0, 3.72529e-09, 0, 1, 5.42861, 0.0344088, -4.36529)
 catergory = 1
 
 [node name="CustomerSpawner" type="MultiplayerSpawner" parent="."]

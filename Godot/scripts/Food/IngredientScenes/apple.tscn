@@ -79,13 +79,14 @@ albedo_color = Color(0.136826, 0.136826, 0.136826, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qr1fj"]
 albedo_texture = ExtResource("3_rydjj")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_gv5uw"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_rydjj"]
+radius = 0.7
 
 [node name="Apple" type="RigidBody3D"]
 script = ExtResource("1_rh1pu")
 
 [node name="Apple" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
 mesh = SubResource("ArrayMesh_mlnfv")
 skeleton = NodePath("")
 
@@ -110,8 +111,8 @@ skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_qr1fj")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.441506, 0, 0, 0, 0.441506, 0, 0, 0, 0.441506, -0.00156671, 0.232583, 0)
-shape = SubResource("BoxShape3D_gv5uw")
+transform = Transform3D(0.441506, 0, 0, 0, 0.441506, 0, 0, 0, 0.441506, -0.00156671, 0.304468, -0.0145589)
+shape = SubResource("SphereShape3D_rydjj")
 
 [node name="InteractableComponent" parent="." instance=ExtResource("3_unp5a")]
 transform = Transform3D(0.441506, 0, 0, 0, 0.441506, 0, 0, 0, 0.441506, -0.00404376, 0.234809, 0)

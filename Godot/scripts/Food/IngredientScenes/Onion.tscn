@@ -5,7 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://cjg0kojqdljfi" path="res://assets/newmodels/food/ingredients/tainted/OnionIck_TextureMapGreen.png" id="3_rhr1j"]
 [ext_resource type="PackedScene" uid="uid://cy1s0o2ip2hob" path="res://scenes/Interaction/InteractableComponent.tscn" id="4_qkvdt"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_ypbfo"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_13wtr"]
+radius = 0.290027
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_gw1mu"]
 _surfaces = [{
@@ -83,11 +84,11 @@ albedo_color = Color(0.117647, 0.117647, 0.117647, 1)
 script = ExtResource("1_13wtr")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.563515, 0)
-shape = SubResource("BoxShape3D_ypbfo")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000863314, 0.293219, 0)
+shape = SubResource("SphereShape3D_13wtr")
 
 [node name="Onion" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
 mesh = SubResource("ArrayMesh_4rdqc")
 skeleton = NodePath("")
 
@@ -112,7 +113,7 @@ skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_dgpu4")
 
 [node name="InteractableComponent" parent="." instance=ExtResource("4_qkvdt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.558246, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.405658, 0)
 is_pickup = true
 
 [connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]

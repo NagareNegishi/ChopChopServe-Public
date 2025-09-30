@@ -65,6 +65,7 @@ func _put_food(food: Food) -> void:
 	#food.current_visibility(false)
 	food.change_collisions(true)
 	if self is not ChoppingBoard: cookware_ui.add_food(food)
+	if self is ChoppingBoard: food.scale = food.original_scale
 	emit_signal("food_placed", contents)
 	if can_cook():
 		# _average_food() # depend on Food implementation ---------------------------

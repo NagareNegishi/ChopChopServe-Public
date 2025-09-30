@@ -39,15 +39,15 @@ func _setup_upgradable():
 ## Default implementation expect one Cookware slot in the center
 func _setup_item_slots():
 	for i in range(capacity):
-		var slot_position = Vector3(0.0, size.y * 0.8, 0.0)
+		var slot_position = Vector3(0.0, size.y * 0.5, 0.0)
 		item_slots.append(slot_position)
 
 
 ## Apply position and direction to item at given slot
 func _position_item(item: Node, slot_index: int):
-	if item is Cookware:
+	if item:
 		item.restore_original_transform()
-		item.rotate_to_direction(item.default_facing)
+		#item.rotate_to_direction(item.default_facing)
 	item.position = item_slots[slot_index]
 
 

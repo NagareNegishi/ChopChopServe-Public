@@ -546,11 +546,7 @@ func remove_item() -> Node3D:
 		return null
 		
 	item_in_hand.get_parent().remove_child(item_in_hand)
-	
-	item_in_hand.global_position = $Mesh/ItemPoint.global_position + $Mesh.global_transform.basis.z * 2.5
-	item_in_hand.global_rotation = $Mesh/ItemPoint.global_rotation
-	
-	item_in_hand.scale = $Mesh/ItemPoint.global_transform.basis.get_scale() / item_in_hand.global_transform.basis.get_scale()
+	await get_tree().process_frame
 	
 	var res = item_in_hand
 	anim_tree["parameters/SM_Walking/conditions/empty"] = true

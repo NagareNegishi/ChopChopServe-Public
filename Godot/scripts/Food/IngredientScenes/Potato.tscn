@@ -92,25 +92,25 @@ height = 1.26704
 script = ExtResource("1_xba6o")
 
 [node name="Potato" type="MeshInstance3D" parent="."]
-transform = Transform3D(-1.09278e-08, 0, 0.465, 0, 0.25, 0, -0.25, 0, -2.03258e-08, 0, 0, 0)
+transform = Transform3D(-1.00536e-08, 0, 0.428, 0, 0.23, 0, -0.23, 0, -1.87085e-08, 0, 0, 0)
 mesh = SubResource("ArrayMesh_ilgog")
 skeleton = NodePath("")
 
 [node name="SpoiledPotato" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.372, 0, 0, 0)
+transform = Transform3D(-1.00536e-08, 0, 0.428, 0, 0.23, 0, -0.23, 0, -1.87085e-08, 0, 0, 0)
 visible = false
 mesh = SubResource("ArrayMesh_ilgog")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_luc2k")
 
 [node name="ChoppedPotato" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.138062, 0.000279507, 0.00124416, 0.00633827, 0.0062888, 9.59652e-05, -0.0151217, 8.40406e-05, -0.011319, 0, 0.0301326, 0)
+transform = Transform3D(-7.5222e-05, -7.84579e-05, 0.0149994, 0.00861864, 0.00899039, 0.000130898, -0.189804, 0.000408267, -6.55646e-10, 0, 0.0301326, 0)
 visible = false
 mesh = SubResource("ArrayMesh_m2ind")
 skeleton = NodePath("")
 
 [node name="BurntPotato" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.138062, 0.000279507, 0.00124416, 0.00633827, 0.0062888, 9.59652e-05, -0.0151217, 8.40406e-05, -0.011319, 0, 0, 0)
+transform = Transform3D(-7.5222e-05, -6.97404e-05, 0.0149994, 0.00861864, 0.00799146, 0.000130898, -0.189804, 0.000362904, -6.55646e-10, 0, 0, 0)
 visible = false
 mesh = SubResource("ArrayMesh_m2ind")
 skeleton = NodePath("")

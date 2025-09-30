@@ -44,9 +44,10 @@ func _setup_item_slots():
 
 
 ## Apply position and direction to item at given slot
-func _position_item(item: Node, slot_index: int):
+func _position_item(item: Node3D, slot_index: int):
 	if item:
 		item.restore_original_transform()
+		item.global_rotation += Vector3(0,12.1,0)
 		#item.rotate_to_direction(item.default_facing)
 	item.position = item_slots[slot_index]
 

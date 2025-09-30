@@ -27,6 +27,7 @@ skeleton = NodePath("")
 
 [node name="Food" type="Node3D" parent="." index="4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.847844, 0)
+visible = false
 
 [node name="Crate" type="MeshInstance3D" parent="." index="5"]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0.0296643, 0, -0.00172821)

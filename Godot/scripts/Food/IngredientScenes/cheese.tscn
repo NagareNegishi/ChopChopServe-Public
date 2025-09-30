@@ -91,20 +91,20 @@ mesh = SubResource("ArrayMesh_xfh83")
 skeleton = NodePath("")
 
 [node name="SpoiledCheese" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.01945, 0, -0.352257, 0, 0.3, 0, 0.299369, 0, -0.0228862, 0, 0.0133532, 0)
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.353, 0, 0.0133532, 0)
 visible = false
 mesh = SubResource("ArrayMesh_xfh83")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_47gja")
 
 [node name="CheeseSliced" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.000436999, 0.101549, -0.0134838, -0.00407138, -0.0107353, 0.0026134, 4.76861e-05, 0.0140346, 0.0995624, 0, 0, 0)
+transform = Transform3D(1.14641e-17, -6.55671e-09, 0.147, -0.006, -6.55671e-09, 0, 2.62268e-10, -0.15, -6.42557e-09, 0, 0, 0)
 visible = false
 mesh = SubResource("ArrayMesh_5xxd6")
 skeleton = NodePath("")
 
 [node name="BurntCheese" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.000436999, 0.101549, -0.0134838, -0.00407138, -0.0107353, 0.0026134, 4.76861e-05, 0.0140346, 0.0995624, 0, 0, 0)
+transform = Transform3D(1.14641e-17, -6.55671e-09, 0.147, -0.006, -6.55671e-09, 0, 2.62268e-10, -0.15, -6.42557e-09, 0, 0, 0)
 visible = false
 mesh = SubResource("ArrayMesh_5xxd6")
 skeleton = NodePath("")
@@ -118,7 +118,12 @@ shape = SubResource("BoxShape3D_olyx1")
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.00561047, 0.152516, 0)
 is_pickup = true
 
+[node name="CollisionShape3D" parent="InteractableComponent" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00463867, 0.0567932, -0.0671387)
+
 [connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]
 [connection signal="hovered" from="InteractableComponent" to="." method="_on_interactable_component_hovered"]
 [connection signal="interacted" from="InteractableComponent" to="." method="_on_interactable_component_interacted"]
 [connection signal="toggle_collision" from="InteractableComponent" to="." method="_on_interactable_component_toggle_collision"]
+
+[editable path="InteractableComponent"]

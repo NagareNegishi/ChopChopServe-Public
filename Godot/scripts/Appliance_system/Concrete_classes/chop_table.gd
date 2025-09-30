@@ -30,6 +30,7 @@ func _add_chopping_board() -> void:
 	ApplianceManager.register_appliance(chopping_board, current_owner, chopping_board.name)
 	var board_position = Vector3(0.0, size.y * 0.5, 0.0)
 	chopping_board.position = board_position
+	chopping_board.rotate_y(1) 
 	chopping_board.lock()
 	chopping_board._toggle_interaction(false)
 	emit_signal("add_appliance", chopping_board)

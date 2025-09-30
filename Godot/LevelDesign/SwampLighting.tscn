@@ -135,13 +135,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.666107, 6)
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 9, 0.666107, -7)
 
 [node name="Oven" parent="Platform" instance=ExtResource("2_k0d3q")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 9)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 9)
 
 [node name="Stove" parent="Platform" instance=ExtResource("3_ypanj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9)
 
 [node name="Oven2" parent="Platform" instance=ExtResource("2_k0d3q")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -2, 0, -9)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, -9)
 
 [node name="Stove2" parent="Platform" instance=ExtResource("3_ypanj")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 4, 0, -9)
@@ -155,10 +155,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -7)
 script = ExtResource("5_ty3c0")
 
 [node name="Sink" parent="Platform" instance=ExtResource("5_a51gl")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2, 0, 0)
+transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, -1, 0, 1)
 
 [node name="Sink2" parent="Platform" instance=ExtResource("5_a51gl")]
-transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 6, 0, 0)
+transform = Transform3D(-1, 0, 8.74226e-08, 0, 1, 0, -8.74226e-08, 0, -1, 5, 0, -1)
 
 [node name="Player" parent="." instance=ExtResource("2_fb8tl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.48897, 0.562044, 0)
@@ -701,6 +701,12 @@ transform = Transform3D(0.0283638, 0, 0.499195, 0, 0.5, 0, -0.499195, 0, 0.02836
 
 [node name="FenceSwampFence26" parent="Background" instance=ExtResource("33_ypanj")]
 transform = Transform3D(0.499195, 0, -0.0283638, 0, 0.5, 0, 0.0283638, 0, 0.499195, -5.54855, -0.273126, 18.8608)
+
+[node name="FenceSwampFence28" parent="Background" instance=ExtResource("33_ypanj")]
+transform = Transform3D(0.0283638, 0, 0.499195, 0, 0.5, 0, -0.499195, 0, 0.0283638, -8.27585, -0.273126, 12.732)
+
+[node name="FenceSwampFence29" parent="Background" instance=ExtResource("33_ypanj")]
+transform = Transform3D(-0.0283638, 0, -0.499195, 0, 0.5, 0, 0.499195, 0, -0.0283638, -9.01213, -0.273126, 29.0975)
 
 [node name="FenceSwampFence27" parent="Background" instance=ExtResource("33_ypanj")]
 transform = Transform3D(0.499195, 0, -0.0283638, 0, 0.5, 0, 0.0283638, 0, 0.499195, -11.7223, -0.273126, 22.5871)

@@ -162,13 +162,13 @@ mesh = SubResource("TorusMesh_uthtu")
 skeleton = NodePath("../LevelSelectArea")
 
 [node name="Zone3" type="MeshInstance3D" parent="== LEVEL SELECT =="]
-transform = Transform3D(5.29349, 0, 0, 0, 208.673, 0, 0, 0, 5.29349, -14.5896, 0.633474, 23.8251)
+transform = Transform3D(5.82284, 0, 0, 0, 229.54, 0, 0, 0, 5.82284, -15.5896, 0.633474, 23.8251)
 mesh = SubResource("TorusMesh_uthtu")
 skeleton = NodePath("../LevelSelectArea")
 
 [node name="LevelSelectArea" parent="== LEVEL SELECT ==" node_paths=PackedStringArray("load_ui", "car") instance=ExtResource("64_kguer")]
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -14.9253, 1.86524, -24.7682)
-level = 6
+level = 9
 load_ui = NodePath("../../== HUD ==/UILoadingScreen")
 car = NodePath("../../PlayerCar")
 
@@ -176,7 +176,7 @@ car = NodePath("../../PlayerCar")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.580652, 0.373383, 0.493759)
 
 [node name="Zone" type="MeshInstance3D" parent="== LEVEL SELECT ==/LevelSelectArea"]
-transform = Transform3D(8.82248, 0, 0, 0, 347.788, 0, 0, 0, 8.82248, -1.0322, -1.75679, 0.133724)
+transform = Transform3D(11.9103, 0, 0, 0, 469.514, 0, 0, 0, 11.9103, -1.0322, -1.75679, 0.133724)
 mesh = SubResource("TorusMesh_uthtu")
 
 [node name="Platform" type="StaticBody3D" parent="."]
@@ -1055,10 +1055,10 @@ transform = Transform3D(-0.5, 0, -7.54979e-08, 0, 0.5, 0, 7.54979e-08, 0, -0.5, 
 transform = Transform3D(-0.5, 0, -4.37114e-08, 0, 0.5, 0, 4.37114e-08, 0, -0.5, -20.7737, 0, 1.1)
 
 [node name="BeachSpeedBoat" parent="Swamp" instance=ExtResource("49_kguer")]
-transform = Transform3D(-6.55671e-08, 0, 1.5, 0, 1.5, 0, -1.5, 0, -6.55671e-08, 39, 0, 8)
+transform = Transform3D(-6.55671e-08, 0, 1.5, 0, 1.5, 0, -1.5, 0, -6.55671e-08, 39, -0.651463, 8)
 
 [node name="BeachSpeedBoat2" parent="Swamp" instance=ExtResource("49_kguer")]
-transform = Transform3D(1.96701e-07, 0, -1.5, 0, 1.5, 0, 1.5, 0, 1.96701e-07, 37, 0, -10)
+transform = Transform3D(1.96701e-07, 0, -1.5, 0, 1.5, 0, 1.5, 0, 1.96701e-07, 37, -0.539836, -10)
 
 [node name="Beach" type="Node3D" parent="."]
 

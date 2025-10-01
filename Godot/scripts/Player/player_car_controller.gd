@@ -34,7 +34,8 @@ func _process(delta: float) -> void:
 	
 	
 func _send_input(new : bool):
-	time = time if !new else Time.get_ticks_msec()
+	if new:
+		time = Time.get_ticks_msec()
 	rpc("_receive_input", multiplayer.get_unique_id(), move_input, turn_input, time)
 
 

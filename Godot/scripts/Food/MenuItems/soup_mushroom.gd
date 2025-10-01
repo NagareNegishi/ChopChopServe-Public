@@ -16,10 +16,10 @@ func _init():
 	}
 	
 	is_available = true
+	name_of_meal = "soup_mushroom"
+	ui_texture = load("res://assets/textures/recipes/MushroomSoup.png")
 
 func _ready():
 	cooked_mesh_good = $SoupMushroom
 	cooked_mesh_bad = $BadQualityMushSoup
 	cooked_mesh_burnt = $BurntSoup
-	name_of_meal = "soup_mushroom"
-	ui_texture = load("res://assets/textures/recipes/MushroomSoup.png")

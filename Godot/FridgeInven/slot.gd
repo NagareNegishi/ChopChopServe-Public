@@ -11,6 +11,7 @@ signal food_requested(food_name: String)
 @onready var buy_text = $ColorRect/ColorRect/buy_texture
 @onready var buy_label = $ColorRect/ColorRect/buy_texture/Label
 @onready var amount_label = $ColorRect/ColorRect/item_texture/Label
+@onready var select_tint = $SelectTint
 
 var AMOUNT
 
@@ -18,6 +19,7 @@ var need_to_buy: bool = false
 var buy_texture : Texture2D
 
 func _ready():
+	select_tint.hide()
 	amount_label.text = "%d" %amount
 	AMOUNT = amount
 	update_slot(true)
@@ -56,3 +58,20 @@ func _on_button_down():
 		amount = AMOUNT
 		amount_label.text = "%d" %amount
 		update_slot(true)
+
+
+func on_selected():
+	if !need_to_buy:
+			amount = amount - 1
+			amount_label.text = "%d" %amount
+			food_requested.emit(inventory_item_name)
+			return inventory_item_name
+	else:
+		var team_id = ENetManager.get_my_team()
+		CurrencySystem.minus_currency(team_id, price)
+		amount = AMOUNT
+		amount_label.text = "%d" %amount
+		update_slot(true)
+
+func get_select_tint():
+	return select_tint

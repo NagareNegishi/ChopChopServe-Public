@@ -15,10 +15,10 @@ func _init():
 		"Potato": ["RAW","CHOPPED","FRIED"]
 	}
 	is_available = true
-
+	name_of_meal = "fish_and_chips"
+	ui_texture = load("res://assets/textures/recipes/FishnChips.png")
+	
 func _ready():
 	cooked_mesh_good = $FishAndChips
 	cooked_mesh_bad = $BadQualityFishNChips
 	cooked_mesh_burnt = $BurntFishNChips
-	name_of_meal = "fish_and_chips"
-	ui_texture = load("res://assets/textures/recipes/FishnChips.png")

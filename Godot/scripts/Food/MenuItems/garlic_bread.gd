@@ -16,10 +16,10 @@ func _init():
 	}
 	
 	is_available = true
+	name_of_meal = "garlic_bread"
+	ui_texture = load("res://assets/textures/recipes/GarlicBread.png")
 
 func _ready():
 	cooked_mesh_good = $BreadGarlic
 	cooked_mesh_bad = $BadQualityGarlicBread
 	cooked_mesh_burnt = $BurntGarlicBread
-	name_of_meal = "garlic_bread"
-	ui_texture = load("res://assets/textures/recipes/GarlicBread.png")

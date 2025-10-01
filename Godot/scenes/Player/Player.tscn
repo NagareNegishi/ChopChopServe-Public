@@ -196,7 +196,9 @@ shape = SubResource("CapsuleShape3D_l2ndj")
 transform = Transform3D(-7.64949e-09, 0, -0.175, 0, 0.175, 0, 0.175, 0, -7.64949e-09, 0, -0.556, 0)
 
 [node name="Clothes_001" parent="Mesh/Armature" index="0"]
+
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0402468, -2.32496, 0.0644098)
+
 
 [node name="Skeleton3D" parent="Mesh/Armature" index="1"]
 bones/3/position = Vector3(-0.745343, 0.911673, -0.0113688)

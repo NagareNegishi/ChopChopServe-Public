@@ -18,10 +18,9 @@ func _init():
 	}
 	
 	is_available=true
-
+	name_of_meal = "burger_fish"
+	ui_texture = load("res://assets/textures/recipes/FishBurger.png")
 func _ready():
 	cooked_mesh_good = $BurgerFish
 	cooked_mesh_bad = $BadQaulityFishBurger
 	cooked_mesh_burnt = $BurntFishBurger
-	name_of_meal = "burger_fish"
-	ui_texture = load("res://assets/textures/recipes/FishBurger.png")

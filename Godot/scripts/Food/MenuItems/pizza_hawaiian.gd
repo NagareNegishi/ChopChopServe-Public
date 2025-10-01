@@ -19,10 +19,10 @@ func _init():
 	}
 	
 	is_available=true
-
+	name_of_meal = "pizza_hawaiian"
+	ui_texture = load("res://assets/textures/recipes/HawaiianPizza.png")
+	
 func _ready():
 	cooked_mesh_good = $PizzaHawaii
 	cooked_mesh_bad = $BadQualityHawaiPizza
 	cooked_mesh_burnt = $BurntHawaiPizza
-	name_of_meal = "pizza_hawaiian"
-	ui_texture = load("res://assets/textures/recipes/HawaiianPizza.png")

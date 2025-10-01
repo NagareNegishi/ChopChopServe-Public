@@ -17,10 +17,10 @@ func _init():
 	}
 	#appliance = "Bowl"
 	is_available=true
-
+	name_of_meal = "bolognese"
+	ui_texture = load("res://assets/textures/recipes/Bolognse.png")
 func _ready():
 	cooked_mesh_good = $SpagBol
 	cooked_mesh_bad = $BadQualitySpagBol
 	cooked_mesh_burnt = $BurntSpagBol
-	name_of_meal = "bolognese"
-	ui_texture = load("res://assets/textures/recipes/Bolognse.png")
+	

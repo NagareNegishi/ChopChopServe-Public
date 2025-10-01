@@ -16,10 +16,10 @@ func _init():
 	}
 	
 	is_available = true
-
+	name_of_meal = "icecream_chocolate"
+	ui_texture = load("res://assets/textures/recipes/ChocolateIcecream.png")
+	
 func _ready():
 	cooked_mesh_good = $IceCreamChoc
 	cooked_mesh_bad = $IceCreamChoc2
 	cooked_mesh_burnt = null
-	name_of_meal = "icecream_chocolate"
-	ui_texture = load("res://assets/textures/recipes/ChocolateIcecream.png")

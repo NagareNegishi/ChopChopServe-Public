@@ -14,10 +14,10 @@ func _init():
 		"Dough": ["RAW", "BAKED"]
 	}
 	is_available = true
-
+	name_of_meal = "bread"
+	ui_texture = load("res://assets/textures/recipes/Bread.png")
 func _ready():
 	cooked_mesh_good = $BreadPlain
 	cooked_mesh_bad = $BadQualityPlainBread
 	cooked_mesh_burnt = $BurntPlainBread
-	name_of_meal = "bread"
-	ui_texture = load("res://assets/textures/recipes/Bread.png")
+	

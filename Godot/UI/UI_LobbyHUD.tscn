@@ -20,6 +20,7 @@ grow_vertical = 2
 script = ExtResource("1_vhq2q")
 
 [node name="Controls" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -113,33 +114,55 @@ theme_override_font_sizes/font_size = 30
 text = "Move"
 
 [node name="Collectables" type="Control" parent="."]
+layout_mode = 1
 anchors_preset = 0
 offset_left = 45.0
 offset_top = 568.0
 offset_right = 85.0
 offset_bottom = 608.0
 
+[node name="ColorRect" type="ColorRect" parent="Collectables"]
+layout_mode = 0
+offset_left = -169.0
+offset_top = -533.0
+offset_right = 57.0
+offset_bottom = -312.0
+rotation = -0.588176
+color = Color(0.980392, 0.980392, 0.980392, 1)
+
+[node name="Hat2" type="TextureRect" parent="Collectables"]
+modulate = Color(0.0705882, 0.0705882, 0.0705882, 1)
+layout_mode = 0
+offset_left = -66.0
+offset_top = -587.0
+offset_right = 105.0
+offset_bottom = -441.0
+texture = ExtResource("7_gc66e")
+expand_mode = 1
+
 [node name="Hat" type="TextureRect" parent="Collectables"]
 layout_mode = 0
-offset_left = -68.0
-offset_top = -91.0
-offset_right = 92.0
-offset_bottom = 49.0
+offset_left = -64.0
+offset_top = -585.0
+offset_right = 103.0
+offset_bottom = -443.0
 texture = ExtResource("7_gc66e")
 expand_mode = 1
 
 [node name="Label" type="Label" parent="Collectables"]
 layout_mode = 0
-offset_left = -16.0
-offset_top = 35.0
-offset_right = 31.0
-offset_bottom = 72.0
+offset_left = -8.0
+offset_top = -460.0
+offset_right = 39.0
+offset_bottom = -423.0
 theme = ExtResource("6_ruavh")
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 1
 theme_override_font_sizes/font_size = 36
 text = "1/1"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="PlayerList" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -148,13 +171,13 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -300.0
-offset_top = -66.0
-offset_right = 60.0
-offset_bottom = 5.0
+offset_left = -307.5
+offset_top = -88.0
+offset_right = 67.5
+offset_bottom = -17.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_constants/separation = 120
+theme_override_constants/separation = 125
 alignment = 1
 
 [node name="P1" type="Control" parent="PlayerList"]
@@ -163,6 +186,8 @@ layout_mode = 2
 [node name="Player" parent="PlayerList/P1" instance=ExtResource("1_6vwja")]
 layout_mode = 2
 anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 offset_left = 120.0
@@ -175,6 +200,8 @@ layout_mode = 2
 [node name="Player" parent="PlayerList/P2" instance=ExtResource("1_6vwja")]
 layout_mode = 2
 anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 offset_left = 120.0
@@ -187,6 +214,8 @@ layout_mode = 2
 [node name="Player" parent="PlayerList/P3" instance=ExtResource("1_6vwja")]
 layout_mode = 2
 anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 offset_left = 120.0
@@ -199,6 +228,8 @@ layout_mode = 2
 [node name="Player" parent="PlayerList/P4" instance=ExtResource("1_6vwja")]
 layout_mode = 2
 anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 offset_left = 120.0

@@ -8,8 +8,9 @@ var _collect_count : int = -1
 
 func _ready() -> void:
 	$Server.text = "Client" if !multiplayer.is_server() else "Server"
-	_load_players()
+	
 	await get_tree().create_timer(0.1).timeout
+	_load_players()
 	collectibles = get_tree().get_nodes_in_group("Collectible")
 	for c in collectibles:
 		if c is Collectible:
@@ -23,13 +24,13 @@ func _load_players():
 	var players := ENetManager.get_player_list()
 	for i in range(list.size()):
 		if i >= players.size(): 
-			list[i].queue_free()
+			list[i].visible = false
 			continue
 		
-		list[i].get_node("Player").set_from_id(players[i])
+		list[i].get_node("Player").set_from_id(players[i], i)
 
 
 func set_collect_text(collectible : Collectible):
 	_collect_count += 1
-	collect_text.text = str(_collect_count)+"/"+str(total)
+	collect_text.text = str(_collect_count)+"/"+str(max(total,0))
 	

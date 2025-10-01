@@ -87,12 +87,12 @@ script = ExtResource("1_rh1pu")
 
 [node name="Apple" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
-visible = false
 mesh = SubResource("ArrayMesh_mlnfv")
 skeleton = NodePath("")
 
 [node name="ChoppedApple" type="MeshInstance3D" parent="."]
 transform = Transform3D(-8.74228e-09, -0.00854147, 0.199153, 0, 0.0191845, 0.0886686, -0.2, 3.73359e-10, -8.70525e-09, 0, -0.0214826, 0)
+visible = false
 mesh = SubResource("ArrayMesh_unp5a")
 skeleton = NodePath("")
 

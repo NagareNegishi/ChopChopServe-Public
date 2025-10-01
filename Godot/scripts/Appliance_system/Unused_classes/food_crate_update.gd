@@ -15,14 +15,13 @@ var supply: PackedScene
 @onready var wait_timer : Timer = Timer.new()
 @onready var crate : MeshInstance3D = $Crate
 @onready var material : Material = StandardMaterial3D.new()
-@onready var slots : Array[MeshInstance3D] = [$Food/Slot1, $Food/Slot2, $Food/Slot3, $Food/Slot4]
 
 var food_directory: String = "res://scripts/Food/IngredientScenes/"
 var supply_instance: Node
 var _switched : bool
 var action_held : bool
 
-const wait_time = 0.3
+const wait_time = 0.25
 
 enum Catergory{
 	FRIDGE,
@@ -31,42 +30,32 @@ enum Catergory{
 	PANTRY
 }
 
-const FOOD_ORDER = {
+var FOOD_ORDER = {
 	
-	Catergory.FRIDGE: [preload("res://scripts/Food/IngredientScenes/beef.tscn"),
-					   preload("res://scripts/Food/IngredientScenes/chicken.tscn"),
-					   preload("res://scripts/Food/IngredientScenes/Fish.tscn"),
-					   preload("res://scripts/Food/IngredientScenes/Milk.tscn")],
+	Catergory.FRIDGE: [[preload("res://scripts/Food/IngredientScenes/beef.tscn"), preload("res://CrateScenes/Beef.tscn")],
+					   [preload("res://scripts/Food/IngredientScenes/chicken.tscn"), preload("res://CrateScenes/Chicken.tscn")],
+					   [preload("res://scripts/Food/IngredientScenes/Fish.tscn"), preload("res://CrateScenes/Fish.tscn")],
+					   [preload("res://scripts/Food/IngredientScenes/Milk.tscn"), preload("res://CrateScenes/Milk.tscn")]],
 					
-	Catergory.VEGE: [preload("res://scripts/Food/IngredientScenes/garlic.tscn"),
-					preload("res://scripts/Food/IngredientScenes/mushroom.tscn"),
-					preload("res://scripts/Food/IngredientScenes/Onion.tscn"),
-					preload("res://scripts/Food/IngredientScenes/Potato.tscn")],
+	Catergory.VEGE: [[preload("res://scripts/Food/IngredientScenes/garlic.tscn"), preload("res://CrateScenes/Garlic.tscn")],
+					[preload("res://scripts/Food/IngredientScenes/mushroom.tscn"), preload("res://CrateScenes/Mushroom.tscn")],
+					[preload("res://scripts/Food/IngredientScenes/Onion.tscn"), preload("res://CrateScenes/Onion.tscn")],
+					[preload("res://scripts/Food/IngredientScenes/Potato.tscn"), preload("res://CrateScenes/Potato.tscn")]],
 	
-	Catergory.FRUIT: [preload("res://scripts/Food/IngredientScenes/apple.tscn"),
-					 preload("res://scripts/Food/IngredientScenes/pineapple.tscn"),
-					 preload("res://scripts/Food/IngredientScenes/Tomato.tscn"),
-					 preload("res://scripts/Food/IngredientScenes/pumpkin.tscn")],
+	Catergory.FRUIT: [[preload("res://scripts/Food/IngredientScenes/apple.tscn"), preload("res://CrateScenes/Apple.tscn")],
+					 [preload("res://scripts/Food/IngredientScenes/pineapple.tscn"), preload("res://CrateScenes/Pineapple.tscn")],
+					 [preload("res://scripts/Food/IngredientScenes/Tomato.tscn"), preload("res://CrateScenes/Tomato.tscn")],
+					[preload("res://scripts/Food/IngredientScenes/pumpkin.tscn"), preload("res://CrateScenes/Pumpkin.tscn")]],
 					
-	Catergory.PANTRY: [ preload("res://scripts/Food/IngredientScenes/Cocoa.tscn"),
-					   preload("res://scripts/Food/IngredientScenes/Flour.tscn"),
-					   preload("res://scripts/Food/IngredientScenes/Pasta.tscn"),
-					   preload("res://scripts/Food/IngredientScenes/cheese.tscn"),
-					   preload("res://scripts/Food/IngredientScenes/dough.tscn")]
+	Catergory.PANTRY: [[preload("res://scripts/Food/IngredientScenes/Cocoa.tscn"), preload("res://CrateScenes/Cocoa.tscn")],
+					   [preload("res://scripts/Food/IngredientScenes/Flour.tscn"), preload("res://CrateScenes/Flour.tscn")],
+					   [preload("res://scripts/Food/IngredientScenes/Pasta.tscn"), preload("res://CrateScenes/Pasta.tscn")],
+					  [preload("res://scripts/Food/IngredientScenes/cheese.tscn"), preload("res://CrateScenes/Cheese.tscn")],
+					   [preload("res://scripts/Food/IngredientScenes/dough.tscn"), preload("res://CrateScenes/Dough.tscn")]]
 }
 
-static var TRANSFORMS = {
-	PreloadMenuSubclasses.Ingredient.GARLIC: 
-	[Transform3D(Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0)),
-	Transform3D(Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0)),
-	Transform3D(Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0)),
-	Transform3D(Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0)),],
-	PreloadMenuSubclasses.Ingredient.TOMATO: 
-	[Transform3D(Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0)),
-	Transform3D(Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0)),
-	Transform3D(Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0)),
-	Transform3D(Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0), Vector3(0,0,0))]
-}
+
+
 ## Setup the model instance
 func _init():
 	super._init()
@@ -98,7 +87,10 @@ func _initialize_supply():
 	if supply and supply.can_instantiate():
 		supply_instance = supply.instantiate()
 		return
-	supply = FOOD_ORDER[catergory][current_index]
+	supply = FOOD_ORDER[catergory][current_index][0]
+	if $Marker3D.get_child_count() != 0: 	$Marker3D.get_child(0).queue_free()
+	$Marker3D.add_child(FOOD_ORDER[catergory][current_index][1].instantiate())
+
 
 
 # Set the supply script for the food crate
@@ -174,6 +166,7 @@ func _take_as_host(player_id: int) -> void:
 		return
 	# host need check to prevent conflicts/ cheating
 	var item = take()
+	if !item: return
 	get_tree().current_scene.add_child(item)
 	_client_take.rpc(item.name)
 	_give_item_to_player.rpc(player_id, item.get_path())
@@ -276,11 +269,12 @@ func _switch_catergory():
 	catergory = catergory + 1 if catergory < Catergory.size() - 1 else 0
 	wait_timer.start()
 	current_index = 0
-	supply = FOOD_ORDER[catergory][current_index]
+	supply = FOOD_ORDER[catergory][current_index][0]
 	
 	print("SWITCHED TOO: ", catergory)
 	_set_mesh()
-
+	if $Marker3D.get_child_count() != 0: 	$Marker3D.get_child(0).queue_free()
+	$Marker3D.add_child(FOOD_ORDER[catergory][current_index][1].instantiate())
 
 
 ## Sets up the timer for how long the player needs to wait
@@ -306,26 +300,25 @@ func _on_interactable_component_action_use(_is_action: bool) -> void:
 	#Chnages the food within catergory
 	var size : int = FOOD_ORDER[catergory].size()
 	current_index = current_index + 1 if (current_index < size - 1) else 0
-	supply = FOOD_ORDER[catergory][current_index]
-	_set_mesh_ingredient()
+	supply = FOOD_ORDER[catergory][current_index][0]
+	if $Marker3D.get_child_count() != 0: 	$Marker3D.get_child(0).queue_free()
+	$Marker3D.add_child(FOOD_ORDER[catergory][current_index][1].instantiate())
+
 
 func _set_mesh():
-	$Fridge.visible = true if catergory == Catergory.FRIDGE else false
-	$Crate.visible = true if catergory != Catergory.FRIDGE else false
+	$Crate.visible = true
 	match catergory:
 		Catergory.PANTRY:
-			material.albedo_color = Color(Color.SADDLE_BROWN)
+			material.albedo_color = Color(Color.PALE_GOLDENROD)
 		Catergory.VEGE:
 			material.albedo_color = Color(Color.WEB_GREEN)
 		Catergory.FRUIT:
 			material.albedo_color = Color(Color.CRIMSON)
 		Catergory.FRIDGE:
-			pass
+			material.albedo_color = Color(Color.ROYAL_BLUE)
 	
 	crate.set_surface_override_material(1, material)
 
-func _set_mesh_ingredient():
-	pass
 	
 @rpc("any_peer", "call_local")
 func _destroy(item_path : String):

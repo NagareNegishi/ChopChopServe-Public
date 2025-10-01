@@ -1,17 +1,35 @@
-[gd_scene load_steps=5 format=3 uid="uid://geqq8dhkrryc"]
+[gd_scene load_steps=6 format=3 uid="uid://geqq8dhkrryc"]
 
 [ext_resource type="Texture2D" uid="uid://2pguohnmuvmw" path="res://assets/textures/HUD/cHEFhAT.png" id="1_3hohr"]
 [ext_resource type="Script" uid="uid://cgb3gdc7yi0s1" path="res://scripts/UI/ui_player_join.gd" id="1_u8vah"]
 [ext_resource type="Texture2D" uid="uid://bpnik5eevb8f7" path="res://assets/textures/HUD/Chef.png" id="2_gjcho"]
 [ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/DefaultTheme.tres" id="4_u8vah"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u8vah"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+shadow_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
+shadow_size = 1
+shadow_offset = Vector2(0, 2)
+
 [node name="UiPlayerJoin" type="Control"]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.1, 1.1)
 script = ExtResource("1_u8vah")
 
 [node name="BG_Shadow" type="TextureRect" parent="."]
@@ -48,7 +66,7 @@ texture = ExtResource("1_3hohr")
 expand_mode = 2
 
 [node name="BG_Inner" type="TextureRect" parent="."]
-modulate = Color(0.811192, 0.92664, 0.972423, 1)
+modulate = Color(0.980392, 0.980392, 0.980392, 1)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -123,14 +141,41 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.828005, 0.828002, 0.837635, 1)
 
-[node name="Label" type="Label" parent="ColorRect2"]
-layout_mode = 0
-offset_left = 3.0
-offset_top = 3.0
-offset_right = 75.0
-offset_bottom = 13.0
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.0
+offset_top = 61.0
+offset_right = 38.0
+offset_bottom = 69.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_u8vah")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.0
+offset_top = 38.0
+offset_right = 36.0
+offset_bottom = 48.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("4_u8vah")
-theme_override_colors/font_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
+theme_override_colors/font_color = Color(0.980392, 0.980392, 0.980392, 1)
+theme_override_colors/font_shadow_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
+theme_override_colors/font_outline_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/outline_size = 1
+theme_override_constants/shadow_outline_size = 1
 theme_override_font_sizes/font_size = 10
 text = "Test"
 horizontal_alignment = 1

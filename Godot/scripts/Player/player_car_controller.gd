@@ -41,4 +41,5 @@ func _send_input(new : bool):
 
 @rpc("any_peer", "call_local", "unreliable")
 func _receive_input(sender_id : int, move : int, turn : int, ttime : int):
-	get_parent()._on_received_input(sender_id, move, turn, ttime)
+	if !ENetManager.is_host(): return
+	get_parent().rpc_id(1,"_on_received_input",sender_id, move, turn, ttime)

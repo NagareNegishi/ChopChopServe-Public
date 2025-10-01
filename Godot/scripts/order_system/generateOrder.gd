@@ -50,7 +50,6 @@ func get_order():
 func get_simple_order(starter_index: int):
 	order.clear() # Make sure there is nothing in the list already as precaution
 	check_food_avalibility(s, MI.starters)
-
 	# Put the order together
 	
 	if !s.is_empty():

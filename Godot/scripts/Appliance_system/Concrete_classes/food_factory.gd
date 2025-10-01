@@ -103,19 +103,38 @@ func _setup_interaction_area():
 	area.body_entered.connect(_on_player_entered)
 	area.body_exited.connect(_on_player_exited)
 
-
+var in_area 
+var player 
+var is_open
 ## Open inventory when player is near
 ## @param body: The body that entered the area
 func _on_player_entered(body):
-	if body is Player and body.name.to_int() == ENetManager.get_my_id():
-		get_node("InventoryLayer/Inventory").open()
+	player = body
+	in_area = true
+	#if body is Player and body.name.to_int() == ENetManager.get_my_id():
+		#get_node("InventoryLayer/Inventory").open()
 
 
 ## Close inventory when player leaves
 ## @param body: The body that exited the area
 func _on_player_exited(body):
-	if body is Player and body == GlobalScript.get_local_player():
-		get_node("InventoryLayer/Inventory").close()
+	in_area = false
+	#if body is Player and body == GlobalScript.get_local_player():
+		#get_node("InventoryLayer/Inventory").close()
+
+func _input(event):
+	if event.is_action_pressed("Action") && in_area:
+		if !is_open:
+			if player is Player and player.name.to_int() == ENetManager.get_my_id():
+				get_node("InventoryLayer/Inventory").open()
+				is_open = true
+				player.disable_controls(true)
+		else:
+			if player is Player and player.name.to_int() == ENetManager.get_my_id():
+				get_node("InventoryLayer/Inventory").close()
+				is_open = false
+				player.disable_controls(false)
+
 
 
 ## Handle food selection from inventory UI

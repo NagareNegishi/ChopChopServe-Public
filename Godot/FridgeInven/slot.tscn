@@ -77,4 +77,10 @@ theme_override_font_sizes/font_size = 8
 text = "Restock"
 uppercase = true
 
+[node name="SelectTint" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.342234, 0.573037, 0.303085, 0.415686)
+
 [connection signal="button_down" from="." to="." method="_on_button_down"]

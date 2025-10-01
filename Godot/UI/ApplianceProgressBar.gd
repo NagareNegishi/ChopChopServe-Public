@@ -7,7 +7,11 @@ var contents: Array
 var applianceInstance
 
 func _process(_delta):
-	change_visibility(is_open)
+	if applianceInstance == null:
+		hide()
+	else:
+		change_visibility(is_open)
+
 
 # Connecting food timer signal to the progress bar
 func _on_cookware_signal(c):
@@ -83,10 +87,11 @@ func get_cooking_style():
 
 
 func change_visibility(turn_on: bool):
-	if turn_on:
-		show()
-	else:
-		hide()
+	var owner_team = applianceInstance.get_appliance_owner()
+	var my_id = ENetManager.get_my_id()
+	var my_team = ENetManager.get_team(my_id)
+	
+	visible = (my_team == owner_team and turn_on)
 
 
 # When another ingredient is added to the cookware get new value of the progress bar
@@ -111,10 +116,10 @@ func get_max_value(cook_style: ApplianceFactory.CookingStyle):
 
 # When there is an a cookware/equipment added to an appliance it connects to this method
 func _on_add_appliance(c, appliance):
-	print("Cookware added backKKKKKKKKKKK    ", c)
 	connect_cookware(c)
 	connect_take_all(c)
 	appliance.connect("cookware_taken", Callable(self, "_on_food_or_cookware_taken"))
+	applianceInstance = appliance
 	
 	if c.contents.size() > 0:
 		_on_cookware_signal(c.contents)
@@ -125,11 +130,13 @@ func _on_blender_signal(c, blender):
 	cookware.connect("average_updated", Callable(self, "_on_average_updated"))
 	_on_cookware_signal(c)
 	connect_take_all(blender)
+	applianceInstance = blender
 
 
 func _on_chop_table_food_placed(c):
 	connect_cookware(c)
 	connect_take_all(c)
+	applianceInstance =  c
 
 func progress_bar_reset():
 	value = 0

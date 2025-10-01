@@ -1,93 +1,72 @@
-[gd_scene load_steps=6 format=3 uid="uid://bq4hnpy0w60tw"]
+[gd_scene load_steps=5 format=3 uid="uid://bq4hnpy0w60tw"]
 
 [ext_resource type="Texture2D" uid="uid://c2y2xswu7upay" path="res://assets/textures/recipes/BeefBurger.png" id="1_ptwn0"]
 [ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/DefaultTheme.tres" id="2_3gpiq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3gpiq"]
-bg_color = Color(0.980392, 0.980392, 0.980392, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
+bg_color = Color(0.195545, 0.195545, 0.195545, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p74or"]
-bg_color = Color(0.20033, 0.20033, 0.20033, 1)
+bg_color = Color(0.980392, 0.980392, 0.980392, 1)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ptwn0"]
-bg_color = Color(0.777446, 0.365636, 0.312518, 1)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
 
 [node name="UiRecipes" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -3.0
-offset_bottom = -3.0
+offset_left = -1.0
+offset_top = 4.0
+offset_right = -1.0
+offset_bottom = 4.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="BG" type="Panel" parent="."]
 layout_mode = 0
-offset_left = 469.0
-offset_top = 226.0
-offset_right = 674.0
-offset_bottom = 328.0
+offset_left = 438.0
+offset_top = 204.0
+offset_right = 725.0
+offset_bottom = 400.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_3gpiq")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 0
-offset_left = 469.0
-offset_top = 226.0
-offset_right = 674.0
-offset_bottom = 240.0
+offset_left = 723.0
+offset_top = 398.0
+offset_right = 1006.0
+offset_bottom = 407.0
+rotation = 3.14159
 theme_override_styles/panel = SubResource("StyleBoxFlat_p74or")
-
-[node name="CLIP" type="Control" parent="."]
-clip_contents = true
-anchors_preset = 0
-offset_left = 469.0
-offset_top = 226.0
-offset_right = 674.0
-offset_bottom = 327.0
-
-[node name="NewBG" type="Panel" parent="CLIP"]
-layout_mode = 0
-offset_left = -20.0
-offset_top = 41.0
-offset_right = 64.0
-offset_bottom = 58.0
-rotation = -0.785398
-theme_override_styles/panel = SubResource("StyleBoxFlat_ptwn0")
-
-[node name="New" type="Label" parent="CLIP/NewBG"]
-layout_mode = 0
-offset_left = 32.5269
-offset_top = 4.24271
-offset_right = 54.5269
-offset_bottom = 14.2427
-theme = ExtResource("2_3gpiq")
-theme_override_font_sizes/font_size = 10
-text = "NEW"
 
 [node name="MenuItem" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 538.0
-offset_top = 188.0
-offset_right = 1301.0
-offset_bottom = 810.0
-scale = Vector2(0.1, 0.1)
+offset_left = 526.0
+offset_top = 155.0
+offset_right = 1289.0
+offset_bottom = 777.0
+scale = Vector2(0.15, 0.15)
 texture = ExtResource("1_ptwn0")
 
-[node name="Price2" type="RichTextLabel" parent="."]
+[node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 796.0
-offset_top = 263.0
-offset_right = 934.0
-offset_bottom = 286.0
-text = "p[adfaldasdasdad"
+offset_left = 439.0
+offset_top = 248.0
+offset_right = 726.0
+offset_bottom = 275.0
+theme = ExtResource("2_3gpiq")
+theme_override_colors/font_shadow_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
+theme_override_colors/font_outline_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 0
+theme_override_constants/shadow_outline_size = 5
+theme_override_font_sizes/font_size = 26
+text = "Hamburger"
+horizontal_alignment = 1
+vertical_alignment = 1

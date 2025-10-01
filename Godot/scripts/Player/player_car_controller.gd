@@ -36,10 +36,10 @@ func _process(delta: float) -> void:
 func _send_input(new : bool):
 	if new:
 		time = Time.get_ticks_msec()
-	rpc("_receive_input", multiplayer.get_unique_id(), move_input, turn_input, time)
+	rpc("_receive_input", ENetManager.get_my_id(), move_input, turn_input, time)
 
 
 @rpc("any_peer", "call_local", "unreliable")
 func _receive_input(sender_id : int, move : int, turn : int, ttime : int):
 	if !ENetManager.is_host(): return
-	get_parent().rpc_id(1,"_on_received_input",sender_id, move, turn, ttime)
+	get_parent()._on_received_input(sender_id, move, turn, ttime)

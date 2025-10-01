@@ -1,11 +1,16 @@
 extends Node3D
 class_name FireStart
 
+
+
+signal fire_spread( teamID: int, appliance_path: NodePath)
+
 # Function to start the fire
 func start_fire(teamID: int, chosen_path: NodePath) -> void:
 	print("Starting fire for team %s on %s" % [teamID, chosen_path])
 	# Get the appliance
 	var appliance = get_node_or_null(chosen_path)
+	start_timer()
 	# Otherwise, just return
 	if not appliance:
 		push_warning("Chosen appliance path is invalid: %s" % chosen_path)
@@ -37,3 +42,18 @@ func start_fire(teamID: int, chosen_path: NodePath) -> void:
 				# update its state
 				##if food.has_method("on_state_change"):
 					##food.on_state_change()
+
+func start_timer() -> void:
+	print("\n \n starting the fire timer")
+	var timer = Timer.new()
+	timer.wait_time = 2
+	timer.one_shot = true
+	add_child(timer)
+	timer.timeout.connect(_on_timer_timeout)
+	timer.start()
+
+func _on_timer_timeout() -> void:
+	print("\n \n the fire has ended")
+	
+
+	

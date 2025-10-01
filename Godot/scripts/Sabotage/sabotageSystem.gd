@@ -14,8 +14,6 @@ signal sabotage_success(sabotage_type: int)
 signal sabotage_failed(reason: String)
 signal sabotage_sending_team(teamID: int)
 
-# Need to remove crateSwitch and maybe add something else?
-
 # Define Sabotage Types
 enum SabotageType {
 	WATER_SPILL,
@@ -85,7 +83,8 @@ func request_sabotage(teamID: int, sabotage_type: int) -> void:
 	currency_system.minus_currency(teamID, cost)
 	# Minus reputation : maybe delete?
 	reputation_system.minus_reputation(teamID, 10)
-	
+
+	current_sabotage = sabotage_type
 	# If there is an extra peice of info needed for a sabotage
 	# Get and pass it here
 	# Probably a better way to do this !!
@@ -99,15 +98,21 @@ func request_sabotage(teamID: int, sabotage_type: int) -> void:
 			return
 		# Call the execute Sabotage with a path
 		execute_sabotage.rpc(teamID, sabotage_type, chosen_path, Vector3(0, 0, 0))
+
 	# If, WATER_SPILL, get a position
 	elif sabotage_type == SabotageType.WATER_SPILL:
 		var position = get_random_position(teamID)
+		print("position of water is : ", position)
 		# Call the execute Sabotage with position
 		execute_sabotage.rpc(teamID, sabotage_type, NodePath(""), position)
+	
+	# If RAT_SPAWN
 	elif sabotage_type == SabotageType.RAT_SWARM:
-		var position = get_random_position(teamID)
-		var chosen_path = find_object_path()
-		execute_sabotage.rpc(teamID, sabotage_type, chosen_path, position)
+			var position = get_random_position(teamID)
+			print("\n next position is: ", position)
+			for i in range (5):
+				var chosen_path = find_object_path()
+				execute_sabotage.rpc(teamID, sabotage_type, chosen_path, position)
 	else:
 		# For now, otherwise just call the normal one
 		execute_sabotage.rpc(teamID, sabotage_type, NodePath(""), Vector3(0, 0, 0))
@@ -166,9 +171,14 @@ func spawn_water_spill(teamID: int, duration: float, position: Vector3) -> void:
 	# Get the waterSpill.tscn : Change to the assest !!
 	var spill = preload("res://scripts/Sabotage/waterSpill.tscn").instantiate()
 	get_tree().get_current_scene().add_child(spill)
-	# Get the position of the Spill
+
 	spill.global_position = position
-	spill.send_position(position)
+	spill.set_sabotaged_team(teamID)
+
+
+	# Get the position of the Spill
+#	spill.global_position = position
+	#spill.send_position(position)
 	spill.spill()
 	##spill.global_position = get_random_spill_position(teamID)	
 	#spill.start_timer(duration)
@@ -181,18 +191,11 @@ func get_random_position(teamID: int) -> Vector3:
 
 	# Currently this just spawns on the specific sides of the floor
 	# Would like to so they don't spawn within appliances
-	# It takes note of things 
-	floor_node = get_tree().get_current_scene().get_node("NavigationRegion3D/Floor")
-
-	# Remove this later
-	if not floor_node:
-		push_error("Player node not found in scene!")
-		return Vector3.ZERO
-	else:
-		print("found the player node")
+	# It takes note of things
 
 	# Get the position
-	var centre = floor_node.global_transform.origin
+	var centre = Vector3.ZERO
+	#floor_node.global_transform.origin
 	
 	# Offset Numbers
 	var offset_x
@@ -205,6 +208,8 @@ func get_random_position(teamID: int) -> Vector3:
 	elif teamID == 2:
 		offset_x = randf_range(-7, 9)
 		offset_z = randf_range(0, 9)
+	
+	print("offsets: ", offset_x, offset_z)
 
 	# Return a position for the spill
 	return centre + Vector3(offset_x, 0, offset_z)
@@ -283,8 +288,7 @@ func spawn_food_critic() -> void:
 		# create a function in the npc and call it here
 		
 # ------- Rat Swarm Stuff ------- #
-# UNUSED CURRENTLY
-func spawn_rat_swarm(position: Vector3, path: NodePath) -> void:
+func spawn_rat__swarm(position: Vector3, path: NodePath) -> void:
 	print("spawning rat sparm")
 	RatAttack.spawn_rat_mischief(position, path)
 	#var rat = preload("res://scripts/Sabotage/rat.tscn").instantiate()
@@ -294,6 +298,17 @@ func spawn_rat_swarm(position: Vector3, path: NodePath) -> void:
 	#rat.add_to_mischief(rat)
 	#add_child(rat)
 var benches : Array = []
+
+func spawn_rat_swarm(position: Vector3, target: NodePath):
+	var swarm = RatAttack.new()
+	swarm.rat_scene = preload("res://scripts/Sabotage/rat.tscn")
+	add_child(swarm)
+
+	# spawn multiple rats in this swarm
+	for i in range(3): # number of rats
+		var spawn_pos = position + Vector3(i, 0, 0) # spread out a bit
+		swarm.spawn_rat(spawn_pos, target)
+
 
 func find_object_path() -> NodePath:
 	var appliances = get_tree().get_nodes_in_group("flammable")
@@ -314,9 +329,3 @@ func spawn_power_outage(teamID: int) -> void:
 	var power = preload("res://scripts/Sabotage/powerOutage.tscn").instantiate()
 	get_tree().get_current_scene().add_child(power)
 	power.turn_power_off(teamID)
-
-
-
-
-
-# IS THE A BUG AROUND STILL BEING ABLE TO COOK EVEN AFTER THE THING IS TURNED OFF?

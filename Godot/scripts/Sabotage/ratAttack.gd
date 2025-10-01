@@ -1,11 +1,26 @@
 extends Node
-class_name Rat
+#class_name Rat
+
+# Need to make the wndinf of the rats nicer:
+	# Make then just run back to their spwan spot
+	# make the spawn spot a better location
+	# Also make the rats dissapear when they find a bench
+	# and later make the oath finding actually object finding instead
+	# Figure out why their time gets messed up when there are multiple rats
+
+
 
 @onready var mischief := []
 
 @export var rat_scene : PackedScene = preload("res://scripts/Sabotage/rat.tscn")
 
 var speed := 3.0 # Units per second
+
+var count = 0
+var secs = 5
+var object_path
+var target_path
+var rat_targets := {} 
 
 # Is there a way to initshate the rat assest?
 # how do I do that ??
@@ -28,11 +43,7 @@ var speed := 3.0 # Units per second
 # the spray will kill them, dropping the item in their hand
 # lasts 20s before the rats stop spawning
 func _ready() -> void:
-	print("HELLO I AM A RAT")
-
-var count = 0
-var secs = 5
-var object_path
+	pass
 
 func _process(delta: float) -> void:
 	run(delta)
@@ -43,12 +54,15 @@ func run(delta: float):
 	for r in mischief:
 		if not is_instance_valid(r):
 			continue
-		if object_path == null:
+		if not rat_targets.has(r):
 			continue
 
-		var target_node = get_node(object_path) 
+		var target_node = get_node(rat_targets[r]) 
+			# if the target node is null, just continue
+			# maybe make them run back to their spawn point instead
 		if target_node == null:
-			continue#find_object() #Vector3(10, 0, 10) # example target
+			continue 
+			#find_object() #Vector3(10, 0, 10) # example target
 		var target_pos = target_node.global_position
 		var old_pos = r.global_position
 		var new_pos = r.global_position.move_toward(target_pos, speed * delta)
@@ -61,18 +75,29 @@ func run(delta: float):
 		if dir.length() > 0.01:
 			# point the rat's nose (Z+) toward movement
 			r.look_at(new_pos - dir, Vector3.UP)
+			
+		# Only erase the target if the rat is close enough
+		if r.global_position.distance_to(target_pos) < 0.1:
+			print("found my target")
+			rat_targets.erase(r)
+			if is_instance_valid(r):
+				r.queue_free()
+	
+
 		target_node = NodePath("")
 		target_pos = Vector3(0, 0, 0)
 			
 # Maybe add a variable to decide the amount of rats
 func spawn_rat_mischief(position : Vector3, path : NodePath) -> void:
-	for i in range(1, 5):
-		var new_rat = rat_scene.instantiate()
-		add_child(new_rat)
-		new_rat.global_position = position
-		object_path = path
-		mischief.append(new_rat)
-		position.x += 1
+	#for i in range(1, 5):
+	var new_rat = rat_scene.instantiate()
+	add_child(new_rat)		
+	new_rat.global_position = position
+	#object_path = path
+	mischief.append(new_rat)
+	#position.x += 1
+	# assign a target
+	rat_targets[new_rat] = path
 	start_timer(secs)
 	#var start = get_tree().get_current_scene()
 	#var bs : Array = find_benches(start)
@@ -97,11 +122,16 @@ func start_timer(seconds: float) -> void:
 	add_child(timer)
 	timer.timeout.connect(_on_timer_timeout)
 	timer.start()
-
+	
 func _on_timer_timeout() -> void:
-	#queue_free()
-	print("done")
-	#moving_rats()
+	for r in mischief:
+		if is_instance_valid(r):
+			r.queue_free()
+			print("queue freeded")
+	#mischief.clear()
+	print("done on the rats")
+	# do not queue_free() the Rat node itself
+
 
 
 # Add the Rats to the pack
@@ -136,8 +166,7 @@ func find_object() -> Vector3:#NodePath:
 			#print("====this is a bench===== ", item)
 			object = item.global_position
 	return object
-		
-			
+	
 	# Need to figure out how this should actually work with propper stuff
 	# But for now just ignore this
 			#print("item and its contents ::::::: ", item.contents)

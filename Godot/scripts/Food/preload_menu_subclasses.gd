@@ -33,7 +33,7 @@ const MESH = {
 	Ingredient.PASTA : preload("res://assets/newmodels/food/ingredients/raw/Pasta_Cylinder_004.res"),
 	Ingredient.CHEESE : preload("res://assets/newmodels/food/ingredients/raw/Cheese_Cube_020.res"),
 	Ingredient.DOUGH : preload("res://assets/newmodels/food/ingredients/raw/Dough_Circle.res"),
-	Ingredient.TOMATO : preload("res://assets/models/food/ingredients/raw/BestTomato_Cube_076.res")
+	#Ingredient.TOMATO : preload("res://assets/models/food/ingredients/raw/BestTomato_Cube_076.res")
 
 }
 func _ready():
@@ -65,5 +65,5 @@ func _ready():
 	preload("res://scripts/Food/MenuItems/taco_beef.gd")
 	preload("res://scripts/Food/MenuItems/taco_chicken.gd")
 	preload("res://scripts/Food/MenuItems/taco_mushroom.gd")
-	preload("res://scripts/Food/MenuItems/pancakes.gd")
+	#preload("res://scripts/Food/MenuItems/pancakes.gd")
 	

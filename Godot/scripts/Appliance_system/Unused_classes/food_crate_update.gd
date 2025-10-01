@@ -59,7 +59,7 @@ var FOOD_ORDER = {
 ## Setup the model instance
 func _init():
 	super._init()
-	model_scene = preload("res://assets/models/NuFurniture/FoodCrater.glb")
+	model_scene = preload("res://assets/newmodels/furniture/FoodCrateReDux.glb")
 	self.freeze = true
 	self.sleeping = true
 

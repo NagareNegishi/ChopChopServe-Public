@@ -11,7 +11,7 @@ static var registered: bool = false
 ## Setup the model instance
 func _init():
 	super._init()
-	model_scene = preload("res://assets/models/furniture/Fridge.glb")
+	model_scene = preload("res://assets/newmodels/furniture/Fridge.glb")
 	if not registered:
 		_register_foods()
 		registered = true

@@ -124,7 +124,7 @@ func _spawn_particle(index : int) -> void:
 
 # adds input into player_input
 func _on_received_input(peer_id: int, move : int, turn : int, time : int):
-	var adjusted_time : int = time - time_start - 70
+	var adjusted_time : int = max(0, time) - time_start - 70
 	adjusted_time = max(0, adjusted_time)
 
 	player_inputs[peer_id] = {

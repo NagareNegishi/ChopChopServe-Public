@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dlk0mbdfg2cmq"]
+[gd_scene load_steps=9 format=3 uid="uid://dlk0mbdfg2cmq"]
 
 [ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="1_tr2cw"]
 [ext_resource type="Script" uid="uid://brwea1k7t14wb" path="res://scripts/Appliance_system/Concrete_classes/oven.gd" id="2_ddlb3"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b2baw0vfm8358" path="res://assets/textures/misc/LoadingBarOutside.png" id="4_rsq5c"]
 [ext_resource type="Texture2D" uid="uid://ts7ljaleqkhg" path="res://assets/textures/misc/LoadingBarInside.png" id="5_4hy3m"]
 [ext_resource type="Script" uid="uid://ue6iw3lh8jpn" path="res://UI/ApplianceProgressBar.gd" id="6_va5yc"]
+[ext_resource type="PackedScene" uid="uid://pl57ikpi4csf" path="res://UI/UI_ProgressCook.tscn" id="7_4hy3m"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_favet"]
 viewport_path = NodePath("SubViewport")
@@ -25,10 +26,11 @@ model_scene = ExtResource("3_hqn4w")
 
 [node name="SubViewport" type="SubViewport" parent="." index="4"]
 transparent_bg = true
-size = Vector2i(122, 13)
+size = Vector2i(122, 33)
 render_target_update_mode = 4
 
 [node name="TextureProgressBar2" type="TextureProgressBar" parent="SubViewport" index="0"]
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -50,8 +52,15 @@ tint_over = Color(0, 0, 0, 1)
 tint_progress = Color(0.167779, 0.668736, 0.111628, 1)
 script = ExtResource("6_va5yc")
 
+[node name="UiProgressCook" parent="SubViewport" index="1" instance=ExtResource("7_4hy3m")]
+
 [node name="Sprite3D" type="Sprite3D" parent="." index="5"]
-transform = Transform3D(-0.999966, -3.60028e-10, -0.00827288, -0.00495588, 0.80071, 0.599031, 0.00662418, 0.599051, -0.800683, 0.005256, 0.923139, -0.0217192)
+transform = Transform3D(-0.999966, -3.60028e-10, -0.00827288, -0.00495588, 0.80071, 0.599031, 0.00662418, 0.599051, -0.800683, -0.00206184, 0.187983, -0.0141381)
+billboard = 1
+no_depth_test = true
 texture = SubResource("ViewportTexture_favet")
 
 [connection signal="add_appliance" from="." to="SubViewport/TextureProgressBar2" method="_on_add_appliance"]
+[connection signal="add_appliance" from="." to="SubViewport/UiProgressCook/ProgressBar" method="_on_oven_add_appliance"]
+
+[editable path="SubViewport/UiProgressCook"]

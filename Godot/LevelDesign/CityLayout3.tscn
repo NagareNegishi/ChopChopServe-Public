@@ -132,6 +132,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 7, 0, 
 
 [node name="Bench2" parent="Node3D" instance=ExtResource("10_14r1b")]
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 4, 0, 7)
+using_tscn = true
 
 [node name="Bench3" parent="Node3D" instance=ExtResource("10_14r1b")]
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 4, 0, 1.5)
@@ -174,6 +175,7 @@ transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 7, 0, 8)
 
 [node name="Fryer" parent="Node3D" instance=ExtResource("14_ht354")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4, 0, 8)
+using_tscn = true
 
 [node name="Sink" parent="Node3D" instance=ExtResource("15_c5fkr")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 6, 0, -1.5)

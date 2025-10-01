@@ -13,6 +13,7 @@ func set_order(item : MenuItem) -> bool:
 		return false
 	
 	if item.ui_texture == null:
+		print(item.get_meal_name())
 		push_error("ERROR: UI_TEXTUIRE IS NULL")
 		return false
 	

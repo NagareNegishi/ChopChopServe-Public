@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=4 uid="uid://hfxkmecbe3vs"]
+[gd_scene load_steps=10 format=4 uid="uid://b7e068kh7qsy4"]
 
 [ext_resource type="Script" uid="uid://b4hmajvjiipma" path="res://scripts/Food/MenuItems/soup_tomato.gd" id="1_qv208"]
+[ext_resource type="Texture2D" uid="uid://chbbc8dxqfr1y" path="res://assets/textures/recipes/TomatoSoup.png" id="2_v284r"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oulxl"]
 resource_name = "Plate"
@@ -106,6 +107,7 @@ albedo_color = Color(0.230315, 0.230315, 0.230315, 1)
 
 [node name="TomatoSoup" type="Node3D"]
 script = ExtResource("1_qv208")
+ui_texture = ExtResource("2_v284r")
 
 [node name="TomatoSoup" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.53083, 0, 0, 0, 0.53083, 0, 0, 0, 0.53083, 0, 0, 0)

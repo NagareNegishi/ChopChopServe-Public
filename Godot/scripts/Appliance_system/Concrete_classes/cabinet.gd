@@ -9,7 +9,7 @@ var plate_scene: PackedScene = preload("res://scripts/order_system/Plate.tscn")
 ## Setup the model instance
 func _init():
 	super._init()
-	model_scene = preload("res://assets/models/furniture/BasicBench.glb")
+	model_scene = preload("res://assets/newmodels/furniture/BasicBench.glb")
 
 
 ## Setup the Cabinet
@@ -103,8 +103,3 @@ func start_action() -> bool:
 	assert(false, "Cabinet does not support starting actions")
 	return false
 #-------------------------------------------------------------------------------
-
-
-
-
-

@@ -4,7 +4,9 @@
 [ext_resource type="Material" uid="uid://d1mru8ywyt58h" path="res://assets/newmodels/texturemap.tres" id="2_7oy6e"]
 [ext_resource type="PackedScene" uid="uid://cy1s0o2ip2hob" path="res://scenes/Interaction/InteractableComponent.tscn" id="3_7oy6e"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_julgp"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_aokm1"]
+radius = 0.288712
+height = 0.917535
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_418mp"]
 _surfaces = [{
@@ -44,8 +46,8 @@ shadow_mesh = SubResource("ArrayMesh_418mp")
 script = ExtResource("1_julgp")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.569856, 0)
-shape = SubResource("BoxShape3D_julgp")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.448228, 0)
+shape = SubResource("CapsuleShape3D_aokm1")
 
 [node name="Egg" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.0765224, 0, 0, 0, 0.0765224, 0, 0, 0, 0.0765224, 0, 0, 0)

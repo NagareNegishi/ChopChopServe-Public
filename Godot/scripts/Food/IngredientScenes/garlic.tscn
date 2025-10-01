@@ -79,45 +79,51 @@ albedo_texture = ExtResource("3_5chdn")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nk1iu"]
 albedo_color = Color(0.151276, 0.151276, 0.151276, 1)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_d6ijw"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_5chdn"]
+radius = 0.3
 
 [node name="Garlic" type="RigidBody3D"]
 script = ExtResource("1_nk1iu")
 
 [node name="Garlic" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.120306, 0.0861573, -0.055651, 0.0654661, 0.130535, 0.0605668, 0.0789576, 0.0230451, -0.135012, 0, 0, 0)
+transform = Transform3D(-0.266343, 0.190741, -0.123204, 0.144934, 0.288989, 0.134087, 0.174802, 0.0510192, -0.2989, 0, 0, 0)
 mesh = SubResource("ArrayMesh_ltewn")
 skeleton = NodePath("")
 
 [node name="GarlicChopped" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.413256, -1.85173e-09, 0.350634, 0.130312, 0.156433, -0.153586, -0.325519, 0.0626235, 0.383656, 0, -0.00342351, 0)
+transform = Transform3D(-0.482091, 0.0568783, 0.544844, 0, 0.221908, -0.237978, -0.574533, -0.0477265, -0.457178, 0, -0.00342351, 0)
 visible = false
 mesh = SubResource("ArrayMesh_dpiqo")
 skeleton = NodePath("")
 
 [node name="SpoiledGarlic" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.120306, 0.0861573, -0.055651, 0.0654661, 0.130535, 0.0605668, 0.0789576, 0.0230451, -0.135012, 0, 0, 0)
+transform = Transform3D(-0.266343, 0.190741, -0.123204, 0.144934, 0.288989, 0.134088, 0.174802, 0.0510193, -0.2989, 0, 0, 0)
 visible = false
 mesh = SubResource("ArrayMesh_ltewn")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_d6ijw")
 
 [node name="BurntGarlic" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.120306, 0.0861573, -0.055651, 0.0654661, 0.130535, 0.0605668, 0.0789576, 0.0230451, -0.135012, 0, 0, 0)
+transform = Transform3D(-0.266343, 0.190741, -0.123204, 0.144934, 0.288989, 0.134088, 0.174802, 0.0510193, -0.2989, 0, 0, 0)
 visible = false
 mesh = SubResource("ArrayMesh_ltewn")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_nk1iu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.468339, 0)
-shape = SubResource("BoxShape3D_d6ijw")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.10352e-05, 0.241245, 0.00830078)
+shape = SubResource("SphereShape3D_5chdn")
 
 [node name="InteractableComponent" parent="." instance=ExtResource("3_dpiqo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00561047, 0.47338, 0)
 is_pickup = true
 
+[node name="CollisionShape3D" parent="InteractableComponent" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0318298, -0.329834, 0.0584412)
+
 [connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]
 [connection signal="hovered" from="InteractableComponent" to="." method="_on_interactable_component_hovered"]
 [connection signal="interacted" from="InteractableComponent" to="." method="_on_interactable_component_interacted"]
 [connection signal="toggle_collision" from="InteractableComponent" to="." method="_on_interactable_component_toggle_collision"]
+
+[editable path="InteractableComponent"]

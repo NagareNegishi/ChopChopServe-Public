@@ -154,7 +154,7 @@ func _start_game() -> void:
 	# Actual scene
 	# SceneManager.change_scene(SceneManager.Scene.LOBBY)
 	# Test scene
-	SceneManager.change_scene(SceneManager.Scene.EMMA_TEST)
+	SceneManager.change_scene(SceneManager.Scene.LOBBY)
 ##----------------------------------------------------------------------------------
 
 

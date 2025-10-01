@@ -18,11 +18,11 @@ func _init():
 	}
 	
 	is_available = true
+	name_of_meal = "pizza_meat"
+	ui_texture = load("res://assets/textures/recipes/PepperoniPizza.png")
 
 
 func _ready():
 	cooked_mesh_good = $PizzaPep
 	cooked_mesh_bad = $BadQualityPepPizza
 	cooked_mesh_burnt = $BurntPepPizza
-	name_of_meal = "pizza_meat"
-	ui_texture = load("res://assets/textures/recipes/PepperoniPizza.png")

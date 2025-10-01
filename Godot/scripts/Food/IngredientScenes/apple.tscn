@@ -79,39 +79,40 @@ albedo_color = Color(0.136826, 0.136826, 0.136826, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qr1fj"]
 albedo_texture = ExtResource("3_rydjj")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_gv5uw"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_rydjj"]
+radius = 0.7
 
 [node name="Apple" type="RigidBody3D"]
 script = ExtResource("1_rh1pu")
 
 [node name="Apple" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
 mesh = SubResource("ArrayMesh_mlnfv")
 skeleton = NodePath("")
 
 [node name="ChoppedApple" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.15313, -0.000393276, 0.00942701, -8.57324e-10, 0.0142586, 0.0679412, -0.00949127, 0.00634503, -0.152093, 0, -0.0214826, 0)
+transform = Transform3D(-8.74228e-09, -0.00854147, 0.199153, 0, 0.0191845, 0.0886686, -0.2, 3.73359e-10, -8.70525e-09, 0, -0.0214826, 0)
 visible = false
 mesh = SubResource("ArrayMesh_unp5a")
 skeleton = NodePath("")
 
 [node name="BurntApple" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.15313, -0.000393276, 0.00942701, -8.57324e-10, 0.0142586, 0.0679412, -0.00949127, 0.00634503, -0.152093, 0, -0.0214826, 0)
+transform = Transform3D(-0.199617, -0.000529018, 0.0123174, -1.11759e-09, 0.01918, 0.0887719, -0.0123726, 0.00853504, -0.198726, 0, -0.0214826, 0)
 visible = false
 mesh = SubResource("ArrayMesh_unp5a")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_gv5uw")
 
 [node name="SpoiledApple" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
 visible = false
 mesh = SubResource("ArrayMesh_mlnfv")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_qr1fj")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.441506, 0, 0, 0, 0.441506, 0, 0, 0, 0.441506, -0.00156671, 0.232583, 0)
-shape = SubResource("BoxShape3D_gv5uw")
+transform = Transform3D(0.441506, 0, 0, 0, 0.441506, 0, 0, 0, 0.441506, -0.00156671, 0.304468, -0.0145589)
+shape = SubResource("SphereShape3D_rydjj")
 
 [node name="InteractableComponent" parent="." instance=ExtResource("3_unp5a")]
 transform = Transform3D(0.441506, 0, 0, 0, 0.441506, 0, 0, 0, 0.441506, -0.00404376, 0.234809, 0)

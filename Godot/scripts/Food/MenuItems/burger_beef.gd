@@ -18,10 +18,10 @@ func _ready():
 	}
 	
 	is_available = true
+	name_of_meal = "burger_beef"
+	ui_texture = load("res://assets/textures/recipes/BeefBurger.png")
 
 func _int():
 	cooked_mesh_good = $BurgerBeef
 	cooked_mesh_bad = $BadQualityBeefBurger
 	cooked_mesh_burnt = $BurntBeefBurger
-	name_of_meal = "burger_beef"
-	ui_texture = load("res://assets/textures/recipes/BeefBurger.png")

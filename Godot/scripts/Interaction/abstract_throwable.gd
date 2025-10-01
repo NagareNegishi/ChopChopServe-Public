@@ -1,23 +1,13 @@
 class_name AbstractThrowable extends RigidBody3D
 
 var overlay = preload("res://materials/InteractOverlay.tres")
-
-## Called when the node enters the scene tree for the first time.
-## @return void
-func _enter_tree() -> void:
-	pass
+@onready var interact : InteractableComponent = $InteractableComponent
 
 
-## Called every frame. 'delta' is the elapsed time since the previous frame.
-## @param delta elapsed time since the previous frame
-## @return void
-func _process(_delta: float) -> void:
-	pass
 
-
-func _ready() -> void:
-	var interact : InteractableComponent = $InteractableComponent
+func _init() -> void:
 	
+	_store_original_transform()
 
 ## Connect to singal: Called when interacted with and will make the player pick this item up
 ## @return void
@@ -54,3 +44,22 @@ func _on_interactable_component_toggle_collision(turn_on: bool) -> void:
 		if child is CollisionShape3D:
 			child.disabled = !turn_on
 	$InteractableComponent/CollisionShape3D.disabled = !turn_on
+
+
+
+var original_transform: Transform3D
+var original_scale: Vector3
+
+
+func _store_original_transform():
+	# Store the main object's transform/scale
+	original_transform = transform
+	original_scale = scale
+	
+	
+	print("Original transforms stored for ", get_class())
+
+func restore_original_transform():
+	# Restore main object
+	transform = original_transform
+	scale = original_scale

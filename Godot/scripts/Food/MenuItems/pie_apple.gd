@@ -16,10 +16,10 @@ func _init():
 	}
 	
 	is_available = true
+	name_of_meal = "pie_apple"
+	ui_texture = load("res://assets/textures/recipes/ApplePie.png")
 
 func _ready():
 	cooked_mesh_good = $ApplePie
 	cooked_mesh_bad = $BadQualityApplePie
 	cooked_mesh_burnt = $BurntApplePie
-	name_of_meal = "pie_apple"
-	ui_texture = load("res://assets/textures/recipes/ApplePie.png")

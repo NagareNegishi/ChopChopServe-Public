@@ -11,7 +11,7 @@ var inflammable_component: Inflammable
 ## Setup the model instance
 func _init():
 	super._init()
-	model_scene = preload("res://assets/models/furniture/BasicBench.glb")
+	model_scene = preload("res://assets/newmodels/furniture/BasicBench.glb")
 	_setup_inflammable()
 
 
@@ -32,22 +32,23 @@ func _setup_inflammable():
 ## Override upgradable setup in concrete appliances
 func _setup_upgradable():
 	super._setup_upgradable()
-	# enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
+	#enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
 
 
 ## Setup cookware slots, should be overridden by subclasses
 ## Default implementation expect one Cookware slot in the center
 func _setup_item_slots():
 	for i in range(capacity):
-		var slot_position = Vector3(0.0, size.y * 0.8, 0.0)
+		var slot_position = Vector3(0.0, size.y * 0.5, 0.0)
 		item_slots.append(slot_position)
 
 
 ## Apply position and direction to item at given slot
-func _position_item(item: Node, slot_index: int):
-	if item is Cookware:
+func _position_item(item: Node3D, slot_index: int):
+	if item:
 		item.restore_original_transform()
-		item.rotate_to_direction(item.default_facing)
+		item.global_rotation += Vector3(0,12.1,0)
+		#item.rotate_to_direction(item.default_facing)
 	item.position = item_slots[slot_index]
 
 

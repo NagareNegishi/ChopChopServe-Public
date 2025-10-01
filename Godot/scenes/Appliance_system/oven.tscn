@@ -61,3 +61,6 @@ no_depth_test = true
 texture = SubResource("ViewportTexture_favet")
 
 [connection signal="add_appliance" from="." to="SubViewport/TextureProgressBar2" method="_on_add_appliance"]
+[connection signal="add_appliance" from="." to="SubViewport/UiProgressCook/ProgressBar" method="_on_oven_add_appliance"]
+
+[editable path="SubViewport/UiProgressCook"]

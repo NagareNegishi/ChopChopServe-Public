@@ -2,7 +2,7 @@ extends ProgressBar
 
 var cookware
 var food_item
-var is_open: bool
+var is_open: bool = false
 var contents: Array
 var applianceInstance
 
@@ -25,7 +25,7 @@ var TEXTURE = {
 
 func _process(_delta):
 	change_visibility(is_open)
-
+	print(is_open)
 
 func _ready() -> void:
 	_set_texture(type)
@@ -159,3 +159,11 @@ func progress_bar_reset():
 
 func _set_texture(texture_type : ProgressType):
 	texture_rect.texture = TEXTURE[texture_type]
+
+
+func _on_oven_add_appliance(cookware: Variant) -> void:
+	pass # Replace with function body.
+
+
+func _on_stove_with_pot_add_appliance(cookware: Variant) -> void:
+	pass # Replace with function body.

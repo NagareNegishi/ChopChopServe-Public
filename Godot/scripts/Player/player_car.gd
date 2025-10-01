@@ -18,8 +18,8 @@ var move_input_avg : int = 0
 var move_particle = preload("res://Particles/MoveParticles.tscn")
 var MOVE_PARTICLES_POOL = []
 
-var  player_inputs := {}
-var time_now : int = 0
+var player_inputs := {}
+var time_start : int = 0
 
 ## Called when the node enters the scene tree for the first time.
 ## @return void
@@ -30,13 +30,13 @@ func _ready() -> void:
 	$SpringArm.spring_length = camera_length
 	set_multiplayer_authority(1)
 	if !ENetManager.is_host(): $ParticleTimer.stop()
-	time_now = Time.get_ticks_msec()
-	rpc("_set_time_now", time_now)
+	time_start = Time.get_ticks_msec()
+	rpc("_set_time_now", time_start)
 
 
 @rpc("any_peer", "call_local")
 func _set_time_now(cur : int):
-	time_now = cur
+	time_start = cur
 
 
 ## Runs every process frame
@@ -56,7 +56,7 @@ func _movement(delta : float) -> void:
 	#resets average
 	turn_input_avg = 0
 	move_input_avg = 0
-
+	print(player_inputs)
 	#adds all turn and move inputs
 	for key in player_inputs.keys():
 		turn_input_avg += player_inputs[key].turn
@@ -124,11 +124,13 @@ func _spawn_particle(index : int) -> void:
 
 # adds input into player_input
 func _on_received_input(peer_id: int, move : int, turn : int, time : int):
-	
+	var adjusted_time : int = time - time_start - 70
+	adjusted_time = max(0, adjusted_time)
+
 	player_inputs[peer_id] = {
 		"move" : move,
 		"turn" : turn,
-		"time" : time_now - time
+		"time" : adjusted_time
 	}
 
 func disable_input(disable : bool):

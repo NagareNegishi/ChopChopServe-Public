@@ -21,7 +21,8 @@ func _ready() -> void:
 	
 
 func _load_players():
-	var players := ENetManager.get_player_list()
+	var players : Array[int] = ENetManager.get_player_list()
+	players.sort_custom(sort_team)
 	for i in range(list.size()):
 		if i >= players.size(): 
 			list[i].visible = false
@@ -34,3 +35,6 @@ func set_collect_text(collectible : Collectible):
 	_collect_count += 1
 	collect_text.text = str(_collect_count)+"/"+str(max(total,0))
 	
+
+func sort_team(a,b) -> bool: 
+	return !ENetManager.get_team1().has(a) 

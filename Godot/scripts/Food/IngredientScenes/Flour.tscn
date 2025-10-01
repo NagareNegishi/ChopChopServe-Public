@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=4 uid="uid://drihqdubig0l3"]
+[gd_scene load_steps=7 format=4 uid="uid://bgvnm1m0hxe1e"]
 
 [ext_resource type="Script" uid="uid://drx2l5axfgl1d" path="res://scripts/Food/Ingredients/flour.gd" id="1_tv7yx"]
 [ext_resource type="PackedScene" uid="uid://cy1s0o2ip2hob" path="res://scenes/Interaction/InteractableComponent.tscn" id="3_6kr4p"]

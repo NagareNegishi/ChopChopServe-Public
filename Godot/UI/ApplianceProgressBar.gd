@@ -61,6 +61,7 @@ func connect_take_all(c):
 
 # Function to chnage boolean value when items are taken from the cookware or blender
 func _on_food_or_cookware_taken(item):
+	print("FOOD IS TAKEN FROM COOKWARE")
 	is_open = false
 	
 	if item and item.is_in_group("Appliance"):

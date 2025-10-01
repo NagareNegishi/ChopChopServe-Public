@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://bkdgdjjlsc7rx"]
+[gd_scene load_steps=40 format=3 uid="uid://bkdgdjjlsc7rx"]
 
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_cmmn0"]
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="1_om5gj"]
@@ -26,6 +26,8 @@
 [ext_resource type="PackedScene" uid="uid://dxlbcu6oeo8f6" path="res://assets/Beachy/FenceBeachRamp.glb" id="22_vda8q"]
 [ext_resource type="PackedScene" uid="uid://bacjqrmridknc" path="res://assets/Beachy/FenceBeachBoardWalk.glb" id="23_t7ckm"]
 [ext_resource type="PackedScene" uid="uid://bev73qms8mo6h" path="res://scenes/Appliance_system/food_crate_test.tscn" id="27_83y2r"]
+[ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="28_niv16"]
+[ext_resource type="PackedScene" uid="uid://lfcppt4wh0g4" path="res://scenes/Interaction/UpgradeHammer.tscn" id="29_83y2r"]
 [ext_resource type="Script" uid="uid://dnns4dn8p042y" path="res://scripts/Table.gd" id="31_t7ckm"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_hte61"]
@@ -496,3 +498,9 @@ transform = Transform3D(1, 0, -4.65661e-10, 0, 1, 0, 4.65661e-10, 0, 1, 11.8854,
 
 [node name="CustomerExitPoint" type="Node3D" parent="."]
 transform = Transform3D(1, 0, -4.65661e-10, 0, 1, 0, 4.65661e-10, 0, 1, 12.208, 0.728576, -3.25253)
+
+[node name="Extinguisher" parent="." instance=ExtResource("28_niv16")]
+transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999984, 1.85923, 0.497373, -0.391937)
+
+[node name="UpgradeHammer" parent="." instance=ExtResource("29_83y2r")]
+transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999984, 1.85772, 0.0163648, 0.872427)

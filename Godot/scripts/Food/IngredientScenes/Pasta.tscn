@@ -46,35 +46,36 @@ albedo_texture = ExtResource("3_yhhtx")
 albedo_color = Color(0.099986, 0.099986, 0.099986, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_208ot"]
+size = Vector3(0.73613, 0.262695, 0.428833)
 
 [node name="Pasta" type="RigidBody3D"]
 script = ExtResource("1_f4pu5")
 
 [node name="Pasta" type="MeshInstance3D" parent="."]
-transform = Transform3D(3.96489, 0, -1.15843, 0, 8.825, 0, 0.528782, 0, 8.68609, 0, 0, 0)
+transform = Transform3D(5.94734, 0, -1.73771, 0, 13.237, 0, 0.793173, 0, 13.0296, 0, 0, 0)
 mesh = SubResource("ArrayMesh_cl66e")
 skeleton = NodePath("")
 
 [node name="SpoiledPasta" type="MeshInstance3D" parent="."]
-transform = Transform3D(3.96489, 0, -1.15843, 0, 8.825, 0, 0.528782, 0, 8.68609, 0, 0, 0)
+transform = Transform3D(5.45173, 0, -1.59283, 0, 12.134, 0, 0.727076, 0, 11.9433, 0, 0, 0)
 visible = false
 mesh = SubResource("ArrayMesh_cl66e")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_hwqf0")
 
 [node name="BurntPasta" type="MeshInstance3D" parent="."]
-transform = Transform3D(3.96489, 0, -1.15843, 0, 8.825, 0, 0.528782, 0, 8.68609, 0, 0, 0)
+transform = Transform3D(5.45173, 0, -1.59283, 0, 12.134, 0, 0.727076, 0, 11.9433, 0, 0, 0)
 visible = false
 mesh = SubResource("ArrayMesh_cl66e")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_f4pu5")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.468339, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0103836, 0.0996868, 0.0269165)
 shape = SubResource("BoxShape3D_208ot")
 
 [node name="InteractableComponent" parent="." instance=ExtResource("3_hwqf0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00561047, 0.47338, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00561047, 0.0389318, 0)
 is_pickup = true
 
 [connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]

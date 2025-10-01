@@ -47,7 +47,7 @@ func _ready():
 
 ## If instance is made through .tscn, it must have a unique name
 func _check_unique_name():
-	assert(unique_name != "UNNAMED_APPLIANCE", "Appliance has not been given a unique name!")
+	#assert(unique_name != "UNNAMED_APPLIANCE", "Appliance has not been given a unique name!")
 	name = unique_name
 
 

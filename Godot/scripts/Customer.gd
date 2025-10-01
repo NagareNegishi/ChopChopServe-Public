@@ -7,6 +7,9 @@ const AGENT_STUCK_THRESHOLD: float = 0.15
 const STUCK_RECALCULATE_TIME: float = 1.0
 const POSITION_IN_FRONT_OF_TABLE: Vector3 = Vector3(0, 0.25, 0.5)
 
+var meal_name = ""
+@onready var animation_tree: AnimationTree = $AnimationTree
+@onready var state_machine = animation_tree.get("parameters/playback")
 @export var customer_state: CustomerState = CustomerState.IDLE:
 	# Runs on all clients when the state changes.
 	set(new_state):
@@ -31,6 +34,7 @@ const POSITION_IN_FRONT_OF_TABLE: Vector3 = Vector3(0, 0.25, 0.5)
 				order_gen_number += 1
 				
 @export var synced_position: Vector3
+@export var synced_velocity: Vector3
 @export var overhead_ui_order: PackedScene
 @export var overhead_ui_thinking: PackedScene
 @export var order_gen_number = randi()
@@ -41,7 +45,7 @@ const MAXIMUM_SEATING_TIME: float = 250
 
 var _table_target: Node3D = null
 var _queue_target: Node3D = null
-var _seated = false
+@export var _seated = false
 var _queued = false
 var _food_court_id
 var _restaurant_number: int
@@ -49,7 +53,7 @@ var order: Array
 @export var _time_till_leaving: float = MAXIMUM_SEATING_TIME
 var _time_till_order: float = MAXIMUM_ORDER_THINK_TIME
 var _stuck_timer: float = 0.0
-
+@export var is_tweening_to_seat = false
 var _id
 var overhead_ui_order_instance: UIOrder
 var overhead_ui_thinking_instance: UIThinking
@@ -84,6 +88,12 @@ func _ready():
 
 ## Syncing position of customer and overhead ui positions 
 func _process(_delta):
+	if is_instance_valid(animation_tree):
+		animation_tree.set("parameters/conditions/is_moving", synced_velocity.length() > 0.1)
+		animation_tree.set("parameters/conditions/not_moving", synced_velocity.length() < 0.1 && _seated == null)
+		animation_tree.set("parameters/conditions/is_sitting", _seated)
+		animation_tree.set("parameters/conditions/is_tweening_to_seat", is_tweening_to_seat)
+		animation_tree.set("parameters/conditions/state", customer_state) 
 	if not is_multiplayer_authority():
 		position = synced_position
 		
@@ -114,13 +124,13 @@ func position_ui(ui: Control):
 func _physics_process(delta: float):
 	
 	if is_multiplayer_authority():
+		synced_velocity = velocity
 		_npc_behavior(delta)
 		if _is_pathfinding and _nav_agent:
 			velocity = _nav_agent.get_velocity()
 			move_and_slide()
 			_rotate_npc(delta)
 		synced_position = position
-			
 ## Customers will either:
 ## - search or move to targets (queue spot or table)
 ## - shift their position in queue
@@ -136,47 +146,47 @@ func _npc_behavior(delta: float):
 		
 	# Customers who have been seated shall wait till they have to leave
 	if _seated:
-		customer_state = CustomerState.THINKING
-		_time_till_order = max(0, _time_till_order - delta)
-		if !_time_till_order:
+		# Check the current state and act accordingly
+		if customer_state == CustomerState.IDLE:
+			# If the customer just sat down, start the thinking process.
+			# This transition will only happen once.
+			customer_state = CustomerState.THINKING
+		
+		elif customer_state == CustomerState.THINKING:
+			# Only run the thinking timer if in this state
+			_time_till_order = max(0, _time_till_order - delta)
+			if !_time_till_order:
+				# Timer is up, transition to ordering.
+				# This transition will only happen once.
+				customer_state = CustomerState.ORDERING
+		
+		elif customer_state == CustomerState.ORDERING:
+			
+			# Only run the leaving timer if in this state
 			_time_till_leaving = max(0, _time_till_leaving - delta)
-			customer_state = CustomerState.ORDERING
 			if !_time_till_leaving:
-				_game_server.call_service(_table_target.id(), 
-											"set_occupied", 
-											[false])
+				# Timer is up, customer leaves.
+				_game_server.call_service(_table_target.id(), "set_occupied", [false])
 				
-				var exit_point = await _game_server.call_service(_food_court_id, 
-											"get_exit_point", 
-											[])
+				var exit_point = await _game_server.call_service(_food_court_id, "get_exit_point", [])
 				_current_target = exit_point	
 				_table_target = null	
 				_pathfind_to_target()	
-				return
+				return # Important to return here
 				
-			var plate_served = await _game_server.call_service(_table_target.id(), 
-											"get_plate", 
-											[])
+			var plate_served = await _game_server.call_service(_table_target.id(), "get_plate", [])
 			if plate_served:
 				var food = plate_served.get_children().back()
-				
-				if ("name_of_meal" in food
-					and food.name_of_meal == order[0].name_of_meal):
-					
+				print(food)
+				if (food is MenuItem and food.get_meal_name() == order[0].get_meal_name()):
 					_table_target.rpc("remove_plate")
 					_time_till_leaving = 2
-					
-	
 	# Customers who reach the front of the queue should begin looking for tables
-	if _queued && _queue_target:
-		if await _game_server.call_service(_food_court_id, 
-											"is_queue_front", 
-											[_queue_target.id()]):
+	if _queued and _queue_target:
+		if await _game_server.call_service(_food_court_id, "is_queue_front", [_queue_target.id()]):
 			check_tables()
-	var exit = _game_server.call_service(_food_court_id, 
-											"get_exit_point", 
-											[])
-	if exit and _current_target == exit and !_is_pathfinding: 
+	var exit = _game_server.call_service(_food_court_id, "get_exit_point", [])
+	if exit and _current_target == exit and !_is_pathfinding:
 		rpc("despawn")
 	
 ## Attempt to accquire unoccupied table to navigate towards
@@ -247,7 +257,7 @@ func _update_pathfinding(delta: float) -> void:
 		|| _distance_to_target <= PATHFINDING_DISTANCE_THRESHOLD):
 		
 		if _table_target:
-			
+			is_tweening_to_seat = true
 			var target_position = _nav_agent.target_position + POSITION_IN_FRONT_OF_TABLE
 			
 			var look_at_point = _table_target.global_position
@@ -263,7 +273,7 @@ func _update_pathfinding(delta: float) -> void:
 			
 			tween.parallel().tween_property(self, "global_position", target_position, 0.5)
 			tween.parallel().tween_property(self, "rotation:y", target_rotation_y, 0.5)
-			
+			tween.finished.connect(func(): is_tweening_to_seat = false)
 		_seated = _table_target	
 		_queued = _queue_target
 		_is_pathfinding = false

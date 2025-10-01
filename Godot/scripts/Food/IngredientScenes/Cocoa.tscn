@@ -38,19 +38,21 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_h3vw4")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_tkic3"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_n6biq"]
+radius = 0.253471
+height = 1.10299
 
 [node name="Cocoa" type="RigidBody3D"]
 script = ExtResource("1_n6biq")
 
 [node name="Cocoa" type="MeshInstance3D" parent="."]
-transform = Transform3D(-3.25841e-08, 0, 0.17, 0, 0.238, 0, -0.2, 0, -2.76965e-08, 0, 0, 0)
+transform = Transform3D(0.35, 0, 0, 0, 0.417, 0, 0, 0, 0.298, 0, 0, 0)
 mesh = SubResource("ArrayMesh_bt316")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.34113, 0)
-shape = SubResource("BoxShape3D_tkic3")
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.244441, 0)
+shape = SubResource("CapsuleShape3D_n6biq")
 
 [node name="InteractableComponent" parent="." instance=ExtResource("3_5c7ov")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.00561047, 0.348424, 0)

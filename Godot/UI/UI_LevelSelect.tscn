@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://gu4ahqngwqip"]
+
+[ext_resource type="Script" uid="uid://fnswgtw77xf3" path="res://UI/ui_level_select.gd" id="1_f8e7t"]
+[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/DefaultTheme.tres" id="1_hvwph"]
+
+[node name="UiLevelSelect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_f8e7t")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = 48.0
+offset_right = 20.0
+offset_bottom = 88.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -63.5
+offset_top = -72.0
+offset_right = 63.5
+offset_bottom = -42.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_hvwph")
+theme_override_font_sizes/font_size = 200
+text = "Test Test"

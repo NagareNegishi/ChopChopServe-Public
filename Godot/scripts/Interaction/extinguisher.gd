@@ -5,8 +5,8 @@ class_name Extinguisher extends AbstractThrowable
 func _ready() -> void:
 	$ExtinguishRange.enabled = false
 	$ExtinguishRange/GPUParticles3D.emitting = false
-	if !multiplayer.is_server():
-		set_physics_process(false)
+	#if !multiplayer.is_server():
+		#set_physics_process(false)
 
 
 
@@ -28,6 +28,7 @@ func _can_extingush() -> bool:
 ## Will extingush the fire from appliance the line trace is hitting if valid
 ## @return void
 func _extingush() -> void:
+	
 	var appliance : Appliance = $ExtinguishRange.get_collider()
 	
 	if (!"inflammable_component" in appliance): return
@@ -44,16 +45,6 @@ func _extingush() -> void:
 ## @param is_action if the player is using the action input
 ## @return void
 func _on_interactable_component_action_use(is_action: bool) -> void:
-	$ExtinguishRange.enabled = true if is_action else false
+
 	$ExtinguishRange/GPUParticles3D.emitting = is_action
-
-
-@rpc("authority", "call_local")
-func server_action(is_action : bool):
-	rpc("_client_action", is_action)
-	
-
-@rpc("any_peer", "call_local")
-func _client_action(is_action : bool):
 	$ExtinguishRange.enabled = true if is_action else false
-	$ExtinguishRange/GPUParticles3D.emitting = is_action

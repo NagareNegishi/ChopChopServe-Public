@@ -48,13 +48,13 @@ func get_order():
 
 
 func get_simple_order(starter_index: int):
-	order.clear() # Make sure there is nothing in the list already as precaution
+	var new_order = []
 	check_food_avalibility(s, MI.starters)
 	# Put the order together
 	
 	if !s.is_empty():
-		order.append(food_generator(s, starter_index))
-	return order
+		new_order.append(food_generator(s, starter_index))
+	return new_order
 
 # Gets a random menuItem from a passed list
 # @param food_type is an array list of available food items of a certain type

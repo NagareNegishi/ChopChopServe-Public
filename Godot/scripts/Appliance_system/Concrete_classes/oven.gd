@@ -6,7 +6,7 @@ var inflammable_component: Inflammable
 ## Setup the model instance
 func _init():
 	super._init()
-	model_scene = preload("res://assets/models/furniture/Oven.glb")
+	model_scene = preload("res://assets/newmodels/furniture/Oven.glb")
 
 
 ## Setup the oven properties

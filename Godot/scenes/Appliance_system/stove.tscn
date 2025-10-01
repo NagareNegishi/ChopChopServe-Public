@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bqpdxpf2l7uw1"]
+[gd_scene load_steps=9 format=3 uid="uid://bqpdxpf2l7uw1"]
 
 [ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="1_sxtcq"]
 [ext_resource type="Script" uid="uid://crigvh2th3lu8" path="res://scripts/Appliance_system/Concrete_classes/stove.gd" id="2_5acl0"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b2baw0vfm8358" path="res://assets/textures/misc/LoadingBarOutside.png" id="4_4ermo"]
 [ext_resource type="Texture2D" uid="uid://ts7ljaleqkhg" path="res://assets/textures/misc/LoadingBarInside.png" id="5_a72co"]
 [ext_resource type="Script" uid="uid://ue6iw3lh8jpn" path="res://UI/ApplianceProgressBar.gd" id="6_n644u"]
+[ext_resource type="PackedScene" uid="uid://pl57ikpi4csf" path="res://UI/UI_ProgressCook.tscn" id="7_a72co"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_gp80u"]
 viewport_path = NodePath("SubViewport")
@@ -25,10 +26,11 @@ model_scene = null
 
 [node name="SubViewport" type="SubViewport" parent="." index="4"]
 transparent_bg = true
-size = Vector2i(122, 13)
+size = Vector2i(137, 33)
 render_target_update_mode = 4
 
 [node name="TextureProgressBar2" type="TextureProgressBar" parent="SubViewport" index="0"]
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -50,8 +52,12 @@ tint_over = Color(0, 0, 0, 1)
 tint_progress = Color(0.167779, 0.668736, 0.111628, 1)
 script = ExtResource("6_n644u")
 
+[node name="UiProgressCook" parent="SubViewport" index="1" instance=ExtResource("7_a72co")]
+
 [node name="Sprite3D" type="Sprite3D" parent="." index="5"]
-transform = Transform3D(-0.999966, 0, -0.00827288, -0.00639621, 0.634218, 0.773128, 0.00524681, 0.773154, -0.634196, 0, 1.44519, 0.392126)
+transform = Transform3D(-0.999966, 0, -0.00827288, -0.00639621, 0.634218, 0.773128, 0.00524681, 0.773154, -0.634196, -0.00206184, 0.187983, -0.0141381)
+billboard = 1
+no_depth_test = true
 texture = SubResource("ViewportTexture_gp80u")
 
 [connection signal="add_appliance" from="." to="SubViewport/TextureProgressBar2" method="_on_add_appliance"]

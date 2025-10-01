@@ -14,9 +14,11 @@ enum Scene {
 	SETTINGS,
 	LOBBY_TEST,
 	TEST,
-	JOHNO_TEST,
 	JESS_TEST,
-	EMMA_TEST
+	EMMA_TEST,
+	BeachLighting2,
+	CityLayout2,
+	SwampLighting
 }
 
 const SCENE_PATHS = {
@@ -26,9 +28,11 @@ const SCENE_PATHS = {
 	Scene.SETTINGS: "", # Will be added later
 	Scene.LOBBY_TEST: "res://scenes/Network_Layer/lobby_network.tscn",
 	Scene.TEST: "res://scenes/Appliance_system/Appliance_test.tscn",
-	Scene.JOHNO_TEST: "res://JohnoTestLevel3.tscn",
 	Scene.JESS_TEST: "res://JessTestScene6.tscn",
-	Scene.EMMA_TEST: "res://scripts/Food/testingSceneEmma2.tscn"
+	Scene.EMMA_TEST: "res://scripts/Food/testingSceneEmma2.tscn",
+	Scene.BeachLighting2: "res://LevelDesign/BeachLighting2.tscn",
+	Scene.CityLayout2: "res://LevelDesign/CityLayout2.tscn",
+	Scene.SwampLighting: "res://LevelDesign/SwampLighting.tscn"
 }
 
 var current_scene: Scene = Scene.MAIN_MENU

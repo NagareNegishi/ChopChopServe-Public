@@ -17,10 +17,10 @@ func _init():
 	}
 	
 	is_available = true
-
+	name_of_meal = "taco_beef"
+	ui_texture = load("res://assets/textures/recipes/BeefTaco.png")
+	
 func _ready():
 	cooked_mesh_good = $TacoBeef
 	cooked_mesh_bad = $BadQualityBeefTaco
 	cooked_mesh_burnt = $BurntBeefTaco
-	name_of_meal = "taco_beef"
-	ui_texture = load("res://assets/textures/recipes/BeefTaco.png")

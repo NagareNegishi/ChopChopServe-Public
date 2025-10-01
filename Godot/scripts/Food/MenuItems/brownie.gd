@@ -17,10 +17,9 @@ func _init():
 		"Milk": ["RAW", "MIXED","BAKED"]
 	}
 	is_available = true
-
+	name_of_meal = "brownie"
+	ui_texture = load("res://assets/textures/recipes/Brownie.png")
 func _ready():
 	cooked_mesh_good = $Brownie
 	cooked_mesh_bad = $BadQualityBrownie
 	cooked_mesh_burnt = $BurntBrownie
-	name_of_meal = "brownie"
-	ui_texture = load("res://assets/textures/recipes/Brownie.png")

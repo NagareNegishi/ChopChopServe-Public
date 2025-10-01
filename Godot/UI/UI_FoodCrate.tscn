@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=3 uid="uid://c8b2kiudgb4nt"]
+
+[ext_resource type="Texture2D" uid="uid://3mip3g8soevs" path="res://assets/textures/ingredients/Tomato.png" id="1_ghp81"]
+[ext_resource type="Script" uid="uid://chpitiwgbv61q" path="res://UI/ui_food_crate.gd" id="1_lfkre"]
+
+[node name="UiFoodCrate" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.2, 0.2)
+script = ExtResource("1_lfkre")
+
+[node name="Next" type="TextureRect" parent="."]
+modulate = Color(0.185981, 0.185981, 0.185981, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 61.0
+offset_top = -21.0
+offset_right = 160.0
+offset_bottom = 78.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_ghp81")
+expand_mode = 2
+
+[node name="Main" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -101.0
+offset_top = -101.0
+offset_right = 101.0
+offset_bottom = 101.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_ghp81")
+expand_mode = 2

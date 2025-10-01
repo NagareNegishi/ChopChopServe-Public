@@ -8,7 +8,7 @@ var bubble_particles: ParticleController
 ## Setup the model instance
 func _init():
 	super._init()
-	model_scene = preload("res://assets/models/furniture/BenchSink.glb")
+	model_scene = preload("res://assets/newmodels/furniture/Sink.glb")
 
 
 ## Setup the sink properties

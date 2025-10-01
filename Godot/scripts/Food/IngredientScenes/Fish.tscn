@@ -296,29 +296,30 @@ albedo_color = Color(0.117647, 0.117647, 0.117647, 1)
 albedo_color = Color(0.117647, 0.117647, 0.117647, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ba7qa"]
+size = Vector3(0.384766, 0.145752, 0.651367)
 
 [node name="Fish" type="RigidBody3D"]
 script = ExtResource("1_u43tf")
 
 [node name="Fish" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.00266667, -0.0298812, 0, 0.0298812, 0.00266667, 0, 0, 0, 0.03, 0, 0, 0)
+transform = Transform3D(5.73206e-17, 1.31134e-09, 0.02, 0.03, -1.31134e-09, 0, 1.31134e-09, 0.03, -8.74228e-10, 0, 0, 0)
 mesh = SubResource("ArrayMesh_v4w4m")
 skeleton = NodePath("")
 
 [node name="CookedFish" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.00204445, -0.0288852, 0, 0.022909, 0.00257779, 0, 0, 0, 0.029, 0, 0, 0)
+transform = Transform3D(5.73206e-17, 1.31134e-09, 0.02, 0.03, -1.31134e-09, 0, 1.31134e-09, 0.03, -8.74228e-10, 0, 0, 0)
 visible = false
 mesh = SubResource("ArrayMesh_ba7qa")
 skeleton = NodePath("")
 
 [node name="SpoiledFish" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.00314273, -0.0160782, -0.00131073, 0.0126245, 0.00402758, 1.21823e-10, 0.000248817, -0.00127294, 0.0165555, 0, 0, 0)
+transform = Transform3D(5.73206e-17, 1.31134e-09, 0.02, 0.03, -1.31134e-09, 0, 1.31134e-09, 0.03, -8.74228e-10, 0, 0, 0)
 visible = false
 mesh = SubResource("ArrayMesh_xw3un")
 skeleton = NodePath("")
 
 [node name="BurntFish" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.00204445, -0.0288852, 0, 0.022909, 0.00257779, 0, 0, 0, 0.029, 0, 0, 0)
+transform = Transform3D(5.73206e-17, 1.26763e-09, 0.02, 0.03, -1.26763e-09, 0, 1.31134e-09, 0.029, -8.74228e-10, 0, 0, 0)
 visible = false
 mesh = SubResource("ArrayMesh_ba7qa")
 skeleton = NodePath("")
@@ -327,14 +328,19 @@ surface_material_override/1 = SubResource("StandardMaterial3D_l1yhi")
 surface_material_override/2 = SubResource("StandardMaterial3D_s1yfw")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.476061, 0)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.00244144, 0.101183, 1.55807e-09)
 shape = SubResource("BoxShape3D_ba7qa")
 
 [node name="InteractableComponent" parent="." instance=ExtResource("4_v4w4m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.473122, 0)
 is_pickup = true
 
+[node name="CollisionShape3D" parent="InteractableComponent" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0076447, -0.382164, 0.000427224)
+
 [connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]
 [connection signal="hovered" from="InteractableComponent" to="." method="_on_interactable_component_hovered"]
 [connection signal="interacted" from="InteractableComponent" to="." method="_on_interactable_component_interacted"]
 [connection signal="toggle_collision" from="InteractableComponent" to="." method="_on_interactable_component_toggle_collision"]
+
+[editable path="InteractableComponent"]

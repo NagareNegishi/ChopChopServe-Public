@@ -92,6 +92,7 @@ func get_2D_texture(item_name: String) -> Texture2D:
 	return load("res://assets/textures/ingredients/"+ item_name +".png")
 
 
+
 # Function to visibly show the player what they are on 
 func update_slot_selected(show: bool):
 	var slot = get_current_slot()

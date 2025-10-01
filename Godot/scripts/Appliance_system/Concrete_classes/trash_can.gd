@@ -11,7 +11,7 @@ extends UnPoweredAppliance
 ## Setup the model instance
 func _init():
 	super._init()
-	model_scene = preload("res://assets/models/furniture/trashcan.glb")
+	#model_scene = preload("res://assets/newmodels/furniture/trashcan.glb")
 
 
 ## Setup the trash can properties

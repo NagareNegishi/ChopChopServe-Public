@@ -1,11 +1,28 @@
 extends Node3D
 class_name FireStart
 
+################################################################################
+# TODO:
+	# - Check if I need to do anything with food in the appliances
+	# - Do something if there isn't any appliances for some reason
+	# - Double check spread time
+	# - Fix networking stuff (more for the sabotageSystem tho)
+################################################################################
+
+var path
+var teamID
+var secs = 10.0 # Change this if we need to
+
+# Signal to say the fire can spread
+signal fire_spread( teamID: int, appliance_path: NodePath)
+
 # Function to start the fire
-func start_fire(teamID: int, chosen_path: NodePath) -> void:
-	print("Starting fire for team %s on %s" % [teamID, chosen_path])
+func start_fire(team_ID: int, chosen_path: NodePath) -> void:
 	# Get the appliance
 	var appliance = get_node_or_null(chosen_path)
+	teamID = team_ID
+	path = chosen_path
+	start_timer()
 	# Otherwise, just return
 	if not appliance:
 		push_warning("Chosen appliance path is invalid: %s" % chosen_path)
@@ -17,23 +34,30 @@ func start_fire(teamID: int, chosen_path: NodePath) -> void:
 	else:
 		push_warning("Chosen appliance has no inflammable component")
 		return
-		
-	# Maybe change this to erase the stuff instead
-	# But also it ignite class might already do something to the food ?!
-	# Burn any food in the appliance
-	# Updated the code 19.09.25 to erase the food rather than burn it
-	for item in appliance.contents:
+	
+### --------- Think Inflammable has this code in it already --------- ###
+	# Burn the food inside the appliances
+	##for item in appliance.contents:
 		# Get the cookware of appliance
-		if item is Cookware:
+		##if item is Cookware:
 			# Get its items
-			for food in item.contents:
-				item.contents.erase(food)
-				remove_child(food)
-				food.queue_free()
+			##for food in item.contents:
+				##item.contents.erase(food)
+				##remove_child(food)
+				##food.queue_free()
 
-				# ----- OG code ----- #
-				# If it is food, burn it
-				##food.state = Food.foodState.BURNT
-				# update its state
-				##if food.has_method("on_state_change"):
-					##food.on_state_change()
+# Timer for the fire spreading
+func start_timer() -> void:
+	var timer = Timer.new()
+	timer.wait_time = secs
+	timer.one_shot = true
+	add_child(timer)
+	timer.timeout.connect(_on_timer_timeout)
+	timer.start()
+
+# When the timer ends, spread the fire
+func _on_timer_timeout() -> void:
+	fire_spread.emit(teamID, path)
+	
+
+	

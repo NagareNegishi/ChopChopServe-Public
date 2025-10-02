@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=4 uid="uid://buwb1io8j33ph"]
+[gd_scene load_steps=7 format=4 uid="uid://ilw161oxn1ar"]
 
 [ext_resource type="Script" uid="uid://cp0hc6tgnaw7f" path="res://scripts/Food/Ingredients/milk.gd" id="1_il8k8"]
 [ext_resource type="Material" uid="uid://d1mru8ywyt58h" path="res://assets/newmodels/texturemap.tres" id="2_il8k8"]

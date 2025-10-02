@@ -43,7 +43,7 @@ func find_next_free_cell() -> Vector2i:
 # Adds items to the plate and scales them so that they appear on the plate
 func add_list_items(food_array: Array):
 	for food in food_array:
-		print("Adding ", food, " to the plate")
+		#print("Adding ", food, " to the plate")
 		add_item(food)
 
 func add_item(food_node) -> void:
@@ -54,7 +54,7 @@ func add_item(food_node) -> void:
 	
 	var cell = find_next_free_cell()
 	if cell.x == -1:
-		print("plate full")
+		#print("plate full")
 		return
 	
 	grid[cell.x][cell.y] = food_node
@@ -106,19 +106,20 @@ func give_all()->Array:
 # replaces the list of ingredients with only the found meal
 @rpc("any_peer","call_local","reliable")
 func check_plate():
-	print(grid)
-	for item in food_items:
-		print("this food items ", item, " previoous states ", item.previous_states)
+	#print(grid)
+	#for item in food_items:
+		#print("this food items ", item, " previoous states ", item.previous_states)
 	if food_items.is_empty():
-		print("food items is emptyw")
+		#print("food items is emptyw")
 		return 0
 	var menuitem = menu_instance.match_menu_items(food_items)
 	
 	if menuitem != null:
 		has_menu_item = true
 		_set_quality(quality_on_plate)
-		print("\n\n This is the quality of the menu item : ", quality,"\n\n")
+		#print("\n\n This is the quality of the menu item : ", quality,"\n\n")
 		display_menu_item(menuitem)
+		menuitem.set_quality(quality)
 		is_full = true
 		remove_all()
 		grid[1][1] = menuitem # Makes the meal we created the only thing on the plate
@@ -130,8 +131,8 @@ func _set_quality(list: Array):
 	
 	var total_quality = 0
 	for elem in list:
-		print("NUMBER: ",number)
-		print("ELEM: ", elem)
+		#print("NUMBER: ",number)
+		#print("ELEM: ", elem)
 		number = number + elem
 	
 	var average_quality = number / list.size()
@@ -141,7 +142,7 @@ func _set_quality(list: Array):
 	if quality < 0:
 		quality = 0
 	
-	print("QUALITY: ", quality, "TIMES FLOOR TOUCHED: ", floor_time_count)
+	#print("QUALITY: ", quality, "TIMES FLOOR TOUCHED: ", floor_time_count)
 
 func get_quality():
 	return quality
@@ -149,7 +150,7 @@ func get_quality():
 func display_menu_item(menuitem: MenuItem):
 	# Load the actual scene file
 	var scene_path = "res://scripts/Food/MenuItemScenes/" + menuitem.get_script().get_global_name() + ".tscn"
-	print("Scene path:        ", scene_path)
+	#print("Scene path:        ", scene_path)
 	var menu_scene = load(scene_path)
 	if menu_scene:
 		var menu_node = menu_scene.instantiate()
@@ -158,7 +159,7 @@ func display_menu_item(menuitem: MenuItem):
 		menu_node.transform.origin = Vector3(0, 0.05, 0)
 		menu_node.scale = Vector3(0.7, 0.7, 0.7)
 	else:
-		print("Could not load scene for: ", menuitem.get_script().get_global_name())
+		push_error("Could not load scene for: ", menuitem.get_script().get_global_name())
 
 
 # Makes it so when the player picks up the ingredient its collisions

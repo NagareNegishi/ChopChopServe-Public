@@ -210,6 +210,7 @@ func _serve_as_host(player_id: int) -> void:
 		return
 	plate.add_list_items(take_all()) # Method in Plate, takes Array of Food
 	_client_serve.rpc(player_id)
+	emit_signal("food_taken")
 
 
 ## Client-side method to serve food to plate, called by host

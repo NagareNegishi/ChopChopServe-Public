@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://b23ol8n0xx3la"]
+[gd_scene load_steps=10 format=4 uid="uid://kskd5fq7f8sy"]
 
 [ext_resource type="Script" uid="uid://cbg1hs2ywk27t" path="res://scripts/Food/Ingredients/pasta.gd" id="1_f4pu5"]
 [ext_resource type="Material" uid="uid://d1mru8ywyt58h" path="res://assets/newmodels/texturemap.tres" id="2_yhhtx"]

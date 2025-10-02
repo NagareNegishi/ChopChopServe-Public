@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://ch11vf2viq36q"]
+[gd_scene load_steps=8 format=4 uid="uid://caiboywrs1rda"]
 
 [ext_resource type="Script" uid="uid://gxt4a0tccd7p" path="res://scripts/Food/MenuItems/pancakes.gd" id="1_w28hb"]
 [ext_resource type="Material" uid="uid://d1mru8ywyt58h" path="res://assets/newmodels/texturemap.tres" id="2_gl2wp"]

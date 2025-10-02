@@ -107,3 +107,7 @@ func _on_upgrade_requested(player_id: int, cost: int, upgradable: Upgradable):
 		print("Upgraded: ", upgradable.upgrade())
 	else:
 		print("Not enough money!")
+
+
+#TODO: make request_upgrade host only and upgrade() to rpc
+# I can make something like get_info, returning dictionary with "property" and "level"??

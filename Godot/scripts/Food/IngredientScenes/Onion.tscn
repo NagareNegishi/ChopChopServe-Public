@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://g70mrwycep6w"]
+[gd_scene load_steps=12 format=4 uid="uid://2xs4q5teg4l8"]
 
 [ext_resource type="Script" uid="uid://b1yb1txtjo20t" path="res://scripts/Food/Ingredients/onion.gd" id="1_13wtr"]
 [ext_resource type="Material" uid="uid://d1mru8ywyt58h" path="res://assets/newmodels/texturemap.tres" id="2_13wtr"]

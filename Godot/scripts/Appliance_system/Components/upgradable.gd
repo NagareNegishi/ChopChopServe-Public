@@ -48,7 +48,7 @@ func _ready():
 ## @return: Maximum level based on upgrade_costs and upgrade_values sizes
 func get_max_level() -> int:
 	if upgrade_costs.size() != upgrade_values.size():
-		push_warning("upgrade_costs and upgrade_values have different sizes! Using minimum.")
+		Debug.warning("upgrade_costs and upgrade_values have different sizes! Using minimum.")
 		return min(upgrade_costs.size(), upgrade_values.size())
 	return upgrade_costs.size()
 
@@ -74,9 +74,7 @@ func request_upgrade(player_id: int) -> void:
 		assert(false, "Upgrade not enabled for: " + target.get_script().get_global_name())
 		return
 	if not can_upgrade():
-		#-----------------------------------------------------------------
-		push_warning("Player ", str(player_id), " tried to upgrade ", target.get_script().get_global_name(), " at max level")
-		#-----------------------------------------------------------------
+		Debug.warning(upgradable_property + " already at Max level: " + target.get_script().get_global_name())
 		return
 	var cost = get_upgrade_cost()
 	upgrade_requested.emit(player_id, cost, self)
@@ -88,6 +86,8 @@ func upgrade() -> bool:
 	if not can_upgrade():
 		return false
 	var new_value = upgrade_values[current_level]
+	if _handle_special_upgrade(new_value):
+		return true
 	match upgrade_mode:
 		UpgradeMode.ADD:
 			target.set(upgradable_property, target.get(upgradable_property) + new_value)
@@ -98,6 +98,22 @@ func upgrade() -> bool:
 	upgrade_completed.emit(upgradable_property)
 	current_level += 1
 	return true
+
+
+## Handle special cases like component properties
+## @return: True if handled, false to continue with normal upgrade
+func _handle_special_upgrade(new_value) -> bool:
+	# Handle inflammable component immunity
+	if upgradable_property == "immune_to_fire":
+		var inflammable = target.get_node_or_null("Inflammable")
+		if inflammable:
+			inflammable.immune_to_fire = new_value
+			upgrade_completed.emit(upgradable_property)
+			current_level += 1
+			return true
+		Debug.error("Tried to upgrade fire immunity but no Inflammable component found")
+		return false
+	return false
 
 # Something like this should happen with currency manager-----------------------
 

@@ -7,6 +7,8 @@ extends Placeable
 signal food_placed(contents)
 signal food_taken
 signal add_appliance(cookware)
+
+
 enum Owner {
 	NONE,
 	TEAM1,
@@ -27,7 +29,7 @@ var interactable_component: InteractableComponent
 var highlight_component: ApplianceHighlight
 var power_upgradable: Upgradable
 var capacity_upgradable: Upgradable
-# var coefficient_upgradable: Upgradable
+var upgradables: Array[Upgradable] = []
 
 var contents: Array[Node] = []
 var contents_names: Array[String] = []: set = _set_contents_names
@@ -76,23 +78,25 @@ func _setup_highlight():
 	add_child(highlight_component)
 
 
+## Register an upgradable component to this appliance
+## @param upgradable: The Upgradable component to register
+func register_upgradable(upgradable: Upgradable):
+	upgradables.append(upgradable)
+	add_child(upgradable)
+
+
 ## Setup the upgradable components
 func _setup_upgradable():
 	# Create power upgradable
 	power_upgradable = Upgradable.new()
 	power_upgradable.upgradable_property = "power"
 	power_upgradable.upgrade_mode = Upgradable.UpgradeMode.ADD
-	add_child(power_upgradable)
+	register_upgradable(power_upgradable)
 	# Create capacity upgradable
 	capacity_upgradable = Upgradable.new()
 	capacity_upgradable.upgradable_property = "capacity"
 	capacity_upgradable.upgrade_mode = Upgradable.UpgradeMode.ADD
-	add_child(capacity_upgradable)
-	# # Create coefficient upgradable
-	# coefficient_upgradable = Upgradable.new()
-	# coefficient_upgradable.upgradable_property = "coefficient"
-	# coefficient_upgradable.upgrade_mode = Upgradable.UpgradeMode.ADD
-	# add_child(coefficient_upgradable)
+	register_upgradable(capacity_upgradable)
 
 
 ## Enable specific upgrade type
@@ -109,26 +113,14 @@ func enable_upgrade(type: String, values: Array, costs: Array[int]) -> bool:
 			power_upgradable.upgrade_values = values
 			power_upgradable.upgrade_costs = costs
 			power_upgradable.enabled = true
-			#-------------------------------------------------------------------
-			#print("Power upgrade enabled for: ", get_script().get_global_name())
-			#-------------------------------------------------------------------
+			Debug.upgrade_log("Power upgrade enabled for: " + get_script().get_global_name())
 			return true
 		"capacity":
 			capacity_upgradable.upgrade_values = values
 			capacity_upgradable.upgrade_costs = costs
 			capacity_upgradable.enabled = true
-			#-------------------------------------------------------------------
-			#print("Capacity upgrade enabled for: ", get_script().get_global_name())
-			#-------------------------------------------------------------------
+			Debug.upgrade_log("Capacity upgrade enabled for: " + get_script().get_global_name())
 			return true
-		# "coefficient":
-		# 	coefficient_upgradable.upgrade_values = values
-		# 	coefficient_upgradable.upgrade_costs = costs
-		# 	coefficient_upgradable.enabled = true
-		# 	#-------------------------------------------------------------------
-		# 	#print("Coefficient upgrade enabled for: ", get_script().get_global_name())
-		# 	#-------------------------------------------------------------------
-		# 	return true
 		_:
 			assert(false, "Unknown upgrade type: " + type)
 			return false
@@ -181,29 +173,24 @@ func set_appliance_owner(team_number: int) -> void:
 			current_owner = Owner.NONE
 
 
-
 ## Update contents names and refresh contents array
 ## @param new_names: The new array of contents names
 func _set_contents_names(new_names: Array[String]):
-	print("I am : ", get_script().get_global_name(), ", Setting contents names is triggered with: ", new_names, "------ My ID is: ", ENetManager.get_my_id())
+	Debug.all("Setting contents names for appliance: " + get_script().get_global_name()
+		+ " to: " + str(new_names) + " (My ID: " + str(ENetManager.get_my_id()) + ")")
 	contents_names = new_names
 	_update_contents()
 
 
 ## Update contents array based on contents names
 func _update_contents():
-	print("=================================================================")
-	print("before update, contents is: ", contents)
 	contents.clear()
 	for item_name in contents_names:
 		var item = get_node_or_null(NodePath(item_name))
-		print("NodePath: ", NodePath(item_name))
 		if item:
-			print("Found item: ", item.get_script().get_global_name())
 			contents.append(item)
 		else:
-			print("Item '", item_name, "' not found as child of ", name)
-
+			Debug.warning("Item '" + item_name + "' not found as child of " + name)
 
 
 ## InteractableComponent Signal Handlers -----------------------------------------------------------
@@ -212,7 +199,6 @@ func _update_contents():
 ## @param _item: The Node Player is holding
 func player_has(_item: Node) -> void:
 	assert(false, "player_has() must be implemented in " + get_class())
-
 
 
 ## Called when interacted with and will make the player pick this item up
@@ -226,14 +212,6 @@ func _on_interactable_component_interacted() -> void:
 func _on_interactable_component_toggle_collision(turn_on: bool) -> void:
 	collision_shape.disabled = not turn_on
 	$InteractableComponent/CollisionShape3D.disabled = not turn_on
-	# TODO: When team starts using collision layers properly:
-	#
-	# if turn_on:
-	# 	collision_layer = APPLIANCES
-	# 	collision_mask = collide_with
-	# else:
-	# 	collision_layer = 0
-	# 	collision_mask = 0
 
 
 ## Give visual feedback when hovered
@@ -243,10 +221,9 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 		highlight_component.hide_feedback()
 		return
 	var item = GlobalScript.get_local_player().item_in_hand
-	#---------------------------------------------------------------------------
 	if item:
-		print("Player with ID: ", ENetManager.get_my_id(), " has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())
-	#---------------------------------------------------------------------------
+		Debug.info("Player ID: " + str(ENetManager.get_my_id())
+			+ " has : " + item.get_script().get_global_name() + ", hovered: " + get_script().get_global_name())
 	if not item:
 		highlight_component.set_state(ApplianceHighlight.HighlightState.HOVER)
 		return
@@ -257,10 +234,9 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 ## Trigger action, if subclass has action
 func _on_interactable_component_action_use(_is_action: bool) -> void:
 	if _is_action:
-		print("Player used action on: ", get_script().get_global_name(), ", but, it does not have action.")
+		Debug.info(get_script().get_global_name() + " does not have action")
 
 
-## TODO: Probably implement this in InteractableComponent not here
 ## Toggle interaction
 func _toggle_interaction(can_interact: bool) -> void:
 	interactable_component.can_be_interacted = can_interact

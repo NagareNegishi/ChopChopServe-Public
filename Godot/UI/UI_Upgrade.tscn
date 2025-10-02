@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://kx2ls46d27yc"]
+[gd_scene load_steps=6 format=3 uid="uid://kx2ls46d27yc"]
 
 [ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/DefaultTheme.tres" id="1_v3djh"]
 [ext_resource type="Script" uid="uid://b1fcailv3s73c" path="res://UI/ui_upgrade.gd" id="1_yttyd"]
@@ -14,6 +14,14 @@ corner_radius_bottom_left = 9
 bg_color = Color(0.956538, 0, 0.182409, 1)
 corner_radius_bottom_right = 9
 corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_28o3u"]
+bg_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
+border_blend = true
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
 
 [node name="UiUpgrade" type="Control"]
 z_index = 2
@@ -35,7 +43,7 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -75.0
-offset_top = -64.0
+offset_top = -36.0
 offset_right = 73.0
 offset_bottom = 49.0
 grow_horizontal = 2
@@ -44,12 +52,15 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_v3djh")
 
 [node name="Appliance" type="Label" parent="."]
 layout_mode = 0
-offset_left = -41.0
-offset_top = -57.0
-offset_right = 35.0
-offset_bottom = -27.0
+offset_left = -40.0
+offset_top = -37.0
+offset_right = 36.0
+offset_bottom = -7.0
 theme = ExtResource("1_v3djh")
+theme_override_font_sizes/font_size = 18
 text = "Stove"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="TeamColor" type="Panel" parent="."]
 layout_mode = 0
@@ -59,11 +70,34 @@ offset_right = 71.0
 offset_bottom = 47.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_yttyd")
 
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 24.0
+offset_right = 87.0
+offset_bottom = 57.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_28o3u")
+
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 11.0
-offset_top = 20.0
-offset_right = 84.0
-offset_bottom = 50.0
+offset_left = 17.0
+offset_top = 26.0
+offset_right = 90.0
+offset_bottom = 56.0
 theme = ExtResource("1_v3djh")
+theme_override_font_sizes/font_size = 22
 text = "$200"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 0
+offset_left = -75.0
+offset_top = -6.0
+offset_right = 72.0
+offset_bottom = 23.0
+theme = ExtResource("1_v3djh")
+theme_override_font_sizes/font_size = 28
+text = " Power"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -249,8 +249,7 @@ transform = Transform3D(1, 0, 4.65661e-10, 0, 1, 0, -4.65661e-10, 0, 1, 0.446792
 
 [node name="Oven" parent="NavigationRegion3D/Node3D" instance=ExtResource("8_q0vpy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.364, 9)
-using_tscn = true
-unique_name = "2"
+unique_name = "Oven"
 
 [node name="ChopTable" parent="NavigationRegion3D/Node3D" instance=ExtResource("10_8whfs")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 3, 0.364, 5)
@@ -285,16 +284,14 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 8, 0.3
 
 [node name="StoveWithPot" parent="NavigationRegion3D/Node3D" instance=ExtResource("13_iso5m")]
 transform = Transform3D(0.999985, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999985, 5.99773, 0.364, 9.02421)
-using_tscn = true
-unique_name = "2"
+unique_name = "Stove"
 
 [node name="Cabinet" parent="NavigationRegion3D/Node3D" instance=ExtResource("14_q0vpy")]
 transform = Transform3D(0.999985, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999985, 9.01374, 0.364, 9.00314)
 
 [node name="Oven2" parent="NavigationRegion3D/Node3D" instance=ExtResource("8_q0vpy")]
 transform = Transform3D(-1, 0, -8.70787e-08, 0, 1, 0, 8.70787e-08, 0, -1, 5.09772, 0.364, -8.66296)
-using_tscn = true
-unique_name = "1"
+unique_name = "Oven"
 current_owner = 2
 
 [node name="ChopTable3" parent="NavigationRegion3D/Node3D" instance=ExtResource("10_8whfs")]
@@ -329,8 +326,7 @@ transform = Transform3D(-1, 0, 1.51806e-07, 0, 1, 0, -1.51806e-07, 0, -1, 8.0553
 
 [node name="StoveWithPot2" parent="NavigationRegion3D/Node3D" instance=ExtResource("13_iso5m")]
 transform = Transform3D(-1, 0, -8.70787e-08, 0, 1, 0, 8.70787e-08, 0, -1, 6.09545, 0.364, -8.63875)
-using_tscn = true
-unique_name = "1"
+unique_name = "Stove"
 current_owner = 2
 
 [node name="Cabinet2" parent="NavigationRegion3D/Node3D" instance=ExtResource("14_q0vpy")]
@@ -508,7 +504,7 @@ transform = Transform3D(1, 0, -4.65661e-10, 0, 1, 0, 4.65661e-10, 0, 1, 11.8854,
 transform = Transform3D(1, 0, -4.65661e-10, 0, 1, 0, 4.65661e-10, 0, 1, 12.208, 0.728576, -3.25253)
 
 [node name="Extinguisher" parent="." instance=ExtResource("28_niv16")]
-transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999984, 1.85923, 2.88658, -0.391937)
+transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999984, 1.85923, 3.57599, -0.391937)
 
 [node name="UpgradeHammer" parent="." instance=ExtResource("29_83y2r")]
-transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999984, 1.85772, 2.54884, 0.872427)
+transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999984, 1.85772, 3.23825, 0.872427)

@@ -2,26 +2,9 @@
 
 [ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/DefaultTheme.tres" id="1_v3djh"]
 [ext_resource type="Script" uid="uid://b1fcailv3s73c" path="res://UI/ui_upgrade.gd" id="1_yttyd"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v3djh"]
-bg_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
-corner_radius_top_left = 9
-corner_radius_top_right = 9
-corner_radius_bottom_right = 9
-corner_radius_bottom_left = 9
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yttyd"]
-bg_color = Color(0.956538, 0, 0.182409, 1)
-corner_radius_bottom_right = 9
-corner_radius_bottom_left = 9
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_28o3u"]
-bg_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
-border_blend = true
-corner_radius_top_left = 7
-corner_radius_top_right = 7
-corner_radius_bottom_right = 7
-corner_radius_bottom_left = 7
+[ext_resource type="StyleBox" uid="uid://bvtk4fhf7agfw" path="res://UI/UI_Upgrade_Bad_Border.tres" id="2_pe7db"]
+[ext_resource type="Texture2D" uid="uid://c8rgo4k2ayhu8" path="res://assets/textures/misc/round-star.png" id="3_28o3u"]
+[ext_resource type="StyleBox" uid="uid://3jt6gf3oh3gx" path="res://UI/UI_Upgrade_Bad.tres" id="3_msvw8"]
 
 [node name="UiUpgrade" type="Control"]
 z_index = 2
@@ -31,6 +14,8 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+offset_left = 3.0
+offset_right = 3.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_yttyd")
@@ -42,62 +27,71 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -75.0
-offset_top = -36.0
-offset_right = 73.0
-offset_bottom = 49.0
+offset_left = -65.0
+offset_top = -43.0
+offset_right = 58.0
+offset_bottom = 42.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_v3djh")
+theme_override_styles/panel = ExtResource("2_pe7db")
 
-[node name="Appliance" type="Label" parent="."]
+[node name="Color" type="Panel" parent="."]
 layout_mode = 0
-offset_left = -40.0
-offset_top = -37.0
-offset_right = 36.0
-offset_bottom = -7.0
+offset_left = -64.0
+offset_top = 34.0
+offset_right = 2.0
+offset_bottom = 42.0
+theme_override_styles/panel = ExtResource("3_msvw8")
+
+[node name="CostBG" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 19.0
+offset_right = 69.0
+offset_bottom = 52.0
+theme_override_styles/panel = ExtResource("2_pe7db")
+
+[node name="Cost" type="Label" parent="."]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 22.0
+offset_right = 67.0
+offset_bottom = 52.0
 theme = ExtResource("1_v3djh")
-theme_override_font_sizes/font_size = 18
-text = "Stove"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TeamColor" type="Panel" parent="."]
-layout_mode = 0
-offset_left = -72.0
-offset_top = 41.0
-offset_right = 71.0
-offset_bottom = 47.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_yttyd")
-
-[node name="Panel" type="Panel" parent="."]
-layout_mode = 0
-offset_left = 19.0
-offset_top = 24.0
-offset_right = 87.0
-offset_bottom = 57.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_28o3u")
-
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_left = 17.0
-offset_top = 26.0
-offset_right = 90.0
-offset_bottom = 56.0
-theme = ExtResource("1_v3djh")
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 19
 text = "$200"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label2" type="Label" parent="."]
+[node name="Appliance" type="Label" parent="."]
 layout_mode = 0
-offset_left = -75.0
-offset_top = -6.0
-offset_right = 72.0
-offset_bottom = 23.0
+offset_left = -64.0
+offset_top = -41.0
+offset_right = 58.0
+offset_bottom = -11.0
 theme = ExtResource("1_v3djh")
-theme_override_font_sizes/font_size = 28
-text = " Power"
+theme_override_font_sizes/font_size = 16
+text = "Stove"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Descrip" type="Label" parent="."]
+layout_mode = 0
+offset_left = -65.0
+offset_top = -13.0
+offset_right = 58.0
+offset_bottom = 20.0
+theme = ExtResource("1_v3djh")
+theme_override_font_sizes/font_size = 17
+text = "Cooks Faster"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -57.0
+offset_top = -36.0
+offset_right = -42.0
+offset_bottom = -21.0
+texture = ExtResource("3_28o3u")
+expand_mode = 2

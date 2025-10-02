@@ -10,7 +10,7 @@ var plate_scene: PackedScene = preload("res://scripts/order_system/Plate.tscn")
 func _init():
 	super._init()
 	model_scene = preload("res://assets/newmodels/furniture/BasicBench.glb")
-
+	appliance_name = "Cabient"
 
 ## Setup the Cabinet
 func _ready():

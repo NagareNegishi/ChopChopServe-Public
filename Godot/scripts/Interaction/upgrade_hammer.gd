@@ -7,7 +7,8 @@ signal upgrade()
 @onready var upgrade_effect : GPUParticles3D 
 @onready var _upgrade_effect_scene : PackedScene
 @onready var _particle_effect : GPUParticles3D = $Sparkle
-@onready var _upgrade_ui : Sprite3D = $UpgradeUI
+@onready var _upgrade_sprite : Sprite3D = $UpgradeUI
+@onready var _upgrade_ui : UIUpgrade = $UpgradeUI/SubViewport/UiUpgrade
 
 var upgrade_library : Dictionary[Appliance, Upgradable] = {} #Dict of all appliances and their chosen upgrade
 var _comp : InteractableComponent #Used purely so player can upgrade with needing rehover ovetr appliance
@@ -17,7 +18,7 @@ var _comp : InteractableComponent #Used purely so player can upgrade with needin
 func _ready() -> void:
 	interact_comp.local_action_use.connect(_can_upgrade)
 	_particle_effect.emitting = false
-	_upgrade_ui.visible = false
+	_upgrade_sprite.visible = false
 	remove_child(_particle_effect)
 	await get_tree().create_timer(2).timeout
 	remove_child(_upgrade_ui)
@@ -64,6 +65,7 @@ func _store_upgrade(comp : InteractableComponent, is_hover : bool):
 		return
 	
 	if upgrade_library.has(appliance):
+		_set_ui_info(upgrade_library.get(appliance), appliance)
 		_show_ui(true, appliance.global_position)
 		return 
 
@@ -74,6 +76,7 @@ func _store_upgrade(comp : InteractableComponent, is_hover : bool):
 		return
 	
 	upgrade_library[appliance] = upgrades.pick_random()
+	_set_ui_info(upgrade_library.get(appliance), appliance)
 	_show_ui(true, appliance.global_position)
 
 ##Disconnects the hover signal and item dropped signal
@@ -148,9 +151,10 @@ func _play_effect(location : Vector3):
 
 
 func _show_ui(is_visible : bool, location : Vector3 = Vector3(0,0,0)):
-	_upgrade_ui.global_position = location+ Vector3(0,0.5,0)
-	_upgrade_ui.visible = is_visible
+	_upgrade_sprite.global_position = location + Vector3(0,0.5,0)
+	_upgrade_sprite.visible = is_visible
 
 
 func _set_ui_info(upgrade : Upgradable, app : Appliance):
-	pass
+	_upgrade_ui._set_info(upgrade, app, 
+	CurrencySystem.check_currency(ENetManager.get_my_team(), upgrade.get_upgrade_cost()))

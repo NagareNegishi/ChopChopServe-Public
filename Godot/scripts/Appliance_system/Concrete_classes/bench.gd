@@ -13,6 +13,7 @@ func _init():
 	super._init()
 	model_scene = preload("res://assets/newmodels/furniture/BasicBench.glb")
 	_setup_inflammable()
+	appliance_name = "Bench"
 
 
 ## Setup the bench

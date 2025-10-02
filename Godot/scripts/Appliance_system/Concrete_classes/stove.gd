@@ -7,6 +7,7 @@ var inflammable_component: Inflammable
 func _init():
 	super._init()
 	model_scene = preload("res://assets/newmodels/furniture/Stove2.glb")
+	appliance_name = "Stove"
 
 
 ## Setup the stove properties

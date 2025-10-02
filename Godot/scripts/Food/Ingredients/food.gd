@@ -36,7 +36,7 @@ var is_cooking = false # Decides whether or not it should be cooking the ingredi
 var is_cooked : bool = false
 var l # current collision layer
 var m # current collision mask
-
+var cooking_progress = 0
 # --------------------------- COOKING TIMES -----------------------------------
 var BOILED_time = 15 # How long it takes to cook 
 var boil_burn = -15
@@ -74,6 +74,7 @@ func _ready():
 func _on_timer_timeout():
 	if is_cooking:
 		cooking.emit()
+		cooking_progress += 1
 		match current_appliance:
 			ApplianceFactory.CookingStyle.CHOP:
 				chop()
@@ -362,3 +363,6 @@ func _on_interactable_component_body_entered(body):
 
 func get_floor_time():
 	return touched_floor_num
+
+func get_current_progress():
+	return cooking_progress

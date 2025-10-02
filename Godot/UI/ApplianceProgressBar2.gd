@@ -1,13 +1,14 @@
-extends ProgressBar
+extends Control
 
-var cookware
+var cw # Cookware
 var food_item
 var is_open: bool = false
 var contents: Array
 var applianceInstance
 
 @export var type : ProgressType
-@onready var texture_rect : TextureRect = $"../TextureRect"
+@onready var texture_rect : TextureRect = $TextureRect
+@onready var progress_bar = $ProgressBar
 
 enum ProgressType {
 	COOK,
@@ -27,43 +28,43 @@ func _process(_delta):
 	change_visibility(is_open)
 	#print(is_open)
 
+
 func _ready() -> void:
 	_set_texture(type)
-	
-	
+
 # Connecting food timer signal to the progress bar
-func _on_cookware_signal(c):
-	max_value = get_max_value(get_cooking_style())
-	contents = c
-	
+func _on_cookware_signal(food):
 	if food_item and food_item.is_connected("cooking", Callable(self, "_on_food_signal")):
 		food_item.disconnect("cooking", Callable(self, "_on_food_signal"))
 	
+	contents = food
 	if contents.size() > 0:
 		food_item = contents[0]
-		
-		if not food_item.is_connected("cooking", Callable(self, "_on_food_signal")):
-			food_item.connect("cooking", Callable(self, "_on_food_signal"))
+	
+	print(food_item)
+	progress_bar.max_value = get_max_value(get_cooking_style())
+	#progress_bar.value = food_item.get_current_progress()
+	
+	
+	if not food_item.is_connected("cooking", Callable(self, "_on_food_signal")):
+		food_item.connect("cooking", Callable(self, "_on_food_signal"))
+	
 	is_open = true
 
 # On food signal we want to change the progress bas value
 func _on_food_signal():
-	value += 1
-	# Dont want the blender to turn orange because food cant burn in there
-	#if value == max_value and (cookware is not Blender and cookware is not ChoppingBoard) : 
-		#tint_progress = Color8(255,165,0)
+	progress_bar.value += 1
 
 
 # Connect the cookware signal so when things are added to the cookware it goes to _on_cookware_signal 
 # function to then connect the food timer up to change the progress bar value
-func connect_cookware(c):
-	if c and c.is_in_group("Appliance"):
-		c.connect("food_placed", Callable(self, "_on_cookware_signal"))
-		cookware = c
+func connect_cookware(cookware):
+	if cookware and cookware.is_in_group("Appliance"):
+		cookware.connect("food_placed", Callable(self, "_on_cookware_signal"))
 		if cookware.contents.size() > 0:
 			is_open = true
 		
-		if not cookware.is_connected("average_updated", Callable(self, "_on_average_updated")):
+		if not cookware.is_connected("new_average", Callable(self, "_on_average_updated")) and cookware != ChoppingBoard:
 			cookware.connect("new_average", Callable(self, "_on_average_updated"))
 	else:
 		push_error("In appliance progress bar -- connect_cookware() -- either there 
@@ -72,48 +73,62 @@ func connect_cookware(c):
 
 # Connect the take_all signal so that when things are taken from cookware it makes the progress bar
 # disappear
-func connect_take_all(c):
-	if c and c.is_in_group("Appliance"):
-		c.connect("food_taken",Callable(self, "_on_food_or_cookware_taken"))
+func connect_take_all(cookware):
+	print("IN CONNECT")
+	print(cookware)
+	
+	if cookware and cookware.is_in_group("Appliance"):
+		cookware.connect("food_taken",Callable(self, "_on_food_taken"))
 
 
 # Function to chnage boolean value when items are taken from the cookware or blender
-func _on_food_or_cookware_taken(item):
-	is_open = false
+func _on_food_taken():
+	print("FOOD OR COOKWARE TAKEN")
 	
-	if item and item.is_in_group("Appliance"):
-		if cookware.is_connected("food_placed", Callable(self, "_on_cookware_signal")):
-			cookware.disconnect("food_placed", Callable(self, "_on_cookware_signal"))
-		if cookware.is_connected("food_taken", Callable(self, "_on_food_or_cookware_taken")):
-			cookware.disconnect("food_taken", Callable(self, "_on_food_or_cookware_taken"))
-		if cookware.is_connected("new_average", Callable(self, "_on_average_updated")):
-			cookware.disconnect("new_average", Callable(self, "_on_average_updated"))
-	
-	if food_item and food_item.is_connected("cooking", Callable(self, "_on_food_signal")):
-		if value == max_value:
-			progress_bar_reset()
+	if food_item and food_item.is_in_group("Food") and food_item.is_connected("cooking", Callable(self, "_on_food_signal")):
+		print("IS FOOD")
 		food_item.disconnect("cooking", Callable(self, "_on_food_signal"))
-		
 	
-	cookware = null
-	food_item = null
+	reset()
+
+
+func _on_cookware_taken(item):
+	if item and item.is_in_group("Appliance"):
+		print("IS APPLIANCE")
+		if cw.is_connected("food_placed", Callable(self, "_on_cookware_signal")):
+			cw.disconnect("food_placed", Callable(self, "_on_cookware_signal"))
+		if cw.is_connected("food_taken", Callable(self, "_on_food_or_cookware_taken")):
+			cw.disconnect("food_taken", Callable(self, "_on_food_or_cookware_taken"))
+		if cw.is_connected("new_average", Callable(self, "_on_average_updated")):
+			cw.disconnect("new_average", Callable(self, "_on_average_updated"))
+	
+	
+	reset()
+	cw = null
 
 
 # Returns the cooking style of the cookware + blender
 func get_cooking_style():
-	return cookware.cooking_style
+	if cw ==null: return ApplianceFactory.CookingStyle.CHOP
+	
+	return cw.cooking_style
 
 
 func change_visibility(turn_on: bool):
-	if turn_on:
-		show()
+	var owner_team
+	if applianceInstance:
+		owner_team = applianceInstance.get_appliance_owner()
 	else:
-		hide()
+		owner_team = 0
+	var my_id = ENetManager.get_my_id()
+	var my_team = ENetManager.get_team(my_id)
+	
+	visible = (my_team == owner_team and turn_on)
 
 
 # When another ingredient is added to the cookware get new value of the progress bar
-func _on_average_updated(new_average: float) -> void:
-	value = max_value - new_average
+func _on_average_updated(new_average: float):
+	progress_bar.value = progress_bar.max_value - new_average
 
 
 func get_max_value(cook_style: ApplianceFactory.CookingStyle):
@@ -131,39 +146,38 @@ func get_max_value(cook_style: ApplianceFactory.CookingStyle):
 			_:
 				push_error("No cooking style matched in appliance progress bar in get_max_value()")
 
+
 # When there is an a cookware/equipment added to an appliance it connects to this method
-func _on_add_appliance(c, appliance):
-	print("Cookware added backKKKKKKKKKKK    ", c)
-	connect_cookware(c)
-	connect_take_all(c)
-	appliance.connect("cookware_taken", Callable(self, "_on_food_or_cookware_taken"))
-	
-	if c.contents.size() > 0:
-		_on_cookware_signal(c.contents)
+func _on_add_appliance(cookware, appliance): # cookware: frying_pan, overn_tray, pot, chooping_board
+	connect_cookware(cookware)
+	connect_take_all(cookware)
+	if appliance != null:
+		appliance.connect("cookware_taken", Callable(self, "_on_cookware_taken"))
+		applianceInstance = appliance
+	cw = cookware
+	if cookware.contents.size() > 0:
+		_on_cookware_signal(cookware.contents)
+
 
 # Is different because this is PoweredAppliance and not Cookware
-func _on_blender_signal(c, blender):
+func _on_blender_signal(cookware, blender):
 	cookware = blender
 	cookware.connect("average_updated", Callable(self, "_on_average_updated"))
-	_on_cookware_signal(c)
+	applianceInstance = blender
+	_on_cookware_signal(cookware)
 	connect_take_all(blender)
 
 
-func _on_chop_table_food_placed(c):
-	connect_cookware(c)
-	connect_take_all(c)
+func _on_chop_table_food_placed(cookware):
+	connect_cookware(cookware)
+	connect_take_all(cookware)
 
-func progress_bar_reset():
-	value = 0
+
+func reset():
+	progress_bar.value = 0
+	food_item = null
+	is_open = false
 
 
 func _set_texture(texture_type : ProgressType):
 	texture_rect.texture = TEXTURE[texture_type]
-
-
-func _on_oven_add_appliance(cookware: Variant) -> void:
-	pass # Replace with function body.
-
-
-func _on_stove_with_pot_add_appliance(cookware: Variant) -> void:
-	pass # Replace with function body.

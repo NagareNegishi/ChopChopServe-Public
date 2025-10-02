@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://ckiyjl6dexd4g"]
+[gd_scene load_steps=13 format=4 uid="uid://cicd5geugh0ny"]
 
 [ext_resource type="Script" uid="uid://dhlgcegh4qw1t" path="res://scripts/Food/Ingredients/potato.gd" id="1_xba6o"]
 [ext_resource type="Texture2D" uid="uid://c64oxejrdut5k" path="res://assets/newmodels/food/ingredients/tainted/PotatoIck_TextureMapGreen.png" id="2_ou20t"]

@@ -48,19 +48,19 @@ albedo_color = Color(0.259294, 0.259294, 0.259294, 1)
 script = ExtResource("1_rcx53")
 
 [node name="SteakChips" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.0960606, 0, -0.0608245, 0, 0.0126179, 0, -0.0948223, 0, 0.0616189, 0, 0, 0)
+transform = Transform3D(0.213504, 3.11636e-09, 0.135583, 4.52987e-08, -0.029, 2.48456e-16, 0.210751, 3.07618e-09, -0.137354, 0, 0.166638, 0)
 mesh = SubResource("ArrayMesh_3ct6w")
 skeleton = NodePath("")
 
 [node name="BadQualitySteakChips" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.0960606, 0, -0.0608245, 0, 0.0126179, 0, -0.0948223, 0, 0.0616189, 0, 0, 0)
+transform = Transform3D(0.213504, 3.11636e-09, 0.135583, 4.52987e-08, -0.029, 2.48456e-16, 0.210751, 3.07618e-09, -0.137354, 0, 0.166638, 0)
 visible = false
 mesh = SubResource("ArrayMesh_3ct6w")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_mt76l")
 
 [node name="BurntSteakChips" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.0960606, 0, -0.0608245, 0, 0.0126179, 0, -0.0948223, 0, 0.0616189, 0, 0, 0)
+transform = Transform3D(0.213504, 3.11636e-09, 0.135583, 4.52987e-08, -0.029, 2.48456e-16, 0.210751, 3.07618e-09, -0.137354, 0, 0.166638, 0)
 visible = false
 mesh = SubResource("ArrayMesh_3ct6w")
 skeleton = NodePath("")

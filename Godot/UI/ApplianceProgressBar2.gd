@@ -180,4 +180,5 @@ func reset():
 
 
 func _set_texture(texture_type : ProgressType):
-	texture_rect.texture = TEXTURE[texture_type]
+	pass
+#	texture_rect.texture = TEXTURE[texture_type]

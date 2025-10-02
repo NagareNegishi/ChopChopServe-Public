@@ -148,7 +148,7 @@ func _play_effect(location : Vector3):
 
 
 func _show_ui(is_visible : bool, location : Vector3 = Vector3(0,0,0)):
-	_upgrade_ui.global_position = location
+	_upgrade_ui.global_position = location+ Vector3(0,0.5,0)
 	_upgrade_ui.visible = is_visible
 
 

@@ -1,6 +1,12 @@
 extends Node3D
 
-# Do we want mulitple water Spills created or just one?
+################################################################################
+# TODO:
+	# - Clean code up
+	# - Remove the Cylinder
+	# - Connect the Customer slip to the signal
+	# - Fix its positioning logic
+################################################################################
 
 @export var duration: float = 10.0
 @export var slow_down: float = 0.5

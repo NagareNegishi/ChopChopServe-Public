@@ -1,12 +1,17 @@
 extends Node
 #class_name Rat
 
-# Need to make the wndinf of the rats nicer:
-	# Make then just run back to their spwan spot
-	# make the spawn spot a better location
-	# Also make the rats dissapear when they find a bench
-	# and later make the oath finding actually object finding instead
-	# Figure out why their time gets messed up when there are multiple rats
+################################################################################
+# TODO:
+	# - Make them avoid objects
+	# - increase timer duration
+	# - Do something about their spawn points
+	# - Make the targets the other teams stuff
+	# - Make then look for, and pick up the food items instead
+	# - Make them smaller and animated
+	# - Change the going home logic so that it is smoother (return home, not just disapear)
+	# - Fix code up
+################################################################################
 
 
 
@@ -21,6 +26,9 @@ var secs = 5
 var object_path
 var target_path
 var rat_targets := {} 
+
+var starting_pos := {}
+var rat_states := {} # {rat: "going" or "returning"}
 
 # Is there a way to initshate the rat assest?
 # how do I do that ??
@@ -45,6 +53,7 @@ var rat_targets := {}
 func _ready() -> void:
 	pass
 
+# Should I move this stuff into the Rat script??
 func _process(delta: float) -> void:
 	run(delta)
 
@@ -54,38 +63,54 @@ func run(delta: float):
 	for r in mischief:
 		if not is_instance_valid(r):
 			continue
-		if not rat_targets.has(r):
-			continue
+		
+		if rat_states.get(r, "going") == "going":
+			if not rat_targets.has(r):
+				continue
 
-		var target_node = get_node(rat_targets[r]) 
+			var target_node = get_node(rat_targets[r]) 
 			# if the target node is null, just continue
 			# maybe make them run back to their spawn point instead
-		if target_node == null:
-			continue 
+			if target_node == null:
+				continue 
 			#find_object() #Vector3(10, 0, 10) # example target
-		var target_pos = target_node.global_position
-		var old_pos = r.global_position
-		var new_pos = r.global_position.move_toward(target_pos, speed * delta)
+			var target_pos = target_node.global_position
+			var old_pos = r.global_position
+			var new_pos = r.global_position.move_toward(target_pos, speed * delta)
 		
-		# update position
-		r.global_position = new_pos
+			# update position
+			r.global_position = new_pos
 		
-		# calculate movement direction
-		var dir = (new_pos - old_pos).normalized()
-		if dir.length() > 0.01:
+			# calculate movement direction
+			var dir = (new_pos - old_pos).normalized()
+			if dir.length() > 0.01:
 			# point the rat's nose (Z+) toward movement
-			r.look_at(new_pos - dir, Vector3.UP)
+				r.look_at(new_pos - dir, Vector3.UP)
 			
-		# Only erase the target if the rat is close enough
-		if r.global_position.distance_to(target_pos) < 0.1:
-			print("found my target")
-			rat_targets.erase(r)
-			if is_instance_valid(r):
+			# Only erase the target if the rat is close enough
+			if r.global_position.distance_to(target_pos) < 0.1:
+				print("found my target, time to go home")
+				rat_states[r] = "returning"
+				rat_targets.erase(r) # Clear the target
+		elif rat_states.get(r) == "returning":
+			var start_pos = starting_pos.get(r, Vector3.ZERO)
+			var old_pos = r.global_position
+			var new_pos = r.global_position.move_toward(start_pos, speed * delta)
+			r.global_position = new_pos
+			var dir = (new_pos - old_pos).normalized()
+			if dir.length() > 0.01:
+				r.look_at(new_pos - dir, Vector3.UP)
+			if r.global_position.distance_to(start_pos) < 0.1:
+				print("rat returned home, removing")
 				r.queue_free()
+				mischief.erase(r)
+				rat_states.erase(r)
+				starting_pos.erase(r)
+			#if is_instance_valid(r):
+			#	r.queue_free()
 	
-
-		target_node = NodePath("")
-		target_pos = Vector3(0, 0, 0)
+		#target_node = NodePath("")
+		#target_pos = Vector3(0, 0, 0)
 			
 # Maybe add a variable to decide the amount of rats
 func spawn_rat_mischief(position : Vector3, path : NodePath) -> void:
@@ -98,7 +123,10 @@ func spawn_rat_mischief(position : Vector3, path : NodePath) -> void:
 	#position.x += 1
 	# assign a target
 	rat_targets[new_rat] = path
-	start_timer(secs)
+	starting_pos[new_rat] = position
+	rat_states[new_rat] = "going"
+	#start_timer(secs)
+	new_rat.rat_timer()
 	#var start = get_tree().get_current_scene()
 	#var bs : Array = find_benches(start)
 	#print("benches in the scene ======= ", bs)

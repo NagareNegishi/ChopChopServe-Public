@@ -25,7 +25,7 @@ var TEXTURE = {
 
 func _process(_delta):
 	change_visibility(is_open)
-	print(is_open)
+	#print(is_open)
 
 func _ready() -> void:
 	_set_texture(type)

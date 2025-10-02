@@ -113,10 +113,15 @@ func get_cooking_style():
 
 
 func change_visibility(turn_on: bool):
-	if turn_on:
-		self.show()
+	var owner_team
+	if applianceInstance:
+		owner_team = applianceInstance.get_appliance_owner()
 	else:
-		self.hide()
+		owner_team = 0
+	var my_id = ENetManager.get_my_id()
+	var my_team = ENetManager.get_team(my_id)
+	
+	visible = (my_team == owner_team and turn_on)
 
 
 # When another ingredient is added to the cookware get new value of the progress bar
@@ -146,6 +151,7 @@ func _on_add_appliance(cookware, appliance): # cookware: frying_pan, overn_tray,
 	connect_take_all(cookware)
 	if appliance != null:
 		appliance.connect("cookware_taken", Callable(self, "_on_cookware_taken"))
+		applianceInstance = appliance
 	cw = cookware
 	if cookware.contents.size() > 0:
 		_on_cookware_signal(cookware.contents)
@@ -155,6 +161,7 @@ func _on_add_appliance(cookware, appliance): # cookware: frying_pan, overn_tray,
 func _on_blender_signal(cookware, blender):
 	cookware = blender
 	cookware.connect("average_updated", Callable(self, "_on_average_updated"))
+	applianceInstance = blender
 	_on_cookware_signal(cookware)
 	connect_take_all(blender)
 

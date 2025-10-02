@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dmmaycolw4qqi"]
+
+[ext_resource type="Script" uid="uid://uo7h2k60f81b" path="res://scripts/Sabotage/switch_controls.gd" id="1_kmc37"]
+
+[node name="SwitchControls" type="Node3D"]
+script = ExtResource("1_kmc37")

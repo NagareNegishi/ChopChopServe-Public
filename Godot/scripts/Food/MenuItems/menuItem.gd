@@ -10,6 +10,7 @@ var ingredients = []
 var ingredient_states = {}
 var name_of_meal : String
 var is_available = false
+var quality
 #var appliance : String = "Plate"
 # A MenuItem needs an Array of ingredients to combine together to make it
 # They need to be able to add things together in a bowl/plate/pan etc. to make the menuItem
@@ -41,7 +42,7 @@ func match_menu_items(input_ingredients: Array):
 		if check_items(input_ingredients, instance.ingredients, instance):
 			#print("in check items if")
 			return instance 
-	print("there is no menu item that contains these ingredients")
+	#print("there is no menu item that contains these ingredients")
 	return null
 
 
@@ -63,14 +64,14 @@ func check_items(pass_ingredients: Array, required_ingredients: Array, food_inst
 	
 	for passed in pass_ingredients:
 		var ingredient_name = passed.food_name
-		print("Checking ingredient: ", ingredient_name)
+		#print("Checking ingredient: ", ingredient_name)
 		
 		if required_counts.get(ingredient_name, 0) == 0:
-			print("Ingredient not required or count exceeded: ", ingredient_name)
+			#print("Ingredient not required or count exceeded: ", ingredient_name)
 			return false
 			
 		if !check_states(passed, food_instance):
-			print("States check failed for: ", ingredient_name)
+			#print("States check failed for: ", ingredient_name)
 			return false
 			
 		required_counts[ingredient_name] -= 1 
@@ -85,9 +86,15 @@ func check_states(input_ingredient: Food, food_instance: MenuItem)->bool:
 	# Check if the ingredient has been through ALL of the required states
 	for required_state in required_states:
 		if required_state not in input_states:
-			print("Missing required state: ", required_state)
+			#print("Missing required state: ", required_state)
 			return false
 	return true
 
 func mesh_visibility(name: MeshInstance3D, turn_on: bool):
 	name.visible = turn_on
+
+func set_quality(new_quality):
+	quality = new_quality
+
+func get_quality():
+	return quality

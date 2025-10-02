@@ -45,7 +45,6 @@ static func _register_foods() -> void:
 				food_book[food_name] = food_scene
 				var sample = food_scene.instantiate()
 				food_instances[food_name] = sample
-				# print("Registered: ", food_name)
 			else:
 				push_warning("Failed to load food scene: " + scene_path)
 		file_name = dir.get_next()

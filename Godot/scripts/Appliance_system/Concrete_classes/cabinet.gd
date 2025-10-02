@@ -19,7 +19,7 @@ func _ready():
 	_set_affixes()
 	# _setup_item_slots()
 	if plate_scene and plate_scene.can_instantiate():
-		print("Cabinet plate scene preloaded successfully")
+		Debug.all("Cabinet plate scene preloaded successfully")
 	else:
 		push_error("Failed to preload plate scene in Cabinet")
 	for i in range(capacity):
@@ -86,10 +86,9 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 		highlight_component.hide_feedback()
 		return
 	var item = GlobalScript.get_local_player().item_in_hand
-	#---------------------------------------------------------------------------
 	if item:
-		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())
-	#---------------------------------------------------------------------------
+		Debug.all("Player ID: " + str(ENetManager.get_my_id())
+			+ " has : " + item.get_script().get_global_name() + ", hovered: " + get_script().get_global_name())
 	if not item:
 		highlight_component.show_feedback(true)
 		return

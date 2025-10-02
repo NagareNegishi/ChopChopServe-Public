@@ -16,7 +16,6 @@ func _ready():
 	valid_classes = ["Pot", "FryingPan"] # Only one Pot or FryingPan allowed
 	capacity = 1
 	power = 1
-	# cook_interval = 1.0
 	_setup_inflammable()
 
 

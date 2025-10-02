@@ -4,7 +4,7 @@ extends Cookware
 ## Setup the model instance
 func _init():
 	super._init()
-	model_scene = preload("res://assets/newmodels/items/OvenTray.glb") # for test
+	model_scene = preload("res://assets/newmodels/items/OvenTray.glb")
 
 
 ## Setup the fryer properties

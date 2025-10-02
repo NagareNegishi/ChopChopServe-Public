@@ -17,7 +17,6 @@ func _ready():
 	power = 1
 	_add_cookware("fryer_basket")
 	_setup_inflammable()
-	# cook_interval = 1.0
 
 
 ## Override upgradable setup in concrete appliances

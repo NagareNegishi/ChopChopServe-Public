@@ -12,7 +12,6 @@ extends Appliance
 @export var capacity: int = 1 ## Maximum number of items this appliance can hold / deal with
 @export var valid_food: Array[String] = [] ## Class names that can be placed in this equipment
 
-
 var can_use: bool = false
 
 
@@ -78,13 +77,13 @@ func take() -> Node:
 ## @return: True if item can be placed, false otherwise
 func _can_accept(item: Node) -> bool:
 	if not item:
-		print("Cannot accept item, item is null")
+		Debug.all("Cannot accept item, item is null")
 		return false
 	if contents_names.size() >= capacity:
-		print("Cannot accept item: ", get_script().get_global_name(), " is at full capacity")
+		Debug.all("Cannot accept item: " + get_script().get_global_name() + " is full")
 		return false
 	if not item.get_script():
-		print("Cannot accept item, item has no script")
+		Debug.all("Cannot accept item, item has no script")
 		return false
 	return item.get_script().get_global_name() in valid_food
 
@@ -105,9 +104,6 @@ func finish_cook() -> bool:
 	for item in contents:
 		if item is Food:
 			item.stop_cooking()
-	# #----------------------------------------------------------------------
-	# 		print("stop_cooking() is called in: ", item.get_script().get_global_name())
-	# #----------------------------------------------------------------------
 	return true
 
 
@@ -181,13 +177,13 @@ func _put_as_host(player_id: int, item_name: String) -> void:
 	# host need check to prevent conflicts/ cheating
 	var player = GlobalScript.get_local_player_by_id(player_id)
 	if not player:
-		print("Player not found with id: ", player_id)
+		Debug.warning("Player not found with id: " + str(player_id))
 		return
 	var item = player.item_in_hand
 	if not _can_accept(item):
 		return
 	if item.name != item_name:
-		print("Item name mismatch: expected ", item_name, ", got ", item.name)
+		Debug.warning("Item name mismatch: expected " + item_name + ", got " + item.name)
 		return
 	player.remove_item()
 	_put(item)
@@ -229,21 +225,3 @@ func _give_item_to_player(player_id: int, item_path: NodePath) -> void:
 			player.pickup_item(item)
 
 ## -------------------------------------------------------------------------------------------------
-
-
-
-## Non-networking methods for Player interaction ---------------------------------------------------
-## Place an item onto this appliance from Player
-## if we could remove Player dependency from this class, we can remove this method
-## @param item: The Node to place on this appliance
-## @return: True if placement was successful, false otherwise
-# func put_from_player(item: Node) -> bool:
-# 	if not _can_accept(item):
-# 		return false
-# 	# transfer item to appliance
-# 	GlobalScript.get_local_player().remove_item()
-# 	contents.append(item)
-# 	add_child(item)
-# 	contents_names.append(item.name)
-# 	return true
-#---------------------------------------------------------------------------------------------------

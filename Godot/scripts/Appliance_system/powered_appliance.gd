@@ -60,7 +60,7 @@ func _add_cookware(cookware_script_name: String):
 	cookware.name = name + "_" + cookware_script_name
 	ApplianceManager.register_appliance(cookware, current_owner, cookware.name)
 	if not cookware:
-		push_error("Failed to create cookware: " + cookware_script_name)
+		Debug.error("Failed to create cookware: " + cookware_script_name)
 		return
 	put(cookware)
 
@@ -81,7 +81,6 @@ func _put(item: Node) -> void:
 	contents.append(item)
 	add_child(item)
 	contents_names.append(item.name)
-	
 	if item is Cookware:
 		_put_cookware(item)
 
@@ -90,7 +89,7 @@ func _put(item: Node) -> void:
 ## @param cookware: The Cookware to place on this PoweredAppliance
 func _put_cookware(cookware: Cookware) -> void:
 	cookware._toggle_interaction(false)
-	cookware.restore_original_transform() # should be removed once player returns original scale !!!
+	cookware.restore_original_transform()
 	_position_cookware(cookware, contents.size() - 1)
 	cookware.lock()
 	cookware.set_can_use(true)
@@ -176,16 +175,16 @@ func _client_take(item_name: String) -> void:
 ## @return: True if item can be placed, false otherwise
 func _can_accept(item: Node) -> bool:
 	if not item:
-		print("Cannot accept item, item is null")
+		Debug.all("Cannot accept item, item is null")
 		return false
 	if current_status == Status.BROKEN:
-		print("Cannot accept item: ", get_script().get_global_name(), " is broken")
+		Debug.all("Cannot accept item: " + get_script().get_global_name() + " is broken")
 		return false
 	if contents_names.size() >= capacity:
-		# print("Cannot accept item: ", get_script().get_global_name(), " is at full capacity")
+		Debug.all("Cannot accept item: " + get_script().get_global_name() + " is full")
 		return false
 	if not item.get_script():
-		print("Cannot accept item, item has no script")
+		Debug.all("Cannot accept item, item has no script")
 		return false
 	return item.get_script().get_global_name() in valid_classes
 
@@ -196,7 +195,7 @@ func start_cook() -> bool:
 	if current_status != Status.COOKING:
 		return false
 	if contents.is_empty():
-		push_warning("No items to cook")
+		Debug.warning("No items to cook")
 		return false
 	# cook_timer.start()
 	_cook()
@@ -207,7 +206,7 @@ func start_cook() -> bool:
 ## @return: True if cooking stopped
 func stop_cook() -> bool:
 	if current_status != Status.COOKING:
-		push_warning("Cannot stop cooking unless appliance is cooking")
+		Debug.warning("Cannot stop cooking unless appliance is cooking")
 		return false
 	for item in contents:
 		if item is Equipment:
@@ -253,7 +252,7 @@ func broken() -> bool:
 ## @return: True if status was changed
 func repair() -> bool:
 	if current_status != Status.BROKEN:
-		push_warning("Cannot repair unless appliance is broken")
+		Debug.warning("Cannot repair unless appliance is broken")
 		return false
 	return _set_status(Status.COOKING)
 
@@ -311,9 +310,8 @@ func _on_cook_timer_timeout():
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
 func player_has(item: Node) -> void:
-#--------------------------------------------
-	print("Player with ID: ", ENetManager.get_my_id(), " has : ", item, ", Self: ", get_script().get_global_name())
-#--------------------------------------------
+	Debug.all("Player with ID: " + str(ENetManager.get_my_id())
+		+ " has : " + str(item) + ", Self: " + get_script().get_global_name())
 	# If player has nothing: move item from appliance to player (if exists), return true
 	if not item:
 		take_request()
@@ -360,13 +358,13 @@ func _put_as_host(player_id: int, item_name: String) -> void:
 	# host need check to prevent conflicts/ cheating
 	var player = GlobalScript.get_local_player_by_id(player_id)
 	if not player:
-		print("Player not found with id: ", player_id)
+		Debug.warning("Player not found with id: " + str(player_id))
 		return
 	var item = player.item_in_hand
 	if not _can_accept(item):
 		return
 	if item.name != item_name:
-		print("Item name mismatch: expected ", item_name, ", got ", item.name)
+		Debug.warning("Item name mismatch: expected " + item_name + ", got " + item.name)
 		return
 	player.remove_item()
 	_put(item)
@@ -422,7 +420,7 @@ func _sync_contents(update: Array[String]) -> void:
 ## @return: True if the plate can accept the current contents, false otherwise
 func _check_plate(plate: Plate) -> bool:
 	if is_empty():
-		print("Nothing to serve from: ", get_script().get_global_name())
+		Debug.cook_log("Nothing to serve from: " + get_script().get_global_name())
 		return false
 	if plate.is_ready() and not contents[0].is_empty():
 		return true
@@ -450,7 +448,7 @@ func _serve_as_host(player_id: int) -> void:
 		return
 	var plate = GlobalScript.get_local_player_by_id(player_id).item_in_hand
 	if not plate or not (plate is Plate):
-		print("Player is not holding a plate")
+		Debug.warning("Player is not holding a plate")
 		return
 	if not _check_plate(plate):
 		return
@@ -472,10 +470,10 @@ func _client_serve(player_id: int) -> void:
 ## @return: True if the cookware can accept the current contents, false otherwise
 func _check_cookware(player_cookware: Node) -> bool:
 	if not player_cookware or not (player_cookware is Cookware):
-		print("Cookware is null or not a cookware")
+		Debug.all("Cookware is null or not a cookware")
 		return false
 	if is_empty():
-		print("Nothing to serve from: ", get_script().get_global_name())
+		Debug.all("Nothing to serve from: " + get_script().get_global_name())
 		return false
 	var appliance_cookware = contents[0]
 	if appliance_cookware.is_empty():
@@ -539,12 +537,11 @@ func _client_transfer(player_id: int, taking: bool) -> void:
 ## @return: True if the target can accept the current contents, false otherwise
 func _check_target(target: Node) -> bool:
 	if is_empty():
-		print("Nothing to serve from: ", get_script().get_global_name())
+		Debug.all("Nothing to serve from: " + get_script().get_global_name())
 		return false
 	if target is Plate and target.is_ready():
 		if contents[0].is_empty():
 			return false
-		# maybe check capacity here??? or no need? depend on how plate handle capacity
 		return true
 	if target is Cookware:
 		var cookware = contents[0]
@@ -561,10 +558,9 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 		highlight_component.hide_feedback()
 		return
 	var item = GlobalScript.get_local_player().item_in_hand
-	#---------------------------------------------------------------------------
 	if item:
-		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name(), ", Item name is:", item.name)
-	#---------------------------------------------------------------------------
+		Debug.all("Player ID: " + str(ENetManager.get_my_id())
+			+ " has : " + item.get_script().get_global_name() + ", hovered: " + get_script().get_global_name())
 	if not item:
 		highlight_component.set_state(ApplianceHighlight.HighlightState.HOVER)
 		return

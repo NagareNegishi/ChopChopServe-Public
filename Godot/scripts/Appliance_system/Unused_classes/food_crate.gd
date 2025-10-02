@@ -16,7 +16,7 @@ var supply_instance: Node
 ## Setup the model instance
 func _init():
 	super._init()
-	model_scene = preload("res://assets/models/NuFurniture/FoodCrater.glb")
+	model_scene = preload("res://assets/newmodels/furniture/FoodCrateReDux.glb")
 
 
 ## Set up the FoodCrate

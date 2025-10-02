@@ -1,7 +1,7 @@
 class_name Player 
 extends CharacterBody3D
 
-signal comp_hovered(cop : InteractableComponent)
+signal comp_hovered(cop : InteractableComponent, is_hover : bool)
 signal item_dropped(item : Node3D)
 
 const ACCELERATION : float = 100
@@ -492,6 +492,7 @@ func _on_interact_area_area_exited(area: Area3D) -> void:
 func _on_check_interactables_timeout() -> void:
 	if _items_in_interactable_area.size() <= 0:
 		if _closest_item != null:
+			emit_signal("comp_hovered", _closest_item, false)
 			_closest_item.hover(false)
 		_closest_item = null
 		return
@@ -508,7 +509,7 @@ func _on_check_interactables_timeout() -> void:
 	
 	if(_closest_item != closest_item):
 		if _closest_item : _closest_item.hover(false)
-		emit_signal("comp_hovered", closest_item)
+		emit_signal("comp_hovered", closest_item, true)
 		closest_item.hover(true)
 	
 	_closest_item = closest_item

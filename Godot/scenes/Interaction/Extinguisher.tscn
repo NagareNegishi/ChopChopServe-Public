@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://d1iqitph17b80" path="res://scenes/Interaction/AbstractPickup.tscn" id="1_tyt0g"]
 [ext_resource type="Script" uid="uid://bb7kgn2eopyqm" path="res://scripts/Interaction/extinguisher.gd" id="2_6nuxd"]
-[ext_resource type="ArrayMesh" uid="uid://ihjc0irkkye4" path="res://assets/models/items/fireExtishuger.tres" id="3_1v4j8"]
 [ext_resource type="Material" uid="uid://cq2k180yx7dln" path="res://materials/Shirt.tres" id="3_2h5x0"]
+[ext_resource type="PackedScene" uid="uid://c62m3vlteeebw" path="res://assets/newmodels/items/FireEx.glb" id="4_2h5x0"]
 
 [sub_resource type="Curve" id="Curve_jekx7"]
 _data = [Vector2(0, 0.23854), 0.0, 0.0, 0, 0, Vector2(0.522167, 0.554717), 1.0446, 1.0446, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -49,7 +49,7 @@ target_position = Vector3(1.5, 0, 0)
 debug_shape_custom_color = Color(1, 0, 0, 1)
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="ExtinguishRange" index="0"]
-transform = Transform3D(-1.45559e-08, 0.333, -1.45559e-08, 0, -1.45559e-08, -0.333, -0.333, -1.45559e-08, 6.36258e-16, 0.238268, 0.473885, 0.00357192)
+transform = Transform3D(-1.45559e-08, 0.333, -1.45559e-08, 0, -1.45559e-08, -0.333, -0.333, -1.45559e-08, 6.36258e-16, 0.238268, 0.847747, 0.00357192)
 material_override = ExtResource("3_2h5x0")
 emitting = false
 amount = 20
@@ -60,7 +60,7 @@ draw_pass_1 = SubResource("SphereMesh_krdf8")
 
 [node name="MeshInstance3D" parent="." index="1"]
 transform = Transform3D(0.222, 0, 0, 0, 0.222, 0, 0, 0, 0.222, 0, 0, 0)
-mesh = ExtResource("3_1v4j8")
+mesh = null
 
 [node name="CollisionShape3D" parent="." index="2"]
 transform = Transform3D(0.33, 0, 0, 0, 0.33, 0, 0, 0, 0.33, 0, 0.157195, 0)
@@ -71,3 +71,6 @@ has_action = true
 
 [node name="NavigationObstacle3D" parent="." index="4"]
 radius = 0.4
+
+[node name="FireEx2" parent="." index="6" instance=ExtResource("4_2h5x0")]
+transform = Transform3D(2.135, 0, 0, 0, 1.375, 0, 0, 0, 2.055, 0.0028021, -0.183422, 0.00901279)

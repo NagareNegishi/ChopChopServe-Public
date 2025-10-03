@@ -5,6 +5,7 @@ extends Cookware
 func _init():
 	super._init()
 	model_scene = preload("res://assets/newmodels/items/FryerBasket.glb")
+	default_facing = Direction.WEST
 
 
 ## Setup the fryer properties

@@ -32,7 +32,6 @@ func _setup_inflammable():
 ## Override upgradable setup in concrete appliances
 func _setup_upgradable():
 	super._setup_upgradable()
-	#enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
 
 
 ## Setup cookware slots, should be overridden by subclasses

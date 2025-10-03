@@ -29,3 +29,10 @@ func _setup_upgradable():
 func _setup_inflammable():
 	inflammable_component = Inflammable.new()
 	add_child(inflammable_component)
+
+
+## Setup cookware slots, should be overridden by subclasses
+## Default implementation expect one Cookware slot in the center
+func _setup_cookware_slots():
+	var slot_position = Vector3(0.0, size.y * 0.8, 0.0)
+	cookware_slots.append(slot_position)

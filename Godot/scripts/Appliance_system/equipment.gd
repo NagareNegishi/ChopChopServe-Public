@@ -28,6 +28,14 @@ func _add_sync_properties(config: SceneReplicationConfig):
 	config.add_property(NodePath(".:capacity"))
 
 
+## Rotate equipment by the given angle
+## @param angle: Relative rotation angle in radians
+## @return: always true
+func rotate_by(angle: float) -> bool:
+	rotation.y += angle
+	return true
+
+
 ## Place an item onto this appliance
 ## @param item: The Node to place on this appliance
 ## @return: True if placement was successful, false otherwise

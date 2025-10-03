@@ -77,7 +77,7 @@ func _setup_immunity_upgrade():
 	immunity_upgradable.upgrade_costs = immunity_cost
 	immunity_upgradable.enabled = true
 	target.register_upgradable(immunity_upgradable)
-	Debug.upgrade_log("Fire immunity upgrade enabled for: " + target.get_script().get_global_name())
+	Debug.upgrade_log("Fire immunity upgrade enabled for: " + target.name)
 
 
 ## Set target on fire
@@ -94,7 +94,7 @@ func ignite() -> bool:
 	_start_fire_effects()
 	fire_timer.start()
 	fire_started.emit(target)
-	Debug.fire_log("Fire started on " + target.get_script().get_global_name())
+	Debug.fire_log("Fire started on " + target.name)
 	if target is PoweredAppliance:
 		target.stop_cook()
 		target.broken()
@@ -114,18 +114,25 @@ func extinguish(reduction: int) -> bool:
 	if fire_level <= 0:
 		Debug.warning("Extinguish called on non-burning appliance: " + target.name)
 		return false
-
 	fire_level -= reduction
 	if fire_level <= 0:
-		fire_level = 0
-		fire_timer.stop()
-		_stop_fire_effects()
-		fire_extinguished.emit(target)
-		Debug.fire_log("Fire fully extinguished on " + target.get_script().get_global_name())
+		_stop_fire()
+	else:
+		Debug.fire_log("Fire reduced on " + target.name + ", fire level: " + str(fire_level))
+	return true
+
+
+## Fully stop the fire
+func _stop_fire() -> void:
+	fire_level = 0
+	fire_timer.stop()
+	_stop_fire_effects()
+	fire_extinguished.emit(target)
+	Debug.fire_log("Fire fully extinguished on " + target.name)
+	if target is PoweredAppliance:
+		target.repair()
 	elif target is Bench:
 		target.current_status = target.Status.IDLE
-	Debug.fire_log("Fire reduced on " + target.get_script().get_global_name() + ", fire level: " + str(fire_level))
-	return true
 
 
 ## Start fire effects
@@ -145,53 +152,5 @@ func _on_fire_timer_timeout():
 	if fire_level > 0:
 		fire_level += fire_spread_rate
 		if fire_level >= max_fire_level:
-			Debug.warning("Fire level exceeded maximum on " + target.get_script().get_global_name())
-	Debug.fire_log("Fire increased on " + target.get_script().get_global_name() + ", fire level: " + fire_level)
-
-
-
-# Note: Initially expected collision layer approach,------------------------------------------------
-# however current implementation is using collision of parent.
-# the function is unused, but keep it for future use.
-#
-# var fire_collision_area: Area3D
-# var fire_collision_shape: CollisionShape3D
-#
-## Setup fire collision
-# func _setup_fire_collision():
-# 	fire_collision_area = Area3D.new()
-# 	fire_collision_shape = CollisionShape3D.new()
-# 	fire_collision_area.collision_layer = 1
-# 	fire_collision_area.collision_mask = 1
-# 	fire_collision_area.area_entered.connect(_on_fire_area_entered)
-# 	var shape = BoxShape3D.new()
-# 	shape.size = target.size # if target is extending Placeable, it should have size property
-# 	fire_collision_shape.shape = shape
-# 	fire_collision_area.add_child(fire_collision_shape)
-# 	add_child(fire_collision_area)
-#
-# func _on_fire_area_entered(area: Area3D):
-# 	pass
-#---------------------------------------------------------------------------------------------------
-
-
-
-
-
-# it should reach here------------------------------------------------------------------------------
-#
-# func _extingush() -> void:
-# 	var collider = $ExtinguishRange.get_collider()
-# 	if collider and collider.is_in_group("flammable"):
-# 		# Belt and suspenders approach
-# 		if "inflammable_component" in collider:
-# 			collider.inflammable_component.extinguish(10)
-# 		else:
-# 			push_error("Flammable object missing inflammable_component!")
-
-# or
-
-# func _extingush() -> void:
-# 	var collider = $ExtinguishRange.get_collider()
-# 	if collider and collider.is_in_group("flammable"):
-# 		collider.inflammable_component.extinguish(10)
+			Debug.fire_log("Fire level exceeded maximum on " + target.name)
+	Debug.fire_log("Fire increased on " + target.name + ", fire level: " + str(fire_level))

@@ -40,7 +40,7 @@ func _setup_upgradable():
 ## Default implementation expect one Cookware slot in the center
 func _setup_item_slots():
 	for i in range(capacity):
-		var slot_position = Vector3(0.0, size.y * 0.5, 0.0)
+		var slot_position = Vector3(0.0, size.y * 0.65, 0.0)
 		item_slots.append(slot_position)
 
 

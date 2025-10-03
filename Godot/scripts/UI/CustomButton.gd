@@ -13,25 +13,27 @@ func _ready() -> void:
 	
 	await get_tree().process_frame
 	
-	self.scale = normal_size
-	self.pivot_offset = self.size/2
-	get_tree().root.size_changed.connect(_on_window_resized)
+	#self.scale = normal_size
+	#self.pivot_offset = self.size/2
+	#get_tree().root.size_changed.connect(_on_window_resized)
 	
 	
 func _hovered() -> void:
-	if tween: tween.kill()
-	tween = create_tween()
-	tween.tween_property(
-		self, "scale", hover_size, 0.1
-	)
+	#if tween: tween.kill()
+	#tween = create_tween()
+	#tween.tween_property(
+		#self, "scale", hover_size, 0.1
+	#)
+	pass
 
 
 func _unhovered() -> void:
-	if tween: tween.kill()
-	tween = create_tween()
-	tween.tween_property(
-		self, "scale", normal_size, 0.1
-	)
+	#if tween: tween.kill()
+	#tween = create_tween()
+	#tween.tween_property(
+		#self, "scale", normal_size, 0.1
+	#)
+	pass
 
 
 func _on_window_resized():

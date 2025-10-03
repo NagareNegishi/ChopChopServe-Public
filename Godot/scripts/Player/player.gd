@@ -98,6 +98,7 @@ func _server_set_name(id : int, p_name : String):
 ## @param delta the times it takes per frame to render
 ## @return void
 func _physics_process(delta: float) -> void:
+	invert_controls(true)
 	if ENetManager.is_host():
 		collision_check()
 	
@@ -217,7 +218,8 @@ func _interact() -> void:
 		return
 	
 	elif (((item_in_hand is Plate  || item_in_hand is Cookware) && _closest_item != null) && 
-	(_closest_item.get_parent() is Food || _closest_item.get_parent() is Appliance)):
+	(_closest_item.get_parent() is Food || _closest_item.get_parent() is Appliance)
+	) || _can_app_interact():
 		_closest_item.interact()
 		return
 	
@@ -225,9 +227,8 @@ func _interact() -> void:
 	_closest_item != null && _closest_item.is_pickup)):
 		server_drop_item(self.get_path(), false)
 	
-	if _closest_item == null:
+	if (_closest_item == null || !_can_app_interact()):
 		return
-	 
 	_closest_item.interact()
 
 
@@ -584,3 +585,9 @@ func invert_controls(_invert : bool):
 func disable_controls(_disable : bool, _action : bool):
 	is_controls_disabled = _disable
 	is_actoin_disabled = _action
+
+func _can_app_interact() -> bool:
+	var inter := _closest_item.get_parent()
+	return (inter is Appliance && inter.current_owner == ENetManager.get_my_team() || 
+		  inter is Bench && !inter is ChopTable || 
+		inter.current_owner == 0)

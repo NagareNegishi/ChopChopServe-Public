@@ -125,19 +125,22 @@ offset_top = -288.0
 offset_right = 375.0
 offset_bottom = -118.0
 grow_vertical = 0
-theme_override_constants/separation = -2
+theme_override_constants/separation = 13
 
 [node name="HostButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
 layout_mode = 2
+theme_override_font_sizes/font_size = 35
 text = "HOST GAME"
 
 [node name="JoinButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
 layout_mode = 2
+theme_override_font_sizes/font_size = 35
 text = "JOIN GAME
 "
 
 [node name="ExitButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
 layout_mode = 2
+theme_override_font_sizes/font_size = 35
 text = "EXIT GAME"
 
 [node name="Error" type="Label" parent="Menu"]

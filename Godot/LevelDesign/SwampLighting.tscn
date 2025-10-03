@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://dys1qdkpi62i0"]
+[gd_scene load_steps=51 format=3 uid="uid://dys1qdkpi62i0"]
 
 [ext_resource type="Material" uid="uid://cnd7ix4cfrxi" path="res://shaders/Water/SwampWater.tres" id="1_kl1pt"]
 [ext_resource type="PackedScene" uid="uid://dj8n6gpyee7v0" path="res://assets/newmodels/items/Choppingboard.glb" id="1_ty3c0"]
@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dlk0mbdfg2cmq" path="res://scenes/Appliance_system/oven.tscn" id="2_k0d3q"]
 [ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="3_jbxoo"]
 [ext_resource type="PackedScene" uid="uid://bqpdxpf2l7uw1" path="res://scenes/Appliance_system/stove.tscn" id="3_ypanj"]
-[ext_resource type="PackedScene" uid="uid://dxhfqm13c85ar" path="res://assets/models/decorations/table.glb" id="4_wlc25"]
+[ext_resource type="PackedScene" uid="uid://bkjryoge78wu0" path="res://assets/newmodels/decorations/Table.glb" id="4_wlc25"]
 [ext_resource type="PackedScene" uid="uid://b0ougk3d4jnku" path="res://scenes/Appliance_system/food_factory.tscn" id="4_yx2km"]
 [ext_resource type="PackedScene" uid="uid://bakeesqt3byva" path="res://scenes/Appliance_system/sink.tscn" id="5_a51gl"]
 [ext_resource type="Script" uid="uid://denxn65anovd7" path="res://scripts/Appliance_system/placeable.gd" id="5_ty3c0"]
@@ -118,6 +118,9 @@ radius = 0.1
 radial_segments = 6
 rings = 4
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_k0d3q"]
+size = Vector3(19.6471, 6.69421, 1.16809)
+
 [node name="BradleyTestScene" type="Node3D"]
 
 [node name="Platform" type="StaticBody3D" parent="."]
@@ -137,7 +140,6 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 9, 0.6
 
 [node name="Oven" parent="Platform" instance=ExtResource("2_k0d3q")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 9)
-using_tscn = true
 unique_name = "3"
 
 [node name="Stove" parent="Platform" instance=ExtResource("3_ypanj")]
@@ -147,7 +149,6 @@ unique_name = "2"
 
 [node name="Oven2" parent="Platform" instance=ExtResource("2_k0d3q")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, -9)
-using_tscn = true
 unique_name = "13"
 current_owner = 2
 
@@ -178,12 +179,10 @@ current_owner = 2
 
 [node name="Fryer" parent="Platform" instance=ExtResource("7_k0d3q")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 9)
-using_tscn = true
 unique_name = "4"
 
 [node name="Fryer2" parent="Platform" instance=ExtResource("7_k0d3q")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1, 0, -9)
-using_tscn = true
 unique_name = "14"
 current_owner = 2
 
@@ -315,12 +314,10 @@ current_owner = 2
 
 [node name="ChopTable" parent="Node3D" instance=ExtResource("11_e41aj")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5, 0, 7)
-using_tscn = true
 unique_name = "1"
 
 [node name="ChopTable2" parent="Node3D" instance=ExtResource("11_e41aj")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 9, 0, -7)
-using_tscn = true
 unique_name = "11"
 current_owner = 2
 
@@ -825,3 +822,34 @@ transform = Transform3D(-0.499732, 0, 0.0163683, 0, 0.5, 0, -0.0163683, 0, -0.49
 
 [node name="FenceSwampFence12" parent="Background" instance=ExtResource("33_ypanj")]
 transform = Transform3D(-0.499414, 0, 0.0241983, 0, 0.5, 0, -0.0241983, 0, -0.499414, -15.7532, -0.273126, 30.3099)
+
+[node name="Invis Walls" type="Node3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1, 0, 7)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Invis Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.3709, 0, 11.8556)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Invis Walls/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.9793, 2.84711, 0.256285)
+shape = SubResource("BoxShape3D_k0d3q")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Invis Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.7987, 0, -6.0264)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Invis Walls/StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.8767, 2.84711, 0.251392)
+shape = SubResource("BoxShape3D_k0d3q")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="Invis Walls"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 17.7987, 0, 3.01064)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Invis Walls/StaticBody3D3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.123306, 2.84711, -2)
+shape = SubResource("BoxShape3D_k0d3q")
+
+[node name="StaticBody3D4" type="StaticBody3D" parent="Invis Walls"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 17.7987, 0, 3.01064)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Invis Walls/StaticBody3D4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.123308, 2.84711, -21)
+shape = SubResource("BoxShape3D_k0d3q")

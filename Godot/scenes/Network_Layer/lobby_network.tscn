@@ -18,14 +18,16 @@ grow_vertical = 2
 script = ExtResource("1_rs7ak")
 
 [node name="Panel" type="Panel" parent="."]
-layout_mode = 0
-offset_left = -9.0
-offset_top = -8.0
-offset_right = 1167.0
-offset_bottom = 650.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_v21k8")
 
 [node name="RoleLabel" type="Label" parent="."]
+visible = false
 layout_mode = 2
 offset_right = 260.0
 offset_bottom = 23.0
@@ -38,11 +40,12 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -45.5
-offset_top = 8.0
+offset_top = 10.0
 offset_right = 45.5
-offset_bottom = 43.0
+offset_bottom = 45.0
 grow_horizontal = 2
 theme = ExtResource("2_v21k8")
+theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 35
 text = "CODE:"
 horizontal_alignment = 1
@@ -54,17 +57,19 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -130.0
-offset_top = 52.0
+offset_top = 53.0
 offset_right = 130.0
-offset_bottom = 112.0
+offset_bottom = 113.0
 grow_horizontal = 2
 theme = ExtResource("2_v21k8")
+theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 60
 text = "ABC123"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TeamLabel" type="Label" parent="."]
+visible = false
 layout_mode = 2
 offset_left = 4.0
 offset_top = 46.0
@@ -74,12 +79,20 @@ theme_override_font_sizes/font_size = 30
 text = "You are Team: "
 
 [node name="ControlContainer" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 489.0
-offset_top = 501.0
-offset_right = 689.0
-offset_bottom = 638.0
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -149.0
+offset_right = 100.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 0
 theme_override_constants/separation = 3
+alignment = 2
 
 [node name="ShuffleButton" parent="ControlContainer" instance=ExtResource("3_lf1rl")]
 layout_mode = 2
@@ -103,38 +116,56 @@ theme_override_font_sizes/font_size = 35
 text = "Leave
 "
 
-[node name="PanelContainer" parent="." instance=ExtResource("1_tbni4")]
+[node name="Slot1" parent="." instance=ExtResource("1_tbni4")]
 layout_mode = 2
 anchors_preset = 0
 offset_left = -473.914
-offset_top = -162.914
+offset_top = -185.914
 offset_right = -323.914
-offset_bottom = -12.9138
+offset_bottom = -35.9138
 rotation = -0.0349066
 
-[node name="PanelContainer2" parent="." instance=ExtResource("1_tbni4")]
+[node name="Slot2" parent="." instance=ExtResource("1_tbni4")]
+layout_mode = 2
+anchors_preset = 0
+offset_left = 313.086
+offset_top = -187.914
+offset_right = 463.086
+offset_bottom = -36.9139
+rotation = 0.0349066
+
+[node name="Slot3" parent="." instance=ExtResource("1_tbni4")]
 layout_mode = 2
 anchors_preset = 0
 offset_left = -436.914
-offset_top = 76.0862
+offset_top = 53.0862
 offset_right = -286.914
-offset_bottom = 227.086
+offset_bottom = 204.086
 rotation = 0.0349066
 
-[node name="PanelContainer3" parent="." instance=ExtResource("1_tbni4")]
+[node name="Slot4" parent="." instance=ExtResource("1_tbni4")]
 layout_mode = 2
 anchors_preset = 0
-offset_left = 322.086
-offset_top = -164.914
-offset_right = 472.086
-offset_bottom = -13.9139
-rotation = 0.0349066
-
-[node name="PanelContainer4" parent="." instance=ExtResource("1_tbni4")]
-layout_mode = 2
-anchors_preset = 0
-offset_left = 281.086
-offset_top = 77.0862
-offset_right = 431.086
-offset_bottom = 228.086
+offset_left = 263.086
+offset_top = 54.0862
+offset_right = 413.086
+offset_bottom = 205.086
 rotation = -0.0349066
+
+[node name="CodeText2" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -46.0
+offset_top = 314.0
+offset_right = 45.0
+offset_bottom = 374.0
+grow_horizontal = 2
+rotation = 0.0349066
+theme = ExtResource("2_v21k8")
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 60
+text = "VS"
+horizontal_alignment = 1
+vertical_alignment = 1

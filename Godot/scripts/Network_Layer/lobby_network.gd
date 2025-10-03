@@ -10,10 +10,10 @@ class_name LobbyNetwork
 @onready var start_button: Button = $ControlContainer/StartButton
 @onready var leave_button: Button = $ControlContainer/LeaveButton
 
-@onready var slot1: PlayerSlot = $PanelContainer
-@onready var slot2: PlayerSlot = $PanelContainer2
-@onready var slot3: PlayerSlot = $PanelContainer3
-@onready var slot4: PlayerSlot = $PanelContainer4
+@onready var slot1: PlayerSlot = $Slot1
+@onready var slot2: PlayerSlot = $Slot2
+@onready var slot3: PlayerSlot = $Slot3
+@onready var slot4: PlayerSlot = $Slot4
 
 var network_layer: ENetNetworkLayer
 var slot_scene: PackedScene

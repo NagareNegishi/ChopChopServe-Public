@@ -51,7 +51,3 @@ func clear() -> void:
 		else:
 			$HBox.remove_child(item)
 			item.free()
-
-func _physics_process(delta: float) -> void:
-	if Input.is_action_just_pressed("Action"):
-		add_food(null)

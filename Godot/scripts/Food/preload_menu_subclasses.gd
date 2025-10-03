@@ -1,5 +1,41 @@
 extends Node
 
+enum Ingredient{
+	BEEF,
+	CHICKEN,
+	FISH,
+	MILK,
+	GARLIC,
+	MUSHROOM,
+	ONION,
+	POTATO,
+	APPLE,
+	PINEAPPLE,
+	TOMATO,
+	PUMPKIN,
+	COCOA,
+	FLOUR,
+	PASTA,
+	CHEESE,
+	DOUGH
+}
+
+const MESH = {
+	Ingredient.GARLIC : preload("res://assets/newmodels/food/ingredients/raw/Garlic_Circle_003.res"),
+	Ingredient.MUSHROOM : preload("res://assets/newmodels/food/ingredients/raw/Mushroom_Cube_031.res"),
+	Ingredient.ONION : preload("res://assets/newmodels/food/ingredients/raw/Onion_Sphere_007.res"),
+	Ingredient.POTATO : preload("res://assets/newmodels/food/ingredients/raw/Potato_Cube_027.res"),
+	Ingredient.APPLE : preload("res://assets/newmodels/food/ingredients/raw/Apple_Icosphere_002.res"),
+	Ingredient.PINEAPPLE : preload("res://assets/newmodels/food/ingredients/raw/Pineapple_Cube_024.res"),
+	Ingredient.PUMPKIN : preload("res://assets/newmodels/food/ingredients/raw/Pumpkin_Sphere_009.res"),
+	Ingredient.COCOA : preload("res://assets/newmodels/food/ingredients/raw/Cocoa_Cube_023.res"),
+	Ingredient.FLOUR : preload("res://assets/newmodels/food/ingredients/raw/Flour_Cube_013.res"),
+	Ingredient.PASTA : preload("res://assets/newmodels/food/ingredients/raw/Pasta_Cylinder_004.res"),
+	Ingredient.CHEESE : preload("res://assets/newmodels/food/ingredients/raw/Cheese_Cube_020.res"),
+	Ingredient.DOUGH : preload("res://assets/newmodels/food/ingredients/raw/Dough_Circle.res"),
+	#Ingredient.TOMATO : preload("res://assets/models/food/ingredients/raw/BestTomato_Cube_076.res")
+
+}
 func _ready():
 	preload("res://scripts/Food/MenuItems/bolognese.gd")
 	preload("res://scripts/Food/MenuItems/bread.gd")
@@ -29,5 +65,5 @@ func _ready():
 	preload("res://scripts/Food/MenuItems/taco_beef.gd")
 	preload("res://scripts/Food/MenuItems/taco_chicken.gd")
 	preload("res://scripts/Food/MenuItems/taco_mushroom.gd")
-	preload("res://scripts/Food/MenuItems/pancakes.gd")
+	#preload("res://scripts/Food/MenuItems/pancakes.gd")
 	

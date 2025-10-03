@@ -79,42 +79,44 @@ albedo_texture = ExtResource("3_fmy4q")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_agtlm"]
 albedo_color = Color(0.129558, 0.129558, 0.129558, 1)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_agtlm"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fmy4q"]
+radius = 0.193057
+height = 1.12421
 
 [node name="Chicken" type="RigidBody3D"]
 script = ExtResource("1_fefbg")
 
 [node name="Chicken" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.5398, 0.70782, -0.455639, 0.0331486, 0.558725, 0.82869, 0.841141, 0.432223, -0.325063, 0, 0, 0)
+transform = Transform3D(-0.806721, -0.474722, 0.351911, 0.0331637, 0.558208, 0.829037, -0.590003, 0.680471, -0.434574, 0, 0, -0.0391429)
 mesh = SubResource("ArrayMesh_rv6tf")
 skeleton = NodePath("")
 
 [node name="ChickenCooked" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.319519, 0.418975, -0.269703, 0.0196214, 0.330722, 0.49052, 0.49789, 0.255842, -0.192412, 0, 0, 0)
+transform = Transform3D(-0.80672, -0.474722, 0.351912, 0.0331637, 0.558209, 0.829038, -0.590003, 0.680472, -0.434574, 0, 0, -0.0391429)
 visible = false
 mesh = SubResource("ArrayMesh_fmy4q")
 skeleton = NodePath("")
 
 [node name="SpoiledChicken" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.5398, 0.70782, -0.455639, 0.0331486, 0.558725, 0.82869, 0.841141, 0.432223, -0.325063, 0, 0, 0)
+transform = Transform3D(-0.80672, -0.474722, 0.351912, 0.0331637, 0.558208, 0.829038, -0.590003, 0.680472, -0.434574, 0, 0, -0.0391429)
 visible = false
 mesh = SubResource("ArrayMesh_rv6tf")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_h0s66")
 
 [node name="BurntChicken" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.5398, 0.70782, -0.455639, 0.0331486, 0.558725, 0.82869, 0.841141, 0.432223, -0.325063, 0, 0, 0)
+transform = Transform3D(-0.80672, -0.474722, 0.351912, 0.0331637, 0.558208, 0.829038, -0.590003, 0.680472, -0.434574, 0, 0, -0.0391429)
 visible = false
 mesh = SubResource("ArrayMesh_rv6tf")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_agtlm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.662515, 0, 0, 0, 0.662515, 0, 0, 0, 0.662515, 0, 0.316991, 0)
-shape = SubResource("BoxShape3D_agtlm")
+transform = Transform3D(-2.89594e-08, -0.662515, 0, 0.662515, -2.89594e-08, 0, 0, 0, 0.662515, 0.028852, 0.169167, 0)
+shape = SubResource("CapsuleShape3D_fmy4q")
 
 [node name="InteractableComponent" parent="." instance=ExtResource("3_h0s66")]
-transform = Transform3D(0.662515, 0, 0, 0, 0.662515, 0, 0, 0, 0.662515, 0, 0.316991, 0)
+transform = Transform3D(0.358, 0, 0, 0, 0.358, 0, 0, 0, 0.358, 0.0799476, 0.316991, 0)
 is_pickup = true
 
 [connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]

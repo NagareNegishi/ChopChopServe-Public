@@ -6,6 +6,11 @@ extends Equipment
 
 signal new_average(average: float)
 
+@onready var cookware_ui_scene : PackedScene = preload("res://UI/UI_Contents.tscn")
+@onready var sprite_ref : Sprite3D = Sprite3D.new()
+@onready var viewport : SubViewport = SubViewport.new()
+
+var cookware_ui : UIContents
 var power_receiving: int = 0
 var sizzle_particles: ParticleController
 
@@ -14,6 +19,7 @@ func _ready():
 	super._ready()
 	interactable_component.is_pickup = true
 	_setup_visual_effects()
+	_setup_cookware_ui()
 
 
 ## Setup visual effects
@@ -58,12 +64,17 @@ func put_all(items: Array) -> bool:
 func _put_food(food: Food) -> void:
 	#food.current_visibility(false)
 	food.change_collisions(true)
+	if self is not ChoppingBoard: cookware_ui.add_food(food)
+	if self is ChoppingBoard: 
+		food.scale = food.original_scale
+		food.global_rotation += Vector3(0,30,0)
 	emit_signal("food_placed", contents)
 	if can_cook():
 		# _average_food() # depend on Food implementation ---------------------------
 		food.start_cooking(int(power_receiving * coefficient), cooking_style)
 		_average_food()
 		_toggle_sizzle(true)
+		food.scale = Vector3(0,0,0)
 	print("Food placed in cookware: ", food.get_script().get_global_name(), ", Cookware can cook: ", can_cook(), ", Food cook time: ", food.get_cook_time(cooking_style))
 
 
@@ -93,6 +104,7 @@ func take_all() -> Array[Node]:
 		remove_child(item)
 	contents = []
 	contents_names = []
+	if self is not ChoppingBoard: cookware_ui.clear()
 	emit_signal("food_taken")
 	return all_items
 
@@ -198,6 +210,7 @@ func _serve_as_host(player_id: int) -> void:
 		return
 	plate.add_list_items(take_all()) # Method in Plate, takes Array of Food
 	_client_serve.rpc(player_id)
+	emit_signal("food_taken")
 
 
 ## Client-side method to serve food to plate, called by host
@@ -262,3 +275,16 @@ func _give_item_to_player(player_id: int, item_path: NodePath) -> void:
 @rpc("authority", "call_remote", "reliable")
 func _sync_contents(update: Array[String]) -> void:
 	contents_names = update
+
+
+func _setup_cookware_ui():
+	if self is ChoppingBoard: return
+	
+	cookware_ui = cookware_ui_scene.instantiate()
+	viewport.transparent_bg = true
+	sprite_ref.texture = viewport.get_texture()
+	sprite_ref.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	self.add_child(sprite_ref)
+	sprite_ref.add_child(viewport)
+	viewport.add_child(cookware_ui)
+	sprite_ref.global_position += Vector3(0,0.5,0)

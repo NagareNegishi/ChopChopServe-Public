@@ -45,6 +45,7 @@ albedo_color = Color(0.486275, 0.741176, 0.380392, 1)
 albedo_color = Color(0.140447, 0.140447, 0.140447, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_y3ybv"]
+size = Vector3(1, 0.199707, 0.932556)
 
 [node name="Dough" type="RigidBody3D"]
 script = ExtResource("1_dchqa")
@@ -69,11 +70,11 @@ skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_t7sf3")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.844018, 0, 0, 0, 0.844018, 0, 0, 0, 0.844018, 0, 0.431026, 0)
+transform = Transform3D(0.844018, 0, 0, 0, 0.844018, 0, 0, 0, 0.844018, 0, 0.0932952, -0.00048939)
 shape = SubResource("BoxShape3D_y3ybv")
 
 [node name="InteractableComponent" parent="." instance=ExtResource("3_6lhhf")]
-transform = Transform3D(0.844018, 0, 0, 0, 0.844018, 0, 0, 0, 0.844018, 0, 0.431026, 0)
+transform = Transform3D(0.843882, -0.0151573, 0, 0.0151573, 0.843882, 0, 0, 0, 0.844018, 0, 0.431026, 0)
 is_pickup = true
 
 [connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]

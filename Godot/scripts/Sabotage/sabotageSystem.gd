@@ -1,7 +1,23 @@
 class_name Sabotage_System
 extends Node
 
-########### Do I need to make a global timer for the different sabotages ?? ##########
+################################################################################
+# TODO:
+	# - Clean code up
+	# - Make sure everything is connected
+	# - Make sure it's networking properly (fire)
+	# - Change the get_random_position() function
+	# - Do something with the signals
+	# - Do I really need teamID?
+
+# Questions:
+	# - How many of Each thing do we want?
+		# - Water Spill
+		# - Rats
+	# - How long should each thing last?
+	# - Do we want to be able to stack sabotages?
+	# - Do we want to be able to have multiple sabotages of the same type at once?
+################################################################################
 
 # Don't currently actually use
 var current_sabotage
@@ -13,8 +29,6 @@ signal sabotage_success(sabotage_type: int)
 # Not used currently
 signal sabotage_failed(reason: String)
 signal sabotage_sending_team(teamID: int)
-
-# Need to remove crateSwitch and maybe add something else?
 
 # Define Sabotage Types
 enum SabotageType {
@@ -54,6 +68,7 @@ const sabotage_times = [
 @onready var reputation_system = ReputationSystem
 @onready var global_script = GlobalScript
 @onready var rat_attack = RatAttack
+@onready var player = Player
 
 
 # ------------------- Requesting Sabotage Functions ------------------- #
@@ -85,29 +100,36 @@ func request_sabotage(teamID: int, sabotage_type: int) -> void:
 	currency_system.minus_currency(teamID, cost)
 	# Minus reputation : maybe delete?
 	reputation_system.minus_reputation(teamID, 10)
-	
+
+	current_sabotage = sabotage_type
 	# If there is an extra peice of info needed for a sabotage
 	# Get and pass it here
 	# Probably a better way to do this !!
 
 	# If FIRE, Get a flammable appliance path
 	if sabotage_type == SabotageType.FIRE:
-		var chosen_path = _pick_flammable_appliance_path()
+		var chosen_path = _pick_flammable_appliance_path(teamID)
 		if chosen_path == NodePath(""):
 			print("No flammable appliances available for fire sabotage")
 			##sabotage_failed.rpc_id(sender_id, "No flammable appliances available")
 			return
 		# Call the execute Sabotage with a path
 		execute_sabotage.rpc(teamID, sabotage_type, chosen_path, Vector3(0, 0, 0))
+
 	# If, WATER_SPILL, get a position
 	elif sabotage_type == SabotageType.WATER_SPILL:
 		var position = get_random_position(teamID)
+		print("position of water is : ", position)
 		# Call the execute Sabotage with position
 		execute_sabotage.rpc(teamID, sabotage_type, NodePath(""), position)
+	
+	# If RAT_SPAWN
 	elif sabotage_type == SabotageType.RAT_SWARM:
-		var position = get_random_position(teamID)
-		var chosen_path = find_object_path()
-		execute_sabotage.rpc(teamID, sabotage_type, chosen_path, position)
+			var position = get_random_position(teamID)
+			print("\n next position is: ", position)
+			for i in range (5):
+				var chosen_path = find_object_path()
+				execute_sabotage.rpc(teamID, sabotage_type, chosen_path, position)
 	else:
 		# For now, otherwise just call the normal one
 		execute_sabotage.rpc(teamID, sabotage_type, NodePath(""), Vector3(0, 0, 0))
@@ -142,6 +164,10 @@ func _do_sabotage(teamID: int, sabotage_type: int, chosen_path: NodePath, positi
 			print("critic stuff")
 			spawn_food_critic()
 			# Handle food critic sabotage
+		SabotageType.SWITCH_CONTROLS:
+			print("switch stuff")
+			spawn_switch_controls(teamID)
+			# Handle switch controls sabotage
 		SabotageType.RAT_SWARM:
 			print("rat stuff")
 			spawn_rat_swarm(position, chosen_path)
@@ -166,9 +192,14 @@ func spawn_water_spill(teamID: int, duration: float, position: Vector3) -> void:
 	# Get the waterSpill.tscn : Change to the assest !!
 	var spill = preload("res://scripts/Sabotage/waterSpill.tscn").instantiate()
 	get_tree().get_current_scene().add_child(spill)
-	# Get the position of the Spill
+
 	spill.global_position = position
-	spill.send_position(position)
+	spill.set_sabotaged_team(teamID)
+
+
+	# Get the position of the Spill
+#	spill.global_position = position
+	#spill.send_position(position)
 	spill.spill()
 	##spill.global_position = get_random_spill_position(teamID)	
 	#spill.start_timer(duration)
@@ -181,18 +212,11 @@ func get_random_position(teamID: int) -> Vector3:
 
 	# Currently this just spawns on the specific sides of the floor
 	# Would like to so they don't spawn within appliances
-	# It takes note of things 
-	floor_node = get_tree().get_current_scene().get_node("NavigationRegion3D/Floor")
-
-	# Remove this later
-	if not floor_node:
-		push_error("Player node not found in scene!")
-		return Vector3.ZERO
-	else:
-		print("found the player node")
+	# It takes note of things
 
 	# Get the position
-	var centre = floor_node.global_transform.origin
+	var centre = Vector3.ZERO
+	#floor_node.global_transform.origin
 	
 	# Offset Numbers
 	var offset_x
@@ -205,6 +229,8 @@ func get_random_position(teamID: int) -> Vector3:
 	elif teamID == 2:
 		offset_x = randf_range(-7, 9)
 		offset_z = randf_range(0, 9)
+	
+	print("offsets: ", offset_x, offset_z)
 
 	# Return a position for the spill
 	return centre + Vector3(offset_x, 0, offset_z)
@@ -214,63 +240,55 @@ func get_random_position(teamID: int) -> Vector3:
 # Spawn a Fire
 func spawn_fire(teamID: int, chosen_path: NodePath) -> void:
 	# TODO: Rework logic to work better (make waterSpill and fireStart the same)
-	print("spawning fire")
+	#print("spawning fire")
 	var fire_start = preload("res://scripts/Sabotage/fireStart.tscn").instantiate()
 	get_tree().get_current_scene().add_child(fire_start)
 	# Get all the familiable appliances
+	fire_start.fire_spread.connect(_on_fire_spread)
 	fire_start.start_fire(teamID, chosen_path)
 
-	# TODO: Look into finding a way to make the fire spread to the bench next door to them.
 
-	#---------- OG code ----------#
-
-	# Pick a random one
-	# This should be changed to the one with the most progress
-	# add a variable to check?
-	##var random_index = randi() % flammable_appliances.size()
-	#3var appliance = flammable_appliances[random_index]
-
-	# Start the fire
-	##if "inflammable_component" in appliance and appliance.inflammable_component:
-	##	appliance.inflammable_component.ignite()
-	##else:
-	##	push_warning("Chosen appliance has no inflamiable compnent")
+func _on_fire_spread(teamID: int, prev_path: NodePath) -> void:
+	print("fire spreading")
+	# Pick a new appliance path (not the previous one)
+	var new_path = _pick_flammable_appliance_path(teamID)
+	if new_path != prev_path and new_path != NodePath(""):
+		spawn_fire(teamID, new_path)
 
 # Helper Function
 # Ge the Random Flammable Appliance Path
-func _pick_flammable_appliance_path() -> NodePath:
-	print("picking a path")
+func _pick_flammable_appliance_path(teamID: int) -> NodePath:
+	# Get the fammable appliances
 	var flammables = get_tree().get_nodes_in_group("flammable")
-	# If there is no flammables, then just send an empty path
+	# If there are none, return nothing
+	# ---------------------------------------------------------- Maybe Change this to something to avoid errors !!
 	if flammables.size() == 0:
 		print("no flammable appliances found")
 		return NodePath("")
-
-	# Find any appliances that are currently cooking
+	
+	# Arrays for the Appliances
 	var cooking := []
-	for a in flammables:
-		# If the Appliance is a powered and and cooking
-		if a is PoweredAppliance and a.current_status == PoweredAppliance.Status.COOKING:
-			# Add it
-			cooking.append(a)
+	var wrong_appliances := []
 
-	# If there are none cooking, then just use the og list
+	# Filter them so that you've got the ones for the other team
+	# And the Ones that are cooking
+	for a in flammables:
+		# There might be a better way to do this cleaner
+		if a.get_appliance_owner() != teamID:
+			wrong_appliances.append(a)
+		elif a is PoweredAppliance and a.current_status == PoweredAppliance.Status.COOKING:
+			cooking.append(a)
+	# Remove the wrong appliances from the flammables
+	for aa in wrong_appliances:
+		flammables.erase(aa)
+	# Because if theres nothing cooking, just go with any flammable
 	if cooking.size() == 0:
 		cooking = flammables
 
-	# Get a random appliance from the list
-	var chosen = cooking[randi() % cooking.size()]
-	print("chosen appliance: %s", % chosen)
+	var chosen_appliance = cooking[randi() % cooking.size()]
 
-	# Return the path of the appliance
-	return chosen.get_path()
-
-	# TODO: Add the fire spread logic etc:
-	# Maybe put a timer here
-	# start the timer and while the fire is going, then have it on
-	# if the fire is stopped then stop the timer
-	# but if the fire is still going when the timer ends
-	# then spread the fire to another appliance
+	# Return the chosen appliance path
+	return chosen_appliance.get_path()
 
 # ------- Food Critic Stuff ------- #
 # UNUSED CURRENTLY
@@ -281,9 +299,17 @@ func spawn_food_critic() -> void:
 		# then deal with it in the npc script
 	# Or:
 		# create a function in the npc and call it here
-		
+
+# ------- Switch Controls ------- #	
+# Switch the Direction of the other teams controls
+func spawn_switch_controls(teamID: int) -> void:
+	print("switching controls")
+	
+	var controls = preload("res://scripts/Sabotage/switchControls.tscn").instantiate()
+	get_tree().get_current_scene().add_child(controls)
+	controls.switch_controls(teamID)
+
 # ------- Rat Swarm Stuff ------- #
-# UNUSED CURRENTLY
 func spawn_rat_swarm(position: Vector3, path: NodePath) -> void:
 	print("spawning rat sparm")
 	RatAttack.spawn_rat_mischief(position, path)
@@ -295,6 +321,7 @@ func spawn_rat_swarm(position: Vector3, path: NodePath) -> void:
 	#add_child(rat)
 var benches : Array = []
 
+# Find the path of a bench within the scene
 func find_object_path() -> NodePath:
 	var appliances = get_tree().get_nodes_in_group("flammable")
 	# add a if statment about size here
@@ -310,13 +337,7 @@ func find_object_path() -> NodePath:
 
 # ------- Power Outage Stuff ------- #
 func spawn_power_outage(teamID: int) -> void:
-	print("spawning power outage")
+	print("jess: spawning power outage")
 	var power = preload("res://scripts/Sabotage/powerOutage.tscn").instantiate()
 	get_tree().get_current_scene().add_child(power)
-	power.turn_power_off(teamID)
-
-
-
-
-
-# IS THE A BUG AROUND STILL BEING ABLE TO COOK EVEN AFTER THE THING IS TURNED OFF?
+	power.power_outage(teamID)

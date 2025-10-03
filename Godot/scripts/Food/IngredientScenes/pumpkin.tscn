@@ -110,7 +110,8 @@ shadow_mesh = SubResource("ArrayMesh_7pucf")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2hud1"]
 albedo_color = Color(0.117647, 0.117647, 0.117647, 1)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_7e352"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_7e352"]
+radius = 0.296059
 
 [node name="Pumpkin" type="RigidBody3D"]
 script = ExtResource("1_h0j00")
@@ -127,24 +128,24 @@ mesh = SubResource("ArrayMesh_y0n3k")
 skeleton = NodePath("")
 
 [node name="ChoppedPumpkin" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.0456126, -0.0151112, 0.0107838, 0.00844829, -0.0446273, -0.016306, 0.0186578, -0.0167348, 0.0337464, 0, 0, 0)
+transform = Transform3D(0.0038792, -0.0205301, 0.0354318, 0.00843398, -0.0446356, -0.0162968, 0.0491306, 0.00928333, -1.54877e-09, 0, 0, 0)
 visible = false
 mesh = SubResource("ArrayMesh_bcell")
 skeleton = NodePath("")
 
 [node name="BurntPumpkin" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.0456126, -0.0151112, 0.0107838, 0.00844829, -0.0446273, -0.016306, 0.0186578, -0.0167348, 0.0337464, 0, 0, 0)
+transform = Transform3D(0.0038792, -0.0205301, 0.0354318, 0.00843398, -0.0446356, -0.0162968, 0.0491306, 0.00928333, -1.54877e-09, 0, 0, 0)
 visible = false
 mesh = SubResource("ArrayMesh_bcell")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_2hud1")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.466252, 0)
-shape = SubResource("BoxShape3D_7e352")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.252141, 0)
+shape = SubResource("SphereShape3D_7e352")
 
 [node name="InteractableComponent" parent="." instance=ExtResource("2_h0j00")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00561047, 0.471293, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00561047, 0.222209, 0)
 is_pickup = true
 
 [connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]

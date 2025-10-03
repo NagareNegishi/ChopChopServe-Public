@@ -1,0 +1,221 @@
+[gd_scene load_steps=10 format=3 uid="uid://bqtbpncsp1lqe"]
+
+[ext_resource type="PackedScene" uid="uid://geqq8dhkrryc" path="res://UI/UI_PlayerJoin.tscn" id="1_6vwja"]
+[ext_resource type="Script" uid="uid://cakb0cas42ccg" path="res://scripts/UI/ui_lobby_hud.gd" id="1_vhq2q"]
+[ext_resource type="Texture2D" uid="uid://b7p20fg37d6jk" path="res://assets/textures/Controls/keyboard_s.png" id="2_i60pi"]
+[ext_resource type="FontFile" uid="uid://dxc6n0umgi0q4" path="res://assets/fonts/Jua-Regular.ttf" id="2_ykmgt"]
+[ext_resource type="Texture2D" uid="uid://dhj88ureo7l26" path="res://assets/textures/Controls/keyboard_a.png" id="3_s1smo"]
+[ext_resource type="Texture2D" uid="uid://bjt562i3fmp15" path="res://assets/textures/Controls/keyboard_w.png" id="4_uk72j"]
+[ext_resource type="Texture2D" uid="uid://dv03e3ubki56c" path="res://assets/textures/Controls/keyboard_d.png" id="5_ruavh"]
+[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/DefaultTheme.tres" id="6_ruavh"]
+[ext_resource type="Texture2D" uid="uid://cnhrnvlwhttx8" path="res://assets/textures/HUD/image (1).png" id="7_gc66e"]
+
+[node name="Root" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vhq2q")
+
+[node name="Controls" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -158.0
+offset_top = -387.0
+offset_right = -118.0
+offset_bottom = -347.0
+grow_horizontal = 0
+grow_vertical = 0
+rotation = -0.0872665
+scale = Vector2(0.6, 0.6)
+
+[node name="Background" type="ColorRect" parent="Controls"]
+layout_mode = 0
+offset_left = 1.15141
+offset_top = 526.102
+offset_right = 235.151
+offset_bottom = 667.102
+rotation = 0.0523599
+color = Color(0.980392, 0.976471, 0.964706, 0.866667)
+
+[node name="W" type="TextureRect" parent="Controls"]
+modulate = Color(0.0705882, 0.0705882, 0.0705882, 1)
+layout_mode = 0
+offset_left = 10.3447
+offset_top = 529.0
+offset_right = 74.3447
+offset_bottom = 593.0
+rotation = 0.0523599
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("4_uk72j")
+
+[node name="A" type="TextureRect" parent="Controls"]
+modulate = Color(0.0705882, 0.0705882, 0.0705882, 1)
+layout_mode = 0
+offset_left = 8.34465
+offset_top = 582.0
+offset_right = 72.3447
+offset_bottom = 646.0
+rotation = 0.0523599
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("3_s1smo")
+
+[node name="S" type="TextureRect" parent="Controls"]
+modulate = Color(0.0705882, 0.0705882, 0.0705882, 1)
+layout_mode = 0
+offset_left = 45.0
+offset_top = 544.0
+offset_right = 109.0
+offset_bottom = 608.0
+rotation = 0.0523599
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_i60pi")
+
+[node name="D" type="TextureRect" parent="Controls"]
+modulate = Color(0.0705882, 0.0705882, 0.0705882, 1)
+layout_mode = 0
+offset_left = 43.0
+offset_top = 594.0
+offset_right = 107.0
+offset_bottom = 658.0
+rotation = 0.0523599
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("5_ruavh")
+
+[node name="Label2" type="Label" parent="Controls"]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 606.0
+offset_right = 186.0
+offset_bottom = 636.0
+rotation = 0.0523599
+theme = ExtResource("6_ruavh")
+theme_override_colors/font_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
+theme_override_font_sizes/font_size = 30
+text = "Rotate"
+
+[node name="Label" type="Label" parent="Controls"]
+layout_mode = 0
+offset_left = 98.0
+offset_top = 558.0
+offset_right = 165.0
+offset_bottom = 588.0
+rotation = 0.0523599
+theme = ExtResource("6_ruavh")
+theme_override_colors/font_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
+theme_override_font_sizes/font_size = 30
+text = "Move"
+
+[node name="Collectables" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 45.0
+offset_top = 568.0
+offset_right = 85.0
+offset_bottom = 608.0
+
+[node name="Hat" type="TextureRect" parent="Collectables"]
+layout_mode = 0
+offset_left = -68.0
+offset_top = -91.0
+offset_right = 92.0
+offset_bottom = 49.0
+texture = ExtResource("7_gc66e")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Collectables"]
+layout_mode = 0
+offset_left = -16.0
+offset_top = 35.0
+offset_right = 31.0
+offset_bottom = 72.0
+theme = ExtResource("6_ruavh")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 36
+text = "1/1"
+
+[node name="PlayerList" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -66.0
+offset_right = 60.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 120
+alignment = 1
+
+[node name="P1" type="Control" parent="PlayerList"]
+layout_mode = 2
+
+[node name="Player" parent="PlayerList/P1" instance=ExtResource("1_6vwja")]
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 120.0
+offset_right = 121.0
+offset_bottom = 1.0
+
+[node name="P2" type="Control" parent="PlayerList"]
+layout_mode = 2
+
+[node name="Player" parent="PlayerList/P2" instance=ExtResource("1_6vwja")]
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 120.0
+offset_right = 121.0
+offset_bottom = 1.0
+
+[node name="P3" type="Control" parent="PlayerList"]
+layout_mode = 2
+
+[node name="Player" parent="PlayerList/P3" instance=ExtResource("1_6vwja")]
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 120.0
+offset_right = 121.0
+offset_bottom = 1.0
+
+[node name="P4" type="Control" parent="PlayerList"]
+layout_mode = 2
+
+[node name="Player" parent="PlayerList/P4" instance=ExtResource("1_6vwja")]
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 120.0
+offset_right = 121.0
+offset_bottom = 1.0
+
+[node name="Server" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 8.0
+offset_top = 7.0
+offset_right = 132.0
+offset_bottom = 47.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("2_ykmgt")
+theme_override_font_sizes/font_size = 40
+text = "Server"

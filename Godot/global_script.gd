@@ -8,12 +8,13 @@ enum UpgradeType{
 
 var player : Player
 var player_colours = PackedColorArray([Color("ff94fc",1), Color("57ceff",1), Color("ff734f",1), Color("76ff61",1)]) # Colours: Pink, Blue, Red, Green
-var player_outline_colours = PackedColorArray([Color("f20cb5",1), Color("124dff",1), Color("e32f00",1), Color("1cd400",1)]) # Colours: Pink, Blue, Red, Green
+var player_outline_colours = PackedColorArray([Color("ed58d1",1), Color("4f77f0",1), Color("e32f00",1), Color("53ba43",1)]) # Colours: Pink, Blue, Red, Green
 var ui_game_state : UIGameState 
 
 var player_name : String
-
-
+var load_screen : LoadingScreen
+@onready var load_scene : PackedScene = preload("res://UI/UI_LoadingScreen.tscn")
+@onready var canvas_layer : CanvasLayer = CanvasLayer.new()
 ## Called when the node enters the scene tree for the first time.
 ## @return void
 func _ready() -> void:
@@ -24,6 +25,11 @@ func _ready() -> void:
 	if get_tree().get_current_scene().has_node("HUD"):
 		ui_game_state = get_tree().get_current_scene().get_node("HUD")
 	
+	load_screen = load_scene.instantiate()
+	canvas_layer.visible = false
+	canvas_layer.layer = 1000
+	add_child(canvas_layer)
+	canvas_layer.add_child(load_screen)
 	
 
 
@@ -49,7 +55,6 @@ func get_local_player_by_id(player_id : int) -> Player:
 
 func get_pause_menu() -> Pause:
 	return get_tree().current_scene.get_node("== HUD ==/UiPause")
-
 
 
 #================== Player State ===============================

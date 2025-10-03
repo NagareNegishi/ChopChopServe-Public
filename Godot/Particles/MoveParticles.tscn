@@ -29,7 +29,7 @@ height = 0.05
 radial_segments = 6
 rings = 6
 
-[node name="MoveParticles" type="Node3D"]
+[node name="Sparkle" type="Node3D"]
 script = ExtResource("1_wvidf")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]

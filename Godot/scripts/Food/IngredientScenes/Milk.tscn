@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=4 uid="uid://buwb1io8j33ph"]
+[gd_scene load_steps=7 format=4 uid="uid://ilw161oxn1ar"]
 
 [ext_resource type="Script" uid="uid://cp0hc6tgnaw7f" path="res://scripts/Food/Ingredients/milk.gd" id="1_il8k8"]
 [ext_resource type="Material" uid="uid://d1mru8ywyt58h" path="res://assets/newmodels/texturemap.tres" id="2_il8k8"]
@@ -39,23 +39,30 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_uaj7t")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_b0yn0"]
+size = Vector3(0.414887, 0.724274, 0.336151)
 
 [node name="Milk" type="RigidBody3D"]
 script = ExtResource("1_il8k8")
 
 [node name="Milk" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.0347329, 0.0215802, 0, -0.035967, 0.0208397, 0, 0, 0, 0.04, 0, 0, 0)
+transform = Transform3D(-2.27734e-09, -1.41495e-09, -0.06, -0.0539505, 0.0312596, 0, 0.0520994, 0.0323703, -2.62268e-09, 0, 0, 0)
 mesh = SubResource("ArrayMesh_eij10")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00181581, 0.384171, -0.00300584)
 shape = SubResource("BoxShape3D_b0yn0")
 
 [node name="InteractableComponent" parent="." instance=ExtResource("3_inqbr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00561047, -0.0017208, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00561047, 0.220386, 0)
 is_pickup = true
+
+[node name="CollisionShape3D" parent="InteractableComponent" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0114326, 0.0305457, 0)
 
 [connection signal="action_use" from="InteractableComponent" to="." method="_on_interactable_component_action_use"]
 [connection signal="hovered" from="InteractableComponent" to="." method="_on_interactable_component_hovered"]
 [connection signal="interacted" from="InteractableComponent" to="." method="_on_interactable_component_interacted"]
 [connection signal="toggle_collision" from="InteractableComponent" to="." method="_on_interactable_component_toggle_collision"]
+
+[editable path="InteractableComponent"]

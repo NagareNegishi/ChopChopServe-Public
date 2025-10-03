@@ -1,11 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://krj0gwn31x8u"]
+[gd_scene load_steps=7 format=3 uid="uid://krj0gwn31x8u"]
 
 [ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="1_06mdy"]
 [ext_resource type="Script" uid="uid://c28hj0gk73hfy" path="res://scripts/Appliance_system/Concrete_classes/stove_with_pot.gd" id="2_0e7nx"]
 [ext_resource type="PackedScene" uid="uid://d4bn5pltpfukp" path="res://assets/newmodels/furniture/StoveSingle.glb" id="3_6qjqx"]
-[ext_resource type="Texture2D" uid="uid://b2baw0vfm8358" path="res://assets/textures/misc/LoadingBarOutside.png" id="4_j0dn2"]
-[ext_resource type="Texture2D" uid="uid://ts7ljaleqkhg" path="res://assets/textures/misc/LoadingBarInside.png" id="5_2df5m"]
-[ext_resource type="Script" uid="uid://ue6iw3lh8jpn" path="res://UI/ApplianceProgressBar.gd" id="6_1w06i"]
+[ext_resource type="PackedScene" path="res://UI/UI_ProgressCook.tscn" id="4_2df5m"]
+[ext_resource type="Script" uid="uid://c6jgfkd4gmbry" path="res://UI/ApplianceProgressBar2.gd" id="5_vgwh3"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_j0dn2"]
 viewport_path = NodePath("SubViewport")
@@ -15,43 +14,31 @@ script = ExtResource("2_0e7nx")
 capacity = 1
 valid_classes = Array[String]([])
 cook_interval = 1.0
-using_tscn = false
+using_tscn = true
 unique_name = "UNNAMED_APPLIANCE"
 current_owner = 1
-cooking_style = 0
+cooking_style = 5
 model_scene = ExtResource("3_6qjqx")
 
 [node name="StoveSingle" parent="." index="3" instance=ExtResource("3_6qjqx")]
 
 [node name="SubViewport" type="SubViewport" parent="." index="4"]
 transparent_bg = true
-size = Vector2i(122, 13)
+size = Vector2i(127, 33)
 render_target_update_mode = 4
 
-[node name="TextureProgressBar2" type="TextureProgressBar" parent="SubViewport" index="0"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -61.0
-offset_top = -7.50002
-offset_right = 935.0
-offset_bottom = 48.5
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.123, 0.266)
-max_value = 1.0
-texture_over = ExtResource("4_j0dn2")
-texture_progress = ExtResource("5_2df5m")
-texture_progress_offset = Vector2(6.26, 7.33)
-tint_under = Color(0, 0, 0, 0.27451)
-tint_over = Color(0, 0, 0, 1)
-tint_progress = Color(0.167779, 0.668736, 0.111628, 1)
-script = ExtResource("6_1w06i")
+[node name="UiProgressCook" parent="SubViewport" index="0" instance=ExtResource("4_2df5m")]
+script = ExtResource("5_vgwh3")
+
+[node name="ProgressBar" parent="SubViewport/UiProgressCook" index="2"]
+script = null
 
 [node name="Sprite3D" type="Sprite3D" parent="." index="5"]
-transform = Transform3D(-0.999966, 0, -0.00827288, -0.00639621, 0.634218, 0.773128, 0.00524681, 0.773154, -0.634196, 0, 1.23562, 0.392126)
+transform = Transform3D(-0.999966, 0, -0.00827288, -0.00639621, 0.634218, 0.773128, 0.00524681, 0.773154, -0.634196, -0.00206184, 0.187983, -0.0141381)
+billboard = 1
+no_depth_test = true
 texture = SubResource("ViewportTexture_j0dn2")
 
-[connection signal="add_appliance" from="." to="SubViewport/TextureProgressBar2" method="_on_add_appliance"]
+[connection signal="add_appliance" from="." to="SubViewport/UiProgressCook" method="_on_add_appliance"]
+
+[editable path="SubViewport/UiProgressCook"]

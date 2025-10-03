@@ -52,7 +52,7 @@ func toggle_visible(tog : bool):
 	if ENetManager.is_host():
 		rpc("host_pause", tog)
 	else: 
-		if GlobalScript.get_local_player(): GlobalScript.get_local_player().disable_controls(tog)
+		if GlobalScript.get_local_player(): GlobalScript.get_local_player().disable_controls(tog, true)
 
 @rpc("any_peer", "call_local")
 func host_pause(tog : bool):

@@ -1,6 +1,24 @@
-[gd_scene load_steps=2 format=3 uid="uid://d0hulcvks34nk"]
+[gd_scene load_steps=4 format=3 uid="uid://d0hulcvks34nk"]
 
 [ext_resource type="Script" uid="uid://cu2jaa6i061el" path="res://scripts/Sabotage/waterSpill.gd" id="1_breg5"]
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_breg5"]
+height = 0.408203
+radius = 0.882324
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_breg5"]
+
 [node name="waterSpill" type="Node3D"]
 script = ExtResource("1_breg5")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.126866, 0)
+shape = SubResource("CylinderShape3D_breg5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D"]
+transform = Transform3D(1.5, 0, 0, 0, 1, 0, 0, 0, 1.5, 0, 0, 0)
+mesh = SubResource("CylinderMesh_breg5")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

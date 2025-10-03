@@ -198,7 +198,7 @@ func _update_contents():
 ## Perform action depend on what player is holding
 ## @param _item: The Node Player is holding
 func player_has(_item: Node) -> void:
-	assert(false, "player_has() must be implemented in " + get_class())
+	Debug.error("player_has() not implemented in " + get_class())
 
 
 ## Called when interacted with and will make the player pick this item up

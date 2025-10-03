@@ -35,7 +35,6 @@ func _provide_plate() -> Plate:
 	plate.name = prefix + plate.get_script().get_global_name() + str(supply_count)
 	supply_count += 1
 	plate_count += 1
-	ApplianceManager.register_item(plate, current_owner, plate.name)
 	return plate
 
 

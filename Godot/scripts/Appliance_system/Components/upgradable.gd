@@ -104,7 +104,7 @@ func _request_upgrade_as_host(player_id: int) -> void:
 ## @param player_id: The id of the player who is requesting the upgrade
 ## @param cost: The cost of the upgrade
 func _attempt_upgrade(player_id: int, cost: int) -> void:
-	if CurrencySystem.check_currency(ENetManager.get_team(player_id), cost):
+	if CurrencySystem.can_afford(ENetManager.get_team(player_id), cost):
 		CurrencySystem.minus_currency(ENetManager.get_team(player_id), cost)
 		_upgrade.rpc()
 

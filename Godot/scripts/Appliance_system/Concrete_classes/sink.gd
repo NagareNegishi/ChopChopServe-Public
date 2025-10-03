@@ -68,7 +68,6 @@ func _provide_water() -> Water:
 	var water = water_scene.instantiate()
 	water.name = prefix + "Water" + str(supply_count)
 	supply_count += 1
-	ApplianceManager.register_item(water, current_owner, water.name)
 	return water
 
 

@@ -10,10 +10,6 @@ var team2_appliances: Array[Appliance] = []
 var shared_appliances: Array[Appliance] = [] # if this concept is needed
 var next_id: int = 0
 
-# Registered items created from appliances
-var team1_items: Dictionary = {}  # item_name -> Node
-var team2_items: Dictionary = {}
-
 
 ## Local player requests new Appliance
 ## @param type: The type of appliance to request
@@ -40,22 +36,23 @@ func _request_appliance_to_host(type: String, team: int):
 ## @param type: The type of appliance to provide
 ## @param team: The team ID (1 or 2) to assign the appliance to
 func _provide_appliance_as_host(type: String, team: int):
+	if not ENetManager.is_host():
+		Debug.net_log("_provide_appliance_as_host should only be called on the host!")
+		return
 	var price = ApplianceFactory.book[type].price
 
-	## here ask money management to if they can afford it-----------------------
-	if team == 0:
-		var appliance_name = _generate_appliance_name(type, team)
-		notify_appliance_created.rpc(type, team, appliance_name)
-		return
+	# if team == 0:
+	# 	var appliance_name = _generate_appliance_name(type, team)
+	# 	notify_appliance_created.rpc(type, team, appliance_name)
+	# 	return
 
-	var can_afford = true
-	#---------------------------------------------------------------------------
-	if not can_afford:
-		print("Team %d cannot afford '%s'" % [team, type])
+	# Check if the team can afford the appliance
+	if not CurrencySystem.can_afford(team, price):
+		Debug.info("Team %d cannot afford '%s'" % [team, type])
 		return
-	var appliance_name2 = _generate_appliance_name(type, team)
+	var appliance_name = _generate_appliance_name(type, team)
 
-	notify_appliance_created.rpc(type, team, appliance_name2)
+	notify_appliance_created.rpc(type, team, appliance_name)
 
 
 
@@ -129,27 +126,3 @@ func reset_appliances() -> void:
 	team2_appliances.clear()
 	shared_appliances.clear()
 	next_id = 0
-
-
-## Register an item created by an appliance
-func register_item(item: Node, team: int, item_name: String) -> void:
-	if not item:
-		push_error("Cannot register a null item!")
-		return
-	match team:
-		1:
-			team1_items[item_name] = item
-			#print("Registered item for Team 1: %s" % item_name)
-		2:
-			team2_items[item_name] = item
-			#print("Registered item for Team 2: %s" % item_name)
-		_: push_error("Unknown team: %d" % team)
-
-
-## Get item by name for RPC operations
-func get_item(item_name: String) -> Node:
-	if team1_items.has(item_name):
-		return team1_items[item_name]
-	if team2_items.has(item_name):
-		return team2_items[item_name]
-	return null

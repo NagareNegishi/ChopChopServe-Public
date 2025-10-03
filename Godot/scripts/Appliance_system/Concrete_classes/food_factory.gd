@@ -60,7 +60,6 @@ func _create_food(food_name: String) -> Node:
 	var food = food_scene.instantiate()
 	food.name = prefix + food_name + str(supply_count)
 	supply_count += 1
-	ApplianceManager.register_item(food, current_owner, food.name)
 	return food
 
 

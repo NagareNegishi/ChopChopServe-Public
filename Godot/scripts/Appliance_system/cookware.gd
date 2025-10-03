@@ -117,7 +117,7 @@ func _can_accept_all(items: Array) -> bool:
 		Debug.all("Cannot accept items, its empty")
 		return false
 	if contents.size() + items.size() > capacity:
-		Debug.all("Cannot accept items: " + get_script().get_global_name() + " is full")
+		Debug.all("Cannot accept items: " + name + " is full")
 		return false
 	for item in items:
 		if not item.get_script().get_global_name() in valid_food:

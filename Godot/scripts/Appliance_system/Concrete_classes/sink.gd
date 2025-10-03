@@ -15,7 +15,6 @@ func _init():
 func _ready():
 	super._ready()
 	capacity = 1
-	# action_interval = 1.0
 	_setup_visual_effects()
 	_set_affixes()
 	if not (water_scene and water_scene.can_instantiate()):

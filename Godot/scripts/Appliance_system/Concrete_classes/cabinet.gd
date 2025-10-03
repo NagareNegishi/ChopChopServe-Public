@@ -5,6 +5,7 @@ extends UnPoweredAppliance
 
 # var item_slots: Array[Vector3] = []  ## Where to place items
 var plate_scene: PackedScene = preload("res://scripts/order_system/Plate.tscn")
+var plate_count: int = 0
 
 ## Setup the model instance
 func _init():
@@ -17,6 +18,7 @@ func _ready():
 	super._ready()
 	capacity = 1
 	_set_affixes()
+	capacity_upgradable.upgrade_completed.connect(_on_capacity_upgraded)
 	# _setup_item_slots()
 	if plate_scene and plate_scene.can_instantiate():
 		Debug.all("Cabinet plate scene preloaded successfully")
@@ -32,6 +34,7 @@ func _provide_plate() -> Plate:
 	var plate = plate_scene.instantiate()
 	plate.name = prefix + plate.get_script().get_global_name() + str(supply_count)
 	supply_count += 1
+	plate_count += 1
 	ApplianceManager.register_item(plate, current_owner, plate.name)
 	return plate
 
@@ -46,6 +49,12 @@ func _add_sync_properties(config: SceneReplicationConfig):
 func _setup_upgradable():
 	super._setup_upgradable()
 	enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
+
+
+## Add one more plate when capacity is upgraded
+func _on_capacity_upgraded(property: String) -> void:
+	if property == "capacity" and plate_count < capacity:
+		put(_provide_plate())
 
 
 # ## Setup cookware slots, should be overridden by subclasses

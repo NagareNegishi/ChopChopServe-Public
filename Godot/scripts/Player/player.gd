@@ -353,8 +353,8 @@ func server_pickup(player_name : String, item_name : String) -> void:
 ## @return bool if successfully picked up
 @rpc("any_peer", "call_local")
 func _client_pickup(player_path : String, item_path : String) -> bool:
-	var item : Node3D = get_tree().current_scene.get_node(item_path)
-	var player : Node3D = get_tree().current_scene.get_node(player_path)
+	var item : Node3D = get_tree().current_scene.get_node_or_null(item_path)
+	var player : Node3D = get_tree().current_scene.get_node_or_null(player_path)
 	
 	if(item == null):
 		push_error("item invalid")
@@ -587,7 +587,14 @@ func disable_controls(_disable : bool, _action : bool):
 	is_actoin_disabled = _action
 
 func _can_app_interact() -> bool:
+	if !_closest_item: return false
+	
 	var inter := _closest_item.get_parent()
-	return (inter is Appliance && inter.current_owner == ENetManager.get_my_team() || 
+	
+	if !"current_owner" in inter: 
+		return true
+
+	return (inter.current_owner == ENetManager.get_my_team() || 
 		  inter is Bench && !inter is ChopTable || 
-		inter.current_owner == 0)
+		inter.current_owner == 0 || 
+		inter is UpgradeHammer)

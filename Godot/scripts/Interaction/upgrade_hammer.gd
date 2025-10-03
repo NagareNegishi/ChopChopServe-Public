@@ -19,10 +19,15 @@ func _ready() -> void:
 	interact_comp.local_action_use.connect(_can_upgrade)
 	_particle_effect.emitting = false
 	_upgrade_sprite.visible = false
-	remove_child(_particle_effect)
+	
+	if _particle_effect.get_parent():
+		remove_child(_particle_effect)
+	
 	await get_tree().create_timer(2).timeout
-	remove_child(_upgrade_ui)
-	get_tree().current_scene.add_child.call_deferred(_upgrade_ui)
+	
+	if _upgrade_ui.get_parent():
+		remove_child(_upgrade_sprite)
+		get_tree().current_scene.add_child.call_deferred(_upgrade_sprite)
 
 
 ## Called when interacted with, it connects signal to find upgrade when hovered and item dropped

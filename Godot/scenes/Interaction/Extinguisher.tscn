@@ -41,6 +41,7 @@ rings = 4
 radius = 0.677734
 
 [node name="Extinguisher" instance=ExtResource("1_tyt0g")]
+lock_rotation = true
 script = ExtResource("2_6nuxd")
 
 [node name="ExtinguishRange" type="RayCast3D" parent="." index="0"]

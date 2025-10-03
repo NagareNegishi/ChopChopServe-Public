@@ -1,10 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://kx2ls46d27yc"]
+[gd_scene load_steps=8 format=3 uid="uid://kx2ls46d27yc"]
 
 [ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/DefaultTheme.tres" id="1_v3djh"]
 [ext_resource type="Script" uid="uid://b1fcailv3s73c" path="res://UI/ui_upgrade.gd" id="1_yttyd"]
 [ext_resource type="StyleBox" uid="uid://bvtk4fhf7agfw" path="res://UI/UI_Upgrade_Bad_Border.tres" id="2_pe7db"]
-[ext_resource type="Texture2D" uid="uid://c8rgo4k2ayhu8" path="res://assets/textures/misc/round-star.png" id="3_28o3u"]
+[ext_resource type="Texture2D" uid="uid://bmerniv1j22pj" path="res://assets/textures/misc/round-star.png" id="3_28o3u"]
 [ext_resource type="StyleBox" uid="uid://3jt6gf3oh3gx" path="res://UI/UI_Upgrade_Bad.tres" id="3_msvw8"]
+[ext_resource type="Texture2D" uid="uid://ch6v2rhv6xhkx" path="res://assets/textures/Controls/keyboard_j.png" id="6_msvw8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_32e4a"]
+bg_color = Color(0.976471, 0.976471, 0.976471, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [node name="UiUpgrade" type="Control"]
 z_index = 2
@@ -94,4 +102,33 @@ offset_top = -36.0
 offset_right = -42.0
 offset_bottom = -21.0
 texture = ExtResource("3_28o3u")
+expand_mode = 2
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = -65.0
+offset_top = 29.0
+offset_right = -50.0
+offset_bottom = 44.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_32e4a")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+layout_mode = 0
+offset_left = -76.0
+offset_top = 19.0
+offset_right = -12.0
+offset_bottom = 83.0
+scale = Vector2(0.55, 0.55)
+max_value = 1.0
+value = 1.0
+texture_progress = ExtResource("6_msvw8")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+self_modulate = Color(0.0705882, 0.0705882, 0.0705882, 1)
+layout_mode = 0
+offset_left = -75.0
+offset_top = 20.0
+offset_right = -42.0
+offset_bottom = 53.0
+texture = ExtResource("6_msvw8")
 expand_mode = 2

@@ -1,6 +1,5 @@
 class_name UIUpgrade extends Control
 
-@onready var team_color : Panel = $TeamColor
 @onready var cost_text : Label = $Cost
 @onready var app_text : Label = $Appliance
 

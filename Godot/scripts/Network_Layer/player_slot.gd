@@ -2,7 +2,6 @@ extends Control
 class_name PlayerSlot
 
 
-@onready var name_label: Label = $VBoxContainer/NameLabel
 @onready var kick_button: Button = $KickButton
 var player_data: Dictionary
 

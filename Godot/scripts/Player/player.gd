@@ -77,6 +77,7 @@ func _ready() -> void:
 	if !multiplayer.get_unique_id() == name.to_int() : return
 	
 	await get_tree().create_timer(0.1).timeout
+	add_to_group("Players")
 	rpc_id(1, "_server_set_name", name.to_int(), GlobalScript.player_name)
 
 

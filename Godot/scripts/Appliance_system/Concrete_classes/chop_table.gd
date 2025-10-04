@@ -42,7 +42,7 @@ func _add_chopping_board() -> void:
 ## @return: True if placement was successful, false otherwise
 func put(item: Node) -> bool:
 	if not _can_accept(item):
-		return false 
+		return false
 	return chopping_board.put(item)
 
 
@@ -81,19 +81,12 @@ func player_has(item: Node) -> void:
 		return
 	chopping_board.put_request(item)
 
-	# new version have Food quality related error
-	# Previous working version --------------------------------------------
-	# if item:
-	# 	chopping_board.put_request(item)
-	# 	return
-	# chopping_board.take_request()
-
 
 ## Trigger action, if subclass has action
 func _on_interactable_component_action_use(_is_action: bool) -> void:
 	if _is_action:
 		chopping_board.cook(1)
-		print("Player ID: ", ENetManager.get_my_id() ,", chop!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+		Debug.all("Player ID: " + str(ENetManager.get_my_id()) + ", chop!!")
 	else:
 		chopping_board.finish_cook()
 #---------------------------------------------------------------------------------------------------
@@ -108,15 +101,3 @@ func take_food() -> Food:
 	assert(false, "ChopTable does not support take_food")
 	return null
 #-------------------------------------------------------------------------------
-
-
-
-# # Non-networking methods for Player interaction ----------------------------------------------------
-# ## Place an item onto this appliance
-# ## @param item: The Node to place on this appliance
-# ## @return: True if placement was successful, false otherwise
-# func put_from_player(item: Node) -> bool:
-# 	if not _can_accept(item):
-# 		return false
-# 	return chopping_board.put_from_player(item)
-# #---------------------------------------------------------------------------------------------------

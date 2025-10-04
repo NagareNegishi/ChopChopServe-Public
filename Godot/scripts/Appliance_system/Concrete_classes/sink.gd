@@ -16,7 +16,6 @@ func _init():
 func _ready():
 	super._ready()
 	capacity = 1
-	# action_interval = 1.0
 	_setup_visual_effects()
 	_set_affixes()
 	if not (water_scene and water_scene.can_instantiate()):
@@ -70,7 +69,6 @@ func _provide_water() -> Water:
 	var water = water_scene.instantiate()
 	water.name = prefix + "Water" + str(supply_count)
 	supply_count += 1
-	ApplianceManager.register_item(water, current_owner, water.name)
 	return water
 
 
@@ -176,10 +174,9 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 		highlight_component.hide_feedback()
 		return
 	var item = GlobalScript.get_local_player().item_in_hand
-	#---------------------------------------------------------------------------
 	if item:
-		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())
-	#---------------------------------------------------------------------------
+		Debug.all("Player ID: " + str(ENetManager.get_my_id())
+			+ " has : " + item.get_script().get_global_name() + ", hovered: " + get_script().get_global_name())
 	if not item:
 		highlight_component.set_state(ApplianceHighlight.HighlightState.HOVER)
 		return

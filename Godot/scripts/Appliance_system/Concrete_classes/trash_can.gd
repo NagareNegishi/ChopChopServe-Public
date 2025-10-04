@@ -18,7 +18,7 @@ func _init():
 ## Setup the trash can properties
 func _ready():
 	super._ready()
-	action_interval = 0.1 ## maybe small amount to avoid rapidly throwing items?
+	action_interval = 0.1
 	add_to_group("Bin")
 
 
@@ -34,9 +34,6 @@ func throw(item: Node) -> bool:
 		# Remove from player and destroy immediately
 		GlobalScript.get_local_player().remove_item()
 		item.queue_free()
-		#--------------------------------------------
-		print("Threw away: ", item.get_script().get_global_name())
-		#--------------------------------------------
 		return true
 	return false
 
@@ -103,7 +100,7 @@ func _everyone_throw(player_id: int) -> void:
 	if not item:
 		return
 	GlobalScript.get_local_player_by_id(player_id).remove_item()
-	print("Item removed: ", item, ", at: ", ENetManager.get_my_id())
+	Debug.all("Item removed: " + item.get_script().get_global_name() + ", at: " + str(ENetManager.get_my_id()))
 	item.queue_free()
 
 
@@ -126,7 +123,7 @@ func _everyone_throw_all(player_id: int, item_name: String) -> void:
 	action_timer.start()
 	var from = GlobalScript.get_local_player_by_id(player_id).item_in_hand
 	if not from or from.name != item_name:
-		print("Player is not holding the expected item")
+		Debug.warning("Player is not holding the expected item")
 		return
 	var items
 	if from is Plate:
@@ -144,10 +141,9 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 		highlight_component.hide_feedback()
 		return
 	var item = GlobalScript.get_local_player().item_in_hand
-	#---------------------------------------------------------------------------
 	if item:
-		print("Player has : ", item.get_script().get_global_name(), ", hovered: ", get_script().get_global_name())
-	#---------------------------------------------------------------------------
+		Debug.all("Player ID: " + str(ENetManager.get_my_id())
+			+ " has : " + item.get_script().get_global_name() + ", hovered: " + get_script().get_global_name())
 	if not item:
 		highlight_component.set_state(ApplianceHighlight.HighlightState.HOVER)
 		return

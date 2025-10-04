@@ -23,7 +23,6 @@ func _ready():
 func _setup_upgradable():
 	super._setup_upgradable()
 	enable_upgrade("power", [1, 1, 1], [100, 200, 300])
-	# enable_upgrade("capacity", [1, 1, 1], [80, 160, 240])
 
 
 ## Place an item onto this appliance
@@ -54,7 +53,6 @@ func _put_food(food: Food) -> void:
 	if current_status == Status.COOKING:
 		_average_food()
 		food.start_cooking(power, cooking_style)
-	# print("Food placed in blender: ", food.get_script().get_global_name(), ", Food cook time: ", food.get_cook_time(cooking_style))
 
 
 ## Average cooking time of food in cookware
@@ -98,10 +96,10 @@ func take_all() -> Array[Node]:
 ## @return: True if all items can be placed, false otherwise
 func _can_accept_all(items: Array) -> bool:
 	if items.is_empty():
-		print("Cannot accept items, its empty")
+		Debug.all("Cannot accept items, its empty")
 		return false
 	if contents.size() + items.size() > capacity:
-		print("Cannot accept items: ", get_script().get_global_name(), " is at full capacity")
+		Debug.all("Cannot accept items: " + get_script().get_global_name() + " is full")
 		return false
 	for item in items:
 		if not item.get_script().get_global_name() in valid_classes:

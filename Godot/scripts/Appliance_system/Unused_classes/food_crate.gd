@@ -64,7 +64,6 @@ func take() -> Node:
 	var food = supply.instantiate()
 	food.name = prefix + supply_name + str(supply_count)
 	supply_count += 1
-	ApplianceManager.register_item(food, current_owner, food.name)
 	return food
 
 

@@ -10,10 +10,11 @@ class_name LobbyNetwork
 @onready var start_button: Button = $ControlContainer/StartButton
 @onready var leave_button: Button = $ControlContainer/LeaveButton
 
-@onready var slot1: PlayerSlot = $Slot1
-@onready var slot2: PlayerSlot = $Slot2
-@onready var slot3: PlayerSlot = $Slot3
-@onready var slot4: PlayerSlot = $Slot4
+@onready var player_list_root: HBoxContainer = $PlayerList
+@onready var slot1: PlayerSlot = $PlayerList/PanelContainer
+@onready var slot2: PlayerSlot = $PlayerList/PanelContainer2
+@onready var slot3: PlayerSlot = $PlayerList/PanelContainer3
+@onready var slot4: PlayerSlot = $PlayerList/PanelContainer4
 
 var network_layer: ENetNetworkLayer
 var slot_scene: PackedScene
@@ -70,7 +71,7 @@ func _set_team_label(team_number: int) -> void:
 func _set_ip_label() -> void:
 	if is_host:
 		ip_label.show()
-		ip_label.text = "%s" % ENetManager.enet_layer.get_connection_info()
+		ip_label.text = "Share your IP: %s" % ENetManager.enet_layer.get_connection_info()
 	else:
 		ip_label.hide()
 
@@ -148,11 +149,12 @@ func _on_team_assigned(team1: Array[int], team2: Array[int]) -> void:
 ## Start Game
 func _start_game() -> void:
 	buttons_container.hide()
+	player_list_root.hide()
 ##----------------------------------------------------------------------------------
 	# Actual scene
 	# SceneManager.change_scene(SceneManager.Scene.LOBBY)
 	# Test scene
-	SceneManager.change_scene(SceneManager.Scene.JOHNO)
+	SceneManager.change_scene(SceneManager.Scene.TEST)
 
 ##----------------------------------------------------------------------------------
 

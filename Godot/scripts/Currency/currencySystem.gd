@@ -68,3 +68,8 @@ func _client_add_currency(teamID : int, currency : int):
 	elif teamID == 2:
 		team2_currency = currency
 	currency_changed.emit(teamID, currency)
+
+
+# Check if team can afford a cost
+func can_afford(teamID: int, cost: float) -> bool:
+	return check_currency(teamID, -cost)

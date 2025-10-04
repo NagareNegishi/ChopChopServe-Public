@@ -45,7 +45,6 @@ static func _register_foods() -> void:
 				food_book[food_name] = food_scene
 				var sample = food_scene.instantiate()
 				food_instances[food_name] = sample
-				# print("Registered: ", food_name)
 			else:
 				push_warning("Failed to load food scene: " + scene_path)
 		file_name = dir.get_next()
@@ -61,7 +60,6 @@ func _create_food(food_name: String) -> Node:
 	var food = food_scene.instantiate()
 	food.name = prefix + food_name + str(supply_count)
 	supply_count += 1
-	ApplianceManager.register_item(food, current_owner, food.name)
 	return food
 
 

@@ -70,12 +70,12 @@ func _put_food(food: Food) -> void:
 		food.global_rotation += Vector3(0,30,0)
 	emit_signal("food_placed", contents)
 	if can_cook():
-		# _average_food() # depend on Food implementation ---------------------------
 		food.start_cooking(int(power_receiving * coefficient), cooking_style)
 		_average_food()
 		_toggle_sizzle(true)
 		food.scale = Vector3(0,0,0)
-	print("Food placed in cookware: ", food.get_script().get_global_name(), ", Cookware can cook: ", can_cook(), ", Food cook time: ", food.get_cook_time(cooking_style))
+	Debug.cook_log("Food placed in cookware: " + food.get_script().get_global_name()
+		+ ", Cookware can cook: " + str(can_cook()) + ", Food cook time: " + str(food.get_cook_time(cooking_style)))
 
 
 ## Average cooking time of food in cookware
@@ -114,10 +114,10 @@ func take_all() -> Array[Node]:
 ## @return: True if all items can be placed, false otherwise
 func _can_accept_all(items: Array) -> bool:
 	if items.is_empty():
-		print("Cannot accept items, its empty")
+		Debug.all("Cannot accept items, its empty")
 		return false
 	if contents.size() + items.size() > capacity:
-		print("Cannot accept items: ", get_script().get_global_name(), " is at full capacity")
+		Debug.all("Cannot accept items: " + name + " is full")
 		return false
 	for item in items:
 		if not item.get_script().get_global_name() in valid_food:
@@ -133,11 +133,6 @@ func cook(power: int) -> bool:
 	power_receiving = power
 	for food in contents:
 		food.start_cooking(int(power_receiving * coefficient), cooking_style)
-		# #-----------------------------------------------------------------------
-		# print(get_script().get_global_name(), " start cooking ", food.get_script().get_global_name(),
-		#  " with power: ", int(power_receiving * coefficient), ", Style is: ",
-		# ApplianceFactory.CookingStyle.keys()[cooking_style], ", Food cook time: ", food.get_cook_time(cooking_style))
-		# #----------------------------------------------------------------------
 	_toggle_sizzle(true)
 	return true
 
@@ -176,7 +171,7 @@ func player_has(item: Node) -> void:
 ## @return: True if the plate can accept the current contents, false otherwise
 func _check_plate(plate: Plate) -> bool:
 	if is_empty():
-		print("Nothing to serve from: ", get_script().get_global_name())
+		Debug.cook_log("Nothing to serve from: " + get_script().get_global_name())
 		return false
 	if plate.is_ready():
 		return true
@@ -204,7 +199,7 @@ func _serve_as_host(player_id: int) -> void:
 		return
 	var plate = GlobalScript.get_local_player_by_id(player_id).item_in_hand
 	if not plate or not (plate is Plate):
-		print("Player is not holding a plate")
+		Debug.all("Player is not holding a plate")
 		return
 	if not _check_plate(plate):
 		return

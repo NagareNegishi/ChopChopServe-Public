@@ -4,7 +4,8 @@ extends Cookware
 ## Setup the model instance
 func _init():
 	super._init()
-	model_scene = preload("res://assets/newmodels/items/OvenTray.glb") # for test
+	model_scene = preload("res://assets/newmodels/items/OvenTray.glb")
+	default_facing = Direction.WEST
 
 
 ## Setup the fryer properties

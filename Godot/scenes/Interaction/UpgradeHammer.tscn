@@ -69,7 +69,7 @@ texture = SubResource("ViewportTexture_egb0i")
 
 [node name="SubViewport" type="SubViewport" parent="UpgradeUI" index="0"]
 transparent_bg = true
-size = Vector2i(647, 342)
+size = Vector2i(167, 117)
 
 [node name="UiUpgrade" parent="UpgradeUI/SubViewport" index="0" instance=ExtResource("4_mhxkh")]
 

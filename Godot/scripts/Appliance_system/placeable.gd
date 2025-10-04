@@ -27,7 +27,6 @@ const APPLIANCES = 4
 ## Default facing direction
 @export var default_facing: Direction = Direction.NORTH
 
-
 var can_move: bool = true
 var facing_direction: Direction
 var model_instance: Node3D
@@ -36,6 +35,12 @@ var interaction_area: Area3D  # For detection
 var interaction_shape: CollisionShape3D
 var multiplayer_sync: MultiplayerSynchronizer
 var initialized: bool = false
+
+# Store transform for protect the class from unwanted changes
+var original_transform: Transform3D
+var original_scale: Vector3
+var original_model_transform: Transform3D
+var original_model_scale: Vector3
 
 
 ## Initialize the placeable with specific dimensions
@@ -63,11 +68,8 @@ func _ready():
 	interaction_area.area_entered.connect(_on_area_entered)
 	interaction_area.area_exited.connect(_on_area_exited)
 	initialized = true
-#----------------------------------------
 	lock()
-	# print_sync_properties()
-	_store_original_transform()       # should be removed once player returns original scale !!!
-#----------------------------------------
+	_store_original_transform()
 
 
 ## Create required child nodes
@@ -120,17 +122,16 @@ func setup_model():
 			model_instance = child
 			align_to_model()
 			return
-
 	# otherwise, instantiate the model scene and align it
 	if not model_scene:
-		push_warning("No model assigned to " + name)
+		Debug.warning("No model assigned to " + name)
 		return
 	if not model_scene.can_instantiate():
-		push_error("Cannot instantiate model scene for " + name)
+		Debug.warning("Cannot instantiate model scene for " + name)
 		return
 	model_instance = model_scene.instantiate()
 	if not model_instance:
-		push_error("Failed to instantiate model for " + name)
+		Debug.error("Failed to instantiate model for " + name)
 		return
 	align_to_model()
 	add_child(model_instance)
@@ -183,6 +184,24 @@ func resize_model():
 	if current_size != Vector3.ZERO:
 		var scale_factor = size / current_size
 		model_instance.scale = scale_factor
+
+
+## Store the original transform for potential restoration
+func _store_original_transform():
+	original_transform = transform
+	original_scale = scale
+	if model_instance:
+		original_model_transform = model_instance.transform
+		original_model_scale = model_instance.scale
+
+
+## Restore the original transform and scale
+func restore_original_transform():
+	transform = original_transform
+	scale = original_scale
+	if model_instance:
+		model_instance.transform = original_model_transform
+		model_instance.scale = original_model_scale
 
 
 ## Update size and automatically refresh collision shape
@@ -346,41 +365,4 @@ func print_sync_properties():
 ## Toggle physics state - requires documentation from original author
 func turnOnPhysics(is_on : bool):
 	set_deferred("freeze", !is_on)
-#-------------------------------------------------------------------------------
-
-
-
-#-------------------------------------------------------------------------------
-# This part should be remove for better performance
-# this is fallback code for if player can not return placeable as original transform
-
-var original_transform: Transform3D
-var original_scale: Vector3
-var original_model_transform: Transform3D
-var original_model_scale: Vector3
-
-func _store_original_transform():
-	# Store the main object's transform/scale
-	original_transform = transform
-	original_scale = scale
-	
-	# Store model's transform/scale if it exists
-	if model_instance:
-		original_model_transform = model_instance.transform
-		original_model_scale = model_instance.scale
-	
-	# print("Original transforms stored for ", get_class())
-
-func restore_original_transform():
-	# Restore main object
-	transform = original_transform
-	scale = original_scale
-	
-	# Restore model if it exists
-	if model_instance:
-		model_instance.transform = original_model_transform
-		model_instance.scale = original_model_scale
-	
-	# print("All transforms restored for ", get_class())
-
 #-------------------------------------------------------------------------------

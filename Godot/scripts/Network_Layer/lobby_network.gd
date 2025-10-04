@@ -152,9 +152,9 @@ func _start_game() -> void:
 	player_list_root.hide()
 ##----------------------------------------------------------------------------------
 	# Actual scene
-	# SceneManager.change_scene(SceneManager.Scene.LOBBY)
+	SceneManager.change_scene(SceneManager.Scene.LOBBY)
 	# Test scene
-	SceneManager.change_scene(SceneManager.Scene.TEST)
+	#SceneManager.change_scene(SceneManager.Scene.TEST)
 
 ##----------------------------------------------------------------------------------
 

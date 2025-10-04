@@ -169,10 +169,9 @@ visible = false
 
 [node name="== LEVEL SELECT ==" type="Node" parent="."]
 
-[node name="LevelSelectArea" parent="== LEVEL SELECT ==" node_paths=PackedStringArray("load_ui", "car") instance=ExtResource("64_kguer")]
+[node name="LevelSelectArea" parent="== LEVEL SELECT ==" node_paths=PackedStringArray("car") instance=ExtResource("64_kguer")]
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -14.9253, 1.86524, -24.7682)
 level = 9
-load_ui = NodePath("../../== HUD ==/UILoadingScreen")
 car = NodePath("../../PlayerCar")
 
 [node name="CollisionShape3D" parent="== LEVEL SELECT ==/LevelSelectArea" index="0"]
@@ -182,10 +181,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.580652, 0.373383, 0.493759
 transform = Transform3D(11.9103, 0, 0, 0, 469.514, 0, 0, 0, 11.9103, -1.0322, -1.75679, 0.133724)
 mesh = SubResource("TorusMesh_uthtu")
 
-[node name="LevelSelectArea2" parent="== LEVEL SELECT ==" node_paths=PackedStringArray("load_ui", "car") instance=ExtResource("64_kguer")]
+[node name="LevelSelectArea2" parent="== LEVEL SELECT ==" node_paths=PackedStringArray("car") instance=ExtResource("64_kguer")]
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 34.2354, 3.87718, -0.704389)
 level = 8
-load_ui = NodePath("../../== HUD ==/UILoadingScreen")
 car = NodePath("../../PlayerCar")
 
 [node name="CollisionShape3D" parent="== LEVEL SELECT ==/LevelSelectArea2" index="0"]
@@ -195,10 +193,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.580652, 0.373383, 0.493759
 transform = Transform3D(11.9103, 0, 0, 0, 469.514, 0, 0, 0, 11.9103, -1.0322, -1.75679, 0.133724)
 mesh = SubResource("TorusMesh_uthtu")
 
-[node name="LevelSelectArea3" parent="== LEVEL SELECT ==" node_paths=PackedStringArray("load_ui", "car") instance=ExtResource("64_kguer")]
+[node name="LevelSelectArea3" parent="== LEVEL SELECT ==" node_paths=PackedStringArray("car") instance=ExtResource("64_kguer")]
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -15.5632, 1.85757, 23.6392)
 level = 8
-load_ui = NodePath("../../== HUD ==/UILoadingScreen")
 car = NodePath("../../PlayerCar")
 
 [node name="CollisionShape3D" parent="== LEVEL SELECT ==/LevelSelectArea3" index="0"]

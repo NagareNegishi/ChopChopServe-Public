@@ -1,11 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://cw5uvt35a87nt"]
+[gd_scene load_steps=7 format=3 uid="uid://cw5uvt35a87nt"]
 
 [ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="1_mlwd7"]
 [ext_resource type="Script" uid="uid://dmims6gtvtpcn" path="res://scripts/Appliance_system/Concrete_classes/blender.gd" id="2_co8sm"]
 [ext_resource type="Texture2D" uid="uid://b2baw0vfm8358" path="res://assets/textures/misc/LoadingBarOutside.png" id="3_8shnm"]
 [ext_resource type="Texture2D" uid="uid://ts7ljaleqkhg" path="res://assets/textures/misc/LoadingBarInside.png" id="4_f4din"]
-[ext_resource type="Script" uid="uid://ue6iw3lh8jpn" path="res://UI/ApplianceProgressBar.gd" id="5_3yrah"]
-[ext_resource type="PackedScene" uid="uid://p5bueh2iq7ap" path="res://scenes/Appliance_system/blenderMeshONLY.tscn" id="6_f4din"]
+[ext_resource type="PackedScene" uid="uid://7td4bfjn7lt1" path="res://assets/newmodels/furniture/Blender.glb" id="6_f4din"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_yc0qb"]
 viewport_path = NodePath("SubViewport")
@@ -21,7 +20,9 @@ current_owner = 1
 cooking_style = 0
 model_scene = null
 
-[node name="SubViewport" type="SubViewport" parent="." index="3"]
+[node name="Blender" parent="." index="3" instance=ExtResource("6_f4din")]
+
+[node name="SubViewport" type="SubViewport" parent="." index="4"]
 transparent_bg = true
 size = Vector2i(122, 13)
 render_target_update_mode = 4
@@ -46,13 +47,10 @@ texture_progress_offset = Vector2(6.26, 7.33)
 tint_under = Color(0, 0, 0, 0.27451)
 tint_over = Color(0, 0, 0, 1)
 tint_progress = Color(0.167779, 0.668736, 0.111628, 1)
-script = ExtResource("5_3yrah")
 
-[node name="Sprite3D" type="Sprite3D" parent="." index="4"]
+[node name="Sprite3D" type="Sprite3D" parent="." index="5"]
 transform = Transform3D(-1.01114, 0, -0.0083653, -0.00646766, 0.641303, 0.781765, 0.00530542, 0.781791, -0.641281, 0, 1.16728, -0.246644)
 texture = SubResource("ViewportTexture_yc0qb")
-
-[node name="newblender" parent="." index="5" instance=ExtResource("6_f4din")]
 
 [connection signal="cookware_taken" from="." to="SubViewport/TextureProgressBar2" method="_on_food_taken"]
 [connection signal="food_placed" from="." to="SubViewport/TextureProgressBar2" method="_on_blender_signal"]

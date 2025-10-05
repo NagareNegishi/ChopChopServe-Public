@@ -5,7 +5,7 @@ extends PoweredAppliance
 func _init():
 	super._init()
 	appliance_name = "Blender"
-	#model_scene = preload("res://assets/models/furniture/Blender.glb")
+	model_scene = preload("res://assets/newmodels/furniture/Blender.glb")
 
 
 ## Setup the blender properties

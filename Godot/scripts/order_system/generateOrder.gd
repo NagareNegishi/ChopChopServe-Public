@@ -54,6 +54,7 @@ func get_simple_order(starter_index: int):
 	
 	if !s.is_empty():
 		new_order.append(food_generator(s, starter_index))
+	
 	return new_order
 
 # Gets a random menuItem from a passed list
@@ -80,3 +81,4 @@ func check_food_avalibility(new_list: Array, original_list: Array):
 	for item in original_list:
 		if item.is_available:
 			new_list.append(item)
+	

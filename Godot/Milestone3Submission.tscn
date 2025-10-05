@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://tqlmk00ju4gv"]
+[gd_scene load_steps=41 format=3 uid="uid://tqlmk00ju4gv"]
 
 [ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_d7dv3"]
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="2_efp6k"]
@@ -10,18 +10,17 @@
 [ext_resource type="PackedScene" uid="uid://d1iqitph17b80" path="res://scenes/Interaction/AbstractPickup.tscn" id="5_tpcwe"]
 [ext_resource type="Script" uid="uid://dv1g0obwvkkkt" path="res://scripts/QueueSpot.gd" id="6_5vug4"]
 [ext_resource type="Script" uid="uid://dnns4dn8p042y" path="res://scripts/Table.gd" id="7_yre0w"]
-[ext_resource type="PackedScene" uid="uid://dxhfqm13c85ar" path="res://assets/models/decorations/table.glb" id="8_0w0vd"]
-[ext_resource type="PackedScene" uid="uid://bhby0n47wy3nv" path="res://assets/models/infrastructure/wall.tscn" id="9_q731q"]
-[ext_resource type="PackedScene" uid="uid://hxrvqyggbykc" path="res://assets/models/NuFurniture/Bench.glb" id="10_dcxpp"]
-[ext_resource type="PackedScene" uid="uid://bkbecho40n7y6" path="res://assets/models/NuFurniture/trashcan.glb" id="11_j5cjb"]
-[ext_resource type="PackedScene" uid="uid://v7nfkw4q5020" path="res://assets/models/NuFurniture/sink.2glb.glb" id="12_x5gpl"]
-[ext_resource type="PackedScene" uid="uid://dm1p1i7vkurb0" path="res://assets/models/NuFurniture/nufryer.glb" id="13_yabua"]
-[ext_resource type="PackedScene" uid="uid://cdqkrjq5ctkjy" path="res://assets/models/NuFurniture/actualwide.glb" id="14_bgd6j"]
-[ext_resource type="PackedScene" uid="uid://bjhvmpray6c2h" path="res://assets/models/NuFurniture/fatdrawers.glb" id="15_pm2sf"]
-[ext_resource type="PackedScene" uid="uid://cjl0yhl53y46r" path="res://assets/models/items/choppingboard.glb" id="16_dcdg3"]
-[ext_resource type="PackedScene" uid="uid://dyyd5onvpbmsv" path="res://assets/models/NuFurniture/oven.glb" id="17_1u8lq"]
-[ext_resource type="PackedScene" uid="uid://b7x0xycilg7vt" path="res://assets/models/NuFurniture/newblender.glb" id="18_hhg8y"]
-[ext_resource type="PackedScene" uid="uid://b64oudiukwpwa" path="res://assets/models/NuFurniture/nufridge.glb" id="19_mclak"]
+[ext_resource type="PackedScene" uid="uid://bkjryoge78wu0" path="res://assets/newmodels/decorations/Table.glb" id="8_0w0vd"]
+[ext_resource type="PackedScene" uid="uid://ckv18fcp6t7xb" path="res://assets/newmodels/WallsnShit/wall.tscn" id="9_q731q"]
+[ext_resource type="PackedScene" uid="uid://iwgylemncmgr" path="res://assets/newmodels/furniture/BasicBench.glb" id="10_dcxpp"]
+[ext_resource type="PackedScene" uid="uid://c5pi83bxsjrrc" path="res://assets/newmodels/furniture/Bin.glb" id="11_j5cjb"]
+[ext_resource type="PackedScene" uid="uid://ho847w7nyk3w" path="res://assets/newmodels/furniture/DeepestFryer.glb" id="13_yabua"]
+[ext_resource type="PackedScene" uid="uid://ow3m0t3n6yy8" path="res://actualwide.glb" id="14_bgd6j"]
+[ext_resource type="PackedScene" uid="uid://cu1l2fmb68va5" path="res://fatdrawers.glb" id="15_pm2sf"]
+[ext_resource type="PackedScene" uid="uid://dj8n6gpyee7v0" path="res://assets/newmodels/items/Choppingboard.glb" id="16_dcdg3"]
+[ext_resource type="PackedScene" uid="uid://465ulms0kb50" path="res://assets/newmodels/furniture/Oven.glb" id="17_1u8lq"]
+[ext_resource type="PackedScene" uid="uid://7td4bfjn7lt1" path="res://assets/newmodels/furniture/Blender.glb" id="18_hhg8y"]
+[ext_resource type="PackedScene" uid="uid://nrfjhpm1sa30" path="res://assets/newmodels/furniture/Fridge.glb" id="19_mclak"]
 [ext_resource type="PackedScene" uid="uid://df6cemvjo3grw" path="res://scenes/Appliance_system/chop_table.tscn" id="20_yjbi8"]
 [ext_resource type="PackedScene" uid="uid://b5nb1nxo1r1kb" path="res://scenes/Appliance_system/bench.tscn" id="21_lx8vs"]
 [ext_resource type="PackedScene" uid="uid://dt4wue57mdx1d" path="res://scenes/Appliance_system/trash_can.tscn" id="22_j4h4t"]
@@ -578,10 +577,10 @@ transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -4, 0, 9
 [node name="trashcan2" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("11_j5cjb")]
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 7, 0, 9)
 
-[node name="sink_2glb" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("12_x5gpl")]
+[node name="sink_2glb" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("31_frgwe")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 5, 0, 5)
 
-[node name="sink_2glb2" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("12_x5gpl")]
+[node name="sink_2glb2" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("31_frgwe")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -2, 0, 5)
 
 [node name="nufryer" parent="NavigationRegion3D/== LSIDE ==" instance=ExtResource("13_yabua")]
@@ -708,13 +707,13 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 [node name="trashcan4" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("11_j5cjb")]
 transform = Transform3D(-1, 0, -8.74232e-08, 0, 1, 0, 8.74232e-08, 0, -1, -4, 0, -9)
 
-[node name="sink_2glb3" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("12_x5gpl")]
+[node name="sink_2glb3" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("31_frgwe")]
 transform = Transform3D(1, 0, -2.38419e-07, 0, 1, 0, 2.38419e-07, 0, 1, -2, 0, -5)
 
-[node name="sink_2glb4" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("12_x5gpl")]
+[node name="sink_2glb4" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("31_frgwe")]
 transform = Transform3D(1, 0, -2.38419e-07, 0, 1, 0, 2.38419e-07, 0, 1, 5, 0, -5)
 
-[node name="Sink" parent="NavigationRegion3D/== RSIDE ==/sink_2glb4" instance=ExtResource("23_sx1cg")]
+[node name="Sink2" parent="NavigationRegion3D/== RSIDE ==/sink_2glb4" instance=ExtResource("23_sx1cg")]
 
 [node name="nufryer3" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("13_yabua")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 4, 0, -9)
@@ -758,7 +757,7 @@ transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0, 0, -7
 [node name="oven4" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("17_1u8lq")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 3, 0, -7)
 
-[node name="Oven" parent="NavigationRegion3D/== RSIDE ==/oven4" instance=ExtResource("25_1cti7")]
+[node name="Oven2" parent="NavigationRegion3D/== RSIDE ==/oven4" instance=ExtResource("25_1cti7")]
 
 [node name="newblender3" parent="NavigationRegion3D/== RSIDE ==" instance=ExtResource("18_hhg8y")]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 9, 0, -7)

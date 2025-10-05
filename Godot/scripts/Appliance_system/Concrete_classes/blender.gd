@@ -4,6 +4,7 @@ extends PoweredAppliance
 ## Setup the model instance
 func _init():
 	super._init()
+	appliance_name = "Blender"
 	#model_scene = preload("res://assets/models/furniture/Blender.glb")
 
 
@@ -14,7 +15,7 @@ func _ready():
 	valid_classes = ["Tomato", "Water", "Milk", "Cocoa", "Flour", "Vanilla Icecream", "Strawberry", "Egg"]
 	capacity = 4
 	power = 1
-	
+
 	add_to_group("Appliance")
 
 

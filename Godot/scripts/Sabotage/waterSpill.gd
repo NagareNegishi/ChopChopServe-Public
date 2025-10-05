@@ -15,7 +15,7 @@ extends Node3D
 var sabotaged_teamID: int
 
 var water_particles: ParticleController
-
+var players_in_spill : Array[Player] = []
 signal in_water_spill()
 signal customer_down()
 
@@ -57,6 +57,9 @@ func start_timer() -> void:
 
 func _on_timer_timeout() -> void:
 	print("\n \n the waterspill has ended")
+	for player in players_in_spill:
+		player.set_speed(4)
+	
 	queue_free()
 
 # Handle customer fall on server only to avoid duplicate effects
@@ -107,6 +110,8 @@ func _on_area_3d_body_entered(body:Node3D) -> void:
 		var teamID = get_team_id(body)
 		print("teamID of player in water: ", teamID)
 		reputation_system.minus_reputation(teamID, 5)
+		players_in_spill.append(body)
+		body.set_speed(1.5)
 		emit_signal("in_water_spill")
 		
 	elif body is Customer:
@@ -127,3 +132,9 @@ func get_team_id(body: Node3D) -> int:
 	else:
 		print("i was the client")
 		return 2
+
+
+func _on_area_3d_body_exited(body: Node3D) -> void:
+	if body is Player:
+		players_in_spill.erase(body)
+		body.set_speed(4)

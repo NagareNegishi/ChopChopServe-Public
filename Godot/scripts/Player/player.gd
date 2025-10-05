@@ -1,7 +1,7 @@
 class_name Player 
 extends CharacterBody3D
 
-signal comp_hovered(cop : InteractableComponent)
+signal comp_hovered(cop : InteractableComponent, is_hover : bool)
 signal item_dropped(item : Node3D)
 
 const ACCELERATION : float = 100
@@ -77,6 +77,7 @@ func _ready() -> void:
 	if !multiplayer.get_unique_id() == name.to_int() : return
 	
 	await get_tree().create_timer(0.1).timeout
+	add_to_group("Players")
 	rpc_id(1, "_server_set_name", name.to_int(), GlobalScript.player_name)
 
 
@@ -98,6 +99,7 @@ func _server_set_name(id : int, p_name : String):
 ## @param delta the times it takes per frame to render
 ## @return void
 func _physics_process(delta: float) -> void:
+	invert_controls(true)
 	if ENetManager.is_host():
 		collision_check()
 	
@@ -217,7 +219,8 @@ func _interact() -> void:
 		return
 	
 	elif (((item_in_hand is Plate  || item_in_hand is Cookware) && _closest_item != null) && 
-	(_closest_item.get_parent() is Food || _closest_item.get_parent() is Appliance)):
+	(_closest_item.get_parent() is Food || _closest_item.get_parent() is Appliance)
+	) || _can_app_interact():
 		_closest_item.interact()
 		return
 	
@@ -225,9 +228,8 @@ func _interact() -> void:
 	_closest_item != null && _closest_item.is_pickup)):
 		server_drop_item(self.get_path(), false)
 	
-	if _closest_item == null:
+	if (_closest_item == null || !_can_app_interact()):
 		return
-	 
 	_closest_item.interact()
 
 
@@ -352,8 +354,8 @@ func server_pickup(player_name : String, item_name : String) -> void:
 ## @return bool if successfully picked up
 @rpc("any_peer", "call_local")
 func _client_pickup(player_path : String, item_path : String) -> bool:
-	var item : Node3D = get_tree().current_scene.get_node(item_path)
-	var player : Node3D = get_tree().current_scene.get_node(player_path)
+	var item : Node3D = get_tree().current_scene.get_node_or_null(item_path)
+	var player : Node3D = get_tree().current_scene.get_node_or_null(player_path)
 	
 	if(item == null):
 		push_error("item invalid")
@@ -492,6 +494,7 @@ func _on_interact_area_area_exited(area: Area3D) -> void:
 func _on_check_interactables_timeout() -> void:
 	if _items_in_interactable_area.size() <= 0:
 		if _closest_item != null:
+			emit_signal("comp_hovered", _closest_item, false)
 			_closest_item.hover(false)
 		_closest_item = null
 		return
@@ -508,7 +511,7 @@ func _on_check_interactables_timeout() -> void:
 	
 	if(_closest_item != closest_item):
 		if _closest_item : _closest_item.hover(false)
-		emit_signal("comp_hovered", closest_item)
+		emit_signal("comp_hovered", closest_item, true)
 		closest_item.hover(true)
 	
 	_closest_item = closest_item
@@ -583,3 +586,16 @@ func invert_controls(_invert : bool):
 func disable_controls(_disable : bool, _action : bool):
 	is_controls_disabled = _disable
 	is_actoin_disabled = _action
+
+func _can_app_interact() -> bool:
+	if !_closest_item: return false
+	
+	var inter := _closest_item.get_parent()
+	
+	if !"current_owner" in inter: 
+		return true
+
+	return (inter.current_owner == ENetManager.get_my_team() || 
+		  inter is Bench && !inter is ChopTable || 
+		inter.current_owner == 0 || 
+		inter is UpgradeHammer)

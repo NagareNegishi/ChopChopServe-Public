@@ -33,7 +33,8 @@ var upgradables: Array[Upgradable] = []
 
 var contents: Array[Node] = []
 var contents_names: Array[String] = []: set = _set_contents_names
-static var price: int = 100
+var price: int = 100
+var appliance_name : String
 
 
 ## Setup the appliance

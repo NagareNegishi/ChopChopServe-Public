@@ -8,9 +8,8 @@ signal scene_ready() # Host only
 enum Scene {
 	MAIN_MENU,
 	LOBBY,
-	# Add more stage here
+	JOHNO,
 	Food_Court,
-	# remove later
 	SETTINGS,
 	LOBBY_TEST,
 	TEST,
@@ -32,7 +31,8 @@ const SCENE_PATHS = {
 	Scene.EMMA_TEST: "res://scripts/Food/testingSceneEmma2.tscn",
 	Scene.BeachLighting2: "res://LevelDesign/BeachLighting2.tscn",
 	Scene.CityLayout2: "res://LevelDesign/CityLayout2.tscn",
-	Scene.SwampLighting: "res://LevelDesign/SwampLighting.tscn"
+	Scene.SwampLighting: "res://LevelDesign/SwampLighting.tscn",
+	Scene.JOHNO: "res://JohnoTestLevel3.tscn"
 }
 
 var current_scene: Scene = Scene.MAIN_MENU

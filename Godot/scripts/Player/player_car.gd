@@ -28,8 +28,12 @@ func _ready() -> void:
 		var particle = move_particle.instantiate()
 		MOVE_PARTICLES_POOL.append(particle)
 	$SpringArm.spring_length = camera_length
-	set_multiplayer_authority(1)
-	if !ENetManager.is_host(): $ParticleTimer.stop()
+	#set_multiplayer_authority(1)
+	
+	if !ENetManager.is_host(): 
+		$ParticleTimer.stop()
+		return
+	
 	time_start = Time.get_ticks_msec()
 	rpc("_set_time_now", time_start)
 
@@ -56,7 +60,7 @@ func _movement(delta : float) -> void:
 	#resets average
 	turn_input_avg = 0
 	move_input_avg = 0
-	print(player_inputs)
+	
 	#adds all turn and move inputs
 	for key in player_inputs.keys():
 		turn_input_avg += player_inputs[key].turn
@@ -123,19 +127,21 @@ func _spawn_particle(index : int) -> void:
 
 
 # adds input into player_input
+@rpc("authority", "call_local", "unreliable")
 func _on_received_input(peer_id: int, move : int, turn : int, time : int):
 	var adjusted_time : int = max(0, time) - time_start - 70
 	adjusted_time = max(0, adjusted_time)
-
-	player_inputs[peer_id] = {
-		"move" : move,
-		"turn" : turn,
-		"time" : adjusted_time
-	}
+	#print(str(ENetManager.get_my_id())+": " +str(time_start))
+	if !player_inputs.has(peer_id) or adjusted_time > player_inputs[peer_id]["time"]:
+		player_inputs[peer_id] = {
+			"move" : move,
+			"turn" : turn,
+			"time" : adjusted_time
+		}
 
 func disable_input(disable : bool):
 	input_disable = disable
 
 
 func _reduce(a : int, b : int): 
-	return a if player_inputs[a].time < player_inputs[b].time else b
+	return a if player_inputs[a].time > player_inputs[b].time else b

@@ -10,6 +10,7 @@ var chopping_board: ChoppingBoard
 func _ready():
 	super._ready()
 	_add_chopping_board()
+	appliance_name = "Chop Table"
 
 
 ## Add interactable component to this class

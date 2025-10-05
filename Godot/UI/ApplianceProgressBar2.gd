@@ -7,7 +7,6 @@ var contents: Array
 var applianceInstance
 
 @export var type : ProgressType
-@onready var texture_rect : TextureRect = $TextureRect
 @onready var progress_bar = $ProgressBar
 
 enum ProgressType {
@@ -181,4 +180,3 @@ func reset():
 
 func _set_texture(texture_type : ProgressType):
 	pass
-#	texture_rect.texture = TEXTURE[texture_type]

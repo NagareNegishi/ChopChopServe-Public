@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://bkgoeb22iydyl" path="res://scripts/Appliance_system/Concrete_classes/chop_table.gd" id="2_f7xxg"]
 [ext_resource type="PackedScene" uid="uid://iwgylemncmgr" path="res://assets/newmodels/furniture/BasicBench.glb" id="3_jjqqy"]
 [ext_resource type="Script" uid="uid://c6jgfkd4gmbry" path="res://UI/ApplianceProgressBar2.gd" id="5_xcam7"]
-[ext_resource type="PackedScene" path="res://UI/UI_ProgressCook.tscn" id="7_1v827"]
+[ext_resource type="PackedScene" uid="uid://pl57ikpi4csf" path="res://UI/UI_ProgressCook.tscn" id="7_1v827"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_w1ren"]
 viewport_path = NodePath("SubViewport")
@@ -29,6 +29,7 @@ render_target_update_mode = 4
 
 [node name="UiProgressCook" parent="SubViewport" index="0" instance=ExtResource("7_1v827")]
 script = ExtResource("5_xcam7")
+type = 2
 
 [node name="ProgressBar" parent="SubViewport/UiProgressCook" index="2"]
 script = null

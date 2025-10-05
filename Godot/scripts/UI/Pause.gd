@@ -2,7 +2,6 @@ class_name Pause extends Control
 
 #Buttons
 @onready var resume_button : CustomButton = $NormalPause/ButtonsContainer/ResumeButton
-@onready var customize_button : CustomButton = $NormalPause/ButtonsContainer/CustomizeButton
 @onready var recipes_button : CustomButton = $NormalPause/ButtonsContainer/Recipes
 @onready var quit_button : CustomButton = $NormalPause/ButtonsContainer/Quit
 
@@ -12,7 +11,6 @@ class_name Pause extends Control
 
 func _ready() -> void:
 	resume_button.pressed.connect(_resume)
-	customize_button.pressed.connect(_customize)
 	recipes_button.pressed.connect(_recipes)
 	quit_button.pressed.connect(_quit)
 	recipe_ui.visible = false

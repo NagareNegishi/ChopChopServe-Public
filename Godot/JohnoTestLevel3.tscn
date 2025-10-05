@@ -1,10 +1,9 @@
-[gd_scene load_steps=40 format=3 uid="uid://bkdgdjjlsc7rx"]
+[gd_scene load_steps=39 format=3 uid="uid://bkdgdjjlsc7rx"]
 
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_cmmn0"]
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="1_om5gj"]
 [ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="2_m6tjv"]
 [ext_resource type="PackedScene" uid="uid://bk7ovilp788kq" path="res://scripts/Player/spawn_point.tscn" id="3_jnlua"]
-[ext_resource type="PackedScene" uid="uid://dxhfqm13c85ar" path="res://assets/models/decorations/table.glb" id="3_mhwt6"]
 [ext_resource type="Script" uid="uid://dv1g0obwvkkkt" path="res://scripts/QueueSpot.gd" id="5_83y2r"]
 [ext_resource type="PackedScene" uid="uid://c8bjd53t4fgr1" path="res://UI/UI_Pause.tscn" id="5_iso5m"]
 [ext_resource type="PackedScene" uid="uid://bakeesqt3byva" path="res://scenes/Appliance_system/sink.tscn" id="6_iso5m"]
@@ -149,8 +148,18 @@ detection_area = NodePath("Area3D")
 transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 9.31323e-10, 0, 1, -0.506278, 0.314758, 0.102341)
 shape = SubResource("CylinderShape3D_hte61")
 
-[node name="table7" parent="===== TABLES =====/TableBody8" instance=ExtResource("3_mhwt6")]
+[node name="table7" parent="===== TABLES =====/TableBody8"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
 transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 9.31323e-10, 0, 1, -0.495689, 0, 0.106708)
+script = null
 
 [node name="Area3D" type="Area3D" parent="===== TABLES =====/TableBody8"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -168,8 +177,18 @@ detection_area = NodePath("Area3D")
 transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 9.31323e-10, 0, 1, -0.506278, 0.314758, 0.102341)
 shape = SubResource("CylinderShape3D_hte61")
 
-[node name="table7" parent="===== TABLES =====/TableBody7" instance=ExtResource("3_mhwt6")]
+[node name="table7" parent="===== TABLES =====/TableBody7"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
 transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 9.31323e-10, 0, 1, -0.495689, 0, 0.106708)
+script = null
 
 [node name="Area3D" type="Area3D" parent="===== TABLES =====/TableBody7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -187,8 +206,18 @@ detection_area = NodePath("Area3D")
 transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 9.31323e-10, 0, 1, -0.506278, 0.314758, 0.102341)
 shape = SubResource("CylinderShape3D_hte61")
 
-[node name="table7" parent="===== TABLES =====/TableBody9" instance=ExtResource("3_mhwt6")]
+[node name="table7" parent="===== TABLES =====/TableBody9"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
 transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 9.31323e-10, 0, 1, -0.495689, 0, 0.106708)
+script = null
 
 [node name="Area3D" type="Area3D" parent="===== TABLES =====/TableBody9"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -206,8 +235,18 @@ detection_area = NodePath("Area3D")
 transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 9.31323e-10, 0, 1, -0.506278, 0.314758, 0.102341)
 shape = SubResource("CylinderShape3D_hte61")
 
-[node name="table7" parent="===== TABLES =====/TableBody10" instance=ExtResource("3_mhwt6")]
+[node name="table7" parent="===== TABLES =====/TableBody10"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
 transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 9.31323e-10, 0, 1, -0.495689, 0, 0.106708)
+script = null
 
 [node name="Area3D" type="Area3D" parent="===== TABLES =====/TableBody10"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

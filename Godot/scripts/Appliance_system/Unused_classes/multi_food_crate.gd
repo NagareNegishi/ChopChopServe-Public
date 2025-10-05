@@ -85,7 +85,6 @@ func take_at(index: int) -> Node:
 		return null
 	food.name = prefix + supply_names[index] + str(supply_counts[index])
 	supply_counts[index] += 1
-	ApplianceManager.register_item(food, current_owner, food.name)
 	return food
 
 

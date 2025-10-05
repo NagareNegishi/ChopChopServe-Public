@@ -4,8 +4,7 @@
 class_name Upgradable
 extends Node
 
-signal upgrade_requested(player_id: int, upgrade_cost: int, upgradable: Upgradable) # from player
-signal upgrade_completed(upgradable_property: String) # from server
+signal upgrade_completed(upgradable_property: String)
 
 enum UpgradeMode {
 	ADD,        # For numbers: current + value
@@ -38,7 +37,6 @@ var enabled: bool = false
 
 ## Initialize the component
 func _ready():
-	upgrade_requested.connect(_on_upgrade_requested)
 	target = get_parent()
 	if not target:
 		assert(false, "Upgradable component must have a parent.")
@@ -48,7 +46,7 @@ func _ready():
 ## @return: Maximum level based on upgrade_costs and upgrade_values sizes
 func get_max_level() -> int:
 	if upgrade_costs.size() != upgrade_values.size():
-		push_warning("upgrade_costs and upgrade_values have different sizes! Using minimum.")
+		Debug.warning("upgrade_costs and upgrade_values have different sizes! Using minimum.")
 		return min(upgrade_costs.size(), upgrade_values.size())
 	return upgrade_costs.size()
 
@@ -67,27 +65,59 @@ func get_upgrade_cost() -> int:
 	return 0
 
 
+## Get information about this upgradable component
+## @return: Dictionary with property name and current level
+func get_info() -> Dictionary:
+	return {
+		"property": upgradable_property,
+		"level": current_level
+	}
+
+
 ## Send upgrade request to authority from the player
 ## @param player_id: Which player (1-4) is requesting the upgrade
 func request_upgrade(player_id: int) -> void:
 	if not enabled:
-		assert(false, "Upgrade not enabled for: " + target.get_script().get_global_name())
+		Debug.error("Upgrade not enabled for: " + target.name)
 		return
 	if not can_upgrade():
-		#-----------------------------------------------------------------
-		push_warning("Player ", str(player_id), " tried to upgrade ", target.get_script().get_global_name(), " at max level")
-		#-----------------------------------------------------------------
+		Debug.warning(upgradable_property + " already at Max level: " + target.name)
 		return
-	var cost = get_upgrade_cost()
-	upgrade_requested.emit(player_id, cost, self)
+	if ENetManager.is_host():
+		_attempt_upgrade(player_id, get_upgrade_cost())
+	else:
+		_request_upgrade_as_host.rpc_id(1, player_id)
+
+
+## Host-side method to handle upgrade requests from clients
+## @param player_id: The id of the player who is requesting the upgrade
+@rpc("any_peer", "call_remote", "reliable")
+func _request_upgrade_as_host(player_id: int) -> void:
+	if not ENetManager.is_host():
+		return
+	# Validate again on host side
+	if can_upgrade():
+		_attempt_upgrade(player_id, get_upgrade_cost())
+
+
+## Attempt to perform the upgrade, deducting currency, Host only
+## @param player_id: The id of the player who is requesting the upgrade
+## @param cost: The cost of the upgrade
+func _attempt_upgrade(player_id: int, cost: int) -> void:
+	if CurrencySystem.can_afford(ENetManager.get_team(player_id), cost):
+		CurrencySystem.minus_currency(ENetManager.get_team(player_id), cost)
+		_upgrade.rpc()
 
 
 ## Attempts to upgrade to the next level
-## @return: True if upgrade was successful
-func upgrade() -> bool:
-	if not can_upgrade():
-		return false
+@rpc("authority", "call_local", "reliable")
+func _upgrade() -> void:
+	if current_level >= max_level:
+		Debug.error("Cannot upgrade " + upgradable_property + " on " + target.name)
+		return
 	var new_value = upgrade_values[current_level]
+	if _handle_special_upgrade(new_value):
+		return
 	match upgrade_mode:
 		UpgradeMode.ADD:
 			target.set(upgradable_property, target.get(upgradable_property) + new_value)
@@ -95,15 +125,27 @@ func upgrade() -> bool:
 			target.set(upgradable_property, target.get(upgradable_property) * new_value)
 		UpgradeMode.SET:
 			target.set(upgradable_property, new_value)  # Works for ANY type
-	upgrade_completed.emit(upgradable_property)
+		_:
+			Debug.error("Invalid upgrade_mode: " + str(upgrade_mode) + " for " + upgradable_property)
+			return
 	current_level += 1
-	return true
+	upgrade_completed.emit(upgradable_property)
+	Debug.upgrade_log("Upgraded: " + upgradable_property + " to level " + str(current_level)
+		+ " on " + target.name)
 
-# Something like this should happen with currency manager-----------------------
 
-func _on_upgrade_requested(player_id: int, cost: int, upgradable: Upgradable):
-	if CurrencySystem.check_currency(ENetManager.get_my_team(), cost):
-		CurrencySystem.minus_currency(ENetManager.get_my_team(), cost)
-		print("Upgraded: ", upgradable.upgrade())
-	else:
-		print("Not enough money!")
+## Handle special cases like component properties
+## @return: True if handled, false to continue with normal upgrade
+func _handle_special_upgrade(new_value) -> bool:
+	# Handle inflammable component immunity
+	if upgradable_property == "immune_to_fire":
+		var inflammable = target.get_node_or_null("Inflammable")
+		if inflammable:
+			inflammable.immune_to_fire = new_value
+			current_level += 1
+			upgrade_completed.emit(upgradable_property)
+			Debug.upgrade_log(target.name + " is now immune to fire!")
+			return true
+		Debug.error("Tried to upgrade fire immunity but no Inflammable component found")
+		return false
+	return false

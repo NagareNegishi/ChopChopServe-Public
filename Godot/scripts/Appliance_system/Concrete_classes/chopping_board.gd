@@ -84,9 +84,7 @@ func put_from_player(item: Node) -> bool:
 	if item is Food:
 		item.scale *= food_scale_factor
 	# -------------------------------------------------------------------------
-#--------------------------------------------
-	print("Put: ", item.get_script().get_global_name(), " onto: ", get_script().get_global_name())
-#--------------------------------------------
+	Debug.all("Put: " + item.get_script().get_global_name() + " onto: " + get_script().get_global_name())
 	return true
 
 

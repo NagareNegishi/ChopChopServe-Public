@@ -110,13 +110,13 @@ func _client_take(item_name: String) -> void:
 ## @return: True if item can be placed, false otherwise
 func _can_accept(item: Node) -> bool:
 	if not item:
-		print("Cannot accept item, item is null")
+		Debug.all("Cannot accept item, item is null")
 		return false
 	if contents_names.size() >= capacity:
-		print("Cannot accept item: ", get_script().get_global_name(), " is at full capacity")
+		Debug.all("Cannot accept item: " + get_script().get_global_name() + " is full")
 		return false
 	if not item.get_script():
-		print("Cannot accept item, item has no script")
+		Debug.all("Cannot accept item, item has no script")
 		return false
 	return true # Minimum requirement
 
@@ -128,7 +128,7 @@ func start_action() -> bool:
 	if current_status != Status.IDLE:
 		return false
 	if contents.is_empty():
-		push_warning("No items to act on")
+		Debug.warning("No items to act on")
 		return false
 	current_status = Status.USING
 	action_timer.start()
@@ -176,13 +176,13 @@ func _put_as_host(player_id: int, item_name: String) -> void:
 	# host need check to prevent conflicts/ cheating
 	var player = GlobalScript.get_local_player_by_id(player_id)
 	if not player:
-		print("Player not found with id: ", player_id)
+		Debug.warning("Player not found with id: " + str(player_id))
 		return
 	var item = player.item_in_hand
 	if not _can_accept(item):
 		return
 	if item.name != item_name:
-		print("Item name mismatch: expected ", item_name, ", got ", item.name)
+		Debug.warning("Item name mismatch: expected " + item_name + ", got " + item.name)
 		return
 	player.remove_item()
 	_put(item)

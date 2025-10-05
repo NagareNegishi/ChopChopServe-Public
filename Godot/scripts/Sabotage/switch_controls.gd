@@ -1,32 +1,20 @@
 extends Node3D
 
-################################################################################
-# TODO:
-	# - Tidy code up
-	# - Figure out how to get the player node properly
-	# - Add timer for the switch back
-	# - Basically everything lol
-################################################################################
-
-@onready var player = get_node("Player")
-
-var id
-var target_team
-var target_player
-
 func switch_controls(teamID: int) -> void:
-	var cook = get_tree().get_current_scene().get_node_or_null("Player")
+	var attack_id = ENetManager.get_my_id()
+	print("jess: I am the attacker = ", attack_id)
 
-	print("jess: the cook is: ", cook)
-	id = cook.get_my_id()
-	print("jess: my id is: ", id)
-	if ENetManager.get_team(id) == 1:
-		target_team = ENetManager.get_team2()
-	else:
-		target_team = ENetManager.get_team1()
-	print("jess: target team is:  ", target_team)
+	# Find target player by team, not hardcoded id
+	var target_players = ENetManager.get_players_by_team(teamID)
+	if target_players.is_empty():
+		print("jess: no players found in team ", teamID)
+		return
 
-	for p in target_team:
-		target_player = p.get_player()
-		target_player.invert_controls(true)
-		print("jess: im switching your controls", p)
+	# Example: just switch the first player found
+	var player = target_players[0]
+	if player == null:
+		print("jess: player is null, can't switch controls")
+		return
+
+	player.invert_controls(true)
+	print("jess: im switching your controls", player)

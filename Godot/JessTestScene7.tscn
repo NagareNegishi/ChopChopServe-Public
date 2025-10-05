@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://bqvt1u2omr2bx"]
+[gd_scene load_steps=37 format=3 uid="uid://bqvt1u2omr2bx"]
 
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="1_354m6"]
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="2_wloi0"]
@@ -28,7 +28,6 @@
 [ext_resource type="PackedScene" uid="uid://b0ougk3d4jnku" path="res://scenes/Appliance_system/food_factory.tscn" id="25_osg6e"]
 [ext_resource type="Script" uid="uid://cbc4pbu7yaju6" path="res://scripts/Appliance_system/Unused_classes/food_crate.gd" id="26_exvv3"]
 [ext_resource type="PackedScene" uid="uid://lfcppt4wh0g4" path="res://scenes/Interaction/UpgradeHammer.tscn" id="27_21q2t"]
-[ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="28_wloi0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cfpj7"]
 size = Vector3(30, 0.03, 30)
@@ -428,6 +427,3 @@ supply_name = "Tomato"
 
 [node name="UpgradeHammer" parent="." instance=ExtResource("27_21q2t")]
 transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999984, 8.96995, 0.0163647, 0.503034)
-
-[node name="Extinguisher" parent="." instance=ExtResource("28_wloi0")]
-transform = Transform3D(1, 0, -1.39698e-09, 0, 1, 0, 1.39698e-09, 0, 1, 2.85832, 0.436406, 0.0158144)

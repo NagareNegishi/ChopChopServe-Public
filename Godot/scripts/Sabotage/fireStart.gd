@@ -11,7 +11,7 @@ class_name FireStart
 
 var path
 var teamID
-var secs = 10.0 # Change this if we need to
+var secs = 3.0 # Change this if we need to
 
 # Signal to say the fire can spread
 signal fire_spread( teamID: int, appliance_path: NodePath)

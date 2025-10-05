@@ -130,14 +130,6 @@ offset_right = 1081.0
 offset_bottom = 55.0
 theme_override_constants/separation = 40
 
-[node name="CurrentSab" type="Label" parent="Sabotages"]
-layout_mode = 2
-text = "Current Sabotage: Nothing"
-
-[node name="CrateSwitch" type="Button" parent="Sabotages"]
-layout_mode = 2
-text = "Crate Switch"
-
 [node name="WaterSpill" type="Button" parent="Sabotages"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 15
@@ -150,6 +142,10 @@ text = "Start Fire"
 [node name="FoodCritic" type="Button" parent="Sabotages"]
 layout_mode = 2
 text = "Food Critic"
+
+[node name="SwitchControls" type="Button" parent="Sabotages"]
+layout_mode = 2
+text = "Switch Controls"
 
 [node name="RatSwarm" type="Button" parent="Sabotages"]
 layout_mode = 2
@@ -169,5 +165,6 @@ text = "Power Outage"
 [connection signal="pressed" from="Buttons/Team2/CurMinusButton_2" to="." method="_on_cur_minus_button_2_pressed"]
 [connection signal="pressed" from="Sabotages/WaterSpill" to="." method="_on_water_spill_pressed"]
 [connection signal="pressed" from="Sabotages/Fire" to="." method="_on_fire_pressed"]
+[connection signal="pressed" from="Sabotages/SwitchControls" to="." method="_on_switch_controls_pressed"]
 [connection signal="pressed" from="Sabotages/RatSwarm" to="." method="_on_rat_swarm_pressed"]
 [connection signal="pressed" from="Sabotages/PowerOutage" to="." method="_on_power_outage_pressed"]

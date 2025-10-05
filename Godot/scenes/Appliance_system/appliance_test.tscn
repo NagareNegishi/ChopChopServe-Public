@@ -497,7 +497,7 @@ transform = Transform3D(2.99311, -0.0677541, 0, 0.203262, 0.997702, 0, 0, 0, 3, 
 mesh = SubResource("BoxMesh_iv3r3")
 
 [node name="Sink" parent="NavigationRegion3D/Floor" instance=ExtResource("27_8ugct")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6.5, 2.4, 8)
+transform = Transform3D(-4.56348e-08, 0, -1, 0, 1, 0, 1, 0, -4.56348e-08, 5.68758, 0.460243, 4.20074)
 
 [node name="Sink2" parent="NavigationRegion3D/Floor" instance=ExtResource("27_8ugct")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6.5, 2.4, -8)

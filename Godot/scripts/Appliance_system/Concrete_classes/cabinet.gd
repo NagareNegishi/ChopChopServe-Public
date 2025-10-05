@@ -56,14 +56,6 @@ func _on_capacity_upgraded(property: String) -> void:
 		put(_provide_plate())
 
 
-# ## Setup cookware slots, should be overridden by subclasses
-# ## Default implementation expect one Cookware slot in the center
-# func _setup_item_slots():
-# 	for i in range(capacity):
-# 		var slot_position = Vector3(0.0, size.y * 0.8, 0.0)
-# 		item_slots.append(slot_position)
-
-
 ## Check if this appliance can accept the given item
 ## @param item: The Node to test for acceptance
 ## @return: True if item can be placed, false otherwise

@@ -57,7 +57,7 @@ func _position_item(item: Node3D, slot_index: int):
 func _put(item: Node) -> void:
 	super._put(item)
 	_position_item(item, contents.size() - 1)
-	print("Placed item on Bench: ", item.get_script().get_global_name())
+	Debug.cook_log("Placed item on Bench: " + item.get_script().get_global_name())
 
 
 ## Remove and return item at specific index
@@ -147,21 +147,21 @@ func player_has(item: Node) -> void:
 ## @return: 1 for Food, 2 for Cookware with Food, -1 for cannot serve
 func _can_serve_to_plate(plate: Plate) -> int:
 	if contents.is_empty():
-		print("Nothing to serve from: ", get_script().get_global_name())
+		Debug.info("Nothing to serve from: " +  name)
 		return -1
 	if not plate.is_ready(): # Method in Plate, checks if plate is ready
-		print("Plate is not ready: ", plate.get_script().get_global_name())
+		Debug.info("Plate is not ready")
 		return -1
 	var item = contents[0]
 	if item is Food:
 		return 1
 	elif item is Cookware:
 		if item.is_empty():
-			print("Nothing to serve from: ", get_script().get_global_name())
+			Debug.info("Nothing to serve from: " + item.name)
 			return -1
 		return 2
 	else:
-		print("Cannot serve from: ", get_script().get_global_name(), ", not Food or Cookware")
+		Debug.info("Cannot serve from: " + name + ", not Food or Cookware")
 		return -1
 
 
@@ -186,7 +186,7 @@ func _serve_as_host(player_id: int, can_serve: int) -> void:
 		return
 	var plate = GlobalScript.get_local_player_by_id(player_id).item_in_hand
 	if not plate or not (plate is Plate):
-		print("Player is not holding a plate")
+		Debug.info("Player is not holding a plate")
 		return
 	if _can_serve_to_plate(plate) != can_serve:
 		return
@@ -203,7 +203,7 @@ func _serve_as_host(player_id: int, can_serve: int) -> void:
 func _client_serve(player_id: int, can_serve: int) -> void:
 	var plate = GlobalScript.get_local_player_by_id(player_id).item_in_hand
 	if not plate or not (plate is Plate):
-		print("Player is not holding a plate")
+		Debug.info("Player is not holding a plate")
 		return
 	if _can_serve_to_plate(plate) != can_serve:
 		return

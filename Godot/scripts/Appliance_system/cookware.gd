@@ -64,16 +64,13 @@ func put_all(items: Array) -> bool:
 func _put_food(food: Food) -> void:
 	#food.current_visibility(false)
 	food.change_collisions(true)
-	if self is not ChoppingBoard: cookware_ui.add_food(food)
-	if self is ChoppingBoard: 
-		food.scale = food.original_scale
-		food.global_rotation += Vector3(0,30,0)
+	cookware_ui.add_food(food)
+	food.restore_original_transform()
 	emit_signal("food_placed", contents)
 	if can_cook():
 		food.start_cooking(int(power_receiving * coefficient), cooking_style)
 		_average_food()
 		_toggle_sizzle(true)
-		food.scale = Vector3(0,0,0)
 	Debug.cook_log("Food placed in cookware: " + food.get_script().get_global_name()
 		+ ", Cookware can cook: " + str(can_cook()) + ", Food cook time: " + str(food.get_cook_time(cooking_style)))
 
@@ -104,7 +101,7 @@ func take_all() -> Array[Node]:
 		remove_child(item)
 	contents = []
 	contents_names = []
-	if self is not ChoppingBoard: cookware_ui.clear()
+	cookware_ui.clear()
 	emit_signal("food_taken")
 	return all_items
 
@@ -272,9 +269,8 @@ func _sync_contents(update: Array[String]) -> void:
 	contents_names = update
 
 
+## Setup the cookware UI
 func _setup_cookware_ui():
-	if self is ChoppingBoard: return
-	
 	cookware_ui = cookware_ui_scene.instantiate()
 	viewport.transparent_bg = true
 	sprite_ref.texture = viewport.get_texture()

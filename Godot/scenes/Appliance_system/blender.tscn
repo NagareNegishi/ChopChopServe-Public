@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dmims6gtvtpcn" path="res://scripts/Appliance_system/Concrete_classes/blender.gd" id="2_co8sm"]
 [ext_resource type="Texture2D" uid="uid://b2baw0vfm8358" path="res://assets/textures/misc/LoadingBarOutside.png" id="3_8shnm"]
 [ext_resource type="Texture2D" uid="uid://ts7ljaleqkhg" path="res://assets/textures/misc/LoadingBarInside.png" id="4_f4din"]
-[ext_resource type="Script" uid="uid://ue6iw3lh8jpn" path="res://UI/ApplianceProgressBar.gd" id="5_3yrah"]
+[ext_resource type="Script" uid="uid://c6jgfkd4gmbry" path="res://UI/ApplianceProgressBar2.gd" id="5_3yrah"]
 [ext_resource type="PackedScene" uid="uid://p5bueh2iq7ap" path="res://scenes/Appliance_system/blenderMeshONLY.tscn" id="6_f4din"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_yc0qb"]

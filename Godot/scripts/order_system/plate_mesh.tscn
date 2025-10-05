@@ -1,5 +1,5 @@
 [gd_scene load_steps=2 format=3 uid="uid://dbqvfbxstodt1"]
 
-[ext_resource type="PackedScene" uid="uid://c3lpqts4wipqe" path="res://assets/models/items/plate.glb" id="1_4cbmh"]
+[ext_resource type="PackedScene" uid="uid://d1k4xk5ym4hrm" path="res://assets/newmodels/items/Plate.glb" id="1_4cbmh"]
 
 [node name="PlateMesh" instance=ExtResource("1_4cbmh")]

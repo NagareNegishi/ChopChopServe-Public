@@ -62,9 +62,11 @@ func put_all(items: Array) -> bool:
 ## Place food into the cookware
 ## @param food: The Food item to place into the cookware
 func _put_food(food: Food) -> void:
-	#food.current_visibility(false)
 	food.change_collisions(true)
-	if self is not ChoppingBoard: cookware_ui.add_food(food)
+	if self is not ChoppingBoard: 
+		cookware_ui.add_food(food)
+		food.current_visibility(false)
+		food.scale = Vector3(0.01,0.01,0.01)
 	if self is ChoppingBoard: 
 		food.scale = food.original_scale
 		food.global_rotation += Vector3(0,30,0)
@@ -73,7 +75,7 @@ func _put_food(food: Food) -> void:
 		food.start_cooking(int(power_receiving * coefficient), cooking_style)
 		_average_food()
 		_toggle_sizzle(true)
-		food.scale = Vector3(0,0,0)
+		food.scale = Vector3(0.01,0.01,0.01)
 	Debug.cook_log("Food placed in cookware: " + food.get_script().get_global_name()
 		+ ", Cookware can cook: " + str(can_cook()) + ", Food cook time: " + str(food.get_cook_time(cooking_style)))
 

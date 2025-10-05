@@ -77,7 +77,7 @@ func _ready():
 		
 		for ui_element in [overhead_ui_order_instance, 
 		overhead_ui_thinking_instance]:
-			ui_element.scale = Vector2.ONE * 0.5
+			ui_element.scale = Vector2.ONE * 0.3
 			ui_element.hide()
 			ui_layer.add_child(ui_element)
 		

@@ -1,9 +1,29 @@
-[gd_scene load_steps=5 format=3 uid="uid://tloru3qomb8r"]
+[gd_scene load_steps=7 format=3 uid="uid://tloru3qomb8r"]
 
 [ext_resource type="Script" uid="uid://ckmuq2kqhvio3" path="res://scripts/UI/ui_order.gd" id="1_8cmx7"]
-[ext_resource type="PackedScene" uid="uid://ckhue72bmvrjv" path="res://UI/UI_Progress.tscn" id="1_ib7mx"]
-[ext_resource type="Texture2D" uid="uid://chbbc8dxqfr1y" path="res://assets/textures/recipes/TomatoSoup.png" id="2_8cmx7"]
+[ext_resource type="Script" uid="uid://dghelyr4xevbv" path="res://scripts/UI/ui_progress.gd" id="2_8cmx7"]
 [ext_resource type="Texture2D" uid="uid://cog5nd4v3i4si" path="res://assets/textures/recipes/Brownie.png" id="4_4cvu0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8cmx7"]
+bg_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4cvu0"]
+bg_color = Color(0.28485, 0.28485, 0.28485, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o2jak"]
+bg_color = Color(0.980392, 0.976471, 0.964706, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -14,51 +34,89 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.95, 0.95)
+scale = Vector2(1.3, 1.3)
 script = ExtResource("1_8cmx7")
 
-[node name="UiProgress" parent="." instance=ExtResource("1_ib7mx")]
+[node name="Panel" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
-current_progress = 0.995
-
-[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -26.0
-offset_top = -49.0
-offset_right = 1300.0
-offset_bottom = 1119.0
+offset_left = -95.0
+offset_top = -18.0
+offset_right = 94.0
+offset_bottom = 18.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.04, 0.045)
-texture_under = ExtResource("2_8cmx7")
-tint_under = Color(0, 0, 0, 1)
+theme_override_styles/panel = SubResource("StyleBoxFlat_8cmx7")
 
-[node name="MenuItem" type="TextureRect" parent="."]
+[node name="Panel2" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -28.0
-offset_top = -55.0
-offset_right = 29.0
-offset_bottom = 2.0
+offset_left = -88.0
+offset_top = -10.0
+offset_right = 86.0
+offset_bottom = 10.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4cvu0")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -88.0
+offset_top = -10.0
+offset_right = 86.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_o2jak")
+max_value = 1.0
+step = 0.001
+value = 1.0
+show_percentage = false
+script = ExtResource("2_8cmx7")
+
+[node name="MenuItem2" type="TextureRect" parent="."]
+self_modulate = Color(0.137255, 0.137255, 0.137255, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -651.539
+offset_top = -680.769
+offset_right = 648.461
+offset_bottom = 621.231
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.085, 0.085)
+pivot_offset = Vector2(650, 650)
 texture = ExtResource("4_4cvu0")
-expand_mode = 2
+
+[node name="MenuItem" type="TextureRect" parent="MenuItem2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -592.455
+offset_top = -603.942
+offset_right = 707.545
+offset_bottom = 698.058
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.91, 0.91)
+texture = ExtResource("4_4cvu0")

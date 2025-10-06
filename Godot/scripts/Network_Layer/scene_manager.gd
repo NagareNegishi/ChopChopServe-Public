@@ -17,7 +17,8 @@ enum Scene {
 	EMMA_TEST,
 	BeachLighting2,
 	CityLayout2,
-	SwampLighting
+	SwampLighting,
+	JOSH_TEST
 }
 
 const SCENE_PATHS = {
@@ -32,7 +33,8 @@ const SCENE_PATHS = {
 	Scene.BeachLighting2: "res://LevelDesign/BeachLighting2.tscn",
 	Scene.CityLayout2: "res://LevelDesign/CityLayout2.tscn",
 	Scene.SwampLighting: "res://LevelDesign/SwampLighting.tscn",
-	Scene.JOHNO: "res://JohnoTestLevel3.tscn"
+	Scene.JOHNO: "res://JohnoTestLevel3.tscn",
+	Scene.JOSH_TEST: "res://JoshTestLevelCopied.tscn"
 }
 
 var current_scene: Scene = Scene.MAIN_MENU

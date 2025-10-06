@@ -1,4 +1,4 @@
-[gd_scene load_steps=90 format=3 uid="uid://brax13qxb8tj2"]
+[gd_scene load_steps=89 format=3 uid="uid://brax13qxb8tj2"]
 
 [ext_resource type="PackedScene" uid="uid://bv68n23xtnfpl" path="res://scenes/Player/PlayerCar.tscn" id="1_2io33"]
 [ext_resource type="PackedScene" uid="uid://c8bjd53t4fgr1" path="res://UI/UI_Pause.tscn" id="1_7dd6r"]
@@ -114,8 +114,6 @@ volumetric_fog_density = 0.0
 volumetric_fog_length = 30.0
 volumetric_fog_sky_affect = 0.0
 
-[sub_resource type="SphereMesh" id="SphereMesh_0qhj0"]
-
 [sub_resource type="SphereMesh" id="SphereMesh_u4l04"]
 material = ExtResource("25_o215m")
 radius = 0.1
@@ -195,7 +193,7 @@ mesh = SubResource("TorusMesh_uthtu")
 
 [node name="LevelSelectArea3" parent="== LEVEL SELECT ==" node_paths=PackedStringArray("car") instance=ExtResource("64_kguer")]
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -15.5632, 1.85757, 23.6392)
-level = 8
+level = 10
 car = NodePath("../../PlayerCar")
 
 [node name="CollisionShape3D" parent="== LEVEL SELECT ==/LevelSelectArea3" index="0"]
@@ -308,14 +306,6 @@ transform = Transform3D(2.62268e-07, 0, -2, 0, 2, 0, 2, 0, 2.62268e-07, -20, 0, 
 transform = Transform3D(2, 0, 3.49691e-07, 0, 2, 0, -3.49691e-07, 0, 2, -24, 0, 35)
 
 [node name="Node3D3" type="Node3D" parent="."]
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Node3D3"]
-transform = Transform3D(-1.02285e-07, 0, -2.34, 0, 2.34, 0, 2.34, 0, -1.02285e-07, -16, 0, 24)
-mesh = SubResource("SphereMesh_0qhj0")
-
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="Node3D3"]
-transform = Transform3D(-1.02285e-07, 0, -2.34, 0, 2.34, 0, 2.34, 0, -1.02285e-07, 33.0782, 2.61873, -0.773237)
-mesh = SubResource("SphereMesh_0qhj0")
 
 [node name="City" type="Node3D" parent="."]
 

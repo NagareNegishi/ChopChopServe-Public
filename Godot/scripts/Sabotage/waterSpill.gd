@@ -3,7 +3,6 @@ extends Node3D
 ################################################################################
 # TODO:
 	# - Clean code up
-	# - Remove the Cylinder
 	# - Connect the Customer slip to the signal
 	# - Fix its positioning logic
 ################################################################################
@@ -16,6 +15,7 @@ var sabotaged_teamID: int
 
 var water_particles: ParticleController
 var players_in_spill : Array[Player] = []
+
 signal in_water_spill()
 signal customer_down()
 
@@ -36,18 +36,15 @@ func _setup_visual_effects():
 
 
 func _start_water_effects() -> void:
-	print("\n \n starting the effects")
 	if water_particles:
 		water_particles.play()
 
 # Set which team is being sabotaged
 func set_sabotaged_team(teamID: int) -> void:
-	print("Water spill sabotaging team: ", teamID)
 	sabotaged_teamID = teamID
 
 #func start_timer(seconds: float) -> void:
 func start_timer() -> void:
-	print("\n \n starting the waterSpill timer")
 	var timer = Timer.new()
 	timer.wait_time = 8.0
 	timer.one_shot = true
@@ -56,7 +53,6 @@ func start_timer() -> void:
 	timer.start()
 
 func _on_timer_timeout() -> void:
-	print("\n \n the waterspill has ended")
 	for player in players_in_spill:
 		player.set_speed(4)
 	
@@ -93,7 +89,6 @@ func customer_falls(customer_path: NodePath) -> void:
 
 # Add the WaterSprout effect
 func spill() -> bool:
-	print("\n \n spilling now")
 	_setup_visual_effects()
 	_start_water_effects()
 	start_timer()
@@ -127,10 +122,8 @@ func _on_area_3d_body_entered(body:Node3D) -> void:
 func get_team_id(body: Node3D) -> int:
 	# Maybe add a check that its player somewhere
 	if ENetManager.get_team1().has(body.name.to_int()):
-		print("i was the server")
 		return 1
 	else:
-		print("i was the client")
 		return 2
 
 

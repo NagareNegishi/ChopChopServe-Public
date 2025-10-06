@@ -1,20 +1,34 @@
 extends Node3D
 
+var secs = 3.0 # Change this
+var player_ids := []
+
+# Switching the players controls 
 func switch_controls(teamID: int) -> void:
-	var attack_id = ENetManager.get_my_id()
-	print("jess: I am the attacker = ", attack_id)
+	if teamID == 1:
+		player_ids = ENetManager.get_team2()
+	else:
+		player_ids = ENetManager.get_team1()
 
-	# Find target player by team, not hardcoded id
-	var target_players = ENetManager.get_players_by_team(teamID)
-	if target_players.is_empty():
-		print("jess: no players found in team ", teamID)
-		return
+	for id in player_ids:
+		var player = GlobalScript.get_local_player_by_id(id)
+		player.invert_controls(true)
+	start_timer(secs)
 
-	# Example: just switch the first player found
-	var player = target_players[0]
-	if player == null:
-		print("jess: player is null, can't switch controls")
-		return
+# Time for the switch
+func start_timer(seconds: float) -> void:
+	var timer = Timer.new()
+	timer.wait_time = seconds
+	timer.one_shot = true
+	add_child(timer)
+	timer.timeout.connect(_on_timer_timeout)
+	timer.start()
 
-	player.invert_controls(true)
-	print("jess: im switching your controls", player)
+# End the Switch 
+func _on_timer_timeout() -> void:
+	for id in player_ids:
+		var player = GlobalScript.get_local_player_by_id(id)
+		if player:
+			player.invert_controls(false)
+			# Clean up the list
+			player_ids.erase(id)

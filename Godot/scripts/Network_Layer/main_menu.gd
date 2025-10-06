@@ -27,25 +27,29 @@ func _ready():
 	join_button.pressed.connect(_on_join_pressed)
 	network_layer.connected.connect(_switch_to_lobby)
 	exit_button.pressed.connect(_exit_game)
-	
 	if !froggo_building : return
 	froggo_building.play("ArmatureAction")
+
 
 
 ## Create Lobby
 func _on_create_pressed():
 	if name_input.text.length() <= 0 :
-		_pop_error(ErrorType.EMPTY_NAME) 
+		_pop_error(ErrorType.EMPTY_NAME)
 		return
 	var public_ip = host_public_ip_input.text.strip_edges()
+
+	Debug.net_log("Creating lobby with public IP: " + public_ip)
+
 	network_layer.create_game_with_ip(4, public_ip)
 	GlobalScript.player_name = name_input.text
+	# Debug.detailed_upnp_test()
 
 
 ## Join Lobby
 func _on_join_pressed():
 	if name_input.text.length() <= 0 :
-		_pop_error(ErrorType.EMPTY_NAME) 
+		_pop_error(ErrorType.EMPTY_NAME)
 		return
 	
 	var connection_info = ip_input.text.strip_edges()

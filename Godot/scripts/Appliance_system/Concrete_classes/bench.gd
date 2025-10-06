@@ -7,6 +7,7 @@ extends UnPoweredAppliance
 
 var item_slots: Array[Vector3] = []  ## Where to place items
 var inflammable_component: Inflammable
+var abstract_throwable_rotation = Vector3(0, 12.1, 0)
 
 ## Setup the model instance
 func _init():
@@ -47,8 +48,10 @@ func _setup_item_slots():
 func _position_item(item: Node3D, slot_index: int):
 	if item:
 		item.restore_original_transform()
-		item.global_rotation += Vector3(0,12.1,0)
-		#item.rotate_to_direction(item.default_facing)
+		if item is AbstractThrowable:
+			item.rotate_abstract_throwable(abstract_throwable_rotation)
+		elif item is Equipment:
+			item.rotate_by(deg_to_rad(abstract_throwable_rotation.y))
 	item.position = item_slots[slot_index]
 
 

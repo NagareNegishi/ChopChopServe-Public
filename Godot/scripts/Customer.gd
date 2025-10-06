@@ -7,7 +7,7 @@ const AGENT_STUCK_THRESHOLD: float = 0.15
 const STUCK_RECALCULATE_TIME: float = 1.0
 const POSITION_IN_FRONT_OF_TABLE: Vector3 = Vector3(0, 0.25, 0.5)
 
-var meal_name = ""
+var meal_name = "" # name of meal being ordered currently
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var state_machine = animation_tree.get("parameters/playback")
 @export var customer_state: CustomerState = CustomerState.IDLE:
@@ -31,7 +31,8 @@ var meal_name = ""
 														"get_simple_order", 
 														[order_gen_number])
 				overhead_ui_order_instance.set_order(order[0])
-				order_gen_number += 1
+				
+				
 				
 @export var synced_position: Vector3
 @export var synced_velocity: Vector3
@@ -88,20 +89,23 @@ func _ready():
 
 ## Syncing position of customer and overhead ui positions 
 func _process(_delta):
-	if is_instance_valid(animation_tree):
+	
+	if is_instance_valid(animation_tree): # Setting animation booleans
 		animation_tree.set("parameters/conditions/is_moving", synced_velocity.length() > 0.1)
 		animation_tree.set("parameters/conditions/not_moving", synced_velocity.length() < 0.1 && _seated == null)
 		animation_tree.set("parameters/conditions/is_sitting", _seated)
 		animation_tree.set("parameters/conditions/is_tweening_to_seat", is_tweening_to_seat)
 		animation_tree.set("parameters/conditions/state", customer_state) 
-	if not is_multiplayer_authority():
-		position = synced_position
 		
+	if not is_multiplayer_authority(): # Passing server customer pos to clients
+		position = synced_position
+	
+	
+	# Managing Overhead UIs
 	if is_instance_valid(overhead_ui_order_instance):
 		overhead_ui_order_instance.progress_bar.set_amount(
 								1 - _time_till_leaving / MAXIMUM_SEATING_TIME)
 		position_ui(overhead_ui_order_instance)
-		
 	if is_instance_valid(overhead_ui_thinking_instance):
 		position_ui(overhead_ui_thinking_instance)
 	visible = position != Vector3.ZERO
@@ -179,8 +183,12 @@ func _npc_behavior(delta: float):
 				var food = plate_served.get_children().back()
 				print(food)
 				if (food is MenuItem and food.get_meal_name() == order[0].get_meal_name()):
+					CurrencySystem.server_add_currency(ENetManager.get_my_team(), 100.0)
+					ReputationSystem.server_add_reputation(ENetManager.get_my_team(), 
+															10.0 * food.get_quality())
 					_table_target.rpc("remove_plate")
 					_time_till_leaving = 2
+					
 	# Customers who reach the front of the queue should begin looking for tables
 	if _queued and _queue_target:
 		if await _game_server.call_service(_food_court_id, "is_queue_front", [_queue_target.id()]):
@@ -274,6 +282,7 @@ func _update_pathfinding(delta: float) -> void:
 			tween.parallel().tween_property(self, "global_position", target_position, 0.5)
 			tween.parallel().tween_property(self, "rotation:y", target_rotation_y, 0.5)
 			tween.finished.connect(func(): is_tweening_to_seat = false)
+			
 		_seated = _table_target	
 		_queued = _queue_target
 		_is_pathfinding = false

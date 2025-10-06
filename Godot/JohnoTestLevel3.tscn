@@ -148,19 +148,6 @@ detection_area = NodePath("Area3D")
 transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 9.31323e-10, 0, 1, -0.506278, 0.314758, 0.102341)
 shape = SubResource("CylinderShape3D_hte61")
 
-[node name="table7" parent="===== TABLES =====/TableBody8"]
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-physics_interpolation_mode = 0
-auto_translate_mode = 0
-editor_description = ""
-transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 9.31323e-10, 0, 1, -0.495689, 0, 0.106708)
-script = null
-
 [node name="Area3D" type="Area3D" parent="===== TABLES =====/TableBody8"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
@@ -176,19 +163,6 @@ detection_area = NodePath("Area3D")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="===== TABLES =====/TableBody7"]
 transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 9.31323e-10, 0, 1, -0.506278, 0.314758, 0.102341)
 shape = SubResource("CylinderShape3D_hte61")
-
-[node name="table7" parent="===== TABLES =====/TableBody7"]
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-physics_interpolation_mode = 0
-auto_translate_mode = 0
-editor_description = ""
-transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 9.31323e-10, 0, 1, -0.495689, 0, 0.106708)
-script = null
 
 [node name="Area3D" type="Area3D" parent="===== TABLES =====/TableBody7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -206,19 +180,6 @@ detection_area = NodePath("Area3D")
 transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 9.31323e-10, 0, 1, -0.506278, 0.314758, 0.102341)
 shape = SubResource("CylinderShape3D_hte61")
 
-[node name="table7" parent="===== TABLES =====/TableBody9"]
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-physics_interpolation_mode = 0
-auto_translate_mode = 0
-editor_description = ""
-transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 9.31323e-10, 0, 1, -0.495689, 0, 0.106708)
-script = null
-
 [node name="Area3D" type="Area3D" parent="===== TABLES =====/TableBody9"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
@@ -234,19 +195,6 @@ detection_area = NodePath("Area3D")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="===== TABLES =====/TableBody10"]
 transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 9.31323e-10, 0, 1, -0.506278, 0.314758, 0.102341)
 shape = SubResource("CylinderShape3D_hte61")
-
-[node name="table7" parent="===== TABLES =====/TableBody10"]
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-physics_interpolation_mode = 0
-auto_translate_mode = 0
-editor_description = ""
-transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 9.31323e-10, 0, 1, -0.495689, 0, 0.106708)
-script = null
 
 [node name="Area3D" type="Area3D" parent="===== TABLES =====/TableBody10"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

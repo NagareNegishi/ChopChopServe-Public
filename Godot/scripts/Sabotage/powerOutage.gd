@@ -48,6 +48,7 @@ func start_timer() -> void:
 
 # When the timer ends, spread the fire
 func _on_timer_timeout() -> void:
+	print("jess: time is ending")
 	# Turn the Power back on
 	turn_power_off(true)
 	

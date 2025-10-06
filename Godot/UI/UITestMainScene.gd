@@ -98,3 +98,10 @@ func _on_rat_swarm_pressed() -> void:
 	print("\n RAT \n")
 	var teamID = _get_player_teamID()
 	SabotageSystem.request_sabotage.rpc_id(1, teamID, SabotageSystem.SabotageType.RAT_SWARM)
+
+
+func _on_switch_controls_pressed() -> void:
+	print("\n jess: switch controls \n")
+	var teamID = _get_player_teamID()
+	SabotageSystem.request_sabotage.rpc_id(1, teamID, SabotageSystem.SabotageType.SWITCH_CONTROLS)
+

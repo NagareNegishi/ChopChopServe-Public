@@ -29,13 +29,11 @@ func _process(delta: float) -> void:
 	if last_move != move_input || last_turn != turn_input:
 		last_move = move_input
 		last_turn = turn_input
-		_send_input(true)
-	_send_input(false)
-	
-	
-func _send_input(new : bool):
-	if new:
 		time = Time.get_ticks_msec()
+	_send_input()
+	
+	
+func _send_input():
 	rpc("_receive_input", ENetManager.get_my_id(), move_input, turn_input, time)
 
 

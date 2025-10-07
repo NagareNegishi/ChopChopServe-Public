@@ -2,11 +2,13 @@
 class_name FoodFactory
 extends UnPoweredAppliance
 
+# fields for managing food
 const FOOD_DIRECTORY: String = "res://scripts/Food/IngredientScenes/"
 static var food_book: Dictionary = {} # {name: PackedScene}
 static var food_instances: Dictionary = {} # {name: instance}
 static var registered: bool = false
 
+# fields for managing UI
 enum groups{
 	groupOne,
 	groupTwo,
@@ -14,6 +16,7 @@ enum groups{
 	groupFour
 }
 @export var group : groups
+var inventory
 
 ## Setup the model instance
 func _init():
@@ -27,7 +30,7 @@ func _init():
 ## Set up the FoodCrate
 func _ready():
 	super._ready()
-	action_interval = 0.5
+	action_interval = 0.0 # no interval as UI prevents rapid requests
 	_set_affixes()
 	_add_inventory_ui()
 
@@ -71,20 +74,20 @@ func _create_food(food_name: String) -> Node:
 
 
 ## Provide specific food from storage
+## @param food_name: The name of the food to provide
+## @return: The food Node if successful, null otherwise
 func provide_food(food_name: String) -> Node:
-	if current_status != Status.IDLE:
-		push_error("FoodStorage is not in IDLE status")
-		return null
-	current_status = Status.USING
-	action_timer.start()
+	# if current_status != Status.IDLE:
+	# 	push_error("FoodStorage is not in IDLE status")
+	# 	return null
+	# current_status = Status.USING
+	# action_timer.start()
 	return _create_food(food_name)
 
 
 ## For Inventory UI --------------------------------------------------------------------------------
 
 ## Add inventory UI to the scene
-var inventory
-
 func _add_inventory_ui():
 	var inventory_scene = preload("res://FridgeInven/inven.tscn")
 	var inventory_ui = inventory_scene.instantiate()
@@ -107,48 +110,19 @@ func _setup_interaction_area():
 	area.body_entered.connect(_on_player_entered)
 	area.body_exited.connect(_on_player_exited)
 
-#TODO: remove it? if unused
-# var in_area
-# # var player <- FoodFactory already use this variable name
-# var is_open 
-
 
 ## Open inventory when player is near
 ## @param body: The body that entered the area
 func _on_player_entered(body):
-	# in_area = true
-	#if body is Player and body.name.to_int() == ENetManager.get_my_id():
-		#get_node("InventoryLayer/Inventory").open()
-	#-------------------------------------------
-	# if inventory != null and body is Player:
 	if body is Player and body == GlobalScript.get_local_player():
-	#-------------------------------------------
 		inventory.get_node("SubViewport").get_node("Inventory").open()
 
 
 ## Close inventory when player leaves
 ## @param body: The body that exited the area
 func _on_player_exited(body):
-	# in_area = false
-	#if body is Player and body == GlobalScript.get_local_player():
-		#get_node("InventoryLayer/Inventory").close()
-	#-------------------------------------------
-	# if inventory != null and body is Player:
 	if body is Player and body == GlobalScript.get_local_player():
-	#-------------------------------------------
 		inventory.get_node("SubViewport").get_node("Inventory").close()
-
-#func _input(event):
-	#if event.is_action_pressed("Action") && in_area:
-		#if !is_open:
-			#if player is Player and player.name.to_int() == ENetManager.get_my_id():
-				#inventory.get_node("SubViewport").get_node("Inventory").open()
-				#is_open = true
-		#else:
-			#if player is Player and player.name.to_int() == ENetManager.get_my_id():
-				#inventory.get_node("SubViewport").get_node("Inventory").close()
-				#is_open = false
-
 
 
 ## Handle food selection from inventory UI

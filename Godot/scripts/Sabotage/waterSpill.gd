@@ -53,7 +53,7 @@ func start_timer() -> void:
 	add_child(timer)
 	timer.timeout.connect(_on_timer_timeout)
 	timer.start()
-	SabotageSystem.on_sabotage_start("Water Spill", secs)
+	SabotageSystem.sabotage_start.emit("Water Spill", secs)
 
 func _on_timer_timeout() -> void:
 	for player in players_in_spill:

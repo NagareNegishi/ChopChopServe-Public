@@ -145,31 +145,6 @@ func get_all_positions() -> Array:
 			positions.append(r.global_position)
 	return positions
 
-func cleanup_swarm():
-	pass
-	#mischief = mischief.filter(func(r): return is_instance_valid(r))
-
-# Rat duration timer
-func start_timer(seconds: float) -> void:
-	print("jess: rat attck timer")
-	var timer = Timer.new()
-	timer.wait_time = seconds
-	timer.one_shot = true
-	add_child(timer)
-	timer.timeout.connect(_on_timer_timeout)
-	timer.start()
-	
-func _on_timer_timeout() -> void:
-	for r in mischief:
-		if is_instance_valid(r):
-			r.queue_free()
-			print("queue freeded")
-	#mischief.clear()
-	print("done on the rats")
-	# do not queue_free() the Rat node itself
-
-
-
 # Add the Rats to the pack
 func add_to_mischief(rat : MeshInstance3D):
 	mischief.append(rat)

@@ -1,7 +1,7 @@
 extends Control
 
 @export var layer_depth: int = 100
-@export var group : groups
+var group : groups
 
 var is_open: bool = false
 @onready var gridCont = $GridContainer

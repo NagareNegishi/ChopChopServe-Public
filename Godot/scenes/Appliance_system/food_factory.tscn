@@ -6,6 +6,7 @@
 
 [node name="FoodFactory" instance=ExtResource("1_nq4fg")]
 script = ExtResource("2_vim2w")
+group = 0
 capacity = 4
 action_interval = 1.0
 using_tscn = false

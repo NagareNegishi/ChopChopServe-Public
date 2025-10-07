@@ -11,7 +11,7 @@ func _input(event):
 			var release_time = Time.get_ticks_msec() / 1000.0
 			var held_duration = release_time - press_time
 			
-			if held_duration>= 0.5:
+			if held_duration>= 0.3:
 				inventory.select_ingredient()
 			else:
 				inventory.current_slot = inventory.move_forward()

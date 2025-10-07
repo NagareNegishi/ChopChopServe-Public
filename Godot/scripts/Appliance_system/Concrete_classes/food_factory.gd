@@ -7,6 +7,13 @@ static var food_book: Dictionary = {} # {name: PackedScene}
 static var food_instances: Dictionary = {} # {name: instance}
 static var registered: bool = false
 
+enum groups{
+	groupOne,
+	groupTwo,
+	groupThree,
+	groupFour
+}
+@export var group : groups
 
 ## Setup the model instance
 func _init():
@@ -83,6 +90,7 @@ func _add_inventory_ui():
 	var inventory_scene = preload("res://FridgeInven/inven.tscn")
 	var inventory_ui = inventory_scene.instantiate()
 	inventory_ui.name = "Inventory"
+	inventory_ui.get_node("SubViewport").get_node("Inventory").group = group
 	add_child(inventory_ui)
 	inventory = inventory_ui
 	_setup_interaction_area()

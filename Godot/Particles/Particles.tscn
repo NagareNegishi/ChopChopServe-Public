@@ -465,6 +465,13 @@ text = "Sparkle
 "
 font_size = 18
 
+[node name="Text14" type="Label3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.8951, 0.141365, -0.18938)
+text = "Zone
+
+"
+font_size = 18
+
 [node name="Node3D2" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.89968, 0, 0)
 

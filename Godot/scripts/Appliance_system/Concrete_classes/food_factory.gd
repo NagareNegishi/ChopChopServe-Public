@@ -86,7 +86,6 @@ func provide_food(food_name: String) -> Node:
 var inventory
 
 func _add_inventory_ui():
-
 	var inventory_scene = preload("res://FridgeInven/inven.tscn")
 	var inventory_ui = inventory_scene.instantiate()
 	inventory_ui.name = "Inventory"
@@ -108,26 +107,35 @@ func _setup_interaction_area():
 	area.body_entered.connect(_on_player_entered)
 	area.body_exited.connect(_on_player_exited)
 
-var in_area 
-var player 
-var is_open
+#TODO: remove it? if unused
+# var in_area
+# # var player <- FoodFactory already use this variable name
+# var is_open 
+
+
 ## Open inventory when player is near
 ## @param body: The body that entered the area
 func _on_player_entered(body):
-	in_area = true
+	# in_area = true
 	#if body is Player and body.name.to_int() == ENetManager.get_my_id():
 		#get_node("InventoryLayer/Inventory").open()
-	if inventory !=null and body is Player:
+	#-------------------------------------------
+	# if inventory != null and body is Player:
+	if body is Player and body == GlobalScript.get_local_player():
+	#-------------------------------------------
 		inventory.get_node("SubViewport").get_node("Inventory").open()
 
 
 ## Close inventory when player leaves
 ## @param body: The body that exited the area
 func _on_player_exited(body):
-	in_area = false
+	# in_area = false
 	#if body is Player and body == GlobalScript.get_local_player():
 		#get_node("InventoryLayer/Inventory").close()
-	if inventory !=null and body is Player:
+	#-------------------------------------------
+	# if inventory != null and body is Player:
+	if body is Player and body == GlobalScript.get_local_player():
+	#-------------------------------------------
 		inventory.get_node("SubViewport").get_node("Inventory").close()
 
 #func _input(event):

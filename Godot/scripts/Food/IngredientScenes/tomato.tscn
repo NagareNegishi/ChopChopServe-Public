@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://meja73kgsx3f"]
+[gd_scene load_steps=16 format=4 uid="uid://byii12v0xaqyy"]
 
 [ext_resource type="Script" uid="uid://hak4lspr1w83" path="res://scripts/Food/Ingredients/tomato.gd" id="1_lo8qe"]
 [ext_resource type="Material" uid="uid://cnxr83cguwhu8" path="res://assets/newmodels/TingedTexture.tres" id="2_gqbnl"]

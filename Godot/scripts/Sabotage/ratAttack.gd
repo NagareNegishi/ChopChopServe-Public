@@ -50,6 +50,7 @@ var rat_states := {} # {rat: "going" or "returning"}
 # they can be attacked by rat spray (maybe make it the fire eughnisuisah)
 # the spray will kill them, dropping the item in their hand
 # lasts 20s before the rats stop spawning
+
 func _ready() -> void:
 	pass
 
@@ -92,6 +93,7 @@ func run(delta: float):
 				print("found my target, time to go home")
 				rat_states[r] = "returning"
 				rat_targets.erase(r) # Clear the target
+
 		elif rat_states.get(r) == "returning":
 			var start_pos = starting_pos.get(r, Vector3.ZERO)
 			var old_pos = r.global_position
@@ -133,9 +135,9 @@ func spawn_rat_mischief(position : Vector3, path : NodePath) -> void:
 
 func get_all_positions() -> Array:
 	var positions = []
-	for rat in mischief:	
-		if is_instance_valid(rat):		
-			positions.append(rat.global_position)
+	for r in mischief:	
+		if is_instance_valid(r):		
+			positions.append(r.global_position)
 	return positions
 
 func cleanup_swarm():
@@ -144,6 +146,7 @@ func cleanup_swarm():
 
 # Rat duration timer
 func start_timer(seconds: float) -> void:
+	print("jess: rat attck timer")
 	var timer = Timer.new()
 	timer.wait_time = seconds
 	timer.one_shot = true

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bbh5tfd1f1ik1"
+path="res://.godot/imported/8bit Bossa.mp3-d3fe42267cf8716447b995c664e8c411.mp3str"
+
+[deps]
+
+source_file="res://Sounds/BGM/Beach/8bit Bossa.mp3"
+dest_files=["res://.godot/imported/8bit Bossa.mp3-d3fe42267cf8716447b995c664e8c411.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

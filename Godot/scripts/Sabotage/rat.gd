@@ -5,6 +5,7 @@ class_name rat
 # TODO:
 	# - Clean Code up
 	# - Fix timer logic
+	# - Add a signal to allow the rats to go home when the time ends, rather then just disapare.
 ################################################################################
 
 var target_path
@@ -15,7 +16,7 @@ func set_target(path: NodePath):
 
 func rat_timer() -> void:
 	var timer = Timer.new()
-	timer.wait_time = 5.0
+	timer.wait_time = 10.0
 	timer.one_shot = true
 	add_child(timer)
 	timer.timeout.connect(_on_timer_timeout)
@@ -23,4 +24,3 @@ func rat_timer() -> void:
 
 func _on_timer_timeout() -> void:
 	queue_free()
-	print("queue freeded")

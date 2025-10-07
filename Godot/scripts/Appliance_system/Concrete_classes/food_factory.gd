@@ -7,6 +7,13 @@ static var food_book: Dictionary = {} # {name: PackedScene}
 static var food_instances: Dictionary = {} # {name: instance}
 static var registered: bool = false
 
+enum groups{
+	groupOne,
+	groupTwo,
+	groupThree,
+	groupFour
+}
+@export var group : groups
 
 ## Setup the model instance
 func _init():
@@ -76,16 +83,16 @@ func provide_food(food_name: String) -> Node:
 ## For Inventory UI --------------------------------------------------------------------------------
 
 ## Add inventory UI to the scene
+var inventory
+
 func _add_inventory_ui():
-	# Add a canvas layer to ensure UI is on top of other elements
-	var canvas_layer = CanvasLayer.new()
-	canvas_layer.name = "InventoryLayer"
-	add_child(canvas_layer)
-	var inventory_scene = preload("res://FridgeInven/inventory.tscn")
+
+	var inventory_scene = preload("res://FridgeInven/inven.tscn")
 	var inventory_ui = inventory_scene.instantiate()
 	inventory_ui.name = "Inventory"
-	canvas_layer.layer = inventory_ui.layer_depth
-	canvas_layer.add_child(inventory_ui)
+	inventory_ui.get_node("SubViewport").get_node("Inventory").group = group
+	add_child(inventory_ui)
+	inventory = inventory_ui
 	_setup_interaction_area()
 
 
@@ -107,10 +114,11 @@ var is_open
 ## Open inventory when player is near
 ## @param body: The body that entered the area
 func _on_player_entered(body):
-	player = body
 	in_area = true
 	#if body is Player and body.name.to_int() == ENetManager.get_my_id():
 		#get_node("InventoryLayer/Inventory").open()
+	if inventory !=null and body is Player:
+		inventory.get_node("SubViewport").get_node("Inventory").open()
 
 
 ## Close inventory when player leaves
@@ -119,19 +127,19 @@ func _on_player_exited(body):
 	in_area = false
 	#if body is Player and body == GlobalScript.get_local_player():
 		#get_node("InventoryLayer/Inventory").close()
+	if inventory !=null and body is Player:
+		inventory.get_node("SubViewport").get_node("Inventory").close()
 
-func _input(event):
-	if event.is_action_pressed("Action") && in_area:
-		if !is_open:
-			if player is Player and player.name.to_int() == ENetManager.get_my_id():
-				get_node("InventoryLayer/Inventory").open()
-				is_open = true
-				player.disable_controls(true)
-		else:
-			if player is Player and player.name.to_int() == ENetManager.get_my_id():
-				get_node("InventoryLayer/Inventory").close()
-				is_open = false
-				player.disable_controls(false)
+#func _input(event):
+	#if event.is_action_pressed("Action") && in_area:
+		#if !is_open:
+			#if player is Player and player.name.to_int() == ENetManager.get_my_id():
+				#inventory.get_node("SubViewport").get_node("Inventory").open()
+				#is_open = true
+		#else:
+			#if player is Player and player.name.to_int() == ENetManager.get_my_id():
+				#inventory.get_node("SubViewport").get_node("Inventory").close()
+				#is_open = false
 
 
 

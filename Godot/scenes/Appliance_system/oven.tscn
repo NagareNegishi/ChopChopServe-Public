@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://brwea1k7t14wb" path="res://scripts/Appliance_system/Concrete_classes/oven.gd" id="2_ddlb3"]
 [ext_resource type="PackedScene" uid="uid://465ulms0kb50" path="res://assets/newmodels/furniture/Oven.glb" id="3_hqn4w"]
 [ext_resource type="Script" uid="uid://c6jgfkd4gmbry" path="res://UI/ApplianceProgressBar2.gd" id="5_du6ku"]
-[ext_resource type="PackedScene" path="res://UI/UI_ProgressCook.tscn" id="7_4hy3m"]
+[ext_resource type="PackedScene" uid="uid://pl57ikpi4csf" path="res://UI/UI_ProgressCook.tscn" id="7_4hy3m"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_favet"]
 viewport_path = NodePath("SubViewport")

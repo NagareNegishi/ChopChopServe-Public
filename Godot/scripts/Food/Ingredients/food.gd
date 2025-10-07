@@ -191,6 +191,8 @@ func start_cooking(time: int, appliance_type: ApplianceFactory.CookingStyle):
 		is_cooking = true
 	
 	cook_timer.start()
+	
+	print("\n\n Checking to see if food cooking time rests ",BOILED_time)
 
 
 # Lets either the appliance or the player tell the food to stop cooking when it 

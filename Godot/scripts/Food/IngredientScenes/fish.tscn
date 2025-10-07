@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://drykeiluncd4h"]
+[gd_scene load_steps=22 format=4 uid="uid://cixuntmb0x1b7"]
 
 [ext_resource type="Script" uid="uid://dw8t6nq6vbgl5" path="res://scripts/Food/Ingredients/fish.gd" id="1_u43tf"]
 [ext_resource type="Material" uid="uid://cnxr83cguwhu8" path="res://assets/newmodels/TingedTexture.tres" id="2_u43tf"]

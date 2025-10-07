@@ -173,6 +173,9 @@ func _on_chop_table_food_placed(cookware):
 
 
 func reset():
+	for item in contents:
+		item.set_cook_time(get_max_value(get_cooking_style()),get_cooking_style())
+	contents.clear()
 	progress_bar.value = 0
 	food_item = null
 	is_open = false

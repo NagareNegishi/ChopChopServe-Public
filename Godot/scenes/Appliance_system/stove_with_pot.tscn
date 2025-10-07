@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="1_06mdy"]
 [ext_resource type="Script" uid="uid://c28hj0gk73hfy" path="res://scripts/Appliance_system/Concrete_classes/stove_with_pot.gd" id="2_0e7nx"]
 [ext_resource type="PackedScene" uid="uid://d4bn5pltpfukp" path="res://assets/newmodels/furniture/StoveSingle.glb" id="3_6qjqx"]
-[ext_resource type="PackedScene" path="res://UI/UI_ProgressCook.tscn" id="4_2df5m"]
+[ext_resource type="PackedScene" uid="uid://pl57ikpi4csf" path="res://UI/UI_ProgressCook.tscn" id="4_2df5m"]
 [ext_resource type="Script" uid="uid://c6jgfkd4gmbry" path="res://UI/ApplianceProgressBar2.gd" id="5_vgwh3"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_j0dn2"]

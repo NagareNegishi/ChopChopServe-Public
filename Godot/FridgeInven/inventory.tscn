@@ -15,14 +15,7 @@ scale = Vector2(1.5, 1.5)
 mouse_filter = 2
 script = ExtResource("1_egceb")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-layout_mode = 0
-offset_right = 250.0
-offset_bottom = 200.0
-mouse_filter = 2
-color = Color(0.290196, 0.34902, 0.352941, 0.945098)
-
-[node name="GridContainer" type="GridContainer" parent="ColorRect"]
+[node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 11.0

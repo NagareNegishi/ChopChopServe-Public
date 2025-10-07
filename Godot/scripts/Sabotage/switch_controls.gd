@@ -1,32 +1,34 @@
 extends Node3D
 
-################################################################################
-# TODO:
-	# - Tidy code up
-	# - Figure out how to get the player node properly
-	# - Add timer for the switch back
-	# - Basically everything lol
-################################################################################
+var secs = 3.0 # Change this
+var player_ids := []
 
-@onready var player = get_node("Player")
-
-var id
-var target_team
-var target_player
-
+# Switching the players controls 
 func switch_controls(teamID: int) -> void:
-	var cook = get_tree().get_current_scene().get_node_or_null("Player")
-
-	print("jess: the cook is: ", cook)
-	id = cook.get_my_id()
-	print("jess: my id is: ", id)
-	if ENetManager.get_team(id) == 1:
-		target_team = ENetManager.get_team2()
+	if teamID == 1:
+		player_ids = ENetManager.get_team2()
 	else:
-		target_team = ENetManager.get_team1()
-	print("jess: target team is:  ", target_team)
+		player_ids = ENetManager.get_team1()
 
-	for p in target_team:
-		target_player = p.get_player()
-		target_player.invert_controls(true)
-		print("jess: im switching your controls", p)
+	for id in player_ids:
+		var player = GlobalScript.get_local_player_by_id(id)
+		player.invert_controls(true)
+	start_timer(secs)
+
+# Time for the switch
+func start_timer(seconds: float) -> void:
+	var timer = Timer.new()
+	timer.wait_time = seconds
+	timer.one_shot = true
+	add_child(timer)
+	timer.timeout.connect(_on_timer_timeout)
+	timer.start()
+
+# End the Switch 
+func _on_timer_timeout() -> void:
+	for id in player_ids:
+		var player = GlobalScript.get_local_player_by_id(id)
+		if player:
+			player.invert_controls(false)
+			# Clean up the list
+			player_ids.erase(id)

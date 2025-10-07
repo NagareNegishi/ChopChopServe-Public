@@ -205,7 +205,9 @@ func player_has(_item: Node) -> void:
 ## Called when interacted with and will make the player pick this item up
 ## @return void
 func _on_interactable_component_interacted() -> void:
-	player_has(GlobalScript.get_local_player().item_in_hand)
+	var player = GlobalScript.get_local_player()
+	if player:
+		player_has(player.item_in_hand)
 
 
 ## Let toggle collision
@@ -221,7 +223,11 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	if not is_hovered:
 		highlight_component.hide_feedback()
 		return
-	var item = GlobalScript.get_local_player().item_in_hand
+	var player = GlobalScript.get_local_player()
+	var item
+	if player:
+		item = player.item_in_hand
+	
 	if item:
 		Debug.all("Player ID: " + str(ENetManager.get_my_id())
 			+ " has : " + item.get_script().get_global_name() + ", hovered: " + get_script().get_global_name())

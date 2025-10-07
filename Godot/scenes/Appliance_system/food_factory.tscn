@@ -14,4 +14,11 @@ current_owner = 1
 cooking_style = 0
 model_scene = null
 
+[node name="CollisionShape3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.614008, 0)
+
+[node name="InteractionArea" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.611115, 0)
+
 [node name="Fridge2" parent="." index="3" instance=ExtResource("3_wu4ye")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0161886, 0)

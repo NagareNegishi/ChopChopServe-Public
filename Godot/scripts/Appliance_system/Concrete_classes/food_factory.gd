@@ -79,10 +79,7 @@ func provide_food(food_name: String) -> Node:
 var inventory
 
 func _add_inventory_ui():
-	# Add a canvas layer to ensure UI is on top of other elements
-	#canvas_layer = CanvasLayer.new()
-	#canvas_layer.name = "InventoryLayer"
-	#add_child(canvas_layer)
+
 	var inventory_scene = preload("res://FridgeInven/inven.tscn")
 	var inventory_ui = inventory_scene.instantiate()
 	inventory_ui.name = "Inventory"
@@ -109,10 +106,11 @@ var is_open
 ## Open inventory when player is near
 ## @param body: The body that entered the area
 func _on_player_entered(body):
-	player = body
 	in_area = true
 	#if body is Player and body.name.to_int() == ENetManager.get_my_id():
 		#get_node("InventoryLayer/Inventory").open()
+	if inventory !=null and body is Player:
+		inventory.get_node("SubViewport").get_node("Inventory").open()
 
 
 ## Close inventory when player leaves
@@ -121,19 +119,19 @@ func _on_player_exited(body):
 	in_area = false
 	#if body is Player and body == GlobalScript.get_local_player():
 		#get_node("InventoryLayer/Inventory").close()
-	if inventory !=null:
+	if inventory !=null and body is Player:
 		inventory.get_node("SubViewport").get_node("Inventory").close()
 
-func _input(event):
-	if event.is_action_pressed("Action") && in_area:
-		if !is_open:
-			if player is Player and player.name.to_int() == ENetManager.get_my_id():
-				inventory.get_node("SubViewport").get_node("Inventory").open()
-				is_open = true
-		else:
-			if player is Player and player.name.to_int() == ENetManager.get_my_id():
-				inventory.get_node("SubViewport").get_node("Inventory").close()
-				is_open = false
+#func _input(event):
+	#if event.is_action_pressed("Action") && in_area:
+		#if !is_open:
+			#if player is Player and player.name.to_int() == ENetManager.get_my_id():
+				#inventory.get_node("SubViewport").get_node("Inventory").open()
+				#is_open = true
+		#else:
+			#if player is Player and player.name.to_int() == ENetManager.get_my_id():
+				#inventory.get_node("SubViewport").get_node("Inventory").close()
+				#is_open = false
 
 
 

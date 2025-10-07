@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://bkdgdjjlsc7rx"]
+[gd_scene load_steps=43 format=3 uid="uid://bkdgdjjlsc7rx"]
 
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_cmmn0"]
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="1_om5gj"]
@@ -31,6 +31,7 @@
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="28_niv16"]
 [ext_resource type="PackedScene" uid="uid://lfcppt4wh0g4" path="res://scenes/Interaction/UpgradeHammer.tscn" id="31_pf82k"]
 [ext_resource type="Script" uid="uid://dnns4dn8p042y" path="res://scripts/Table.gd" id="31_t7ckm"]
+[ext_resource type="PackedScene" uid="uid://b0ougk3d4jnku" path="res://scenes/Appliance_system/food_factory.tscn" id="32_vda8q"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_hte61"]
 height = 0.506226
@@ -521,3 +522,6 @@ transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.9999
 
 [node name="UpgradeHammer" parent="." instance=ExtResource("31_pf82k")]
 transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999984, 3.0994, 3.85325, 0.42221)
+
+[node name="FoodFactory" parent="." instance=ExtResource("32_vda8q")]
+transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999984, 5.76957, 0.110193, -6.2831)

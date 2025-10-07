@@ -73,11 +73,11 @@ func _ready() -> void:
 	for i in range(10):
 		var particle = move_particle.instantiate()
 		MOVE_PARTICLES_POOL.append(particle)
-	
+	add_to_group("Players")
 	if !multiplayer.get_unique_id() == name.to_int() : return
 	
 	await get_tree().create_timer(0.1).timeout
-	add_to_group("Players")
+	
 	rpc_id(1, "_server_set_name", name.to_int(), GlobalScript.player_name)
 
 
@@ -100,7 +100,6 @@ func _server_set_name(id : int, p_name : String):
 ## @param delta the times it takes per frame to render
 ## @return void
 func _physics_process(delta: float) -> void:
-	invert_controls(true)
 	if ENetManager.is_host():
 		collision_check()
 	
@@ -144,8 +143,11 @@ func _rotate_player(delta: float) -> void:
 ## @return void
 func _movement(delta : float) -> void:
 	if is_controls_disabled: return
+	
 	_direction = (transform.basis * 
 	Vector3(controller.input_dir.x, 0, controller.input_dir.y)).normalized()
+	
+	if is_inverted: _direction *= -1
 	
 	if _direction:
 		velocity.x = move_toward(velocity.x, _direction.x * speed, ACCELERATION * delta)
@@ -579,8 +581,6 @@ func _final_drop(item: Node3D) -> void:
 
 
 func invert_controls(_invert : bool):
-	if _invert: controller.vector = Input.get_vector("Up", "Down", "Right", "Left")
-	if !_invert: controller.vector = Input.get_vector("Down", "Up", "Left", "Right")
 	is_inverted = _invert
 
 

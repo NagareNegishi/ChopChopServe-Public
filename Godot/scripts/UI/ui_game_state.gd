@@ -41,6 +41,7 @@ func _set_time(time : float):
 	$Main/Time.text = seconds2hhmmss(time)
 
 func _connect_time_signal(value):
+	if !value: return
 	_set_time(value.current_time)
 	value.time_changed.connect(_set_time)
 

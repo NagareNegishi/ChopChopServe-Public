@@ -32,8 +32,8 @@ func _ready() -> void:
 	timer.timeout.connect(_on_timer_timeout)
 	add_child(timer)
 	timer.start()
-	CurrencySystem.minus_currency(1, 9500)
-	CurrencySystem.minus_currency(2, 9500)
+	#CurrencySystem.minus_currency(1, 9500)
+	#CurrencySystem.minus_currency(2, 9500)
 
 func change_phase():
 	if current_time <= prep_length:

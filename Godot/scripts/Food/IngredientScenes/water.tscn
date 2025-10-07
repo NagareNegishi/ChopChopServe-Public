@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dbqm4i10x565r"]
+[gd_scene load_steps=6 format=3 uid="uid://dftc8o1un3kbu"]
 
 [ext_resource type="Script" uid="uid://dixggc4kjlony" path="res://scripts/Food/Ingredients/water.gd" id="1_4i87h"]
 [ext_resource type="PackedScene" uid="uid://cy1s0o2ip2hob" path="res://scenes/Interaction/InteractableComponent.tscn" id="2_ca5ka"]

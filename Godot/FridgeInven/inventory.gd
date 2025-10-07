@@ -30,25 +30,27 @@ var g = {
 
 func _ready():
 	gridCont.columns = columns
-	sprite.position.y = 1
-	print("\n\n",sprite.position.y)
+	sprite.position.y = 2
+	print("Sprite node: ", sprite)
 	set_up_inven()
 	close()
 
-
 # Have these called by the fridge so it can open and close the inventory
 func open():
-	sprite.visible = true
+	print("open")
+	visible = true
 	is_open = true
 
 func close():
-	sprite.visible = false
+	print("close")
+	visible = false
 	is_open = false
 	update_slot_selected(false)
 	current_slot = 0
 
 
 func set_up_inven():
+	print("set up inven")
 	var selectedGroup = group
 	var group_name = groups.keys()[selectedGroup]
 	gridCont.columns = g[group_name].size()
@@ -58,6 +60,7 @@ func set_up_inven():
 
 # svp means subviewport
 func change_svp_size():
+	print("chnage svp size")
 	var temp_slot = SlotScene.instantiate()
 	var width = 100
 	var height = 100
@@ -80,6 +83,7 @@ func add_slot(item_name: String):
 
 
 func find_food_factory() -> FoodFactory:
+	print("find food factory")
 	var current = self
 	while current:
 		if current is FoodFactory:
@@ -96,6 +100,9 @@ func update_slot_selected(show: bool):
 	print("THE BOOL IN UDS:    ", show)
 	print("Current slot is:", current_slot)
 	var slot = get_current_slot()
+	if slot==null:
+		push_error("out of index on slots in grid container")
+	
 	var tint = slot.get_select_tint()
 	if show:
 		tint.show()
@@ -104,22 +111,24 @@ func update_slot_selected(show: bool):
 
 
 func select_ingredient():
+	print("selected slot")
 	var slot = get_current_slot()
 	slot.on_selected()
 
 func get_current_slot():
+	print("get current slot")
 	return gridCont.get_child(current_slot)
 
 func move_forward():
-	print("1")
+	print("move forward")
 	update_slot_selected(false)
-	if current_slot + 1 > slots:
-		return current_slot
+	if current_slot + 1 > gridCont.columns-1:
+		return 0
 	return current_slot + 1
 
 func move_backward():
-	print("2")
+	print("move backward")
 	update_slot_selected(false)
 	if current_slot - 1 < 0:
-		current_slot = current_slot
+		return gridCont.columns-1
 	return current_slot - 1

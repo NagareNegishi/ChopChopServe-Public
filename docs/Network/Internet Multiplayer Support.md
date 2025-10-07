@@ -50,3 +50,19 @@ Industry-standard protocol that **automatically configures port forwarding** on 
 - `UPNP.add_port_mapping()` - Open port automatically
 - `UPNP.delete_port_mapping()` - Close port when done
 - `UPNP.query_external_address()` - Get public IP
+
+
+## Room lookup services
+- Run small server with Railway
+- Use Godot HTTPRequest to query server for rooms
+https://docs.godotengine.org/en/4.4/classes/class_httprequest.html
+https://docs.godotengine.org/en/stable/tutorials/networking/http_request_class.html
+https://docs.godotengine.org/en/4.4/classes/class_json.html
+
+Main pattern is:
+- Create HTTPRequest node
+- Call request() method with URL, default is GET
+- Connect to request_completed signal
+- Parse response (usually JSON) and execute corresponding logic
+
+

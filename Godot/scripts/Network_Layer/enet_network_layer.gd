@@ -1,6 +1,7 @@
 class_name ENetNetworkLayer
 extends NetworkLayer
 
+signal notify(message: String, duration: float)
 
 @export var port: int = 7000
 # @export var bind_ip: String = "0.0.0.0"	## What to bind server to, but no use for Enet
@@ -13,6 +14,9 @@ var my_id: int = -1
 var upnp: UPNP = null
 var upnp_enabled: bool = false
 var upnp_thread = null
+var http_request: HTTPRequest
+const LOOKUP_SERVER = "https://chopchopserve-production.up.railway.app"
+var room_code: String = ""
 
 
 ## Setup signals for player management
@@ -23,6 +27,7 @@ func _ready():
 	multiplayer.connection_failed.connect(_on_connection_failed)
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
 	multiplayer.server_disconnected.connect(_on_disconnected_from_server)
+	_setup_http_request()
 
 
 ## Create a server with default settings. Server is also player 1.
@@ -39,6 +44,7 @@ func create_game(max_players: int) -> bool:
 func create_game_with_ip(max_players: int, host_public_ip: String = "") -> bool:
 	if state != ConnectionState.DISCONNECTED:
 		Debug.net_log("Already connected or connecting")
+		notify.emit("Already connected or connecting", 3.0)
 		return false
 	if max_players <= 0:
 		Debug.net_log("Invalid max players")
@@ -46,6 +52,9 @@ func create_game_with_ip(max_players: int, host_public_ip: String = "") -> bool:
 	if max_players > max_clients + 1: # +1 for the host
 		Debug.net_log("Max players clamped from %d to %d" % [max_players, max_clients + 1])
 		max_players = max_clients + 1
+	if host_public_ip != "":
+		if not validate_ip(host_public_ip):
+			return false
 
 	peer = ENetMultiplayerPeer.new()
 	if peer.create_server(port, max_players - 1) == OK:
@@ -59,11 +68,11 @@ func create_game_with_ip(max_players: int, host_public_ip: String = "") -> bool:
 			upnp_thread.start(_upnp_setup.bind(port))
 		# Use provided public IP if valid format (doesn't mean it's reachable)
 		else:
-			if _is_valid_ipv4(host_public_ip):
-				set_public_ip(host_public_ip)
-				Debug.net_log("Using provided public IP: " + host_public_ip)
-			else:
-				Debug.net_log("Invalid IP format: '%s' - ignoring" % host_public_ip)
+			set_public_ip(host_public_ip)
+			room_code = _generate_room_code()
+			_register_room_code(room_code, host_public_ip + ":" + str(port))
+			Debug.net_log("Using provided public IP: %s, Room code: %s" % [host_public_ip, room_code])
+
 
 		connected.emit()
 		player_joined.emit(my_id)
@@ -75,28 +84,13 @@ func create_game_with_ip(max_players: int, host_public_ip: String = "") -> bool:
 		return false
 
 
-## Validate if string is a valid IPv4 address
-## @param ip: The IP address string to validate
-## @return: True if valid IPv4, false otherwise
-func _is_valid_ipv4(ip: String) -> bool:
-	var parts = ip.split(".")
-	if parts.size() != 4:
-		return false
-	for part in parts:
-		if not part.is_valid_int():
-			return false
-		var num = int(part)
-		if num < 0 or num > 255:
-			return false
-	return true
-
-
 ## Join a server at the specified IP address (and port.)
 ## @param connection_info: can be "IP:PORT" or just "IP"
 ## @return: True if connection was successful
 func join_game(connection_info: String) -> bool:
 	if state != ConnectionState.DISCONNECTED:
 		Debug.net_log("Cannot join: already connected or connecting")
+		notify.emit("Already connected or connecting", 3.0)
 		return false
 	
 	# Parse connection_info as "IP:PORT" or "IP"
@@ -111,9 +105,11 @@ func join_game(connection_info: String) -> bool:
 		multiplayer.multiplayer_peer = peer
 		state = ConnectionState.CONNECTING
 		Debug.net_log("Attempting to connect to %s:%d" % [target_ip, target_port])
+		notify.emit("Connecting...", 15.0)
 		return true
 	else:
 		Debug.net_log("Failed to create ENet client")
+		notify.emit("Failed to start connection", 3.0)
 		peer = null
 		return false
 
@@ -139,7 +135,7 @@ func leave_game():
 ## Handle peer connection (when someone joins)
 ## "A new peer has connected to the same network as me"
 func _on_peer_connected(id: int):
-	print("Peer connected: %d" % id)
+	Debug.net_log("Peer connected: %d" % id)
 	if state == ConnectionState.HOST:
 		if multiplayer.get_peers().size() > max_clients:
 			Debug.net_log("Maximum clients reached. Disconnecting new client.")
@@ -159,6 +155,7 @@ func _on_peer_disconnected(id: int):
 ## Handle connection failure (when join_game fails to connect)
 func _on_connection_failed():
 	Debug.net_log("Connection to server failed")
+	notify.emit("Failed to connect to server.", 3.0)
 	state = ConnectionState.DISCONNECTED
 	multiplayer.multiplayer_peer = null
 	peer = null
@@ -274,12 +271,71 @@ func _receive_data(data: Dictionary):
 
 # Player management used by the host ---------------------------------------------------------------
 
+## Validate an IP address for hosting
+## @param ip: The IP address string to validate
+## @return: True if valid and usable for public internet, false otherwise
+func validate_ip(ip: String) -> bool:
+	if not _is_valid_ipv4(ip):
+		notify.emit("Invalid IP address format.", 3.0)
+		return false
+	var usability = check_ip_usability(ip)
+	if not usability.usable:
+		notify.emit("IP not usable for internet: " + usability.reason, 3.0)
+		return false
+	return true
+
+
+## Validate if string is a valid IPv4 address
+## @param ip: The IP address string to validate
+## @return: True if valid IPv4, false otherwise
+func _is_valid_ipv4(ip: String) -> bool:
+	ip = ip.strip_edges()
+	if ip.is_empty():
+		return false
+	var parts = ip.split(".")
+	if parts.size() != 4:
+		return false
+	for part in parts:
+		if not part.is_valid_int():
+			return false
+		var num = int(part)
+		if num < 0 or num > 255:
+			return false
+	return true
+
+
+## Check if a valid IP is usable for public internet hosting
+## @param ip: The IP address string to check (must be valid format first)
+## @return: Dictionary with {usable: bool, reason: String, is_private: bool}
+func check_ip_usability(ip: String) -> Dictionary:
+	# Assume IP format is already validated by _is_valid_ipv4()
+	var parts = ip.split(".")
+	var first = int(parts[0])
+	var second = int(parts[1])
+	if first == 0: 	# 0.0.0.0/8 - Invalid
+		return {"usable": false, "reason": "0.0.0.0/8 is reserved", "is_private": false}
+	if first == 127: # 127.0.0.0/8 - Localhost
+		return {"usable": false, "reason": "Localhost (not reachable externally)", "is_private": true}
+	if first == 10: # 10.0.0.0/8 - Private
+		return {"usable": false, "reason": "Private IP (LAN only)", "is_private": true}
+	if first == 172 and second >= 16 and second <= 31: # 172.16.0.0/12 - Private
+		return {"usable": false, "reason": "Private IP (LAN only)", "is_private": true}
+	if first == 192 and second == 168: # 192.168.0.0/16 - Private
+		return {"usable": false, "reason": "Private IP (LAN only)", "is_private": true}
+	if first == 169 and second == 254: # 169.254.0.0/16 - Link-local
+		return {"usable": false, "reason": "Link-local (auto-assigned)", "is_private": false}
+	if first >= 224 and first <= 239: # 224.0.0.0/4 - Multicast
+		return {"usable": false, "reason": "Multicast address", "is_private": false}
+	if first >= 240: # 240.0.0.0/4 - Reserved
+		return {"usable": false, "reason": "Reserved range", "is_private": false}
+	# Public IP - usable!
+	return {"usable": true, "reason": "", "is_private": false}
+
+
 ## Update the public IP address (host only)
 ## @param new_public_ip: The public IP address to set
 func set_public_ip(new_public_ip: String):
-
 	Debug.net_log("Setting public IP to: " + new_public_ip)
-
 	if not is_host():
 		push_warning("set_public_ip() should only be called by host")
 		return
@@ -377,7 +433,10 @@ func _upnp_setup(server_port: int) -> void:
 func _upnp_succeed(external_ip: String, server_port: int):
 	upnp_enabled = true
 	set_public_ip(external_ip)
-	Debug.net_log("UPnP enabled: %s:%d" % [external_ip, server_port])
+	# Generate and register room code
+	room_code = _generate_room_code()
+	_register_room_code(room_code, public_ip + ":" + str(server_port))
+	Debug.net_log("UPnP enabled: %s:%d, Room code: %s" % [external_ip, server_port, room_code])
 
 
 ## UPnP failed
@@ -409,6 +468,90 @@ func _exit_tree():
 	# Close peer
 	if peer:
 		peer.close()
+
+
+# HTTP request for room lookup services ----------------------------------------
+
+## Setup HTTPRequest node for room lookup services
+func _setup_http_request():
+	http_request = HTTPRequest.new()
+	add_child(http_request)
+	http_request.request_completed.connect(_on_http_request_completed)
+
+
+## Register room code with lookup server
+## @param code: The room code to register
+## @param ip: The public IP address of the host
+func _register_room_code(code: String, ip: String):
+	var body = JSON.stringify(
+		{
+		"room_code": code,
+		"ip": ip
+		}
+	)
+	var error = http_request.request(
+		LOOKUP_SERVER + "/register",
+		["Content-Type: application/json"],
+		HTTPClient.METHOD_POST,
+		body
+	)
+	if error != OK:
+		Debug.net_log("An error occurred in the HTTP request.")
+
+
+## Lookup room code from lookup server
+## @param code: The room code to look up
+func lookup_room_code(code: String):
+	var error = http_request.request(LOOKUP_SERVER + "/lookup/" + code)
+	if error != OK:
+		Debug.net_log("An error occurred in the HTTP request.")
+
+
+## Handle HTTP request completion
+## @param result: The result of the HTTP request
+## @param response_code: The HTTP response code
+## @param headers: The response headers
+## @param body: The response body
+func _on_http_request_completed(result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray):
+	# Check for errors
+	if result != HTTPRequest.RESULT_SUCCESS:
+		Debug.net_log("HTTP request failed with result: %d" % result)
+		notify.emit("Failed to contact room server.", 3.0)
+		return
+	if response_code != 200:
+		Debug.net_log("HTTP request returned non-200 status code: %d" % response_code)
+		notify.emit("Invalid Room Code.", 3.0)
+		return
+
+	# Parse JSON response
+	var response = JSON.parse_string(body.get_string_from_utf8())
+	if response == null:
+		Debug.net_log("Failed to parse JSON response")
+		notify.emit("Invalid response from room server.", 3.0)
+		return
+
+	# response is a Dictionary at this point
+	if response.has("error"):
+		Debug.net_log("Server error: %s" % response["error"])
+		notify.emit("Invalid request.", 3.0)
+		return
+	if response.has("success"):
+		Debug.net_log("Room registered successfully")
+		return
+	if response.has("ip"):
+		Debug.net_log("Room code lookup successful: " + response["ip"])
+		join_game(response["ip"])
+		return
+
+
+## Generate a random 6-character room code
+## @return: A random room code string
+func _generate_room_code() -> String:
+	var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	var code = ""
+	for i in range(6):
+		code += chars[randi() % chars.length()]
+	return code
 
 
 # # Optional features, consider once the base functionality is implemented -------------------------

@@ -5,6 +5,7 @@ class_name LobbyNetwork
 @onready var role_label: Label = $RoleLabel
 @onready var team_label: Label = $TeamLabel
 @onready var ip_label: Label = $IPLabel
+@onready var code_label: Label = $CodeText
 @onready var buttons_container: Container = $ControlContainer
 @onready var shuffle_button: Button = $ControlContainer/ShuffleButton
 @onready var start_button: Button = $ControlContainer/StartButton
@@ -47,6 +48,7 @@ func _ready():
 	_set_role_label()
 	_set_team_label(my_team)
 	_set_ip_label()
+	_set_code_label()
 	_set_buttons()
 
 
@@ -70,9 +72,18 @@ func _set_team_label(team_number: int) -> void:
 func _set_ip_label() -> void:
 	if is_host:
 		ip_label.show()
-		ip_label.text = "%s" % ENetManager.enet_layer.get_connection_info()
+		ip_label.text = "%s" % network_layer.get_connection_info()
 	else:
 		ip_label.hide()
+
+
+## Set code Label
+func _set_code_label() -> void:
+	if is_host:
+		code_label.show()
+		code_label.text = "CODE: %s" % network_layer.room_code
+	else:
+		code_label.hide()
 
 
 ## Set Buttons

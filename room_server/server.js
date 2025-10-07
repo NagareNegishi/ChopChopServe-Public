@@ -1,3 +1,6 @@
+// Deployed on: chopchopserve-production.up.railway.app
+// expects JSON bodies for POST requests
+
 const express = require('express')
 const rooms = new Map() // room_code -> ip + expiry time
 const app = express()

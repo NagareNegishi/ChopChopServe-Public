@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://vphuiv51th5v"]
+
+[ext_resource type="PackedScene" uid="uid://bayntuwyuo4wh" path="res://FridgeInven/inventory.tscn" id="1_aedto"]
+[ext_resource type="Script" uid="uid://cus02wv12wypr" path="res://FridgeInven/inven.gd" id="1_bsbmu"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_otftc"]
+viewport_path = NodePath("SubViewport")
+
+[node name="Inven" type="Sprite3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+texture = SubResource("ViewportTexture_otftc")
+script = ExtResource("1_bsbmu")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+
+[node name="Inventory" parent="SubViewport" instance=ExtResource("1_aedto")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1

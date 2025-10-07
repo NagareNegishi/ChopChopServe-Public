@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="1_fh1u4"]
 [ext_resource type="Script" uid="uid://drw1ejyko02d6" path="res://scripts/Appliance_system/Unused_classes/food_crate_update.gd" id="2_fh1u4"]
-[ext_resource type="ArrayMesh" uid="uid://tjgv6b7pc05a" path="res://assets/newmodels/furniture/Fridge_Sphere.res" id="3_22vov"]
-[ext_resource type="ArrayMesh" uid="uid://bs4g710wvw52v" path="res://assets/newmodels/Crateredone_Cube_053.res" id="4_22vov"]
+[ext_resource type="ArrayMesh" uid="uid://b1qj1jxyghxeb" path="res://assets/newmodels/furniture/Fridge_Sphere.res" id="3_22vov"]
+[ext_resource type="ArrayMesh" uid="uid://urjiiaqjj2u4" path="res://assets/newmodels/Crateredone_Cube_053.res" id="4_22vov"]
 [ext_resource type="Texture2D" uid="uid://pdewjp1spb72" path="res://assets/textures/ingredients/beef.png" id="5_r34q6"]
 
 [node name="FoodFactory" instance=ExtResource("1_fh1u4")]

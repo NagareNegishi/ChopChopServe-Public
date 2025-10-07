@@ -227,7 +227,10 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	if not is_hovered:
 		highlight_component.hide_feedback()
 		return
-	var item = GlobalScript.get_local_player().item_in_hand
+	var player = GlobalScript.get_local_player()
+	var item
+	if player:
+		item = player.item_in_hand
 	
 	#---------------------------------------------------------------------------
 	if item:

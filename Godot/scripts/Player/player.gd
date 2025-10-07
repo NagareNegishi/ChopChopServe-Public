@@ -87,7 +87,8 @@ func set_speed(new_speed : float) -> void:
 @rpc("any_peer", "call_local")
 func _set_player_name(id : int, p_name : String):
 	var player : Player = GlobalScript.get_local_player_by_id(id)
-	player.name_tag.set_tag(p_name)
+	if player:
+		player.name_tag.set_tag(p_name)
 
 @rpc("authority", "call_local")
 func _server_set_name(id : int, p_name : String):

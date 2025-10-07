@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://cdkyf70jhtj1n"]
+[gd_scene load_steps=34 format=3 uid="uid://cdkyf70jhtj1n"]
 
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_qfo0q"]
 [ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_rdyjb"]
@@ -14,6 +14,8 @@
 [ext_resource type="PackedScene" uid="uid://dbeboubu5gkhe" path="res://scenes/Appliance_system/fryer.tscn" id="8_p0tnk"]
 [ext_resource type="PackedScene" uid="uid://dlk0mbdfg2cmq" path="res://scenes/Appliance_system/oven.tscn" id="9_tok01"]
 [ext_resource type="PackedScene" uid="uid://bakeesqt3byva" path="res://scenes/Appliance_system/sink.tscn" id="10_iv5qa"]
+[ext_resource type="PackedScene" uid="uid://bev73qms8mo6h" path="res://scenes/Appliance_system/food_crate_test.tscn" id="14_nq5uu"]
+[ext_resource type="PackedScene" uid="uid://bqpdxpf2l7uw1" path="res://scenes/Appliance_system/stove.tscn" id="15_0wnb8"]
 [ext_resource type="PackedScene" uid="uid://bl75bmgw02yr" path="res://assets/newmodels/WallsnShit/wall.glb" id="17_4al2s"]
 [ext_resource type="PackedScene" uid="uid://cnxonjh7xlet5" path="res://assets/CityPacks/gltf/road_straight_crossing.gltf" id="18_rdyjb"]
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="19_f85dq"]
@@ -170,11 +172,12 @@ transform = Transform3D(-4.37114e-08, -0.819152, 0.573576, 0, 0.573576, 0.819152
 metadata/_edit_use_anchors_ = true
 
 [node name="GridMap" type="GridMap" parent="MISC"]
+visible = false
 mesh_library = ExtResource("4_b20f1")
 cell_size = Vector3(1, 1, 1)
 cell_center_y = false
 data = {
-"cells": PackedInt32Array(65529, 8, 1441792, 65535, 7, 1048583, 65529, 7, 1441792, 65529, 65527, 1441792, 65529, 65528, 1441792, 65535, 65528, 1048583, 4, 7, 1441799, 10, 7, 1048576, 10, 8, 1048576, 4, 65528, 1441799, 10, 65527, 1048576, 10, 65528, 1048576, 65529, 65531, 0, 65530, 65531, 0, 65533, 65531, 8, 65534, 65531, 0, 65535, 65531, 0, 4, 65531, 0, 5, 65531, 0, 6, 65531, 8, 9, 65531, 0, 10, 65531, 0, 6, 65526, 655363, 7, 65526, 655360, 65532, 65526, 655360, 65533, 65526, 655363, 65529, 4, 655360, 65530, 4, 655360, 65533, 4, 655368, 65534, 4, 655360, 65535, 4, 655360, 4, 4, 655360, 5, 4, 655360, 6, 4, 655368, 9, 4, 655360, 10, 4, 655360, 6, 9, 3, 7, 9, 0, 65532, 9, 0, 65533, 9, 3, 3, 7, 0, 2, 7, 655360, 1, 7, 0, 0, 7, 655360, 0, 65528, 655360, 1, 65528, 0, 2, 65528, 655360, 3, 65528, 0)
+"cells": PackedInt32Array(65535, 7, 1048583, 65529, 7, 1441792, 65529, 65528, 1441792, 65535, 65528, 1048583, 4, 7, 1441799, 10, 7, 1048576, 10, 8, 1048576, 4, 65528, 1441799, 10, 65527, 1048576, 10, 65528, 1048576, 65529, 65531, 0, 65530, 65531, 0, 65533, 65531, 8, 65534, 65531, 0, 4, 65531, 0, 5, 65531, 0, 6, 65531, 8, 9, 65531, 0, 10, 65531, 0, 6, 65526, 655363, 7, 65526, 655360, 65532, 65526, 655360, 65533, 65526, 655363, 65529, 4, 655360, 65530, 4, 655360, 65533, 4, 655368, 65534, 4, 655360, 4, 4, 655360, 5, 4, 655360, 6, 4, 655368, 9, 4, 655360, 10, 4, 655360, 6, 9, 3, 7, 9, 0, 65532, 9, 0, 65533, 9, 3, 3, 7, 0, 1, 7, 0, 0, 65528, 655360, 2, 65528, 655360, 2, 7, 0, 0, 7, 0, 1, 65528, 655360, 3, 65528, 655360, 65535, 4, 655369, 65535, 65531, 9)
 }
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
@@ -220,12 +223,12 @@ using_tscn = true
 unique_name = "13"
 
 [node name="Bench12" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("6_08y48")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2.5, 0, 7.5)
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, 2.5, 0, 7.5)
 using_tscn = true
 unique_name = "14"
 
 [node name="Bench15" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("6_08y48")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0.5, 0, 7.5)
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, 0.5, 0, 7.5)
 using_tscn = true
 unique_name = "16"
 
@@ -266,11 +269,6 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.5, 
 using_tscn = true
 unique_name = "19"
 
-[node name="Bench19" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("6_08y48")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.5, 0, 4.5)
-using_tscn = true
-unique_name = "18"
-
 [node name="Bench21" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("6_08y48")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6.5, 0, 7.5)
 using_tscn = true
@@ -285,11 +283,6 @@ unique_name = "21"
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -6.5, 0, 4.5)
 using_tscn = true
 unique_name = "22"
-
-[node name="Bench26" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("6_08y48")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6.5, 0, 8.5)
-using_tscn = true
-unique_name = "25"
 
 [node name="ChopTable3" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("7_0ioum")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, 9.5)
@@ -307,6 +300,18 @@ unique_name = "17"
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2.5, 0, 4.5)
 using_tscn = true
 unique_name = "20"
+
+[node name="FoodFactory4" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("14_nq5uu")]
+transform = Transform3D(1, 0, -4.61466e-09, 0, 1, 0, 4.61466e-09, 0, 1, -6.5, -0.348, 8.5)
+catergory = 1
+using_tscn = true
+unique_name = "FoodCrate"
+
+[node name="Stove" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("15_0wnb8")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.5, 0, 4.5)
+
+[node name="Stove2" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("15_0wnb8")]
+transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, -0.5, 0, -4.5)
 
 [node name="Right Kitchen" type="Node3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.728, 0)
@@ -327,12 +332,6 @@ current_owner = 2
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6.5, 0, -7.5)
 using_tscn = true
 unique_name = "55"
-current_owner = 2
-
-[node name="Bench18" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("6_08y48")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6.5, 0, -8.5)
-using_tscn = true
-unique_name = "56"
 current_owner = 2
 
 [node name="Bench37" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("6_08y48")]
@@ -432,13 +431,13 @@ unique_name = "44"
 current_owner = 2
 
 [node name="Bench19" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("6_08y48")]
-transform = Transform3D(1, 0, -1.42109e-14, 0, 1, 0, 1.42109e-14, 0, 1, 1.5, 0, -7.5)
+transform = Transform3D(-1, 0, 8.9407e-08, 0, 1, 0, -8.9407e-08, 0, -1, 1.5, 0, -7.5)
 using_tscn = true
 unique_name = "43"
 current_owner = 2
 
 [node name="Bench20" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("6_08y48")]
-transform = Transform3D(1, 0, -1.42109e-14, 0, 1, 0, 1.42109e-14, 0, 1, 3.5, 0, -7.5)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 3.5, 0, -7.5)
 using_tscn = true
 unique_name = "41"
 current_owner = 2
@@ -447,6 +446,13 @@ current_owner = 2
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2.5, 0, -7.5)
 using_tscn = true
 unique_name = "42"
+current_owner = 2
+
+[node name="FoodFactory5" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("14_nq5uu")]
+transform = Transform3D(1, 0, -4.61466e-09, 0, 1, 0, 4.61466e-09, 0, 1, -6.5, -0.348, -8.5)
+catergory = 1
+using_tscn = true
+unique_name = "FoodCrate2"
 current_owner = 2
 
 [node name="Walls" type="Node3D" parent="NavigationRegion3D"]

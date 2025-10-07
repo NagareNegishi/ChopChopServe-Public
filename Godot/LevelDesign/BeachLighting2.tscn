@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://g5y4cnxk5856"]
+[gd_scene load_steps=41 format=3 uid="uid://g5y4cnxk5856"]
 
 [ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_1hj32"]
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="1_jd0au"]
@@ -24,11 +24,10 @@
 [ext_resource type="PackedScene" uid="uid://dmahi8f6d6lw0" path="res://assets/NaturePack/Rock_5.fbx" id="18_m8iad"]
 [ext_resource type="PackedScene" uid="uid://bfyl14i4p2lc0" path="res://assets/NaturePack/Rock_2.fbx" id="19_q1cwv"]
 [ext_resource type="Shader" uid="uid://c46kta255prk4" path="res://shaders/Water/WaterOpenWorld.gdshader" id="20_i40ex"]
-[ext_resource type="PackedScene" uid="uid://b0ougk3d4jnku" path="res://scenes/Appliance_system/food_factory.tscn" id="21_lg5jw"]
-[ext_resource type="Script" uid="uid://denxn65anovd7" path="res://scripts/Appliance_system/placeable.gd" id="22_6wlo3"]
 [ext_resource type="PackedScene" uid="uid://crx0marg1hk52" path="res://assets/Beachy/FenceBeachPlank.glb" id="23_kdffh"]
 [ext_resource type="PackedScene" uid="uid://ote03xslp2mk" path="res://assets/Beachy/FenceBeachPlankPath.glb" id="24_v5sy6"]
 [ext_resource type="PackedScene" uid="uid://bdavcjsmotl0h" path="res://assets/Beachy/FenceBeachPlank4.glb" id="25_jd0au"]
+[ext_resource type="PackedScene" uid="uid://bev73qms8mo6h" path="res://scenes/Appliance_system/food_crate_test.tscn" id="29_gq2iv"]
 [ext_resource type="Script" uid="uid://dnns4dn8p042y" path="res://scripts/Table.gd" id="30_eayyc"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kdffh"]
@@ -605,10 +604,6 @@ using_tscn = true
 unique_name = "22"
 current_owner = 2
 
-[node name="FoodCrate2" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("21_lg5jw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1, -1)
-script = ExtResource("22_6wlo3")
-
 [node name="Left Kitchen" type="Node3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.728, 0)
 
@@ -663,9 +658,18 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.5, 
 using_tscn = true
 unique_name = "6"
 
-[node name="FoodCrate" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("21_lg5jw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1, 2)
-script = ExtResource("22_6wlo3")
+[node name="FoodFactory2" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("29_gq2iv")]
+transform = Transform3D(1, 0, -4.61466e-09, 0, 1, 0, 4.61466e-09, 0, 1, -2.5, 0.752, 2)
+catergory = 1
+using_tscn = true
+unique_name = "FoodCrate"
+
+[node name="FoodFactory3" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("29_gq2iv")]
+transform = Transform3D(1, 0, -4.61466e-09, 0, 1, 0, 4.61466e-09, 0, 1, -2.5, 0.752, -1)
+catergory = 1
+using_tscn = true
+unique_name = "FoodCrate2"
+current_owner = 2
 
 [node name="CustomerSpawn" type="Node3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 9.31323e-10, 0, 1, 0, -9.31323e-10, 0, 1, 16.4468, 1, 7.62814)

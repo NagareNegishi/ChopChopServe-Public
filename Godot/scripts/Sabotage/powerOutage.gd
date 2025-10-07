@@ -51,4 +51,5 @@ func _on_timer_timeout() -> void:
 	print("jess: time is ending")
 	# Turn the Power back on
 	turn_power_off(true)
+	SabotageSystem.sabotage_ending.emit()
 	

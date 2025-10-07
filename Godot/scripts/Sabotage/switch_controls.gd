@@ -32,3 +32,4 @@ func _on_timer_timeout() -> void:
 			player.invert_controls(false)
 			# Clean up the list
 			player_ids.erase(id)
+	SabotageSystem.sabotage_ending.emit()

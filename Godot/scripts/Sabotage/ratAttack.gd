@@ -22,7 +22,7 @@ extends Node
 var speed := 3.0 # Units per second
 
 var count = 0
-var secs = 5
+var secs = 2
 var object_path
 var target_path
 var rat_targets := {} 
@@ -132,6 +132,11 @@ func spawn_rat_mischief(position : Vector3, path : NodePath) -> void:
 	#var start = get_tree().get_current_scene()
 	#var bs : Array = find_benches(start)
 	#print("benches in the scene ======= ", bs)
+
+# Change the state of the rat to go back home when their time runs out
+func change_state() -> void:
+	for r in mischief:
+		rat_states[r] = "returning"
 
 func get_all_positions() -> Array:
 	var positions = []

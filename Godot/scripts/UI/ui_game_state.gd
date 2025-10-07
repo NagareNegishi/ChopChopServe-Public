@@ -38,7 +38,6 @@ func set_money(team : int, amount : int) -> bool:
 	return true
 
 func _set_time(time : float):
-	print(time)
 	$Main/Time.text = seconds2hhmmss(time)
 
 func _connect_time_signal(value):

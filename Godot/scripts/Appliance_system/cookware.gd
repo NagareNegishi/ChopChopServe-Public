@@ -4,7 +4,6 @@
 class_name Cookware
 extends Equipment
 
-signal new_average(average: float)
 
 @onready var cookware_ui_scene : PackedScene = preload("res://UI/UI_Contents.tscn")
 @onready var sprite_ref : Sprite3D = Sprite3D.new()

@@ -35,7 +35,7 @@ signal sabotage_failed(reason: String)
 signal sabotage_sending_team(teamID: int)
 
 signal sabotage_ending(sab_name: String)
-signal sabotage_starting(sab_name: String, sab_time: int)
+signal sabotage_start(sab_name: String, sab_time: int)
 
 # Define Sabotage Types
 enum SabotageType {
@@ -81,7 +81,7 @@ func _ready() -> void:
 	sabotage_ending.connect(on_sabotage_ending)
 	sabotage_success.connect(on_sabotage_success)
 	sabotage_failed.connect(_on_sabotage_failed)
-	sabotage_starting.connect(on_sabotage_start)
+	sabotage_start.connect(on_sabotage_start)
 
 # ------------------- Requesting Sabotage Functions ------------------- #
 

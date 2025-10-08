@@ -22,12 +22,12 @@ func rat_timer() -> void:
 	add_child(timer)
 	timer.timeout.connect(_on_timer_timeout)
 	timer.start()
-	SabotageSystem.on_sabotage_start("Rat Swarm", secs)
+	SabotageSystem.sabotage_start.emit("Rat Swarm", secs)
 
 func _on_timer_timeout() -> void:
-	SabotageSystem.sabotage_ending.emit("Rat Swarm")
 	# This should make the rats turn around when the timer is up 
 	# Instead of just disapearing when itsover
 	RatAttack.change_state()
 	print("jess: the timer has ended and the rat state should be changing")
 	#queue_free()
+	SabotageSystem.sabotage_ending.emit("Rat Swarm")

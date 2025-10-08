@@ -82,12 +82,17 @@ func _can_accept(item: Node) -> bool:
 	return item is Plate
 
 
+var count = 0
+
+
 ## Perform action logic
 func _action() -> bool:
 	if current_status != Status.USING:
 		assert(false, "Do not call wash() unless status is USING")
 		return false
 
+	Debug.cook_log("Sink is washing items...: " + str(count))
+	count += 1
 	for item in contents:
 		# if item is Plate:
 		if item.has_method("clean"):

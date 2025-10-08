@@ -539,4 +539,4 @@ transform = Transform3D(1, 0, -3.25963e-09, 0, 1, 0, 3.25963e-09, 0, 1, 6.18281,
 
 [node name="FoodFactory" parent="." instance=ExtResource("36_7oceb")]
 transform = Transform3D(1, 0, -2.79397e-09, 0, 1, 0, 2.79397e-09, 0, 1, 7.67573, 0.510343, 5.98735)
-group = 3
+group = 2

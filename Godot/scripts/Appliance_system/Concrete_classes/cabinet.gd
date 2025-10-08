@@ -62,7 +62,7 @@ func _on_capacity_upgraded(property: String) -> void:
 func _can_accept(item: Node) -> bool:
 	if not super._can_accept(item):
 		return false
-	return item is Plate and item.is_ready() # maybe we need different method to check clean and empty
+	return item is Plate and item.is_ready() and item.is_empty()
 
 
 ## For Player interaction --------------------------------------------------------------------------
@@ -88,7 +88,7 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	var item = GlobalScript.get_local_player().item_in_hand
 	if item:
 		Debug.all("Player ID: " + str(ENetManager.get_my_id())
-			+ " has : " + item.get_script().get_global_name() + ", hovered: " + get_script().get_global_name())
+			+ " has : " + item.get_script().get_global_name() + ", hovered: " + name)
 	if not item:
 		highlight_component.show_feedback(true)
 		return

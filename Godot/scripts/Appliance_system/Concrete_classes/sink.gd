@@ -1,4 +1,5 @@
 ## Sink only accept plate, player can clean plate in sink manually
+## The Status must be always IDLE. DO NOT FORCEFULLY CHANGE!!
 class_name Sink
 extends UnPoweredAppliance
 
@@ -52,12 +53,6 @@ func _toggle_bubble(bubble: bool) -> void:
 		bubble_particles.stop()
 
 
-## Trigger the washing process
-## @return: True if washing started
-func wash() -> bool:
-	return start_action()
-
-
 ## Check if this appliance can accept the given item
 ## @param item: The Node to test for acceptance
 ## @return: True if item can be placed, false otherwise
@@ -65,27 +60,35 @@ func _can_accept(item: Node) -> bool:
 	var acceptable = super._can_accept(item)
 	if not acceptable:
 		return false
-	return item is Plate
+	return item is Plate and item.is_empty()
 
 
-var count = 0
+## Trigger the washing process
+func start_wash() -> void:
+	if contents.is_empty():
+		Debug.cook_log("Sink has nothing to wash")
+		return
+	action_timer.start()
+	_toggle_bubble(true)
 
 
-## Perform action logic
-func _action() -> bool:
-	if current_status != Status.USING:
-		assert(false, "Do not call wash() unless status is USING")
-		return false
+## Stop the washing process
+func stop_wash() -> void:
+	action_timer.stop()
+	_toggle_bubble(false)
 
-	Debug.cook_log("Sink is washing items...: " + str(count))
-	count += 1
-	for item in contents:
-		# if item is Plate:
-		if item.has_method("clean"):
-			item.clean()
-		else:
-			push_error("Sink can only clean plates, found: " + item.get_class())
-	return true
+
+## Timer callback to handle action logic
+func _on_action_timer_timeout():
+	for plate in contents:
+		if plate is Plate:
+			plate.clean()
+
+
+## Override unsupported methods to prevent misuse ------------------------------
+func start_action() -> bool:
+	assert(false, "Sink does not support generic action, use start_wash() instead")
+	return false
 
 
 ## For Player interaction --------------------------------------------------------------------------
@@ -111,10 +114,9 @@ func player_has(item: Node) -> void:
 ## Trigger action, if subclass has action
 func _on_interactable_component_action_use(_is_action: bool) -> void:
 	if _is_action:
-		wash()
-		_toggle_bubble(true)
+		start_wash()
 	else:
-		_toggle_bubble(false)
+		stop_wash()
 
 
 ## Give visual feedback when hovered

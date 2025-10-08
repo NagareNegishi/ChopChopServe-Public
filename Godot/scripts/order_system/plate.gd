@@ -237,3 +237,35 @@ func set_mesh(food):
 		food.mesh_visibility(food.cooked_mesh_bad, true)
 	else:
 		food.mesh_visibility(food.cooked_mesh_burnt, true)
+
+
+## Functions for cleaning the plate --------------------------------------------
+
+var dirtiness = 0
+const MAX_DIRTINESS = 5
+
+## Set the plate dirty or clean
+## @param state: True if dirty, false if clean
+func set_dirty(state: bool):
+	is_dirty = state
+	if state:
+		dirtiness = MAX_DIRTINESS
+	else:
+		dirtiness = 0
+		Debug.cook_log("Plate " + name + " is now clean")
+
+
+## Clean the plate by reducing its dirtiness level
+func clean():
+	if not is_dirty:
+		return
+	dirtiness -= 1
+	Debug.cook_log("Plate cleaned, current dirtiness: " + str(dirtiness))
+	if dirtiness <= 0:
+		set_dirty(false)
+
+
+## Check if the plate is empty
+## @return: True if empty, false otherwise
+func is_empty() -> bool:
+	return !is_full and food_items.is_empty()

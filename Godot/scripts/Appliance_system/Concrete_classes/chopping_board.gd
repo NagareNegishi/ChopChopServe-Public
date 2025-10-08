@@ -10,13 +10,14 @@ extends Cookware
 # TODO: Move the variable to appropriate class
 # ADDED so we know how much we need to scale the model on the chopping board by
 var food_scale_factor: float = 4
+var choppingBoard :ChoppingBoard
 # TODO: Move the function to appropriate class (No need to override)
 # ADDED so that when you take the food from the chopping board the scale goes back to how it was
 func take() -> Node:
 	var item = super.take()
 	if item and item is Food:
 		item.scale /= food_scale_factor
-	emit_signal("food_taken")
+	emit_signal("food_taken", self, item)
 	return item
 # -----------------------------------------------------------------------------
 
@@ -54,6 +55,7 @@ func put(item: Node) -> bool:
 	contents.append(item)
 	add_child(item)
 	item.position = Vector3(0.0, size.y * 0.5, 0.0)
+	emit_signal("food_placed", self, item)
 	return true
 
 

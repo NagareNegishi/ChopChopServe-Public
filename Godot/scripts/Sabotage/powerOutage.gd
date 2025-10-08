@@ -45,9 +45,12 @@ func start_timer() -> void:
 	add_child(timer)
 	timer.timeout.connect(_on_timer_timeout)
 	timer.start()
+	SabotageSystem.sabotage_start.emit("Power Outage", secs)
 
 # When the timer ends, spread the fire
 func _on_timer_timeout() -> void:
+	print("jess: time is ending")
 	# Turn the Power back on
 	turn_power_off(true)
+	SabotageSystem.sabotage_ending.emit("Power Outage")
 	

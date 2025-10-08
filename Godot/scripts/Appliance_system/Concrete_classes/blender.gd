@@ -4,6 +4,7 @@ extends PoweredAppliance
 ## Setup the model instance
 func _init():
 	super._init()
+	appliance_name = "Blender"
 	#model_scene = preload("res://assets/models/furniture/Blender.glb")
 
 
@@ -14,7 +15,6 @@ func _ready():
 	valid_classes = ["Tomato", "Water", "Milk", "Cocoa", "Flour", "Vanilla Icecream", "Strawberry", "Egg"]
 	capacity = 4
 	power = 1
-	
 	add_to_group("Appliance")
 
 
@@ -47,8 +47,9 @@ func put_all(items: Array) -> bool:
 ## Place food into the blender
 ## @param food: The Food item to place into the blender
 func _put_food(food: Food) -> void:
+	emit_signal("add_appliance", self, null)
 	food.change_collisions(true)
-	emit_signal("food_placed", contents, self)
+	emit_signal("food_placed", self, contents)
 	if current_status == Status.COOKING:
 		_average_food()
 		food.start_cooking(power, cooking_style)
@@ -67,6 +68,7 @@ func _average_food() -> float:
 	var average = total / contents.size()
 	for food in contents:
 		food.set_cook_time(average, cooking_style)
+	emit_signal("new_average", average)
 	return average
 
 
@@ -86,7 +88,7 @@ func take_all() -> Array[Node]:
 	contents = []
 	contents_names = []
 	stop_cook()
-	emit_signal("food_taken", contents)
+	emit_signal("food_taken", self, contents)
 	return all_items
 
 

@@ -3,7 +3,6 @@ extends Node3D
 ################################################################################
 # TODO:
 	# - Clean code up
-	# - Remove the Cylinder
 	# - Connect the Customer slip to the signal
 	# - Fix its positioning logic
 ################################################################################
@@ -15,6 +14,7 @@ extends Node3D
 var sabotaged_teamID: int
 
 var water_particles: ParticleController
+var players_in_spill : Array[Player] = []
 
 signal in_water_spill()
 signal customer_down()
@@ -36,27 +36,31 @@ func _setup_visual_effects():
 
 
 func _start_water_effects() -> void:
-	print("\n \n starting the effects")
 	if water_particles:
 		water_particles.play()
 
 # Set which team is being sabotaged
 func set_sabotaged_team(teamID: int) -> void:
-	print("Water spill sabotaging team: ", teamID)
 	sabotaged_teamID = teamID
+
+var secs = 8.0
 
 #func start_timer(seconds: float) -> void:
 func start_timer() -> void:
-	print("\n \n starting the waterSpill timer")
 	var timer = Timer.new()
-	timer.wait_time = 8.0
+	timer.wait_time = secs
 	timer.one_shot = true
 	add_child(timer)
 	timer.timeout.connect(_on_timer_timeout)
 	timer.start()
+	SabotageSystem.sabotage_start.emit("Water Spill", secs)
 
 func _on_timer_timeout() -> void:
-	print("\n \n the waterspill has ended")
+	for player in players_in_spill:
+		player.set_speed(4)
+	print("jess: timer has ended !!")
+	SabotageSystem.sabotage_ending.emit("Water Spill")
+	
 	queue_free()
 
 # Handle customer fall on server only to avoid duplicate effects
@@ -90,7 +94,6 @@ func customer_falls(customer_path: NodePath) -> void:
 
 # Add the WaterSprout effect
 func spill() -> bool:
-	print("\n \n spilling now")
 	_setup_visual_effects()
 	_start_water_effects()
 	start_timer()
@@ -107,6 +110,8 @@ func _on_area_3d_body_entered(body:Node3D) -> void:
 		var teamID = get_team_id(body)
 		print("teamID of player in water: ", teamID)
 		reputation_system.minus_reputation(teamID, 5)
+		players_in_spill.append(body)
+		body.set_speed(1.5)
 		emit_signal("in_water_spill")
 		
 	elif body is Customer:
@@ -122,8 +127,12 @@ func _on_area_3d_body_entered(body:Node3D) -> void:
 func get_team_id(body: Node3D) -> int:
 	# Maybe add a check that its player somewhere
 	if ENetManager.get_team1().has(body.name.to_int()):
-		print("i was the server")
 		return 1
 	else:
-		print("i was the client")
 		return 2
+
+
+func _on_area_3d_body_exited(body: Node3D) -> void:
+	if body is Player:
+		players_in_spill.erase(body)
+		body.set_speed(4)

@@ -121,15 +121,6 @@ offset_top = 568.0
 offset_right = 85.0
 offset_bottom = 608.0
 
-[node name="ColorRect" type="ColorRect" parent="Collectables"]
-layout_mode = 0
-offset_left = -169.0
-offset_top = -533.0
-offset_right = 57.0
-offset_bottom = -312.0
-rotation = -0.588176
-color = Color(0.980392, 0.980392, 0.980392, 1)
-
 [node name="Hat2" type="TextureRect" parent="Collectables"]
 modulate = Color(0.0705882, 0.0705882, 0.0705882, 1)
 layout_mode = 0

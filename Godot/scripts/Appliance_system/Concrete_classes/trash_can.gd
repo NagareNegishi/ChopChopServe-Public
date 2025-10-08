@@ -11,6 +11,7 @@ extends UnPoweredAppliance
 ## Setup the model instance
 func _init():
 	super._init()
+	appliance_name = "Bin"
 	#model_scene = preload("res://assets/newmodels/furniture/trashcan.glb")
 
 

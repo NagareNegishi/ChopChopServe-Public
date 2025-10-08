@@ -1,23 +1,82 @@
-[gd_scene load_steps=5 format=3 uid="uid://lfcppt4wh0g4"]
+[gd_scene load_steps=12 format=3 uid="uid://lfcppt4wh0g4"]
 
 [ext_resource type="PackedScene" uid="uid://d1iqitph17b80" path="res://scenes/Interaction/AbstractPickup.tscn" id="1_mhxkh"]
 [ext_resource type="Script" uid="uid://cg3tuv2nsnun8" path="res://scripts/Interaction/upgrade_hammer.gd" id="2_otwws"]
 [ext_resource type="ArrayMesh" uid="uid://cua6sp03n6j11" path="res://assets/newmodels/items/UpgradeMallet_Cube_019.res" id="3_otwws"]
+[ext_resource type="PackedScene" uid="uid://kx2ls46d27yc" path="res://UI/UI_Upgrade.tscn" id="4_mhxkh"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_otwws"]
 size = Vector3(0.529846, 1.49194, 1)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_egb0i"]
+viewport_path = NodePath("UpgradeUI/SubViewport")
+
+[sub_resource type="Curve" id="Curve_otwws"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(0.985294, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_acvn8"]
+curve = SubResource("Curve_otwws")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mhxkh"]
+emission_shape = 1
+emission_sphere_radius = 0.3
+direction = Vector3(0, 1, 0)
+spread = 0.0
+initial_velocity_max = 0.1
+gravity = Vector3(0, 0.1, 0)
+scale_curve = SubResource("CurveTexture_acvn8")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7whca"]
+albedo_color = Color(0.261763, 0.000840892, 0.49038, 1)
+emission_enabled = true
+emission = Color(0.394249, 0.000676093, 0.520701, 1)
+emission_energy_multiplier = 1.5
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_egb0i"]
+material = SubResource("StandardMaterial3D_7whca")
+radius = 0.02
+height = 0.08
+radial_segments = 4
+rings = 1
 
 [node name="UpgradeHammer" instance=ExtResource("1_mhxkh")]
 script = ExtResource("2_otwws")
 
 [node name="MeshInstance3D" parent="." index="0"]
-transform = Transform3D(0.5, 0, 0, 0, 0.185, 0, 0, 0, 0.185, 0, 0, 0)
+transform = Transform3D(0.5, 0, 0, 0, 0.185, 0, 0, 0, 0.185, -0.284037, 0, 0)
 mesh = ExtResource("3_otwws")
 
 [node name="CollisionShape3D" parent="." index="1"]
-transform = Transform3D(0.33, 0, 0, 0, 0.33, 0, 0, 0, 0.33, -0.000694882, 0.245375, 0)
+transform = Transform3D(0.33, 0, 0, 0, 0.33, 0, 0, 0, 0.33, -0.284732, 0.245375, 0)
 shape = SubResource("BoxShape3D_otwws")
 
 [node name="InteractableComponent" parent="." index="2"]
-transform = Transform3D(0.333, 0, 0, 0, 0.333, 0, 0, 0, 0.333, 0, 0.287053, 0)
+transform = Transform3D(0.333, 0, 0, 0, 0.333, 0, 0, 0, 0.333, -0.284037, 0.287053, 0)
 has_action = true
+
+[node name="NavigationObstacle3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.284037, 0, 0)
+
+[node name="UpgradeUI" type="Sprite3D" parent="." index="5"]
+transform = Transform3D(1.8, 0, 0, 0, 1.8, 0, 0, 0, 1.8, -0.284037, 0, 0)
+billboard = 1
+no_depth_test = true
+render_priority = 127
+texture = SubResource("ViewportTexture_egb0i")
+
+[node name="SubViewport" type="SubViewport" parent="UpgradeUI" index="0"]
+transparent_bg = true
+size = Vector2i(167, 117)
+
+[node name="UiUpgrade" parent="UpgradeUI/SubViewport" index="0" instance=ExtResource("4_mhxkh")]
+
+[node name="Sparkle" type="GPUParticles3D" parent="." index="6"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -0.284037, 0, 0)
+amount = 6
+explosiveness = 0.7
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_mhxkh")
+draw_pass_1 = SubResource("SphereMesh_egb0i")

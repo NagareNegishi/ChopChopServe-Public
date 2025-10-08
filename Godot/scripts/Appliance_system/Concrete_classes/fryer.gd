@@ -6,6 +6,7 @@ var inflammable_component: Inflammable
 func _init():
 	super._init()
 	model_scene = preload("res://assets/newmodels/furniture/DeepestFryer.glb")
+	appliance_name = "Fryer"
 
 
 ## Setup the fryer properties

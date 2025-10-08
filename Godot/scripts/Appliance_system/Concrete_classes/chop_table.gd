@@ -10,6 +10,7 @@ var chopping_board: ChoppingBoard
 func _ready():
 	super._ready()
 	_add_chopping_board()
+	appliance_name = "Chop Table"
 
 
 ## Add interactable component to this class
@@ -33,7 +34,7 @@ func _add_chopping_board() -> void:
 	chopping_board.rotate_y(1) 
 	chopping_board.lock()
 	chopping_board._toggle_interaction(false)
-	emit_signal("add_appliance", chopping_board, null)
+	emit_signal("add_appliance", chopping_board, self)
 
 
 ## Place an item onto this appliance

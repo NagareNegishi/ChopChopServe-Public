@@ -4,14 +4,12 @@ class_name FireStart
 ################################################################################
 # TODO:
 	# - Check if I need to do anything with food in the appliances
-	# - Do something if there isn't any appliances for some reason
-	# - Double check spread time
-	# - Fix networking stuff (more for the sabotageSystem tho)
+	# - Do something if all of the appliances are on fire or if it goes on to long
 ################################################################################
 
 var path
 var teamID
-var secs = 10.0 # Change this if we need to
+var secs = 15.0 # Change this if we need to
 
 # Signal to say the fire can spread
 signal fire_spread( teamID: int, appliance_path: NodePath)
@@ -54,10 +52,13 @@ func start_timer() -> void:
 	add_child(timer)
 	timer.timeout.connect(_on_timer_timeout)
 	timer.start()
+	SabotageSystem.sabotage_start.emit("Fire Spread", secs)
 
-# When the timer ends, spread the fire
+# When the timer ends, spread the fire to other appliances
 func _on_timer_timeout() -> void:
 	fire_spread.emit(teamID, path)
+	SabotageSystem.sabotage_ending.emit("Fire Spread")
+	
 	
 
 	

@@ -10,6 +10,7 @@ extends Node
 	# - Do something with the signals
 	# - Do I really need teamID?
 
+	# - Should I remove teamID and make it that is the sabotaged team?
 # Questions:
 	# - How many of Each thing do we want?
 		# - Water Spill
@@ -22,13 +23,19 @@ extends Node
 # Don't currently actually use
 var current_sabotage
 
-@onready var mischief := []
+# Arrays for the sabotages
+var on_fire := []
+var benches := []
 
 # Signals
 signal sabotage_success(sabotage_type: int)
 # Not used currently
 signal sabotage_failed(reason: String)
+
 signal sabotage_sending_team(teamID: int)
+
+signal sabotage_ending(sab_name: String)
+signal sabotage_start(sab_name: String, sab_time: int)
 
 # Define Sabotage Types
 enum SabotageType {
@@ -70,6 +77,11 @@ const sabotage_times = [
 @onready var rat_attack = RatAttack
 @onready var player = Player
 
+func _ready() -> void:
+	sabotage_ending.connect(on_sabotage_ending)
+	sabotage_success.connect(on_sabotage_success)
+	sabotage_failed.connect(_on_sabotage_failed)
+	sabotage_start.connect(on_sabotage_start)
 
 # ------------------- Requesting Sabotage Functions ------------------- #
 
@@ -82,10 +94,7 @@ func request_sabotage(teamID: int, sabotage_type: int) -> void:
 	# Only the server can process requests
 	if not multiplayer.is_server():
 		return
-	# Get the sender ID for degbugging
-	##var sender_id = multiplayer.get_remote_sender_id()
-	##print("Clinet %s requests sabotage %s" % [sender_id, sabotage_type])
-	
+
 	# Get the cost of the sabotage
 	var cost = sabotage_costs[sabotage_type]
 	# Check if the team can afford it
@@ -98,20 +107,13 @@ func request_sabotage(teamID: int, sabotage_type: int) -> void:
 
 	# Pay the sabotage cost
 	currency_system.minus_currency(teamID, cost)
-	# Minus reputation : maybe delete?
-	reputation_system.minus_reputation(teamID, 10)
-
-	current_sabotage = sabotage_type
-	# If there is an extra peice of info needed for a sabotage
-	# Get and pass it here
-	# Probably a better way to do this !!
 
 	# If FIRE, Get a flammable appliance path
 	if sabotage_type == SabotageType.FIRE:
 		var chosen_path = _pick_flammable_appliance_path(teamID)
 		if chosen_path == NodePath(""):
 			print("No flammable appliances available for fire sabotage")
-			##sabotage_failed.rpc_id(sender_id, "No flammable appliances available")
+			sabotage_failed.emit("No Famiable Appliances")
 			return
 		# Call the execute Sabotage with a path
 		execute_sabotage.rpc(teamID, sabotage_type, chosen_path, Vector3(0, 0, 0))
@@ -126,13 +128,13 @@ func request_sabotage(teamID: int, sabotage_type: int) -> void:
 	# If RAT_SPAWN
 	elif sabotage_type == SabotageType.RAT_SWARM:
 			var position = get_random_position(teamID)
-			print("\n next position is: ", position)
 			for i in range (5):
 				var chosen_path = find_object_path()
 				execute_sabotage.rpc(teamID, sabotage_type, chosen_path, position)
 	else:
-		# For now, otherwise just call the normal one
+		# For now, otherwise just call the normal one with empty path and position
 		execute_sabotage.rpc(teamID, sabotage_type, NodePath(""), Vector3(0, 0, 0))
+		sabotage_ending.connect(on_sabotage_ending)
 
 # ------------------- Execute Sabotage Function ------------------- #
 
@@ -141,8 +143,7 @@ func request_sabotage(teamID: int, sabotage_type: int) -> void:
 @rpc("authority", "call_local", "reliable")
 func execute_sabotage(teamID: int, sabotage_type: int, chosen_path: NodePath, position: Vector3 ) -> void:
 	print("executing sabotage %s for team %s" % [sabotage_type, teamID])
-	##current_sabotage = sabotage_type
-	# Do the basic Sabotage
+	# Do the Sabotages
 	_do_sabotage(teamID, sabotage_type, chosen_path, position)
 	# Signals
 	sabotage_success.emit(sabotage_type)
@@ -155,8 +156,7 @@ func _do_sabotage(teamID: int, sabotage_type: int, chosen_path: NodePath, positi
 	match sabotage_type:
 		SabotageType.WATER_SPILL:
 			print("water stuff")
-			spawn_water_spill(teamID, 5.0, position)
-			#spawn_water_spill(teamID, 5.0, ) # duration can be adjusted
+			spawn_water_spill(teamID, position)
 		SabotageType.FIRE:
 			print("fire stuff")
 			spawn_fire(teamID, chosen_path)
@@ -184,84 +184,93 @@ func _do_sabotage(teamID: int, sabotage_type: int, chosen_path: NodePath, positi
 # ------------------- Implement Sabotage Functions ------------------- #
 
 # ------- Water Spill Stuff ------- #
-# Spawn a Water Spill
-func spawn_water_spill(teamID: int, duration: float, position: Vector3) -> void:
-	# TODO: Make sure position is vaild
-	# I can Track who needs to lose Reputation
+
+# Make sure the spills aren't over lapping eachother
+var used_pos := []
+const MIN_SPILL_DISTANCE := 1.5
+
+func spawn_water_spill(teamID: int, position: Vector3) -> void:
+	# Check if position is too close to any used position
 	print("spilling water")
-	# Get the waterSpill.tscn : Change to the assest !!
 	var spill = preload("res://scripts/Sabotage/waterSpill.tscn").instantiate()
 	get_tree().get_current_scene().add_child(spill)
 
 	spill.global_position = position
 	spill.set_sabotaged_team(teamID)
-
-
-	# Get the position of the Spill
-#	spill.global_position = position
-	#spill.send_position(position)
 	spill.spill()
-	##spill.global_position = get_random_spill_position(teamID)	
-	#spill.start_timer(duration)
-	# Add something to use the team ID
 	
-var floor_node
-# Helper Function
 # Random position for the water spill
 func get_random_position(teamID: int) -> Vector3:
 
 	# Currently this just spawns on the specific sides of the floor
 	# Would like to so they don't spawn within appliances
-	# It takes note of things
-
+	var water_pos
 	# Get the position
 	var centre = Vector3.ZERO
-	#floor_node.global_transform.origin
 	
 	# Offset Numbers
 	var offset_x
 	var offset_z
 
 	# Is there a better way to do this ??
-	if teamID == 1:
-		offset_x = randf_range(-7, 9)
-		offset_z = randf_range(-9, 0)
-	elif teamID == 2:
-		offset_x = randf_range(-7, 9)
-		offset_z = randf_range(0, 9)
-	
-	print("offsets: ", offset_x, offset_z)
+	#if teamID == 1:
+	#	offset_x = randf_range(-7, 9)
+	#	offset_z = randf_range(-9, 0)
+	#elif teamID == 2:
+	#	offset_x = randf_range(-7, 9)
+	#	offset_z = randf_range(0, 9)
 
-	# Return a position for the spill
-	return centre + Vector3(offset_x, 0, offset_z)
+	# New Range for the waterSpill position options
+	# Check it is good for all levels !!
+	if teamID == 1:
+		offset_x = randf_range(-7, 11)
+		offset_z = randf_range(-10, 2)
+	elif teamID == 2:
+		offset_x = randf_range(-7, 11)
+		offset_z = randf_range(-2, 10)
+
+	water_pos = centre + Vector3(offset_x, 0, offset_z)
+	# Check it's not going to overlap another waterSpill
+	for p in used_pos:
+		if water_pos.distance_to(p) < MIN_SPILL_DISTANCE:
+			if offset_x < 0 || offset_z < 0:
+				water_pos = water_pos + Vector3(0.8, 0, 0.8)
+			elif offset_x > 0 || offset_z > 0:
+				water_pos = water_pos + Vector3(-0.8, 0, -0.8)
+
+	used_pos.append(water_pos)
+
+	return water_pos
 
 # ------- Fire Stuff ------- #
 
 # Spawn a Fire
 func spawn_fire(teamID: int, chosen_path: NodePath) -> void:
-	# TODO: Rework logic to work better (make waterSpill and fireStart the same)
-	#print("spawning fire")
 	var fire_start = preload("res://scripts/Sabotage/fireStart.tscn").instantiate()
 	get_tree().get_current_scene().add_child(fire_start)
-	# Get all the familiable appliances
 	fire_start.fire_spread.connect(_on_fire_spread)
 	fire_start.start_fire(teamID, chosen_path)
 
-
+# Called when the fire spreads
 func _on_fire_spread(teamID: int, prev_path: NodePath) -> void:
-	print("fire spreading")
-	# Pick a new appliance path (not the previous one)
+	if not multiplayer.is_server():
+		return
+
 	var new_path = _pick_flammable_appliance_path(teamID)
 	if new_path != prev_path and new_path != NodePath(""):
-		spawn_fire(teamID, new_path)
+		# Tell everyone to spawn the fire in the same place
+		_rpc_spawn_fire.rpc(teamID, new_path)
 
-# Helper Function
+# Spread fire for all clients and the server
+@rpc("authority", "call_local", "reliable")
+func _rpc_spawn_fire(teamID: int, chosen_path: NodePath) -> void:
+	spawn_fire(teamID, chosen_path)
+
 # Ge the Random Flammable Appliance Path
 func _pick_flammable_appliance_path(teamID: int) -> NodePath:
 	# Get the fammable appliances
 	var flammables = get_tree().get_nodes_in_group("flammable")
-	# If there are none, return nothing
-	# ---------------------------------------------------------- Maybe Change this to something to avoid errors !!
+	# There should always be appliances, but...
 	if flammables.size() == 0:
 		print("no flammable appliances found")
 		return NodePath("")
@@ -279,13 +288,23 @@ func _pick_flammable_appliance_path(teamID: int) -> NodePath:
 		elif a is PoweredAppliance and a.current_status == PoweredAppliance.Status.COOKING:
 			cooking.append(a)
 	# Remove the wrong appliances from the flammables
-	for aa in wrong_appliances:
-		flammables.erase(aa)
-	# Because if theres nothing cooking, just go with any flammable
+	for apps in wrong_appliances:
+		flammables.erase(apps)
+	# If there is nothing cooking, just go with any flammable
 	if cooking.size() == 0:
 		cooking = flammables
-
-	var chosen_appliance = cooking[randi() % cooking.size()]
+	var available := []
+	for a in cooking:
+		if not on_fire.has(a):
+			available.append(a)
+	if available.size() == 0:
+		print("no available appliances found !!")
+		# Maybe this is where we would want to force stop the day
+		# and make the other team win
+		return NodePath("")
+	# Get a random appliance from the available ones
+	var chosen_appliance = available[randi() % available.size()]
+	on_fire.append(chosen_appliance)
 
 	# Return the chosen appliance path
 	return chosen_appliance.get_path()
@@ -313,31 +332,50 @@ func spawn_switch_controls(teamID: int) -> void:
 func spawn_rat_swarm(position: Vector3, path: NodePath) -> void:
 	print("spawning rat sparm")
 	RatAttack.spawn_rat_mischief(position, path)
-	#var rat = preload("res://scripts/Sabotage/rat.tscn").instantiate()
-	#get_tree().get_current_scene()#.add_child(rat)
-	#rat.global_position = position
-	#mischief.append(rat)
-	#rat.add_to_mischief(rat)
-	#add_child(rat)
-var benches : Array = []
 
 # Find the path of a bench within the scene
 func find_object_path() -> NodePath:
 	var appliances = get_tree().get_nodes_in_group("flammable")
-	# add a if statment about size here
+	# Check its not empty
+	if appliances.size() == 0:
+		print("no flammable appliances found")
+		return NodePath("")
+	# Get the benches
 	for item in appliances:
-		#print("going through #1")
 		if item is Bench:
-			#print("====this is a bench===== ", item)
 			benches.append(item)
 	
 	var b = benches[randi() % benches.size()]
-	#print("Bench we have gone with is: ", b)
+	# Do I need to do this?
+	# Aim is to make sure they are going to different benches each time
+	benches.erase(b)
 	return b.get_path()
 
 # ------- Power Outage Stuff ------- #
 func spawn_power_outage(teamID: int) -> void:
-	print("jess: spawning power outage")
 	var power = preload("res://scripts/Sabotage/powerOutage.tscn").instantiate()
 	get_tree().get_current_scene().add_child(power)
 	power.power_outage(teamID)
+
+
+# ------------------- Signal Functions ------------------- #
+
+# Sabotage Starting signal catcher
+func on_sabotage_success(sab_type: int):
+	# Here you would start the UI for the sabotage
+	print("jess: the sabotage has started !! ", sab_type)
+
+# Sabotage Failing signal catcher
+func _on_sabotage_failed(reason: String):
+	# Here you would make a pop up saying why the sabotage didn't work
+	# and/ or redo an action but with information that will work
+	print("jess: the sabotage failed !!\n the reason is because ", reason)
+
+# Sabotage Ending signal catcher
+func on_sabotage_ending(sabotage_name: String):
+	# Here the UI would end etc
+	print("jess: the sabotage ", sabotage_name, " has ended now !!")
+	# Do something with the UI here
+
+func on_sabotage_start(sabotage_name: String, sab_time: int):
+	print("jess: I an going to start the ", sabotage_name, " for ", sab_time, " now")

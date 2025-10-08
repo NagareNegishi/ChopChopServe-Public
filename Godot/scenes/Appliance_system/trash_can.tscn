@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="1_s4gv8"]
 [ext_resource type="Script" uid="uid://bauejc2d2sn4k" path="res://scripts/Appliance_system/Concrete_classes/trash_can.gd" id="2_ux6ja"]
-[ext_resource type="PackedScene" uid="uid://byuk82f7gify8" path="res://assets/newmodels/furniture/trashcan1.glb" id="3_i1tnl"]
+[ext_resource type="PackedScene" uid="uid://c5pi83bxsjrrc" path="res://assets/newmodels/furniture/Bin.glb" id="3_i1tnl"]
 
 [node name="TrashCan" instance=ExtResource("1_s4gv8")]
 script = ExtResource("2_ux6ja")
@@ -14,4 +14,4 @@ current_owner = 1
 cooking_style = 0
 model_scene = null
 
-[node name="trashcanoutside" parent="." index="3" instance=ExtResource("3_i1tnl")]
+[node name="Bin" parent="." index="3" instance=ExtResource("3_i1tnl")]

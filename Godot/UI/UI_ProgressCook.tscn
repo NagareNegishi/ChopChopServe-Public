@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://pl57ikpi4csf"]
+[gd_scene load_steps=5 format=3 uid="uid://pl57ikpi4csf"]
 
 [ext_resource type="Texture2D" uid="uid://d4jrv8cjxmnds" path="res://assets/textures/misc/fire (2).png" id="1_id8wb"]
-[ext_resource type="Script" uid="uid://c6jgfkd4gmbry" path="res://UI/ApplianceProgressBar2.gd" id="1_trsa7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_id8wb"]
 bg_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
@@ -82,7 +81,6 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_ou75e")
 max_value = 1.0
 step = 1.0
 show_percentage = false
-script = ExtResource("1_trsa7")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1

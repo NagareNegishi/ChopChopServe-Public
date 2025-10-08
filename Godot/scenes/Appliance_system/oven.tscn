@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://brwea1k7t14wb" path="res://scripts/Appliance_system/Concrete_classes/oven.gd" id="2_ddlb3"]
 [ext_resource type="PackedScene" uid="uid://465ulms0kb50" path="res://assets/newmodels/furniture/Oven.glb" id="3_hqn4w"]
 [ext_resource type="Script" uid="uid://c6jgfkd4gmbry" path="res://UI/ApplianceProgressBar2.gd" id="5_du6ku"]
-[ext_resource type="PackedScene" path="res://UI/UI_ProgressCook.tscn" id="7_4hy3m"]
+[ext_resource type="PackedScene" uid="uid://pl57ikpi4csf" path="res://UI/UI_ProgressCook.tscn" id="7_4hy3m"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_favet"]
 viewport_path = NodePath("SubViewport")
@@ -30,15 +30,12 @@ render_target_update_mode = 4
 [node name="UiProgressCook" parent="SubViewport" index="0" instance=ExtResource("7_4hy3m")]
 script = ExtResource("5_du6ku")
 
-[node name="ProgressBar" parent="SubViewport/UiProgressCook" index="2"]
-script = null
-
 [node name="Sprite3D" type="Sprite3D" parent="." index="5"]
-transform = Transform3D(-0.999966, -3.60028e-10, -0.00827288, -0.00495588, 0.80071, 0.599031, 0.00662418, 0.599051, -0.800683, -0.00206184, 0.187983, -0.0141381)
+transform = Transform3D(-0.999966, -3.60028e-10, -0.00827288, -0.00495588, 0.80071, 0.599031, 0.00662418, 0.599051, -0.800683, -0.00206184, 1.42005, -0.0141381)
 billboard = 1
 no_depth_test = true
 texture = SubResource("ViewportTexture_favet")
 
-[connection signal="add_appliance" from="." to="SubViewport/UiProgressCook" method="_on_add_appliance"]
+[connection signal="add_appliance" from="." to="SubViewport/UiProgressCook" method="_on_add_cookware"]
 
 [editable path="SubViewport/UiProgressCook"]

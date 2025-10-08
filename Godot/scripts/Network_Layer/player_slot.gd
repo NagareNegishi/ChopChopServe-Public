@@ -1,9 +1,8 @@
-extends PanelContainer
+extends Control
 class_name PlayerSlot
 
 
-@onready var name_label: Label = $VBoxContainer/NameLabel
-@onready var kick_button: Button = $VBoxContainer/KickButton
+@onready var kick_button: Button = $KickButton
 var player_data: Dictionary
 
 
@@ -16,7 +15,7 @@ func _ready():
 
 func set_player(data: Dictionary) -> void:
 	player_data = data
-	name_label.text = data.get("name", "Waiting...")
+	#name_label.text = data.get("name", "Waiting...")
 
 
 func get_player() -> Dictionary:

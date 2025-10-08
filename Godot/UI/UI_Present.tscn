@@ -1,9 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://bkiho50cm2cj8"]
+[gd_scene load_steps=8 format=3 uid="uid://bkiho50cm2cj8"]
 
 [ext_resource type="Script" uid="uid://dby241x7depct" path="res://scripts/UI/ui_present.gd" id="1_3jkq6"]
-[ext_resource type="Texture2D" uid="uid://bpww3wiaqof13" path="res://icon.svg" id="1_4mul5"]
 [ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/DefaultTheme.tres" id="2_fn4x2"]
+[ext_resource type="StyleBox" uid="uid://bvtk4fhf7agfw" path="res://UI/UI_Upgrade_Bad_Border.tres" id="2_vh3nh"]
 [ext_resource type="Texture2D" uid="uid://ch6v2rhv6xhkx" path="res://assets/textures/Controls/keyboard_j.png" id="3_e58pj"]
+[ext_resource type="StyleBox" uid="uid://3jt6gf3oh3gx" path="res://UI/UI_Upgrade_Bad.tres" id="3_m4ivy"]
+[ext_resource type="Texture2D" uid="uid://dricl17ytwels" path="res://assets/textures/misc/stone-crafting.png" id="5_vh3nh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vh3nh"]
+bg_color = Color(0.976471, 0.976471, 0.976471, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [node name="UiPresent" type="Control"]
 layout_mode = 3
@@ -16,72 +25,97 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_3jkq6")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-layout_mode = 0
-offset_left = -280.0
-offset_top = -131.0
-offset_right = 256.0
-offset_bottom = 46.0
-color = Color(0.0705882, 0.0705882, 0.0705882, 0.54902)
-
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="BG" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -263.0
-offset_top = -109.0
-offset_right = 228.0
-offset_bottom = 31.0
+offset_left = -65.0
+offset_top = -43.0
+offset_right = 58.0
+offset_bottom = 42.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 40
+theme_override_styles/panel = ExtResource("2_vh3nh")
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
-layout_mode = 2
-texture = ExtResource("1_4mul5")
-expand_mode = 2
+[node name="Color" type="Panel" parent="."]
+offset_left = -64.0
+offset_top = 34.0
+offset_right = 2.0
+offset_bottom = 42.0
+theme_override_styles/panel = ExtResource("3_m4ivy")
 
-[node name="Label" type="Label" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 1
+[node name="CostBG" type="Panel" parent="."]
+offset_left = 1.0
+offset_top = 19.0
+offset_right = 69.0
+offset_bottom = 52.0
+theme_override_styles/panel = ExtResource("2_vh3nh")
+
+[node name="Cost" type="Label" parent="."]
+offset_left = 3.0
+offset_top = 22.0
+offset_right = 67.0
+offset_bottom = 52.0
 theme = ExtResource("2_fn4x2")
-theme_override_colors/font_color = Color(0.945098, 0.356863, 0.298039, 1)
-theme_override_constants/outline_size = 13
-theme_override_font_sizes/font_size = 120
+theme_override_font_sizes/font_size = 19
 text = "$200"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
-layout_mode = 0
-offset_left = -31.64
-offset_top = 54.36
-offset_right = 32.36
-offset_bottom = 118.36
-scale = Vector2(2.7, 2.7)
-pivot_offset = Vector2(32, 32)
-max_value = 1.0
-step = 0.001
-fill_mode = 4
-texture_progress = ExtResource("3_e58pj")
-tint_progress = Color(0.980392, 0.980392, 0.980392, 1)
+[node name="Appliance" type="Label" parent="."]
+offset_left = -64.0
+offset_top = -41.0
+offset_right = 58.0
+offset_bottom = -11.0
+theme = ExtResource("2_fn4x2")
+theme_override_font_sizes/font_size = 16
+text = "Stove"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="ColorRect2" type="ColorRect" parent="."]
-layout_mode = 0
-offset_left = -16.0001
-offset_top = 55.0
-offset_right = 23.9999
-offset_bottom = 116.0
-color = Color(0.980392, 0.980392, 0.980392, 1)
+[node name="Descrip" type="Label" parent="."]
+offset_left = -65.0
+offset_top = -13.0
+offset_right = 58.0
+offset_bottom = 20.0
+theme = ExtResource("2_fn4x2")
+theme_override_font_sizes/font_size = 17
+text = "Can Cook"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -57.0
+offset_top = -36.0
+offset_right = -42.0
+offset_bottom = -21.0
+texture = ExtResource("5_vh3nh")
+expand_mode = 2
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+offset_left = -76.0
+offset_top = 19.0
+offset_right = -12.0
+offset_bottom = 83.0
+scale = Vector2(0.55, 0.55)
+max_value = 1.0
+texture_progress = ExtResource("3_e58pj")
+
+[node name="Panel" type="Panel" parent="."]
+offset_left = -65.0
+offset_top = 28.0
+offset_right = -50.0
+offset_bottom = 45.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_vh3nh")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
 self_modulate = Color(0.0705882, 0.0705882, 0.0705882, 1)
-layout_mode = 0
-offset_left = -69.64
-offset_top = 17.36
-offset_right = 71.36
-offset_bottom = 158.36
+offset_left = -75.0
+offset_top = 20.0
+offset_right = -42.0
+offset_bottom = 53.0
 texture = ExtResource("3_e58pj")
+expand_mode = 2

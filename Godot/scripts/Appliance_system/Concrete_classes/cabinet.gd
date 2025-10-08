@@ -4,7 +4,7 @@ class_name Cabinet
 extends UnPoweredAppliance
 
 # var item_slots: Array[Vector3] = []  ## Where to place items
-var plate_scene: PackedScene = preload("res://scripts/order_system/Plate.tscn")
+var plate_scene: PackedScene = preload("res://scenes/Interaction/Plate.tscn")
 var plate_count: int = 0
 
 ## Setup the model instance

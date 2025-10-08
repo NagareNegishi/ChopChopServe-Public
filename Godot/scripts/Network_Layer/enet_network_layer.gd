@@ -3,6 +3,8 @@ extends NetworkLayer
 
 signal notify(message: String, duration: float)
 
+enum Reachability { UNKNOWN, PROBABLE, CONFIRMED, FAILED }
+
 @export var port: int = 7000
 # @export var bind_ip: String = "0.0.0.0"	## What to bind server to, but no use for Enet
 @export var public_ip: String = ""	## What clients should connect to
@@ -17,6 +19,7 @@ var upnp_thread = null
 var http_request: HTTPRequest
 const LOOKUP_SERVER = "https://chopchopserve-production.up.railway.app"
 var room_code: String = ""
+var reachability: Reachability = Reachability.UNKNOWN
 
 
 ## Setup signals for player management
@@ -56,6 +59,7 @@ func create_game_with_ip(max_players: int, host_public_ip: String = "") -> bool:
 		if not validate_ip(host_public_ip):
 			return false
 
+	reachability = Reachability.UNKNOWN
 	peer = ENetMultiplayerPeer.new()
 	if peer.create_server(port, max_players - 1) == OK:
 		multiplayer.multiplayer_peer = peer
@@ -436,6 +440,7 @@ func _upnp_succeed(external_ip: String, server_port: int):
 	# Generate and register room code
 	room_code = _generate_room_code()
 	_register_room_code(room_code, public_ip + ":" + str(server_port))
+	reachability = Reachability.PROBABLE
 	Debug.net_log("UPnP enabled: %s:%d, Room code: %s" % [external_ip, server_port, room_code])
 
 

@@ -31,7 +31,11 @@ var benches := []
 signal sabotage_success(sabotage_type: int)
 # Not used currently
 signal sabotage_failed(reason: String)
+
 signal sabotage_sending_team(teamID: int)
+
+signal sabotage_ending(sab_name: String)
+signal sabotage_start(sab_name: String, sab_time: int)
 
 # Define Sabotage Types
 enum SabotageType {
@@ -73,6 +77,11 @@ const sabotage_times = [
 @onready var rat_attack = RatAttack
 @onready var player = Player
 
+func _ready() -> void:
+	sabotage_ending.connect(on_sabotage_ending)
+	sabotage_success.connect(on_sabotage_success)
+	sabotage_failed.connect(_on_sabotage_failed)
+	sabotage_start.connect(on_sabotage_start)
 
 # ------------------- Requesting Sabotage Functions ------------------- #
 
@@ -104,7 +113,7 @@ func request_sabotage(teamID: int, sabotage_type: int) -> void:
 		var chosen_path = _pick_flammable_appliance_path(teamID)
 		if chosen_path == NodePath(""):
 			print("No flammable appliances available for fire sabotage")
-			##sabotage_failed.rpc_id(sender_id, "No flammable appliances available")
+			sabotage_failed.emit("No Famiable Appliances")
 			return
 		# Call the execute Sabotage with a path
 		execute_sabotage.rpc(teamID, sabotage_type, chosen_path, Vector3(0, 0, 0))
@@ -125,6 +134,7 @@ func request_sabotage(teamID: int, sabotage_type: int) -> void:
 	else:
 		# For now, otherwise just call the normal one with empty path and position
 		execute_sabotage.rpc(teamID, sabotage_type, NodePath(""), Vector3(0, 0, 0))
+		sabotage_ending.connect(on_sabotage_ending)
 
 # ------------------- Execute Sabotage Function ------------------- #
 
@@ -174,8 +184,13 @@ func _do_sabotage(teamID: int, sabotage_type: int, chosen_path: NodePath, positi
 # ------------------- Implement Sabotage Functions ------------------- #
 
 # ------- Water Spill Stuff ------- #
-# Spawn a Water Spill
+
+# Make sure the spills aren't over lapping eachother
+var used_pos := []
+const MIN_SPILL_DISTANCE := 1.5
+
 func spawn_water_spill(teamID: int, position: Vector3) -> void:
+	# Check if position is too close to any used position
 	print("spilling water")
 	var spill = preload("res://scripts/Sabotage/waterSpill.tscn").instantiate()
 	get_tree().get_current_scene().add_child(spill)
@@ -189,8 +204,7 @@ func get_random_position(teamID: int) -> Vector3:
 
 	# Currently this just spawns on the specific sides of the floor
 	# Would like to so they don't spawn within appliances
-	# It takes note of things
-
+	var water_pos
 	# Get the position
 	var centre = Vector3.ZERO
 	
@@ -199,17 +213,34 @@ func get_random_position(teamID: int) -> Vector3:
 	var offset_z
 
 	# Is there a better way to do this ??
-	if teamID == 1:
-		offset_x = randf_range(-7, 9)
-		offset_z = randf_range(-9, 0)
-	elif teamID == 2:
-		offset_x = randf_range(-7, 9)
-		offset_z = randf_range(0, 9)
-	
-	print("offsets: ", offset_x, offset_z)
+	#if teamID == 1:
+	#	offset_x = randf_range(-7, 9)
+	#	offset_z = randf_range(-9, 0)
+	#elif teamID == 2:
+	#	offset_x = randf_range(-7, 9)
+	#	offset_z = randf_range(0, 9)
 
-	# Return a position for the spill
-	return centre + Vector3(offset_x, 0, offset_z)
+	# New Range for the waterSpill position options
+	# Check it is good for all levels !!
+	if teamID == 1:
+		offset_x = randf_range(-7, 11)
+		offset_z = randf_range(-10, 2)
+	elif teamID == 2:
+		offset_x = randf_range(-7, 11)
+		offset_z = randf_range(-2, 10)
+
+	water_pos = centre + Vector3(offset_x, 0, offset_z)
+	# Check it's not going to overlap another waterSpill
+	for p in used_pos:
+		if water_pos.distance_to(p) < MIN_SPILL_DISTANCE:
+			if offset_x < 0 || offset_z < 0:
+				water_pos = water_pos + Vector3(0.8, 0, 0.8)
+			elif offset_x > 0 || offset_z > 0:
+				water_pos = water_pos + Vector3(-0.8, 0, -0.8)
+
+	used_pos.append(water_pos)
+
+	return water_pos
 
 # ------- Fire Stuff ------- #
 
@@ -325,3 +356,26 @@ func spawn_power_outage(teamID: int) -> void:
 	var power = preload("res://scripts/Sabotage/powerOutage.tscn").instantiate()
 	get_tree().get_current_scene().add_child(power)
 	power.power_outage(teamID)
+
+
+# ------------------- Signal Functions ------------------- #
+
+# Sabotage Starting signal catcher
+func on_sabotage_success(sab_type: int):
+	# Here you would start the UI for the sabotage
+	print("jess: the sabotage has started !! ", sab_type)
+
+# Sabotage Failing signal catcher
+func _on_sabotage_failed(reason: String):
+	# Here you would make a pop up saying why the sabotage didn't work
+	# and/ or redo an action but with information that will work
+	print("jess: the sabotage failed !!\n the reason is because ", reason)
+
+# Sabotage Ending signal catcher
+func on_sabotage_ending(sabotage_name: String):
+	# Here the UI would end etc
+	print("jess: the sabotage ", sabotage_name, " has ended now !!")
+	# Do something with the UI here
+
+func on_sabotage_start(sabotage_name: String, sab_time: int):
+	print("jess: I an going to start the ", sabotage_name, " for ", sab_time, " now")

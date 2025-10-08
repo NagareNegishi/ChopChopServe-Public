@@ -43,18 +43,23 @@ func _start_water_effects() -> void:
 func set_sabotaged_team(teamID: int) -> void:
 	sabotaged_teamID = teamID
 
+var secs = 8.0
+
 #func start_timer(seconds: float) -> void:
 func start_timer() -> void:
 	var timer = Timer.new()
-	timer.wait_time = 8.0
+	timer.wait_time = secs
 	timer.one_shot = true
 	add_child(timer)
 	timer.timeout.connect(_on_timer_timeout)
 	timer.start()
+	SabotageSystem.sabotage_start.emit("Water Spill", secs)
 
 func _on_timer_timeout() -> void:
 	for player in players_in_spill:
 		player.set_speed(4)
+	print("jess: timer has ended !!")
+	SabotageSystem.sabotage_ending.emit("Water Spill")
 	
 	queue_free()
 

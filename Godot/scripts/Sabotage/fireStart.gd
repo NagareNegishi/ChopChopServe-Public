@@ -52,10 +52,13 @@ func start_timer() -> void:
 	add_child(timer)
 	timer.timeout.connect(_on_timer_timeout)
 	timer.start()
+	SabotageSystem.sabotage_start.emit("Fire Spread", secs)
 
 # When the timer ends, spread the fire to other appliances
 func _on_timer_timeout() -> void:
 	fire_spread.emit(teamID, path)
+	SabotageSystem.sabotage_ending.emit("Fire Spread")
+	
 	
 
 	

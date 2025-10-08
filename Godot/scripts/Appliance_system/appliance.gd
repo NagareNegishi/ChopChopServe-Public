@@ -4,9 +4,10 @@
 class_name Appliance
 extends Placeable
 
-signal food_placed(contents)
-signal food_taken
-signal add_appliance(cookware)
+signal food_placed(cookware, contents)
+signal food_taken(cookware, contents)
+signal add_appliance(cookware, appliance)
+signal new_average(average: float)
 
 
 enum Owner {

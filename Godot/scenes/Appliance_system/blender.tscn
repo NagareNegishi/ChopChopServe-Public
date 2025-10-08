@@ -1,14 +1,34 @@
-[gd_scene load_steps=8 format=3 uid="uid://cw5uvt35a87nt"]
+[gd_scene load_steps=10 format=3 uid="uid://cw5uvt35a87nt"]
 
 [ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="1_mlwd7"]
 [ext_resource type="Script" uid="uid://dmims6gtvtpcn" path="res://scripts/Appliance_system/Concrete_classes/blender.gd" id="2_co8sm"]
-[ext_resource type="Texture2D" uid="uid://b2baw0vfm8358" path="res://assets/textures/misc/LoadingBarOutside.png" id="3_8shnm"]
-[ext_resource type="Texture2D" uid="uid://ts7ljaleqkhg" path="res://assets/textures/misc/LoadingBarInside.png" id="4_f4din"]
+[ext_resource type="PackedScene" uid="uid://pl57ikpi4csf" path="res://UI/UI_ProgressCook.tscn" id="3_8shnm"]
 [ext_resource type="Script" uid="uid://c6jgfkd4gmbry" path="res://UI/ApplianceProgressBar2.gd" id="5_3yrah"]
 [ext_resource type="PackedScene" uid="uid://p5bueh2iq7ap" path="res://scenes/Appliance_system/blenderMeshONLY.tscn" id="6_f4din"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_yc0qb"]
-viewport_path = NodePath("SubViewport")
+[sub_resource type="ViewportTexture" id="ViewportTexture_8shnm"]
+viewport_path = NodePath("SubViewport2")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_id8wb"]
+bg_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_trsa7"]
+bg_color = Color(0.28485, 0.28485, 0.28485, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ou75e"]
+bg_color = Color(0.980392, 0.976471, 0.964706, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [node name="Blender" instance=ExtResource("1_mlwd7")]
 script = ExtResource("2_co8sm")
@@ -21,38 +41,31 @@ current_owner = 1
 cooking_style = 0
 model_scene = null
 
-[node name="SubViewport" type="SubViewport" parent="." index="3"]
+[node name="Sprite3D2" type="Sprite3D" parent="." index="3"]
+transform = Transform3D(1.01106, -0.00646767, 0.0136703, 0.0064673, 1.01115, 7.05719e-05, -0.0136704, 1.68979e-05, 1.01108, 0.00220308, 3.69196, 0.00419462)
+billboard = 1
+no_depth_test = true
+texture = SubResource("ViewportTexture_8shnm")
+
+[node name="SubViewport2" type="SubViewport" parent="." index="4"]
 transparent_bg = true
-size = Vector2i(122, 13)
+size = Vector2i(122, 33)
 render_target_update_mode = 4
 
-[node name="TextureProgressBar2" type="TextureProgressBar" parent="SubViewport" index="0"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -61.0
-offset_top = -7.50003
-offset_right = 935.0
-offset_bottom = 48.5
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.123, 0.266)
-max_value = 1.0
-texture_over = ExtResource("3_8shnm")
-texture_progress = ExtResource("4_f4din")
-texture_progress_offset = Vector2(6.26, 7.33)
-tint_under = Color(0, 0, 0, 0.27451)
-tint_over = Color(0, 0, 0, 1)
-tint_progress = Color(0.167779, 0.668736, 0.111628, 1)
+[node name="UiProgressCook" parent="SubViewport2" index="0" instance=ExtResource("3_8shnm")]
 script = ExtResource("5_3yrah")
 
-[node name="Sprite3D" type="Sprite3D" parent="." index="4"]
-transform = Transform3D(-1.01114, 0, -0.0083653, -0.00646766, 0.641303, 0.781765, 0.00530542, 0.781791, -0.641281, 0, 1.16728, -0.246644)
-texture = SubResource("ViewportTexture_yc0qb")
+[node name="Panel" parent="SubViewport2/UiProgressCook" index="0"]
+theme_override_styles/panel = SubResource("StyleBoxFlat_id8wb")
+
+[node name="Panel2" parent="SubViewport2/UiProgressCook" index="1"]
+theme_override_styles/panel = SubResource("StyleBoxFlat_trsa7")
+
+[node name="ProgressBar" parent="SubViewport2/UiProgressCook" index="2"]
+theme_override_styles/fill = SubResource("StyleBoxFlat_ou75e")
 
 [node name="newblender" parent="." index="5" instance=ExtResource("6_f4din")]
 
-[connection signal="cookware_taken" from="." to="SubViewport/TextureProgressBar2" method="_on_food_taken"]
-[connection signal="food_placed" from="." to="SubViewport/TextureProgressBar2" method="_on_blender_signal"]
+[connection signal="add_appliance" from="." to="SubViewport2/UiProgressCook" method="_on_add_cookware"]
+
+[editable path="SubViewport2/UiProgressCook"]

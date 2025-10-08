@@ -20,7 +20,7 @@ func _init():
 ## Setup the bench
 func _ready():
 	super._ready()
-	invalid_food = ["Water"]
+	invalid_food = ["Water"] # Example of invalid food
 	capacity = 1
 	_setup_item_slots()
 

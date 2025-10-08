@@ -4,8 +4,6 @@
 class_name Cookware
 extends Equipment
 
-signal new_average(average: float)
-
 @onready var cookware_ui_scene : PackedScene = preload("res://UI/UI_Contents.tscn")
 @onready var sprite_ref : Sprite3D = Sprite3D.new()
 @onready var viewport : SubViewport = SubViewport.new()
@@ -68,7 +66,7 @@ func _put_food(food: Food) -> void:
 	if self is ChoppingBoard: 
 		food.scale = food.original_scale
 		food.global_rotation += Vector3(0,30,0)
-	emit_signal("food_placed", contents)
+	emit_signal("food_placed", self, contents)
 	if can_cook():
 		food.start_cooking(int(power_receiving * coefficient), cooking_style)
 		_average_food()
@@ -102,10 +100,11 @@ func take_all() -> Array[Node]:
 	var all_items = contents
 	for item in all_items:
 		remove_child(item)
+	emit_signal("food_taken", self, contents)
 	contents = []
 	contents_names = []
 	if self is not ChoppingBoard: cookware_ui.clear()
-	emit_signal("food_taken")
+	
 	return all_items
 
 

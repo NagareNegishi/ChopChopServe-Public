@@ -61,6 +61,7 @@ height = 0.506226
 radius = 0.655273
 
 [node name="BradleyTestScene" type="Node3D" node_paths=PackedStringArray("tables", "queue_spots", "customer_spawn_point", "customer_exit_point")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000378609, 9.53674e-07, -0.0196961)
 script = ExtResource("1_rdyjb")
 customer_scene = ExtResource("2_nq5uu")
 tables = [NodePath("NavigationRegion3D/Tables/table/TableBody"), NodePath("NavigationRegion3D/Tables/table2/TableBody"), NodePath("NavigationRegion3D/Tables/table3/TableBody"), NodePath("NavigationRegion3D/Tables/table4/TableBody"), NodePath("NavigationRegion3D/Tables/table5/TableBody"), NodePath("NavigationRegion3D/Tables/table6/TableBody"), NodePath("NavigationRegion3D/Tables/table7/TableBody"), NodePath("NavigationRegion3D/Tables/table8/TableBody")]
@@ -101,23 +102,23 @@ priority = 1
 [node name="===QUEUE==" type="Node" parent="."]
 
 [node name="QueueSpot-1" type="Node3D" parent="===QUEUE=="]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.4891, 0, 2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.4891, 1.47649, 2)
 script = ExtResource("6_0wnb8")
 
 [node name="QueueSpot-2" type="Node3D" parent="===QUEUE=="]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.4891, 0, 3.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.4891, 1.47649, 3.5)
 script = ExtResource("6_0wnb8")
 
 [node name="QueueSpot-3" type="Node3D" parent="===QUEUE=="]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.4891, 0, 5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.4891, 1.47649, 5)
 script = ExtResource("6_0wnb8")
 
 [node name="QueueSpot-4" type="Node3D" parent="===QUEUE=="]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.4891, 0, 6.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.4891, 1.47649, 6.5)
 script = ExtResource("6_0wnb8")
 
 [node name="QueueSpot-5" type="Node3D" parent="===QUEUE=="]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.4891, 0, 8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.4891, 1.47649, 8)
 script = ExtResource("6_0wnb8")
 
 [node name="Invis Walls" type="Node3D" parent="."]
@@ -125,6 +126,8 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1, 0.
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Invis Walls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.3709, 0, 11.8556)
+collision_layer = 2
+collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Invis Walls/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.9793, 2.84711, 0.71983)
@@ -132,6 +135,8 @@ shape = SubResource("BoxShape3D_5ixo3")
 
 [node name="StaticBody3D2" type="StaticBody3D" parent="Invis Walls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.7987, 0, -6.0264)
+collision_layer = 2
+collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Invis Walls/StaticBody3D2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.8767, 2.84711, -0.638739)
@@ -139,6 +144,8 @@ shape = SubResource("BoxShape3D_5ixo3")
 
 [node name="StaticBody3D3" type="StaticBody3D" parent="Invis Walls"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 17.7987, 0, 3.01064)
+collision_layer = 2
+collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Invis Walls/StaticBody3D3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.123306, 2.84711, -0.401506)
@@ -146,6 +153,8 @@ shape = SubResource("BoxShape3D_5ixo3")
 
 [node name="StaticBody3D4" type="StaticBody3D" parent="Invis Walls"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 17.7987, 0, 3.01064)
+collision_layer = 2
+collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Invis Walls/StaticBody3D4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.123308, 2.84711, -21.4133)

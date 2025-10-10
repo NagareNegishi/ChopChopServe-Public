@@ -56,21 +56,13 @@ func _on_capacity_upgraded(property: String) -> void:
 		put(_provide_plate())
 
 
-# ## Setup cookware slots, should be overridden by subclasses
-# ## Default implementation expect one Cookware slot in the center
-# func _setup_item_slots():
-# 	for i in range(capacity):
-# 		var slot_position = Vector3(0.0, size.y * 0.8, 0.0)
-# 		item_slots.append(slot_position)
-
-
 ## Check if this appliance can accept the given item
 ## @param item: The Node to test for acceptance
 ## @return: True if item can be placed, false otherwise
 func _can_accept(item: Node) -> bool:
 	if not super._can_accept(item):
 		return false
-	return item is Plate and item.is_ready() # maybe we need different method to check clean and empty
+	return item is Plate and item.is_ready() and item.is_empty()
 
 
 ## For Player interaction --------------------------------------------------------------------------
@@ -96,7 +88,7 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	var item = GlobalScript.get_local_player().item_in_hand
 	if item:
 		Debug.all("Player ID: " + str(ENetManager.get_my_id())
-			+ " has : " + item.get_script().get_global_name() + ", hovered: " + get_script().get_global_name())
+			+ " has : " + item.get_script().get_global_name() + ", hovered: " + name)
 	if not item:
 		highlight_component.show_feedback(true)
 		return

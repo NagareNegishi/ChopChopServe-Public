@@ -35,6 +35,7 @@ func _ready():
 	enet_layer.player_left.connect(_on_player_left)
 	enet_layer.disconnected.connect(_on_disconnected_from_server)
 	enet_layer.data_received.connect(_on_data_received)
+	enet_layer.notify.connect(show_notification)
 
 
 ## Update Player List when a player joins, and host shares it

@@ -23,6 +23,7 @@ func start_timer(seconds: float) -> void:
 	add_child(timer)
 	timer.timeout.connect(_on_timer_timeout)
 	timer.start()
+	SabotageSystem.sabotage_start.emit("Switch Controls", secs)
 
 # End the Switch 
 func _on_timer_timeout() -> void:
@@ -32,3 +33,4 @@ func _on_timer_timeout() -> void:
 			player.invert_controls(false)
 			# Clean up the list
 			player_ids.erase(id)
+	SabotageSystem.sabotage_ending.emit("Switch Controls")

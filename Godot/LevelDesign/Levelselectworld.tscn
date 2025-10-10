@@ -1,4 +1,4 @@
-[gd_scene load_steps=85 format=3 uid="uid://brax13qxb8tj2"]
+[gd_scene load_steps=89 format=3 uid="uid://brax13qxb8tj2"]
 
 [ext_resource type="PackedScene" uid="uid://bv68n23xtnfpl" path="res://scenes/Player/PlayerCar.tscn" id="1_2io33"]
 [ext_resource type="PackedScene" uid="uid://c8bjd53t4fgr1" path="res://UI/UI_Pause.tscn" id="1_7dd6r"]
@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://386cia5dig43" path="res://assets/NaturePack/Willow_4.fbx" id="5_2io33"]
 [ext_resource type="PackedScene" uid="uid://dfpfglb1oru28" path="res://assets/Swampy/RoadSwampCorner.glb" id="5_d2ijq"]
 [ext_resource type="FontFile" uid="uid://dxc6n0umgi0q4" path="res://assets/fonts/Jua-Regular.ttf" id="5_iytpy"]
-[ext_resource type="Material" uid="uid://8a2o8qga7q64" path="res://shaders/Water/WaterOpenworldAlt.tres" id="5_mpt4u"]
 [ext_resource type="Material" uid="uid://c6svha1ojqeej" path="res://LevelDesign/Zone.tres" id="5_u8kom"]
 [ext_resource type="PackedScene" uid="uid://x0o0oxbumdxi" path="res://assets/NaturePack/Willow_2.fbx" id="6_38v8k"]
 [ext_resource type="Shader" uid="uid://c46kta255prk4" path="res://shaders/Water/WaterOpenWorld.gdshader" id="6_mpt4u"]
@@ -68,6 +67,8 @@
 [ext_resource type="PackedScene" uid="uid://bnqti3cd67kf0" path="res://assets/Beachy/FenceBeachWire.glb" id="58_7dd6r"]
 [ext_resource type="PackedScene" uid="uid://bailsqnlqlti0" path="res://assets/CityPacks/CityRestaurantAnim2.glb" id="61_ps02h"]
 [ext_resource type="PackedScene" uid="uid://cky86yj522kph" path="res://scenes/Interaction/LevelSelectArea.tscn" id="64_kguer"]
+[ext_resource type="PackedScene" uid="uid://crx0marg1hk52" path="res://assets/Beachy/FenceBeachPlank.glb" id="66_uthtu"]
+[ext_resource type="Material" uid="uid://c5cgp40o6fxiq" path="res://shaders/Water/WaterSabotage.tres" id="68_334ny"]
 
 [sub_resource type="TorusMesh" id="TorusMesh_uthtu"]
 material = ExtResource("5_u8kom")
@@ -113,8 +114,6 @@ volumetric_fog_density = 0.0
 volumetric_fog_length = 30.0
 volumetric_fog_sky_affect = 0.0
 
-[sub_resource type="SphereMesh" id="SphereMesh_0qhj0"]
-
 [sub_resource type="SphereMesh" id="SphereMesh_u4l04"]
 material = ExtResource("25_o215m")
 radius = 0.1
@@ -139,8 +138,20 @@ subdivide_width = 25
 subdivide_depth = 25
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_spsuo"]
-material = ExtResource("5_mpt4u")
+material = ExtResource("68_334ny")
 size = Vector2(94.205, 15.74)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u8kom"]
+size = Vector3(77, 6.69421, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_asefv"]
+size = Vector3(2, 2, 77)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nh4pr"]
+size = Vector3(8, 2, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8gic2"]
+size = Vector3(1, 1, 5)
 
 [node name="BradleyTestScene" type="Node3D"]
 
@@ -156,20 +167,9 @@ visible = false
 
 [node name="== LEVEL SELECT ==" type="Node" parent="."]
 
-[node name="Zone2" type="MeshInstance3D" parent="== LEVEL SELECT =="]
-transform = Transform3D(5.29349, 0, 0, 0, 208.673, 0, 0, 0, 5.29349, 33.7801, 2.6039, -0.802038)
-mesh = SubResource("TorusMesh_uthtu")
-skeleton = NodePath("../LevelSelectArea")
-
-[node name="Zone3" type="MeshInstance3D" parent="== LEVEL SELECT =="]
-transform = Transform3D(5.82284, 0, 0, 0, 229.54, 0, 0, 0, 5.82284, -15.5896, 0.633474, 23.8251)
-mesh = SubResource("TorusMesh_uthtu")
-skeleton = NodePath("../LevelSelectArea")
-
-[node name="LevelSelectArea" parent="== LEVEL SELECT ==" node_paths=PackedStringArray("load_ui", "car") instance=ExtResource("64_kguer")]
+[node name="LevelSelectArea" parent="== LEVEL SELECT ==" node_paths=PackedStringArray("car") instance=ExtResource("64_kguer")]
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -14.9253, 1.86524, -24.7682)
-level = 9
-load_ui = NodePath("../../== HUD ==/UILoadingScreen")
+level = 10
 car = NodePath("../../PlayerCar")
 
 [node name="CollisionShape3D" parent="== LEVEL SELECT ==/LevelSelectArea" index="0"]
@@ -177,6 +177,30 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.580652, 0.373383, 0.493759
 
 [node name="Zone" type="MeshInstance3D" parent="== LEVEL SELECT ==/LevelSelectArea"]
 transform = Transform3D(11.9103, 0, 0, 0, 469.514, 0, 0, 0, 11.9103, -1.0322, -1.75679, 0.133724)
+mesh = SubResource("TorusMesh_uthtu")
+
+[node name="LevelSelectArea2" parent="== LEVEL SELECT ==" node_paths=PackedStringArray("car") instance=ExtResource("64_kguer")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 34.2354, 3.87718, -0.704389)
+level = 9
+car = NodePath("../../PlayerCar")
+
+[node name="CollisionShape3D" parent="== LEVEL SELECT ==/LevelSelectArea2" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.580652, 0.373383, 0.493759)
+
+[node name="Zone" type="MeshInstance3D" parent="== LEVEL SELECT ==/LevelSelectArea2"]
+transform = Transform3D(11.9103, 0, 0, 0, 469.514, 0, 0, 0, 11.9103, -1.0322, -1.75679, 0.133724)
+mesh = SubResource("TorusMesh_uthtu")
+
+[node name="LevelSelectArea3" parent="== LEVEL SELECT ==" node_paths=PackedStringArray("car") instance=ExtResource("64_kguer")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -15.5632, 1.85757, 23.6392)
+level = 11
+car = NodePath("../../PlayerCar")
+
+[node name="CollisionShape3D" parent="== LEVEL SELECT ==/LevelSelectArea3" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.580652, 0.373383, 0.493759)
+
+[node name="Zone" type="MeshInstance3D" parent="== LEVEL SELECT ==/LevelSelectArea3"]
+transform = Transform3D(10.5312, 0, 0, 0, 415.15, 0, 0, 0, 10.5312, -1.0322, -1.75679, 0.133724)
 mesh = SubResource("TorusMesh_uthtu")
 
 [node name="Platform" type="StaticBody3D" parent="."]
@@ -282,14 +306,6 @@ transform = Transform3D(2.62268e-07, 0, -2, 0, 2, 0, 2, 0, 2.62268e-07, -20, 0, 
 transform = Transform3D(2, 0, 3.49691e-07, 0, 2, 0, -3.49691e-07, 0, 2, -24, 0, 35)
 
 [node name="Node3D3" type="Node3D" parent="."]
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Node3D3"]
-transform = Transform3D(-1.02285e-07, 0, -2.34, 0, 2.34, 0, 2.34, 0, -1.02285e-07, -16, 0, 24)
-mesh = SubResource("SphereMesh_0qhj0")
-
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="Node3D3"]
-transform = Transform3D(-1.02285e-07, 0, -2.34, 0, 2.34, 0, 2.34, 0, -1.02285e-07, 33.0782, 2.61873, -0.773237)
-mesh = SubResource("SphereMesh_0qhj0")
 
 [node name="City" type="Node3D" parent="."]
 
@@ -908,7 +924,7 @@ transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 10.4628, 0, 37.4222)
 transform = Transform3D(-0.969398, 0, 0.245493, 0, 1, 0, -0.245493, 0, -0.969398, -3.56375, 0.0500146, 17.0377)
 
 [node name="Rock_Moss_3" parent="Swamp/Rocks" instance=ExtResource("18_unvvj")]
-transform = Transform3D(0.987849, 0, 0.155417, 0, 1, 0, -0.155417, 0, 0.987849, -8.26656, 0.0500146, 9.0645)
+transform = Transform3D(0.987849, 0, 0.155417, 0, 1, 0, -0.155417, 0, 0.987849, -13.2666, 0.0500146, 10.0645)
 
 [node name="Rock_Moss_7" parent="Swamp/Rocks" instance=ExtResource("19_4qp8e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.981844, 0.222786, 25.4398)
@@ -1055,10 +1071,10 @@ transform = Transform3D(-0.5, 0, -7.54979e-08, 0, 0.5, 0, 7.54979e-08, 0, -0.5, 
 transform = Transform3D(-0.5, 0, -4.37114e-08, 0, 0.5, 0, 4.37114e-08, 0, -0.5, -20.7737, 0, 1.1)
 
 [node name="BeachSpeedBoat" parent="Swamp" instance=ExtResource("49_kguer")]
-transform = Transform3D(-6.55671e-08, 0, 1.5, 0, 1.5, 0, -1.5, 0, -6.55671e-08, 39, -0.651463, 8)
+transform = Transform3D(-6.55671e-08, 0, 1.5, 0, 1.5, 0, -1.5, 0, -6.55671e-08, 39, -0.350391, 8)
 
 [node name="BeachSpeedBoat2" parent="Swamp" instance=ExtResource("49_kguer")]
-transform = Transform3D(1.96701e-07, 0, -1.5, 0, 1.5, 0, 1.5, 0, 1.96701e-07, 37, -0.539836, -10)
+transform = Transform3D(1.96701e-07, 0, -1.5, 0, 1.5, 0, 1.5, 0, 1.96701e-07, 37, -0.415684, -10)
 
 [node name="Beach" type="Node3D" parent="."]
 
@@ -1335,6 +1351,78 @@ transform = Transform3D(-2.18557e-08, 0, 0.5, 0, 0.5, 0, -0.5, 0, -2.18557e-08, 
 [node name="FenceBeachWire12" parent="Beach/Objects" instance=ExtResource("58_7dd6r")]
 transform = Transform3D(-2.18557e-08, 0, 0.5, 0, 0.5, 0, -0.5, 0, -2.18557e-08, 10.0437, 0.0449996, 34.1607)
 
+[node name="FenceBeachPlankPath" parent="Beach/Objects" instance=ExtResource("57_lyps1")]
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 21.3923, 0.0724495, -0.847105)
+
+[node name="FenceBeachPlankPath2" parent="Beach/Objects" instance=ExtResource("57_lyps1")]
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 18.5469, 0.0724495, -0.857286)
+
+[node name="FenceBeachPlankPath5" parent="Beach/Objects" instance=ExtResource("57_lyps1")]
+transform = Transform3D(1.49029, 0, -0.170377, 0, 1.5, 0, 0.170377, 0, 1.49029, 15.8289, 0.0724505, 3.85279)
+
+[node name="FenceBeachPlankPath6" parent="Beach/Objects" instance=ExtResource("57_lyps1")]
+transform = Transform3D(1.48398, 0, 0.218658, 0, 1.5, 0, -0.218658, 0, 1.48398, 16.1174, 0.060459, 8.55045)
+
+[node name="FenceBeachPlankPath7" parent="Beach/Objects" instance=ExtResource("57_lyps1")]
+transform = Transform3D(1.4819, 0, -0.232298, 0, 1.5, 0, 0.232298, 0, 1.4819, 15.9406, 0.060459, 13.0823)
+
+[node name="FenceBeachPlankPath8" parent="Beach/Objects" instance=ExtResource("57_lyps1")]
+transform = Transform3D(1.48398, 0, 0.218658, 0, 1.5, 0, -0.218658, 0, 1.48398, 16.3161, 0.060459, 17.2837)
+
+[node name="FenceBeachPlankPath15" parent="Beach/Objects" instance=ExtResource("57_lyps1")]
+transform = Transform3D(1.48398, 0, 0.218658, 0, 1.5, 0, -0.218658, 0, 1.48398, 16.3161, 0.060459, 26.2837)
+
+[node name="FenceBeachPlankPath9" parent="Beach/Objects" instance=ExtResource("57_lyps1")]
+transform = Transform3D(1.4819, 0, -0.232298, 0, 1.5, 0, 0.232298, 0, 1.4819, 16.1394, 0.060459, 21.8155)
+
+[node name="FenceBeachPlankPath17" parent="Beach/Objects" instance=ExtResource("57_lyps1")]
+transform = Transform3D(1.48398, 0, 0.218658, 0, 1.5, 0, -0.218658, 0, 1.48398, 16.3161, 0.060459, 35.2837)
+
+[node name="FenceBeachPlankPath18" parent="Beach/Objects" instance=ExtResource("57_lyps1")]
+transform = Transform3D(1.4819, 0, -0.232298, 0, 1.5, 0, 0.232298, 0, 1.4819, 16.1394, 0.060459, 30.8155)
+
+[node name="FenceBeachPlankPath10" parent="Beach/Objects" instance=ExtResource("57_lyps1")]
+transform = Transform3D(-1.48213, 0, 0.23085, 0, 1.5, 0, -0.23085, 0, -1.48213, 15.9294, 0.0724505, -5.73067)
+
+[node name="FenceBeachPlankPath11" parent="Beach/Objects" instance=ExtResource("57_lyps1")]
+transform = Transform3D(-1.49164, 0, -0.158121, 0, 1.5, 0, 0.158121, 0, -1.49164, 15.8322, 0.060459, -10.4362)
+
+[node name="FenceBeachPlankPath12" parent="Beach/Objects" instance=ExtResource("57_lyps1")]
+transform = Transform3D(-1.47123, 0, 0.292379, 0, 1.5, 0, -0.292379, 0, -1.47123, 16.1931, 0.060459, -14.9571)
+
+[node name="FenceBeachPlankPath13" parent="Beach/Objects" instance=ExtResource("57_lyps1")]
+transform = Transform3D(-1.49164, 0, -0.158121, 0, 1.5, 0, 0.158121, 0, -1.49164, 15.9888, 0.060459, -19.1702)
+
+[node name="FenceBeachPlankPath16" parent="Beach/Objects" instance=ExtResource("57_lyps1")]
+transform = Transform3D(-1.49164, 0, -0.158121, 0, 1.5, 0, 0.158121, 0, -1.49164, 15.9888, 0.060459, -28.1702)
+
+[node name="FenceBeachPlankPath14" parent="Beach/Objects" instance=ExtResource("57_lyps1")]
+transform = Transform3D(-1.47123, 0, 0.292379, 0, 1.5, 0, -0.292379, 0, -1.47123, 16.3497, 0.060459, -23.6912)
+
+[node name="FenceBeachPlankPath19" parent="Beach/Objects" instance=ExtResource("57_lyps1")]
+transform = Transform3D(-1.47123, 0, 0.292379, 0, 1.5, 0, -0.292379, 0, -1.47123, 16.3497, 0.060459, -32.6912)
+
+[node name="FenceBeachPlankPath3" parent="Beach/Objects" instance=ExtResource("57_lyps1")]
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 15.6967, 0.0724495, -0.867483)
+
+[node name="FenceBeachPlankPath4" parent="Beach/Objects" instance=ExtResource("57_lyps1")]
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 12.8512, 0.0724495, -0.877664)
+
+[node name="FenceBeachPlank" parent="Beach/Objects" instance=ExtResource("66_uthtu")]
+transform = Transform3D(0.45, 0, 0, 0, 0.45, 0, 0, 0, 0.45, 34.4173, 1.83361, -2.43967)
+
+[node name="FenceBeachPlank2" parent="Beach/Objects" instance=ExtResource("66_uthtu")]
+transform = Transform3D(0.45, 0, 0, 0, 0.45, 0, 0, 0, 0.45, 30.283, 1.83361, -2.43967)
+
+[node name="FenceBeachPlank3" parent="Beach/Objects" instance=ExtResource("66_uthtu")]
+transform = Transform3D(0.45, 0, 0, 0, 0.45, 0, 0, 0, 0.45, 34.4173, 1.83361, 0.740783)
+
+[node name="FenceBeachPlank5" parent="Beach/Objects" instance=ExtResource("66_uthtu")]
+transform = Transform3D(-1.74846e-08, 0, -0.4, 0, 0.4, 0, 0.4, 0, -1.74846e-08, 36.4173, 1.83361, -0.848975)
+
+[node name="FenceBeachPlank4" parent="Beach/Objects" instance=ExtResource("66_uthtu")]
+transform = Transform3D(0.45, 0, 0, 0, 0.45, 0, 0, 0, 0.45, 30.283, 1.83361, 0.740783)
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Beach"]
 transform = Transform3D(-1.24882, 0, 0.0379848, 0, 1, 0, -0.0126203, 0, -3.75869, 54.498, -0.09, -0.409219)
 mesh = SubResource("PlaneMesh_5xw4e")
@@ -1344,63 +1432,6 @@ skeleton = NodePath("../MeshInstance3D13")
 transform = Transform3D(-4.37114e-08, 0, -1.43187, 0, 1, 0, 1, 0, -6.25891e-08, 107.532, -0.403716, 0.0566957)
 mesh = SubResource("PlaneMesh_spsuo")
 skeleton = NodePath("../../Node3D")
-
-[node name="FenceBeachPlankPath" parent="." instance=ExtResource("57_lyps1")]
-transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 21.3923, 0.0724495, -0.847105)
-
-[node name="FenceBeachPlankPath2" parent="." instance=ExtResource("57_lyps1")]
-transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 18.5469, 0.0724495, -0.857286)
-
-[node name="FenceBeachPlankPath5" parent="." instance=ExtResource("57_lyps1")]
-transform = Transform3D(1.49029, 0, -0.170377, 0, 1.5, 0, 0.170377, 0, 1.49029, 15.8289, 0.0724505, 3.85279)
-
-[node name="FenceBeachPlankPath6" parent="." instance=ExtResource("57_lyps1")]
-transform = Transform3D(1.48398, 0, 0.218658, 0, 1.5, 0, -0.218658, 0, 1.48398, 16.1174, 0.060459, 8.55045)
-
-[node name="FenceBeachPlankPath7" parent="." instance=ExtResource("57_lyps1")]
-transform = Transform3D(1.4819, 0, -0.232298, 0, 1.5, 0, 0.232298, 0, 1.4819, 15.9406, 0.060459, 13.0823)
-
-[node name="FenceBeachPlankPath8" parent="." instance=ExtResource("57_lyps1")]
-transform = Transform3D(1.48398, 0, 0.218658, 0, 1.5, 0, -0.218658, 0, 1.48398, 16.3161, 0.060459, 17.2837)
-
-[node name="FenceBeachPlankPath15" parent="." instance=ExtResource("57_lyps1")]
-transform = Transform3D(1.48398, 0, 0.218658, 0, 1.5, 0, -0.218658, 0, 1.48398, 16.3161, 0.060459, 26.2837)
-
-[node name="FenceBeachPlankPath9" parent="." instance=ExtResource("57_lyps1")]
-transform = Transform3D(1.4819, 0, -0.232298, 0, 1.5, 0, 0.232298, 0, 1.4819, 16.1394, 0.060459, 21.8155)
-
-[node name="FenceBeachPlankPath17" parent="." instance=ExtResource("57_lyps1")]
-transform = Transform3D(1.48398, 0, 0.218658, 0, 1.5, 0, -0.218658, 0, 1.48398, 16.3161, 0.060459, 35.2837)
-
-[node name="FenceBeachPlankPath18" parent="." instance=ExtResource("57_lyps1")]
-transform = Transform3D(1.4819, 0, -0.232298, 0, 1.5, 0, 0.232298, 0, 1.4819, 16.1394, 0.060459, 30.8155)
-
-[node name="FenceBeachPlankPath10" parent="." instance=ExtResource("57_lyps1")]
-transform = Transform3D(-1.48213, 0, 0.23085, 0, 1.5, 0, -0.23085, 0, -1.48213, 15.9294, 0.0724505, -5.73067)
-
-[node name="FenceBeachPlankPath11" parent="." instance=ExtResource("57_lyps1")]
-transform = Transform3D(-1.49164, 0, -0.158121, 0, 1.5, 0, 0.158121, 0, -1.49164, 15.8322, 0.060459, -10.4362)
-
-[node name="FenceBeachPlankPath12" parent="." instance=ExtResource("57_lyps1")]
-transform = Transform3D(-1.47123, 0, 0.292379, 0, 1.5, 0, -0.292379, 0, -1.47123, 16.1931, 0.060459, -14.9571)
-
-[node name="FenceBeachPlankPath13" parent="." instance=ExtResource("57_lyps1")]
-transform = Transform3D(-1.49164, 0, -0.158121, 0, 1.5, 0, 0.158121, 0, -1.49164, 15.9888, 0.060459, -19.1702)
-
-[node name="FenceBeachPlankPath16" parent="." instance=ExtResource("57_lyps1")]
-transform = Transform3D(-1.49164, 0, -0.158121, 0, 1.5, 0, 0.158121, 0, -1.49164, 15.9888, 0.060459, -28.1702)
-
-[node name="FenceBeachPlankPath14" parent="." instance=ExtResource("57_lyps1")]
-transform = Transform3D(-1.47123, 0, 0.292379, 0, 1.5, 0, -0.292379, 0, -1.47123, 16.3497, 0.060459, -23.6912)
-
-[node name="FenceBeachPlankPath19" parent="." instance=ExtResource("57_lyps1")]
-transform = Transform3D(-1.47123, 0, 0.292379, 0, 1.5, 0, -0.292379, 0, -1.47123, 16.3497, 0.060459, -32.6912)
-
-[node name="FenceBeachPlankPath3" parent="." instance=ExtResource("57_lyps1")]
-transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 15.6967, 0.0724495, -0.867483)
-
-[node name="FenceBeachPlankPath4" parent="." instance=ExtResource("57_lyps1")]
-transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 12.8512, 0.0724495, -0.877664)
 
 [node name="CityRestaurantAnim2" parent="." instance=ExtResource("61_ps02h")]
 transform = Transform3D(-8.74228e-08, 0, 2, 0, 2, 0, -2, 0, -8.74228e-08, -14, 0.1, -25)
@@ -1423,5 +1454,55 @@ bones/10/rotation = Quaternion(-0.707102, -0.0026188, 0.707102, -0.0026188)
 [node name="Hat" parent="CityRestaurantAnim2/Armature/Skeleton3D" index="0"]
 transform = Transform3D(-0.762018, 0.248143, 0.0528217, 0.249048, 0.765408, -0.00142305, -0.0719968, 0.0213091, -0.56399, 2.42889e-06, 2.86102e-06, 3.72529e-07)
 
+[node name="Invisible Walls" type="Node3D" parent="."]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Invisible Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.3709, 0, 39.3837)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Invisible Walls/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.8442, 2.84711, 0)
+shape = SubResource("BoxShape3D_u8kom")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Invisible Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.3709, 0, -37.798)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Invisible Walls/StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.8442, 2.84711, 0)
+shape = SubResource("BoxShape3D_u8kom")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="Invisible Walls"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -34.6723, 0, -37.2826)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Invisible Walls/StaticBody3D3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38, 2.84711, 0)
+shape = SubResource("BoxShape3D_u8kom")
+
+[node name="StaticBody3D4" type="StaticBody3D" parent="Invisible Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 38)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Invisible Walls/StaticBody3D4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.5, -38)
+shape = SubResource("BoxShape3D_asefv")
+
+[node name="StaticBody3D5" type="StaticBody3D" parent="Invisible Walls"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Invisible Walls/StaticBody3D5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.5, 2, 1)
+shape = SubResource("BoxShape3D_nh4pr")
+
+[node name="StaticBody3D6" type="StaticBody3D" parent="Invisible Walls"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Invisible Walls/StaticBody3D6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.5, 2.5, -3)
+shape = SubResource("BoxShape3D_nh4pr")
+
+[node name="StaticBody3D7" type="StaticBody3D" parent="Invisible Walls"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Invisible Walls/StaticBody3D7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 3, -1)
+shape = SubResource("BoxShape3D_8gic2")
+
 [editable path="== LEVEL SELECT ==/LevelSelectArea"]
+[editable path="== LEVEL SELECT ==/LevelSelectArea2"]
+[editable path="== LEVEL SELECT ==/LevelSelectArea3"]
 [editable path="CityRestaurantAnim2"]

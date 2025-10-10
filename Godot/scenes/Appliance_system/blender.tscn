@@ -42,7 +42,7 @@ cooking_style = 0
 model_scene = null
 
 [node name="Sprite3D2" type="Sprite3D" parent="." index="3"]
-transform = Transform3D(1.01106, -0.00646767, 0.0136703, 0.0064673, 1.01115, 7.05719e-05, -0.0136704, 1.68979e-05, 1.01108, 0.00220308, 3.69196, 0.00419462)
+transform = Transform3D(1.01106, -0.00646767, 0.0136703, 0.0064673, 1.01115, 7.05719e-05, -0.0136704, 1.68979e-05, 1.01108, 0.00220308, 2.52529, 0.00419462)
 billboard = 1
 no_depth_test = true
 texture = SubResource("ViewportTexture_8shnm")

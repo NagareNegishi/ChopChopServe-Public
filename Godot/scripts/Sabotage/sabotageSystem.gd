@@ -22,6 +22,7 @@ extends Node
 
 # Don't currently actually use
 var current_sabotage
+var sab_team_id
 
 # Arrays for the sabotages
 var on_fire := []
@@ -34,8 +35,8 @@ signal sabotage_failed(reason: String)
 
 signal sabotage_sending_team(teamID: int)
 
-signal sabotage_ending(sab_name: String)
-signal sabotage_start(sab_name: String, sab_time: int)
+signal sabotage_start(teamID: int, sab_name: String, sab_time: int)
+signal sabotage_ending(teamID: int, sab_name: String)
 
 # Define Sabotage Types
 enum SabotageType {
@@ -95,6 +96,7 @@ func request_sabotage(teamID: int, sabotage_type: int) -> void:
 	if not multiplayer.is_server():
 		return
 
+	sab_team_id = teamID
 	# Get the cost of the sabotage
 	var cost = sabotage_costs[sabotage_type]
 	# Check if the team can afford it
@@ -107,7 +109,7 @@ func request_sabotage(teamID: int, sabotage_type: int) -> void:
 
 	# Pay the sabotage cost
 	currency_system.minus_currency(teamID, cost)
-
+	 
 	# If FIRE, Get a flammable appliance path
 	if sabotage_type == SabotageType.FIRE:
 		var chosen_path = _pick_flammable_appliance_path(teamID)
@@ -131,6 +133,7 @@ func request_sabotage(teamID: int, sabotage_type: int) -> void:
 			for i in range (5):
 				var chosen_path = find_object_path()
 				execute_sabotage.rpc(teamID, sabotage_type, chosen_path, position)
+	
 	else:
 		# For now, otherwise just call the normal one with empty path and position
 		execute_sabotage.rpc(teamID, sabotage_type, NodePath(""), Vector3(0, 0, 0))
@@ -170,7 +173,7 @@ func _do_sabotage(teamID: int, sabotage_type: int, chosen_path: NodePath, positi
 			# Handle switch controls sabotage
 		SabotageType.RAT_SWARM:
 			print("rat stuff")
-			spawn_rat_swarm(position, chosen_path)
+			spawn_rat_swarm(teamID, position, chosen_path)
 			# Handle rat swarm sabotage
 		SabotageType.POWER_OUTAGE:
 			print("power stuff")
@@ -196,7 +199,7 @@ func spawn_water_spill(teamID: int, position: Vector3) -> void:
 	get_tree().get_current_scene().add_child(spill)
 
 	spill.global_position = position
-	spill.set_sabotaged_team(teamID)
+	spill.get_team(teamID)
 	spill.spill()
 	
 # Random position for the water spill
@@ -329,9 +332,9 @@ func spawn_switch_controls(teamID: int) -> void:
 	controls.switch_controls(teamID)
 
 # ------- Rat Swarm Stuff ------- #
-func spawn_rat_swarm(position: Vector3, path: NodePath) -> void:
+func spawn_rat_swarm(teamID: int, position: Vector3, path: NodePath) -> void:
 	print("spawning rat sparm")
-	RatAttack.spawn_rat_mischief(position, path)
+	RatAttack.spawn_rat_mischief(teamID, position, path)
 
 # Find the path of a bench within the scene
 func find_object_path() -> NodePath:
@@ -360,6 +363,9 @@ func spawn_power_outage(teamID: int) -> void:
 
 # ------------------- Signal Functions ------------------- #
 
+func get_team_id() -> int:
+	return sab_team_id
+	
 # Sabotage Starting signal catcher
 func on_sabotage_success(sab_type: int):
 	# Here you would start the UI for the sabotage

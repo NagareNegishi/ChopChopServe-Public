@@ -275,7 +275,7 @@ func _action(is_active : bool) -> void:
 	if _closest_item != null && (_closest_item.get_parent() is ChopTable or _closest_item.get_parent() is Sink):
 		disable_controls(is_active, false)
 	
-	if _closest_item.get_parent() is not FoodCrateUpdate:
+	if _closest_item.get_parent() is not FoodFactory:
 		rpc("_client_action_anim",ENetManager.get_my_id(), is_active,
 	is_active && _closest_item.get_parent() is ChopTable,
 	is_active && _closest_item.get_parent() is Sink)

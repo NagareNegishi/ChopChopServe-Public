@@ -244,10 +244,6 @@ func _on_interactable_component_action_use(_is_action: bool) -> void:
 	inventory_sprite.inventory.update_slot_selected(true)
 	
 
-func _on_interactable_component_interacted() -> void:
-	inventory_sprite.inventory.select_ingredient()
-
-
 ## Override unsupported methods to prevent misuse ------------------------------
 func put(_item: Node) -> bool:
 	assert(false, "Food Crate does not support putting items")
@@ -258,6 +254,8 @@ func take() -> Node:
 	return null
 
 func player_has(_item: Node) -> void:
+	print("MEOOWWWWWWWW")
+	inventory_sprite.inventory.select_ingredient()
 	return
 
 func put_from_player(_item: Node) -> bool:

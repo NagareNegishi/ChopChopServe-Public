@@ -369,7 +369,7 @@ func _client_pickup(player_path : String, item_path : String) -> bool:
 		return false
 	
 	if player.item_in_hand:
-		player.rpc("server_drop_item", false)
+		player.drop_item(false)
 	
 	item.global_position = Vector3(0,0,0)
 	item.global_rotation = Vector3(0,0,0)

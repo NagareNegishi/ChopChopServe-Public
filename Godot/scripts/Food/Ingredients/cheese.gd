@@ -9,6 +9,7 @@ func _ready():
 	cooked_mesh = $Cheese
 	burnt_mesh = $BurntCheese
 	chopped_mesh = $CheeseSliced
+	texture = load("res://assets/textures/ingredients/cheese.png")
 	
 	add_to_group("Food")
 	on_state_change()

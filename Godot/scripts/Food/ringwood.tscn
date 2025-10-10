@@ -402,5 +402,5 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6.5, 
 transform = Transform3D(1, 0, -4.65661e-10, 0, 1, 0, 4.65661e-10, 0, 1, 6.33427, 0, 0.0350459)
 group = 2
 
-[node name="Blender" parent="." instance=ExtResource("26_2rsp4")]
-transform = Transform3D(0.0475422, 0, -0.998869, 0, 1, 0, 0.998869, 0, 0.0475422, 2.50744, 0.0150003, 0.719478)
+[node name="Blender" parent="NavigationRegion3D" instance=ExtResource("26_2rsp4")]
+transform = Transform3D(0.042015, 0, -0.999116, 0, 1, 0, 0.999116, 0, 0.042015, 2.95021, 0.0150003, 1.36148)

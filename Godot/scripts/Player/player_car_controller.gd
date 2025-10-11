@@ -35,7 +35,8 @@ func _process(delta: float) -> void:
 	
 	
 func _send_input():
-	rpc("_receive_input", ENetManager.get_my_id(), move_input, turn_input, time)
+	var estimated_server_time = time + get_parent().client_offset
+	rpc("_receive_input", ENetManager.get_my_id(), move_input, turn_input, estimated_server_time)
 
 
 @rpc("any_peer", "call_local", "unreliable")

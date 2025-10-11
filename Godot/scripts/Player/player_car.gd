@@ -20,7 +20,7 @@ var MOVE_PARTICLES_POOL = []
 
 var player_inputs := {}
 var time_start : int = 0
-
+var client_offset : int = 0
 ## Called when the node enters the scene tree for the first time.
 ## @return void
 func _ready() -> void:
@@ -40,7 +40,10 @@ func _ready() -> void:
 
 @rpc("any_peer", "call_local")
 func _set_time_now(cur : int):
+	var local_now = Time.get_ticks_msec()
+	client_offset = cur - local_now
 	time_start = cur
+	
 
 
 ## Runs every process frame
@@ -129,14 +132,12 @@ func _spawn_particle(index : int) -> void:
 # adds input into player_input
 @rpc("authority", "call_local", "unreliable")
 func _on_received_input(peer_id: int, move : int, turn : int, time : int):
-	var adjusted_time : int = max(0, time) - time_start
-	adjusted_time = max(0, adjusted_time)
-	print(str(peer_id)+": " +str(adjusted_time))
-	if !player_inputs.has(peer_id) or adjusted_time > player_inputs[peer_id]["time"]:
+	print(str(peer_id)+": " +str(time))
+	if !player_inputs.has(peer_id) or time > player_inputs[peer_id]["time"]:
 		player_inputs[peer_id] = {
 			"move" : move,
 			"turn" : turn,
-			"time" : adjusted_time
+			"time" : time
 		}
 
 func disable_input(disable : bool):

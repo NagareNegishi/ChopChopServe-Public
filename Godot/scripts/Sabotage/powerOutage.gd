@@ -9,11 +9,13 @@ extends Node3D
 # Check this time is good !!
 var secs = 10.0
 var things
+var teamID
 
 var appliances
 @onready var rat_attack = RatAttack
 
-func power_outage(teamID: int) -> void:
+func power_outage(team_id: int) -> void:
+	teamID = team_id
 	# Get the appliances within the scene
 	appliances = get_tree().get_nodes_in_group("flammable")
 	# Remove the Applianes from the other team
@@ -29,13 +31,14 @@ func power_outage(teamID: int) -> void:
 func turn_power_off(is_power_on: bool) -> void:
 	# Go through and find the powered ones
 	for appliance in appliances:
-		if appliance is PoweredAppliance and appliance.has_method("power_off"):
-			if is_power_on:
-				# Turn the power on
-				appliance.power_on()
-			else:
-				# Otherwise turn it off
-				appliance.power_off()
+		if appliance.get_appliance_owner() != teamID:
+			if appliance is PoweredAppliance and appliance.has_method("power_off"):
+				if is_power_on:
+					# Turn the power on
+					appliance.power_on()
+				else:
+					# Otherwise turn it off
+					appliance.power_off()
 
 # Timer for the fire spreading
 func start_timer() -> void:
@@ -45,12 +48,12 @@ func start_timer() -> void:
 	add_child(timer)
 	timer.timeout.connect(_on_timer_timeout)
 	timer.start()
-	SabotageSystem.sabotage_start.emit("Power Outage", secs)
+	SabotageSystem.sabotage_start.emit(teamID, "Power Outage", secs)
 
 # When the timer ends, spread the fire
 func _on_timer_timeout() -> void:
 	print("jess: time is ending")
 	# Turn the Power back on
 	turn_power_off(true)
-	SabotageSystem.sabotage_ending.emit("Power Outage")
+	SabotageSystem.sabotage_ending.emit(teamID, "Power Outage")
 	

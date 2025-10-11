@@ -11,9 +11,7 @@ class_name rat
 var target_path
 @onready var rat_mischief := []
 var secs = 10.0
-
-func set_target(path: NodePath):
-	target_path = path
+var teamID: int
 
 func rat_timer() -> void:
 	var timer = Timer.new()
@@ -22,7 +20,10 @@ func rat_timer() -> void:
 	add_child(timer)
 	timer.timeout.connect(_on_timer_timeout)
 	timer.start()
-	SabotageSystem.sabotage_start.emit("Rat Swarm", secs)
+	SabotageSystem.sabotage_start.emit(teamID, "Rat Swarm", secs)
+
+func set_team_id(team_id: int) -> void:
+	teamID = team_id
 
 func _on_timer_timeout() -> void:
 	# This should make the rats turn around when the timer is up 
@@ -30,4 +31,4 @@ func _on_timer_timeout() -> void:
 	RatAttack.change_state()
 	print("jess: the timer has ended and the rat state should be changing")
 	#queue_free()
-	SabotageSystem.sabotage_ending.emit("Rat Swarm")
+	SabotageSystem.sabotage_ending.emit(teamID, "Rat Swarm")

@@ -30,6 +30,7 @@ func _process(delta: float) -> void:
 		last_move = move_input
 		last_turn = turn_input
 		time = Time.get_ticks_msec()
+	
 	_send_input()
 	
 	

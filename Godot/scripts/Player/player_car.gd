@@ -129,9 +129,9 @@ func _spawn_particle(index : int) -> void:
 # adds input into player_input
 @rpc("authority", "call_local", "unreliable")
 func _on_received_input(peer_id: int, move : int, turn : int, time : int):
-	var adjusted_time : int = max(0, time) - time_start - 70
+	var adjusted_time : int = max(0, time) - time_start
 	adjusted_time = max(0, adjusted_time)
-	#print(str(ENetManager.get_my_id())+": " +str(time_start))
+	print(str(peer_id)+": " +str(adjusted_time))
 	if !player_inputs.has(peer_id) or adjusted_time > player_inputs[peer_id]["time"]:
 		player_inputs[peer_id] = {
 			"move" : move,

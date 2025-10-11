@@ -132,12 +132,13 @@ func _spawn_particle(index : int) -> void:
 # adds input into player_input
 @rpc("authority", "call_local", "unreliable")
 func _on_received_input(peer_id: int, move : int, turn : int, time : int):
-	print(str(peer_id)+": " +str(time))
-	if !player_inputs.has(peer_id) or time > player_inputs[peer_id]["time"]:
+	var actual_time = time - time_start
+	#print(str(peer_id)+": " +str(actual_time))
+	if !player_inputs.has(peer_id) or actual_time > player_inputs[peer_id]["time"]:
 		player_inputs[peer_id] = {
 			"move" : move,
 			"turn" : turn,
-			"time" : time
+			"time" : actual_time
 		}
 
 func disable_input(disable : bool):

@@ -10,6 +10,7 @@ var network_layer: ENetNetworkLayer
 @onready var join_button = $Menu/ButtonsContainer/JoinButton
 @onready var ip_input = $Menu/Note/VBox/IP/PublicIPInput
 @onready var exit_button = $Menu/ButtonsContainer/ExitButton
+@onready var  test_button = $Menu/TestButton
 @onready var  error_message = $Menu/Error
 @onready var name_input : LineEdit = $Menu/Note/VBox/Name/Name
 
@@ -27,6 +28,7 @@ func _ready():
 	join_button.pressed.connect(_on_join_pressed)
 	network_layer.connected.connect(_switch_to_lobby)
 	exit_button.pressed.connect(_exit_game)
+	test_button.pressed.connect(_diagnose_network)
 	if !froggo_building : return
 	froggo_building.play("ArmatureAction")
 
@@ -101,3 +103,28 @@ func _pop_error(error : ErrorType):
 	await get_tree().create_timer(4).timeout
 	
 	error_message.visible = false
+
+
+## Diagnose Network connection
+func _diagnose_network():
+	test_button.disabled = true
+	test_button.text = "Testing..."
+	var diagnostics = NetworkDiagnostics.new()
+	add_child(diagnostics)
+	diagnostics.setup(network_layer)
+	# Run diagnostics
+	var user_ip = host_public_ip_input.text.strip_edges()
+	var results = await diagnostics.run_diagnostics(user_ip)
+	# Format and show results
+	var report = diagnostics.format_short_results(results)
+	ENetManager.show_notification(report, 50.0)
+
+	print("=== Network Diagnostics ===")
+	print(diagnostics.format_results(results))
+	
+	var status = diagnostics.get_status_summary(results)
+	print("Status: ", status)
+	
+	diagnostics.queue_free()
+	test_button.disabled = false
+	test_button.text = "Connection Help"

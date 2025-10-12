@@ -89,19 +89,18 @@ func _switch_to_lobby():
 	SceneManager.change_scene(SceneManager.Scene.LOBBY_TEST)
 
 
+## Exit Game
 func _exit_game():
 	get_tree().quit()
 
 
+## Pop up error message
 func _pop_error(error : ErrorType):
 	match error:
 		ErrorType.EMPTY_NAME:
 			error_message.text = "Please Enter a Name"
-	
 	error_message.visible = true
-	
 	await get_tree().create_timer(4).timeout
-	
 	error_message.visible = false
 
 
@@ -117,14 +116,8 @@ func _diagnose_network():
 	var results = await diagnostics.run_diagnostics(user_ip)
 	# Format and show results
 	var report = diagnostics.format_short_results(results)
-	ENetManager.show_notification(report, 50.0)
-
-	print("=== Network Diagnostics ===")
-	print(diagnostics.format_results(results))
-	
-	var status = diagnostics.get_status_summary(results)
-	print("Status: ", status)
-	
+	ENetManager.show_notification(report, 5.0)
+	Debug.net_log(diagnostics.format_results(results))
 	diagnostics.queue_free()
 	test_button.disabled = false
 	test_button.text = "Connection Help"

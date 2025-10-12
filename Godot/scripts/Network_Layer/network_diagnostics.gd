@@ -9,109 +9,63 @@ func setup(net_layer: ENetNetworkLayer):
 
 
 ## Run full diagnostics and return structured results
+## @param user_provided_ip: Optional manual public IP to validate
+## @return: Dictionary with diagnostic results
 func run_diagnostics(user_provided_ip: String = "") -> Dictionary:
 	var result = {
 		"local_ip": "",
 		"public_ip": "",
 		"user_ip": user_provided_ip,
-		"network_type": "",  # "LAN", "Internet", "Offline"
+		"network_type": "",  # "Offline", "LAN", "Internet"
 		"can_host_lan": false,
-		"can_host_internet": false,
 		"upnp_enabled": false,
-		"needs_port_forward": false,
 		"issues": [],
 		"recommendations": []
 	}
-	
+
 	# 1. Get local IP
 	result.local_ip = network_layer._get_best_local_ip()
-	
-	# 2. Determine network type
+
+	# 2. Handle the offline case
 	if result.local_ip == "127.0.0.1":
 		result.network_type = "Offline"
 		result.issues.append("No network connection detected")
 		result.recommendations.append("Connect to WiFi or Ethernet")
 		return result
-	
+
 	# 3. Check if private network (LAN)
 	if is_private_ip(result.local_ip):
 		result.network_type = "LAN"
 		result.can_host_lan = true
 		result.recommendations.append("✅ Can host games on local network")
-	
-	# 4. Determine which public IP to check
+
+	# 4. Check public IP usability
 	if user_provided_ip != "":
 		# User provided an IP - validate that one
 		result.public_ip = user_provided_ip
-		Debug.net_log("Using user-provided IP: " + user_provided_ip)
+		var usability = network_layer.check_ip_usability(result.public_ip)
+		if not usability.usable:
+			result.issues.append("Public IP issue: " + usability.reason)
+			result.recommendations.append("Check your public IP")
 	else:
 		# No user input - try to fetch it
 		result.public_ip = await _get_public_ip()
 		if result.public_ip != "":
-			Debug.net_log("Auto-detected public IP: " + result.public_ip)
-
-	# 5. Test UPnP (only if no manual IP provided)
-	if user_provided_ip == "":
-		result.upnp_available = await _test_upnp_capability()
-		
-		if result.upnp_available:
-			result.can_host_internet = true
-			result.recommendations.append("✅ UPnP available - can host internet games!")
+			result.recommendations.append("Auto-detected public IP: " + result.public_ip)
 		else:
-			result.needs_port_forward = true
-			result.recommendations.append("⚠️ UPnP not available")
-	else:
-		# User provided manual IP, assume they know what they're doing
-		result.recommendations.append("ℹ️ Using manual IP configuration")
-		result.needs_port_forward = true  # Assume manual = port forwarding
-	
-	# 6. Check public IP usability
-	if result.public_ip != "":
-		var usability = network_layer.check_ip_usability(result.public_ip)
-		
-		if usability.is_private:
-			# CGNAT detected
-			result.issues.append("Behind CGNAT (Carrier-Grade NAT)")
-			result.recommendations.append("⚠️ Your ISP uses private IP addressing")
-			result.recommendations.append("   Solution: Request public IP from ISP or use relay")
-			result.can_host_internet = false
-		elif not usability.usable:
-			result.issues.append("Public IP issue: " + usability.reason)
-			result.can_host_internet = false
-		else:
-			# Public IP is good
-			result.can_host_internet = true
-			if not result.upnp_available and user_provided_ip == "":
-				result.recommendations.append("📝 Manual port forwarding needed:")
-				result.recommendations.append("   1. Router settings: 192.168.1.1")
-				result.recommendations.append("   2. Forward UDP port 7000 to " + result.local_ip)
-				result.recommendations.append("   3. Use this IP: " + result.public_ip + ":7000")
-	else:
-		result.issues.append("Could not detect public IP")
-		result.recommendations.append("⚠️ Check internet connection")
+			result.issues.append("Could not auto-detect public IP")
+			result.recommendations.append("⚠️ Check internet connection")
+			return result
 
+	# 5. Test UPnP
+	result.upnp_available = await _test_upnp_capability()
+	if result.upnp_available:
+		result.recommendations.append("✅ Your router may support automatic setup")
+		result.recommendations.append("Try Hosting without IP input")
+	else:
+		result.recommendations.append("⚠️ UPnP not available, check router settings")
+		result.recommendations.append("Manual port forwarding needed: UDP port 7000 → " + result.local_ip)
 
-	# # 4. Check UPnP status (if available from network_layer)
-	# result.upnp_available = await _test_upnp_capability()
-	# if result.upnp_available:
-	# 	result.can_host_internet = true
-	# 	result.recommendations.append("✅ UPnP available - can host internet games!")
-	# else:
-	# 	result.needs_port_forward = true
-	# 	result.recommendations.append("⚠️ UPnP not available")
-	# 	result.recommendations.append("   Need manual port forwarding for internet hosting")
-	
-	
-	# # 5. Check if behind CGNAT or restricted network
-	# var usability = network_layer.check_ip_usability(result.local_ip)
-	# if usability.is_private:
-	# 	if not result.upnp_enabled:
-	# 		result.issues.append("Behind private network without UPnP")
-	# 		result.recommendations.append("To host over internet:")
-	# 		result.recommendations.append("	1. Access router at 192.168.1.1")
-	# 		result.recommendations.append("	2. Enable UPnP OR")
-	# 		result.recommendations.append("	3. Forward UDP port 7000 to " + result.local_ip)
-	
 	return result
 
 
@@ -152,13 +106,12 @@ func _upnp_test() -> bool:
 	return true
 
 
-# In network_diagnostics.gd
-
 ## Fetch public IP from external service
+## @return: Public IP as string, or empty if failed
 func _get_public_ip() -> String:
 	var http = HTTPRequest.new()
 	add_child(http)
-	
+
 	var error = http.request("https://api.ipify.org")
 	if error != OK:
 		Debug.net_log("Failed to get public IP")
@@ -167,22 +120,18 @@ func _get_public_ip() -> String:
 	
 	var response = await http.request_completed
 	http.queue_free()
-	
+	## response has 4 elements: result, response_code, headers, body
 	if response[0] == HTTPRequest.RESULT_SUCCESS and response[1] == 200:
 		return response[3].get_string_from_utf8().strip_edges()
-	
 	return ""
 
 
-
 ## Format diagnostic results as readable text
+## @param results: Diagnostic results dictionary
+## @return: Detailed multi-line string with full info
 func format_results(results: Dictionary) -> String:
 	var lines = []
-	
-	lines.append("NETWORK DIAGNOSTICS")
-	lines.append("--------------------")
-	lines.append("")
-	
+	lines.append("====== Network Diagnostics =====")
 	# Network Status
 	lines.append("Network Status:")
 	lines.append("Type: " + results.network_type)
@@ -195,82 +144,63 @@ func format_results(results: Dictionary) -> String:
 	lines.append("Hosting Capabilities:")
 	if results.can_host_lan:
 		lines.append("✅ Can host on local network")
-	if results.can_host_internet:
-		lines.append("✅ Can host over internet")
-	elif results.needs_port_forward:
-		lines.append("⚠️ Cannot host over internet yet")
-	lines.append("")
-	
-	# UPnP Status
-	if results.upnp_enabled:
-		lines.append("✅ UPnP: Enabled")
+	if results.upnp_available:
+		lines.append("✅ May be able to host over internet (automatic setup)")
 	else:
-		lines.append("❌ UPnP: Not available")
+		lines.append("⚠️ Manual port forwarding required for internet hosting")
+	# UPnP Status
+	if results.upnp_available:
+		lines.append("✅ UPnP: Available")
+	else:
+		lines.append("⚠️ UPnP: Not available")
 	lines.append("")
 	
 	# Issues
 	if not results.issues.is_empty():
 		lines.append("⚠️ Issues Found:")
 		for issue in results.issues:
-			lines.append("   • " + issue)
+			lines.append(" - " + issue)
 		lines.append("")
 	
 	# Recommendations
 	if not results.recommendations.is_empty():
 		lines.append("Recommendations:")
 		for rec in results.recommendations:
-			lines.append(rec)
+			lines.append(" - " + rec)
 		lines.append("")
-	
-	# Quick Actions
-	lines.append("------------------")
-	lines.append("WHAT YOU CAN DO:")
-	if results.can_host_lan:
-		lines.append("✓ Host for friends on same WiFi")
-	if results.can_host_internet:
-		lines.append("✓ Host for anyone with room code")
-	else:
-		lines.append("✓ Join other people's games")
-		lines.append("✓ Host after setting up port forwarding")
-	
+
 	return "\n".join(lines)
 
 
-
-# network_diagnostics.gd
-## Format diagnostic results as readable text (CONDENSED VERSION)
+## Format diagnostic results as readable text
+## @param results: Diagnostic results dictionary
+## @return: Short summary string with key info
 func format_short_results(results: Dictionary) -> String:
 	var lines = []
 	# Quick Status
-	lines.append("📡 " + results.network_type + " | IP: " + results.local_ip)
-	
+	lines.append(results.network_type + " | IP: " + results.local_ip)
 	# Capabilities
-	if results.can_host_internet:
-		lines.append("✅ Ready to host over internet")
+	if results.upnp_available:
+		lines.append("✅ Ready to host (automatic setup available)")
 	elif results.can_host_lan:
-		lines.append("✅ Can host on WiFi (same network only)")
+		lines.append("✅ Can host on local network")
 	else:
-		lines.append("⚠️ Can join games only")
-	
-	# Main issue/recommendation
-	if results.upnp_enabled:
-		lines.append("✅ UPnP enabled")
+		lines.append("⚠️ Limited to local device testing")
+	# Main recommendation
+	if results.upnp_available:
+		lines.append("Try hosting without entering IP")
 	else:
-		lines.append("⚠️ No UPnP - need port forwarding")
-		lines.append("Forward UDP port 7000 to " + results.local_ip)
-	
+		lines.append("⚠️ Manual setup needed for internet")
+		lines.append("Forward UDP port 7000 → " + results.local_ip)
 	return "\n".join(lines)
 
 
-
-
-## Get quick status summary (for UI badges/icons)
+## Get quick status summary
+## @param results: Diagnostic results dictionary
+## @return: Summary string with emoji status
 func get_status_summary(results: Dictionary) -> String:
-	if results.network_type == "Offline":
-		return "❌ Offline"
-	elif results.can_host_internet:
+	if results.upnp_available:
 		return "✅ Ready to Host"
-	elif results.can_host_lan:
+	if results.can_host_lan:
 		return "⚠️ LAN Only"
-	else:
-		return "⚠️ Join Only"
+	return "❌ Offline"

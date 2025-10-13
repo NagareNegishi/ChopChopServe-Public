@@ -8,21 +8,18 @@ extends Node3D
 ################################################################################
 
 @export var duration: float = 10.0
-@export var slow_down: float = 0.5
-		
+@export var slow_down: float = 0.5		
 @onready var reputation_system = ReputationSystem
+
 var sabotaged_teamID: int
+var teamID: int
+var secs = 8.0
 
 var water_particles: ParticleController
 var players_in_spill : Array[Player] = []
 
 signal in_water_spill()
 signal customer_down()
-
-func _ready() -> void:
-	# Connect to body entered signal
-	pass
-	#body_entered.connect(_on_body_entered)
 
 # Set up the visual effects
 # Taken from inflammable
@@ -39,11 +36,9 @@ func _start_water_effects() -> void:
 	if water_particles:
 		water_particles.play()
 
-# Set which team is being sabotaged
-func set_sabotaged_team(teamID: int) -> void:
-	sabotaged_teamID = teamID
-
-var secs = 8.0
+# Get the Sending team
+func get_team(team_id: int) -> void:
+	teamID = team_id
 
 #func start_timer(seconds: float) -> void:
 func start_timer() -> void:
@@ -53,7 +48,7 @@ func start_timer() -> void:
 	add_child(timer)
 	timer.timeout.connect(_on_timer_timeout)
 	timer.start()
-	SabotageSystem.sabotage_start.emit("Water Spill", secs)
+	SabotageSystem.sabotage_start.emit(teamID, "Water Spill", secs)
 
 func _on_timer_timeout() -> void:
 	for player in players_in_spill:
@@ -107,9 +102,9 @@ func _on_area_3d_body_entered(body:Node3D) -> void:
 	if body is Player:
 		# Player effects happen locally on each client
 		body.drop_item(false)
-		var teamID = get_team_id(body)
-		print("teamID of player in water: ", teamID)
-		reputation_system.minus_reputation(teamID, 5)
+		var water_team_id = get_team_id(body)
+		print("teamID of player in water: ", water_team_id)
+		reputation_system.minus_reputation(water_team_id, 5)
 		players_in_spill.append(body)
 		body.set_speed(1.5)
 		emit_signal("in_water_spill")

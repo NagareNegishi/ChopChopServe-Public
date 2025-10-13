@@ -26,6 +26,7 @@ var secs = 2
 var object_path
 var target_path
 var rat_targets := {} 
+var teamID
 
 var starting_pos := {}
 var rat_states := {} # {rat: "going" or "returning"}
@@ -115,7 +116,7 @@ func run(delta: float):
 		#target_pos = Vector3(0, 0, 0)
 			
 # Maybe add a variable to decide the amount of rats
-func spawn_rat_mischief(position : Vector3, path : NodePath) -> void:
+func spawn_rat_mischief(team_id: int, position : Vector3, path : NodePath) -> void:
 	#for i in range(1, 5):
 	var new_rat = rat_scene.instantiate()
 	add_child(new_rat)		
@@ -129,9 +130,11 @@ func spawn_rat_mischief(position : Vector3, path : NodePath) -> void:
 	rat_states[new_rat] = "going"
 	#start_timer(secs)
 	new_rat.rat_timer()
+	new_rat.set_team_id(team_id)
 	#var start = get_tree().get_current_scene()
 	#var bs : Array = find_benches(start)
 	#print("benches in the scene ======= ", bs)
+	#teamID = team_id
 
 # Change the state of the rat to go back home when their time runs out
 func change_state() -> void:
@@ -145,24 +148,9 @@ func get_all_positions() -> Array:
 			positions.append(r.global_position)
 	return positions
 
-# Add the Rats to the pack
-func add_to_mischief(rat : MeshInstance3D):
-	mischief.append(rat)
-	count+1
-	print("\n adding new RATTTTTTTTT : this is number: ", count)
+#func get_team() -> int:
+#	return teamID
 	
-
-func move_rat(rat : MeshInstance3D, position : Vector3) -> void:
-	rat.global_position += position
-	print("RAT NUMBER : ", mischief[rat], "MOVED")
-
-func moving_rats():
-	for r in mischief:
-		r.global_position += Vector3(2, 0, 4)
-
-func get_position():
-	pass #print("=========== getting the rats ==============", mischief)
-
 # This code currently works !!
 func find_object() -> Vector3:#NodePath:
 	#var bench_list : Array = []

@@ -22,6 +22,7 @@ var current_status: Status = Status.COOKING
 var cook_timer: Timer
 var power: int = 1
 var cookware_slots: Array[Vector3] = []  ## Where to place cookware
+var active_cookware: Cookware  ## The cookware on this appliance, and player can interact with
 
 
 ## Setup the PoweredAppliance
@@ -94,6 +95,7 @@ func _put_cookware(cookware: Cookware) -> void:
 	cookware.lock()
 	cookware.set_can_use(true)
 	cookware.power_receiving = power
+	active_cookware = cookware
 	if cookware.can_cook() and can_cook():
 		cookware.cook(power)
 	emit_signal("add_appliance", cookware, self)
@@ -151,6 +153,7 @@ func _take_cookware(cookware: Cookware) -> void:
 	cookware.unlock()
 	cookware.restore_original_transform()
 	cookware._toggle_interaction(true)
+	active_cookware = null # only one cookware supported, if multiple, need to switch target
 	emit_signal("cookware_taken", cookware, self)
 
 
@@ -321,8 +324,8 @@ func player_has(item: Node) -> void:
 		serve_request(item)
 		return
 	# If player has food: try to put it in Cookware
-	if item is Food:
-		contents[0].player_has(item)
+	if item is Food and active_cookware:
+		active_cookware.player_has(item)
 		return
 	# If player has cookware: try to transfer contents
 	if item is Cookware and not is_empty():
@@ -422,7 +425,7 @@ func _check_plate(plate: Plate) -> bool:
 	if is_empty():
 		Debug.cook_log("Nothing to serve from: " + get_script().get_global_name())
 		return false
-	if plate.is_ready() and not contents[0].is_empty():
+	if plate.is_ready() and not active_cookware.is_empty():
 		return true
 	return false
 
@@ -434,7 +437,7 @@ func serve_request(plate: Plate) -> void:
 	if not _check_plate(plate):
 		return
 	if ENetManager.is_host():
-		plate.add_list_items(contents[0].take_all()) # Method in Plate, takes Array of Food
+		plate.add_list_items(active_cookware.take_all()) # Method in Plate, takes Array of Food
 		_client_serve.rpc(ENetManager.get_my_id())
 		return
 	_serve_as_host.rpc_id(1, ENetManager.get_my_id())
@@ -452,7 +455,7 @@ func _serve_as_host(player_id: int) -> void:
 		return
 	if not _check_plate(plate):
 		return
-	plate.add_list_items(contents[0].take_all()) # Method in Plate, takes Array of Food
+	plate.add_list_items(active_cookware.take_all()) # Method in Plate, takes Array of Food
 	_client_serve.rpc(player_id)
 
 
@@ -462,7 +465,7 @@ func _serve_as_host(player_id: int) -> void:
 func _client_serve(player_id: int) -> void:
 	var plate = GlobalScript.get_local_player_by_id(player_id).item_in_hand
 	if plate and plate is Plate and _check_plate(plate):
-		plate.add_list_items(contents[0].take_all())
+		plate.add_list_items(active_cookware.take_all())
 
 
 ## Check if the cookware can accept the current contents
@@ -475,10 +478,9 @@ func _check_cookware(player_cookware: Node) -> bool:
 	if is_empty():
 		Debug.all("Nothing to serve from: " + get_script().get_global_name())
 		return false
-	var appliance_cookware = contents[0]
-	if appliance_cookware.is_empty():
-		return appliance_cookware._can_accept_all(player_cookware.show_contents())
-	return player_cookware._can_accept_all(appliance_cookware.show_contents())
+	if active_cookware.is_empty():
+		return active_cookware._can_accept_all(player_cookware.show_contents())
+	return player_cookware._can_accept_all(active_cookware.show_contents())
 
 
 ## Transfer food from Cookware to another Cookware
@@ -488,12 +490,11 @@ func transfer_request(player_cookware: Cookware) -> void:
 	if not _check_cookware(player_cookware):
 		return
 	if ENetManager.is_host():
-		var appliance_cookware = contents[0]
-		if appliance_cookware.is_empty():
-			appliance_cookware.put_all(player_cookware.take_all())
+		if active_cookware.is_empty():
+			active_cookware.put_all(player_cookware.take_all())
 			_client_transfer.rpc(ENetManager.get_my_id(), true)
 			return
-		player_cookware.put_all(appliance_cookware.take_all())
+		player_cookware.put_all(active_cookware.take_all())
 		_client_transfer.rpc(ENetManager.get_my_id(), false)
 		return
 	_transfer_as_host.rpc_id(1, ENetManager.get_my_id())
@@ -508,12 +509,11 @@ func _transfer_as_host(player_id: int) -> void:
 	var player_cookware = GlobalScript.get_local_player_by_id(player_id).item_in_hand
 	if not _check_cookware(player_cookware):
 		return
-	var appliance_cookware = contents[0]
-	if appliance_cookware.is_empty():
-		appliance_cookware.put_all(player_cookware.take_all())
+	if active_cookware.is_empty():
+		active_cookware.put_all(player_cookware.take_all())
 		_client_transfer.rpc(player_id, true)
 		return
-	player_cookware.put_all(appliance_cookware.take_all())
+	player_cookware.put_all(active_cookware.take_all())
 	_client_transfer.rpc(player_id, false)
 
 
@@ -525,11 +525,10 @@ func _client_transfer(player_id: int, taking: bool) -> void:
 	var player_cookware = GlobalScript.get_local_player_by_id(player_id).item_in_hand
 	if not _check_cookware(player_cookware):
 		return
-	var appliance_cookware = contents[0]
 	if taking:
-		appliance_cookware.put_all(player_cookware.take_all())
+		active_cookware.put_all(player_cookware.take_all())
 	else:
-		player_cookware.put_all(appliance_cookware.take_all())
+		player_cookware.put_all(active_cookware.take_all())
 
 
 ## Check if the target can accept the current contents
@@ -540,14 +539,13 @@ func _check_target(target: Node) -> bool:
 		Debug.all("Nothing to serve from: " + get_script().get_global_name())
 		return false
 	if target is Plate and target.is_ready():
-		if contents[0].is_empty():
+		if active_cookware.is_empty():
 			return false
 		return true
 	if target is Cookware:
-		var cookware = contents[0]
-		if cookware.is_empty():
-			return cookware._can_accept_all(target.show_contents())
-		return target._can_accept_all(cookware.show_contents())
+		if active_cookware.is_empty():
+			return active_cookware._can_accept_all(target.show_contents())
+		return target._can_accept_all(active_cookware.show_contents())
 	return false
 
 
@@ -564,9 +562,13 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	if not item:
 		highlight_component.set_state(ApplianceHighlight.HighlightState.HOVER)
 		return
-	if item is Plate or item is Cookware:
-		highlight_component.show_feedback(_check_target(item))
+	if item is Plate:
+		highlight_component.show_feedback(_check_plate(item))
 		return
+	if item is Cookware:
+		if _check_cookware(item):
+			highlight_component.show_feedback(true)
+			return
 	var can_accept = _can_accept(item)
 	if not can_accept:
 		for cookware in contents:

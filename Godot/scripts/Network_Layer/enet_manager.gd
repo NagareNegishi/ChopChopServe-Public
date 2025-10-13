@@ -25,6 +25,7 @@ var team2: Array[int] = []
 var current_state: GameProgress = GameProgress.LOBBY
 var pause_timer: Timer = null
 var popup_scene: PackedScene = preload("res://scenes/Network_Layer/network_popup.tscn")
+var popup_layer: CanvasLayer = null
 
 
 ## Setup
@@ -36,6 +37,7 @@ func _ready():
 	enet_layer.disconnected.connect(_on_disconnected_from_server)
 	enet_layer.data_received.connect(_on_data_received)
 	enet_layer.notify.connect(show_notification)
+	_setup_popup_layer()
 
 
 ## Update Player List when a player joins, and host shares it
@@ -335,9 +337,18 @@ func _reset_game() -> void:
 ## @param duration: How long to display before fading out
 func show_notification(message: String, duration: float = 3.0):
 	var popup = popup_scene.instantiate()
-	get_tree().current_scene.add_child(popup)
+	popup_layer.add_child(popup)
 	popup.setup(message, duration)
 	await get_tree().process_frame
 	var viewport_size = get_viewport().size
 	popup.position.x = (viewport_size.x - popup.size.x) / 2
 	popup.position.y = (viewport_size.y - popup.size.y) / 2
+
+
+## Setup a dedicated CanvasLayer for popups.
+## Prevent them from being hidden by other UI.
+func _setup_popup_layer():
+	popup_layer = CanvasLayer.new()
+	popup_layer.name = "PopupLayer"
+	popup_layer.layer = 100
+	add_child(popup_layer)

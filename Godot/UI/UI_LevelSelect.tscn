@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://gu4ahqngwqip"]
 
 [ext_resource type="Script" uid="uid://fnswgtw77xf3" path="res://UI/ui_level_select.gd" id="1_f8e7t"]
-[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/DefaultTheme.tres" id="1_hvwph"]
+[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/Style/DefaultTheme.tres" id="1_hvwph"]
 
 [node name="UiLevelSelect" type="Control"]
 layout_mode = 3

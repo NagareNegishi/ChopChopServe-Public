@@ -286,7 +286,7 @@ func _pick_flammable_appliance_path(teamID: int) -> NodePath:
 	# And the Ones that are cooking
 	for a in flammables:
 		# There might be a better way to do this cleaner
-		if a.get_appliance_owner() != teamID:
+		if a.get_appliance_owner() == teamID:
 			wrong_appliances.append(a)
 		elif a is PoweredAppliance and a.current_status == PoweredAppliance.Status.COOKING:
 			cooking.append(a)

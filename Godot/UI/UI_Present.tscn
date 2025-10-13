@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://bkiho50cm2cj8"]
 
 [ext_resource type="Script" uid="uid://dby241x7depct" path="res://scripts/UI/ui_present.gd" id="1_3jkq6"]
-[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/DefaultTheme.tres" id="2_fn4x2"]
+[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/Style/DefaultTheme.tres" id="2_fn4x2"]
 [ext_resource type="StyleBox" uid="uid://bvtk4fhf7agfw" path="res://UI/UI_Upgrade_Bad_Border.tres" id="2_vh3nh"]
 [ext_resource type="Texture2D" uid="uid://ch6v2rhv6xhkx" path="res://assets/textures/Controls/keyboard_j.png" id="3_e58pj"]
 [ext_resource type="StyleBox" uid="uid://3jt6gf3oh3gx" path="res://UI/UI_Upgrade_Bad.tres" id="3_m4ivy"]

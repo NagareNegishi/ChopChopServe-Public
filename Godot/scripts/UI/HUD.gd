@@ -1,17 +1,20 @@
 class_name HUD
 extends Control
 
-@onready var debug_hud = [$Controls, $FPS, $Server]
+
 @export var game_state : GameStateTest 
+
 @onready var game_state_ui : UIGameState = $UIGameState
+@onready var debug_hud = [$Controls, $FPS, $Server]
 
 func _ready() -> void:
 	$Server.text = "Client" if !multiplayer.is_server() else "Server"
 
 	for control in debug_hud:
-		control.visible = true
+		control.visible = false
 	
 	game_state_ui.game_state = game_state
+	SabotageSystem.sabotage_start.connect(sabotage_start)
 	
 func _process(delta: float) -> void:
 	var fps = Engine.get_frames_per_second()
@@ -22,3 +25,11 @@ func _process(delta: float) -> void:
 func _toggle_debug_controls():
 	for control in debug_hud:
 		control.visible = !control.visible
+
+
+func sabotage_popup(time : float ):
+	pass
+
+func sabotage_start(teamID: int, sab_name: String, sab_time: int):
+	if teamID == ENetManager.get_my_team(): return
+	

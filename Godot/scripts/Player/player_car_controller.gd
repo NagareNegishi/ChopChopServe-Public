@@ -30,11 +30,13 @@ func _process(delta: float) -> void:
 		last_move = move_input
 		last_turn = turn_input
 		time = Time.get_ticks_msec()
+	
 	_send_input()
 	
 	
 func _send_input():
-	rpc("_receive_input", ENetManager.get_my_id(), move_input, turn_input, time)
+	var estimated_server_time = time + get_parent().client_offset
+	rpc("_receive_input", ENetManager.get_my_id(), move_input, turn_input, estimated_server_time)
 
 
 @rpc("any_peer", "call_local", "unreliable")

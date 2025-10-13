@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://dhj88ureo7l26" path="res://assets/textures/Controls/keyboard_a.png" id="8_re5al"]
 [ext_resource type="Texture2D" uid="uid://dv03e3ubki56c" path="res://assets/textures/Controls/keyboard_d.png" id="9_q5svn"]
 [ext_resource type="Texture2D" uid="uid://bcrbuspt7k6np" path="res://assets/textures/Controls/keyboard_e.png" id="10_q5svn"]
-[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/DefaultTheme.tres" id="10_vfrei"]
+[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/Style/DefaultTheme.tres" id="10_vfrei"]
 [ext_resource type="Texture2D" uid="uid://5xkcw1880lhj" path="res://assets/textures/Controls/keyboard_space.png" id="11_tlpe4"]
 [ext_resource type="Texture2D" uid="uid://ch6v2rhv6xhkx" path="res://assets/textures/Controls/keyboard_j.png" id="12_tlpe4"]
 [ext_resource type="Texture2D" uid="uid://bdej1mwrdda3h" path="res://assets/textures/Controls/keyboard_l.png" id="13_oofjj"]

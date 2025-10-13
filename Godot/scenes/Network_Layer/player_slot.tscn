@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://boew3tnp8ycuq" path="res://scripts/Network_Layer/player_slot.gd" id="1_6087y"]
 [ext_resource type="Texture2D" uid="uid://2pguohnmuvmw" path="res://assets/textures/HUD/cHEFhAT.png" id="2_16dm1"]
 [ext_resource type="Texture2D" uid="uid://bpnik5eevb8f7" path="res://assets/textures/HUD/Chef.png" id="3_f8gqx"]
-[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/DefaultTheme.tres" id="4_x3g3s"]
+[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/Style/DefaultTheme.tres" id="4_x3g3s"]
 
 [node name="PanelContainer" type="Control"]
 custom_minimum_size = Vector2(150, 150)

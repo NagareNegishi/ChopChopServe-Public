@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dhj88ureo7l26" path="res://assets/textures/Controls/keyboard_a.png" id="3_s1smo"]
 [ext_resource type="Texture2D" uid="uid://bjt562i3fmp15" path="res://assets/textures/Controls/keyboard_w.png" id="4_uk72j"]
 [ext_resource type="Texture2D" uid="uid://dv03e3ubki56c" path="res://assets/textures/Controls/keyboard_d.png" id="5_ruavh"]
-[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/DefaultTheme.tres" id="6_ruavh"]
+[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/Style/DefaultTheme.tres" id="6_ruavh"]
 [ext_resource type="Texture2D" uid="uid://cnhrnvlwhttx8" path="res://assets/textures/HUD/image (1).png" id="7_gc66e"]
 
 [node name="Root" type="Control"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://g5y4cnxk5856"]
+[gd_scene load_steps=42 format=3 uid="uid://g5y4cnxk5856"]
 
 [ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_1hj32"]
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="1_jd0au"]
@@ -27,6 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://crx0marg1hk52" path="res://assets/Beachy/FenceBeachPlank.glb" id="23_kdffh"]
 [ext_resource type="PackedScene" uid="uid://ote03xslp2mk" path="res://assets/Beachy/FenceBeachPlankPath.glb" id="24_v5sy6"]
 [ext_resource type="PackedScene" uid="uid://bdavcjsmotl0h" path="res://assets/Beachy/FenceBeachPlank4.glb" id="25_jd0au"]
+[ext_resource type="PackedScene" uid="uid://dt4wue57mdx1d" path="res://scenes/Appliance_system/trash_can.tscn" id="29_1hj32"]
 [ext_resource type="PackedScene" uid="uid://bev73qms8mo6h" path="res://scenes/Appliance_system/food_crate_test.tscn" id="29_gq2iv"]
 [ext_resource type="Script" uid="uid://dnns4dn8p042y" path="res://scripts/Table.gd" id="30_eayyc"]
 
@@ -606,6 +607,11 @@ using_tscn = true
 unique_name = "22"
 current_owner = 2
 
+[node name="TrashCan2" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("29_1hj32")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 9)
+using_tscn = true
+unique_name = "Bin"
+
 [node name="Left Kitchen" type="Node3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.728, 0)
 
@@ -671,6 +677,12 @@ transform = Transform3D(1, 0, -4.61466e-09, 0, 1, 0, 4.61466e-09, 0, 1, -2.5, 0.
 catergory = 1
 using_tscn = true
 unique_name = "FoodCrate2"
+current_owner = 2
+
+[node name="TrashCan" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("29_1hj32")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 11, 0, -9)
+using_tscn = true
+unique_name = "Bin2"
 current_owner = 2
 
 [node name="CustomerSpawn" type="Node3D" parent="NavigationRegion3D"]

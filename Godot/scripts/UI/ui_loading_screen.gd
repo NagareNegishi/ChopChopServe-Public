@@ -3,11 +3,11 @@ extends Control
 
 var hints : Array[String] = ["No frogs were harmed in development",
 							"Watch out for wild rats!",
-							"Fire is pretty scary",
-							"Killer Tomatos about",
+							"Extishugers might be handy for fires",
+							"Might be killer tomatos about",
 							"Can you do the infamous back dash?",
-							"We love CoPo",
-							"You can check recipes at any time in the pause menu"]
+							"We love Costal Postal",
+							"You can throw with [L]"]
 
 @onready var hint_timer : Timer = Timer.new()
 @onready var test_timer : Timer = Timer.new()

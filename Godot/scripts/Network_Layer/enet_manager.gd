@@ -19,25 +19,25 @@ signal game_reset()
 
 const PAUSE_TIME : float = 3.0
 var enet_layer: ENetNetworkLayer
+var popup_manager: PopupManager
 var player_list: Array[int] = []
 var team1: Array[int] = []
 var team2: Array[int] = []
 var current_state: GameProgress = GameProgress.LOBBY
 var pause_timer: Timer = null
-var popup_scene: PackedScene = preload("res://scenes/Network_Layer/network_popup.tscn")
-var popup_layer: CanvasLayer = null
 
 
 ## Setup
 func _ready():
 	enet_layer = ENetNetworkLayer.new()
 	add_child(enet_layer)
+	popup_manager = PopupManager.new()
+	add_child(popup_manager)
 	enet_layer.player_joined.connect(_on_player_joined)
 	enet_layer.player_left.connect(_on_player_left)
 	enet_layer.disconnected.connect(_on_disconnected_from_server)
 	enet_layer.data_received.connect(_on_data_received)
 	enet_layer.notify.connect(show_notification)
-	_setup_popup_layer()
 
 
 ## Update Player List when a player joins, and host shares it
@@ -74,7 +74,7 @@ func _on_player_joined(player_id: int):
 ## Remove player from list and notify all clients, Host only
 ## @param player_id: The ID of the player to remove
 func _remove_player_from_list(player_id: int):
-	print("Player left: " + str(player_id))
+	Debug.net_log("Player left: " + str(player_id))
 	player_list.erase(player_id)
 	team1.erase(player_id)
 	team2.erase(player_id)
@@ -93,7 +93,7 @@ func player_leaves_intentionally(player_id: int):
 		push_warning("player_leaves_intentionally() should only be called by host")
 		return
 	if player_id == -1:
-		print("Player can not leave - Invalid player ID")
+		Debug.net_log("Player can not leave - Invalid player ID")
 		return
 	_remove_player_from_list(player_id)
 
@@ -165,7 +165,7 @@ func _on_disconnected_from_server():
 
 ## Handle incoming data
 func _on_data_received(_from_id: int, data: Dictionary):
-	# print("DEBUG: Received data from : ", from_id, ": ", data, "I am : ", enet_layer.get_my_id())
+	# Debug.net_log("Received data from %d: %s" % [_from_id, str(data)])
 	match data.get("type"):
 		"player_list_update":
 			player_list = data.players
@@ -313,6 +313,7 @@ func start_game() -> void:
 	})
 	game_started.emit()
 
+
 ## Reset the game after pause due to disconnection, Host only
 func _reset_game() -> void:
 	if not is_host():
@@ -336,19 +337,9 @@ func _reset_game() -> void:
 ## @param message: The message to display
 ## @param duration: How long to display before fading out
 func show_notification(message: String, duration: float = 3.0):
-	var popup = popup_scene.instantiate()
-	popup_layer.add_child(popup)
-	popup.setup(message, duration)
-	await get_tree().process_frame
-	var viewport_size = get_viewport().size
-	popup.position.x = (viewport_size.x - popup.size.x) / 2
-	popup.position.y = (viewport_size.y - popup.size.y) / 2
+	popup_manager.show_notification(message, duration)
 
 
-## Setup a dedicated CanvasLayer for popups.
-## Prevent them from being hidden by other UI.
-func _setup_popup_layer():
-	popup_layer = CanvasLayer.new()
-	popup_layer.name = "PopupLayer"
-	popup_layer.layer = 100
-	add_child(popup_layer)
+## Hide the active popup
+func hide_popup():
+	popup_manager.hide_popup()

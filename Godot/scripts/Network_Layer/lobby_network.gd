@@ -11,15 +11,17 @@ class_name LobbyNetwork
 @onready var start_button: Button = $ControlContainer/StartButton
 @onready var leave_button: Button = $ControlContainer/LeaveButton
 
-@onready var slot1: PlayerSlot = $Slot1
-@onready var slot2: PlayerSlot = $Slot2
-@onready var slot3: PlayerSlot = $Slot3
-@onready var slot4: PlayerSlot = $Slot4
+@onready var slotT1_1: PlayerSlot = $Team1Slot1
+@onready var slotT2_1: PlayerSlot = $Team2Slot1
+@onready var slotT1_2: PlayerSlot = $Team1Slot2
+@onready var slotT2_2: PlayerSlot = $Team2Slot2
 
 var network_layer: ENetNetworkLayer
 var slot_scene: PackedScene
 var current_players: Array[int] = []
 var slots: Array[PlayerSlot]
+var slot_T1: Array[PlayerSlot]
+var slot_T2: Array[PlayerSlot]
 var is_host: bool = false
 var my_id: int = -1
 var my_team: int = -1
@@ -30,7 +32,9 @@ var is_local: bool = true
 func _ready():
 	network_layer = ENetManager.enet_layer
 	my_id = network_layer.get_my_id()
-	slots = [slot1, slot2, slot3, slot4]
+	slots = [slotT1_1, slotT2_1, slotT1_2, slotT2_2]
+	slot_T1 = [slotT1_1, slotT1_2]
+	slot_T2 = [slotT2_1, slotT2_2]
 
 	ENetManager.player_list_updated.connect(_on_player_list_updated)
 	# ENetManager.disconnected_from_server.connect(_back_to_main_menu)
@@ -106,14 +110,14 @@ func _set_buttons() -> void:
 
 ## Update Player List
 func _update_player_list():
-	#print("Updating display... on :", network_layer.get_my_id())
 	for i in range(4):
 		var slot = slots[i]
 		if i < current_players.size():
 			var player_id = current_players[i]
-			var player_name = "Player %d" % i
+			var player_name = "Player %d" % (i + 1)
 			if player_id == my_id:
 				player_name += " (You)"
+				slot.set_as_local_player()
 			slot.set_player({
 				"name": player_name,
 				"ID": player_id
@@ -130,7 +134,7 @@ func _update_player_list():
 func _on_player_list_updated(players: Array[int] = []):
 	current_players = players.duplicate()
 	_update_player_list()
-	print("Lobby updated - Players: %s" % str(players))
+	Debug.net_log("Player list updated: %s" % str(current_players))
 	if is_host:
 		start_button.disabled = true
 		if current_players.size() % 2 == 0:

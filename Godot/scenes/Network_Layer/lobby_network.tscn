@@ -116,7 +116,7 @@ theme_override_font_sizes/font_size = 35
 text = "Leave
 "
 
-[node name="Slot1" parent="." instance=ExtResource("1_tbni4")]
+[node name="Team1Slot1" parent="." instance=ExtResource("1_tbni4")]
 layout_mode = 2
 anchors_preset = 0
 offset_left = -473.914
@@ -125,7 +125,7 @@ offset_right = -323.914
 offset_bottom = -35.9138
 rotation = -0.0349066
 
-[node name="Slot2" parent="." instance=ExtResource("1_tbni4")]
+[node name="Team2Slot1" parent="." instance=ExtResource("1_tbni4")]
 layout_mode = 2
 anchors_preset = 0
 offset_left = 313.086
@@ -134,7 +134,7 @@ offset_right = 463.086
 offset_bottom = -36.9139
 rotation = 0.0349066
 
-[node name="Slot3" parent="." instance=ExtResource("1_tbni4")]
+[node name="Team1Slot2" parent="." instance=ExtResource("1_tbni4")]
 layout_mode = 2
 anchors_preset = 0
 offset_left = -436.914
@@ -143,7 +143,7 @@ offset_right = -286.914
 offset_bottom = 204.086
 rotation = 0.0349066
 
-[node name="Slot4" parent="." instance=ExtResource("1_tbni4")]
+[node name="Team2Slot2" parent="." instance=ExtResource("1_tbni4")]
 layout_mode = 2
 anchors_preset = 0
 offset_left = 263.086

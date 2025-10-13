@@ -12,7 +12,7 @@ var teamID
 var secs = 15.0 # Change this if we need to
 
 # Signal to say the fire can spread
-signal fire_spread( teamID: int, appliance_path: NodePath)
+signal fire_spread(teamID: int, appliance_path: NodePath)
 
 # Function to start the fire
 func start_fire(team_ID: int, chosen_path: NodePath) -> void:
@@ -52,12 +52,12 @@ func start_timer() -> void:
 	add_child(timer)
 	timer.timeout.connect(_on_timer_timeout)
 	timer.start()
-	SabotageSystem.sabotage_start.emit("Fire Spread", secs)
+	SabotageSystem.sabotage_start.emit(teamID, "Fire Spread", secs)
 
 # When the timer ends, spread the fire to other appliances
 func _on_timer_timeout() -> void:
 	fire_spread.emit(teamID, path)
-	SabotageSystem.sabotage_ending.emit("Fire Spread")
+	SabotageSystem.sabotage_ending.emit(teamID, "Fire Spread")
 	
 	
 

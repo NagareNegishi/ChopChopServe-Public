@@ -200,13 +200,14 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -161.0
-offset_top = -67.0
-offset_right = 161.0
-offset_bottom = -17.0
+offset_left = -200.5
+offset_top = -52.0
+offset_right = 299.5
+offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_constants/separation = 18
+scale = Vector2(0.8, 0.8)
+theme_override_constants/separation = 40
 
 [node name="UiSabotageNode" parent="VBoxContainer" instance=ExtResource("6_gppie")]
 custom_minimum_size = Vector2(50, 50)
@@ -236,5 +237,11 @@ custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 key_texture = ExtResource("11_kg6a8")
 sabotage_index = 4
+
+[node name="UiSabotageNode6" parent="VBoxContainer" instance=ExtResource("6_gppie")]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+key_texture = ExtResource("11_kg6a8")
+sabotage_index = 5
 
 [editable path="Team2Rep"]

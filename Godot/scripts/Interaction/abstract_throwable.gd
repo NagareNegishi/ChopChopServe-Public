@@ -63,3 +63,9 @@ func restore_original_transform():
 	# Restore main object
 	transform = original_transform
 	scale = original_scale
+
+
+## Rotate the throwable object by a given angle
+## @param angle: The angle to rotate
+func rotate_abstract_throwable(angle: Vector3):
+	global_rotation += angle

@@ -7,13 +7,18 @@ static var food_book: Dictionary = {} # {name: PackedScene}
 static var food_instances: Dictionary = {} # {name: instance}
 static var registered: bool = false
 
-enum groups{
-	groupOne,
-	groupTwo,
-	groupThree,
-	groupFour
+@onready var inventory_scene = preload("res://FridgeInven/inven.tscn")
+@onready var inventory_sprite : Sprite3D = inventory_scene.instantiate()
+@export var group : Groups
+
+enum Groups{
+	ONE,
+	TWO,
+	THREE,
+	FOUR
 }
-@export var group : groups
+
+
 
 ## Setup the model instance
 func _init():
@@ -30,6 +35,8 @@ func _ready():
 	action_interval = 0.5
 	_set_affixes()
 	_add_inventory_ui()
+	interactable_component.has_action = true
+	interactable_component.can_be_interacted = true
 
 
 ## Register all foods from the directory
@@ -83,64 +90,19 @@ func provide_food(food_name: String) -> Node:
 ## For Inventory UI --------------------------------------------------------------------------------
 
 ## Add inventory UI to the scene
-var inventory
+var inventory : Inven
 
 func _add_inventory_ui():
-
-	var inventory_scene = preload("res://FridgeInven/inven.tscn")
-	var inventory_ui = inventory_scene.instantiate()
-	inventory_ui.name = "Inventory"
-	inventory_ui.get_node("SubViewport").get_node("Inventory").group = group
-	add_child(inventory_ui)
-	inventory = inventory_ui
-	_setup_interaction_area()
+	inventory_sprite.name = "Inventory"
+	inventory_sprite
+	inventory_sprite.get_node("SubViewport").get_node("Inventory").group = group
+	add_child(inventory_sprite)
+	inventory = inventory_sprite
+	inventory_sprite.position -= Vector3(0,1.5,0)
 
 
-## Set up an interaction area to open/close the inventory
-func _setup_interaction_area():
-	var area = Area3D.new()
-	var collision = CollisionShape3D.new()
-	var shape = BoxShape3D.new()
-	shape.size = Vector3(2, 1, 2)
-	collision.shape = shape
-	area.add_child(collision)
-	add_child(area)
-	area.body_entered.connect(_on_player_entered)
-	area.body_exited.connect(_on_player_exited)
-
-var in_area 
 var player 
 var is_open
-## Open inventory when player is near
-## @param body: The body that entered the area
-func _on_player_entered(body):
-	in_area = true
-	#if body is Player and body.name.to_int() == ENetManager.get_my_id():
-		#get_node("InventoryLayer/Inventory").open()
-	if inventory !=null and body is Player:
-		inventory.get_node("SubViewport").get_node("Inventory").open()
-
-
-## Close inventory when player leaves
-## @param body: The body that exited the area
-func _on_player_exited(body):
-	in_area = false
-	#if body is Player and body == GlobalScript.get_local_player():
-		#get_node("InventoryLayer/Inventory").close()
-	if inventory !=null and body is Player:
-		inventory.get_node("SubViewport").get_node("Inventory").close()
-
-#func _input(event):
-	#if event.is_action_pressed("Action") && in_area:
-		#if !is_open:
-			#if player is Player and player.name.to_int() == ENetManager.get_my_id():
-				#inventory.get_node("SubViewport").get_node("Inventory").open()
-				#is_open = true
-		#else:
-			#if player is Player and player.name.to_int() == ENetManager.get_my_id():
-				#inventory.get_node("SubViewport").get_node("Inventory").close()
-				#is_open = false
-
 
 
 ## Handle food selection from inventory UI
@@ -253,19 +215,34 @@ func _client_transfer(player_id: int, item_name: String, food_name: String) -> v
 ## Give visual feedback when hovered
 ## @param is_hovered: Whether the item is hovered or not
 func _on_interactable_component_hovered(is_hovered: bool) -> void:
+	if is_hovered && inventory: 
+		inventory.get_node("SubViewport").get_node("Inventory").open()
+	elif !is_hovered && inventory: 
+		inventory.get_node("SubViewport").get_node("Inventory").close()
+		
 	if not is_hovered:
 		highlight_component.hide_feedback()
 		return
+		
 	var item = GlobalScript.get_local_player().item_in_hand
+	
 	if not item:
 		highlight_component.show_feedback(true)
 		return
-	if item is Cookware:
-		if item.is_full():
-			highlight_component.show_feedback(false)
-		else:
-			highlight_component.show_feedback(true)
+		
+	if item is not Cookware:
+		return
+		
+	if item.is_full():
+		highlight_component.show_feedback(false)
+	else:
+		highlight_component.show_feedback(true)
 
+func _on_interactable_component_action_use(_is_action: bool) -> void:
+	if !_is_action: return
+	inventory_sprite.inventory.current_slot = inventory_sprite.inventory.move_forward()
+	inventory_sprite.inventory.update_slot_selected(true)
+	
 
 ## Override unsupported methods to prevent misuse ------------------------------
 func put(_item: Node) -> bool:
@@ -276,11 +253,9 @@ func take() -> Node:
 	assert(false, "MultiFoodCrate requires an index to take specific food item")
 	return null
 
-func start_action() -> bool:
-	assert(false, "Food Crate does not support starting actions")
-	return false
-
 func player_has(_item: Node) -> void:
+	print("MEOOWWWWWWWW")
+	inventory_sprite.inventory.select_ingredient()
 	return
 
 func put_from_player(_item: Node) -> bool:

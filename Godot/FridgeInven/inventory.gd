@@ -1,10 +1,10 @@
-extends Control
+class_name Inventory extends Control
 
 @export var layer_depth: int = 100
 var group : groups
 
 var is_open: bool = false
-@onready var gridCont = $GridContainer
+@onready var hbox = $HBoxContainer
 @onready var subviewport = $".."
 @onready var sprite = $"../.."
 
@@ -21,15 +21,14 @@ enum groups {
 }
 
 var g = {
-	"groupOne" : ["chicken", "ham", "beef", "fish", "egg"],
-	"groupTwo" : ["milk", "cheese", "flour", "dough", "pasta","cocoa"],
-	"groupThree" : ["pineapple", "apple", "tomato", "pumpkin","strawberry"],
+	"groupOne" : ["chicken", "beef", "fish", "milk"],
+	"groupTwo" : ["cheese", "flour", "dough", "pasta", "cocoa"],
+	"groupThree" : ["pineapple", "apple", "tomato", "pumpkin", "strawberry"],
 	"groupFour" : ["garlic", "mushroom", "onion", "potato"]
 }
 
 
 func _ready():
-	gridCont.columns = columns
 	sprite.position.y = 2
 	set_up_inven()
 	close()
@@ -38,18 +37,18 @@ func _ready():
 func open():
 	visible = true
 	is_open = true
+	update_slot_selected(true)
 
 func close():
 	visible = false
 	is_open = false
-	update_slot_selected(false)
-	current_slot = 0
+	update_slot_selected(true)
+	#current_slot = 0
 
 
 func set_up_inven():
 	var selectedGroup = group
 	var group_name = groups.keys()[selectedGroup]
-	gridCont.columns = g[group_name].size()
 	change_svp_size()
 	for item in g[group_name]:
 		add_slot(item)
@@ -74,7 +73,7 @@ func add_slot(item_name: String):
 	else:
 		print("ERROR: Could not find FoodFactory parent")
 	
-	gridCont.add_child(slot_instance)
+	hbox.add_child(slot_instance)
 
 
 func find_food_factory() -> FoodFactory:
@@ -107,16 +106,16 @@ func select_ingredient():
 	slot.on_selected()
 
 func get_current_slot():
-	return gridCont.get_child(current_slot)
+	return hbox.get_child(current_slot)
 
 func move_forward():
 	update_slot_selected(false)
-	if current_slot + 1 > gridCont.columns-1:
+	if current_slot + 1 > hbox.get_child_count() - 1:
 		return 0
 	return current_slot + 1
 
 func move_backward():
 	update_slot_selected(false)
 	if current_slot - 1 < 0:
-		return gridCont.columns-1
+		return hbox.get_child_count() - 1
 	return current_slot - 1

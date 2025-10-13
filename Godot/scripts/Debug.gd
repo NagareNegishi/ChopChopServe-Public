@@ -14,7 +14,7 @@ enum Level {
 # System toggles
 @export var fire: bool = true
 @export var cooking: bool = true
-@export var network: bool = false
+@export var network: bool = true
 @export var upgrade: bool = true
 
 # Main logging functions
@@ -52,3 +52,44 @@ func cook_log(message: String):
 func upgrade_log(message: String):
     if upgrade and level >= Level.ALL:
         print("[UPGRADE] ", message)
+
+
+
+## Debugging function to test UPnP functionality--------------------------------
+func detailed_upnp_test():
+    var upnp = UPNP.new()
+    
+    print("=== UPnP Discovery Test ===")
+    var discover_result = upnp.discover(2000, 2, "InternetGatewayDevice")
+    print("Discovery result: ", discover_result)
+    print("Result name: ", _get_upnp_result_name(discover_result))
+    print("\nDevice count: ", upnp.get_device_count())
+    
+    if upnp.get_device_count() > 0:
+        for i in range(upnp.get_device_count()):
+            var device = upnp.get_device(i)
+            print("\nDevice ", i, ":")
+            print("  Valid: ", device.is_valid_gateway())
+            print("  Description: ", device.query_external_address())
+            print("  Service type: ", device.service_type)
+            print("  IGD control URL: ", device.igd_control_url)
+            print("  IGD service type: ", device.igd_service_type)
+            print("  IGD status: ", device.igd_status)
+    
+    var gateway = upnp.get_gateway()
+    if gateway:
+        print("\nGateway found:")
+        print("  Valid: ", gateway.is_valid_gateway())
+        print("  Service type: ", gateway.service_type)
+    else:
+        print("\nNo gateway found")
+
+func _get_upnp_result_name(result: int) -> String:
+    match result:
+        0: return "SUCCESS"
+        1: return "NOT_AUTHORIZED"
+        2: return "PORT_MAPPING_NOT_FOUND"
+        26: return "NO_GATEWAY"
+        27: return "NO_DEVICES"
+        _: return "UNKNOWN_ERROR_" + str(result)
+# ------------------------------------------------------------------------------

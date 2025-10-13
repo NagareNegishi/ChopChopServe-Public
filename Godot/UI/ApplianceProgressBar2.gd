@@ -44,7 +44,6 @@ func _on_add_cookware(cookware, appliance): # Need to do something else for the 
 		cookware.connect("new_average", Callable(self, "_on_average_updated"))
 	
 	if appliance != null:
-		print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY")
 		appliance.connect("cookware_taken", Callable(self, "_on_cookware_taken"))
 	else:
 		push_error("The applience and the cookware on the appliance shouldnt be null")
@@ -74,7 +73,6 @@ func _on_food_taken(cookware, contents):
 			if !item.is_cooked:
 				item.set_cook_time(get_max_value(get_cooking_style()), get_cooking_style())
 				progress_bar.value = 0
-				print("THIS ITEMS COOKING TIME REMAINING:   ", item.get_cook_time(get_cooking_style()))
 	elif contents is Food:
 		if !contents.is_cooked:
 			contents.set_cook_time(get_max_value(get_cooking_style()), get_cooking_style())
@@ -106,9 +104,7 @@ func _on_cookware_taken(cookware, appliance):
 
 func _on_food_cooking():
 	print("food is cooking")
-	print(is_open)
 	progress_bar.value += 1
-	print(progress_bar.value)
 
 
 # Returns the cooking style of the cookware + blender
@@ -120,8 +116,11 @@ func get_cooking_style():
 
 func change_visibility(turn_on: bool):
 	var owner_team
+	
 	if applianceInstance:
 		owner_team = applianceInstance.get_appliance_owner()
+	elif applianceInstance == null and cw is Blender:
+		owner_team = cw.get_appliance_owner()
 	else:
 		owner_team = 0
 	var my_id = ENetManager.get_my_id()
@@ -152,4 +151,4 @@ func get_max_value(cook_style: ApplianceFactory.CookingStyle):
 
 
 func _set_texture(texture_type : ProgressType):
-	pass
+	$TextureRect.texture = TEXTURE[type]

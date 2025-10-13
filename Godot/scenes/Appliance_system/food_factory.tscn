@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="1_nq4fg"]
 [ext_resource type="Script" uid="uid://bxy0fop3xjvqr" path="res://scripts/Appliance_system/Concrete_classes/food_factory.gd" id="2_vim2w"]
-[ext_resource type="PackedScene" uid="uid://nrfjhpm1sa30" path="res://assets/newmodels/furniture/Fridge.glb" id="3_wu4ye"]
+[ext_resource type="PackedScene" uid="uid://bfmqtf2alwt4g" path="res://assets/newmodels/Crateredone.glb" id="3_wu4ye"]
 
 [node name="FoodFactory" instance=ExtResource("1_nq4fg")]
 script = ExtResource("2_vim2w")
@@ -21,5 +21,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.614008, 0)
 [node name="InteractionArea" parent="." index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.611115, 0)
 
-[node name="Fridge2" parent="." index="3" instance=ExtResource("3_wu4ye")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0161886, 0)
+[node name="Crateredone" parent="." index="3" instance=ExtResource("3_wu4ye")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0364803)

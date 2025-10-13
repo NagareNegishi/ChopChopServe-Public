@@ -8,13 +8,12 @@ static var _auto_register = MenuItem.register(pizza_hawaiian)
 static var _type_register = MenuItem.register_type(MenuItem.mains, pizza_hawaiian.new())
 
 func _init():
-	ingredients = ["Dough", "Cheese", "Tomato", "Ham", "Pineapple"]
+	ingredients = ["Dough", "Cheese", "Tomato", "Pineapple"]
 	
 	ingredient_states = {
 		"Dough": ["RAW", "BAKED"],
 		"Cheese": ["RAW","CHOPPED","BAKED"],
 		"Tomato": ["RAW","BLENDED","BAKED"],
-		"Ham": ["RAW", "CHOPPED","BAKED"],
 		"Pineapple":["RAW", "CHOPPED","BAKED"]
 	}
 	

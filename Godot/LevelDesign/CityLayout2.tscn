@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://cdkyf70jhtj1n"]
+[gd_scene load_steps=38 format=3 uid="uid://cdkyf70jhtj1n"]
 
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_qfo0q"]
 [ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_rdyjb"]
@@ -14,8 +14,10 @@
 [ext_resource type="PackedScene" uid="uid://dbeboubu5gkhe" path="res://scenes/Appliance_system/fryer.tscn" id="8_p0tnk"]
 [ext_resource type="PackedScene" uid="uid://dlk0mbdfg2cmq" path="res://scenes/Appliance_system/oven.tscn" id="9_tok01"]
 [ext_resource type="PackedScene" uid="uid://bakeesqt3byva" path="res://scenes/Appliance_system/sink.tscn" id="10_iv5qa"]
-[ext_resource type="PackedScene" uid="uid://bev73qms8mo6h" path="res://scenes/Appliance_system/food_crate_test.tscn" id="14_nq5uu"]
-[ext_resource type="PackedScene" uid="uid://bqpdxpf2l7uw1" path="res://scenes/Appliance_system/stove.tscn" id="15_0wnb8"]
+[ext_resource type="PackedScene" uid="uid://pee1rah6hbep" path="res://scenes/Appliance_system/stove_with_pan.tscn" id="14_08y48"]
+[ext_resource type="PackedScene" uid="uid://krj0gwn31x8u" path="res://scenes/Appliance_system/stove_with_pot.tscn" id="15_0ioum"]
+[ext_resource type="PackedScene" uid="uid://b0ougk3d4jnku" path="res://scenes/Appliance_system/food_factory.tscn" id="16_p0tnk"]
+[ext_resource type="PackedScene" uid="uid://0aex3yts1utd" path="res://scenes/Appliance_system/cabinet.tscn" id="17_0ioum"]
 [ext_resource type="PackedScene" uid="uid://bl75bmgw02yr" path="res://assets/newmodels/WallsnShit/wall.glb" id="17_4al2s"]
 [ext_resource type="PackedScene" uid="uid://cnxonjh7xlet5" path="res://assets/CityPacks/gltf/road_straight_crossing.gltf" id="18_rdyjb"]
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="19_f85dq"]
@@ -25,6 +27,8 @@
 [ext_resource type="PackedScene" uid="uid://dleafo37pi7md" path="res://assets/CityPacks/gltf/building_D.gltf" id="21_wmdyb"]
 [ext_resource type="PackedScene" uid="uid://dpbjfwr1e1ei" path="res://assets/CityPacks/gltf/car_sedan.gltf" id="22_rdyjb"]
 [ext_resource type="Script" uid="uid://dnns4dn8p042y" path="res://scripts/Table.gd" id="23_wmdyb"]
+[ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="27_tok01"]
+[ext_resource type="PackedScene" uid="uid://lfcppt4wh0g4" path="res://scenes/Interaction/UpgradeHammer.tscn" id="28_iv5qa"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5ixo3"]
 size = Vector3(19.6471, 6.69421, 1.16809)
@@ -61,7 +65,6 @@ height = 0.506226
 radius = 0.655273
 
 [node name="BradleyTestScene" type="Node3D" node_paths=PackedStringArray("tables", "queue_spots", "customer_spawn_point", "customer_exit_point")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000378609, 9.53674e-07, -0.0196961)
 script = ExtResource("1_rdyjb")
 customer_scene = ExtResource("2_nq5uu")
 tables = [NodePath("NavigationRegion3D/Tables/table/TableBody"), NodePath("NavigationRegion3D/Tables/table2/TableBody"), NodePath("NavigationRegion3D/Tables/table3/TableBody"), NodePath("NavigationRegion3D/Tables/table4/TableBody"), NodePath("NavigationRegion3D/Tables/table5/TableBody"), NodePath("NavigationRegion3D/Tables/table6/TableBody"), NodePath("NavigationRegion3D/Tables/table7/TableBody"), NodePath("NavigationRegion3D/Tables/table8/TableBody")]
@@ -221,11 +224,6 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10.5, 
 using_tscn = true
 unique_name = "2"
 
-[node name="Bench9" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("6_08y48")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10.5, 0, 8.5)
-using_tscn = true
-unique_name = "1"
-
 [node name="Bench10" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("6_08y48")]
 transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, 3.5, 0, 7.5)
 using_tscn = true
@@ -250,11 +248,6 @@ unique_name = "15"
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 5.5, 0, 4.5)
 using_tscn = true
 unique_name = "10"
-
-[node name="Bench13" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("6_08y48")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 4.5, 0, 4.5)
-using_tscn = true
-unique_name = "11"
 
 [node name="ChopTable2" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("7_0ioum")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0, 9.5)
@@ -310,17 +303,24 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2.5, 
 using_tscn = true
 unique_name = "20"
 
-[node name="FoodFactory4" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("14_nq5uu")]
-transform = Transform3D(1, 0, -4.61466e-09, 0, 1, 0, 4.61466e-09, 0, 1, -6.5, -0.348, 8.5)
-catergory = 1
-using_tscn = true
-unique_name = "FoodCrate"
-
-[node name="Stove" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("15_0wnb8")]
+[node name="StoveWithPan" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("14_08y48")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.5, 0, 4.5)
+unique_name = "Pan"
 
-[node name="Stove2" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("15_0wnb8")]
-transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, -0.5, 0, -4.5)
+[node name="StoveWithPot" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("15_0ioum")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4.5, 0, 4.5)
+unique_name = "pot"
+
+[node name="FoodFactory" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("16_p0tnk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 0, 8.5)
+using_tscn = true
+unique_name = "Food"
+current_owner = 0
+
+[node name="Cabinet" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("17_0ioum")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10.5, 0, 8.5)
+using_tscn = true
+unique_name = "Plate"
 
 [node name="Right Kitchen" type="Node3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.728, 0)
@@ -347,12 +347,6 @@ current_owner = 2
 transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, -1.5, 0, -4.5)
 using_tscn = true
 unique_name = "47"
-current_owner = 2
-
-[node name="Bench38" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("6_08y48")]
-transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, -0.5, 0, -4.5)
-using_tscn = true
-unique_name = "46"
 current_owner = 2
 
 [node name="ChopTable6" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("7_0ioum")]
@@ -382,12 +376,6 @@ using_tscn = true
 unique_name = "38"
 current_owner = 2
 
-[node name="Bench41" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("6_08y48")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, -4.5)
-using_tscn = true
-unique_name = "39"
-current_owner = 2
-
 [node name="Bench43" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("6_08y48")]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 10.5, 0, -7.5)
 using_tscn = true
@@ -404,12 +392,6 @@ current_owner = 2
 transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, 10.5, 0, -4.5)
 using_tscn = true
 unique_name = "32"
-current_owner = 2
-
-[node name="Bench48" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("6_08y48")]
-transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 10.5, 0, -8.5)
-using_tscn = true
-unique_name = "29"
 current_owner = 2
 
 [node name="ChopTable7" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("7_0ioum")]
@@ -457,11 +439,26 @@ using_tscn = true
 unique_name = "42"
 current_owner = 2
 
-[node name="FoodFactory5" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("14_nq5uu")]
-transform = Transform3D(1, 0, -4.61466e-09, 0, 1, 0, 4.61466e-09, 0, 1, -6.5, -0.348, -8.5)
-catergory = 1
+[node name="FoodFactory2" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("16_p0tnk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 0, -8.5)
 using_tscn = true
-unique_name = "FoodCrate2"
+unique_name = "Food2"
+current_owner = 0
+
+[node name="StoveWithPot2" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("15_0ioum")]
+transform = Transform3D(1, 0, 1.78814e-07, 0, 1, 0, -1.78814e-07, 0, 1, 4.5, 0, -4.5)
+unique_name = "pot2"
+current_owner = 2
+
+[node name="StoveWithPan2" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("14_08y48")]
+transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, -0.5, 0, -4.5)
+unique_name = "Pan2"
+current_owner = 2
+
+[node name="Cabinet2" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("17_0ioum")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10.5, 0, -8.5)
+using_tscn = true
+unique_name = "Plate2"
 current_owner = 2
 
 [node name="Walls" type="Node3D" parent="NavigationRegion3D"]
@@ -884,3 +881,15 @@ transform = Transform3D(1, 0, 9.31323e-10, 0, 1, 0, -9.31323e-10, 0, 1, -19.5532
 
 [node name="CustomerSpawner" type="MultiplayerSpawner" parent="."]
 spawn_path = NodePath("../===QUEUE==")
+
+[node name="Extinguisher" parent="." instance=ExtResource("27_tok01")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 9.5)
+
+[node name="Extinguisher2" parent="." instance=ExtResource("27_tok01")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, -9.5)
+
+[node name="UpgradeHammer" parent="." instance=ExtResource("28_iv5qa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1, 10)
+
+[node name="UpgradeHammer2" parent="." instance=ExtResource("28_iv5qa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1, -9.5)

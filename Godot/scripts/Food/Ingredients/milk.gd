@@ -8,3 +8,4 @@ func _ready():
 	
 	add_to_group("Food")
 	on_state_change()
+	texture = preload("res://assets/textures/ingredients/milk.png")

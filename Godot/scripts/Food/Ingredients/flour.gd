@@ -7,4 +7,5 @@ func _ready():
 	raw_mesh = $Flour
 	mixed_mesh = $Flour
 	add_to_group("Food")
+	texture = preload("res://assets/textures/ingredients/flour.png")
 	on_state_change()

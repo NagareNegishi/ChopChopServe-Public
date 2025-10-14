@@ -207,14 +207,16 @@ func _inputs() -> void:
 		
 	if Input.is_action_just_pressed("Throw"):
 		server_drop_item(get_path(), true)
-	
+	#==== Sabotages ====
 	if Input.is_action_just_pressed("Sabotage1"): _sabotage(0)
 	elif Input.is_action_just_pressed("Sabotage2"): _sabotage(1)
 	elif Input.is_action_just_pressed("Sabotage3"): _sabotage(2)
 	elif Input.is_action_just_pressed("Sabotage4"): _sabotage(3)
 	elif Input.is_action_just_pressed("Sabotage5"): _sabotage(4)
-
-
+	
+	if Input.is_action_just_pressed("CTR_SabotageCycleLeft"): _sabotage_left()
+	if Input.is_action_just_pressed("CTR_SabotageCycleRight"): _sabotage_right()
+	if Input.is_action_just_pressed("CTR_SabotageUse"): _select_sabo()
 func _interact() -> void:
 	if _can_add_to_plate():
 		rpc("_client_add_plate", ENetManager.get_my_id(), 
@@ -600,3 +602,15 @@ func _can_app_interact() -> bool:
 		  inter is Bench && !inter is ChopTable || 
 		inter.current_owner == 0 || 
 		inter is UpgradeHammer)
+
+var sabo_index : int
+func _sabotage_left():
+	sabo_index = sabo_index - 1 if sabo_index > 0 else 5
+	print(sabo_index)
+	
+func _sabotage_right():
+	sabo_index = sabo_index + 1 if sabo_index <= 4 else 0
+	print(sabo_index)
+
+func _select_sabo():
+	_sabotage(sabo_index)

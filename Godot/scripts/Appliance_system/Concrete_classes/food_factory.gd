@@ -98,7 +98,8 @@ func _add_inventory_ui():
 	inventory_sprite.get_node("SubViewport").get_node("Inventory").group = group
 	add_child(inventory_sprite)
 	inventory = inventory_sprite
-	inventory_sprite.position -= Vector3(0,1.5,0)
+	inventory_sprite.no_depth_test = true
+	inventory_sprite.position -= Vector3(0,2,0)
 
 
 var player 

@@ -69,7 +69,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TeamLabel" type="Label" parent="."]
-visible = false
 layout_mode = 2
 offset_left = 4.0
 offset_top = 46.0
@@ -152,7 +151,7 @@ offset_right = 413.086
 offset_bottom = 205.086
 rotation = -0.0349066
 
-[node name="CodeText2" type="Label" parent="."]
+[node name="VSLabel" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5

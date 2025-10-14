@@ -1,25 +1,46 @@
 extends Control
 class_name PlayerSlot
 
+enum Team {
+	UNASSIGNED,
+	TEAM1,
+	TEAM2
+}
 
 @onready var kick_button: Button = $KickButton
+@onready var team1_button: Button = $JoinTeam1Button
+@onready var team2_button: Button = $JoinTeam2Button
 @onready var name_label: Label = $NameLabel
 @onready var is_local: TextureRect = $BG_Outline # Local player indicator (temporary)
 var player_data: Dictionary
+var current_team: Team = Team.UNASSIGNED
 
 
 ## Setup the player slot
 func _ready():
 	custom_minimum_size = Vector2(150, 150) # reserve space in lobby
 	kick_button.pressed.connect(_on_kick_pressed)
+	team1_button.pressed.connect(_on_join_team1_pressed)
+	team2_button.pressed.connect(_on_join_team2_pressed)
+	_setup_buttons()
+	visible = false
+
+
+## Setup button visibility and layering
+func _setup_buttons():
 	kick_button.visible = false
 	kick_button.z_index = 10
 	kick_button.z_as_relative = true
+	team1_button.visible = false
+	team1_button.z_index = 10
+	team1_button.z_as_relative = true
+	team2_button.visible = false
+	team2_button.z_index = 10
+	team2_button.z_as_relative = true
 	# Ignore mouse on all children except buttons (visual elements blocking button)
 	for child in get_children():
 		if child is Control and not child is Button:
 			child.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	visible = false
 
 
 ## Set the player data and update UI
@@ -60,3 +81,23 @@ func remove_local_highlight():
 ## Set the outline color for this slot
 func set_outline_color(color: Color):
 	is_local.modulate = color
+
+
+func _check_team_buttons():
+	if ENetManager.is_host():
+		return
+	if ENetManager.get_team1().size() < 2:
+		team1_button.show()
+	else:
+		team1_button.hide()
+	if ENetManager.get_team2().size() < 2:
+		team2_button.show()
+	else:
+		team2_button.hide()
+
+
+func _on_join_team1_pressed():
+	pass
+
+func _on_join_team2_pressed():
+	pass

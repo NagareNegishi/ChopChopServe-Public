@@ -21,6 +21,7 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(2, 2)
 pivot_offset = Vector2(75, 75)
+mouse_filter = 2
 script = ExtResource("1_6087y")
 
 [node name="KickButton" type="Button" parent="."]
@@ -39,6 +40,40 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 10
 text = "Kick"
+
+[node name="JoinTeam1Button" type="Button" parent="."]
+z_index = 10
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -105.0
+offset_top = 15.0
+offset_right = -43.0
+offset_bottom = 37.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 10
+text = "Join Team1"
+
+[node name="JoinTeam2Button" type="Button" parent="."]
+z_index = 10
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 53.5
+offset_top = 16.0
+offset_right = 115.5
+offset_bottom = 38.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 10
+text = "Join Team2"
 
 [node name="BG_Shadow" type="TextureRect" parent="."]
 modulate = Color(0.2484, 0.2484, 0.2484, 1)

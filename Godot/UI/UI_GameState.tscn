@@ -228,6 +228,14 @@ text = "9:30"
 horizontal_alignment = 1
 script = ExtResource("6_k13aw")
 
+[node name="TimeType" type="Label" parent="Main/Time"]
+layout_mode = 0
+offset_left = 69.0
+offset_top = 2.0
+offset_right = 109.0
+offset_bottom = 25.0
+text = "AM"
+
 [node name="Day" type="Label" parent="Main"]
 layout_mode = 1
 anchors_preset = 8

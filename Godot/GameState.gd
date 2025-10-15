@@ -159,7 +159,7 @@ func _start_gameplay_timer():
 	timer.start()
 
 
-func _get_available_food_names() -> Array:
+func _get_available_food_names():
 	var scene_name = SceneManager.Scene.keys()[SceneManager.current_scene]
 	return _make_food_available(scene_name, str(current_day))
 

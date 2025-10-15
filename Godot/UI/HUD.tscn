@@ -207,6 +207,7 @@ grow_vertical = 1
 scale = Vector2(-1, 1)
 teamID = 1
 
+
 [node name="Team1Sab" type="HBoxContainer" parent="."]
 clip_children = 1
 layout_mode = 1
@@ -230,16 +231,16 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_bottom = 0.0
-offset_left = -542.0
-offset_top = 1.0
-offset_right = -95.9998
-offset_bottom = 54.0
+offset_left = -505.0
+offset_top = -3.0
+offset_right = -58.9998
+offset_bottom = 50.0
 grow_horizontal = 0
 grow_vertical = 1
 rotation = 0.00872665
 teamID = 2
 
-[node name="Sauce" parent="Team2Rep" index="0"]
+[node name="Sauce" parent="Team1Rep/Team2Rep" index="0"]
 offset_left = -100.992
 offset_top = -9.45677
 offset_right = 583.008
@@ -248,7 +249,7 @@ value = 0.2
 tint_under = Color(0.992157, 0.917647, 0.301961, 0.392157)
 tint_progress = Color(0.990784, 0.919061, 0.301274, 1)
 
-[node name="Bottle" parent="Team2Rep" index="1"]
+[node name="Bottle" parent="Team1Rep/Team2Rep" index="1"]
 offset_left = -329.0
 offset_top = -48.4215
 offset_right = -108.0
@@ -282,4 +283,4 @@ offset_right = 58.48
 offset_bottom = 75.0
 grow_vertical = 1
 
-[editable path="Team2Rep"]
+[editable path="Team1Rep/Team2Rep"]

@@ -16,7 +16,6 @@ func _init():
 		"Egg": ["RAW","MIXED","BAKED"],
 		"Milk": ["RAW", "MIXED","BAKED"]
 	}
-	is_available = true
 	name_of_meal = "brownie"
 	ui_texture = load("res://assets/textures/recipes/Brownie.png")
 func _ready():

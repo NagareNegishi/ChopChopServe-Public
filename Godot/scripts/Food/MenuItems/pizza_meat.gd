@@ -17,7 +17,6 @@ func _init():
 		"Beef":["RAW", "FRIED", "BAKED"]
 	}
 	
-	is_available = true
 	name_of_meal = "pizza_meat"
 	ui_texture = load("res://assets/textures/recipes/PepperoniPizza.png")
 

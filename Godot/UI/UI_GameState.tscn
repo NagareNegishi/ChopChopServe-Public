@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://cpf68rvd2ht5y"]
+[gd_scene load_steps=8 format=3 uid="uid://cpf68rvd2ht5y"]
 
 [ext_resource type="Texture2D" uid="uid://bvhcg80u526t2" path="res://assets/textures/HUD/TimerBG.png" id="1_7cglj"]
 [ext_resource type="Script" uid="uid://dnpbcprkay5ak" path="res://scripts/UI/ui_game_state.gd" id="1_8nf6r"]
 [ext_resource type="FontFile" uid="uid://dxc6n0umgi0q4" path="res://assets/fonts/Jua-Regular.ttf" id="1_vitvd"]
 [ext_resource type="Texture2D" uid="uid://brxfjwq14cq5e" path="res://assets/textures/HUD/ClockTimer.png" id="3_4r1a5"]
 [ext_resource type="Texture2D" uid="uid://upyttcx2p5e0" path="res://assets/textures/HUD/bg.png" id="3_lto73"]
+[ext_resource type="Script" uid="uid://bts4wpxxod8ne" path="res://UI/day.gd" id="6_iqdsg"]
+[ext_resource type="Script" uid="uid://bxgcajf5issh" path="res://UI/time.gd" id="6_k13aw"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -222,8 +224,9 @@ theme_override_constants/outline_size = 2
 theme_override_constants/shadow_outline_size = 2
 theme_override_fonts/font = ExtResource("1_vitvd")
 theme_override_font_sizes/font_size = 24
-text = "10:30"
+text = "9:30"
 horizontal_alignment = 1
+script = ExtResource("6_k13aw")
 
 [node name="Day" type="Label" parent="Main"]
 layout_mode = 1
@@ -248,6 +251,7 @@ theme_override_font_sizes/font_size = 11
 text = "Day 1"
 horizontal_alignment = 1
 vertical_alignment = 1
+script = ExtResource("6_iqdsg")
 
 [node name="Money" type="Label" parent="Main"]
 layout_mode = 1

@@ -14,9 +14,6 @@ func _init():
 		"Pumpkin": ["RAW","CHOPPED", "BOILED"],
 	}
 	
-	# This is the appliance it is to be collected in 
-	#appliance = "Bowl"
-	is_available=true
 	name_of_meal = "soup_pumpkin"
 	ui_texture = load("res://assets/textures/recipes/PumpkinSoup.png")
 	

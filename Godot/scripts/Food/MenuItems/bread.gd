@@ -13,7 +13,6 @@ func _init():
 	ingredient_states = {
 		"Dough": ["RAW", "BAKED"]
 	}
-	is_available = true
 	name_of_meal = "bread"
 	ui_texture = load("res://assets/textures/recipes/Bread.png")
 func _ready():

@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://2qlfolqgl2hl"]
 
-[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/DefaultTheme.tres" id="1_d13su"]
-[ext_resource type="StyleBox" uid="uid://r57cutimhstv" path="res://UI/NormalButton.tres" id="1_n5cah"]
+[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/Style/DefaultTheme.tres" id="1_d13su"]
+[ext_resource type="StyleBox" uid="uid://r57cutimhstv" path="res://UI/Style/NormalButton.tres" id="1_n5cah"]
 [ext_resource type="Script" uid="uid://dmbhupq6ieaid" path="res://scripts/UI/CustomButton.gd" id="1_ojmj5"]
 [ext_resource type="FontFile" uid="uid://dxc6n0umgi0q4" path="res://assets/fonts/Jua-Regular.ttf" id="2_kw3pp"]
 

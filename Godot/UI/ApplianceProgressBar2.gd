@@ -154,4 +154,4 @@ func get_max_value(cook_style: ApplianceFactory.CookingStyle):
 
 
 func _set_texture(texture_type : ProgressType):
-	pass
+	$TextureRect.texture = TEXTURE[type]

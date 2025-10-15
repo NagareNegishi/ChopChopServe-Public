@@ -6,25 +6,14 @@
 class_name ChoppingBoard
 extends Cookware
 
-# -----------------------------------------------------------------------------
-# TODO: Move the variable to appropriate class
-# ADDED so we know how much we need to scale the model on the chopping board by
-var food_scale_factor: float = 4
-var choppingBoard :ChoppingBoard
-# TODO: Move the function to appropriate class (No need to override)
-# ADDED so that when you take the food from the chopping board the scale goes back to how it was
-func take() -> Node:
-	var item = super.take()
-	if item and item is Food:
-		item.scale /= food_scale_factor
-	emit_signal("food_taken", self, item)
-	return item
-# -----------------------------------------------------------------------------
+var food_rotation = Vector3(0, 30, 0)
+
 
 ## Setup the model instance
 func _init():
 	super._init()
 	model_scene = preload("res://assets/newmodels/items/ChoppingBoardNoKnife.glb")
+
 
 ## Setup the fryer properties
 func _ready():
@@ -35,7 +24,6 @@ func _ready():
 				"Mushroom", "Pineapple", "Pumpkin", "Strawberry"]
 	capacity = 1 # one item only
 	coefficient = 1.0
-	
 	add_to_group("Appliance")
 
 
@@ -44,6 +32,11 @@ func _ready():
 func _setup_interactable():
 	super._setup_interactable()
 	interactable_component.has_action = true
+
+
+## Set the rotation for food placed on the chopping board
+func set_food_rotation(angle: Vector3) -> void:
+	food_rotation = angle
 
 
 ## Place an item onto this appliance
@@ -55,8 +48,18 @@ func put(item: Node) -> bool:
 	contents.append(item)
 	add_child(item)
 	item.position = Vector3(0.0, size.y * 0.5, 0.0)
-	emit_signal("food_placed", self, item)
 	return true
+
+
+## Place food into the cookware
+## @param food: The Food item to place into the cookware
+func _put_food(food: Food) -> void:
+	food.change_collisions(true)
+	food.restore_original_transform()
+	food.rotate_abstract_throwable(food_rotation)
+	emit_signal("food_placed", contents)
+	Debug.cook_log("Food placed in cookware: " + food.get_script().get_global_name()
+		+ ", Cookware can cook: " + str(can_cook()) + ", Food cook time: " + str(food.get_cook_time(cooking_style)))
 
 
 ## Perform cooking logic
@@ -65,6 +68,24 @@ func cook(power: int) -> bool:
 	for food in contents:
 		food.start_cooking(int(power * coefficient), cooking_style)
 	return true
+
+
+## Remove and return all items
+## @return: Array of all items that were removed
+func take_all() -> Array[Node]:
+	finish_cook()
+	var all_items = contents
+	for item in all_items:
+		remove_child(item)
+	contents = []
+	contents_names = []
+	emit_signal("food_taken")
+	return all_items
+
+
+## Setup the cookware UI
+func _setup_cookware_ui():
+	return # Chopping board does not need UI
 
 
 ## For Player interaction --------------------------------------------------------------------------
@@ -80,12 +101,6 @@ func put_from_player(item: Node) -> bool:
 	contents.append(item)
 	add_child(item)
 	item.position = Vector3(0.0, size.y * 0.5, 0.0)
-	# -------------------------------------------------------------------------
-	# TODO: Move the function to appropriate class
-	# ADDED to scale the food to be on the chopping board to be visible
-	if item is Food:
-		item.scale *= food_scale_factor
-	# -------------------------------------------------------------------------
 	Debug.all("Put: " + item.get_script().get_global_name() + " onto: " + get_script().get_global_name())
 	return true
 

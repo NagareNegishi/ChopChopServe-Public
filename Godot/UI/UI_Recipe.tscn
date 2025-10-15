@@ -1,12 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://75yh0t2jmnhg"]
-
-[ext_resource type="Texture2D" uid="uid://dxoefmduqxit1" path="res://assets/textures/recipes/HawaiianPizza.png" id="1_tms7n"]
-[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/DefaultTheme.tres" id="2_ljwv2"]
+[gd_scene load_steps=3 format=3 uid="uid://75yh0t2jmnhg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tms7n"]
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
+bg_color = Color(0.976471, 0.976471, 0.976471, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_okijf"]
+bg_color = Color(0.686275, 0.686275, 0.686275, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
 
 [node name="UiRecipe" type="Control"]
 layout_mode = 3
@@ -23,35 +29,77 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -166.5
-offset_top = -104.0
-offset_right = 166.5
-offset_bottom = 104.0
+offset_left = -302.0
+offset_top = -135.0
+offset_right = 305.0
+offset_bottom = 184.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_tms7n")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="Panel2" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -60.0
-offset_top = -142.0
-offset_right = 729.0
-offset_bottom = 355.0
+offset_left = -296.0
+offset_top = -129.0
+offset_right = 300.0
+offset_bottom = 178.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.15, 0.15)
-texture = ExtResource("1_tms7n")
+theme_override_styles/panel = SubResource("StyleBoxFlat_okijf")
 
-[node name="Name" type="Label" parent="."]
+[node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 471.0
-offset_top = 254.0
-offset_right = 682.0
-offset_bottom = 284.0
-theme = ExtResource("2_ljwv2")
-text = "Haiwaiann Pizza"
+offset_left = 533.0
+offset_top = 124.0
+offset_right = 627.0
+offset_bottom = 147.0
+text = "NEW RECIPE"
+
+[node name="Dish" type="Label" parent="."]
+offset_left = 531.0
+offset_top = 216.0
+offset_right = 625.0
+offset_bottom = 239.0
+text = "Pizza"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Titles" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 295.0
+offset_top = 250.0
+offset_right = 862.0
+offset_bottom = 290.0
+theme_override_constants/separation = 140
+alignment = 1
+
+[node name="Prep" type="Label" parent="Titles"]
+layout_mode = 2
+text = "PREP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Cook" type="Label" parent="Titles"]
+layout_mode = 2
+text = "COOK"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Serve" type="Label" parent="Titles"]
+layout_mode = 2
+text = "SERVE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 0
+offset_left = 356.0
+offset_top = 339.0
+offset_right = 396.0
+offset_bottom = 379.0
+columns = 3

@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://p5bueh2iq7ap"]
-
-[ext_resource type="PackedScene" uid="uid://7td4bfjn7lt1" path="res://assets/newmodels/furniture/Blender.glb" id="1_uha7g"]
-
-[node name="newblender" instance=ExtResource("1_uha7g")]

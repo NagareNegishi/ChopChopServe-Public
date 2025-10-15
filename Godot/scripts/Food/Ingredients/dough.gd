@@ -8,6 +8,7 @@ func _ready():
 	spoiled_mesh = $SpoiledDough
 	cooked_mesh = $dough
 	burnt_mesh = $BurntDough
+	texture = load("res://assets/textures/ingredients/dough.png")
 	
 	add_to_group("Food")
 	on_state_change()

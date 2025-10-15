@@ -17,7 +17,6 @@ func _init():
 		"Chicken":["RAW","FRIED"]
 	}
 	
-	is_available=true
 	name_of_meal = "burger_chicken"
 	ui_texture = load("res://assets/textures/recipes/ChickenBurger.png")
 

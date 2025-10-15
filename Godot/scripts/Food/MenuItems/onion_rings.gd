@@ -13,7 +13,6 @@ func _init():
 	ingredient_states = {
 		"Onion": ["RAW","CHOPPED", "FRIED"]
 	}
-	is_available = true
 	name_of_meal = "onion_rings"
 	ui_texture = load("res://assets/textures/recipes/OnionRings.png")
 	

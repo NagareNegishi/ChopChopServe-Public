@@ -3,12 +3,14 @@ extends MultiplayerSynchronizer
 
 @onready var move_input : int
 @onready var turn_input : int
+@onready var input_dir : Vector2 
 
 var last_move : int = 0
 var last_turn : int = 0
 var time : int = 0
 
 func _process(delta: float) -> void:
+	
 	move_input = 0
 	turn_input = 0
 

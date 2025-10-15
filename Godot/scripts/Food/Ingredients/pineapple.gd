@@ -8,6 +8,6 @@ func _ready():
 	cooked_mesh = $Pineapple
 	burnt_mesh = $BurntPineapple
 	chopped_mesh = $PineappleSliced
-	
+	texture = preload("res://assets/textures/ingredients/pineapple.png")
 	add_to_group("Food")
 	on_state_change()

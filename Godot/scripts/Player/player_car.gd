@@ -50,7 +50,10 @@ func _set_time_now(cur : int):
 ## @param delta time to proces frame
 ## @return void
 func _process(delta: float) -> void:
-	_movement(delta)
+	if Input.get_connected_joypads().size() <= 0:
+		_keyboard_movement(delta)
+	else:
+		_controller_movement(delta)
 	
 	if !is_on_floor():
 		velocity += get_gravity() * delta
@@ -59,8 +62,9 @@ func _process(delta: float) -> void:
 ## Handles the movement logic for the car
 # @param delta time to proces frame
 # @return void
-func _movement(delta : float) -> void:
+func _keyboard_movement(delta : float) -> void:
 	#resets average
+
 	turn_input_avg = 0
 	move_input_avg = 0
 	
@@ -147,3 +151,34 @@ func disable_input(disable : bool):
 
 func _reduce(a : int, b : int): 
 	return a if player_inputs[a].time > player_inputs[b].time else b
+
+var _direction
+
+func _controller_movement(delta: float):
+	var input_dir = Input.get_vector("Left", "Right", "Up", "Down") # X: Left/Right, Y: Forward/Back
+
+	if input_dir.length() < 0.1:
+		velocity = velocity.move_toward(Vector3.ZERO, decceleration * delta)
+		move_and_slide()
+		return
+
+	# Convert 2D input direction into camera-relative 3D direction
+	var cam_forward = camera.global_transform.basis.z
+	var cam_right = camera.global_transform.basis.x
+	
+	# Flatten the camera vectors (ignore Y to keep movement horizontal)
+	cam_forward.y = 0
+	cam_right.y = 0
+	cam_forward = cam_forward.normalized()
+	cam_right = cam_right.normalized()
+
+	var move_dir = (cam_forward * input_dir.y + cam_right * input_dir.x).normalized()
+	
+	# Rotate character toward movement direction
+	var target_rot = atan2(-move_dir.x, -move_dir.z)
+	rotation.y = lerp_angle(rotation.y, target_rot, delta * turn_speed * 1.5)
+
+	# Accelerate toward movement direction
+	velocity = velocity.move_toward(move_dir * speed / 1.5, acceleration * delta)
+
+	move_and_slide()

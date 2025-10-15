@@ -32,10 +32,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 30.0
-offset_top = -36.0
-offset_right = 58.0
-offset_bottom = -14.0
+offset_left = -13.0
+offset_top = 53.5
+offset_right = 15.0
+offset_bottom = 75.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 10
@@ -49,14 +49,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -105.0
-offset_top = 15.0
-offset_right = -43.0
-offset_bottom = 37.0
+offset_left = -55.5
+offset_top = -51.0
+offset_right = -14.5
+offset_bottom = -15.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 10
-text = "Join Team1"
+text = "Join 
+Team1"
 
 [node name="JoinTeam2Button" type="Button" parent="."]
 z_index = 10
@@ -66,14 +67,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 53.5
-offset_top = 16.0
-offset_right = 115.5
-offset_bottom = 38.0
+offset_left = 16.0
+offset_top = -53.5
+offset_right = 57.0
+offset_bottom = -17.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 10
-text = "Join Team2"
+text = "Join 
+Team2"
 
 [node name="BG_Shadow" type="TextureRect" parent="."]
 modulate = Color(0.2484, 0.2484, 0.2484, 1)
@@ -206,5 +208,15 @@ theme_override_constants/outline_size = 1
 theme_override_constants/shadow_outline_size = 1
 theme_override_font_sizes/font_size = 10
 text = "Test"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TeamLable" type="Label" parent="."]
+layout_mode = 0
+offset_left = 63.5
+offset_top = -5.0
+offset_right = 103.5
+offset_bottom = 18.0
+text = "??"
 horizontal_alignment = 1
 vertical_alignment = 1

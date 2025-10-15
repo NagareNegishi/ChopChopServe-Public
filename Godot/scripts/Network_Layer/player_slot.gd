@@ -11,6 +11,7 @@ enum Team {
 @onready var team1_button: Button = $JoinTeam1Button
 @onready var team2_button: Button = $JoinTeam2Button
 @onready var name_label: Label = $NameLabel
+@onready var team_label: Label = $TeamLabel
 @onready var is_local: TextureRect = $BG_Outline # Local player indicator (temporary)
 var player_data: Dictionary
 var current_team: Team = Team.UNASSIGNED
@@ -69,13 +70,11 @@ func _on_kick_pressed() -> void:
 
 
 ## Highlight this slot as the local player
-func set_as_local_player():
-	is_local.modulate = Color(1.0, 0.8, 0.0)  # Gold/yellow tint
-
-
-## Remove local player highlight
-func remove_local_highlight():
-	is_local.modulate = Color(1.0, 1.0, 1.0)  # White (default)
+func set_as_local_player(local: bool):
+	if local:
+		is_local.modulate = Color(1.0, 0.8, 0.0)  # Gold/yellow tint
+	else:
+		is_local.modulate = Color(1.0, 1.0, 1.0)  # White (default)
 
 
 ## Set the outline color for this slot
@@ -84,8 +83,6 @@ func set_outline_color(color: Color):
 
 
 func _check_team_buttons():
-	if ENetManager.is_host():
-		return
 	if ENetManager.get_team1().size() < 2:
 		team1_button.show()
 	else:
@@ -96,8 +93,31 @@ func _check_team_buttons():
 		team2_button.hide()
 
 
+func _hide_team_buttons():
+	team1_button.hide()
+	team2_button.hide()
+
+
 func _on_join_team1_pressed():
-	pass
+	var player_id = player_data.get("ID", -1)
+	if player_id == -1:
+		return
+	ENetManager.enet_layer.send_to(1, {  # 1 is always the host
+		"type": "request_team_join",
+		"player_id": player_id,
+		"team": 1
+	})
+	_hide_team_buttons()
+
+
 
 func _on_join_team2_pressed():
-	pass
+	var player_id = player_data.get("ID", -1)
+	if player_id == -1:
+		return
+	ENetManager.enet_layer.send_to(1, {
+		"type": "request_team_join",
+		"player_id": player_id,
+		"team": 2
+	})
+	_hide_team_buttons()

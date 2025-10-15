@@ -10,6 +10,7 @@ enum GameProgress {
 
 signal player_list_updated(players: Array[int])
 signal team_assigned(team1: Array[int], team2: Array[int])
+signal player_assigned(player_id: int, team: int, number: int)
 signal disconnected_from_server()
 signal back_to_main_menu()
 signal game_started()
@@ -180,11 +181,18 @@ func _on_data_received(_from_id: int, data: Dictionary):
 			await get_tree().create_timer(0.1).timeout
 			enet_layer.leave_game()
 
+		"request_team_join":
+			_on_request_team_join(data)
+
+		"player_assignment":
+			if data.has("player_id") and data.has("team") and data.has("number"):
+				player_assigned.emit(data.player_id, data.team, data.number)
+
 		"team_assignment":
 			team1 = data.team1
 			team2 = data.team2
 			team_assigned.emit(team1, team2)
-		
+
 		"game_starting":
 			current_state = GameProgress.IN_GAME
 			game_started.emit()
@@ -197,7 +205,7 @@ func _on_data_received(_from_id: int, data: Dictionary):
 			else:
 				current_state = GameProgress.IN_GAME
 			game_paused.emit(data.is_paused)
-			
+
 		"game_reset":
 			current_state = GameProgress.LOBBY
 			game_paused.emit(false)
@@ -206,8 +214,8 @@ func _on_data_received(_from_id: int, data: Dictionary):
 			if data.has("message") and data.has("duration"):
 				show_notification(data.message, data.duration)
 
-
-			print("Unknown message type: ", data.get("type"))
+		_:
+			push_warning("Unknown message type: ", data.get("type"))
 
 
 ## Get the ID of the current player
@@ -294,6 +302,40 @@ func shuffle_players():
 		"team2": team2
 	})
 	team_assigned.emit(team1, team2)
+
+
+## Handle team join requests from players
+## @param data: Dictionary containing "player_id" and "team"
+func _on_request_team_join(data: Dictionary):
+	# basic validation
+	if not is_host():
+		return
+	if not data.has("player_id") or not data.has("team"):
+		return
+	if not player_list.has(data.player_id) or not (data.team == 1 or data.team == 2):
+		return
+	# check current team
+	if get_team(data.player_id) == data.team:
+		return
+	var number = 0
+	if data.team == 1 and team1.size() < 2:
+		number = team1.size() + 1
+		team2.erase(data.player_id)
+		team1.append(data.player_id)
+	elif data.team == 2 and team2.size() < 2:
+		number = team2.size() + 1
+		team1.erase(data.player_id)
+		team2.append(data.player_id)
+	else:
+		return
+	# Broadcast to all clients
+	enet_layer.broadcast_except(enet_layer.get_my_id(), {
+		"type": "player_assignment",
+		"player_id": data.player_id,
+		"team": data.team,
+		"number": number
+	})
+	player_assigned.emit(data.player_id, data.team, number) # for host
 
 
 ## Check if game can start

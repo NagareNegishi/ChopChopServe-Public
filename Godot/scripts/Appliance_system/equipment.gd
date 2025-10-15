@@ -81,6 +81,12 @@ func take() -> Node:
 	return item
 
 
+## Peek at the next item to be taken without removing it
+## @return: The Node that would be removed next, or null if nothing to take
+func _check_next_take() -> Node:
+	return contents.back()
+
+
 ## Check if this appliance can accept the given item
 ## @param item: The Node to test for acceptance
 ## @return: True if item can be placed, false otherwise

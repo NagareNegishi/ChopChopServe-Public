@@ -1,7 +1,6 @@
 extends Node
 
 var total_rep_team = {
-	0: 20.0,
 	1: 20.0,
 	2: 20.0
 }

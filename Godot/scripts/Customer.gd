@@ -2,14 +2,33 @@ class_name Customer extends NPC
 
 enum CustomerState { IDLE, THINKING, ORDERING }
 
-const MAXIMUM_ORDER_THINK_TIME: float = 1.0
+# Agents with velocity below this are considered stuck.
 const AGENT_STUCK_THRESHOLD: float = 0.15
+
+# Maximum time in seconds a customer will "think" before placing an order.
+const MAXIMUM_ORDER_THINK_TIME: float = 1.0
+# Time in seconds the agent must be stuck before recalculating its path.
 const STUCK_RECALCULATE_TIME: float = 1.0 
+# Time in seconds the customer will stay seated till they get fed up not being served
+const MAXIMUM_SEATING_TIME: float = 250
+# Time in seconds the customer will stop moving for after falling
+const FALLEN_OVER_TIME = 5.0
+
+# A localoffset from a table's origin to define where the customer sits
 @export var POSITION_IN_FRONT_OF_TABLE: Vector3 = Vector3(0, 0.25, 0.5)
+
+# customers will fall over due to water spills
 @export var fallen_over : bool
-var meal_name = "" # name of meal being ordered currently
-@onready var animation_tree: AnimationTree = $AnimationTree
-@onready var state_machine = animation_tree.get("parameters/playback")
+@export var _seated = false
+@export var synced_position: Vector3
+@export var synced_velocity: Vector3
+@export var overhead_ui_order: PackedScene # Shows meal customer wants
+@export var overhead_ui_thinking: PackedScene # Shows frog thinking
+# Allows for orders to be randomly selected
+@export var order_gen_number = randi()
+@export var _time_till_leaving: float = MAXIMUM_SEATING_TIME
+@export var is_tweening_to_seat = false # true when customer first arrives to table
+
 @export var customer_state: CustomerState = CustomerState.IDLE:
 	# Runs on all clients when the state changes.
 	set(new_state):
@@ -31,34 +50,24 @@ var meal_name = "" # name of meal being ordered currently
 														"get_simple_order", 
 														[order_gen_number])
 				overhead_ui_order_instance.set_order(order[0])
-				
-				
-				
-@export var synced_position: Vector3
-@export var synced_velocity: Vector3
-@export var overhead_ui_order: PackedScene
-@export var overhead_ui_thinking: PackedScene
-@export var order_gen_number = randi()
-@onready var ui_anchor: Marker3D = $OverheadUIAnchor
-var FALLEN_OVER_TIME = 5.0
-var fallen_over_timer = FALLEN_OVER_TIME
-# Might get changed back to const at some point
-const MAXIMUM_SEATING_TIME: float = 250
 
+@onready var ui_anchor: Marker3D = $OverheadUIAnchor
+@onready var animation_tree: AnimationTree = $AnimationTree
+@onready var state_machine = animation_tree.get("parameters/playback")
+
+var fallen_over_timer = FALLEN_OVER_TIME
 var _table_target: Node3D = null
 var _queue_target: Node3D = null
-@export var _seated = false
 var _queued = false
 var _food_court_id
 var _restaurant_number: int
 var order: Array
-@export var _time_till_leaving: float = MAXIMUM_SEATING_TIME
 var _time_till_order: float = MAXIMUM_ORDER_THINK_TIME
 var _stuck_timer: float = 0.0
-@export var is_tweening_to_seat = false
 var _id
 var overhead_ui_order_instance: UIOrder
 var overhead_ui_thinking_instance: UIThinking
+
 
 # Registers to server on hosts end 
 func _initialize():
@@ -325,8 +334,6 @@ func despawn():
 
 # This function is for waterspill sabotage
 func fall_down():
-	print("AAHHH IVE FALLEN", is_multiplayer_authority())
 	if is_multiplayer_authority():
-		print("AAHHH IVE FALLEN")
 		fallen_over = true
 		fallen_over_timer = FALLEN_OVER_TIME

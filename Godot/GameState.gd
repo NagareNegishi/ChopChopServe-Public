@@ -8,7 +8,7 @@ var current_day : int
 var current_phase
 var team_1_score : int
 var team_2_score : int
-var can_send_customers : bool = false
+var can_send_customers : bool = true
 var customer_amount : int
 var timer : Timer = Timer.new()
 

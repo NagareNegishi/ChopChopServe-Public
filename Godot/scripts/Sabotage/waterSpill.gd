@@ -69,9 +69,11 @@ func handle_customer_fall(customer_path: NodePath) -> void:
 	var chance = randi() % 100
 	print("Customer fall chance: ", chance)
 	
-	if chance < 100:  # 10% chance
-		print("Customer should fall", is_multiplayer_authority())
-		reputation_system.minus_reputation(sabotaged_teamID, 5)
+	if chance < 100:  # 100% chance
+		# sabotaged_teamID not assigned
+		# Using modulo to get opposing side instead
+		reputation_system.minus_reputation(teamID % 2 + 1, 5)
+		
 		# Notify all clients about the fall
 		customer.fall_down()
 
@@ -80,9 +82,7 @@ func handle_customer_fall(customer_path: NodePath) -> void:
 func customer_falls(customer_path: NodePath) -> void:
 	var customer = get_node_or_null(customer_path)
 	if customer:
-		# Add customer fall animation/effect here
-		print("Customer fell: ", customer)
-		customer.fall_down()
+		handle_customer_fall(customer_path)
 
 # Add the WaterSprout effect
 func spill() -> bool:

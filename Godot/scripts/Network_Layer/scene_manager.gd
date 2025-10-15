@@ -4,6 +4,7 @@ extends Node
 
 
 signal scene_ready() # Host only
+signal level_ready(level: Scene)
 
 enum Scene {
 	MAIN_MENU,
@@ -71,6 +72,7 @@ func change_scene(scene: Scene) -> void:
 	get_tree().call_deferred("change_scene_to_file", scene_path)
 	await get_tree().tree_changed
 	is_changing = false
+	emit_signal("level_ready", scene)
 	if ENetManager.is_host():
 		players_in_scene[ENetManager.get_my_id()] = scene
 		waiting = true
@@ -79,6 +81,7 @@ func change_scene(scene: Scene) -> void:
 			print("All players ready in scene: %s" % Scene.keys()[current_scene])
 			waiting = false
 			scene_ready.emit()
+			
 	else:
 		_report_scene_ready.rpc_id(1, ENetManager.get_my_id(), scene)
 

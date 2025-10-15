@@ -404,3 +404,5 @@ group = 2
 
 [node name="Blender" parent="NavigationRegion3D" instance=ExtResource("26_2rsp4")]
 transform = Transform3D(0.042015, 0, -0.999116, 0, 1, 0, 0.999116, 0, 0.042015, 2.95021, 0.0150003, 1.36148)
+
+[node name="HUD" parent="." instance=ExtResource("6_c87li")]

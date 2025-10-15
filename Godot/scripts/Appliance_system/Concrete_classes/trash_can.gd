@@ -12,7 +12,7 @@ extends UnPoweredAppliance
 func _init():
 	super._init()
 	appliance_name = "Bin"
-	#model_scene = preload("res://assets/newmodels/furniture/trashcan.glb")
+	model_scene = preload("res://assets/newmodels/furniture/Bin.glb")
 
 
 ## Setup the trash can properties
@@ -72,7 +72,7 @@ func _can_accept(item: Node) -> bool:
 ## @param _item: The Node Player is holding
 ## @return: True if action is triggered, false otherwise
 func player_has(item: Node) -> void:
-	if item is Cookware:
+	if item is Cookware or item is Plate:
 		throw_all_request(item)
 		return
 	throw_request(item)
@@ -99,7 +99,7 @@ func _everyone_throw(player_id: int) -> void:
 	var item = GlobalScript.get_local_player_by_id(player_id).item_in_hand
 	if not item:
 		return
-	GlobalScript.get_local_player_by_id(player_id).remove_item()
+	await GlobalScript.get_local_player_by_id(player_id).remove_item()
 	Debug.all("Item removed: " + item.get_script().get_global_name() + ", at: " + str(ENetManager.get_my_id()))
 	item.queue_free()
 

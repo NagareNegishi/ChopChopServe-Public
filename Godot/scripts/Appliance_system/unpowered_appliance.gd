@@ -68,6 +68,10 @@ func _put(item: Node) -> void:
 	contents_names.append(item.name)
 	emit_signal("food_placed", self, contents)
 
+	if item is AbstractThrowable: # could be plate, food
+		item.restore_original_transform()
+
+
 
 ## Client-side method to put item, called by host
 ## @param item_name: The name of the item to put

@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://c432ikensldlj"]
+
+[ext_resource type="Script" uid="uid://db5ut2r2tsbca" path="res://UI/HUD/ui_sabotage_progress.gd" id="1_4vspa"]
+[ext_resource type="Texture2D" uid="uid://b3fclbfnr7i7u" path="res://assets/textures/misc/grey_square.webp" id="2_xc6cr"]
+
+[node name="SabProg" type="Control"]
+modulate = Color(1, 1, 1, 0.941176)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4vspa")
+
+[node name="ProgressBar" type="TextureProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 239.0
+offset_bottom = 238.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.12, 0.12)
+max_value = 1.0
+step = 0.001
+value = 0.285
+fill_mode = 4
+texture_under = ExtResource("2_xc6cr")
+texture_progress = ExtResource("2_xc6cr")
+tint_under = Color(1, 0.502869, 0.49988, 1)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true

@@ -2,9 +2,12 @@ extends Node3D
 
 var secs = 3.0 # Change this
 var player_ids := []
+var teamID
 
 # Switching the players controls 
-func switch_controls(teamID: int) -> void:
+func switch_controls(team_id: int) -> void:
+	teamID = team_id
+
 	if teamID == 1:
 		player_ids = ENetManager.get_team2()
 	else:
@@ -13,6 +16,7 @@ func switch_controls(teamID: int) -> void:
 	for id in player_ids:
 		var player = GlobalScript.get_local_player_by_id(id)
 		player.invert_controls(true)
+
 	start_timer(secs)
 
 # Time for the switch
@@ -23,7 +27,7 @@ func start_timer(seconds: float) -> void:
 	add_child(timer)
 	timer.timeout.connect(_on_timer_timeout)
 	timer.start()
-	SabotageSystem.sabotage_start.emit("Switch Controls", secs)
+	SabotageSystem.sabotage_start.emit(teamID, "Switch Controls", secs)
 
 # End the Switch 
 func _on_timer_timeout() -> void:
@@ -33,4 +37,4 @@ func _on_timer_timeout() -> void:
 			player.invert_controls(false)
 			# Clean up the list
 			player_ids.erase(id)
-	SabotageSystem.sabotage_ending.emit("Switch Controls")
+	SabotageSystem.sabotage_ending.emit(teamID, "Switch Controls")

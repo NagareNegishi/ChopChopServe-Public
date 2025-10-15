@@ -8,6 +8,7 @@ func _ready():
 	spoiled_mesh = $SpoiledBeef
 	cooked_mesh = $BeefCooked
 	burnt_mesh = $BurntBeef
+	texture = load("res://assets/textures/ingredients/beef.png")
 	
 	add_to_group("Food")
 	on_state_change()

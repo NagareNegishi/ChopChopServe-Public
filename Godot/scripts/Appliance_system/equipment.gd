@@ -77,6 +77,7 @@ func take() -> Node:
 	var item = contents.pop_back()
 	remove_child(item)
 	contents_names.pop_back()
+	emit_signal("food_taken")
 	return item
 
 

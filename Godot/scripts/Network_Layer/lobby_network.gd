@@ -5,6 +5,7 @@ class_name LobbyNetwork
 @onready var role_label: Label = $RoleLabel
 @onready var team_label: Label = $TeamLabel
 @onready var ip_label: Label = $IPLabel
+@onready var code_label: Label = $CodeText
 @onready var buttons_container: Container = $ControlContainer
 @onready var shuffle_button: Button = $ControlContainer/ShuffleButton
 @onready var start_button: Button = $ControlContainer/StartButton
@@ -22,6 +23,7 @@ var slots: Array[PlayerSlot]
 var is_host: bool = false
 var my_id: int = -1
 var my_team: int = -1
+var is_local: bool = true
 
 
 ## Setup
@@ -46,6 +48,7 @@ func _ready():
 	_update_player_list()
 	_set_role_label()
 	_set_team_label(my_team)
+	_set_code_label()
 	_set_ip_label()
 	_set_buttons()
 
@@ -70,9 +73,27 @@ func _set_team_label(team_number: int) -> void:
 func _set_ip_label() -> void:
 	if is_host:
 		ip_label.show()
-		ip_label.text = "%s" % ENetManager.enet_layer.get_connection_info()
+		ip_label.text = "%s" % network_layer.get_connection_info()
+		if not is_local:
+			ENetManager.show_notification(
+				"Reachability: " + network_layer.Reachability.keys()[network_layer.reachability],
+				3.0
+			)
 	else:
 		ip_label.hide()
+
+
+## Set code Label
+func _set_code_label() -> void:
+	if is_host:
+		code_label.show()
+		if network_layer.room_code == "":
+			code_label.text = "Using local network, the best way to connect you is:"
+		else:
+			code_label.text = "CODE: %s" % network_layer.room_code
+			is_local = false
+	else:
+		code_label.hide()
 
 
 ## Set Buttons

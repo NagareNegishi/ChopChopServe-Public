@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://2pguohnmuvmw" path="res://assets/textures/HUD/cHEFhAT.png" id="1_3hohr"]
 [ext_resource type="Script" uid="uid://cgb3gdc7yi0s1" path="res://scripts/UI/ui_player_join.gd" id="1_u8vah"]
 [ext_resource type="Texture2D" uid="uid://bpnik5eevb8f7" path="res://assets/textures/HUD/Chef.png" id="2_gjcho"]
-[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/DefaultTheme.tres" id="4_u8vah"]
+[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/Style/DefaultTheme.tres" id="4_u8vah"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u8vah"]
 bg_color = Color(1, 1, 1, 1)

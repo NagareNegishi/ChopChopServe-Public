@@ -1,8 +1,7 @@
-[gd_scene load_steps=41 format=3 uid="uid://tqlmk00ju4gv"]
+[gd_scene load_steps=40 format=3 uid="uid://tqlmk00ju4gv"]
 
 [ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_d7dv3"]
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="2_efp6k"]
-[ext_resource type="PackedScene" uid="uid://hlnawqai2mw4" path="res://NPCs/Customer.tscn" id="2_gggs0"]
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="2_kxebp"]
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="3_efp6k"]
 [ext_resource type="PackedScene" uid="uid://bk7ovilp788kq" path="res://scripts/Player/spawn_point.tscn" id="4_efp6k"]
@@ -29,7 +28,7 @@
 [ext_resource type="PackedScene" uid="uid://dlk0mbdfg2cmq" path="res://scenes/Appliance_system/oven.tscn" id="25_1cti7"]
 [ext_resource type="PackedScene" uid="uid://cw5uvt35a87nt" path="res://scenes/Appliance_system/blender.tscn" id="26_427g2"]
 [ext_resource type="PackedScene" uid="uid://br76j8t76ne2x" path="res://scripts/order_system/Plate.tscn" id="27_gpoin"]
-[ext_resource type="PackedScene" uid="uid://dbqm4i10x565r" path="res://scripts/Food/IngredientScenes/Water.tscn" id="28_xogbl"]
+[ext_resource type="PackedScene" uid="uid://dftc8o1un3kbu" path="res://scripts/Food/IngredientScenes/water.tscn" id="28_xogbl"]
 [ext_resource type="PackedScene" uid="uid://krj0gwn31x8u" path="res://scenes/Appliance_system/stove_with_pot.tscn" id="29_l1235"]
 [ext_resource type="PackedScene" uid="uid://b0ougk3d4jnku" path="res://scenes/Appliance_system/food_factory.tscn" id="30_wk08a"]
 [ext_resource type="PackedScene" uid="uid://cn8yjuakgjsam" path="res://assets/newmodels/furniture/Sink.glb" id="31_frgwe"]
@@ -65,7 +64,6 @@ size = Vector3(30, 0.05, 30)
 
 [node name="JohnoTestScene2" type="Node3D" node_paths=PackedStringArray("tables", "queue_spots", "customer_spawn_point", "customer_exit_point")]
 script = ExtResource("1_d7dv3")
-customer_scene = ExtResource("2_gggs0")
 tables = [NodePath("NavigationRegion3D/== TABLES ==/TableBody8"), NodePath("NavigationRegion3D/== TABLES ==/TableBody7"), NodePath("NavigationRegion3D/== TABLES ==/TableBody6"), NodePath("NavigationRegion3D/== TABLES ==/TableBody5"), NodePath("NavigationRegion3D/== TABLES ==/TableBody9"), NodePath("NavigationRegion3D/== TABLES ==/TableBody10"), NodePath("NavigationRegion3D/== TABLES ==/TableBody11"), NodePath("NavigationRegion3D/== TABLES ==/TableBody12")]
 queue_spots = [NodePath("===QUEUE==/QueueSpot-1"), NodePath("===QUEUE==/QueueSpot-2"), NodePath("===QUEUE==/QueueSpot-3"), NodePath("===QUEUE==/QueueSpot-4"), NodePath("===QUEUE==/QueueSpot-5")]
 customer_spawn_point = NodePath("CustomerSpawnPoint")

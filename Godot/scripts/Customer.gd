@@ -4,9 +4,9 @@ enum CustomerState { IDLE, THINKING, ORDERING }
 
 const MAXIMUM_ORDER_THINK_TIME: float = 1.0
 const AGENT_STUCK_THRESHOLD: float = 0.15
-const STUCK_RECALCULATE_TIME: float = 1.0
-const POSITION_IN_FRONT_OF_TABLE: Vector3 = Vector3(0, 0.25, 0.5)
-
+const STUCK_RECALCULATE_TIME: float = 1.0 
+@export var POSITION_IN_FRONT_OF_TABLE: Vector3 = Vector3(0, 0.25, 0.5)
+@export var fallen_over : bool
 var meal_name = "" # name of meal being ordered currently
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var state_machine = animation_tree.get("parameters/playback")
@@ -40,7 +40,8 @@ var meal_name = "" # name of meal being ordered currently
 @export var overhead_ui_thinking: PackedScene
 @export var order_gen_number = randi()
 @onready var ui_anchor: Marker3D = $OverheadUIAnchor
-
+var FALLEN_OVER_TIME = 5.0
+var fallen_over_timer = FALLEN_OVER_TIME
 # Might get changed back to const at some point
 const MAXIMUM_SEATING_TIME: float = 250
 
@@ -128,6 +129,11 @@ func position_ui(ui: Control):
 func _physics_process(delta: float):
 	
 	if is_multiplayer_authority():
+		if fallen_over:
+			fallen_over_timer -= delta
+			if fallen_over_timer < 0:
+				fallen_over = false
+			return
 		synced_velocity = velocity
 		_npc_behavior(delta)
 		if _is_pathfinding and _nav_agent:
@@ -316,4 +322,11 @@ func despawn():
 		overhead_ui_order_instance.queue_free()
 	if is_instance_valid(overhead_ui_order_instance):
 		overhead_ui_order_instance.queue_free()
-		
+
+# This function is for waterspill sabotage
+func fall_down():
+	print("AAHHH IVE FALLEN", is_multiplayer_authority())
+	if is_multiplayer_authority():
+		print("AAHHH IVE FALLEN")
+		fallen_over = true
+		fallen_over_timer = FALLEN_OVER_TIME

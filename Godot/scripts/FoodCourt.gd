@@ -8,12 +8,12 @@ var _time_since_queue_check: float = 0.0
 
 
 @onready var _game_server = get_node("/root/GameServer")
-@export var customer_scene: PackedScene
+@export var customer_scenes: Array[PackedScene] = []
 @export var tables: Array[Table] = []
 @export var queue_spots: Array[QueueSpot] = []
 @export var customer_spawn_point: Node3D
 @export var customer_exit_point: Node3D
-
+@export var customer_seed = randi() # For making synced random changes
 
 var _next_customer_id_num: int = 0
 var number_of_restaurants = 2
@@ -65,7 +65,7 @@ func spawn_customer(id: String, pos: Vector3, fc_id: String):
 	if get_node_or_null(id):
 		return
 
-	var new_customer = customer_scene.instantiate()
+	var new_customer = customer_scenes[customer_seed % customer_scenes.size()].instantiate()
 	new_customer.name = id
 	new_customer._id = id
 	new_customer._food_court_id = fc_id
@@ -74,7 +74,8 @@ func spawn_customer(id: String, pos: Vector3, fc_id: String):
 	
 	# Tell the multiplayer system that the server (peer ID 1) has authority.
 	new_customer.set_multiplayer_authority(1)
-
+	if is_multiplayer_authority():
+		customer_seed = randi()
 ## Returns point customers despawn at
 func get_exit_point():
 	return customer_exit_point

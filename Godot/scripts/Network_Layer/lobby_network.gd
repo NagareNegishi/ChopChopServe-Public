@@ -175,6 +175,7 @@ func _start_game() -> void:
 	# Test scene
 	SceneManager.change_scene(SceneManager.Scene.EMMA_TEST)
 
+
 ##----------------------------------------------------------------------------------
 
 

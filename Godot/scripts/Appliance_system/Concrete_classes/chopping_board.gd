@@ -79,7 +79,7 @@ func take_all() -> Array[Node]:
 		remove_child(item)
 	contents = []
 	contents_names = []
-	emit_signal("food_taken", self, contents)
+	emit_signal("food_taken", self, all_items)
 	return all_items
 
 

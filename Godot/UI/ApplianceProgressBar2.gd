@@ -29,23 +29,22 @@ func _ready() -> void:
 
 
 func _on_add_cookware(cookware, appliance): # Need to do something else for the sink
-	print("Called _on_add_cookware with:", cookware, appliance)
 	if cookware == null:
 		print("Warning: cookware is null!")
 	if appliance == null:
 		print("Warning: appliance is null!")
-	print("cookware added")
+	
 	cw = cookware
 	applianceInstance = appliance
 	
-	cookware.connect("food_placed", Callable(self, "_on_food_added"))
-	cookware.connect("food_taken", Callable(self, "_on_food_taken"))
+	cw.connect("food_placed", Callable(self, "_on_food_added"))
+	cw.connect("food_taken", Callable(self, "_on_food_taken"))
 	
 	if cookware is not ChoppingBoard:
-		cookware.connect("new_average", Callable(self, "_on_average_updated"))
+		cw.connect("new_average", Callable(self, "_on_average_updated"))
 	
 	if appliance != null:
-		appliance.connect("cookware_taken", Callable(self, "_on_cookware_taken"))
+		applianceInstance.connect("cookware_taken", Callable(self, "_on_cookware_taken"))
 	else:
 		push_error("The applience and the cookware on the appliance shouldnt be null")
 
@@ -65,8 +64,9 @@ func _on_food_added(cookware, contents):
 		progress_bar.max_value = get_max_value(get_cooking_style())
 	else:
 		progress_bar.max_value = 3
-	if !food_item.is_cooked:
-		progress_bar.value = 0
+	
+	if food_item.is_cooked:
+		progress_bar.value = progress_bar.max_value
 	
 	if not food_item.is_connected("cooking", Callable(self, "_on_food_cooking")):
 		food_item.connect("cooking", Callable(self, "_on_food_cooking"))
@@ -74,19 +74,27 @@ func _on_food_added(cookware, contents):
 
 func _on_food_taken(cookware, contents):
 	print("FOOD IS TAKEN")
-	if contents is Array and contents.size() > 1:
+	print("CONTENTS: ",contents)
+	print("COOKWARE: ", cookware)
+	if contents is Array and contents.size() >= 1:
+		print("1")
 		for item in contents:
+			print("2")
 			if !item.is_cooked:
+				print("3")
 				item.set_cook_time(get_max_value(get_cooking_style()), get_cooking_style())
-				progress_bar.value = 0
+				print("progress value = ", progress_bar.value,"item cook time = ",item.get_cook_time)
 	elif contents is Food:
+		print("4")
 		if !contents.is_cooked:
+			print("5")
 			contents.set_cook_time(get_max_value(get_cooking_style()), get_cooking_style())
-			progress_bar.value = 0
+			print("progress value = ", progress_bar.value,"item cook time = ",contents.get_cook_time)
 	
 	if food_item and food_item.is_connected("cooking", Callable(self, "_on_food_cooking")):
 		food_item.disconnect("cooking", Callable(self, "_on_food_cooking"))
-
+	
+	progress_bar.value = 0
 	is_open = false
 	food_item = null
 
@@ -108,7 +116,6 @@ func _on_cookware_taken(cookware, appliance):
 		item.set_cook_time(get_max_value(get_cooking_style()), get_cooking_style())
 
 func _on_food_cooking():
-	print("food is cooking")
 	progress_bar.value += 1
 
 

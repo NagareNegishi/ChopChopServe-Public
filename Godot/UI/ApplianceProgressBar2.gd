@@ -60,7 +60,10 @@ func _on_food_added(cookware, contents):
 	elif contents is Food:
 		food_item = contents
 	
-	progress_bar.max_value = get_max_value(get_cooking_style())
+	if get_max_value(get_cooking_style()):
+		progress_bar.max_value = get_max_value(get_cooking_style())
+	else:
+		progress_bar.max_value = 3
 	
 	if not food_item.is_connected("cooking", Callable(self, "_on_food_cooking")):
 		food_item.connect("cooking", Callable(self, "_on_food_cooking"))
@@ -119,7 +122,7 @@ func change_visibility(turn_on: bool):
 	
 	if applianceInstance:
 		owner_team = applianceInstance.get_appliance_owner()
-	elif applianceInstance == null and cw is Blender:
+	elif applianceInstance == null and (cw is Blender || cw is Sink):
 		owner_team = cw.get_appliance_owner()
 	else:
 		owner_team = 0

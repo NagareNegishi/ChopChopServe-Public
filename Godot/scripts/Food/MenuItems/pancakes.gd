@@ -7,7 +7,7 @@ static var _auto_register = MenuItem.register(pancakes)
 @warning_ignore("unused_private_class_variable")
 static var _type_register = MenuItem.register_type(MenuItem.starters, pancakes.new())
 
-func _ready():
+func _init():
 	ingredients = ["Flour", "Water", "Milk", "Egg"]
 	
 	ingredient_states = {
@@ -17,12 +17,11 @@ func _ready():
 		"Milk":["RAW","MIXED","FRIED"]
 	}
 	
-	is_available=true
+	name_of_meal = "pancakes"
+	ui_texture = load("res://assets/textures/recipes/Pancakes.png")
 
 
-func _init():
+func _ready():
 	cooked_mesh_good = $Pancakes
 	cooked_mesh_bad = $BadQualityPancakes
 	cooked_mesh_burnt = $BurntPancakes
-	name_of_meal = "pancakes"
-	ui_texture = load("res://assets/textures/recipes/Pancakes.png")

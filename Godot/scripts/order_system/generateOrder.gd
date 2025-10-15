@@ -1,7 +1,6 @@
 extends Node
 class_name generateOrder
 # variables for the menuitem to be loaded into this script so its values can be used
-var preload_menuItems = preload("res://scripts/Food/MenuItems/menuItem.gd")
 var menu_instance
 
 # Order for the npc
@@ -12,16 +11,12 @@ var s = [] # starters
 var m = [] # mains
 var d = [] # deserts
 
-
-# Instantiates a new instance of the menuitem so that there is access to the menuitem static arrays
-func _ready():
-	menu_instance = preload_menuItems.new()
-
-
+var available_recipes
 # Creates an order of food that is available for the npcs to order depending on the day
 # the server deals with the chnaging of the availablity at the moment
 # @return an order of 2 starters, 2 mains and a desert in a list
 func get_order():
+	available_recipes = GameState.get_available_recipes()
 	order.clear() # Make sure there is nothing in the list already as precaution
 	
 	# Put available food into new lists
@@ -79,6 +74,5 @@ func food_generator(food_type: Array, index : int)-> MenuItem:
 func check_food_avalibility(new_list: Array, original_list: Array):
 	new_list.clear()
 	for item in original_list:
-		if item.is_available:
+		if available_recipes.has(item):
 			new_list.append(item)
-	

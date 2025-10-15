@@ -15,7 +15,7 @@ func _init():
 		"Dough": ["RAW", "BAKED"]
 	}
 	
-	is_available = true
+
 	name_of_meal = "pie_pumpkin"
 	ui_texture = load("res://assets/textures/recipes/PumpkinPie.png")
 	

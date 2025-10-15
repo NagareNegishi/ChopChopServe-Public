@@ -14,12 +14,9 @@ func _init():
 		"Tomato": ["RAW","CHOPPED", "BOILED"],
 		"Water": ["RAW","BOILED"]
 	}
-	is_available = true
+	
 	name_of_meal = "soup_tomato"
 	ui_texture = load("res://assets/textures/recipes/TomatoSoup.png")
-
-	# This is the appliance it is to be collected in 
-	#appliance = "Bowl"
 
 func _ready():
 	cooked_mesh_good = $TomatoSoup

@@ -398,9 +398,20 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6.5, 
 [node name="Sink2" parent="NavigationRegion3D/Floor" instance=ExtResource("25_d4bhi")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6.5, 2.4, -8)
 
-[node name="FoodFactory" parent="NavigationRegion3D" instance=ExtResource("26_y7x5b")]
-transform = Transform3D(1, 0, -4.65661e-10, 0, 1, 0, 4.65661e-10, 0, 1, 6.33427, 0, 0.0350459)
+[node name="FoodFactory4" parent="NavigationRegion3D" instance=ExtResource("26_y7x5b")]
+transform = Transform3D(1, 0, -4.19095e-09, 0, 1, 0, 4.19095e-09, 0, 1, 9.83327, 0, 0.0544047)
+group = 3
+
+[node name="FoodFactory3" parent="NavigationRegion3D" instance=ExtResource("26_y7x5b")]
+transform = Transform3D(1, 0, -3.25963e-09, 0, 1, 0, 3.25963e-09, 0, 1, 8.44538, 0, 0.0467259)
 group = 2
+
+[node name="FoodFactory2" parent="NavigationRegion3D" instance=ExtResource("26_y7x5b")]
+transform = Transform3D(1, 0, -2.32831e-09, 0, 1, 0, 2.32831e-09, 0, 1, 6.99294, 0, 0.03869)
+group = 1
+
+[node name="FoodFactory" parent="NavigationRegion3D" instance=ExtResource("26_y7x5b")]
+transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 9.31323e-10, 0, 1, 5.63437, 0, 0.0311735)
 
 [node name="Blender" parent="NavigationRegion3D" instance=ExtResource("26_2rsp4")]
 transform = Transform3D(0.042015, 0, -0.999116, 0, 1, 0, 0.999116, 0, 0.042015, 2.95021, 0.0150003, 1.36148)

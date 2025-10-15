@@ -83,7 +83,8 @@ func _enter_end_phase():
 		has_ended = true
 		current_day += 1
 		var available_food_names = _get_available_food_names()
-		_make_food_items_available(available_food_names)
+		if available_food_names != null:
+			_make_food_items_available(available_food_names)
 	
 	var team_1_rep = ReputationSystem.get_reputation(1)
 	var team_2_rep = ReputationSystem.get_reputation(2)

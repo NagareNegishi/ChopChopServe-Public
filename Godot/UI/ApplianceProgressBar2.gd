@@ -40,6 +40,7 @@ func _on_add_cookware(cookware, appliance): # Need to do something else for the 
 	
 	cookware.connect("food_placed", Callable(self, "_on_food_added"))
 	cookware.connect("food_taken", Callable(self, "_on_food_taken"))
+	
 	if cookware is not ChoppingBoard:
 		cookware.connect("new_average", Callable(self, "_on_average_updated"))
 	
@@ -64,6 +65,8 @@ func _on_food_added(cookware, contents):
 		progress_bar.max_value = get_max_value(get_cooking_style())
 	else:
 		progress_bar.max_value = 3
+	if !food_item.is_cooked:
+		progress_bar.value = 0
 	
 	if not food_item.is_connected("cooking", Callable(self, "_on_food_cooking")):
 		food_item.connect("cooking", Callable(self, "_on_food_cooking"))
@@ -83,10 +86,9 @@ func _on_food_taken(cookware, contents):
 	
 	if food_item and food_item.is_connected("cooking", Callable(self, "_on_food_cooking")):
 		food_item.disconnect("cooking", Callable(self, "_on_food_cooking"))
-	
+
 	is_open = false
 	food_item = null
-	
 
 func _on_cookware_taken(cookware, appliance):
 	print("cookware is taken")

@@ -96,12 +96,13 @@ func _average_food() -> float:
 func take_all() -> Array[Node]:
 	finish_cook()
 	var all_items = contents
+	emit_signal("food_taken",self, contents)
 	for item in all_items:
 		remove_child(item)
 	contents = []
 	contents_names = []
 	cookware_ui.clear()
-	emit_signal("food_taken")
+	
 	return all_items
 
 
@@ -222,6 +223,7 @@ func _client_take(item_name: String) -> void:
 			var item = contents.pop_at(i)
 			remove_child(item)
 			get_tree().current_scene.add_child(item)
+			emit_signal("food_taken", self, contents)
 			break
 
 

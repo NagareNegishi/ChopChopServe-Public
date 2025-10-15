@@ -20,9 +20,7 @@ current_owner = 1
 cooking_style = 0
 model_scene = null
 
-
 [node name="Blender" parent="." index="3" instance=ExtResource("6_f4din")]
-
 
 [node name="SubViewport" type="SubViewport" parent="." index="4"]
 transparent_bg = true

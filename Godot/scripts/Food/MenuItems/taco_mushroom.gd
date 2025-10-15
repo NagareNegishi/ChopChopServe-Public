@@ -17,7 +17,6 @@ func _init():
 		"Tomato":["RAW","CHOPPED"]
 	}
 	
-	is_available= true
 	name_of_meal = "taco_mushroom"
 	ui_texture = load("res://assets/textures/recipes/MushroomTaco.png")
 	

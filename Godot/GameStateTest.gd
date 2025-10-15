@@ -1,19 +1,26 @@
 class_name GameStateTest
 extends Node
 
-var prep_length : float
-var current_time : float = 180
-var day_length : float
-var amount_of_days: int # Amount of days is the amount of rounds on one level
-var current_day : int
-var current_phase
-var team_1_score : int
-var team_2_score : int
+const SERVE_TIME : int = 180
+const PREP_TIME : int = 45
+const amount_of_days: int = 5  # Amount of days is the amount of rounds on one level
+
+var current_time : float = PREP_TIME
+var current_day : int = 0
+var current_phase : Phases = Phases.PREP
 var can_send_customers : bool = false
-var customer_amount : int
+
+var team_1_score : int = 0
+var team_2_score : int = 0
+
 var timer : Timer = Timer.new()
 
+@export var food_court : FoodCourt
+
 signal time_changed(time : float)
+signal day_changed(day : int)
+signal recipe_added(recipe : MenuItem)
+signal phase_changed(phase : Phases)
 
 enum Phases{
 	PREP,
@@ -22,10 +29,6 @@ enum Phases{
 }
 
 func _ready() -> void:
-	amount_of_days = 5
-	prep_length = 30
-	day_length = 180
-
 	if !ENetManager.is_host(): return 
 	timer.wait_time = 1.0
 	timer.one_shot = false
@@ -36,15 +39,22 @@ func _ready() -> void:
 	#CurrencySystem.minus_currency(2, 9500)
 
 func change_phase():
-	if current_time <= prep_length:
-		current_phase = Phases.PREP
-		print("PREP PHASE")
-	elif current_time > prep_length && current_time <= day_length:
-		current_phase = Phases.SERVE
-		print("SERVE PHASE")
-	else:
-		current_phase = Phases.END_ROUND
-		print("END PHASE")
+	timer.stop()
+	match current_phase:
+		Phases.PREP:
+			current_phase = Phases.SERVE
+			current_time = SERVE_TIME
+			timer.start()
+
+		Phases.SERVE:
+			current_phase = Phases.PREP
+			current_time = PREP_TIME
+			timer.start()
+
+		Phases.END_ROUND:
+			pass
+	
+	rpc("_client_phase_change", current_phase)
 
 func check_customers():
 	if current_phase == Phases.PREP || current_phase == Phases.END_ROUND:
@@ -54,9 +64,11 @@ func check_customers():
 
 
 func _on_timer_timeout():
+	if current_time <= 0: 
+		change_phase()
+	
 	current_time -= 1
 	rpc("_client_time_change", current_time)
-	#change_phase()
 	#check_customers()
 
 func get_customer_check():
@@ -71,3 +83,8 @@ func get_current_phase():
 @rpc("authority", "call_local")
 func _client_time_change(time : float):
 	emit_signal("time_changed", time)
+
+
+@rpc("authority", "call_local")
+func _client_phase_change(phase : Phases):
+	emit_signal("phase_changed", phase)

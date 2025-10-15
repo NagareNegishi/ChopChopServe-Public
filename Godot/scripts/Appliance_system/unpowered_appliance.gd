@@ -62,11 +62,15 @@ func put(item: Node) -> bool:
 ## Place an item onto this appliance
 ## @param item: The Node to place on this appliance
 func _put(item: Node) -> void:
+	emit_signal("add_appliance", self, null)
 	contents.append(item)
 	add_child(item)
 	contents_names.append(item.name)
+	emit_signal("food_placed", self, contents)
+
 	if item is AbstractThrowable: # could be plate, food
 		item.restore_original_transform()
+
 
 
 ## Client-side method to put item, called by host
@@ -92,6 +96,7 @@ func take() -> Node:
 	var item = contents.pop_back()
 	remove_child(item)
 	contents_names.pop_back()
+	emit_signal("food_taken", self, item)
 	return item
 
 

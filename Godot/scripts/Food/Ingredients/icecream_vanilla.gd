@@ -9,3 +9,4 @@ func _ready():
 	raw_mesh = null
 	add_to_group("Food")
 	on_state_change()
+	texture = preload("res://assets/textures/recipes/Vanillaicecream.png")

@@ -5,10 +5,15 @@ class_name NetworkLayer
 extends Node
 
 # Events (emitted by implementations)
+@warning_ignore("unused_signal")
 signal player_joined(id: int)
+@warning_ignore("unused_signal")
 signal player_left(id: int)
+@warning_ignore("unused_signal")
 signal connected()
+@warning_ignore("unused_signal")
 signal disconnected()
+@warning_ignore("unused_signal")
 signal data_received(from_id: int, data: Dictionary)
 
 # signal connection_failed(reason: String)
@@ -16,72 +21,79 @@ signal data_received(from_id: int, data: Dictionary)
 # signal network_error(error: String)
 
 enum ConnectionState {
-    DISCONNECTED,
-    CONNECTING,
-    CONNECTED,
-    HOST
+	DISCONNECTED,
+	CONNECTING,
+	CONNECTED,
+	HOST
 }
 
 # Connection lifecycle
+@warning_ignore("unused_parameter")
 func create_game(max_players: int) -> bool:
-    push_error("Must implement create_game")
-    return false
+	push_error("Must implement create_game")
+	return false
 
 # Different implementations can parse connection_info differently:
 # ENetNetworkLayer: "127.0.0.1:7000"
 # WebSocketNetworkLayer: "wss://myserver.com:443/room/abc123"
 # SteamNetworkLayer: "steam:friend_id"
+@warning_ignore("unused_parameter")
 func join_game(connection_info: String) -> bool:
-    push_error("Must implement join_game")
-    return false
+	push_error("Must implement join_game")
+	return false
 
 func leave_game():
-    push_error("Must implement leave_game")
+	push_error("Must implement leave_game")
 
 # Data transmission
+@warning_ignore("unused_parameter")
 func send_to(player_id: int, data: Dictionary):
-    push_error("Must implement send_to")
+	push_error("Must implement send_to")
 
+@warning_ignore("unused_parameter")
 func broadcast(data: Dictionary):
-    push_error("Must implement broadcast")
+	push_error("Must implement broadcast")
 
 # Selective transmission (very useful for games)
+@warning_ignore("unused_parameter")
 func send_to_multiple(player_ids: Array[int], data: Dictionary):
-    push_error("Must implement send_to_multiple")
+	push_error("Must implement send_to_multiple")
 
+@warning_ignore("unused_parameter")
 func broadcast_except(excluded_id: int, data: Dictionary):
-    push_error("Must implement broadcast_except")
+	push_error("Must implement broadcast_except")
 
 # Player info
 func get_my_id() -> int:
-    push_error("Must implement get_my_id")
-    return -1
+	push_error("Must implement get_my_id")
+	return -1
 
 func is_host() -> bool:
-    push_error("Must implement is_host")
-    return false
+	push_error("Must implement is_host")
+	return false
 
 func get_connection_info() -> String:
-    push_error("Must implement get_connection_info")
-    return ""
+	push_error("Must implement get_connection_info")
+	return ""
 
 func get_connected_players() -> PackedInt32Array:
-    push_error("Must implement get_connected_players")
-    return PackedInt32Array()
+	push_error("Must implement get_connected_players")
+	return PackedInt32Array()
 
 # Player management used by the host
 func get_player_count() -> int:
-    push_error("Must implement get_player_count")
-    return 0
+	push_error("Must implement get_player_count")
+	return 0
 
+@warning_ignore("unused_parameter")
 func kick_player(player_id: int) -> bool:
-    push_error("Must implement kick_player")
-    return false
+	push_error("Must implement kick_player")
+	return false
 
 # Connection state
 func get_connection_state() -> ConnectionState:
-    push_error("Must implement get_connection_state")
-    return ConnectionState.DISCONNECTED
+	push_error("Must implement get_connection_state")
+	return ConnectionState.DISCONNECTED
 
 
 # # Optional features, consider once the base functionality is implemented

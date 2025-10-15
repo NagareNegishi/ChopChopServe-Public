@@ -10,6 +10,6 @@ func _ready():
 	chopped_mesh = $ChoppedPumpkin
 	# Cook time same as super class
 	# Spoil time same as super class
-	
+	texture = preload("res://assets/textures/ingredients/pumpkin.png")
 	add_to_group("Food")
 	on_state_change()

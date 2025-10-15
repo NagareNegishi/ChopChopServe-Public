@@ -20,7 +20,7 @@ var MOVE_PARTICLES_POOL = []
 
 var player_inputs := {}
 var time_start : int = 0
-
+var client_offset : int = 0
 ## Called when the node enters the scene tree for the first time.
 ## @return void
 func _ready() -> void:
@@ -40,14 +40,20 @@ func _ready() -> void:
 
 @rpc("any_peer", "call_local")
 func _set_time_now(cur : int):
+	var local_now = Time.get_ticks_msec()
+	client_offset = cur - local_now
 	time_start = cur
+	
 
 
 ## Runs every process frame
 ## @param delta time to proces frame
 ## @return void
 func _process(delta: float) -> void:
-	_movement(delta)
+	if Input.get_connected_joypads().size() <= 0:
+		_keyboard_movement(delta)
+	else:
+		_controller_movement(delta)
 	
 	if !is_on_floor():
 		velocity += get_gravity() * delta
@@ -56,8 +62,9 @@ func _process(delta: float) -> void:
 ## Handles the movement logic for the car
 # @param delta time to proces frame
 # @return void
-func _movement(delta : float) -> void:
+func _keyboard_movement(delta : float) -> void:
 	#resets average
+
 	turn_input_avg = 0
 	move_input_avg = 0
 	
@@ -129,14 +136,13 @@ func _spawn_particle(index : int) -> void:
 # adds input into player_input
 @rpc("authority", "call_local", "unreliable")
 func _on_received_input(peer_id: int, move : int, turn : int, time : int):
-	var adjusted_time : int = max(0, time) - time_start - 70
-	adjusted_time = max(0, adjusted_time)
-	#print(str(ENetManager.get_my_id())+": " +str(time_start))
-	if !player_inputs.has(peer_id) or adjusted_time > player_inputs[peer_id]["time"]:
+	var actual_time = time - time_start
+	#print(str(peer_id)+": " +str(actual_time))
+	if !player_inputs.has(peer_id) or actual_time > player_inputs[peer_id]["time"]:
 		player_inputs[peer_id] = {
 			"move" : move,
 			"turn" : turn,
-			"time" : adjusted_time
+			"time" : actual_time
 		}
 
 func disable_input(disable : bool):
@@ -145,3 +151,34 @@ func disable_input(disable : bool):
 
 func _reduce(a : int, b : int): 
 	return a if player_inputs[a].time > player_inputs[b].time else b
+
+var _direction
+
+func _controller_movement(delta: float):
+	var input_dir = Input.get_vector("Left", "Right", "Up", "Down") # X: Left/Right, Y: Forward/Back
+
+	if input_dir.length() < 0.1:
+		velocity = velocity.move_toward(Vector3.ZERO, decceleration * delta)
+		move_and_slide()
+		return
+
+	# Convert 2D input direction into camera-relative 3D direction
+	var cam_forward = camera.global_transform.basis.z
+	var cam_right = camera.global_transform.basis.x
+	
+	# Flatten the camera vectors (ignore Y to keep movement horizontal)
+	cam_forward.y = 0
+	cam_right.y = 0
+	cam_forward = cam_forward.normalized()
+	cam_right = cam_right.normalized()
+
+	var move_dir = (cam_forward * input_dir.y + cam_right * input_dir.x).normalized()
+	
+	# Rotate character toward movement direction
+	var target_rot = atan2(-move_dir.x, -move_dir.z)
+	rotation.y = lerp_angle(rotation.y, target_rot, delta * turn_speed * 1.5)
+
+	# Accelerate toward movement direction
+	velocity = velocity.move_toward(move_dir * speed / 1.5, acceleration * delta)
+
+	move_and_slide()

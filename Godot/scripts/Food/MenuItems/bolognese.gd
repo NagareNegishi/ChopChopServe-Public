@@ -16,7 +16,6 @@ func _init():
 		"Tomato":["RAW","MIXED","FRIED"]
 	}
 	#appliance = "Bowl"
-	is_available=true
 	name_of_meal = "bolognese"
 	ui_texture = load("res://assets/textures/recipes/Bolognse.png")
 func _ready():

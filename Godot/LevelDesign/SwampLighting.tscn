@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://dys1qdkpi62i0"]
+[gd_scene load_steps=62 format=3 uid="uid://dys1qdkpi62i0"]
 
 [ext_resource type="Material" uid="uid://cnd7ix4cfrxi" path="res://shaders/Water/SwampWater.tres" id="1_kl1pt"]
 [ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_ndyhk"]
@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="2_fb8tl"]
 [ext_resource type="PackedScene" uid="uid://dlk0mbdfg2cmq" path="res://scenes/Appliance_system/oven.tscn" id="2_k0d3q"]
 [ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="3_jbxoo"]
-[ext_resource type="PackedScene" uid="uid://bqpdxpf2l7uw1" path="res://scenes/Appliance_system/stove.tscn" id="3_ypanj"]
 [ext_resource type="PackedScene" uid="uid://bk7ovilp788kq" path="res://scripts/Player/spawn_point.tscn" id="3_yx2km"]
 [ext_resource type="PackedScene" uid="uid://bkjryoge78wu0" path="res://assets/newmodels/decorations/Table.glb" id="4_wlc25"]
 [ext_resource type="PackedScene" uid="uid://bakeesqt3byva" path="res://scenes/Appliance_system/sink.tscn" id="5_a51gl"]
@@ -15,9 +14,12 @@
 [ext_resource type="PackedScene" uid="uid://dbeboubu5gkhe" path="res://scenes/Appliance_system/fryer.tscn" id="7_k0d3q"]
 [ext_resource type="PackedScene" uid="uid://b5nb1nxo1r1kb" path="res://scenes/Appliance_system/bench.tscn" id="9_jjilc"]
 [ext_resource type="PackedScene" uid="uid://df6cemvjo3grw" path="res://scenes/Appliance_system/chop_table.tscn" id="11_e41aj"]
+[ext_resource type="PackedScene" uid="uid://pee1rah6hbep" path="res://scenes/Appliance_system/stove_with_pan.tscn" id="13_fwwnp"]
+[ext_resource type="PackedScene" uid="uid://b0ougk3d4jnku" path="res://scenes/Appliance_system/food_factory.tscn" id="14_7ojpi"]
 [ext_resource type="PackedScene" uid="uid://dpwv6bcyou10r" path="res://assets/NaturePack/Rock_Moss_7.fbx" id="14_a51gl"]
-[ext_resource type="PackedScene" uid="uid://bev73qms8mo6h" path="res://scenes/Appliance_system/food_crate_test.tscn" id="14_jjilc"]
+[ext_resource type="PackedScene" uid="uid://0aex3yts1utd" path="res://scenes/Appliance_system/cabinet.tscn" id="15_gxibg"]
 [ext_resource type="PackedScene" uid="uid://bcxt3d3xllask" path="res://assets/NaturePack/Rock_Moss_6.fbx" id="15_jjilc"]
+[ext_resource type="PackedScene" uid="uid://krj0gwn31x8u" path="res://scenes/Appliance_system/stove_with_pot.tscn" id="16_1uhqc"]
 [ext_resource type="PackedScene" uid="uid://cx0krfkam0acv" path="res://assets/NaturePack/Rock_Moss_5.fbx" id="16_ndyhk"]
 [ext_resource type="PackedScene" uid="uid://b38a0ph0yf37r" path="res://assets/NaturePack/Rock_Moss_4.fbx" id="17_e41aj"]
 [ext_resource type="PackedScene" uid="uid://dwds5rce23q8x" path="res://assets/NaturePack/Rock_Moss_3.fbx" id="18_lmy4t"]
@@ -38,6 +40,9 @@
 [ext_resource type="PackedScene" uid="uid://c3belq12qg2va" path="res://assets/Swampy/FenceSwampFence1.glb" id="32_k0d3q"]
 [ext_resource type="PackedScene" uid="uid://bw37632k8e3to" path="res://assets/Swampy/FenceSwampFence2.glb" id="33_ypanj"]
 [ext_resource type="Script" uid="uid://dnns4dn8p042y" path="res://scripts/Table.gd" id="39_fwwnp"]
+[ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="41_k8rnb"]
+[ext_resource type="PackedScene" uid="uid://lfcppt4wh0g4" path="res://scenes/Interaction/UpgradeHammer.tscn" id="42_g2bww"]
+[ext_resource type="PackedScene" uid="uid://cuhevmvqjjwji" path="res://assets/newmodels/decorations/Stool.glb" id="43_7ojpi"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_k0d3q"]
 size = Vector3(19.6471, 6.69421, 1.16809)
@@ -304,11 +309,6 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4, 0, 
 using_tscn = true
 unique_name = "8"
 
-[node name="Bench2" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("9_jjilc")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 5, 0, 5)
-using_tscn = true
-unique_name = "7"
-
 [node name="Bench3" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("9_jjilc")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 6, 0, 5)
 using_tscn = true
@@ -322,11 +322,6 @@ unique_name = "1"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 9)
 unique_name = "3"
 
-[node name="Stove" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("3_ypanj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9)
-using_tscn = true
-unique_name = "2"
-
 [node name="Sink" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("5_a51gl")]
 transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, -1, 0, 1)
 using_tscn = true
@@ -336,11 +331,48 @@ unique_name = "9"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 9)
 unique_name = "4"
 
-[node name="FoodFactory3" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("14_jjilc")]
-transform = Transform3D(1, 0, -4.61466e-09, 0, 1, 0, 4.61466e-09, 0, 1, 10, -0.348, 6)
-catergory = 1
+[node name="StoveWithPan" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("13_fwwnp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9)
+unique_name = "Pan"
+
+[node name="StoveWithPan2" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("13_fwwnp")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 4, 0, -9)
+unique_name = "Pan2"
+current_owner = 2
+
+[node name="FoodFactory" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("14_7ojpi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 3)
+group = 1
 using_tscn = true
-unique_name = "FoodCrate2"
+unique_name = "Food"
+current_owner = 0
+
+[node name="FoodFactory2" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("14_7ojpi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 3)
+group = 2
+using_tscn = true
+unique_name = "Food3"
+current_owner = 0
+
+[node name="Cabinet" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("15_gxibg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 9)
+using_tscn = true
+unique_name = "Plate"
+
+[node name="Cabinet2" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("15_gxibg")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 5, 0, -9)
+using_tscn = true
+unique_name = "Plate2"
+current_owner = 2
+
+[node name="StoveWithPot" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("16_1uhqc")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 5, 0, 5)
+unique_name = "Pot"
+
+[node name="StoveWithPot2" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("16_1uhqc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -5)
+unique_name = "Pot2"
+current_owner = 2
 
 [node name="Right Kitchen" type="Node3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 9.31323e-10, 0, 1, 0, -9.31323e-10, 0, 1, 0.446792, 0.728, 0.628139)
@@ -349,12 +381,6 @@ transform = Transform3D(1, 0, 9.31323e-10, 0, 1, 0, -9.31323e-10, 0, 1, 0.446792
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
 using_tscn = true
 unique_name = "18"
-current_owner = 2
-
-[node name="Bench6" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("9_jjilc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -5)
-using_tscn = true
-unique_name = "17"
 current_owner = 2
 
 [node name="Bench7" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("9_jjilc")]
@@ -373,12 +399,6 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 
 unique_name = "13"
 current_owner = 2
 
-[node name="Stove2" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("3_ypanj")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 4, 0, -9)
-using_tscn = true
-unique_name = "12"
-current_owner = 2
-
 [node name="Sink2" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("5_a51gl")]
 transform = Transform3D(-1, 0, 8.74226e-08, 0, 1, 0, -8.74226e-08, 0, -1, 5, 0, -1)
 using_tscn = true
@@ -390,12 +410,19 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1, 0,
 unique_name = "14"
 current_owner = 2
 
-[node name="FoodFactory4" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("14_jjilc")]
-transform = Transform3D(1, 0, -4.61466e-09, 0, 1, 0, 4.61466e-09, 0, 1, -5, -0.348, -7)
-catergory = 1
+[node name="FoodFactory2" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("14_7ojpi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -3)
+group = 1
 using_tscn = true
-unique_name = "FoodCrate"
-current_owner = 2
+unique_name = "Food2"
+current_owner = 0
+
+[node name="FoodFactory3" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("14_7ojpi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -3)
+group = 3
+using_tscn = true
+unique_name = "Food4"
+current_owner = 0
 
 [node name="Tables" type="Node3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 9.31323e-10, 0, 1, 0, -9.31323e-10, 0, 1, 0.446792, 0.364, 0.628139)
@@ -943,7 +970,7 @@ transform = Transform3D(0.498981, 0, -0.0319091, 0, 0.5, 0, 0.0319091, 0, 0.4989
 transform = Transform3D(0.0283638, 0, 0.499195, 0, 0.5, 0, -0.499195, 0, 0.0283638, -0.671502, -0.273126, 18.0792)
 
 [node name="FenceSwampFence26" parent="NavigationRegion3D/Background/Objects" instance=ExtResource("33_ypanj")]
-transform = Transform3D(0.499195, 0, -0.0283638, 0, 0.5, 0, 0.0283638, 0, 0.499195, -5.549, -0.273, 19)
+transform = Transform3D(0.499195, 0, -0.0283638, 0, 0.5, 0, 0.0283638, 0, 0.499195, -5.5, -0.273, 19)
 
 [node name="FenceSwampFence28" parent="NavigationRegion3D/Background/Objects" instance=ExtResource("33_ypanj")]
 transform = Transform3D(0.0283638, 0, 0.499195, 0, 0.5, 0, -0.499195, 0, 0.0283638, -8.27585, -0.273126, 12.732)
@@ -952,7 +979,7 @@ transform = Transform3D(0.0283638, 0, 0.499195, 0, 0.5, 0, -0.499195, 0, 0.02836
 transform = Transform3D(-0.0283638, 0, -0.499195, 0, 0.5, 0, 0.499195, 0, -0.0283638, -9.01213, -0.273126, 29.0975)
 
 [node name="FenceSwampFence27" parent="NavigationRegion3D/Background/Objects" instance=ExtResource("33_ypanj")]
-transform = Transform3D(0.499195, 0, -0.0283638, 0, 0.5, 0, 0.0283638, 0, 0.499195, -11.7669, -0.273, 22.999)
+transform = Transform3D(0.499195, 0, -0.0283638, 0, 0.5, 0, 0.0283638, 0, 0.499195, -11.5, -0.273, 23)
 
 [node name="FenceSwampFence15" parent="NavigationRegion3D/Background/Objects" instance=ExtResource("32_k0d3q")]
 transform = Transform3D(0.0205367, 0, 0.499578, 0, 0.5, 0, -0.499578, 0, 0.0205367, -0.574606, -0.308, 15.5076)
@@ -1013,3 +1040,35 @@ transform = Transform3D(-0.499414, 0, 0.0241983, 0, 0.5, 0, -0.0241983, 0, -0.49
 
 [node name="CustomerSpawner" type="MultiplayerSpawner" parent="."]
 spawn_path = NodePath("../NavigationRegion3D/CustomerSpawn")
+
+[node name="Extinguisher" parent="." instance=ExtResource("41_k8rnb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, 2.5)
+
+[node name="Extinguisher2" parent="." instance=ExtResource("41_k8rnb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, -3)
+
+[node name="UpgradeHammer" parent="." instance=ExtResource("42_g2bww")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1, 7)
+
+[node name="UpgradeHammer2" parent="." instance=ExtResource("42_g2bww")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1, -7)
+
+[node name="Stools" type="Node3D" parent="."]
+
+[node name="Stool" parent="Stools" instance=ExtResource("43_7ojpi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.4, 3)
+
+[node name="Stool5" parent="Stools" instance=ExtResource("43_7ojpi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.4, -4)
+
+[node name="Stool6" parent="Stools" instance=ExtResource("43_7ojpi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.4, -4)
+
+[node name="Stool2" parent="Stools" instance=ExtResource("43_7ojpi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.4, -1)
+
+[node name="Stool3" parent="Stools" instance=ExtResource("43_7ojpi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 6)
+
+[node name="Stool4" parent="Stools" instance=ExtResource("43_7ojpi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.4, 6)

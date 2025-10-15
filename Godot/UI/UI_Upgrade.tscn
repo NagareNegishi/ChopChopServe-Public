@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://kx2ls46d27yc"]
 
-[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/DefaultTheme.tres" id="1_v3djh"]
+[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/Style/DefaultTheme.tres" id="1_v3djh"]
 [ext_resource type="Script" uid="uid://b1fcailv3s73c" path="res://UI/ui_upgrade.gd" id="1_yttyd"]
 [ext_resource type="StyleBox" uid="uid://bvtk4fhf7agfw" path="res://UI/UI_Upgrade_Bad_Border.tres" id="2_pe7db"]
 [ext_resource type="Texture2D" uid="uid://bmerniv1j22pj" path="res://assets/textures/misc/round-star.png" id="3_28o3u"]

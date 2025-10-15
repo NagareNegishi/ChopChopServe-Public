@@ -4,9 +4,13 @@
 class_name Appliance
 extends Placeable
 
+@warning_ignore("unused_signal")
 signal food_placed(cookware, contents)
+@warning_ignore("unused_signal")
 signal food_taken(cookware, contents)
+@warning_ignore("unused_signal")
 signal add_appliance(cookware, appliance)
+@warning_ignore("unused_signal")
 signal new_average(average: float)
 
 

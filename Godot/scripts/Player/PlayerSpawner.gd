@@ -65,7 +65,7 @@ func _get_spawn_point(player_id : int) -> SpawnPoint:
 		func(_spawn : SpawnPoint) : return _spawn.is_active()).filter(
 		func(_spawn : SpawnPoint) : return _spawn.team == ENetManager.get_team(player_id))
 	
-	valid_spawns.sort_custom(func(a : SpawnPoint, b : SpawnPoint) : return a.priority > b.priority)
+	valid_spawns.sort_custom(func(a : SpawnPoint, b : SpawnPoint) : return a.priority < b.priority)
 	
 	if valid_spawns.size() <= 0:
 		return null

@@ -6,6 +6,9 @@ extends Control
 
 @onready var game_state_ui : UIGameState = $UIGameState
 @onready var debug_hud = [$Controls, $FPS, $Server]
+@onready var sabotage_nodes = [$Sabotages/UiSabotageNode, $Sabotages/UiSabotageNode2, 
+$Sabotages/UiSabotageNode3, $Sabotages/UiSabotageNode4, 
+$Sabotages/UiSabotageNode5, $Sabotages/UiSabotageNode6]
 
 func _ready() -> void:
 	$Server.text = "Client" if !multiplayer.is_server() else "Server"

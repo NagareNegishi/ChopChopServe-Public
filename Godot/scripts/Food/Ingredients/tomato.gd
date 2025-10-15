@@ -12,6 +12,6 @@ func _ready():
 	burnt_mesh = $BurntTomato
 	chopped_mesh = $ChoppedTomato
 	mixed_mesh = $ChoppedTomato
-	
+	texture = preload("res://assets/textures/ingredients/Tomato.png")
 	add_to_group("Food")
 	on_state_change()

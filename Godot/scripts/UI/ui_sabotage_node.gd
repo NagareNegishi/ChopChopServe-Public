@@ -16,6 +16,8 @@ func _ready() -> void:
 	CurrencySystem.currency_changed.connect(currency_update)
 	cost = SabotageSystem.sabotage_costs.get(sabotage_index)
 	cost_label.text = str(cost)
+	if Input.get_connected_joypads().size() <= 0:
+		modulate = Color(255,255,255,180)
 	
 	var current_money = CurrencySystem.get_currency(ENetManager.get_my_team())
 	
@@ -34,3 +36,7 @@ func currency_update(teamID : int, new_currency : float):
 	
 	cost_label.add_theme_color_override("font_color", font_color)
 	input_bg.color = input_bg_color
+
+
+func select(is_selected : bool):
+	modulate = Color(255,255,255,180) if true else Color(255,255,255,130)

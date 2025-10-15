@@ -98,7 +98,8 @@ func _add_inventory_ui():
 	inventory_sprite.get_node("SubViewport").get_node("Inventory").group = group
 	add_child(inventory_sprite)
 	inventory = inventory_sprite
-	inventory_sprite.position -= Vector3(0,1.5,0)
+	inventory_sprite.no_depth_test = true
+	inventory_sprite.position -= Vector3(0,2,0)
 
 
 var player 
@@ -242,7 +243,7 @@ func _on_interactable_component_action_use(_is_action: bool) -> void:
 	if !_is_action: return
 	inventory_sprite.inventory.current_slot = inventory_sprite.inventory.move_forward()
 	inventory_sprite.inventory.update_slot_selected(true)
-	
+
 
 ## Override unsupported methods to prevent misuse ------------------------------
 func put(_item: Node) -> bool:
@@ -254,7 +255,6 @@ func take() -> Node:
 	return null
 
 func player_has(_item: Node) -> void:
-	print("MEOOWWWWWWWW")
 	inventory_sprite.inventory.select_ingredient()
 	return
 
@@ -262,3 +262,12 @@ func put_from_player(_item: Node) -> bool:
 	assert(false, "Food Crate does not support putting items")
 	return false
 #-------------------------------------------------------------------------------
+
+
+func _physics_process(delta: float) -> void:
+	if Input.is_action_just_pressed("LB"):
+		inventory_sprite.inventory.current_slot = inventory_sprite.inventory.move_backward()
+		inventory_sprite.inventory.update_slot_selected(true)
+	if Input.is_action_just_pressed("RB"):
+		inventory_sprite.inventory.current_slot = inventory_sprite.inventory.move_forward()
+		inventory_sprite.inventory.update_slot_selected(true)

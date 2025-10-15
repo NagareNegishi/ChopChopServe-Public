@@ -51,7 +51,7 @@ func _put_food(food: Food) -> void:
 	food.current_visibility(false)
 	food.change_collisions(true)
 	food.restore_original_transform()
-	emit_signal("food_placed", contents, self)
+	emit_signal("food_placed",self, contents)
 	if current_status == Status.COOKING:
 		_average_food()
 		food.start_cooking(power, cooking_style)

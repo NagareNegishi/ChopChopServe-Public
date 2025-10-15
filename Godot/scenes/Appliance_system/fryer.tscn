@@ -36,6 +36,6 @@ billboard = 1
 no_depth_test = true
 texture = SubResource("ViewportTexture_4l7he")
 
-[connection signal="add_appliance" from="." to="SubViewport/UiProgressCook" method="_on_add_appliance"]
+[connection signal="add_appliance" from="." to="SubViewport/UiProgressCook" method="_on_add_cookware"]
 
 [editable path="SubViewport/UiProgressCook"]

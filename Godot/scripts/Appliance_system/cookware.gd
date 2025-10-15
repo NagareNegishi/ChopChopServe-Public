@@ -65,7 +65,7 @@ func _put_food(food: Food) -> void:
 	food.change_collisions(true)
 	cookware_ui.add_food(food)
 	food.restore_original_transform()
-	emit_signal("food_placed", contents)
+	emit_signal("food_placed", self, contents)
 	if can_cook():
 		food.start_cooking(int(power_receiving * coefficient), cooking_style)
 		_average_food()

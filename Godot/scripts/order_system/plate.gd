@@ -129,12 +129,14 @@ func _set_quality(list: Array):
 	if list.size()<=0:
 		push_error("Nothing in list")
 	
+	@warning_ignore("unused_variable")
 	var total_quality = 0
 	for elem in list:
 		#print("NUMBER: ",number)
 		#print("ELEM: ", elem)
 		number = number + elem
 	
+	@warning_ignore("integer_division")
 	var average_quality = number / list.size()
 	
 	quality = (average_quality - floor_time_count)

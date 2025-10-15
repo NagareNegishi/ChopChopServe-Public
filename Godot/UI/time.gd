@@ -1,6 +1,6 @@
 extends Label
 
-var start_time_hour = 11
+var start_time_hour = 9
 var start_time_min = 30
 @onready var type = $TimeType
 func _ready():

@@ -34,7 +34,7 @@ func _init():
 	amount_of_days = 5
 	current_day = 1
 	prep_length = 30 #sec
-	day_length = 300 #sec
+	day_length = 60 #sec
 	end_length = 15
 	
 	timer.wait_time = 1.0
@@ -59,7 +59,7 @@ func change_phase():
 		_enter_prep_phase()
 	elif current_time <= day_length:
 		_enter_serve_phase()
-	elif current_time <= day_length + end_length:
+	elif current_time > day_length && current_time <= day_length + end_length:
 		_enter_end_phase()
 
 func _enter_prep_phase():
@@ -150,6 +150,9 @@ func _is_gameplay_scene(scene: SceneManager.Scene):
 		&& scene != SceneManager.Scene.MAIN_MENU \
 		&& scene != SceneManager.Scene.LOBBY_TEST
 
+
+func end_level(): # what are we doing here?? press okay on screen and then go back to lobby??
+	return 0
 
 func _start_gameplay_timer():
 	add_child(timer)

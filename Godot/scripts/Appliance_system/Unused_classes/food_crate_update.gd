@@ -139,6 +139,7 @@ func player_has(item: Node) -> void:
 		return
 
 
+@warning_ignore("unused_parameter")
 func _delete_food(item_path : String):
 	pass
 	

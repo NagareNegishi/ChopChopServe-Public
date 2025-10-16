@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://g5y4cnxk5856"]
+[gd_scene load_steps=48 format=3 uid="uid://g5y4cnxk5856"]
 
 [ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_1hj32"]
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="1_jd0au"]
@@ -35,6 +35,7 @@
 [ext_resource type="PackedScene" uid="uid://0aex3yts1utd" path="res://scenes/Appliance_system/cabinet.tscn" id="33_0eeim"]
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="33_q1cwv"]
 [ext_resource type="PackedScene" uid="uid://lfcppt4wh0g4" path="res://scenes/Interaction/UpgradeHammer.tscn" id="34_i40ex"]
+[ext_resource type="PackedScene" uid="uid://cuhevmvqjjwji" path="res://assets/newmodels/decorations/Stool.glb" id="36_mlfds"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kdffh"]
 size = Vector3(20.5843, 6.69421, 0.448242)
@@ -606,6 +607,13 @@ using_tscn = true
 unique_name = "Food"
 current_owner = 0
 
+[node name="FoodFactory2" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("30_0eeim")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
+group = 3
+using_tscn = true
+unique_name = "Food4"
+current_owner = 0
+
 [node name="StoveWithPot2" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("31_mlfds")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -5)
 unique_name = "Stovpot2"
@@ -672,8 +680,16 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 7, 0, 
 
 [node name="FoodFactory2" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("30_0eeim")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1, 2)
+group = 1
 using_tscn = true
 unique_name = "Food2"
+current_owner = 0
+
+[node name="FoodFactory3" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("30_0eeim")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 2)
+group = 2
+using_tscn = true
+unique_name = "Food3"
 current_owner = 0
 
 [node name="StoveWithPan" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("32_m8iad")]
@@ -719,3 +735,29 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 4)
 
 [node name="UpgradeHammer2" parent="." instance=ExtResource("34_i40ex")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, -4)
+
+[node name="Stools" type="Node3D" parent="."]
+
+[node name="Stool" parent="Stools" instance=ExtResource("36_mlfds")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0.4, 3)
+
+[node name="Stool2" parent="Stools" instance=ExtResource("36_mlfds")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0.4, 3)
+
+[node name="Stool3" parent="Stools" instance=ExtResource("36_mlfds")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0.4, 3)
+
+[node name="Stool4" parent="Stools" instance=ExtResource("36_mlfds")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.4, 3)
+
+[node name="Stool5" parent="Stools" instance=ExtResource("36_mlfds")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0.4, -1)
+
+[node name="Stool6" parent="Stools" instance=ExtResource("36_mlfds")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0.4, -1)
+
+[node name="Stool7" parent="Stools" instance=ExtResource("36_mlfds")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0.4, -1)
+
+[node name="Stool8" parent="Stools" instance=ExtResource("36_mlfds")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.4, -1)

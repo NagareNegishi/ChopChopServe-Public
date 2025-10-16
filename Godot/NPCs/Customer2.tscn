@@ -1,9 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://hlnawqai2mw4"]
+[gd_scene load_steps=18 format=3 uid="uid://cr8yeiregohxa"]
 
-[ext_resource type="Script" uid="uid://bvyjm5mpgpywa" path="res://scripts/Customer.gd" id="1_3max8"]
-[ext_resource type="PackedScene" uid="uid://tloru3qomb8r" path="res://UI/UI_order.tscn" id="2_v706b"]
-[ext_resource type="PackedScene" uid="uid://br3jfy6v5habq" path="res://UI/UI_Thinking.tscn" id="3_8qaux"]
-[ext_resource type="PackedScene" uid="uid://bhij60dxhiycs" path="res://assets/newmodels/animations/customers/Customer1.glb" id="4_gijdy"]
+[ext_resource type="Script" uid="uid://bvyjm5mpgpywa" path="res://scripts/Customer.gd" id="1_kwlw3"]
+[ext_resource type="PackedScene" uid="uid://tloru3qomb8r" path="res://UI/UI_order.tscn" id="2_2xrgg"]
+[ext_resource type="PackedScene" uid="uid://br3jfy6v5habq" path="res://UI/UI_Thinking.tscn" id="3_lhnlw"]
+[ext_resource type="PackedScene" uid="uid://dh5cm04gytte0" path="res://assets/newmodels/animations/customers/Customer2.glb" id="4_kwlw3"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_esrsq"]
 
@@ -56,7 +56,7 @@ states/Walking/position = Vector2(695, 106)
 transitions = ["Start", "IdleAnimation", SubResource("AnimationNodeStateMachineTransition_c4u2r"), "IdleAnimation", "Walking", SubResource("AnimationNodeStateMachineTransition_ppgne"), "Walking", "Sitting", SubResource("AnimationNodeStateMachineTransition_2m75d"), "Sitting", "SittingIdle", SubResource("AnimationNodeStateMachineTransition_m804o"), "SittingIdle", "Walking", SubResource("AnimationNodeStateMachineTransition_imbnr"), "Walking", "IdleAnimation", SubResource("AnimationNodeStateMachineTransition_gijdy")]
 graph_offset = Vector2(123.598, 0)
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gijdy"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_kwlw3"]
 properties/0/path = NodePath(".:synced_position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
@@ -87,9 +87,9 @@ properties/8/replication_mode = 1
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
-script = ExtResource("1_3max8")
-overhead_ui_order = ExtResource("2_v706b")
-overhead_ui_thinking = ExtResource("3_8qaux")
+script = ExtResource("1_kwlw3")
+overhead_ui_order = ExtResource("2_2xrgg")
+overhead_ui_thinking = ExtResource("3_lhnlw")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_esrsq")
@@ -111,35 +111,35 @@ radius = 0.7
 [node name="OverheadUIAnchor" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1624, 0)
 
-[node name="Mesh" parent="." instance=ExtResource("4_gijdy")]
-transform = Transform3D(0.195, 0, 0, 0, 0.195, 0, 0, 0, 0.195, 0, -0.943593, 0)
-
-[node name="Skeleton3D" parent="Mesh/Armature" index="0"]
-bones/1/position = Vector3(-0.0285939, 0.815686, -0.0113688)
-bones/2/rotation = Quaternion(0.0246497, 1.19173e-07, -2.45243e-09, 0.999696)
-bones/3/position = Vector3(-3.85431, 2.21847, 2.00982e-09)
-bones/3/rotation = Quaternion(-3.89966e-08, 2.25142e-09, 0.998338, 0.0576379)
-bones/4/rotation = Quaternion(-1.13927e-09, 8.31912e-08, 0.00706236, 0.999975)
-bones/5/rotation = Quaternion(-3.2693e-11, -3.49708e-07, -0.00031076, 1)
-bones/6/position = Vector3(3.85431, 2.19063, 2.23934e-09)
-bones/6/rotation = Quaternion(3.89966e-08, 2.25142e-09, 0.998338, -0.0576379)
-bones/7/rotation = Quaternion(1.35973e-09, 2.70658e-07, -0.00706199, 0.999975)
-bones/8/rotation = Quaternion(-1.42488e-10, -4.14868e-09, 0.000310395, 1)
-bones/9/position = Vector3(-0.745343, 0.846522, -0.0113688)
-bones/9/rotation = Quaternion(-0.707104, -0.0031089, 0.7071, -0.0021288)
-bones/10/position = Vector3(0.688155, 0.833874, -0.0113688)
-bones/10/rotation = Quaternion(0.707102, -0.00261885, 0.707102, 0.00261885)
-
 [node name="AnimationTree" type="AnimationTree" parent="."]
-root_node = NodePath("../Mesh")
+root_node = NodePath("../Customer2")
 tree_root = SubResource("AnimationNodeStateMachine_ppgne")
-anim_player = NodePath("../Mesh/AnimationPlayer")
+anim_player = NodePath("../Customer2/AnimationPlayer")
 parameters/conditions/is_moving = false
 parameters/conditions/is_sitting = false
 parameters/conditions/is_tweening_to_seat = false
 parameters/conditions/not_moving = false
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_gijdy")
+[node name="Customer2" parent="." instance=ExtResource("4_kwlw3")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, -1, 0)
 
-[editable path="Mesh"]
+[node name="Skeleton3D" parent="Customer2/Armature" index="0"]
+bones/1/position = Vector3(-0.0285939, 0.949392, -0.0113688)
+bones/2/rotation = Quaternion(0.0058839, 1.19207e-07, 5.86738e-09, 0.999983)
+bones/3/position = Vector3(-3.85431, 2.40399, -1.92581e-09)
+bones/3/rotation = Quaternion(-3.89966e-08, 2.25142e-09, 0.998338, 0.0576379)
+bones/4/rotation = Quaternion(-1.13927e-09, 8.31912e-08, 0.00706236, 0.999975)
+bones/5/rotation = Quaternion(-3.2693e-11, -3.49708e-07, -0.00031076, 1)
+bones/6/position = Vector3(3.85431, 2.39735, -2.14574e-09)
+bones/6/rotation = Quaternion(3.89966e-08, 2.25142e-09, 0.998338, -0.0576379)
+bones/7/rotation = Quaternion(1.35973e-09, 2.70658e-07, -0.00706199, 0.999975)
+bones/8/rotation = Quaternion(-1.42488e-10, -4.14868e-09, 0.000310395, 1)
+bones/9/position = Vector3(-0.745343, 0.896122, -0.0113688)
+bones/9/rotation = Quaternion(-0.707104, -0.0031089, 0.7071, -0.0021288)
+bones/10/position = Vector3(0.688155, 0.893103, -0.0113688)
+bones/10/rotation = Quaternion(0.707102, -0.00261885, 0.707102, 0.00261885)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_kwlw3")
+
+[editable path="Customer2"]

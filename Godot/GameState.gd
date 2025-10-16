@@ -16,7 +16,7 @@ var current_day : int # Also as levels to know when to let new or more food come
 var current_phase
 var team_1_score : int
 var team_2_score : int
-var can_send_customers : bool = false
+var can_send_customers : bool = true
 var customer_amount : int
 var timer : Timer = Timer.new()
 
@@ -83,7 +83,8 @@ func _enter_end_phase():
 		has_ended = true
 		current_day += 1
 		var available_food_names = _get_available_food_names()
-		_make_food_items_available(available_food_names)
+		if available_food_names != null:
+			_make_food_items_available(available_food_names)
 	
 	var team_1_rep = ReputationSystem.get_reputation(1)
 	var team_2_rep = ReputationSystem.get_reputation(2)

@@ -74,7 +74,6 @@ func _ready():
 func _on_timer_timeout():
 	if is_cooking:
 		cooking.emit()
-		cooking_progress += 1
 		match current_appliance:
 			ApplianceFactory.CookingStyle.CHOP:
 				chop()

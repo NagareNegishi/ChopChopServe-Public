@@ -336,12 +336,19 @@ func _on_request_team_join(data: Dictionary):
 		"number": number
 	})
 	player_assigned.emit(data.player_id, data.team, number) # for host
+	Debug.net_log("New teams: " + str(team1) + " | " + str(team2))
 
 
 ## Check if game can start
 ## @return: True if game can start, false otherwise
 func can_start_game() -> bool:
-	return team1.size() == team2.size() and not team1.is_empty()
+	if team1.is_empty():
+		return false
+	if team1.size() != team2.size():
+		return false
+	if team1.size() + team2.size() != player_list.size():
+		return false
+	return true
 
 
 ## Start the game, only host can call this

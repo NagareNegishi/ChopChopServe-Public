@@ -210,13 +210,3 @@ theme_override_font_sizes/font_size = 10
 text = "Test"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="TeamLable" type="Label" parent="."]
-layout_mode = 0
-offset_left = 63.5
-offset_top = -5.0
-offset_right = 103.5
-offset_bottom = 18.0
-text = "??"
-horizontal_alignment = 1
-vertical_alignment = 1

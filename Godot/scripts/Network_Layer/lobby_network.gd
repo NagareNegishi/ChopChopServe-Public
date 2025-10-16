@@ -39,6 +39,7 @@ var network_layer: ENetNetworkLayer
 var current_players: Array[int] = []
 var slot_scene: PackedScene = preload("res://scenes/Network_Layer/player_slot.tscn")
 var player_slots: Dictionary = {}  # {player_id: PlayerSlot}
+var slot_occupied: Array[bool] = [false, false, false, false]
 var animation_duration: float = 0.3
 var is_host: bool = false
 var my_id: int = -1
@@ -69,6 +70,8 @@ func _ready():
 	_set_ip_label()
 	_set_buttons()
 	_activate_start_game(false)
+	if not is_host:
+		_request_current_slots.rpc_id(1, my_id)
 
 
 ## Set Role Label
@@ -122,37 +125,35 @@ func _set_buttons() -> void:
 	start_button.disabled = true
 
 
-## Update player list - create/remove slots as needed
+## Create or remove player slots to match current players
 func _update_player_list():
 	var old_players = player_slots.keys()
-	
 	# Remove slots for players who left
 	for player_id in old_players:
 		if player_id not in current_players:
 			_remove_player_slot(player_id)
-	
 	# Create slots for new players
 	for player_id in current_players:
 		if player_id not in player_slots:
 			_create_player_slot(player_id)
-	
-	Debug.net_log("Player slots updated: %s" % str(player_slots.keys()))
 
 
 ## Create a new player slot
+## @param player_id: The ID of the player to create a slot for
 func _create_player_slot(player_id: int):
 	if not slot_scene:
 		push_error("Slot scene not assigned")
 		return
+
+	# Instantiate slot
 	var slot: PlayerSlot = slot_scene.instantiate()
 	add_child(slot)
 	player_slots[player_id] = slot
-	
-	# Set player data
-	var player_index = current_players.find(player_id)
-	var player_name = "Player %d" % (player_index + 1)
+
+	# Setup slot
+	var player_name = ""
 	if player_id == my_id:
-		player_name += " (You)"
+		player_name = "You"
 		slot.set_as_local_player(true)
 		slot._check_team_buttons()
 	else:
@@ -160,32 +161,124 @@ func _create_player_slot(player_id: int):
 		slot._hide_team_buttons()
 		if is_host:
 			slot.show_kick_button()
-	
 	slot.set_player({
 		"name": player_name,
 		"ID": player_id
 	})
-	
-	# Position in unassigned area
-	var unassigned_index = min(player_index, unassigned_positions.size() - 1)
-	if unassigned_index >= 0 and unassigned_index < unassigned_positions.size():
-		slot.position = unassigned_positions[unassigned_index]
+	_position_slot(slot, player_id)
+
+
+## Identify appropriate position for the new slot and position it
+## @param slot: The PlayerSlot instance to position
+## @param player_id: The ID of the player this slot represents
+func _position_slot(slot: PlayerSlot, player_id: int) -> void:
+	# Check for available unassigned slot
+	if is_host:
+		var unassigned_index = _find_next_available_slot()
+		if unassigned_index == -1:
+			# Should handle this more gracefully, but it should never happen
+			assert(false, "No available slot positions for new player %d" % player_id)
+			return
+		slot_occupied[unassigned_index] = true
+		slot.slot_index = unassigned_index
+
+		# Position in unassigned area
+		_position_unassigned_slots(slot, unassigned_index)
+		_sync_slot_position.rpc(player_id, unassigned_index)
+		Debug.net_log("Host: Created slot for player %d at position %d" % [player_id, unassigned_index])
+	else:
+		slot.visible = false
+
+
+## Find the next available slot position (HOST ONLY)
+## @return: The index of the next available slot, or -1 if none available
+func _find_next_available_slot() -> int:
+	for i in range(slot_occupied.size()):
+		if not slot_occupied[i]:
+			return i
+	return -1
+
+
+## Actually position the slot in the unassigned area
+## @param slot: The PlayerSlot instance to position
+## @param slot_index: The index of the unassigned position to use
+func _position_unassigned_slots(slot: PlayerSlot, slot_index: int) -> void:
+	if slot_index >= 0 and slot_index < unassigned_positions.size():
+		slot.position = unassigned_positions[slot_index]
 		slot.rotation = 0.0
-	
-	slot.visible = true
-	Debug.net_log("Created slot for player %d at unassigned position %d" % [player_id, unassigned_index])
+		slot.visible = true
+
+
+## Client: Sync slot position from host
+## @param player_id: The ID of the player whose slot is being positioned
+## @param slot_index: The index of the unassigned position to use
+@rpc("authority", "call_remote", "reliable")
+func _sync_slot_position(player_id: int, slot_index: int):
+	Debug.net_log("Client: Received position for player %d: slot %d" % [player_id, slot_index])
+	slot_occupied[slot_index] = true
+	# Position the slot if it exists
+	if player_id in player_slots:
+		var slot = player_slots[player_id]
+		slot.slot_index = slot_index
+		_position_unassigned_slots(slot, slot_index)
 
 
 ## Remove a player slot
+## @param player_id: The ID of the player whose slot should be removed
 func _remove_player_slot(player_id: int):
 	if player_id in player_slots:
-		player_slots[player_id].queue_free()
+		var slot = player_slots[player_id]
+		var slot_index = slot.slot_index
+
+#---------------------------------
+
+# add team alignment logic here
+
+
+
+		var team = slot.get_team()
+
+#-------------------------------------
+		slot.queue_free()
 		player_slots.erase(player_id)
+		if is_host and slot_index >= 0 and slot_index < slot_occupied.size():
+			slot_occupied[slot_index] = false
+			_sync_slot_freed(slot_index)
 		Debug.net_log("Removed slot for player %d" % player_id)
 
 
+## Client: Sync occupied slot to what host has freed
+## @param slot_index: The index of the slot that is now free
+@rpc("authority", "call_remote", "reliable")
+func _sync_slot_freed(slot_index: int):
+	Debug.net_log("Client: Slot %d is now free" % slot_index)
+	slot_occupied[slot_index] = false
+
+
+## RPC: Client requests full slot state from host
+@rpc("any_peer", "call_remote", "reliable")
+func _request_current_slots(client_id: int):
+	if not is_host:
+		return
+	# Send current slot positions for all players
+	for player_id in player_slots:
+		var slot = player_slots[player_id]
+		if slot.slot_index >= 0:
+			_sync_slot_position.rpc_id(client_id, player_id, slot.slot_index)
+
+	# Send current team assignments
+	var team1 = ENetManager.get_team1()
+	var team2 = ENetManager.get_team2()
+	for i in range(team1.size()):
+		var player_id = team1[i]
+		_sync_team_assignment.rpc_id(client_id, player_id, 1, i + 1)
+	for i in range(team2.size()):
+		var player_id = team2[i]
+		_sync_team_assignment.rpc_id(client_id, player_id, 2, i + 1)
+
 
 ## Signal Handler: Player list updated
+## @param players: The updated list of player IDs
 func _on_player_list_updated(players: Array[int] = []):
 	current_players = players.duplicate()
 	_update_player_list()
@@ -199,39 +292,43 @@ func _on_player_list_updated(players: Array[int] = []):
 			shuffle_button.disabled = true
 
 
-
-## Leave Button Pressed
-func _on_leave_pressed():
-	if is_host:
-		# Host can directly call the function
-		ENetManager.player_leaves_intentionally(my_id)
-	else:
-		# Client notifies host they're leaving
-		network_layer.send_to(1, {
-			"type": "player_leaving_intentionally",
-			"player_id": my_id
-		})
-		await get_tree().create_timer(0.1).timeout # Small delay to ensure message is sent
-
-
 ## Signal Handler: Player assigned to team
-func _on_player_assigned(player_id: int, team: int, number: int) -> void:
+## @param player_id: The ID of the player assigned
+## @param team: The team number assigned (1 or 2)
+## @param number: The slot number within the team (1 or 2)
+func _on_player_assigned(player_id: int, team: int, number: int, animate: bool = true) -> void:
 	if player_id not in player_slots:
 		push_warning("Player %d not found in slots!" % player_id)
 		return
-	
 	var slot = player_slots[player_id]
+	slot.set_team(team)
 	var target_data = _get_team_slot_transform(team, number)
-	
 	if target_data.is_empty():
 		push_warning("Invalid team/slot: %d/%d" % [team, number])
 		return
-	
-	_move_slot_to_transform(slot, target_data.pos, target_data.rot, true)
+	_move_slot_to_transform(slot, target_data.pos, target_data.rot, animate)
 	Debug.net_log("Moved player %d to team %d slot %d" % [player_id, team, number])
+	if player_id == my_id:
+		my_team = team
+		_set_team_label(my_team)
+	if ENetManager.can_start_game():
+		_activate_start_game(true)
+
+
+## Sync team assignment from host to client
+## @param player_id: The ID of the player assigned
+## @param team: The team number assigned (1 or 2)
+## @param number: The slot number within the team (1 or 2)
+@rpc("authority", "call_remote", "reliable")
+func _sync_team_assignment(player_id: int, team: int, number: int):
+	Debug.net_log("Client: Syncing team assignment for player %d: team %d, slot %d" % [player_id, team, number])
+	_on_player_assigned(player_id, team, number, false)
 
 
 ## Get team slot transform data
+## @param team: The team number (1 or 2)
+## @param slot_num: The slot number within the team (1 or 2)
+## @return: where to position the slot
 func _get_team_slot_transform(team: int, slot_num: int) -> Dictionary:
 	if team == 1 and slot_num == 1:
 		return {"pos": team1_slot1_pos, "rot": team1_slot1_rot}
@@ -245,6 +342,10 @@ func _get_team_slot_transform(team: int, slot_num: int) -> Dictionary:
 
 
 ## Move slot to target transform
+## @param slot: The PlayerSlot instance to move
+## @param target_pos: The target position to move to
+## @param target_rot: The target rotation to rotate to
+## @param animation: If true, animate the movement; if false, move instantly
 func _move_slot_to_transform(slot: PlayerSlot, target_pos: Vector2, target_rot: float, animation: bool) -> void:
 	if animation:
 		var tween = create_tween()
@@ -257,6 +358,8 @@ func _move_slot_to_transform(slot: PlayerSlot, target_pos: Vector2, target_rot: 
 
 
 ## Signal Handlers from ENetManager, assign teams and display
+## @param team1: Array of player IDs in team 1
+## @param team2: Array of player IDs in team 2
 func _on_team_assigned(team1: Array[int], team2: Array[int]) -> void:
 	if my_id in team1:
 		my_team = 1
@@ -287,10 +390,26 @@ func _start_game() -> void:
 	# SceneManager.change_scene(SceneManager.Scene.LOBBY)
 	# Test scene
 	SceneManager.change_scene(SceneManager.Scene.EMMA_TEST)
-
 ##----------------------------------------------------------------------------------
+
+
+## Leave Button Pressed
+func _on_leave_pressed():
+	if is_host:
+		# Host can directly call the function
+		ENetManager.player_leaves_intentionally(my_id)
+	else:
+		# Client notifies host they're leaving
+		network_layer.send_to(1, {
+			"type": "player_leaving_intentionally",
+			"player_id": my_id
+		})
+		await get_tree().create_timer(0.1).timeout # Small delay to ensure message is sent
 
 
 ## Back to Main Menu
 func _back_to_main_menu() -> void:
 	SceneManager.change_scene(SceneManager.Scene.MAIN_MENU)
+
+
+

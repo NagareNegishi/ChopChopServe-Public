@@ -48,7 +48,7 @@ func add_item(food_node) -> void:
 	#print("Adding item to plate: ", food_node, ", food_name: ", food_node.food_name)
 	var cell = find_next_free_cell()
 	if food_node is Array:
-		food_items = food_node
+		food_items.append_array(food_node)
 		for item in food_node:
 			disable_collision(item)
 			quality_on_plate.append(item.get_quality())

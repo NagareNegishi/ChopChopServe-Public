@@ -145,6 +145,7 @@ func check_plate():
 		is_full = true
 		remove_all()
 		grid[1][1] = menuitem # Makes the meal we created the only thing on the plate
+	print("MENU ITEM ISSSSS:    ",menuitem)
 	return
 
 func _set_quality(list: Array):

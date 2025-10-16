@@ -8,7 +8,7 @@ static var _auto_register = MenuItem.register(soup_pumpkin)
 static var _type_register = MenuItem.register_type(MenuItem.starters, soup_pumpkin.new())
 
 func _init():
-	ingredients = ["Pumpkin", "Pumpkin", "Pumpkin", "Water"]
+	ingredients = ["Pumpkin", "Pumpkin", "Pumpkin"]
 	
 	ingredient_states = {
 		"Pumpkin": ["RAW","CHOPPED", "BOILED"],

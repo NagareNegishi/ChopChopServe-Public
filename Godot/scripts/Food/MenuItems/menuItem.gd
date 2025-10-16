@@ -40,6 +40,8 @@ func match_menu_items(input_ingredients: Array):
 		var instance = subclass.new()
 		input_ingredients.sort()
 		instance.ingredients.sort()
+		print("INPUTTTTT INGREDIENTS   ",input_ingredients)
+		print("INSTANCE INGREDIENTS    ",instance.ingredients)
 		if check_items(input_ingredients, instance.ingredients, instance):
 			#print("in check items if")
 			return instance 

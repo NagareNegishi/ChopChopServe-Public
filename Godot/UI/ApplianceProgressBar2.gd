@@ -46,14 +46,11 @@ func _on_add_cookware(cookware, appliance): # Need to do something else for the 
 	else:
 		progress_bar.max_value = 3
 	
-	print("progress bar max value: ", progress_bar.max_value)
+	#print("progress bar max value: ", progress_bar.max_value)
 	
 	if cookware.contents.size() >= 1:
-		print("IN IF")
 		food_item = cookware.contents[0]
-		print("FOOD ITEM   ", food_item)
 		if not food_item.is_connected("cooking", Callable(self, "_on_food_cooking")):
-			print("IN ANOTHER IFFFFF")
 			food_item.connect("cooking", Callable(self, "_on_food_cooking"))
 			is_open = true
 	
@@ -77,7 +74,7 @@ func _on_food_added(cookware, contents):
 	elif contents is Food:
 		food_item = contents
 	
-	print("food added, cook time is: ", food_item.get_cook_time(get_cooking_style()))
+	#print("food added, cook time is: ", food_item.get_cook_time(get_cooking_style()))
 	if get_max_value(get_cooking_style()):
 		progress_bar.max_value = get_max_value(get_cooking_style())
 	else:
@@ -91,7 +88,7 @@ func _on_food_added(cookware, contents):
 
 
 func _on_food_taken(cookware, contents):
-	print("FOOD IS TAKEN")
+	#print("FOOD IS TAKEN")
 	if contents is Array and contents.size() >= 1:
 		for item in contents:
 			if !item.is_cooked:
@@ -110,7 +107,7 @@ func _on_food_taken(cookware, contents):
 	food_item = null
 
 func _on_cookware_taken(cookware, appliance):
-	print("cookware is taken")
+	#print("cookware is taken")
 	if cookware and cookware.is_in_group("Appliance"):
 		if cookware.is_connected("food_placed", Callable(self, "_on_food_added")):
 			cookware.disconnect("food_placed", Callable(self, "_on_food_added"))

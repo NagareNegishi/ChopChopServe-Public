@@ -37,8 +37,9 @@ func get_meal_name():
 func match_menu_items(input_ingredients: Array):
 	#print("in match menu")
 	for subclass in subclasses:
-		print(subclass)
 		var instance = subclass.new()
+		input_ingredients.sort()
+		instance.ingredients.sort()
 		if check_items(input_ingredients, instance.ingredients, instance):
 			#print("in check items if")
 			return instance 

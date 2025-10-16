@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://g5y4cnxk5856"]
+[gd_scene load_steps=50 format=3 uid="uid://g5y4cnxk5856"]
 
 [ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_1hj32"]
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="1_jd0au"]
@@ -23,6 +23,8 @@
 [ext_resource type="PackedScene" uid="uid://dmahi8f6d6lw0" path="res://assets/NaturePack/Rock_5.fbx" id="18_m8iad"]
 [ext_resource type="PackedScene" uid="uid://bfyl14i4p2lc0" path="res://assets/NaturePack/Rock_2.fbx" id="19_q1cwv"]
 [ext_resource type="Shader" uid="uid://c46kta255prk4" path="res://shaders/Water/WaterOpenWorld.gdshader" id="20_i40ex"]
+[ext_resource type="PackedScene" uid="uid://sie7pvckcbi7" path="res://assets/Beachy/BeachSpeedBoat.glb" id="20_q1cwv"]
+[ext_resource type="PackedScene" uid="uid://cblkl35ovw83" path="res://assets/Beachy/BeachRowBoat.glb" id="21_i40ex"]
 [ext_resource type="PackedScene" uid="uid://crx0marg1hk52" path="res://assets/Beachy/FenceBeachPlank.glb" id="23_kdffh"]
 [ext_resource type="PackedScene" uid="uid://ote03xslp2mk" path="res://assets/Beachy/FenceBeachPlankPath.glb" id="24_v5sy6"]
 [ext_resource type="PackedScene" uid="uid://bdavcjsmotl0h" path="res://assets/Beachy/FenceBeachPlank4.glb" id="25_jd0au"]
@@ -210,6 +212,7 @@ transform = Transform3D(-4.37114e-08, -0.819152, 0.573576, 0, 0.573576, 0.819152
 current = true
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.210315, -0.0467806, -0.0465879)
 navigation_mesh = SubResource("NavigationMesh_1hj32")
 
 [node name="Platform" type="StaticBody3D" parent="NavigationRegion3D"]
@@ -387,25 +390,25 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.364, 0)
 [node name="Foliage" type="Node3D" parent="NavigationRegion3D/Background"]
 
 [node name="PalmTree_3" parent="NavigationRegion3D/Background/Foliage" instance=ExtResource("12_ne1yq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.66652, 0, 14.3053)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.33348, 0, 12.3053)
 
 [node name="PalmTree_9" parent="NavigationRegion3D/Background/Foliage" instance=ExtResource("12_ne1yq")]
-transform = Transform3D(0.857023, 0, -0.515278, 0, 0.86068, 0, 0.515278, 0, 0.857023, 11.5454, 0, 8.94747)
+transform = Transform3D(0.857023, 0, -0.515278, 0, 0.86068, 0, 0.515278, 0, 0.857023, 1.5454, 0, 14.9475)
 
 [node name="PalmTree_10" parent="NavigationRegion3D/Background/Foliage" instance=ExtResource("12_ne1yq")]
-transform = Transform3D(-0.0976698, 0, 0.995219, 0, 1, 0, -0.995219, 0, -0.0976698, 11.7246, 0, -5.85128)
+transform = Transform3D(-0.0976698, 0, 0.995219, 0, 1, 0, -0.995219, 0, -0.0976698, 0.7246, 0, -10.8513)
 
 [node name="PalmTree_11" parent="NavigationRegion3D/Background/Foliage" instance=ExtResource("14_eayyc")]
 transform = Transform3D(-0.452979, 0, -0.891521, 0, 1, 0, 0.891521, 0, -0.452979, 11.785, 9.53674e-07, -8.50237)
 
 [node name="PalmTree_6" parent="NavigationRegion3D/Background/Foliage" instance=ExtResource("14_eayyc")]
-transform = Transform3D(0.0710622, 0, -0.997472, 0, 1, 0, 0.997472, 0, 0.0710622, 6.51214, 0, 11.3052)
+transform = Transform3D(0.0710622, 0, -0.997472, 0, 1, 0, 0.997472, 0, 0.0710622, 5.51214, 0, 11.3052)
 
 [node name="PalmTree_1" parent="NavigationRegion3D/Background/Foliage" instance=ExtResource("15_i1k63")]
 transform = Transform3D(-0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, 5, 0, -12)
 
 [node name="PalmTree_8" parent="NavigationRegion3D/Background/Foliage" instance=ExtResource("15_i1k63")]
-transform = Transform3D(0.707106, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707106, 9.8944, 0, 11.35)
+transform = Transform3D(0.707106, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707106, 8.8944, 0, 10.35)
 
 [node name="Objects" type="Node3D" parent="NavigationRegion3D/Background"]
 
@@ -490,6 +493,39 @@ transform = Transform3D(-2.01072e-08, 0, 0.46, 0, 0.46, 0, -0.46, 0, -2.01072e-0
 [node name="FenceBeachPlankPath" parent="NavigationRegion3D/Background/Objects" instance=ExtResource("24_v5sy6")]
 transform = Transform3D(-4.37114e-08, 1, 0, -0.990866, -4.33121e-08, -0.134851, -0.134851, -5.89452e-09, 0.990866, -2.83502, -0.264768, 5.45545)
 
+[node name="FenceBeachPlankPath5" parent="NavigationRegion3D/Background/Objects" instance=ExtResource("24_v5sy6")]
+transform = Transform3D(0.99492, 0.0404913, -0.0921713, -0.0411822, 0.999136, -0.00560464, 0.0918647, 0.00937198, 0.995728, 3.5422, 0.0751148, 15.9225)
+
+[node name="FenceBeachPlankPath8" parent="NavigationRegion3D/Background/Objects" instance=ExtResource("24_v5sy6")]
+transform = Transform3D(0.956383, 0.0410423, 0.289218, -0.0411822, 0.999136, -0.00560464, -0.289198, -0.00655042, 0.957247, 6.84799, 0.0751143, 14.5405)
+
+[node name="FenceBeachPlankPath9" parent="NavigationRegion3D/Background/Objects" instance=ExtResource("24_v5sy6")]
+transform = Transform3D(-0.0907749, 0.00184478, 0.99587, -3.51518e-05, 0.999999, -0.00185563, -0.995871, -0.000203431, -0.0907747, 11.8096, 0.0207717, 0.0156713)
+
+[node name="FenceBeachPlankPath10" parent="NavigationRegion3D/Background/Objects" instance=ExtResource("24_v5sy6")]
+transform = Transform3D(-0.997197, -0.000173881, -0.0748252, -3.51519e-05, 0.999999, -0.00185563, 0.0748254, -0.0018478, -0.997195, 11.5281, 0.0207712, 1.56937)
+
+[node name="FenceBeachPlankPath11" parent="NavigationRegion3D/Background/Objects" instance=ExtResource("24_v5sy6")]
+transform = Transform3D(-0.997197, -0.000173881, -0.0748252, -3.51519e-05, 0.999999, -0.00185563, 0.0748254, -0.0018478, -0.997195, 11.5281, 0.0207712, 3.64676)
+
+[node name="FenceBeachPlankPath12" parent="NavigationRegion3D/Background/Objects" instance=ExtResource("24_v5sy6")]
+transform = Transform3D(-0.997197, -0.000173881, -0.0748252, -3.51519e-05, 0.999999, -0.00185563, 0.0748254, -0.0018478, -0.997195, 11.5281, 0.0207712, 5.74902)
+
+[node name="FenceBeachPlankPath13" parent="NavigationRegion3D/Background/Objects" instance=ExtResource("24_v5sy6")]
+transform = Transform3D(-0.997197, -0.000173881, -0.0748252, -3.51519e-05, 0.999999, -0.00185563, 0.0748254, -0.0018478, -0.997195, 11.5281, 0.0207712, 7.85495)
+
+[node name="FenceBeachPlankPath7" parent="NavigationRegion3D/Background/Objects" instance=ExtResource("24_v5sy6")]
+transform = Transform3D(0.17121, 0.00153023, -0.985234, -0.0411822, 0.999136, -0.00560465, 0.984374, 0.0415336, 0.171125, 3.35931, 0.0751148, 13.1522)
+
+[node name="FenceBeachPlankPath14" parent="NavigationRegion3D/Background/Objects" instance=ExtResource("24_v5sy6")]
+transform = Transform3D(0.896292, 0.0394209, 0.441709, -0.0411822, 0.999136, -0.00560464, -0.441548, -0.0131671, 0.897141, 4.12723, 0.0247541, -10.3945)
+
+[node name="FenceBeachPlankPath15" parent="NavigationRegion3D/Background/Objects" instance=ExtResource("24_v5sy6")]
+transform = Transform3D(0.664319, 0.0315708, 0.746782, -0.0411822, 0.999136, -0.00560464, -0.746314, -0.0270308, 0.665045, 6.22368, 0.0247537, -13.3002)
+
+[node name="FenceBeachPlankPath16" parent="NavigationRegion3D/Background/Objects" instance=ExtResource("24_v5sy6")]
+transform = Transform3D(0.66034, 0.0230072, -0.750614, -0.0411822, 0.999136, -0.00560465, 0.749837, 0.0346129, 0.660717, 2.52371, 0.0247541, -12.661)
+
 [node name="FenceBeachPlankPath3" parent="NavigationRegion3D/Background/Objects" instance=ExtResource("24_v5sy6")]
 transform = Transform3D(-4.37114e-08, 1, 0, -0.999564, -4.36923e-08, 0.0295267, 0.0295267, 1.29065e-09, 0.999564, -2.83502, -0.179917, -0.702763)
 
@@ -517,25 +553,46 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.33652, -1, 4.63006)
 [node name="FenceBeachBoardWalk2" parent="NavigationRegion3D/Background/Objects" instance=ExtResource("13_2bve2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.33652, -1, -4.16436)
 
+[node name="BeachSpeedBoat" parent="NavigationRegion3D/Background/Objects" instance=ExtResource("20_q1cwv")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, -0.247702, -13.4906)
+
+[node name="BeachSpeedBoat2" parent="NavigationRegion3D/Background/Objects" instance=ExtResource("20_q1cwv")]
+transform = Transform3D(-0.123238, 0, 0.992377, 0, 1, 0, -0.992377, 0, -0.123238, -12.9884, -0.282783, 16.6779)
+
+[node name="BeachRowBoat" parent="NavigationRegion3D/Background/Objects" instance=ExtResource("21_i40ex")]
+transform = Transform3D(0.998748, -0.0500177, 0, 0.0500177, 0.998748, 0, 0, 0, 1, -1.19009, 0.581681, -11.011)
+
 [node name="Rocks" type="Node3D" parent="NavigationRegion3D/Background"]
 
 [node name="Rock_5" parent="NavigationRegion3D/Background/Rocks" instance=ExtResource("18_m8iad")]
 transform = Transform3D(0.961503, 0, 1.60904, 0, 1.87443, 0, -1.60904, 0, 0.961503, -1.94828, -0.0888872, 12.7428)
 
+[node name="Rock_12" parent="NavigationRegion3D/Background/Rocks" instance=ExtResource("18_m8iad")]
+transform = Transform3D(2.28024, 0, 3.81589, 0, 4.44528, 0, -3.81589, 0, 2.28024, -9.35125, -0.745405, 10.0763)
+
+[node name="Rock_13" parent="NavigationRegion3D/Background/Rocks" instance=ExtResource("18_m8iad")]
+transform = Transform3D(-3.71271, 0, -2.44465, 0, 4.44528, 0, 2.44465, 0, -3.71271, -7.84943, -0.745405, -18.8622)
+
 [node name="Rock_7" parent="NavigationRegion3D/Background/Rocks" instance=ExtResource("18_m8iad")]
 transform = Transform3D(0.24182, 0, -1.59238, 0, 0.950633, 0, 1.59238, 0, 0.24182, 0.774071, -0.0888873, -12.3589)
 
+[node name="Rock_14" parent="NavigationRegion3D/Background/Rocks" instance=ExtResource("18_m8iad")]
+transform = Transform3D(0.70259, 0, -4.62654, 0, 2.76199, 0, 4.62654, 0, 0.70259, -5.92705, -0.0785438, 16.0332)
+
 [node name="Rock_10" parent="NavigationRegion3D/Background/Rocks" instance=ExtResource("18_m8iad")]
-transform = Transform3D(-1.61035, 0, -0.0304142, 0, 1.25388, 0, 0.0304142, 0, -1.61035, 7.99219, -0.0888864, 10.768)
+transform = Transform3D(-1.61035, 0, -0.0304142, 0, 1.25388, 0, 0.0304142, 0, -1.61035, 6.99219, -0.0888864, 11.768)
 
 [node name="Rock_9" parent="NavigationRegion3D/Background/Rocks" instance=ExtResource("18_m8iad")]
-transform = Transform3D(0.24182, 0, -1.59238, 0, 0.950633, 0, 1.59238, 0, 0.24182, 0.680156, -0.0888873, 15.0699)
+transform = Transform3D(0.24182, 0, -1.59238, 0, 0.950633, 0, 1.59238, 0, 0.24182, 2.68016, -0.0888873, -14.9301)
 
 [node name="Rock_8" parent="NavigationRegion3D/Background/Rocks" instance=ExtResource("18_m8iad")]
 transform = Transform3D(-1.38488, 0, -0.822348, 0, 0.950633, 0, 0.822348, 0, -1.38488, 10.7506, -0.0888873, -10.1885)
 
 [node name="Rock_6" parent="NavigationRegion3D/Background/Rocks" instance=ExtResource("18_m8iad")]
 transform = Transform3D(0.961503, 0, 1.60904, 0, 1.87443, 0, -1.60904, 0, 0.961503, 7.14864, -0.0888872, -11.2863)
+
+[node name="Rock_11" parent="NavigationRegion3D/Background/Rocks" instance=ExtResource("18_m8iad")]
+transform = Transform3D(0.961503, 0, 1.60904, 0, 1.87443, 0, -1.60904, 0, 0.961503, -0.85136, -0.0888872, -16.2863)
 
 [node name="Rock_2" parent="NavigationRegion3D/Background/Rocks" instance=ExtResource("19_q1cwv")]
 transform = Transform3D(2.24769, 0, 0, 0, 2.24769, 0, 0, 0, 2.24769, 2.35783, -0.0814111, 11.4269)

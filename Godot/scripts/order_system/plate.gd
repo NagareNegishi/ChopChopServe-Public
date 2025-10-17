@@ -16,9 +16,11 @@ var quality
 const GRID_SIZE = 3
 const CELL_SIZE = 0.2
 var grid: Array = []
-var is_dirty : bool = false
+@export var is_dirty : bool = false
 var is_full : bool = false
 var number: int = 0
+
+var clean_level = 0
 
 func _ready():
 	menu_instance = preload_menuItems.new()
@@ -32,6 +34,12 @@ func _ready():
 			grid[i][j]=null # Makes sure they all start out null
 	freeze = true
 
+
+func get_clean_level():
+	return clean_level
+
+func set_clean_level(value: int):
+	clean_level = value
 
 func find_next_free_cell() -> Vector2i:
 	for i in range(grid.size()):
@@ -265,7 +273,7 @@ func set_mesh(food):
 ## Functions for cleaning the plate --------------------------------------------
 
 var dirtiness = 0
-const MAX_DIRTINESS = 5
+const MAX_DIRTINESS = 3
 
 ## Set the plate dirty or clean
 ## @param state: True if dirty, false if clean
@@ -273,6 +281,7 @@ func set_dirty(state: bool):
 	is_dirty = state
 	if state:
 		dirtiness = MAX_DIRTINESS
+		clean_level = 0
 	else:
 		dirtiness = 0
 		Debug.cook_log("Plate " + name + " is now clean")
@@ -282,10 +291,7 @@ func set_dirty(state: bool):
 func clean():
 	if not is_dirty:
 		return
-	dirtiness -= 1
-	Debug.cook_log("Plate cleaned, current dirtiness: " + str(dirtiness))
-	if dirtiness <= 0:
-		set_dirty(false)
+	set_dirty(false)
 
 
 ## Check if the plate is empty

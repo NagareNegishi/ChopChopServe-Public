@@ -43,8 +43,7 @@ func _init():
 
 func _ready():
 	SceneManager.connect("level_ready", Callable(self, "_on_level_started"))
-	#food_data = _read_json_file("res://scripts/Food/menu_items_data.json")
-	food_data = _read_json_file("res://scripts/Sabotage/menu_items_data.json")
+	food_data = _read_json_file("res://scripts/Food/menu_items_data.json")
 
 
 func check_who_wins():

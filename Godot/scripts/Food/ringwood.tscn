@@ -77,7 +77,7 @@ albedo_color = Color(1, 0.858824, 0.670588, 1)
 material = SubResource("StandardMaterial3D_d8qn3")
 size = Vector3(30, 0.05, 30)
 
-[node name="Ringwood" type="Node3D"]
+[node name="Ringwood2" type="Node3D"]
 
 [node name="== PLAYERS ==" type="Node" parent="."]
 

@@ -77,6 +77,7 @@ const sabotage_times = [
 @onready var global_script = GlobalScript
 @onready var rat_attack = RatAttack
 @onready var player = Player
+@onready var rat_manager = RatManager
 
 func _ready() -> void:
 	sabotage_ending.connect(on_sabotage_ending)
@@ -131,6 +132,10 @@ func request_sabotage(teamID: int, sabotage_type: int) -> void:
 	# If RAT_SPAWN
 	elif sabotage_type == SabotageType.RAT_SWARM:
 			var position = get_random_position(teamID)
+			# Start the rat timer here so theres only one
+			RatManager.testing_rat_timer()
+			RatManager.set_team_id(teamID)
+
 			for i in range (5):
 				var chosen_path = find_object_path()
 				execute_sabotage.rpc(teamID, sabotage_type, chosen_path, position)
@@ -386,6 +391,7 @@ func find_object_path() -> NodePath:
 	# Do I need to do this?
 	# Aim is to make sure they are going to different benches each time
 	benches.erase(b)
+
 	return b.get_path()
 
 # ------- Power Outage Stuff ------- #

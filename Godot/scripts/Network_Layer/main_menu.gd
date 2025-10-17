@@ -40,10 +40,6 @@ func _on_create_pressed():
 		_pop_error(ErrorType.EMPTY_NAME)
 		return
 	var public_ip = host_public_ip_input.text.strip_edges()
-	
-	UIManager.play_load()
-	await get_tree().create_timer(3.5).timeout
-	
 	Debug.net_log("Try to Create lobby with public IP: " + public_ip)
 	network_layer.create_game_with_ip(4, public_ip)
 	GlobalScript.player_name = name_input.text
@@ -90,7 +86,7 @@ func _is_room_code(input: String) -> bool:
 
 ## Switch to Lobby
 func _switch_to_lobby():
-	SceneManager.change_scene(SceneManager.Scene.LOBBY)
+	SceneManager.change_scene(SceneManager.Scene.LOBBY_TEST)
 
 
 ## Exit Game

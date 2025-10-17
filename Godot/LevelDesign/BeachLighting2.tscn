@@ -93,7 +93,7 @@ subdivide_depth = 25
 
 [node name="BradleyTestScene" type="Node3D" node_paths=PackedStringArray("tables", "queue_spots", "customer_spawn_point", "customer_exit_point")]
 script = ExtResource("1_1hj32")
-customer_scene = ExtResource("2_ne1yq")
+customer_scenes = Array[PackedScene]([ExtResource("2_ne1yq")])
 tables = [NodePath("NavigationRegion3D/Tables/table5/TableBody"), NodePath("NavigationRegion3D/Tables/table6/TableBody"), NodePath("NavigationRegion3D/Tables/table7/TableBody"), NodePath("NavigationRegion3D/Tables/table9/TableBody"), NodePath("NavigationRegion3D/Tables/table11/TableBody"), NodePath("NavigationRegion3D/Tables/table10/TableBody"), NodePath("NavigationRegion3D/Tables/table12/TableBody"), NodePath("NavigationRegion3D/Tables/table8/TableBody")]
 queue_spots = [NodePath("===QUEUE==/QueueSpot-1"), NodePath("===QUEUE==/QueueSpot-2"), NodePath("===QUEUE==/QueueSpot-3"), NodePath("===QUEUE==/QueueSpot-4"), NodePath("===QUEUE==/QueueSpot-5")]
 customer_spawn_point = NodePath("NavigationRegion3D/CustomerSpawn")
@@ -723,6 +723,7 @@ transform = Transform3D(1, 0, 9.31323e-10, 0, 1, 0, -9.31323e-10, 0, 1, 16.4468,
 
 [node name="CustomerSpawner" type="MultiplayerSpawner" parent="."]
 spawn_path = NodePath("../===QUEUE==")
+spawn_limit = 20
 
 [node name="Extinguisher" parent="." instance=ExtResource("33_q1cwv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2, 1)

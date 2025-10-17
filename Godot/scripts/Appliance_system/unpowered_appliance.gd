@@ -3,8 +3,8 @@
 class_name UnPoweredAppliance
 extends Appliance
 
-signal added()
-signal taken()
+signal start(item)
+signal stop()
 
 enum Status {
 	IDLE,
@@ -64,7 +64,7 @@ func put(item: Node) -> bool:
 ## Place an item onto this appliance
 ## @param item: The Node to place on this appliance
 func _put(item: Node) -> void:
-	emit_signal("added", item)
+	emit_signal("start", item)
 	contents.append(item)
 	add_child(item)
 	contents_names.append(item.name)
@@ -97,7 +97,7 @@ func take() -> Node:
 	var item = contents.pop_back()
 	remove_child(item)
 	contents_names.pop_back()
-	emit_signal("taken")
+	emit_signal("stop")
 	return item
 
 

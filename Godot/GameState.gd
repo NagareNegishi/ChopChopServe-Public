@@ -21,7 +21,7 @@ var customer_amount : int
 var timer : Timer = Timer.new()
 
 var food_data = {}
-var available = []
+var available : Array
 var has_ended : bool = false
 
 enum Phases{

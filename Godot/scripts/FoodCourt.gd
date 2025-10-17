@@ -64,7 +64,7 @@ func spawn_customer(id: String, pos: Vector3, fc_id: String):
 	# prevent duplicate customers from being spawned
 	if get_node_or_null(id):
 		return
-
+	
 	var new_customer = customer_scenes[customer_seed % customer_scenes.size()].instantiate()
 	new_customer.name = id
 	new_customer._id = id

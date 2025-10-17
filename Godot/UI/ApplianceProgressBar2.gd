@@ -147,7 +147,7 @@ func change_visibility(turn_on: bool):
 	
 	if applianceInstance:
 		owner_team = applianceInstance.get_appliance_owner()
-	elif applianceInstance == null and (cw is Blender || cw is Sink):
+	elif applianceInstance == null and (cw is Blender || cw is Sink || cw is ChoppingBoard):
 		owner_team = cw.get_appliance_owner()
 	else:
 		owner_team = 0

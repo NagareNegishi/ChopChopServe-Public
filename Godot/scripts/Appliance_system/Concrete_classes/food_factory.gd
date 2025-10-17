@@ -12,7 +12,7 @@ static var registered: bool = false
 @onready var marker : Marker3D = $CrateFoodMarker
 @onready var material : Material = StandardMaterial3D.new()
 @onready var crate : MeshInstance3D = $Crate
-
+@onready var decal : Decal = $Crate/Decal
 @export var group : Groups
 
 var food_crate_visual = null
@@ -281,17 +281,15 @@ func _physics_process(delta: float) -> void:
 		inventory_sprite.inventory.update_slot_selected(true)
 
 func _set_food_visual(food : String):
-	if food_crate_visual:
-			marker.remove_child(food_crate_visual)
-			food_crate_visual.queue_free()
+	var texture = ResourceLoader.load("res://assets/textures/ingredients/" + food + ".png")
+	if !texture: return
+	decal.texture_albedo = texture
 	
-	var scene = load("res://CrateScenes/" + food + ".tscn")
-	if !scene: return
-	food_crate_visual = scene.instantiate()
-	marker.add_child(food_crate_visual)
+	
 
 
 func _set_colour():
+	return
 	match group:
 		Groups.ONE:
 			material.albedo_color = Color(Color.ROYAL_BLUE)

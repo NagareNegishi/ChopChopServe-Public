@@ -26,7 +26,6 @@ func _ready() -> void:
 	
 	recipe_screen.done.connect(_done)
 	
-	show_recipe(bolognese.new())
 
 
 #================== LOADING SCREEN ======================

@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://bkdgdjjlsc7rx"]
+[gd_scene load_steps=44 format=3 uid="uid://bkdgdjjlsc7rx"]
 
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_cmmn0"]
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="1_om5gj"]
@@ -32,6 +32,7 @@
 [ext_resource type="PackedScene" uid="uid://br76j8t76ne2x" path="res://scripts/order_system/Plate.tscn" id="32_hte61"]
 [ext_resource type="PackedScene" uid="uid://cw5uvt35a87nt" path="res://scenes/Appliance_system/blender.tscn" id="32_t7ckm"]
 [ext_resource type="PackedScene" uid="uid://b0ougk3d4jnku" path="res://scenes/Appliance_system/food_factory.tscn" id="32_vda8q"]
+[ext_resource type="PackedScene" uid="uid://pee1rah6hbep" path="res://scenes/Appliance_system/stove_with_pan.tscn" id="33_t7ckm"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rci3a"]
 sky_top_color = Color(0.636864, 0.781479, 0.982896, 1)
@@ -525,3 +526,15 @@ transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.9999
 
 [node name="Plate8" parent="." instance=ExtResource("32_hte61")]
 transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999984, 6.11539, 0.0149996, -1.74422)
+
+[node name="Blender" parent="." instance=ExtResource("32_t7ckm")]
+transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999984, 3.13206, 0.430518, -8.61998)
+using_tscn = true
+current_owner = 2
+
+[node name="StoveWithPan" parent="." instance=ExtResource("33_t7ckm")]
+transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999984, 8.81772, 0.0150003, -2.99787)
+current_owner = 2
+
+[node name="StoveWithPan2" parent="." instance=ExtResource("33_t7ckm")]
+transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999984, 8.95304, 0.0150003, 3.73551)

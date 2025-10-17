@@ -8,8 +8,14 @@ static var food_instances: Dictionary = {} # {name: instance}
 static var registered: bool = false
 
 @onready var inventory_scene = preload("res://FridgeInven/inven.tscn")
-@onready var inventory_sprite : Sprite3D = inventory_scene.instantiate()
+@onready var inventory_sprite : Inven = inventory_scene.instantiate()
+@onready var marker : Marker3D = $CrateFoodMarker
+@onready var material : Material = StandardMaterial3D.new()
+@onready var crate : MeshInstance3D = $Crate
+
 @export var group : Groups
+
+var food_crate_visual = null
 
 enum Groups{
 	ONE,
@@ -37,6 +43,8 @@ func _ready():
 	_add_inventory_ui()
 	interactable_component.has_action = true
 	interactable_component.can_be_interacted = true
+	_set_food_visual(inventory_sprite.inventory.get_current_slot().inventory_item_name)
+	_set_colour()
 
 
 ## Register all foods from the directory
@@ -243,6 +251,7 @@ func _on_interactable_component_action_use(_is_action: bool) -> void:
 	if !_is_action: return
 	inventory_sprite.inventory.current_slot = inventory_sprite.inventory.move_forward()
 	inventory_sprite.inventory.update_slot_selected(true)
+	_set_food_visual(inventory_sprite.inventory.get_current_slot().inventory_item_name)
 
 
 ## Override unsupported methods to prevent misuse ------------------------------
@@ -263,7 +272,6 @@ func put_from_player(_item: Node) -> bool:
 	return false
 #-------------------------------------------------------------------------------
 
-
 func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("LB"):
 		inventory_sprite.inventory.current_slot = inventory_sprite.inventory.move_backward()
@@ -271,3 +279,30 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("RB"):
 		inventory_sprite.inventory.current_slot = inventory_sprite.inventory.move_forward()
 		inventory_sprite.inventory.update_slot_selected(true)
+
+func _set_food_visual(food : String):
+	if food_crate_visual:
+			marker.remove_child(food_crate_visual)
+			food_crate_visual.queue_free()
+	
+	var scene = load("res://CrateScenes/" + food + ".tscn")
+	if !scene: return
+	food_crate_visual = scene.instantiate()
+	marker.add_child(food_crate_visual)
+
+
+func _set_colour():
+	match group:
+		Groups.ONE:
+			material.albedo_color = Color(Color.ROYAL_BLUE)
+
+		Groups.TWO:
+			material.albedo_color = Color(Color.PALE_GOLDENROD)
+
+		Groups.THREE:
+			material.albedo_color = Color(Color.CRIMSON)
+
+		Groups.FOUR:
+			material.albedo_color = Color(Color.WEB_GREEN)
+	
+	crate.set_surface_override_material(1, material)

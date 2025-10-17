@@ -2,9 +2,10 @@
 
 [ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="1_nq4fg"]
 [ext_resource type="Script" uid="uid://bxy0fop3xjvqr" path="res://scripts/Appliance_system/Concrete_classes/food_factory.gd" id="2_vim2w"]
-[ext_resource type="PackedScene" uid="uid://bfmqtf2alwt4g" path="res://assets/newmodels/Crateredone.glb" id="3_wu4ye"]
+[ext_resource type="ArrayMesh" uid="uid://urjiiaqjj2u4" path="res://assets/newmodels/Crateredone_Cube_053.res" id="3_wu4ye"]
 
 [node name="FoodFactory" instance=ExtResource("1_nq4fg")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
 script = ExtResource("2_vim2w")
 group = 0
 capacity = 4
@@ -21,5 +22,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.614008, 0)
 [node name="InteractionArea" parent="." index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.611115, 0)
 
-[node name="Crateredone" parent="." index="3" instance=ExtResource("3_wu4ye")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0364803)
+[node name="CrateFoodMarker" type="Marker3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.005)
+
+[node name="Crate" type="MeshInstance3D" parent="." index="4"]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0.0296643, 0, -0.00172821)
+mesh = ExtResource("3_wu4ye")
+skeleton = NodePath("")

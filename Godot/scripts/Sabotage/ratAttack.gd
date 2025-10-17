@@ -8,7 +8,7 @@ extends Node
 	# - Do something about their spawn points
 	# - Make the targets the other teams stuff
 	# - Make then look for, and pick up the food items instead
-	# - Make them smaller and animated
+	# - Make them animated
 	# - Change the going home logic so that it is smoother (return home, not just disapear)
 	# - Fix code up
 ################################################################################
@@ -91,7 +91,8 @@ func run(delta: float):
 			
 			# Only erase the target if the rat is close enough
 			if r.global_position.distance_to(target_pos) < 0.1:
-				print("found my target, time to go home")
+				print("bran: found my target, time to go home")
+				target_node.take_food()
 				rat_states[r] = "returning"
 				rat_targets.erase(r) # Clear the target
 

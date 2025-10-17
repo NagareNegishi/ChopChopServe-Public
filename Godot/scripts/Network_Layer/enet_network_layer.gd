@@ -95,7 +95,7 @@ func join_game(connection_info: String) -> bool:
 		Debug.net_log("Cannot join: already connected or connecting")
 		notify.emit("Already connected or connecting", 3.0)
 		return false
-	
+
 	# Parse connection_info as "IP:PORT" or "IP"
 	var parts: Array = connection_info.split(":")
 	var target_ip: String = parts[0] if parts.size() > 0 else "127.0.0.1" # localhost

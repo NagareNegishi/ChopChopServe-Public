@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/WaterBoil.ogg-994e0510bc75a4329396a045e07f3dc
 [params]
 
 loop=false
-loop_offset=0
-bpm=0
+loop_offset=0.0
+bpm=0.0
 beat_count=0
 bar_beats=4

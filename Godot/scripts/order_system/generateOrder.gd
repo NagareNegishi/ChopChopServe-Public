@@ -11,7 +11,7 @@ var s = [] # starters
 var m = [] # mains
 var d = [] # deserts
 
-var available_recipes
+var available_recipes: Array
 # Creates an order of food that is available for the npcs to order depending on the day
 # the server deals with the chnaging of the availablity at the moment
 # @return an order of 2 starters, 2 mains and a desert in a list

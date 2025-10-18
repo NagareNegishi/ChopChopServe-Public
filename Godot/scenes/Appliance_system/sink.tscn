@@ -129,6 +129,4 @@ billboard = 1
 no_depth_test = true
 texture = SubResource("ViewportTexture_h4tho")
 
-[connection signal="added" from="." to="SubViewport/UiProgressCook" method="_on_dish_added"]
 [connection signal="progress" from="." to="SubViewport/UiProgressCook" method="_on_sink_progress"]
-[connection signal="taken" from="." to="SubViewport/UiProgressCook" method="_on_dish_taken"]

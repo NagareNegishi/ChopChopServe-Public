@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dg3km4t6mbwwg"]
+[gd_scene load_steps=13 format=3 uid="uid://dg3km4t6mbwwg"]
 
 [ext_resource type="Script" uid="uid://djull4qell3bf" path="res://scripts/UI/HUD.gd" id="1_f2wx0"]
 [ext_resource type="PackedScene" uid="uid://b6huce6rberg3" path="res://UI/UI_Reputation.tscn" id="2_ijstf"]
@@ -8,8 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://buf4joxpmeoqd" path="res://assets/textures/Controls/keyboard_1.png" id="7_ixkb2"]
 [ext_resource type="Texture2D" uid="uid://bw4uq8pmr1ia6" path="res://assets/textures/Controls/keyboard_2.png" id="8_mms7u"]
 [ext_resource type="Texture2D" uid="uid://dwqngqcqkgkn7" path="res://assets/textures/Controls/keyboard_3.png" id="9_281ki"]
-[ext_resource type="Script" uid="uid://nm3g8omleeay" path="res://UI/SabotageBar.gd" id="10_ixkb2"]
+[ext_resource type="Script" path="res://UI/SabotageBar.gd" id="10_ixkb2"]
 [ext_resource type="Texture2D" uid="uid://dlnedfofn7vuv" path="res://assets/textures/Controls/keyboard_4.png" id="10_w37wn"]
+[ext_resource type="Texture2D" uid="uid://b4qjni3x30ew" path="res://assets/textures/HUD/YBottle.png" id="11_ixkb2"]
 [ext_resource type="Texture2D" uid="uid://bgmq0j2s80owe" path="res://assets/textures/Controls/keyboard_5.png" id="11_kg6a8"]
 
 [node name="HUD" type="Control"]
@@ -19,6 +20,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_f2wx0")
 
 [node name="Controls" type="ColorRect" parent="."]
@@ -228,14 +230,27 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_bottom = 0.0
-offset_left = -505.0
-offset_top = -3.0
-offset_right = -58.9998
-offset_bottom = 50.0
+offset_left = -558.0
+offset_top = 3.0
+offset_right = -112.0
+offset_bottom = 56.0
 grow_horizontal = 0
 grow_vertical = 1
 rotation = 0.00872665
 teamID = 2
+
+[node name="Sauce" parent="Team2Rep" index="0"]
+offset_left = -93.0279
+offset_top = -13.9999
+offset_right = 590.972
+offset_bottom = 13.0001
+value = 0.0
+tint_under = Color(0.8286, 0.731688, 0.342893, 0.392157)
+tint_progress = Color(0.876399, 0.860176, 0.462874, 1)
+
+[node name="Bottle" parent="Team2Rep" index="1"]
+texture = ExtResource("11_ixkb2")
+flip_h = false
 
 [node name="Team1Sab2" type="HBoxContainer" parent="."]
 clip_children = 1
@@ -262,3 +277,5 @@ offset_left = -58.52
 offset_right = 58.48
 offset_bottom = 75.0
 grow_vertical = 1
+
+[editable path="Team2Rep"]

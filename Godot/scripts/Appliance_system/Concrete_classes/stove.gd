@@ -35,5 +35,16 @@ func _setup_inflammable():
 ## Setup cookware slots, should be overridden by subclasses
 ## Default implementation expect one Cookware slot in the center
 func _setup_cookware_slots():
-	var slot_position = Vector3(0.0, size.y * 0.8, 0.0)
-	cookware_slots.append(slot_position)
+	var pot_position = Vector3(0.0, size.y * 0.8, 0.0)
+	cookware_slots.append(pot_position)
+	var pan_position = Vector3(0.0, size.y * 0.55, size.z * -0.15)
+	cookware_slots.append(pan_position)
+
+
+## Apply position and direction to cookware at given slot
+func _position_cookware(cookware: Cookware, slot_index: int):
+	# FryingPan uses second slot
+	if cookware is FryingPan:
+		slot_index = 1
+	cookware.position = cookware_slots[slot_index]
+	cookware.rotate_to_direction(cookware.default_facing)

@@ -408,7 +408,7 @@ func _start_game() -> void:
 	# SceneManager.change_scene(SceneManager.Scene.LOBBY)
 	# Test scene
 
-	SceneManager.change_scene(SceneManager.Scene.BeachLighting2)
+	SceneManager.change_scene(SceneManager.Scene.TEST)
 
 ##----------------------------------------------------------------------------------
 

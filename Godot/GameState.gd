@@ -3,6 +3,7 @@ extends Node
 signal prep_phase()
 signal serve_phase()
 signal end_phase()
+signal day_change(day : int)
 signal time_tick(time)
 signal can_sabotage(flag: bool)
 signal can_build(flag: bool)
@@ -82,6 +83,7 @@ func _enter_end_phase():
 	if not has_ended:
 		has_ended = true
 		current_day += 1
+		emit_signal("day_change", current_day)
 		var available_food_names = _get_available_food_names()
 		if available_food_names != null:
 			_make_food_items_available(available_food_names)

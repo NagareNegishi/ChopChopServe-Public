@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://bkdgdjjlsc7rx"]
+[gd_scene load_steps=44 format=3 uid="uid://bkdgdjjlsc7rx"]
 
 [ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_cktef"]
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_cmmn0"]
@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://bk7ovilp788kq" path="res://scripts/Player/spawn_point.tscn" id="3_jnlua"]
 [ext_resource type="PackedScene" uid="uid://bkjryoge78wu0" path="res://assets/newmodels/decorations/Table.glb" id="3_mhwt6"]
 [ext_resource type="Script" uid="uid://dv1g0obwvkkkt" path="res://scripts/QueueSpot.gd" id="5_83y2r"]
-[ext_resource type="PackedScene" uid="uid://c8bjd53t4fgr1" path="res://UI/UI_Pause.tscn" id="5_iso5m"]
 [ext_resource type="PackedScene" uid="uid://bakeesqt3byva" path="res://scenes/Appliance_system/sink.tscn" id="6_iso5m"]
 [ext_resource type="PackedScene" uid="uid://dlk0mbdfg2cmq" path="res://scenes/Appliance_system/oven.tscn" id="8_q0vpy"]
 [ext_resource type="PackedScene" uid="uid://df6cemvjo3grw" path="res://scenes/Appliance_system/chop_table.tscn" id="10_8whfs"]
@@ -153,9 +152,6 @@ script = ExtResource("5_83y2r")
 
 [node name="HUD" parent="== HUD ==" node_paths=PackedStringArray("game_state") instance=ExtResource("2_m6tjv")]
 game_state = NodePath("../..")
-
-[node name="UiPause" parent="== HUD ==" instance=ExtResource("5_iso5m")]
-visible = false
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_ctosr")

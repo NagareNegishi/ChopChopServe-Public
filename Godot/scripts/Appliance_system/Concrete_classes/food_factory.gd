@@ -247,12 +247,6 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	else:
 		highlight_component.show_feedback(true)
 
-func _on_interactable_component_action_use(_is_action: bool) -> void:
-	if !_is_action: return
-	inventory_sprite.inventory.current_slot = inventory_sprite.inventory.move_forward()
-	inventory_sprite.inventory.update_slot_selected(true)
-	_set_food_visual(inventory_sprite.inventory.get_current_slot().inventory_item_name)
-
 
 ## Override unsupported methods to prevent misuse ------------------------------
 func put(_item: Node) -> bool:
@@ -276,9 +270,12 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("LB"):
 		inventory_sprite.inventory.current_slot = inventory_sprite.inventory.move_backward()
 		inventory_sprite.inventory.update_slot_selected(true)
+		_set_food_visual(inventory_sprite.inventory.get_current_slot().inventory_item_name)
+	
 	if Input.is_action_just_pressed("RB"):
 		inventory_sprite.inventory.current_slot = inventory_sprite.inventory.move_forward()
 		inventory_sprite.inventory.update_slot_selected(true)
+		_set_food_visual(inventory_sprite.inventory.get_current_slot().inventory_item_name)
 
 func _set_food_visual(food : String):
 	var texture = ResourceLoader.load("res://assets/textures/ingredients/" + food + ".png")

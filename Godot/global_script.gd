@@ -44,9 +44,3 @@ func get_local_player_by_id(player_id : int) -> Player:
 		if child.get_multiplayer_authority() == player_id:
 			return child
 	return null
-
-func get_pause_menu() -> Pause:
-	return get_tree().current_scene.get_node("== HUD ==/UiPause")
-
-
-#================== Player State ===============================

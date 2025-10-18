@@ -54,7 +54,7 @@ func _on_timer_timeout() -> void:
 	for player in players_in_spill:
 		player.set_speed(4)
 	print("jess: timer has ended !!")
-	SabotageSystem.sabotage_ending.emit("Water Spill")
+	SabotageSystem.sabotage_ending.emit(teamID, "Water Spill")
 	
 	queue_free()
 

@@ -4,6 +4,7 @@ class_name Sink
 extends UnPoweredAppliance
 
 var bubble_particles: ParticleController
+signal progress()
 
 ## Setup the model instance
 func _init():
@@ -77,12 +78,16 @@ func stop_wash() -> void:
 	action_timer.stop()
 	_toggle_bubble(false)
 
+var clean:int
 
 ## Timer callback to handle action logic
 func _on_action_timer_timeout():
-	for plate in contents:
-		if plate is Plate:
-			plate.clean()
+	clean = clean + 1
+	emit_signal("progress")
+	if clean == 3:
+		for plate in contents:
+			if plate is Plate:
+				plate.clean()
 
 
 ## Override unsupported methods to prevent misuse ------------------------------
@@ -194,3 +199,7 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 # 		var water = water_scene.instantiate() # Skip registration, already done by host
 # 		water.name = water_name
 # 		pot._put(water)
+
+
+func _on_dish_taken():
+	pass # Replace with function body.

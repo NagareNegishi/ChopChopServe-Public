@@ -8,7 +8,7 @@ extends Node
 	# - Do something about their spawn points
 	# - Make the targets the other teams stuff
 	# - Make then look for, and pick up the food items instead
-	# - Make them smaller and animated
+	# - Make them animated
 	# - Change the going home logic so that it is smoother (return home, not just disapear)
 	# - Fix code up
 ################################################################################
@@ -86,14 +86,26 @@ func run(delta: float):
 			# calculate movement direction
 			var dir = (new_pos - old_pos).normalized()
 			if dir.length() > 0.01:
-			# point the rat's nose (Z+) toward movement
 				r.look_at(new_pos - dir, Vector3.UP)
 			
-			# Only erase the target if the rat is close enough
 			if r.global_position.distance_to(target_pos) < 0.1:
-				print("found my target, time to go home")
+				print("bran: found my target, time to go home")
+
+				target_node.take_food()
+				var food = null
+				if "contents" in target_node and target_node.contents.size() > 0:
+					food = target_node.contents[0]
+
+				if food and is_instance_valid(food):
+					var parent = food.get_parent()
+					if parent:
+						parent.remove_child(food)
+					r.add_child(food)
+					food.position = Vector3(0, 0.2, 0)
+				
 				rat_states[r] = "returning"
-				rat_targets.erase(r) # Clear the target
+				rat_targets.erase(r)
+
 
 		elif rat_states.get(r) == "returning":
 			var start_pos = starting_pos.get(r, Vector3.ZERO)
@@ -109,11 +121,7 @@ func run(delta: float):
 				mischief.erase(r)
 				rat_states.erase(r)
 				starting_pos.erase(r)
-			#if is_instance_valid(r):
-			#	r.queue_free()
-	
-		#target_node = NodePath("")
-		#target_pos = Vector3(0, 0, 0)
+
 			
 # Maybe add a variable to decide the amount of rats
 func spawn_rat_mischief(team_id: int, position : Vector3, path : NodePath) -> void:
@@ -129,8 +137,8 @@ func spawn_rat_mischief(team_id: int, position : Vector3, path : NodePath) -> vo
 	starting_pos[new_rat] = position
 	rat_states[new_rat] = "going"
 	#start_timer(secs)
-	new_rat.rat_timer()
-	new_rat.set_team_id(team_id)
+	#new_rat.rat_timer()
+	#new_rat.set_team_id(team_id)
 	#var start = get_tree().get_current_scene()
 	#var bs : Array = find_benches(start)
 	#print("benches in the scene ======= ", bs)
@@ -140,94 +148,3 @@ func spawn_rat_mischief(team_id: int, position : Vector3, path : NodePath) -> vo
 func change_state() -> void:
 	for r in mischief:
 		rat_states[r] = "returning"
-
-func get_all_positions() -> Array:
-	var positions = []
-	for r in mischief:	
-		if is_instance_valid(r):		
-			positions.append(r.global_position)
-	return positions
-
-#func get_team() -> int:
-#	return teamID
-	
-# This code currently works !!
-func find_object() -> Vector3:#NodePath:
-	#var bench_list : Array = []
-	var object
-	#print("is there an object within the scene they can get?")
-	# Figure out how to figureout if there is an object on a bench within the scene
-	var appliances = get_tree().get_nodes_in_group("flammable")
-	print(appliances)
-	for item in appliances:
-		#print("going through #1")
-		if item is Bench:
-			#print("====this is a bench===== ", item)
-			object = item.global_position
-	return object
-	
-	# Need to figure out how this should actually work with propper stuff
-	# But for now just ignore this
-			#print("item and its contents ::::::: ", item.contents)
-			#for b in item.contents:
-			#	print("going through #2")
-			#	if b is Food:
-			#		print("====== this is a food item found ======== ", b)
-				#bench_list.append(item)
-				
-
-
-		#if item.content.size() > 0:
-		#	print("there is an item : ", item.content)
-
-func find_benches(root: Node = null) -> Array:
-	if root == null:
-		root = get_tree().get_current_scene()
-
-	print("finding benches")
-	var benches : Array = []
-	for child in root.get_children(): #.get_nodes_in_group("root"):
-		print("child type ===== ", child.get_class_name())
-		if child is Bench:
-			print("found a bench")
-			benches.append(child)
-		benches.append_array(find_benches(child)) # recursive
-	return benches
-	
-	
-	#print("finding bench")
-	#var benches = []
-	#for node in get_tree().get_nodes_in_group("benches"): #get_tree().get_current_scene().get_children():
-	#	print("node ===== ", node)
-	#	if node is Bench:
-	#		benches.append(node)
-	#if benches.is_empty():
-	#	print("No benches found!")
-	#else:
-	#	for b in benches:
-	#		if b.contents.size() > 0:
-	#			print("bench has something on it: ", b, " -> ", b.contents)
-	#		else:
-	#			print("bench is empty: ", b)
-	
-		# debug print
-	#for b in benches:
-	#	if b.contents != null and b.contents.size() > 0:
-	#		print("bench has something on it: ", b, " -> ", b.contents)
-	#	else:
-	#		print("bench is empty: ", b)
-		
-	#for bench in benches:
-	#	if bench.has_method("has_object") and bench.has_object():
-	#		print("Bench", bench, "has an object!")
-	#	elif bench.has("content") and bench.content != null:
-	#		print("Bench", bench, "is holding", bench.content)
-	#	else:
-	##		print("Bench", bench, "is empty.")
-
-	#if benches.size() == 0:
-	#	print("no benches found")
-	
-	#for item in benches:
-	#	if not item.content.is_empty():
-	#		print("yay i found: ", item.content)

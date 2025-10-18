@@ -1,6 +1,6 @@
 extends Node3D
 
-var secs = 3.0 # Change this
+var secs = 10.0 # Change this
 var player_ids := []
 var teamID
 
@@ -37,4 +37,5 @@ func _on_timer_timeout() -> void:
 			player.invert_controls(false)
 			# Clean up the list
 			player_ids.erase(id)
+			
 	SabotageSystem.sabotage_ending.emit(teamID, "Switch Controls")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://g5y4cnxk5856"]
+[gd_scene load_steps=51 format=3 uid="uid://g5y4cnxk5856"]
 
 [ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_1hj32"]
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="1_jd0au"]
@@ -7,8 +7,11 @@
 [ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="2_ldg50"]
 [ext_resource type="PackedScene" uid="uid://hlnawqai2mw4" path="res://NPCs/Customer.tscn" id="2_ne1yq"]
 [ext_resource type="PackedScene" uid="uid://bkjryoge78wu0" path="res://assets/newmodels/decorations/Table.glb" id="3_6wlo3"]
+[ext_resource type="PackedScene" uid="uid://cr8yeiregohxa" path="res://NPCs/Customer2.tscn" id="3_i40ex"]
 [ext_resource type="PackedScene" uid="uid://bk7ovilp788kq" path="res://scripts/Player/spawn_point.tscn" id="3_lg5jw"]
+[ext_resource type="PackedScene" uid="uid://daplbq0248tm1" path="res://NPCs/Customer3.tscn" id="4_xxntf"]
 [ext_resource type="PackedScene" uid="uid://dlk0mbdfg2cmq" path="res://scenes/Appliance_system/oven.tscn" id="5_6wlo3"]
+[ext_resource type="PackedScene" uid="uid://cypyp7vc8c5gp" path="res://NPCs/Customer4.tscn" id="5_iuno0"]
 [ext_resource type="Script" uid="uid://dv1g0obwvkkkt" path="res://scripts/QueueSpot.gd" id="6_iy0ij"]
 [ext_resource type="PackedScene" uid="uid://df6cemvjo3grw" path="res://scenes/Appliance_system/chop_table.tscn" id="7_b26ie"]
 [ext_resource type="PackedScene" uid="uid://b5nb1nxo1r1kb" path="res://scenes/Appliance_system/bench.tscn" id="9_v5sy6"]
@@ -93,7 +96,7 @@ subdivide_depth = 25
 
 [node name="BradleyTestScene" type="Node3D" node_paths=PackedStringArray("tables", "queue_spots", "customer_spawn_point", "customer_exit_point")]
 script = ExtResource("1_1hj32")
-customer_scene = ExtResource("2_ne1yq")
+customer_scenes = Array[PackedScene]([ExtResource("2_ne1yq"), ExtResource("3_i40ex"), ExtResource("4_xxntf"), ExtResource("5_iuno0")])
 tables = [NodePath("NavigationRegion3D/Tables/table5/TableBody"), NodePath("NavigationRegion3D/Tables/table6/TableBody"), NodePath("NavigationRegion3D/Tables/table7/TableBody"), NodePath("NavigationRegion3D/Tables/table9/TableBody"), NodePath("NavigationRegion3D/Tables/table11/TableBody"), NodePath("NavigationRegion3D/Tables/table10/TableBody"), NodePath("NavigationRegion3D/Tables/table12/TableBody"), NodePath("NavigationRegion3D/Tables/table8/TableBody")]
 queue_spots = [NodePath("===QUEUE==/QueueSpot-1"), NodePath("===QUEUE==/QueueSpot-2"), NodePath("===QUEUE==/QueueSpot-3"), NodePath("===QUEUE==/QueueSpot-4"), NodePath("===QUEUE==/QueueSpot-5")]
 customer_spawn_point = NodePath("NavigationRegion3D/CustomerSpawn")
@@ -723,6 +726,7 @@ transform = Transform3D(1, 0, 9.31323e-10, 0, 1, 0, -9.31323e-10, 0, 1, 16.4468,
 
 [node name="CustomerSpawner" type="MultiplayerSpawner" parent="."]
 spawn_path = NodePath("../===QUEUE==")
+spawn_limit = 20
 
 [node name="Extinguisher" parent="." instance=ExtResource("33_q1cwv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2, 1)

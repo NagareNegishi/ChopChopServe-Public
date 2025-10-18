@@ -3,9 +3,13 @@ extends Node
 signal prep_phase()
 signal serve_phase()
 signal end_phase()
+signal day_change(day : int)
 signal time_tick(time)
 signal can_sabotage(flag: bool)
 signal can_build(flag: bool)
+
+var end_ui_scene = preload("res://UI/UI_end_game.tscn")
+var end_ui = end_ui_scene.instantiate()
 
 var prep_length : int
 var end_length : int
@@ -21,7 +25,7 @@ var customer_amount : int
 var timer : Timer = Timer.new()
 
 var food_data = {}
-var available = []
+var available : Array
 var has_ended : bool = false
 
 enum Phases{
@@ -31,7 +35,7 @@ enum Phases{
 }
 
 func _init():
-	amount_of_days = 5
+	amount_of_days = 1
 	current_day = 1
 	prep_length = 30 #sec
 	day_length = 60 #sec
@@ -82,6 +86,7 @@ func _enter_end_phase():
 	if not has_ended:
 		has_ended = true
 		current_day += 1
+		emit_signal("day_change", current_day)
 		var available_food_names = _get_available_food_names()
 		if available_food_names != null:
 			_make_food_items_available(available_food_names)
@@ -113,7 +118,9 @@ func _on_timer_timeout():
 	emit_signal("time_tick", current_time)
 	change_phase()
 	check_customers()
-	check_who_wins()
+	
+	#if current_day > amount_of_days:
+		#end_game()
 
 
 func get_customer_check():
@@ -151,9 +158,6 @@ func _is_gameplay_scene(scene: SceneManager.Scene):
 		&& scene != SceneManager.Scene.MAIN_MENU \
 		&& scene != SceneManager.Scene.LOBBY_TEST
 
-
-func end_level(): # what are we doing here?? press okay on screen and then go back to lobby??
-	return 0
 
 func _start_gameplay_timer():
 	add_child(timer)
@@ -215,3 +219,10 @@ func _make_food_available(scene, level):
 
 func get_available_recipes():
 	return available
+
+# Needs to show an end screen where it tells the users who has won and then they press okay and it takes them back to the lobby
+func end_game():
+	add_child(end_ui)
+	end_ui.set_winner(check_who_wins())
+	
+	remove_child(timer)

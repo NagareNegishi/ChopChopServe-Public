@@ -389,7 +389,7 @@ func _start_game() -> void:
 	# Actual scene
 	# SceneManager.change_scene(SceneManager.Scene.LOBBY)
 	# Test scene
-	SceneManager.change_scene(SceneManager.Scene.EMMA_TEST)
+	SceneManager.change_scene(SceneManager.Scene.LOBBY)
 ##----------------------------------------------------------------------------------
 
 
@@ -410,6 +410,3 @@ func _on_leave_pressed():
 ## Back to Main Menu
 func _back_to_main_menu() -> void:
 	SceneManager.change_scene(SceneManager.Scene.MAIN_MENU)
-
-
-

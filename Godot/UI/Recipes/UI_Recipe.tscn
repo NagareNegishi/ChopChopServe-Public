@@ -1,0 +1,266 @@
+[gd_scene load_steps=11 format=3 uid="uid://75yh0t2jmnhg"]
+
+[ext_resource type="Script" uid="uid://uiljehkqv2ts" path="res://UI/Recipes/ui_recipe.gd" id="1_4c6sh"]
+[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/Style/DefaultTheme.tres" id="2_tms7n"]
+[ext_resource type="Texture2D" uid="uid://chbbc8dxqfr1y" path="res://assets/textures/recipes/TomatoSoup.png" id="4_obou8"]
+[ext_resource type="Texture2D" uid="uid://hlkfqb0l0we1" path="res://assets/textures/misc/check.png" id="5_gtklq"]
+[ext_resource type="Texture2D" uid="uid://datsc15wk03gp" path="res://assets/textures/misc/right-arrow (2).png" id="6_a0ewq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tms7n"]
+bg_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_okijf"]
+bg_color = Color(0.286275, 0.286275, 0.286275, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4c6sh"]
+bg_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ljwv2"]
+bg_color = Color(0.28485, 0.28485, 0.28485, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s34q8"]
+bg_color = Color(0.980392, 0.976471, 0.964706, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="UiRecipe" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4c6sh")
+
+[node name="BG" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -332.0
+offset_top = -176.0
+offset_right = 338.0
+offset_bottom = 181.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tms7n")
+
+[node name="Panel2" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -325.0
+offset_top = -168.0
+offset_right = 329.0
+offset_bottom = 174.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_okijf")
+
+[node name="Prep" type="Label" parent="."]
+layout_mode = 2
+offset_left = 311.0
+offset_top = 259.0
+offset_right = 404.0
+offset_bottom = 299.0
+theme = ExtResource("2_tms7n")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 35
+text = "PREP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Ingredients" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 304.0
+offset_top = 354.0
+offset_right = 394.0
+offset_bottom = 424.0
+theme_override_constants/separation = 70
+
+[node name="Row1" type="HBoxContainer" parent="Ingredients"]
+layout_mode = 2
+theme_override_constants/separation = 90
+alignment = 1
+
+[node name="Row2" type="HBoxContainer" parent="Ingredients"]
+layout_mode = 2
+theme_override_constants/separation = 90
+alignment = 1
+
+[node name="Cook" type="Label" parent="."]
+offset_left = 529.0
+offset_top = 258.0
+offset_right = 627.0
+offset_bottom = 298.0
+theme = ExtResource("2_tms7n")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 35
+text = "COOK"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Serve" type="Label" parent="."]
+layout_mode = 2
+offset_left = 763.0
+offset_top = 260.0
+offset_right = 881.0
+offset_bottom = 300.0
+theme = ExtResource("2_tms7n")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 35
+text = "SERVE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MenuItem" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 755.0
+offset_top = 337.0
+offset_right = 2081.0
+offset_bottom = 1505.0
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("4_obou8")
+
+[node name="Panel3" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -217.0
+offset_top = 191.0
+offset_right = 232.0
+offset_bottom = 220.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4c6sh")
+
+[node name="Panel4" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -214.0
+offset_top = 194.0
+offset_right = 229.0
+offset_bottom = 217.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ljwv2")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -214.0
+offset_top = 194.0
+offset_right = 229.0
+offset_bottom = 217.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_s34q8")
+max_value = 10.0
+step = 0.001
+show_percentage = false
+
+[node name="Ticks" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 527.0
+offset_top = 519.0
+offset_right = 3025.0
+offset_bottom = 1031.0
+scale = Vector2(0.04, 0.04)
+theme_override_constants/separation = 150
+alignment = 1
+
+[node name="P1" type="TextureRect" parent="Ticks"]
+layout_mode = 2
+texture = ExtResource("5_gtklq")
+
+[node name="P2" type="TextureRect" parent="Ticks"]
+layout_mode = 2
+texture = ExtResource("5_gtklq")
+
+[node name="P3" type="TextureRect" parent="Ticks"]
+layout_mode = 2
+texture = ExtResource("5_gtklq")
+
+[node name="P4" type="TextureRect" parent="Ticks"]
+layout_mode = 2
+texture = ExtResource("5_gtklq")
+
+[node name="Dish" type="Label" parent="."]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 163.0
+offset_right = 904.0
+offset_bottom = 243.0
+theme = ExtResource("2_tms7n")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 65
+text = "Tomato Soup"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 436.0
+offset_top = 252.0
+offset_right = 948.0
+offset_bottom = 764.0
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("6_a0ewq")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+offset_left = 670.0
+offset_top = 253.0
+offset_right = 1182.0
+offset_bottom = 765.0
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("6_a0ewq")

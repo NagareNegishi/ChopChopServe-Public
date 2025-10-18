@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dxvyryn6potkf"]
+[gd_scene load_steps=6 format=3 uid="uid://dxvyryn6potkf"]
 
 [ext_resource type="Script" uid="uid://beco606kiollg" path="res://UI/Recipes/UIRecipes.gd" id="1_pipdd"]
 [ext_resource type="Shader" uid="uid://bdsj6gf6j8784" path="res://shaders/blur.gdshader" id="1_v1nc6"]
+[ext_resource type="PackedScene" uid="uid://75yh0t2jmnhg" path="res://UI/Recipes/UI_Recipe.tscn" id="3_8gc3i"]
+[ext_resource type="Texture2D" uid="uid://datsc15wk03gp" path="res://assets/textures/misc/right-arrow (2).png" id="4_mmnnv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pipdd"]
 shader = ExtResource("1_v1nc6")
@@ -40,3 +42,27 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.0705882, 0.0705882, 0.0705882, 0.392157)
+
+[node name="UiRecipe" parent="." instance=ExtResource("3_8gc3i")]
+layout_mode = 1
+offset_left = -9.0
+offset_top = -15.0
+offset_right = -9.0
+offset_bottom = -15.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = 934.0
+offset_top = 268.0
+offset_right = 1446.0
+offset_bottom = 780.0
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("4_mmnnv")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+offset_left = 105.0
+offset_top = 263.0
+offset_right = 617.0
+offset_bottom = 775.0
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("4_mmnnv")
+flip_h = true

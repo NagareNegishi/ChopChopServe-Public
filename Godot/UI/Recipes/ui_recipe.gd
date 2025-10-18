@@ -6,13 +6,18 @@ signal done()
 @onready var recipe_final : TextureRect = $MenuItem
 @onready var row1 : HBoxContainer = $Ingredients/Row1
 @onready var row2 : HBoxContainer = $Ingredients/Row2
+@onready var progress_parts = [$Panel3, $Panel4, $ProgressBar, $Ticks] 
 
+@export var hide : bool
 
 func _ready() -> void:
 	_progress.value = 0
 	reset()
 	set_physics_process(false)
 	#set_info(bolognese.new())
+
+	for part in progress_parts:
+		part.visible = false
 	
 func _physics_process(delta: float) -> void:
 	_progress.value += delta * 0.25
@@ -54,17 +59,10 @@ func _add_ingredients(recipe : MenuItem):
 		index += 1
 
 func _clear_ingredients():
-	var size = row1.get_children().size() - 1
-	var children = row1.get_children()
-	
-	for i in range(size):
-		children[i].queue_free()
-	
-	size = row2.get_children().size() - 1
-	children = row2.get_children()
-	
-	for i in range(size):
-		children[i].queue_free()
+	for child in row1.get_children():
+		child.queue_free()
+	for child in row2.get_children():
+		child.queue_free()
 
 func start():
 	set_physics_process(true)

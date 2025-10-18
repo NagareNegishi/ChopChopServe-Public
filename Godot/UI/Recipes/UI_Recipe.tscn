@@ -116,6 +116,7 @@ theme_override_constants/separation = 90
 alignment = 1
 
 [node name="Cook" type="Label" parent="."]
+layout_mode = 0
 offset_left = 529.0
 offset_top = 258.0
 offset_right = 627.0
@@ -258,6 +259,7 @@ scale = Vector2(0.1, 0.1)
 texture = ExtResource("6_a0ewq")
 
 [node name="TextureRect2" type="TextureRect" parent="."]
+layout_mode = 0
 offset_left = 670.0
 offset_top = 253.0
 offset_right = 1182.0

@@ -10,34 +10,24 @@ var recipe_tab : UIRecipes
 @onready var canvas_layer : CanvasLayer = CanvasLayer.new()
 
 func _ready() -> void:
-	var load_scene : PackedScene = preload("res://UI/UI_LoadingScreen.tscn")
-	load_screen = load_scene.instantiate()
-	
-	var recipe_scene : PackedScene = preload("res://UI/Recipes/UI_Recipe.tscn")
-	recipe_screen = recipe_scene.instantiate()
-	
-	var pause_scene : PackedScene = preload("res://UI/UI_Pause.tscn")
-	pause_menu = pause_scene.instantiate()
-	
-	var recipes_screen : PackedScene = preload("res://UI/Recipes/UI_RecipesInGame.tscn")
-	recipe_tab = recipes_screen.instantiate()
-	
+	add_child(canvas_layer)
 	canvas_layer.visible = false
 	canvas_layer.layer = 1000
 	
-	load_screen.visible = false
-	recipe_screen.visible = false
-	pause_menu.visible = false
+	load_screen = setup_ui(preload("res://UI/UI_LoadingScreen.tscn"))
+	recipe_screen = setup_ui(preload("res://UI/Recipes/UI_Recipe.tscn"))
+	pause_menu = setup_ui(preload("res://UI/UI_Pause.tscn"))
+	recipe_tab = setup_ui(preload("res://UI/Recipes/UI_RecipesInGame.tscn"))
 	
-	add_child(canvas_layer)
-	canvas_layer.add_child(load_screen)
-	canvas_layer.add_child(recipe_screen)
-	canvas_layer.add_child(pause_menu)
-	canvas_layer.add_child(recipe_tab)
 	recipe_screen.done.connect(_done)
 	
 
-
+func setup_ui(scene : PackedScene):
+	var ui = scene.instantiate()
+	ui.visible = false
+	canvas_layer.add_child(ui)
+	return ui
+	
 #================== LOADING SCREEN ======================
 
 
@@ -98,4 +88,8 @@ func show_recipes_tab(show : bool):
 #================== PAUSE ======================
 
 func pause(pause : bool):
+	if pause:
+		show_recipes_tab(false)
+		
 	pause_menu.toggle_visible(true)
+	

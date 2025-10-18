@@ -19,7 +19,13 @@ func _init():
 	
 	name_of_meal = "burger_beef"
 	ui_texture = load("res://assets/textures/recipes/BeefBurger.png")
-
+	ui_meal_name = "Beef Burger"
+	ui_states = {
+		"Dough": ["NONE", "BAKED"],
+		"Cheese": ["CHOPPED", "NONE"],
+		"Tomato":["CHOPPED","NONE"],
+		"Beef":["NONE","FIRED"]
+	}
 func _ready():
 	cooked_mesh_good = $BurgerBeef
 	cooked_mesh_bad = $BadQualityBeefBurger

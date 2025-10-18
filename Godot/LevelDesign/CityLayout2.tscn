@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://cdkyf70jhtj1n"]
+[gd_scene load_steps=47 format=3 uid="uid://cdkyf70jhtj1n"]
 
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_qfo0q"]
 [ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_rdyjb"]

@@ -1,4 +1,5 @@
-[gd_scene load_steps=51 format=3 uid="uid://g5y4cnxk5856"]
+[gd_scene load_steps=49 format=3 uid="uid://g5y4cnxk5856"]
+
 [ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_1hj32"]
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="1_jd0au"]
 [ext_resource type="PackedScene" uid="uid://bakeesqt3byva" path="res://scenes/Appliance_system/sink.tscn" id="1_ldg50"]
@@ -6,11 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="2_ldg50"]
 [ext_resource type="PackedScene" uid="uid://hlnawqai2mw4" path="res://NPCs/Customer.tscn" id="2_ne1yq"]
 [ext_resource type="PackedScene" uid="uid://bkjryoge78wu0" path="res://assets/newmodels/decorations/Table.glb" id="3_6wlo3"]
-[ext_resource type="PackedScene" uid="uid://cr8yeiregohxa" path="res://NPCs/Customer2.tscn" id="3_i40ex"]
 [ext_resource type="PackedScene" uid="uid://bk7ovilp788kq" path="res://scripts/Player/spawn_point.tscn" id="3_lg5jw"]
-[ext_resource type="PackedScene" uid="uid://daplbq0248tm1" path="res://NPCs/Customer3.tscn" id="4_xxntf"]
 [ext_resource type="PackedScene" uid="uid://dlk0mbdfg2cmq" path="res://scenes/Appliance_system/oven.tscn" id="5_6wlo3"]
-[ext_resource type="PackedScene" uid="uid://cypyp7vc8c5gp" path="res://NPCs/Customer4.tscn" id="5_iuno0"]
 [ext_resource type="Script" uid="uid://dv1g0obwvkkkt" path="res://scripts/QueueSpot.gd" id="6_iy0ij"]
 [ext_resource type="PackedScene" uid="uid://df6cemvjo3grw" path="res://scenes/Appliance_system/chop_table.tscn" id="7_b26ie"]
 [ext_resource type="PackedScene" uid="uid://b5nb1nxo1r1kb" path="res://scenes/Appliance_system/bench.tscn" id="9_v5sy6"]
@@ -491,6 +489,26 @@ using_tscn = true
 unique_name = "Bin2"
 current_owner = 2
 
+[node name="Bench10" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("9_v5sy6")]
+transform = Transform3D(1.31135e-07, 0, -1, 0, 1, 0, 1, 0, 1.31135e-07, -2.5, 1, -5)
+using_tscn = true
+unique_name = "bench5"
+
+[node name="Bench11" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("9_v5sy6")]
+transform = Transform3D(-1, 0, -8.74232e-08, 0, 1, 0, 8.74232e-08, 0, -1, 5, 0, -9)
+using_tscn = true
+unique_name = "bench6"
+
+[node name="Bench12" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("9_v5sy6")]
+transform = Transform3D(-1, 0, -8.74232e-08, 0, 1, 0, 8.74232e-08, 0, -1, 12, 0, -9)
+using_tscn = true
+unique_name = "bench7"
+
+[node name="Bench13" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("9_v5sy6")]
+transform = Transform3D(1, 0, 4.47642e-13, 0, 1, 0, -4.47642e-13, 0, 1, 5, 0, -5)
+using_tscn = true
+unique_name = "bench8"
+
 [node name="Left Kitchen" type="Node3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.728, 0)
 
@@ -511,6 +529,26 @@ unique_name = "2"
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 10, 0, 9)
 using_tscn = true
 unique_name = "5"
+
+[node name="Bench6" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("9_v5sy6")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 12, 0, 9)
+using_tscn = true
+unique_name = "bench"
+
+[node name="Bench7" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("9_v5sy6")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 5, 0, 9)
+using_tscn = true
+unique_name = "bench2"
+
+[node name="Bench8" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("9_v5sy6")]
+transform = Transform3D(-1, 0, -8.74232e-08, 0, 1, 0, 8.74232e-08, 0, -1, 5, 0, 5)
+using_tscn = true
+unique_name = "bench3"
+
+[node name="Bench9" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("9_v5sy6")]
+transform = Transform3D(1.31135e-07, 0, -1, 0, 1, 0, 1, 0, 1.31135e-07, -2.5, 1, 6)
+using_tscn = true
+unique_name = "bench4"
 
 [node name="Bench3" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("9_v5sy6")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 6, 0, 5)

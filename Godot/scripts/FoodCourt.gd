@@ -49,7 +49,7 @@ func _process(delta: float):
 	if _time_since_last_customer < 0 and (GameState.get_customer_check() 
 									and await get_free_queue_spot()
 									and customer_seed != 0):
-		_time_since_last_customer += NEW_CUSTOMER_DELAY
+		_time_since_last_customer = NEW_CUSTOMER_DELAY
 		var customer_id = "customer_%d" % _next_customer_id_num
 		_next_customer_id_num += 1
 		

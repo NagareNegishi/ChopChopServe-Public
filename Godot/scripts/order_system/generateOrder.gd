@@ -45,10 +45,17 @@ func get_order():
 func get_simple_order(starter_index: int):
 	var new_order = []
 	check_food_avalibility(s, MI.starters)
+	check_food_avalibility(m, MI.mains)
+	check_food_avalibility(d, MI.deserts)
+	
+	var current_meals = []
+	for meals in [s,m,d]:
+		if meals.size() > 0:
+			current_meals.append(meals)
 	# Put the order together
 	
-	if !s.is_empty():
-		new_order.append(food_generator(s, starter_index))
+	if !current_meals.is_empty():
+		new_order.append(food_generator(current_meals.pick_random(), starter_index))
 	
 	return new_order
 
@@ -77,7 +84,7 @@ func check_food_avalibility(new_list: Array, original_list: Array):
 	for recipe in available_recipes:
 		name_list.append(recipe.get_meal_name())
 	new_list.clear()
-	print(name_list, original_list, "MEEP")
 	for item in original_list:
 		if name_list.has(item.get_meal_name()):
+			print(item.get_meal_name())
 			new_list.append(item)

@@ -7,7 +7,7 @@ static var _auto_register = MenuItem.register(burger_beef)
 @warning_ignore("unused_private_class_variable")
 static var _type_register = MenuItem.register_type(MenuItem.mains, burger_beef.new())
 
-func _ready():
+func _init():
 	ingredients = ["Dough", "Cheese", "Tomato","Beef"]
 	
 	ingredient_states = {
@@ -20,7 +20,7 @@ func _ready():
 	name_of_meal = "burger_beef"
 	ui_texture = load("res://assets/textures/recipes/BeefBurger.png")
 
-func _int():
+func _ready():
 	cooked_mesh_good = $BurgerBeef
 	cooked_mesh_bad = $BadQualityBeefBurger
 	cooked_mesh_burnt = $BurntBeefBurger

@@ -77,7 +77,6 @@ func create_game_with_ip(max_players: int, host_public_ip: String = "") -> bool:
 			_register_room_code(room_code, host_public_ip + ":" + str(port))
 			Debug.net_log("Using provided public IP: %s, Room code: %s" % [host_public_ip, room_code])
 
-
 		connected.emit()
 		player_joined.emit(my_id)
 		Debug.net_log("ENet server created on port %d, max players: %d" % [port, max_players])
@@ -96,7 +95,7 @@ func join_game(connection_info: String) -> bool:
 		Debug.net_log("Cannot join: already connected or connecting")
 		notify.emit("Already connected or connecting", 3.0)
 		return false
-	
+
 	# Parse connection_info as "IP:PORT" or "IP"
 	var parts: Array = connection_info.split(":")
 	var target_ip: String = parts[0] if parts.size() > 0 else "127.0.0.1" # localhost
@@ -169,6 +168,7 @@ func _on_connection_failed():
 ## Handle successful connection to server (client successfully joined)
 func _on_connected_to_server():
 	Debug.net_log("Successfully connected to server")
+	ENetManager.hide_popup()
 	state = ConnectionState.CONNECTED # Client is now connected
 	my_id = multiplayer.get_unique_id()
 	connected.emit()

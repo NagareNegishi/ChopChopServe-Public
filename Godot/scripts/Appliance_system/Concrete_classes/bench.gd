@@ -141,6 +141,17 @@ func player_has(item: Node) -> void:
 		if can_serve != -1:
 			serve_request(item, can_serve)
 			return
+	# If player has cookware:
+	if item is Cookware:
+		# try to transfer contents from bench to cookware
+		if _can_transfer(item):
+			transfer_request(item)
+			return
+		# If bench has plate: try to serve food to plate
+		var plate = contents.back()
+		if plate and plate is Plate and plate.is_ready():
+			served_on_plate_request(plate, item)
+			return
 	# If item_in_hand exists: depend on if appliance can accept it
 	put_request(item)
 
@@ -214,3 +225,91 @@ func _client_serve(player_id: int, can_serve: int) -> void:
 		plate.add_list_items([take()])
 	elif can_serve == 2:
 		plate.add_list_items(contents[0].take_all())
+
+
+## Check if bench can transfer contents to given cookware
+## @param item: must be Cookware
+## @return: True if transfer is possible, false otherwise
+func _can_transfer(item: Node) -> bool:
+	if not item or item is not Cookware:
+		return false
+	var target = contents.back()
+	if target is Food and item._can_accept(target):
+		return true
+	return false
+
+
+## Transfer food from Bench to another Cookware
+## @param cookware: The Cookware to transfer food to
+func transfer_request(player_cookware: Cookware) -> void:
+	if ENetManager.is_host():
+		player_cookware.put(take())
+		_client_transfer.rpc(ENetManager.get_my_id())
+		return
+	_transfer_as_host.rpc_id(1, ENetManager.get_my_id())
+
+
+## Host-side method to handle transfer requests from clients
+## @param player_id: The id of the player who is transferring the food
+@rpc("any_peer", "call_remote", "reliable")
+func _transfer_as_host(player_id: int) -> void:
+	if not ENetManager.is_host():
+		return
+	var player_cookware = GlobalScript.get_local_player_by_id(player_id).item_in_hand
+	if not _can_transfer(player_cookware):
+		return
+	player_cookware.put(take())
+	_client_transfer.rpc(player_id)
+
+
+## Client-side method to transfer food between cookwares, called by host
+## @param player_id: The id of the player who is transferring the food
+@rpc("authority", "call_remote", "reliable")
+func _client_transfer(player_id: int) -> void:
+	var player_cookware = GlobalScript.get_local_player_by_id(player_id).item_in_hand
+	if not _can_transfer(player_cookware):
+		return
+	player_cookware.put(take())
+
+
+## Serve food from Cookware to Plate
+## @param plate: The Plate to serve food to
+## @param cookware: The Cookware holding the food
+func served_on_plate_request(plate: Plate, cookware: Cookware) -> void:
+	if cookware.is_empty():
+		Debug.info("Cookware is empty, cannot serve")
+		return
+	if ENetManager.is_host():
+		plate.add_list_items(cookware.take_all())
+		_client_served_on_plate.rpc(ENetManager.get_my_id())
+		return
+	_served_on_plate_as_host.rpc_id(1, ENetManager.get_my_id())
+
+
+## Host-side method to handle serve requests from clients
+## @param player_id: The id of the player who is serving the food
+@rpc("any_peer", "call_remote", "reliable")
+func _served_on_plate_as_host(player_id: int) -> void:
+	if not ENetManager.is_host():
+		return
+	var cookware = GlobalScript.get_local_player_by_id(player_id).item_in_hand
+	if not cookware or not (cookware is Cookware) or cookware.is_empty():
+		Debug.info("Player is not holding a cookware with food")
+		return
+	var plate = contents.back()
+	if plate and plate is Plate and plate.is_ready():
+		plate.add_list_items(cookware.take_all())
+		_client_served_on_plate.rpc(player_id)
+
+
+## Client-side method to serve food to plate, called by host
+## @param player_id: The id of the player who is serving the food
+@rpc("authority", "call_remote", "reliable")
+func _client_served_on_plate(player_id: int) -> void:
+	var cookware = GlobalScript.get_local_player_by_id(player_id).item_in_hand
+	if not cookware or not (cookware is Cookware) or cookware.is_empty():
+		Debug.info("Player is not holding a cookware with food")
+		return
+	var plate = contents.back()
+	if plate and plate is Plate and plate.is_ready():
+		plate.add_list_items(cookware.take_all())

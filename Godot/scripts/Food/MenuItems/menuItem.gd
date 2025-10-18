@@ -9,6 +9,8 @@ class_name MenuItem
 var ingredients = []
 var ingredient_states = {}
 var name_of_meal : String
+var ui_meal_name : String
+var ui_states : Dictionary = {}
 var is_available = false
 var quality = 1
 #var appliance : String = "Plate"
@@ -37,8 +39,11 @@ func get_meal_name():
 func match_menu_items(input_ingredients: Array):
 	#print("in match menu")
 	for subclass in subclasses:
-		print(subclass)
 		var instance = subclass.new()
+		input_ingredients.sort()
+		instance.ingredients.sort()
+		print("INPUTTTTT INGREDIENTS   ",input_ingredients)
+		print("INSTANCE INGREDIENTS    ",instance.ingredients)
 		if check_items(input_ingredients, instance.ingredients, instance):
 			#print("in check items if")
 			return instance 

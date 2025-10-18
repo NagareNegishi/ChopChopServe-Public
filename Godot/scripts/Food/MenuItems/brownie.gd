@@ -8,16 +8,16 @@ static var _auto_register = MenuItem.register(brownie)
 static var _type_register = MenuItem.register_type(MenuItem.deserts, brownie.new())
 
 func _init():
-	ingredients = ["Flour", "Cocoa", "Milk", "Egg"]
+	ingredients = ["Flour", "Cocoa", "Milk"]
 	
 	ingredient_states = {
 		"Flour": ["RAW","MIXED","BAKED"],
 		"Cocoa": ["RAW","MIXED","BAKED"],
-		"Egg": ["RAW","MIXED","BAKED"],
 		"Milk": ["RAW", "MIXED","BAKED"]
 	}
 	name_of_meal = "brownie"
 	ui_texture = load("res://assets/textures/recipes/Brownie.png")
+
 func _ready():
 	cooked_mesh_good = $Brownie
 	cooked_mesh_bad = $BadQualityBrownie

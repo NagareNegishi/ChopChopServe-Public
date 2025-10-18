@@ -7,7 +7,7 @@ extends Node3D
 ################################################################################
 
 # Check this time is good !!
-var secs = 10.0
+var secs = 5.0
 var things
 var teamID
 

@@ -150,6 +150,7 @@ func take() -> Node:
 func _take_cookware(cookware: Cookware) -> void:
 	cookware.finish_cook()
 	cookware.set_can_use(false)
+	cookware.power_receiving = 0
 	cookware.unlock()
 	cookware.restore_original_transform()
 	cookware._toggle_interaction(true)

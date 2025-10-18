@@ -18,6 +18,13 @@ func _init():
 	#appliance = "Bowl"
 	name_of_meal = "bolognese"
 	ui_texture = load("res://assets/textures/recipes/Bolognse.png")
+	ui_meal_name = "Bolognese"
+	ui_states = {
+		"Beef": ["NONE", "FRIED"],
+		"Pasta": ["NONE", "BOILED"],
+		"Tomato":["MIXED","FRIED"]
+	}
+
 func _ready():
 	cooked_mesh_good = $SpagBol
 	cooked_mesh_bad = $BadQualitySpagBol

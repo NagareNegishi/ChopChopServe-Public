@@ -3,17 +3,17 @@ class_name FoodCourt extends Node
 
 const NEW_CUSTOMER_DELAY: float = 1.5
 const QUEUE_CHECK_DELAY: float = 0.5
-var _time_since_last_customer: float = 0.0
+var _time_since_last_customer: float = 0.5
 var _time_since_queue_check: float = 0.0
 
 
 @onready var _game_server = get_node("/root/GameServer")
-@export var customer_scene: PackedScene
+@export var customer_scenes: Array[PackedScene] = []
 @export var tables: Array[Table] = []
 @export var queue_spots: Array[QueueSpot] = []
 @export var customer_spawn_point: Node3D
 @export var customer_exit_point: Node3D
-
+@export var customer_seed = 0 # For making synced random changes
 
 var _next_customer_id_num: int = 0
 var number_of_restaurants = 2
@@ -30,11 +30,12 @@ func _ready():
 		occupiable.initialize(str("FoodCourt", "occupiable_", _next_id))
 		_game_server.register_service(str("FoodCourt", "occupiable_", _next_id), occupiable)
 		_next_id += 1
-
+	
 func _process(delta: float):
 	if not is_multiplayer_authority():
 		return
-
+	if customer_seed == 0:
+		customer_seed = randi()
 	# Shifts queue if there are any gaps
 	_time_since_queue_check -= delta
 	if _time_since_queue_check < 0:
@@ -45,7 +46,9 @@ func _process(delta: float):
 				shift_queue(i)
 				
 	_time_since_last_customer -= delta
-	if _time_since_last_customer < 0 and await get_free_queue_spot():
+	if _time_since_last_customer < 0 and (GameState.get_customer_check() 
+									and await get_free_queue_spot()
+									and customer_seed != 0):
 		_time_since_last_customer += NEW_CUSTOMER_DELAY
 		var customer_id = "customer_%d" % _next_customer_id_num
 		_next_customer_id_num += 1
@@ -64,8 +67,9 @@ func spawn_customer(id: String, pos: Vector3, fc_id: String):
 	# prevent duplicate customers from being spawned
 	if get_node_or_null(id):
 		return
-
-	var new_customer = customer_scene.instantiate()
+	var new_customer
+	customer_scenes[customer_seed % customer_scenes.size()].instantiate()
+	new_customer = customer_scenes[customer_seed % customer_scenes.size()].instantiate()
 	new_customer.name = id
 	new_customer._id = id
 	new_customer._food_court_id = fc_id
@@ -74,7 +78,8 @@ func spawn_customer(id: String, pos: Vector3, fc_id: String):
 	
 	# Tell the multiplayer system that the server (peer ID 1) has authority.
 	new_customer.set_multiplayer_authority(1)
-
+	if is_multiplayer_authority():
+		customer_seed = randi()
 ## Returns point customers despawn at
 func get_exit_point():
 	return customer_exit_point

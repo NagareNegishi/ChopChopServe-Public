@@ -54,16 +54,13 @@ func _on_timer_timeout() -> void:
 	for player in players_in_spill:
 		player.set_speed(4)
 	print("jess: timer has ended !!")
-	SabotageSystem.sabotage_ending.emit("Water Spill")
+	SabotageSystem.sabotage_ending.emit(teamID, "Water Spill")
 	
 	queue_free()
 
 # Handle customer fall on server only to avoid duplicate effects
 @rpc("any_peer", "call_remote", "reliable") 
 func handle_customer_fall(customer_path: NodePath) -> void:
-	if not multiplayer.is_server():
-		return
-		
 	var customer = get_node_or_null(customer_path)
 	if not customer:
 		return
@@ -72,20 +69,20 @@ func handle_customer_fall(customer_path: NodePath) -> void:
 	var chance = randi() % 100
 	print("Customer fall chance: ", chance)
 	
-	if chance < 10:  # 10% chance
-		print("Customer should fall")
-		reputation_system.minus_reputation(sabotaged_teamID, 5)
+	if chance < 100:  # 100% chance
+		# sabotaged_teamID not assigned
+		# Using modulo to get opposing side instead
+		reputation_system.minus_reputation(teamID % 2 + 1, 5)
+		
 		# Notify all clients about the fall
-		customer_falls.rpc(customer_path)
+		customer.fall_down()
 
 # Notify all clients that customer fell
 @rpc("authority", "call_local", "reliable")
 func customer_falls(customer_path: NodePath) -> void:
 	var customer = get_node_or_null(customer_path)
 	if customer:
-		# Add customer fall animation/effect here
-		print("Customer fell: ", customer)
-		emit_signal("customer_down")
+		handle_customer_fall(customer_path)
 
 # Add the WaterSprout effect
 func spill() -> bool:
@@ -114,7 +111,7 @@ func _on_area_3d_body_entered(body:Node3D) -> void:
 		# Only handle customer fall on server to avoid duplicates
 		if multiplayer.is_server():
 			var customer_path = body.get_path()
-			handle_customer_fall.rpc(customer_path)
+			customer_falls(customer_path)
 		
 	else:
 		print("Unknown body entered water: ", body)

@@ -34,7 +34,7 @@ func _add_chopping_board() -> void:
 	chopping_board.rotate_y(1)
 	chopping_board.lock()
 	chopping_board._toggle_interaction(false)
-	emit_signal("add_appliance", chopping_board, self)
+	emit_signal("add_appliance", chopping_board, null)
 
 
 ## Place an item onto this appliance
@@ -79,6 +79,10 @@ func player_has(item: Node) -> void:
 	if item is Plate:
 		chopping_board.serve_request(item)
 		return
+	# If player has cookware: try to transfer contents
+	if _can_transfer(item):
+		transfer_request(item)
+		return
 	chopping_board.put_request(item)
 
 
@@ -89,6 +93,19 @@ func _on_interactable_component_action_use(_is_action: bool) -> void:
 		Debug.all("Player ID: " + str(ENetManager.get_my_id()) + ", chop!!")
 	else:
 		chopping_board.finish_cook()
+
+
+## Check if ChopTable can transfer contents to given cookware
+## @param item: must be Cookware
+## @return: True if transfer is possible, false otherwise
+func _can_transfer(item: Node) -> bool:
+	if not item or item is not Cookware:
+		return false
+	var target = chopping_board._check_next_take()
+	if target is Food and item._can_accept(target):
+		return true
+	return false
+
 #---------------------------------------------------------------------------------------------------
 
 

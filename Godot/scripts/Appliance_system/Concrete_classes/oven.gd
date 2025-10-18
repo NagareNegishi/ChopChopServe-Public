@@ -30,3 +30,17 @@ func _setup_upgradable():
 func _setup_inflammable():
 	inflammable_component = Inflammable.new()
 	add_child(inflammable_component)
+
+
+## Place a Cookware onto this Oven, start cooking if applicable
+## @param cookware: The Cookware to place on this Oven
+func _put_cookware(cookware: Cookware) -> void:
+	super._put_cookware(cookware)
+	cookware.toggle_food_visibility(false)
+
+
+## Take cookware from this Oven
+## @param cookware: The Cookware to take
+func _take_cookware(cookware: Cookware) -> void:
+	super._take_cookware(cookware)
+	cookware.toggle_food_visibility(true)

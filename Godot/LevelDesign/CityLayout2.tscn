@@ -1,12 +1,15 @@
-[gd_scene load_steps=39 format=3 uid="uid://cdkyf70jhtj1n"]
+[gd_scene load_steps=43 format=3 uid="uid://cdkyf70jhtj1n"]
 
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_qfo0q"]
 [ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_rdyjb"]
 [ext_resource type="PackedScene" uid="uid://bhr122fytw4th" path="res://assets/CityPacks/gltf/road_straight.gltf" id="1_u1byf"]
+[ext_resource type="PackedScene" uid="uid://cr8yeiregohxa" path="res://NPCs/Customer2.tscn" id="2_4al2s"]
 [ext_resource type="PackedScene" uid="uid://tpxr3ilucedw" path="res://assets/CityPacks/gltf/road_tsplit.gltf" id="2_hlxg0"]
 [ext_resource type="PackedScene" uid="uid://hlnawqai2mw4" path="res://NPCs/Customer.tscn" id="2_nq5uu"]
+[ext_resource type="PackedScene" uid="uid://cypyp7vc8c5gp" path="res://NPCs/Customer4.tscn" id="3_epo3g"]
 [ext_resource type="MeshLibrary" uid="uid://buov12gyntk2n" path="res://LevelDesign/Tilestest.tres" id="4_b20f1"]
 [ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="4_f85dq"]
+[ext_resource type="PackedScene" uid="uid://daplbq0248tm1" path="res://NPCs/Customer3.tscn" id="4_hiedm"]
 [ext_resource type="PackedScene" uid="uid://bkjryoge78wu0" path="res://assets/newmodels/decorations/Table.glb" id="5_u1byf"]
 [ext_resource type="Script" uid="uid://dv1g0obwvkkkt" path="res://scripts/QueueSpot.gd" id="6_0wnb8"]
 [ext_resource type="PackedScene" uid="uid://b5nb1nxo1r1kb" path="res://scenes/Appliance_system/bench.tscn" id="6_08y48"]
@@ -61,14 +64,19 @@ size = Vector3(30, 0.03, 30)
 [sub_resource type="BoxMesh" id="BoxMesh_w6hnu"]
 size = Vector3(30, 0.05, 30)
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_08y48"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_4al2s"]
 height = 0.506226
 radius = 0.655273
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_rh21u"]
+properties/0/path = NodePath(".:customer_seed")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
 [node name="BradleyTestScene" type="Node3D" node_paths=PackedStringArray("tables", "queue_spots", "customer_spawn_point", "customer_exit_point")]
 script = ExtResource("1_rdyjb")
-customer_scene = ExtResource("2_nq5uu")
-tables = [NodePath("NavigationRegion3D/Tables/table/TableBody"), NodePath("NavigationRegion3D/Tables/table2/TableBody"), NodePath("NavigationRegion3D/Tables/table3/TableBody"), NodePath("NavigationRegion3D/Tables/table4/TableBody"), NodePath("NavigationRegion3D/Tables/table5/TableBody"), NodePath("NavigationRegion3D/Tables/table6/TableBody"), NodePath("NavigationRegion3D/Tables/table7/TableBody"), NodePath("NavigationRegion3D/Tables/table8/TableBody")]
+customer_scenes = Array[PackedScene]([ExtResource("2_4al2s"), ExtResource("3_epo3g"), ExtResource("4_hiedm"), ExtResource("2_nq5uu")])
+tables = [NodePath("NavigationRegion3D/Tables/TableBody16"), NodePath("NavigationRegion3D/Tables/TableBody17"), NodePath("NavigationRegion3D/Tables/TableBody18"), NodePath("NavigationRegion3D/Tables/TableBody19"), NodePath("NavigationRegion3D/Tables/TableBody20"), NodePath("NavigationRegion3D/Tables/TableBody21"), NodePath("NavigationRegion3D/Tables/TableBody22"), NodePath("NavigationRegion3D/Tables/TableBody23")]
 queue_spots = [NodePath("===QUEUE==/QueueSpot-1"), NodePath("===QUEUE==/QueueSpot-2"), NodePath("===QUEUE==/QueueSpot-3"), NodePath("===QUEUE==/QueueSpot-4"), NodePath("===QUEUE==/QueueSpot-5")]
 customer_spawn_point = NodePath("NavigationRegion3D/CustomerSpawn")
 customer_exit_point = NodePath("NavigationRegion3D/CustomerLeave")
@@ -737,157 +745,149 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
 [node name="Tables" type="Node3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.364, 0)
 
-[node name="table" parent="NavigationRegion3D/Tables" instance=ExtResource("5_u1byf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 2)
-
-[node name="TableBody" type="StaticBody3D" parent="NavigationRegion3D/Tables/table" node_paths=PackedStringArray("detection_area")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.507046, 0, -0.0885038)
+[node name="TableBody16" type="StaticBody3D" parent="NavigationRegion3D/Tables" node_paths=PackedStringArray("detection_area")]
+transform = Transform3D(0.999985, 0, 0.00553266, 0, 1, 0, -0.00553266, 0, 0.999985, 9, 0.011, 2)
 script = ExtResource("23_wmdyb")
 detection_area = NodePath("Area3D")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/table/TableBody"]
-transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 9.31323e-10, 0, 1, -0.506278, 0.314758, 0.102341)
-shape = SubResource("CylinderShape3D_08y48")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/TableBody16"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.314758, 0)
+shape = SubResource("CylinderShape3D_4al2s")
 
-[node name="Area3D" type="Area3D" parent="NavigationRegion3D/Tables/table/TableBody"]
+[node name="table8" parent="NavigationRegion3D/Tables/TableBody16" instance=ExtResource("5_u1byf")]
+
+[node name="Area3D" type="Area3D" parent="NavigationRegion3D/Tables/TableBody16"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/table/TableBody/Area3D"]
-transform = Transform3D(1, 0, -2.32831e-09, 0, 1, 0, 2.32831e-09, 0, 1, -0.499747, -0.168116, 0.0967939)
-shape = SubResource("CylinderShape3D_08y48")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/TableBody16/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.314758, 0)
+shape = SubResource("CylinderShape3D_4al2s")
 
-[node name="table2" parent="NavigationRegion3D/Tables" instance=ExtResource("5_u1byf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 2)
-
-[node name="TableBody" type="StaticBody3D" parent="NavigationRegion3D/Tables/table2" node_paths=PackedStringArray("detection_area")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.507046, 0, -0.0885038)
+[node name="TableBody17" type="StaticBody3D" parent="NavigationRegion3D/Tables" node_paths=PackedStringArray("detection_area")]
+transform = Transform3D(0.999985, 0, 0.00553266, 0, 1, 0, -0.00553266, 0, 0.999985, 6, 0.011, 2)
 script = ExtResource("23_wmdyb")
 detection_area = NodePath("Area3D")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/table2/TableBody"]
-transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 9.31323e-10, 0, 1, -0.506278, 0.314758, 0.102341)
-shape = SubResource("CylinderShape3D_08y48")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/TableBody17"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.314758, 0)
+shape = SubResource("CylinderShape3D_4al2s")
 
-[node name="Area3D" type="Area3D" parent="NavigationRegion3D/Tables/table2/TableBody"]
+[node name="table8" parent="NavigationRegion3D/Tables/TableBody17" instance=ExtResource("5_u1byf")]
+
+[node name="Area3D" type="Area3D" parent="NavigationRegion3D/Tables/TableBody17"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/table2/TableBody/Area3D"]
-transform = Transform3D(1, 0, -2.32831e-09, 0, 1, 0, 2.32831e-09, 0, 1, -0.499747, -0.168116, 0.0967939)
-shape = SubResource("CylinderShape3D_08y48")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/TableBody17/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.314758, 0)
+shape = SubResource("CylinderShape3D_4al2s")
 
-[node name="table3" parent="NavigationRegion3D/Tables" instance=ExtResource("5_u1byf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -2)
-
-[node name="TableBody" type="StaticBody3D" parent="NavigationRegion3D/Tables/table3" node_paths=PackedStringArray("detection_area")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.507046, 0, -0.0885038)
+[node name="TableBody18" type="StaticBody3D" parent="NavigationRegion3D/Tables" node_paths=PackedStringArray("detection_area")]
+transform = Transform3D(0.999985, 0, 0.00553266, 0, 1, 0, -0.00553266, 0, 0.999985, 9, 0.011, -2)
 script = ExtResource("23_wmdyb")
 detection_area = NodePath("Area3D")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/table3/TableBody"]
-transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 9.31323e-10, 0, 1, -0.506278, 0.314758, 0.102341)
-shape = SubResource("CylinderShape3D_08y48")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/TableBody18"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.314758, 0)
+shape = SubResource("CylinderShape3D_4al2s")
 
-[node name="Area3D" type="Area3D" parent="NavigationRegion3D/Tables/table3/TableBody"]
+[node name="table8" parent="NavigationRegion3D/Tables/TableBody18" instance=ExtResource("5_u1byf")]
+
+[node name="Area3D" type="Area3D" parent="NavigationRegion3D/Tables/TableBody18"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/table3/TableBody/Area3D"]
-transform = Transform3D(1, 0, -2.32831e-09, 0, 1, 0, 2.32831e-09, 0, 1, -0.499747, -0.168116, 0.0967939)
-shape = SubResource("CylinderShape3D_08y48")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/TableBody18/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.314758, 0)
+shape = SubResource("CylinderShape3D_4al2s")
 
-[node name="table4" parent="NavigationRegion3D/Tables" instance=ExtResource("5_u1byf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
-
-[node name="TableBody" type="StaticBody3D" parent="NavigationRegion3D/Tables/table4" node_paths=PackedStringArray("detection_area")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.507046, 0, -0.0885038)
+[node name="TableBody19" type="StaticBody3D" parent="NavigationRegion3D/Tables" node_paths=PackedStringArray("detection_area")]
+transform = Transform3D(0.999985, 0, 0.00553266, 0, 1, 0, -0.00553266, 0, 0.999985, 6, 0.011, -2)
 script = ExtResource("23_wmdyb")
 detection_area = NodePath("Area3D")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/table4/TableBody"]
-transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 9.31323e-10, 0, 1, -0.506278, 0.314758, 0.102341)
-shape = SubResource("CylinderShape3D_08y48")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/TableBody19"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.314758, 0)
+shape = SubResource("CylinderShape3D_4al2s")
 
-[node name="Area3D" type="Area3D" parent="NavigationRegion3D/Tables/table4/TableBody"]
+[node name="table8" parent="NavigationRegion3D/Tables/TableBody19" instance=ExtResource("5_u1byf")]
+
+[node name="Area3D" type="Area3D" parent="NavigationRegion3D/Tables/TableBody19"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/table4/TableBody/Area3D"]
-transform = Transform3D(1, 0, -2.32831e-09, 0, 1, 0, 2.32831e-09, 0, 1, -0.499747, -0.168116, 0.0967939)
-shape = SubResource("CylinderShape3D_08y48")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/TableBody19/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.314758, 0)
+shape = SubResource("CylinderShape3D_4al2s")
 
-[node name="table5" parent="NavigationRegion3D/Tables" instance=ExtResource("5_u1byf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 2)
-
-[node name="TableBody" type="StaticBody3D" parent="NavigationRegion3D/Tables/table5" node_paths=PackedStringArray("detection_area")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.507046, 0, -0.0885038)
+[node name="TableBody20" type="StaticBody3D" parent="NavigationRegion3D/Tables" node_paths=PackedStringArray("detection_area")]
+transform = Transform3D(0.999985, 0, 0.00553266, 0, 1, 0, -0.00553266, 0, 0.999985, -1.99673, 0.011, 2)
 script = ExtResource("23_wmdyb")
 detection_area = NodePath("Area3D")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/table5/TableBody"]
-transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 9.31323e-10, 0, 1, -0.506278, 0.314758, 0.102341)
-shape = SubResource("CylinderShape3D_08y48")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/TableBody20"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.314758, 0)
+shape = SubResource("CylinderShape3D_4al2s")
 
-[node name="Area3D" type="Area3D" parent="NavigationRegion3D/Tables/table5/TableBody"]
+[node name="table8" parent="NavigationRegion3D/Tables/TableBody20" instance=ExtResource("5_u1byf")]
+
+[node name="Area3D" type="Area3D" parent="NavigationRegion3D/Tables/TableBody20"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/table5/TableBody/Area3D"]
-transform = Transform3D(1, 0, -2.32831e-09, 0, 1, 0, 2.32831e-09, 0, 1, -0.499747, -0.168116, 0.0967939)
-shape = SubResource("CylinderShape3D_08y48")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/TableBody20/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.314758, 0)
+shape = SubResource("CylinderShape3D_4al2s")
 
-[node name="table6" parent="NavigationRegion3D/Tables" instance=ExtResource("5_u1byf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 2)
-
-[node name="TableBody" type="StaticBody3D" parent="NavigationRegion3D/Tables/table6" node_paths=PackedStringArray("detection_area")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.507046, 0, -0.0885038)
+[node name="TableBody21" type="StaticBody3D" parent="NavigationRegion3D/Tables" node_paths=PackedStringArray("detection_area")]
+transform = Transform3D(0.999985, 0, 0.00553266, 0, 1, 0, -0.00553266, 0, 0.999985, -4.99673, 0.011, 2)
 script = ExtResource("23_wmdyb")
 detection_area = NodePath("Area3D")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/table6/TableBody"]
-transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 9.31323e-10, 0, 1, -0.506278, 0.314758, 0.102341)
-shape = SubResource("CylinderShape3D_08y48")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/TableBody21"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.314758, 0)
+shape = SubResource("CylinderShape3D_4al2s")
 
-[node name="Area3D" type="Area3D" parent="NavigationRegion3D/Tables/table6/TableBody"]
+[node name="table8" parent="NavigationRegion3D/Tables/TableBody21" instance=ExtResource("5_u1byf")]
+
+[node name="Area3D" type="Area3D" parent="NavigationRegion3D/Tables/TableBody21"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/table6/TableBody/Area3D"]
-transform = Transform3D(1, 0, -2.32831e-09, 0, 1, 0, 2.32831e-09, 0, 1, -0.499747, -0.168116, 0.0967939)
-shape = SubResource("CylinderShape3D_08y48")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/TableBody21/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.314758, 0)
+shape = SubResource("CylinderShape3D_4al2s")
 
-[node name="table7" parent="NavigationRegion3D/Tables" instance=ExtResource("5_u1byf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -2)
-
-[node name="TableBody" type="StaticBody3D" parent="NavigationRegion3D/Tables/table7" node_paths=PackedStringArray("detection_area")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.507046, 0, -0.0885038)
+[node name="TableBody22" type="StaticBody3D" parent="NavigationRegion3D/Tables" node_paths=PackedStringArray("detection_area")]
+transform = Transform3D(0.999985, 0, 0.00553266, 0, 1, 0, -0.00553266, 0, 0.999985, -1.99673, 0.011, -2)
 script = ExtResource("23_wmdyb")
 detection_area = NodePath("Area3D")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/table7/TableBody"]
-transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 9.31323e-10, 0, 1, -0.506278, 0.314758, 0.102341)
-shape = SubResource("CylinderShape3D_08y48")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/TableBody22"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.314758, 0)
+shape = SubResource("CylinderShape3D_4al2s")
 
-[node name="Area3D" type="Area3D" parent="NavigationRegion3D/Tables/table7/TableBody"]
+[node name="table8" parent="NavigationRegion3D/Tables/TableBody22" instance=ExtResource("5_u1byf")]
+
+[node name="Area3D" type="Area3D" parent="NavigationRegion3D/Tables/TableBody22"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/table7/TableBody/Area3D"]
-transform = Transform3D(1, 0, -2.32831e-09, 0, 1, 0, 2.32831e-09, 0, 1, -0.499747, -0.168116, 0.0967939)
-shape = SubResource("CylinderShape3D_08y48")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/TableBody22/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.314758, 0)
+shape = SubResource("CylinderShape3D_4al2s")
 
-[node name="table8" parent="NavigationRegion3D/Tables" instance=ExtResource("5_u1byf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -2)
-
-[node name="TableBody" type="StaticBody3D" parent="NavigationRegion3D/Tables/table8" node_paths=PackedStringArray("detection_area")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.507046, 0, -0.0885038)
+[node name="TableBody23" type="StaticBody3D" parent="NavigationRegion3D/Tables" node_paths=PackedStringArray("detection_area")]
+transform = Transform3D(0.999985, 0, 0.00553266, 0, 1, 0, -0.00553266, 0, 0.999985, -4.99673, 0.011, -2)
 script = ExtResource("23_wmdyb")
 detection_area = NodePath("Area3D")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/table8/TableBody"]
-transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 9.31323e-10, 0, 1, -0.506278, 0.314758, 0.102341)
-shape = SubResource("CylinderShape3D_08y48")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/TableBody23"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.314758, 0)
+shape = SubResource("CylinderShape3D_4al2s")
 
-[node name="Area3D" type="Area3D" parent="NavigationRegion3D/Tables/table8/TableBody"]
+[node name="table8" parent="NavigationRegion3D/Tables/TableBody23" instance=ExtResource("5_u1byf")]
+
+[node name="Area3D" type="Area3D" parent="NavigationRegion3D/Tables/TableBody23"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/table8/TableBody/Area3D"]
-transform = Transform3D(1, 0, -2.32831e-09, 0, 1, 0, 2.32831e-09, 0, 1, -0.499747, -0.168116, 0.0967939)
-shape = SubResource("CylinderShape3D_08y48")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Tables/TableBody23/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.314758, 0)
+shape = SubResource("CylinderShape3D_4al2s")
 
 [node name="CustomerSpawn" type="Node3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 9.31323e-10, 0, 1, 0, -9.31323e-10, 0, 1, 12.4468, 1, 11.6281)
@@ -936,3 +936,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.4, -1)
 
 [node name="Stool8" parent="Stools" instance=ExtResource("30_p0tnk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, -1)
+
+[node name="FCMultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_rh21u")
+
+[node name="== HUD ==" type="CanvasLayer" parent="." groups=["Canvas"]]

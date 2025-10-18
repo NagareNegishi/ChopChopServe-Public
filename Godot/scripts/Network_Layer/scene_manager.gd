@@ -29,7 +29,7 @@ const SCENE_PATHS = {
 	Scene.SETTINGS: "", # Will be added later
 	Scene.LOBBY_TEST: "res://scenes/Network_Layer/lobby_network.tscn",
 	Scene.TEST: "res://scenes/Appliance_system/Appliance_test.tscn",
-	Scene.JESS_TEST: "res://JessTestScene7.tscn",
+	Scene.JESS_TEST: "res://scripts/Sabotage/JessTestScene9.tscn",
 	Scene.EMMA_TEST: "res://scripts/Food/ringwood.tscn",
 	Scene.BeachLighting2: "res://LevelDesign/BeachLighting2.tscn",
 	Scene.CityLayout2: "res://LevelDesign/CityLayout2.tscn",

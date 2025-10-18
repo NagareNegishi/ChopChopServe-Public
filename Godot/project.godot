@@ -32,6 +32,7 @@ ENetManager="*res://scripts/Network_Layer/enet_manager.gd"
 SceneManager="*res://scripts/Network_Layer/scene_manager.gd"
 RatAttack="*res://scripts/Sabotage/ratAttack.gd"
 Debug="*res://scripts/Debug.gd"
+UIManager="*res://UI/UIManager.gd"
 
 [display]
 

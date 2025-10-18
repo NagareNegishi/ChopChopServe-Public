@@ -77,7 +77,7 @@ albedo_color = Color(1, 0.858824, 0.670588, 1)
 material = SubResource("StandardMaterial3D_d8qn3")
 size = Vector3(30, 0.05, 30)
 
-[node name="Ringwood" type="Node3D"]
+[node name="Ringwood2" type="Node3D"]
 
 [node name="== PLAYERS ==" type="Node" parent="."]
 
@@ -410,6 +410,18 @@ using_tscn = false
 unique_name = "UNNAMED_APPLIANCE"
 current_owner = 1
 cooking_style = 0
+
+[node name="FoodFactory4" parent="NavigationRegion3D" instance=ExtResource("26_y7x5b")]
+transform = Transform3D(1, 0, -4.19095e-09, 0, 1, 0, 4.19095e-09, 0, 1, 9.83327, 0, 0.0544047)
+group = 3
+
+[node name="FoodFactory3" parent="NavigationRegion3D" instance=ExtResource("26_y7x5b")]
+transform = Transform3D(1, 0, -3.25963e-09, 0, 1, 0, 3.25963e-09, 0, 1, 8.44538, 0, 0.0467259)
+group = 2
+
+[node name="FoodFactory2" parent="NavigationRegion3D" instance=ExtResource("26_y7x5b")]
+transform = Transform3D(1, 0, -2.32831e-09, 0, 1, 0, 2.32831e-09, 0, 1, 6.99294, 0, 0.03869)
+group = 1
 
 [node name="FoodFactory4" parent="NavigationRegion3D" instance=ExtResource("26_y7x5b")]
 transform = Transform3D(1, 0, -4.19095e-09, 0, 1, 0, 4.19095e-09, 0, 1, 9.83327, 0, 0.0544047)

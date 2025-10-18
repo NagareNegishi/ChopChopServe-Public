@@ -181,7 +181,6 @@ func _position_slot(slot: PlayerSlot, player_id: int) -> void:
 			return
 		slot_occupied[unassigned_index] = true
 		slot.slot_index = unassigned_index
-
 		# Position in unassigned area
 		_position_unassigned_slots(slot, unassigned_index)
 		_sync_slot_position.rpc(player_id, unassigned_index)
@@ -221,6 +220,8 @@ func _sync_slot_position(player_id: int, slot_index: int):
 		var slot = player_slots[player_id]
 		slot.slot_index = slot_index
 		_position_unassigned_slots(slot, slot_index)
+		if player_id == my_id:
+			slot._check_team_buttons()
 
 
 ## Remove a player slot
@@ -229,22 +230,31 @@ func _remove_player_slot(player_id: int):
 	if player_id in player_slots:
 		var slot = player_slots[player_id]
 		var slot_index = slot.slot_index
-
-#---------------------------------
-
-# add team alignment logic here
-
-
-
-		var team = slot.get_team()
-
-#-------------------------------------
+		_adjust_slots_after_removal(slot.get_team())
 		slot.queue_free()
 		player_slots.erase(player_id)
 		if is_host and slot_index >= 0 and slot_index < slot_occupied.size():
 			slot_occupied[slot_index] = false
 			_sync_slot_freed(slot_index)
 		Debug.net_log("Removed slot for player %d" % player_id)
+
+
+## Adjust slots after a player removal (HOST ONLY)
+## @param team_id: The team ID of the removed player
+func _adjust_slots_after_removal(team_id: int):
+	if not is_host:
+		return
+	if team_id == -1:
+		return
+	var team = ENetManager.get_team1() if team_id == 1 else ENetManager.get_team2()
+	if team.is_empty():
+		return
+	var remained_player_id = team[0]
+	if remained_player_id in player_slots:
+		var remained_slot = player_slots[remained_player_id]
+		var target_data = _get_team_slot_transform(team_id, 1)
+		_move_slot_to_transform(remained_slot, target_data.pos, target_data.rot, true)
+		_sync_team_assignment.rpc(remained_player_id, team_id, 1, true)
 
 
 ## Client: Sync occupied slot to what host has freed
@@ -271,10 +281,10 @@ func _request_current_slots(client_id: int):
 	var team2 = ENetManager.get_team2()
 	for i in range(team1.size()):
 		var player_id = team1[i]
-		_sync_team_assignment.rpc_id(client_id, player_id, 1, i + 1)
+		_sync_team_assignment.rpc_id(client_id, player_id, 1, i + 1, false)
 	for i in range(team2.size()):
 		var player_id = team2[i]
-		_sync_team_assignment.rpc_id(client_id, player_id, 2, i + 1)
+		_sync_team_assignment.rpc_id(client_id, player_id, 2, i + 1, false)
 
 
 ## Signal Handler: Player list updated
@@ -320,9 +330,9 @@ func _on_player_assigned(player_id: int, team: int, number: int, animate: bool =
 ## @param team: The team number assigned (1 or 2)
 ## @param number: The slot number within the team (1 or 2)
 @rpc("authority", "call_remote", "reliable")
-func _sync_team_assignment(player_id: int, team: int, number: int):
+func _sync_team_assignment(player_id: int, team: int, number: int, animate: bool):
 	Debug.net_log("Client: Syncing team assignment for player %d: team %d, slot %d" % [player_id, team, number])
-	_on_player_assigned(player_id, team, number, false)
+	_on_player_assigned(player_id, team, number, animate)
 
 
 ## Get team slot transform data
@@ -368,6 +378,14 @@ func _on_team_assigned(team1: Array[int], team2: Array[int]) -> void:
 	else:
 		my_team = -1
 	_set_team_label(my_team)
+
+	# Assign each player to their team slot with animation
+	for i in range(team1.size()):
+		var player_id = team1[i]
+		_on_player_assigned(player_id, 1, i + 1, true)
+	for i in range(team2.size()):
+		var player_id = team2[i]
+		_on_player_assigned(player_id, 2, i + 1, true)
 	_activate_start_game(true)
 
 
@@ -389,8 +407,21 @@ func _start_game() -> void:
 	# Actual scene
 	# SceneManager.change_scene(SceneManager.Scene.LOBBY)
 	# Test scene
-	SceneManager.change_scene(SceneManager.Scene.SwampLighting)
-##----------------------------------------------------------------------------------
+
+	SceneManager.change_scene(SceneManager.Scene.BeachLighting2)
+
+## Leave Button Pressed
+func _on_leave_pressed():
+	if is_host:
+		# Host can directly call the function
+		ENetManager.player_leaves_intentionally(my_id)
+	else:
+		# Client notifies host they're leaving
+		network_layer.send_to(1, {
+			"type": "player_leaving_intentionally",
+			"player_id": my_id
+		})
+		await get_tree().create_timer(0.1).timeout # Small delay to ensure message is sent
 
 
 ## Leave Button Pressed

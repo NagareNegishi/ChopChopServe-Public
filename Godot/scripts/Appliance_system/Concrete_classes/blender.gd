@@ -90,7 +90,7 @@ func take_all() -> Array[Node]:
 	contents = []
 	contents_names = []
 	stop_cook()
-	emit_signal("food_taken", contents)
+	emit_signal("food_taken", self, contents)
 	return all_items
 
 

@@ -46,7 +46,6 @@ func _on_add_cookware(cookware, appliance): # Need to do something else for the 
 	else:
 		progress_bar.max_value = 3
 	
-	#print("progress bar max value: ", progress_bar.max_value)
 	
 	if cookware.contents.size() >= 1:
 		food_item = cookware.contents[0]
@@ -56,8 +55,6 @@ func _on_add_cookware(cookware, appliance): # Need to do something else for the 
 	
 	if appliance != null:
 		appliance.connect("cookware_taken", Callable(self, "_on_cookware_taken"))
-	else:
-		push_error("The applience and the cookware on the appliance shouldnt be null")
 	
 	cw = cookware
 	applianceInstance = appliance
@@ -88,7 +85,6 @@ func _on_food_added(cookware, contents):
 
 
 func _on_food_taken(cookware, contents):
-	#print("FOOD IS TAKEN")
 	if contents is Array and contents.size() >= 1:
 		for item in contents:
 			if !item.is_cooked:
@@ -147,7 +143,7 @@ func change_visibility(turn_on: bool):
 	
 	if applianceInstance:
 		owner_team = applianceInstance.get_appliance_owner()
-	elif applianceInstance == null and (cw is Blender || cw is Sink):
+	elif applianceInstance == null and (cw is Blender || cw is Sink || cw is ChoppingBoard):
 		owner_team = cw.get_appliance_owner()
 	else:
 		owner_team = 0

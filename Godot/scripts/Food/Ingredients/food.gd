@@ -306,8 +306,10 @@ func on_state_change():
 	visibility_of_mesh(spoiled_mesh, false)
 	visibility_of_mesh(cooked_mesh, false)
 	visibility_of_mesh(burnt_mesh, false)
-	visibility_of_mesh(chopped_mesh, false)
-	visibility_of_mesh(mixed_mesh, false)
+	if chopped_mesh:
+		visibility_of_mesh(chopped_mesh, false)
+	if mixed_mesh:
+		visibility_of_mesh(mixed_mesh, false)
 	
 	
 	match(state):
@@ -338,12 +340,17 @@ func on_state_change():
 # ----------------------- CHANGING VISIBILITY/COLLISIONS -----------------------
 func visibility_of_mesh(meshName: MeshInstance3D, changeTo: bool):
 	if meshName != null:
-		meshName.visible = changeTo
+		push_error("No mesh passed to current_visibility() in food.gd")
+	
+	if changeTo:
+		meshName.show()
+	else:
+		meshName.hide()
 
 func current_visibility(changeTo: bool):
 	if !current_mesh:
 		push_error("No mesh passed to current_visibility() in food.gd")
-	current_mesh.visible = changeTo
+	visibility_of_mesh(current_mesh, changeTo)
 
 var  want : bool = false # this is so it doesnt happen everytime the player drops an item because there 
 # is no point turing the collisions back on it they are already on (and also it throws an error if you do that)
@@ -357,6 +364,7 @@ func change_collisions(turn_off:bool):
 	elif want && !turn_off:
 		self.collision_layer = l
 		self.collision_mask = m
+		want = false
 
 func _on_interactable_component_body_entered(body):
 	if body.is_in_group("Floor"):

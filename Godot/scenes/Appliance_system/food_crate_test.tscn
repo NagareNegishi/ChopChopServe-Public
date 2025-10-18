@@ -1,10 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bev73qms8mo6h"]
+[gd_scene load_steps=4 format=3 uid="uid://bev73qms8mo6h"]
 
 [ext_resource type="PackedScene" uid="uid://cci8yswyvokg5" path="res://scenes/Appliance_system/placeable.tscn" id="1_fh1u4"]
 [ext_resource type="Script" uid="uid://drw1ejyko02d6" path="res://scripts/Appliance_system/Unused_classes/food_crate_update.gd" id="2_fh1u4"]
-[ext_resource type="ArrayMesh" uid="uid://b1qj1jxyghxeb" path="res://assets/newmodels/furniture/Fridge_Sphere.res" id="3_22vov"]
-[ext_resource type="ArrayMesh" uid="uid://urjiiaqjj2u4" path="res://assets/newmodels/Crateredone_Cube_053.res" id="4_22vov"]
-[ext_resource type="Texture2D" uid="uid://pdewjp1spb72" path="res://assets/textures/ingredients/beef.png" id="5_r34q6"]
+[ext_resource type="ArrayMesh" uid="uid://bpsuoocqtkbkr" path="res://assets/newmodels/furniture/FoodCrateReDux_Cube_026.res" id="3_fh1u4"]
 
 [node name="FoodFactory" instance=ExtResource("1_fh1u4")]
 sleeping = true
@@ -20,20 +18,9 @@ current_owner = 1
 cooking_style = 0
 model_scene = null
 
-[node name="Fridge" type="MeshInstance3D" parent="." index="3"]
-transform = Transform3D(-0.00235377, -0.0299075, 4.52987e-09, -0.0299075, 0.00235377, -2.98653e-17, -3.5541e-10, -4.51591e-09, -0.03, -0.00965393, -0.382902, -0.409441)
-visible = false
-mesh = ExtResource("3_22vov")
+[node name="Crate" type="MeshInstance3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0296643, 0, 0.0488769)
+mesh = ExtResource("3_fh1u4")
 skeleton = NodePath("")
 
-[node name="Decal" type="Decal" parent="Fridge" index="0"]
-transform = Transform3D(-2.6153, -33.2306, -3.94899e-07, -33.2306, 2.6153, -5.01767e-06, 5.0332e-06, 1.3488e-12, -33.3333, -39.346, 2.70042, -12.9249)
-size = Vector3(0.63, 0.411, 0.63)
-texture_albedo = ExtResource("5_r34q6")
-
-[node name="Crate" type="MeshInstance3D" parent="." index="4"]
-transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0.0296643, 0, -0.00172821)
-mesh = ExtResource("4_22vov")
-skeleton = NodePath("")
-
-[node name="Marker3D" type="Marker3D" parent="." index="5"]
+[node name="Marker3D" type="Marker3D" parent="." index="4"]

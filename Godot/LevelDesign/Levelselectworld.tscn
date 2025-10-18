@@ -1110,6 +1110,9 @@ transform = Transform3D(-0.988167, 0, -0.153383, 0, 1, 0, 0.153383, 0, -0.988167
 [node name="PalmTree_15" parent="Beach/Trees" instance=ExtResource("42_8nmf1")]
 transform = Transform3D(-0.988167, 0, -0.153383, 0, 1, 0, 0.153383, 0, -0.988167, 21.0035, 0, -24.3209)
 
+[node name="PalmTree_40" parent="Beach/Trees" instance=ExtResource("42_8nmf1")]
+transform = Transform3D(-0.851031, 0, 0.525115, 0, 1, 0, -0.525115, 0, -0.851031, 17.9477, 0, -41.412)
+
 [node name="PalmTree_32" parent="Beach/Trees" instance=ExtResource("42_8nmf1")]
 transform = Transform3D(-0.988167, 0, -0.153383, 0, 1, 0, 0.153383, 0, -0.988167, 24.2496, 0, -4.53598)
 
@@ -1167,6 +1170,9 @@ transform = Transform3D(-0.45357, 0, -0.89122, 0, 1, 0, 0.89122, 0, -0.45357, 13
 [node name="PalmTree_39" parent="Beach/Trees" instance=ExtResource("41_fdwt2")]
 transform = Transform3D(0.983741, 0, -0.179592, 0, 1, 0, 0.179592, 0, 0.983741, 20.684, 0.136078, 30.5507)
 
+[node name="PalmTree_41" parent="Beach/Trees" instance=ExtResource("41_fdwt2")]
+transform = Transform3D(-0.186764, 0, -0.982405, 0, 1, 0, 0.982405, 0, -0.186764, 23.2395, 0.136078, -42.6312)
+
 [node name="PalmTree_21" parent="Beach/Trees" instance=ExtResource("42_8nmf1")]
 transform = Transform3D(-0.999916, 0, -0.0129326, 0, 1, 0, 0.0129326, 0, -0.999916, 13.2493, 0, 29.0233)
 
@@ -1217,11 +1223,20 @@ transform = Transform3D(-0.911932, 0, 0.312865, 0, 0.964108, 0, -0.312865, 0, -0
 [node name="Rock_8" parent="Beach/Rocks" instance=ExtResource("46_4hvn4")]
 transform = Transform3D(1.31759, 0, 0.61004, 0, 1.45196, 0, -0.61004, 0, 1.31759, 19.7665, 0.0450003, -23.5813)
 
+[node name="Rock_19" parent="Beach/Rocks" instance=ExtResource("45_3q3io")]
+transform = Transform3D(1.06204, 0, -1.69784, 0, 2.00265, 0, 1.69784, 0, 1.06204, 20.79, 0.259332, -44.1416)
+
+[node name="Rock_20" parent="Beach/Rocks" instance=ExtResource("46_4hvn4")]
+transform = Transform3D(1.3981, 0, -0.391804, 0, 1.45196, 0, 0.391804, 0, 1.3981, 16.5267, 0.0450003, -41.653)
+
 [node name="Rock_2" parent="Beach/Rocks" instance=ExtResource("47_jxeiq")]
 transform = Transform3D(1.01459, 0, 1.58045, 0, 1.87809, 0, -1.58045, 0, 1.01459, 20.358, 0.13596, -32.5286)
 
 [node name="Rock_10" parent="Beach/Rocks" instance=ExtResource("45_3q3io")]
 transform = Transform3D(0.838238, 0, -1.81878, 0, 2.00265, 0, 1.81878, 0, 0.838238, 20.519, 0.259334, 28.5691)
+
+[node name="Rock_21" parent="Beach/Rocks" instance=ExtResource("45_3q3io")]
+transform = Transform3D(-1.82485, 0, -0.824947, 0, 2.00265, 0, 0.824947, 0, -1.82485, 25.2223, 0.259334, -42.7817)
 
 [node name="Rock_11" parent="Beach/Rocks" instance=ExtResource("47_jxeiq")]
 transform = Transform3D(1.73629, 0, -0.715897, 0, 1.87809, 0, 0.715897, 0, 1.73629, 19.4783, 0.135962, 21.3831)

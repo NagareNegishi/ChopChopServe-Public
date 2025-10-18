@@ -33,6 +33,7 @@ SceneManager="*res://scripts/Network_Layer/scene_manager.gd"
 RatAttack="*res://scripts/Sabotage/ratAttack.gd"
 Debug="*res://scripts/Debug.gd"
 RatManager="*res://scripts/Sabotage/rat_manager.gd"
+UIManager="*res://UI/UIManager.gd"
 
 [display]
 

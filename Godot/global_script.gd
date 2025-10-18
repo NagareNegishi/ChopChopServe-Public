@@ -12,9 +12,8 @@ var player_outline_colours = PackedColorArray([Color("ed58d1",1), Color("4f77f0"
 var ui_game_state : UIGameState 
 
 var player_name : String
-var load_screen : LoadingScreen
-@onready var load_scene : PackedScene = preload("res://UI/UI_LoadingScreen.tscn")
-@onready var canvas_layer : CanvasLayer = CanvasLayer.new()
+
+
 ## Called when the node enters the scene tree for the first time.
 ## @return void
 func _ready() -> void:
@@ -24,13 +23,6 @@ func _ready() -> void:
 		
 	if get_tree().get_current_scene().has_node("HUD"):
 		ui_game_state = get_tree().get_current_scene().get_node("HUD")
-	
-	load_screen = load_scene.instantiate()
-	canvas_layer.visible = false
-	canvas_layer.layer = 1000
-	add_child(canvas_layer)
-	canvas_layer.add_child(load_screen)
-	
 
 
 func get_local_player() -> Player:

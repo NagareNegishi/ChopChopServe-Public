@@ -9,6 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_fc8sh")
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -18,22 +19,26 @@ offset_left = 284.0
 offset_top = 113.0
 offset_right = 866.0
 offset_bottom = 475.0
+mouse_filter = 2
 
-[node name="Button" type="Button" parent="ColorRect"]
+[node name="Button" type="Button" parent="."]
+z_as_relative = false
 layout_mode = 0
-offset_left = 165.0
-offset_top = 287.0
-offset_right = 433.0
-offset_bottom = 334.0
+offset_left = 449.0
+offset_top = 400.0
+offset_right = 717.0
+offset_bottom = 447.0
+mouse_force_pass_scroll_events = false
+action_mode = 0
 text = "CONTINUE"
 
-[node name="Label" type="Label" parent="ColorRect"]
+[node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 147.0
-offset_top = 101.0
-offset_right = 426.0
-offset_bottom = 223.0
+offset_left = 431.0
+offset_top = 214.0
+offset_right = 710.0
+offset_bottom = 336.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 50
 
-[connection signal="pressed" from="ColorRect/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

@@ -25,7 +25,7 @@
 [ext_resource type="Shader" uid="uid://c46kta255prk4" path="res://shaders/Water/WaterOpenWorld.gdshader" id="20_bjoss"]
 [ext_resource type="PackedScene" uid="uid://dxlbcu6oeo8f6" path="res://assets/Beachy/FenceBeachRamp.glb" id="22_vda8q"]
 [ext_resource type="PackedScene" uid="uid://bacjqrmridknc" path="res://assets/Beachy/FenceBeachBoardWalk.glb" id="23_t7ckm"]
-[ext_resource type="Script" uid="uid://bovslkbm84p1j" path="res://scripts/level_camera.gd" id="25_pf82k"]
+[ext_resource type="Script" path="res://scripts/level_camera.gd" id="25_pf82k"]
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="28_niv16"]
 [ext_resource type="PackedScene" uid="uid://dt4wue57mdx1d" path="res://scenes/Appliance_system/trash_can.tscn" id="31_pf82k"]
 [ext_resource type="Script" uid="uid://dnns4dn8p042y" path="res://scripts/Table.gd" id="31_t7ckm"]
@@ -87,7 +87,7 @@ size = Vector3(30, 0.05, 30)
 height = 0.506226
 radius = 0.655273
 
-[node name="JohnoTestLevel3" type="Node3D" groups=["GameState"]]
+[node name="JohnoTestLevel4" type="Node3D" groups=["GameState"]]
 transform = Transform3D(0.999985, 0, 0.00553267, 0, 1, 0, -0.00553267, 0, 0.999985, 0, 0, 0)
 
 [node name="== PLAYERS ==" type="Node" parent="."]

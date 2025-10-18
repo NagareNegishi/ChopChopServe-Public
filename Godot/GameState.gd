@@ -35,10 +35,10 @@ enum Phases{
 }
 
 func _init():
-	amount_of_days = 1
+	amount_of_days = 5
 	current_day = 1
 	prep_length = 30 #sec
-	day_length = 60 #sec
+	day_length = 35 #sec
 	end_length = 15
 	
 	timer.wait_time = 1.0
@@ -119,8 +119,8 @@ func _on_timer_timeout():
 	change_phase()
 	check_customers()
 	
-	#if current_day > amount_of_days:
-		#end_game()
+	if current_day > amount_of_days:
+		end_game()
 
 
 func get_customer_check():
@@ -223,6 +223,21 @@ func get_available_recipes():
 # Needs to show an end screen where it tells the users who has won and then they press okay and it takes them back to the lobby
 func end_game():
 	add_child(end_ui)
+	end_ui.set_to_visible()
 	end_ui.set_winner(check_who_wins())
-	
 	remove_child(timer)
+
+func set_HUD_visibility(changeTo : bool) -> void:
+	var root = get_tree().current_scene
+	var found_layer: CanvasLayer = null
+	
+	for child in root.get_children():
+		if child is CanvasLayer:
+			found_layer = child
+			break
+	
+	if found_layer:
+		if changeTo:
+			found_layer.show()
+		else:
+			found_layer.hide()

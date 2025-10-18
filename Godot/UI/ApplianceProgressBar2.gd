@@ -85,15 +85,12 @@ func _on_food_added(cookware, contents):
 
 
 func _on_food_taken(cookware, contents):
-	print("FOOD IS TAKEN")
 	if contents is Array and contents.size() >= 1:
-		print("1")
 		for item in contents:
 			if !item.is_cooked:
 				item.set_cook_time(get_max_value(get_cooking_style()), get_cooking_style())
 				#print("progress value = ", progress_bar.value,"item cook time = ",item.get_cook_time)
 	elif contents is Food:
-		print("2")
 		if !contents.is_cooked:
 			contents.set_cook_time(get_max_value(get_cooking_style()), get_cooking_style())
 			#print("progress value = ", progress_bar.value,"item cook time = ",contents.get_cook_time)

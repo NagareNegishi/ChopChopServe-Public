@@ -88,7 +88,7 @@ func _setup_highlight():
 ## @param upgradable: The Upgradable component to register
 func register_upgradable(upgradable: Upgradable):
 	upgradables.append(upgradable)
-	add_child(upgradable)
+	add_child.call_deferred(upgradable)
 
 
 ## Setup the upgradable components

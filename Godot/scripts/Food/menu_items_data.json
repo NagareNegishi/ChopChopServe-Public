@@ -1,6 +1,6 @@
 {
   "BeachLighting2": {
-	"1": ["bread", "soup_tomato", "onion_rings", "Brownie"],
+	"1": ["bread"],
 	"2": ["burger_chicken", "pizza_cheese", "pie_apple"]
   },
 "TEST": {
@@ -158,48 +158,11 @@
 	  "mushroom_taco"
 	]
   },
-"BeachLighting2": {
-	"1": [
-	
-	  "soup_tomato"
-	],
-	"2": [
-	  "bolognese",
-	  "bread",
-	  "brownie",
-	  "beef_burger",
-	  "chicken_burger",
-	  "fish_burger",
-	  "cheese_bread",
-	  "fish_and_chips",
-	  "garlic_bread",
-	  "mac_and_cheese",
-	  "onion_rings",
-	  "pancakes",
-	  "apple_pie",
-	  "pineapple_pie",
-	  "cheese_pizza",
-	  "hawaiian_pizza",
-	  "meat_pizza",
-	  "mushroom_soup",
-	  "onion_soup",
-	  "pumpkin_soup",
-	  "soup_tomato",
-	  "steak_and_chips",
-	  "beef_taco",
-	  "chicken_taco",
-	  "mushroom_taco"
-	]
-  },
   "Swamp": {
 	"1": ["garlic_bread", "soup_onion", "soup_pumpkin", "taco_mushroom"],
 	"2": ["fish_and_chips", "cheese_bread", "pizza_meat"]
   },
   "Beach": {
-	"1": ["onion_rings", "cheese_bread", "pie_pineapple", "burger_fish"],
-	"2": ["steak_and_chips", "taco_beef", "pie_pumpkin", "fish_and_chips"]
-  },
-"BeachLighting2": {
 	"1": ["onion_rings", "cheese_bread", "pie_pineapple", "burger_fish"],
 	"2": ["steak_and_chips", "taco_beef", "pie_pumpkin", "fish_and_chips"]
   },

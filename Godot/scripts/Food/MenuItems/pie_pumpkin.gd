@@ -15,10 +15,9 @@ func _init():
 		"Dough": ["RAW", "BAKED"]
 	}
 	
-
 	name_of_meal = "pie_pumpkin"
 	ui_texture = load("res://assets/textures/recipes/PumpkinPie.png")
-	
+
 func _ready():
 	cooked_mesh_good = $PiePumpkin
 	cooked_mesh_bad = $BadQualityPumpkinPie

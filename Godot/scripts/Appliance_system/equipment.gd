@@ -77,8 +77,14 @@ func take() -> Node:
 	var item = contents.pop_back()
 	remove_child(item)
 	contents_names.pop_back()
-	emit_signal("food_taken")
+	emit_signal("food_taken", self, item)
 	return item
+
+
+## Peek at the next item to be taken without removing it
+## @return: The Node that would be removed next, or null if nothing to take
+func _check_next_take() -> Node:
+	return contents.back()
 
 
 ## Check if this appliance can accept the given item

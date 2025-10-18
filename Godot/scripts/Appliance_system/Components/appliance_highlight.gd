@@ -20,7 +20,7 @@ const COLORS = {
 }
 
 const CORNER_SIZE = 0.15  # Length of corner lines
-const LINE_THICKNESS = 0.02  # Thickness of lines (actual 3D geometry)
+const LINE_THICKNESS = 0.1  # Thickness of lines (actual 3D geometry)
 
 var current_state: HighlightState = HighlightState.HIDDEN
 var corner_meshes: Array[MeshInstance3D] = []

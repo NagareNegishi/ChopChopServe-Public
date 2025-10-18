@@ -4,6 +4,7 @@ var food_item
 var is_open: bool = false
 var applianceInstance
 var cw 
+
 @export var type : ProgressType
 @onready var progress_bar = $ProgressBar
 
@@ -29,27 +30,40 @@ func _ready() -> void:
 
 
 func _on_add_cookware(cookware, appliance): # Need to do something else for the sink
-	print("Called _on_add_cookware with:", cookware, appliance)
 	if cookware == null:
 		print("Warning: cookware is null!")
 	if appliance == null:
 		print("Warning: appliance is null!")
-	print("cookware added")
-	cw = cookware
-	applianceInstance = appliance
 	
 	cookware.connect("food_placed", Callable(self, "_on_food_added"))
 	cookware.connect("food_taken", Callable(self, "_on_food_taken"))
+	
 	if cookware is not ChoppingBoard:
 		cookware.connect("new_average", Callable(self, "_on_average_updated"))
+	
+	if get_max_value(get_cooking_style()):
+		progress_bar.max_value = get_max_value(get_cooking_style())
+	else:
+		progress_bar.max_value = 3
+	
+	#print("progress bar max value: ", progress_bar.max_value)
+	
+	if cookware.contents.size() >= 1:
+		food_item = cookware.contents[0]
+		if not food_item.is_connected("cooking", Callable(self, "_on_food_cooking")):
+			food_item.connect("cooking", Callable(self, "_on_food_cooking"))
+			is_open = true
 	
 	if appliance != null:
 		appliance.connect("cookware_taken", Callable(self, "_on_cookware_taken"))
 	else:
 		push_error("The applience and the cookware on the appliance shouldnt be null")
+	
+	cw = cookware
+	applianceInstance = appliance
+
 
 func _on_food_added(cookware, contents):
-	print("food added")
 	is_open = true
 	
 	if food_item and food_item.is_connected("cooking", Callable(self, "_on_food_cooking")):
@@ -60,44 +74,56 @@ func _on_food_added(cookware, contents):
 	elif contents is Food:
 		food_item = contents
 	
+	#print("food added, cook time is: ", food_item.get_cook_time(get_cooking_style()))
 	if get_max_value(get_cooking_style()):
 		progress_bar.max_value = get_max_value(get_cooking_style())
 	else:
 		progress_bar.max_value = 3
+	
+	if food_item.get_cook_time(get_cooking_style()) == 0:
+		progress_bar.value = progress_bar.max_value
 	
 	if not food_item.is_connected("cooking", Callable(self, "_on_food_cooking")):
 		food_item.connect("cooking", Callable(self, "_on_food_cooking"))
 
 
 func _on_food_taken(cookware, contents):
-	print("FOOD IS TAKEN")
-	if contents is Array and contents.size() > 1:
+	#print("FOOD IS TAKEN")
+	if contents is Array and contents.size() >= 1:
 		for item in contents:
 			if !item.is_cooked:
 				item.set_cook_time(get_max_value(get_cooking_style()), get_cooking_style())
-				progress_bar.value = 0
+				#print("progress value = ", progress_bar.value,"item cook time = ",item.get_cook_time)
 	elif contents is Food:
 		if !contents.is_cooked:
 			contents.set_cook_time(get_max_value(get_cooking_style()), get_cooking_style())
-			progress_bar.value = 0
+			#print("progress value = ", progress_bar.value,"item cook time = ",contents.get_cook_time)
 	
 	if food_item and food_item.is_connected("cooking", Callable(self, "_on_food_cooking")):
 		food_item.disconnect("cooking", Callable(self, "_on_food_cooking"))
 	
+	progress_bar.value = 0
 	is_open = false
 	food_item = null
-	
 
 func _on_cookware_taken(cookware, appliance):
-	print("cookware is taken")
+	#print("cookware is taken")
 	if cookware and cookware.is_in_group("Appliance"):
-		print("IS A COOKWARE")
-		if cookware.is_connected("food_placed", Callable(self, "_on_cookware_signal")):
-			cookware.disconnect("food_placed", Callable(self, "_on_cookware_signal"))
-		if cookware.is_connected("food_taken", Callable(self, "_on_food_or_cookware_taken")):
-			cookware.disconnect("food_taken", Callable(self, "_on_food_or_cookware_taken"))
+		if cookware.is_connected("food_placed", Callable(self, "_on_food_added")):
+			cookware.disconnect("food_placed", Callable(self, "_on_food_added"))
+		if cookware.is_connected("food_taken", Callable(self, "_on_food_taken")):
+			cookware.disconnect("food_taken", Callable(self, "_on_food_taken"))
 		if cookware.is_connected("new_average", Callable(self, "_on_average_updated")):
 			cookware.disconnect("new_average", Callable(self, "_on_average_updated"))
+		
+		if cookware.contents.size()>=1:
+			for item in cookware.contents:
+				if item.is_connected("cooking", Callable(self, "_on_food_cooking")):
+					item.disconnect("cooking", Callable(self, "_on_food_cooking"))
+		elif cookware.contents is Food:
+			if cookware.contents.is_connected("cooking", Callable(self, "_on_food_cooking")):
+					cookware.contents.disconnect("cooking", Callable(self, "_on_food_cooking"))
+	
 	
 	is_open = false
 	progress_bar.value = 0
@@ -106,7 +132,6 @@ func _on_cookware_taken(cookware, appliance):
 		item.set_cook_time(get_max_value(get_cooking_style()), get_cooking_style())
 
 func _on_food_cooking():
-	print("food is cooking")
 	progress_bar.value += 1
 
 

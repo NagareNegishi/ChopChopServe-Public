@@ -1,6 +1,7 @@
 ## Simple popup for network messages
-extends PanelContainer
 class_name NetworkPopup
+extends PanelContainer
+
 
 @onready var label: Label = $MarginContainer/Label
 @onready var timer: Timer = $Timer
@@ -22,6 +23,20 @@ func setup(message: String, duration: float = 3.0):
 
 ## Fade out and free itself
 func _on_timeout():
+	var tween = create_tween()
+	tween.tween_property(self, "modulate:a", 0.0, 0.3)
+	tween.finished.connect(queue_free)
+
+
+## Hide the popup immediately without animation
+func hide_popup():
+	timer.stop()
+	queue_free()
+
+
+## Hide the popup with fade out animation
+func hide_popup_animated():
+	timer.stop()
 	var tween = create_tween()
 	tween.tween_property(self, "modulate:a", 0.0, 0.3)
 	tween.finished.connect(queue_free)

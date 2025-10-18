@@ -16,9 +16,11 @@ var quality
 const GRID_SIZE = 3
 const CELL_SIZE = 0.2
 var grid: Array = []
-var is_dirty : bool = false
+@export var is_dirty : bool = false
 var is_full : bool = false
 var number: int = 0
+
+var clean_level = 0
 
 func _ready():
 	menu_instance = preload_menuItems.new()
@@ -33,6 +35,12 @@ func _ready():
 	freeze = true
 
 
+func get_clean_level():
+	return clean_level
+
+func set_clean_level(value: int):
+	clean_level = value
+
 func find_next_free_cell() -> Vector2i:
 	for i in range(grid.size()):
 		for j in range(grid.size()):
@@ -42,41 +50,59 @@ func find_next_free_cell() -> Vector2i:
 
 # Adds items to the plate and scales them so that they appear on the plate
 func add_list_items(food_array: Array):
-	for food in food_array:
-		#print("Adding ", food, " to the plate")
-		add_item(food)
+	add_item(food_array.duplicate())
 
 func add_item(food_node) -> void:
-	food_items.append(food_node)
-	disable_collision(food_node)
-	quality_on_plate.append(food_node.get_quality())
-	floor_time_count += food_node.get_floor_time()
-	
+	#print("Adding item to plate: ", food_node, ", food_name: ", food_node.food_name)
 	var cell = find_next_free_cell()
-	if cell.x == -1:
-		#print("plate full")
-		return
+	if food_node is Array:
+		food_items.append_array(food_node)
+		for item in food_node:
+			disable_collision(item)
+			quality_on_plate.append(item.get_quality())
+			floor_time_count += item.get_floor_time()
+			if cell.x == -1:
+				#print("plate full")
+				return
+			grid[cell.x][cell.y] = item
+			if item.get_parent():
+				item.get_parent().remove_child(item)
+			add_child(item)
+			
+			# Disable physics for items
+			if item is RigidBody3D:
+				item.freeze = true
+				item.gravity_scale = 0
+			
+			item.scale = Vector3(0.5, 0.5, 0.5)
+			
+			var x_offset = (cell.x - 1) * CELL_SIZE
+			var z_offset = (cell.y - 1) * CELL_SIZE
+			
+			# Try positioning at the plate's center first
+			item.transform.origin = Vector3(x_offset, 0.05, z_offset)
+	else:
+		food_items.append(food_node)
+		disable_collision(food_node)
+		quality_on_plate.append(food_node.get_quality())
+		floor_time_count += food_node.get_floor_time()
+		if food_node.get_parent():
+			food_node.get_parent().remove_child(food_node)
+		add_child(food_node)
+		# Disable physics for items
+		if food_node is RigidBody3D:
+			food_node.freeze = true
+			food_node.gravity_scale = 0
+		
+		food_node.scale = Vector3(0.5, 0.5, 0.5)
+		
+		var x_offset = (cell.x - 1) * CELL_SIZE
+		var z_offset = (cell.y - 1) * CELL_SIZE
+		
+		# Try positioning at the plate's center first
+		food_node.transform.origin = Vector3(x_offset, 0.05, z_offset)
 	
-	grid[cell.x][cell.y] = food_node
-
-#---------------------------------------------------------
-	if food_node.get_parent():
-		food_node.get_parent().remove_child(food_node)
-#---------------------------------------------------------
-	add_child(food_node)
 	
-	# Disable physics for items
-	if food_node is RigidBody3D:
-		food_node.freeze = true
-		food_node.gravity_scale = 0
-	
-	food_node.scale = Vector3(0.5, 0.5, 0.5)
-	
-	var x_offset = (cell.x - 1) * CELL_SIZE
-	var z_offset = (cell.y - 1) * CELL_SIZE
-	
-	# Try positioning at the plate's center first
-	food_node.transform.origin = Vector3(x_offset, 0.05, z_offset)  # Start with center
 	check_plate.rpc()
 
 # This has been made so that we can add the different ingredients to the plate visually
@@ -86,13 +112,16 @@ func get_items():
 # This is so that if they make a mistake they have to bin the whole thing
 # We can change this later if you want them to be able to take off the top item
 func remove_all():
+	if food_items is Array:
+		for item in food_items:
+			item.current_visibility(false)
 	for i in range(GRID_SIZE):
 		for j in range(GRID_SIZE):
 			if grid[i][j] != null:
 				var item = grid[i][j]
 				if item.get_parent() == self:
 					remove_child(item)
-					item.free() 
+					item.queue_free() 
 			grid[i][j] = null
 	food_items.clear()
 
@@ -111,8 +140,9 @@ func check_plate():
 		#print("this food items ", item, " previoous states ", item.previous_states)
 	if food_items.is_empty():
 		#print("food items is emptyw")
-		return 0
-	var menuitem = menu_instance.match_menu_items(food_items)
+		return
+	
+	var menuitem = menu_instance.match_menu_items(food_items.duplicate())
 	
 	if menuitem != null:
 		has_menu_item = true
@@ -123,14 +153,13 @@ func check_plate():
 		is_full = true
 		remove_all()
 		grid[1][1] = menuitem # Makes the meal we created the only thing on the plate
-	return 0
+	print("MENU ITEM ISSSSS:    ",menuitem)
+	return
 
 func _set_quality(list: Array):
 	if list.size()<=0:
 		push_error("Nothing in list")
 	
-	@warning_ignore("unused_variable")
-	var total_quality = 0
 	for elem in list:
 		#print("NUMBER: ",number)
 		#print("ELEM: ", elem)
@@ -198,9 +227,9 @@ func _on_interactable_component_action_interact(is_action: bool) -> void:
 					if not equipment.put(food_item):
 						# If equipment can't accept the item, handle appropriately
 						# Could put it back on plate, drop it, or show message
-						print("Equipment couldn't accept: ", food_item.get_script().get_global_name())
+						push_error("Equipment couldn't accept: ", food_item.get_script().get_global_name())
 				
-				print("Transferred items from plate to ", equipment.get_script().get_global_name())
+				#print("Transferred items from plate to ", equipment.get_script().get_global_name())
 				return
 		
 		# Original food pickup logic
@@ -244,7 +273,7 @@ func set_mesh(food):
 ## Functions for cleaning the plate --------------------------------------------
 
 var dirtiness = 0
-const MAX_DIRTINESS = 5
+const MAX_DIRTINESS = 3
 
 ## Set the plate dirty or clean
 ## @param state: True if dirty, false if clean
@@ -252,6 +281,7 @@ func set_dirty(state: bool):
 	is_dirty = state
 	if state:
 		dirtiness = MAX_DIRTINESS
+		clean_level = 0
 	else:
 		dirtiness = 0
 		Debug.cook_log("Plate " + name + " is now clean")
@@ -261,10 +291,7 @@ func set_dirty(state: bool):
 func clean():
 	if not is_dirty:
 		return
-	dirtiness -= 1
-	Debug.cook_log("Plate cleaned, current dirtiness: " + str(dirtiness))
-	if dirtiness <= 0:
-		set_dirty(false)
+	set_dirty(false)
 
 
 ## Check if the plate is empty

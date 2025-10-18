@@ -150,6 +150,7 @@ func _physics_process(delta: float):
 			move_and_slide()
 			_rotate_npc(delta)
 		synced_position = position
+		
 ## Customers will either:
 ## - search or move to targets (queue spot or table)
 ## - shift their position in queue
@@ -202,6 +203,7 @@ func _npc_behavior(delta: float):
 					ReputationSystem.server_add_reputation(ENetManager.get_my_team(), 
 															10.0 * food.get_quality())
 					_table_target.rpc("remove_plate")
+					_table_target.remove_plate()
 					_time_till_leaving = 2
 					
 	# Customers who reach the front of the queue should begin looking for tables
@@ -332,7 +334,7 @@ func despawn():
 	if is_instance_valid(overhead_ui_order_instance):
 		overhead_ui_order_instance.queue_free()
 
-# This function is for waterspill sabotage
+## For waterspill sabotage
 func fall_down():
 	if is_multiplayer_authority():
 		fallen_over = true

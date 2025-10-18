@@ -142,6 +142,7 @@ func _on_level_started(level: SceneManager.Scene):
 	# ----------------------------
 	
 	var available_food_names = _get_available_food_names()
+	
 	_make_food_items_available(available_food_names)
 
 

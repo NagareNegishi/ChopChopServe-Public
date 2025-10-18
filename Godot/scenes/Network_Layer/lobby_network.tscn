@@ -69,7 +69,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TeamLabel" type="Label" parent="."]
-visible = false
 layout_mode = 2
 offset_left = 4.0
 offset_top = 46.0
@@ -116,7 +115,7 @@ theme_override_font_sizes/font_size = 35
 text = "Leave
 "
 
-[node name="Slot1" parent="." instance=ExtResource("1_tbni4")]
+[node name="Team1Slot1" parent="." instance=ExtResource("1_tbni4")]
 layout_mode = 2
 anchors_preset = 0
 offset_left = -473.914
@@ -125,7 +124,7 @@ offset_right = -323.914
 offset_bottom = -35.9138
 rotation = -0.0349066
 
-[node name="Slot2" parent="." instance=ExtResource("1_tbni4")]
+[node name="Team2Slot1" parent="." instance=ExtResource("1_tbni4")]
 layout_mode = 2
 anchors_preset = 0
 offset_left = 313.086
@@ -134,7 +133,7 @@ offset_right = 463.086
 offset_bottom = -36.9139
 rotation = 0.0349066
 
-[node name="Slot3" parent="." instance=ExtResource("1_tbni4")]
+[node name="Team1Slot2" parent="." instance=ExtResource("1_tbni4")]
 layout_mode = 2
 anchors_preset = 0
 offset_left = -436.914
@@ -143,7 +142,7 @@ offset_right = -286.914
 offset_bottom = 204.086
 rotation = 0.0349066
 
-[node name="Slot4" parent="." instance=ExtResource("1_tbni4")]
+[node name="Team2Slot2" parent="." instance=ExtResource("1_tbni4")]
 layout_mode = 2
 anchors_preset = 0
 offset_left = 263.086
@@ -152,7 +151,7 @@ offset_right = 413.086
 offset_bottom = 205.086
 rotation = -0.0349066
 
-[node name="CodeText2" type="Label" parent="."]
+[node name="VSLabel" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5

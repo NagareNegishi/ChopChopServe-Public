@@ -73,7 +73,6 @@ func _put(item: Node) -> void:
 		item.restore_original_transform()
 
 
-
 ## Client-side method to put item, called by host
 ## @param item_name: The name of the item to put
 ## @param player_id: The id of the player who is putting the item
@@ -241,18 +240,18 @@ func _sync_contents(update: Array[String]) -> void:
 	contents_names = update
 
 
-# Non-networking methods for Player interaction ----------------------------------------------------
-## Place an item onto this appliance from Player
-## if we could remove Player dependency from this class, we can remove this method
-## @param item: The Node to place on this appliance
-## @return: True if placement was successful, false otherwise
-func put_from_player(item: Node) -> bool:
-	if not _can_accept(item):
-		return false
-	# transfer item to appliance
-	GlobalScript.get_local_player().remove_item()
-	contents.append(item)
-	add_child(item)
-	contents_names.append(item.name)
-	return true
-#---------------------------------------------------------------------------------------------------
+# # Non-networking methods for Player interaction ----------------------------------------------------
+# ## Place an item onto this appliance from Player
+# ## if we could remove Player dependency from this class, we can remove this method
+# ## @param item: The Node to place on this appliance
+# ## @return: True if placement was successful, false otherwise
+# func put_from_player(item: Node) -> bool:
+# 	if not _can_accept(item):
+# 		return false
+# 	# transfer item to appliance
+# 	GlobalScript.get_local_player().remove_item()
+# 	contents.append(item)
+# 	add_child(item)
+# 	contents_names.append(item.name)
+# 	return true
+# #---------------------------------------------------------------------------------------------------

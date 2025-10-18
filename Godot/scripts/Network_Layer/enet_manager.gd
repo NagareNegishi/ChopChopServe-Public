@@ -69,6 +69,12 @@ func _on_player_joined(player_id: int):
 			"type": "player_list_update",
 			"players": player_list
 		})
+		# Send current team assignments to the new player
+		enet_layer.send_to(player_id, {
+			"type": "team_assignment",
+			"team1": team1,
+			"team2": team2
+		})
 		player_list_updated.emit(player_list)
 
 

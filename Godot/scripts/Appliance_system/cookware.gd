@@ -12,6 +12,13 @@ extends Equipment
 var cookware_ui : UIContents
 var power_receiving: int = 0
 var sizzle_particles: ParticleController
+# Food positioning
+var food_slots: Array[Vector3] = []
+var center_offset: Vector3 = Vector3.ZERO
+var spacing: float = 0.15
+var random_range: float = 0.03
+var food_scale: Vector3 = Vector3(0.7, 0.7, 0.7)
+
 
 ## Setup the cookware
 func _ready():
@@ -19,6 +26,7 @@ func _ready():
 	interactable_component.is_pickup = true
 	_setup_visual_effects()
 	_setup_cookware_ui()
+	_setup_food_slots()
 
 
 ## Setup visual effects
@@ -65,6 +73,7 @@ func _put_food(food: Food) -> void:
 	food.change_collisions(true)
 	cookware_ui.add_food(food)
 	food.restore_original_transform()
+	_position_food(food)
 	emit_signal("food_placed", self, contents)
 	if can_cook():
 		food.start_cooking(int(power_receiving * coefficient), cooking_style)
@@ -149,6 +158,51 @@ func _toggle_sizzle(sizzle: bool) -> void:
 	else:
 		sizzle_particles.stop()
 
+
+## Toggle visibility of food in cookware
+## @param can_see: True if food should be visible, false otherwise
+func toggle_food_visibility(can_see: bool) -> void:
+	for food in contents:
+		food.current_visibility(can_see)
+
+
+## Calculate food slots positions
+func _setup_food_slots():
+	for i in range(capacity):
+		var slot_position = _calculate_food_position(i, center_offset)
+		food_slots.append(slot_position)
+
+
+## Apply position to food at given slot
+## @param food: The Food item to position
+func _position_food(food: Food) -> void:
+	var slot_index = contents.size() - 1
+	if slot_index < food_slots.size():
+		var base_position = food_slots[slot_index]
+		var random_offset = Vector3(
+			randf_range(-random_range, random_range),
+			randf_range(-random_range, random_range),
+			randf_range(-random_range, random_range)
+		)
+		food.position = base_position + random_offset
+		food.scale = food_scale
+
+
+## Calculate position for food at given index
+## @param index: The index of the food item
+## @param center: The center offset of the cookware
+## @return: The position for the food item
+func _calculate_food_position(index: int, center: Vector3) -> Vector3:
+	if capacity == 1:
+		return center
+	# Make a grid layout from capacity
+	var cols = ceil(sqrt(capacity))
+	var row = floor(index / cols)
+	var col = index % int(cols)
+	# Center the grid
+	var offset_x = (col - (cols - 1) / 2.0) * spacing
+	var offset_z = (row - (cols - 1) / 2.0) * spacing
+	return center + Vector3(offset_x, 0, offset_z)
 
 ## For Player interaction --------------------------------------------------------------------------
 

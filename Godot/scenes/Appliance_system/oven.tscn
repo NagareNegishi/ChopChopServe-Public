@@ -31,7 +31,7 @@ render_target_update_mode = 4
 script = ExtResource("5_du6ku")
 
 [node name="Sprite3D" type="Sprite3D" parent="." index="5"]
-transform = Transform3D(-0.999966, -3.60028e-10, -0.00827288, -0.00495588, 0.80071, 0.599031, 0.00662418, 0.599051, -0.800683, -0.00206184, 1.42005, -0.0141381)
+transform = Transform3D(-0.999966, -3.60028e-10, -0.00827288, -0.00495588, 0.80071, 0.599031, 0.00662418, 0.599051, -0.800683, 0, 0, 0)
 billboard = 1
 no_depth_test = true
 texture = SubResource("ViewportTexture_favet")

@@ -1,7 +1,9 @@
-[gd_scene load_steps=44 format=3 uid="uid://bkdgdjjlsc7rx"]
+[gd_scene load_steps=45 format=3 uid="uid://bkdgdjjlsc7rx"]
 
+[ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_cktef"]
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_cmmn0"]
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="1_om5gj"]
+[ext_resource type="PackedScene" uid="uid://hlnawqai2mw4" path="res://NPCs/Customer.tscn" id="2_cfpj7"]
 [ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="2_m6tjv"]
 [ext_resource type="PackedScene" uid="uid://bk7ovilp788kq" path="res://scripts/Player/spawn_point.tscn" id="3_jnlua"]
 [ext_resource type="PackedScene" uid="uid://bkjryoge78wu0" path="res://assets/newmodels/decorations/Table.glb" id="3_mhwt6"]
@@ -25,11 +27,10 @@
 [ext_resource type="Shader" uid="uid://c46kta255prk4" path="res://shaders/Water/WaterOpenWorld.gdshader" id="20_bjoss"]
 [ext_resource type="PackedScene" uid="uid://dxlbcu6oeo8f6" path="res://assets/Beachy/FenceBeachRamp.glb" id="22_vda8q"]
 [ext_resource type="PackedScene" uid="uid://bacjqrmridknc" path="res://assets/Beachy/FenceBeachBoardWalk.glb" id="23_t7ckm"]
-[ext_resource type="Script" path="res://scripts/level_camera.gd" id="25_pf82k"]
+[ext_resource type="Script" uid="uid://bovslkbm84p1j" path="res://scripts/level_camera.gd" id="25_pf82k"]
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="28_niv16"]
 [ext_resource type="PackedScene" uid="uid://dt4wue57mdx1d" path="res://scenes/Appliance_system/trash_can.tscn" id="31_pf82k"]
 [ext_resource type="Script" uid="uid://dnns4dn8p042y" path="res://scripts/Table.gd" id="31_t7ckm"]
-[ext_resource type="PackedScene" uid="uid://br76j8t76ne2x" path="res://scripts/order_system/Plate.tscn" id="32_hte61"]
 [ext_resource type="PackedScene" uid="uid://cw5uvt35a87nt" path="res://scenes/Appliance_system/blender.tscn" id="32_t7ckm"]
 [ext_resource type="PackedScene" uid="uid://b0ougk3d4jnku" path="res://scenes/Appliance_system/food_factory.tscn" id="32_vda8q"]
 [ext_resource type="PackedScene" uid="uid://pee1rah6hbep" path="res://scenes/Appliance_system/stove_with_pan.tscn" id="33_t7ckm"]
@@ -87,8 +88,14 @@ size = Vector3(30, 0.05, 30)
 height = 0.506226
 radius = 0.655273
 
-[node name="JohnoTestLevel4" type="Node3D" groups=["GameState"]]
+[node name="JohnoTestLevel4" type="Node3D" node_paths=PackedStringArray("tables", "queue_spots", "customer_spawn_point", "customer_exit_point") groups=["GameState"]]
 transform = Transform3D(0.999985, 0, 0.00553267, 0, 1, 0, -0.00553267, 0, 0.999985, 0, 0, 0)
+script = ExtResource("1_cktef")
+customer_scenes = Array[PackedScene]([ExtResource("2_cfpj7")])
+tables = [NodePath("NavigationRegion3D/Tables/table12/TableBody"), NodePath("NavigationRegion3D/Tables/table8/TableBody")]
+queue_spots = [NodePath("===QUEUE==/QueueSpot-1"), NodePath("===QUEUE==/QueueSpot-2"), NodePath("===QUEUE==/QueueSpot-3"), NodePath("===QUEUE==/QueueSpot-4"), NodePath("===QUEUE==/QueueSpot-5")]
+customer_spawn_point = NodePath("CustomerSpawnPoint")
+customer_exit_point = NodePath("CustomerExitPoint")
 
 [node name="== PLAYERS ==" type="Node" parent="."]
 
@@ -502,30 +509,6 @@ transform = Transform3D(1, 0, -4.65661e-10, 0, 1, 0, 4.65661e-10, 0, 1, 12.208, 
 
 [node name="Extinguisher" parent="." instance=ExtResource("28_niv16")]
 transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999984, 8.04569, 3.57599, 0.273297)
-
-[node name="Plate" parent="." instance=ExtResource("32_hte61")]
-transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999984, 7.2636, 0.0149996, 2.77139)
-
-[node name="Plate2" parent="." instance=ExtResource("32_hte61")]
-transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999984, 7.27207, 0.0149996, 1.24182)
-
-[node name="Plate3" parent="." instance=ExtResource("32_hte61")]
-transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999984, 7.28009, 0.0149996, -0.208163)
-
-[node name="Plate4" parent="." instance=ExtResource("32_hte61")]
-transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999984, 7.28855, 0.0149996, -1.73773)
-
-[node name="Plate5" parent="." instance=ExtResource("32_hte61")]
-transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999984, 6.09045, 0.0149996, 2.7649)
-
-[node name="Plate6" parent="." instance=ExtResource("32_hte61")]
-transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999984, 6.09891, 0.0149996, 1.23533)
-
-[node name="Plate7" parent="." instance=ExtResource("32_hte61")]
-transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999984, 6.10693, 0.0149996, -0.214653)
-
-[node name="Plate8" parent="." instance=ExtResource("32_hte61")]
-transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999984, 6.11539, 0.0149996, -1.74422)
 
 [node name="Blender" parent="." instance=ExtResource("32_t7ckm")]
 transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999984, 3.13206, 0.430518, -8.61998)

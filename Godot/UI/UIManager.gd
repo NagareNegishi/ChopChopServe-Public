@@ -37,11 +37,11 @@ func play_load():
 
 @rpc("any_peer", "call_local")
 func _server_play_load():
-	if ENetManager.is_host(): return
-	_client_play_load.rpc_id(1)
+	if !ENetManager.is_host(): return
+	_client_play_load.rpc()
 
 
-@rpc("authority", "call_local")
+@rpc("any_peer", "call_local")
 func _client_play_load():
 	load_screen.visible = true
 	canvas_layer.visible = true

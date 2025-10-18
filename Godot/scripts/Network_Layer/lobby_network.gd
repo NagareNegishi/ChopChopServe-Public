@@ -407,21 +407,7 @@ func _start_game() -> void:
 	# Actual scene
 	# SceneManager.change_scene(SceneManager.Scene.LOBBY)
 	# Test scene
-
 	SceneManager.change_scene(SceneManager.Scene.TEST)
-
-## Leave Button Pressed
-func _on_leave_pressed():
-	if is_host:
-		# Host can directly call the function
-		ENetManager.player_leaves_intentionally(my_id)
-	else:
-		# Client notifies host they're leaving
-		network_layer.send_to(1, {
-			"type": "player_leaving_intentionally",
-			"player_id": my_id
-		})
-		await get_tree().create_timer(0.1).timeout # Small delay to ensure message is sent
 
 
 ## Leave Button Pressed

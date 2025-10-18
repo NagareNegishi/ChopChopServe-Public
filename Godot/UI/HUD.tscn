@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://buf4joxpmeoqd" path="res://assets/textures/Controls/keyboard_1.png" id="7_ixkb2"]
 [ext_resource type="Texture2D" uid="uid://bw4uq8pmr1ia6" path="res://assets/textures/Controls/keyboard_2.png" id="8_mms7u"]
 [ext_resource type="Texture2D" uid="uid://dwqngqcqkgkn7" path="res://assets/textures/Controls/keyboard_3.png" id="9_281ki"]
-[ext_resource type="Script" uid="uid://nm3g8omleeay" path="res://UI/SabotageBar.gd" id="10_ixkb2"]
+[ext_resource type="Script" path="res://UI/SabotageBar.gd" id="10_ixkb2"]
 [ext_resource type="Texture2D" uid="uid://dlnedfofn7vuv" path="res://assets/textures/Controls/keyboard_4.png" id="10_w37wn"]
 [ext_resource type="Texture2D" uid="uid://b4qjni3x30ew" path="res://assets/textures/HUD/YBottle.png" id="11_ixkb2"]
 [ext_resource type="Texture2D" uid="uid://bgmq0j2s80owe" path="res://assets/textures/Controls/keyboard_5.png" id="11_kg6a8"]
@@ -20,6 +20,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_f2wx0")
 
 [node name="Controls" type="ColorRect" parent="."]

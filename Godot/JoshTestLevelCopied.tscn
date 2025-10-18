@@ -29,7 +29,7 @@
 [ext_resource type="PackedScene" uid="uid://bfyl14i4p2lc0" path="res://assets/NaturePack/Rock_2.fbx" id="22_3ebxm"]
 [ext_resource type="Shader" uid="uid://c46kta255prk4" path="res://shaders/Water/WaterOpenWorld.gdshader" id="23_hhhlh"]
 [ext_resource type="PackedScene" uid="uid://dxlbcu6oeo8f6" path="res://assets/Beachy/FenceBeachRamp.glb" id="24_ru14q"]
-[ext_resource type="Script" uid="uid://bovslkbm84p1j" path="res://scripts/level_camera.gd" id="25_youy5"]
+[ext_resource type="Script" path="res://scripts/level_camera.gd" id="25_youy5"]
 [ext_resource type="PackedScene" uid="uid://bacjqrmridknc" path="res://assets/Beachy/FenceBeachBoardWalk.glb" id="26_rvbud"]
 [ext_resource type="PackedScene" uid="uid://bakeesqt3byva" path="res://scenes/Appliance_system/sink.tscn" id="27_e1dum"]
 [ext_resource type="PackedScene" uid="uid://bev73qms8mo6h" path="res://scenes/Appliance_system/food_crate_test.tscn" id="28_y0brk"]

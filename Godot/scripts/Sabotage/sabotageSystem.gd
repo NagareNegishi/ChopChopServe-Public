@@ -77,6 +77,7 @@ const sabotage_times = [
 @onready var global_script = GlobalScript
 @onready var rat_attack = RatAttack
 @onready var player = Player
+@onready var rat_manager = RatManager
 
 func _ready() -> void:
 	sabotage_ending.connect(on_sabotage_ending)
@@ -122,7 +123,8 @@ func request_sabotage(teamID: int, sabotage_type: int) -> void:
 
 	# If, WATER_SPILL, get a position
 	elif sabotage_type == SabotageType.WATER_SPILL:
-		var position = get_random_position(teamID)
+		#var position = get_random_position(teamID)
+		var position = get_offset(teamID)
 		print("position of water is : ", position)
 		# Call the execute Sabotage with position
 		execute_sabotage.rpc(teamID, sabotage_type, NodePath(""), position)
@@ -130,6 +132,10 @@ func request_sabotage(teamID: int, sabotage_type: int) -> void:
 	# If RAT_SPAWN
 	elif sabotage_type == SabotageType.RAT_SWARM:
 			var position = get_random_position(teamID)
+			# Start the rat timer here so theres only one
+			RatManager.testing_rat_timer()
+			RatManager.set_team_id(teamID)
+
 			for i in range (5):
 				var chosen_path = find_object_path()
 				execute_sabotage.rpc(teamID, sabotage_type, chosen_path, position)
@@ -190,7 +196,7 @@ func _do_sabotage(teamID: int, sabotage_type: int, chosen_path: NodePath, positi
 
 # Make sure the spills aren't over lapping eachother
 var used_pos := []
-const MIN_SPILL_DISTANCE := 1.5
+var MIN_SPILL_DISTANCE := 1.5
 
 func spawn_water_spill(teamID: int, position: Vector3) -> void:
 	# Check if position is too close to any used position
@@ -201,13 +207,53 @@ func spawn_water_spill(teamID: int, position: Vector3) -> void:
 	spill.global_position = position
 	spill.get_team(teamID)
 	spill.spill()
+
+
+# New code for finding the waterSpill pos
+func get_offset(teamID: int) -> Vector3:
 	
-# Random position for the water spill
+	var offset_x = randf_range(-2, 2)
+	var offset_z = randf_range(-2, 2)
+	var water_pos
+	var players:= []
+	var player_ids := []
+
+	print("jess: Getting offset ", teamID)
+	if teamID == 1:
+		player_ids = ENetManager.get_team2()
+		print("jess: Getting player ids ", player_ids)
+	else:
+		player_ids = ENetManager.get_team1()
+		print("jess: Getting player ids ", player_ids)
+	for id in player_ids:
+		print("jess: Getting player bodies ", id)
+		players.append(GlobalScript.get_local_player_by_id(id))
+	
+	for p in players:
+		print("jess: for p in players ", p)
+		var player_pos = p.global_transform.origin
+		water_pos = player_pos + Vector3(offset_x, -player_pos.y, offset_z)
+		print("jess: water position ", water_pos)
+		#return water_pos
+
+		for pos in used_pos:
+			if water_pos.distance_to(pos) < MIN_SPILL_DISTANCE:
+				if offset_x < 0 || offset_z < 0:
+					water_pos = water_pos + Vector3(0.8, 0, 0.8)
+				elif offset_x > 0 || offset_z > 0:
+					water_pos = water_pos + Vector3(-0.8, 0, -0.8)
+
+		used_pos.append(water_pos)
+		return water_pos
+
+	return water_pos
+
+# Random position for the rats
 func get_random_position(teamID: int) -> Vector3:
 
 	# Currently this just spawns on the specific sides of the floor
 	# Would like to so they don't spawn within appliances
-	var water_pos
+	var target_pos
 	# Get the position
 	var centre = Vector3.ZERO
 	
@@ -215,15 +261,6 @@ func get_random_position(teamID: int) -> Vector3:
 	var offset_x
 	var offset_z
 
-	# Is there a better way to do this ??
-	#if teamID == 1:
-	#	offset_x = randf_range(-7, 9)
-	#	offset_z = randf_range(-9, 0)
-	#elif teamID == 2:
-	#	offset_x = randf_range(-7, 9)
-	#	offset_z = randf_range(0, 9)
-
-	# New Range for the waterSpill position options
 	# Check it is good for all levels !!
 	if teamID == 1:
 		offset_x = randf_range(-7, 11)
@@ -232,18 +269,18 @@ func get_random_position(teamID: int) -> Vector3:
 		offset_x = randf_range(-7, 11)
 		offset_z = randf_range(-2, 10)
 
-	water_pos = centre + Vector3(offset_x, 0, offset_z)
+	target_pos = centre + Vector3(offset_x, 0, offset_z)
 	# Check it's not going to overlap another waterSpill
-	for p in used_pos:
-		if water_pos.distance_to(p) < MIN_SPILL_DISTANCE:
-			if offset_x < 0 || offset_z < 0:
-				water_pos = water_pos + Vector3(0.8, 0, 0.8)
-			elif offset_x > 0 || offset_z > 0:
-				water_pos = water_pos + Vector3(-0.8, 0, -0.8)
+	# for p in used_pos:
+	# 	if target_pos.distance_to(p) < MIN_SPILL_DISTANCE:
+	# 		if offset_x < 0 || offset_z < 0:
+	# 			target_pos = target_pos + Vector3(0.8, 0, 0.8)
+	# 		elif offset_x > 0 || offset_z > 0:
+	# 			target_pos = target_pos + Vector3(-0.8, 0, -0.8)
 
-	used_pos.append(water_pos)
+	#used_pos.append(target_pos)
 
-	return water_pos
+	return target_pos
 
 # ------- Fire Stuff ------- #
 
@@ -346,12 +383,15 @@ func find_object_path() -> NodePath:
 	# Get the benches
 	for item in appliances:
 		if item is Bench:
-			benches.append(item)
+			if item.contents.size() > 0:
+				print("jess: theres and object on this bench: ", item.contents.size(), "and it is a ", item.contents_names)
+				benches.append(item)
 	
 	var b = benches[randi() % benches.size()]
 	# Do I need to do this?
 	# Aim is to make sure they are going to different benches each time
 	benches.erase(b)
+
 	return b.get_path()
 
 # ------- Power Outage Stuff ------- #
@@ -378,10 +418,10 @@ func _on_sabotage_failed(reason: String):
 	print("jess: the sabotage failed !!\n the reason is because ", reason)
 
 # Sabotage Ending signal catcher
-func on_sabotage_ending(sabotage_name: String):
+func on_sabotage_ending(sabotage_team: int, sabotage_name: String):
 	# Here the UI would end etc
 	print("jess: the sabotage ", sabotage_name, " has ended now !!")
 	# Do something with the UI here
 
-func on_sabotage_start(sabotage_name: String, sab_time: int):
+func on_sabotage_start(sabotage_team: int, sabotage_name: String, sab_time: int):
 	print("jess: I an going to start the ", sabotage_name, " for ", sab_time, " now")

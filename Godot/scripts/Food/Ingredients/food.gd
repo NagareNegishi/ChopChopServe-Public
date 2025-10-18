@@ -306,8 +306,10 @@ func on_state_change():
 	visibility_of_mesh(spoiled_mesh, false)
 	visibility_of_mesh(cooked_mesh, false)
 	visibility_of_mesh(burnt_mesh, false)
-	visibility_of_mesh(chopped_mesh, false)
-	visibility_of_mesh(mixed_mesh, false)
+	if chopped_mesh:
+		visibility_of_mesh(chopped_mesh, false)
+	if mixed_mesh:
+		visibility_of_mesh(mixed_mesh, false)
 	
 	
 	match(state):

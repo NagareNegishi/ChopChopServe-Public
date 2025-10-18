@@ -46,7 +46,6 @@ func _on_add_cookware(cookware, appliance): # Need to do something else for the 
 	else:
 		progress_bar.max_value = 3
 	
-	#print("progress bar max value: ", progress_bar.max_value)
 	
 	if cookware.contents.size() >= 1:
 		food_item = cookware.contents[0]
@@ -56,8 +55,6 @@ func _on_add_cookware(cookware, appliance): # Need to do something else for the 
 	
 	if appliance != null:
 		appliance.connect("cookware_taken", Callable(self, "_on_cookware_taken"))
-	else:
-		push_error("The applience and the cookware on the appliance shouldnt be null")
 	
 	cw = cookware
 	applianceInstance = appliance
@@ -88,13 +85,15 @@ func _on_food_added(cookware, contents):
 
 
 func _on_food_taken(cookware, contents):
-	#print("FOOD IS TAKEN")
+	print("FOOD IS TAKEN")
 	if contents is Array and contents.size() >= 1:
+		print("1")
 		for item in contents:
 			if !item.is_cooked:
 				item.set_cook_time(get_max_value(get_cooking_style()), get_cooking_style())
 				#print("progress value = ", progress_bar.value,"item cook time = ",item.get_cook_time)
 	elif contents is Food:
+		print("2")
 		if !contents.is_cooked:
 			contents.set_cook_time(get_max_value(get_cooking_style()), get_cooking_style())
 			#print("progress value = ", progress_bar.value,"item cook time = ",contents.get_cook_time)

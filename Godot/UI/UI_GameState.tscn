@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cpf68rvd2ht5y"]
+[gd_scene load_steps=9 format=3 uid="uid://cpf68rvd2ht5y"]
 
 [ext_resource type="Texture2D" uid="uid://bvhcg80u526t2" path="res://assets/textures/HUD/TimerBG.png" id="1_7cglj"]
 [ext_resource type="Script" uid="uid://dnpbcprkay5ak" path="res://scripts/UI/ui_game_state.gd" id="1_8nf6r"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://upyttcx2p5e0" path="res://assets/textures/HUD/bg.png" id="3_lto73"]
 [ext_resource type="Script" uid="uid://bts4wpxxod8ne" path="res://UI/day.gd" id="6_iqdsg"]
 [ext_resource type="Script" uid="uid://bxgcajf5issh" path="res://UI/time.gd" id="6_k13aw"]
+[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/Style/DefaultTheme.tres" id="7_qq8c1"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -211,9 +212,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 510.0
+offset_left = 489.0
 offset_top = 271.0
-offset_right = 596.0
+offset_right = 575.0
 offset_bottom = 302.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -225,15 +226,21 @@ theme_override_constants/shadow_outline_size = 2
 theme_override_fonts/font = ExtResource("1_vitvd")
 theme_override_font_sizes/font_size = 24
 text = "9:30"
-horizontal_alignment = 1
+horizontal_alignment = 2
 script = ExtResource("6_k13aw")
 
 [node name="TimeType" type="Label" parent="Main/Time"]
 layout_mode = 0
-offset_left = 69.0
-offset_top = 2.0
-offset_right = 109.0
-offset_bottom = 25.0
+offset_left = 87.0
+offset_top = 8.0
+offset_right = 127.0
+offset_bottom = 31.0
+theme = ExtResource("7_qq8c1")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 16
 text = "AM"
 
 [node name="Day" type="Label" parent="Main"]

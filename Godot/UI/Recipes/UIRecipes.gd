@@ -22,7 +22,7 @@ func _physics_process(delta: float) -> void:
 
 
 func forward():
-	index = index + 1 if index + 1 < curr_menu_items.size() - 1 else 0
+	index = index + 1 if index + 1 <= curr_menu_items.size() - 1 else 0
 	recipe.set_info(all_menu_items[curr_menu_items[index]])
 
 func backward():
@@ -32,8 +32,9 @@ func backward():
 func _set_curr_menu_items():
 	curr_menu_items = GameState._get_available_food_names()
 	var item = all_menu_items[curr_menu_items[index]]
+	
 	for part in arrows:
-		part.visible = curr_menu_items.size() <= 0
+		part.visible = curr_menu_items.size() > 1
 	if !item: return
 	recipe.set_info(item)
 

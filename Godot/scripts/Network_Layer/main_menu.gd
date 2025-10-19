@@ -30,7 +30,7 @@ func _ready():
 	exit_button.pressed.connect(_exit_game)
 	test_button.pressed.connect(_diagnose_network)
 	if !froggo_building : return
-	froggo_building.play("ArmatureAction")
+	froggo_building.play("ArmatureAction", -1, 0.6)
 
 
 
@@ -121,3 +121,7 @@ func _diagnose_network():
 	diagnostics.queue_free()
 	test_button.disabled = false
 	test_button.text = "Connection Help"
+
+func _physics_process(delta: float) -> void:
+	if Input.is_action_just_pressed("ui_accept"):
+		_on_join_pressed()

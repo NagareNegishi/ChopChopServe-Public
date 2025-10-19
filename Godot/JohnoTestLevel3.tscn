@@ -504,7 +504,7 @@ transform = Transform3D(1, 0, -4.65661e-10, 0, 1, 0, 4.65661e-10, 0, 1, 11.8854,
 transform = Transform3D(1, 0, -4.65661e-10, 0, 1, 0, 4.65661e-10, 0, 1, 12.208, 0.728576, -3.25253)
 
 [node name="Extinguisher" parent="." instance=ExtResource("28_niv16")]
-transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999984, 8.04569, 3.57599, 0.273297)
+transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999984, 4.94814, 0.667944, 1.64516)
 
 [node name="Blender" parent="." instance=ExtResource("32_t7ckm")]
 transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.999984, 3.13206, 0.430518, -8.61998)

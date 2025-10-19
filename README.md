@@ -30,9 +30,9 @@ Players run competing restaurants, serving customers while managing reputation, 
 | Action | Keyboard | Gamepad |
 |--------|----------|---------|
 | Walk | W/A/S/D | Left Joystick |
-| Interact | E | A |
+| Interact | E/SPACE | A |
 | Action | J | X |
-| Dash | Space / Left Shift | B |
+| Dash | K / Left Shift | B |
 | Cycle Left | J | L1 |
 | Cycle Right | L | R1 |
 | Sabotage | 1/2/3/4/5/6 | D-Pad Up

@@ -3,7 +3,7 @@ extends Button
 
 @export var normal_size := Vector2(0.6,0.6)
 @export var hover_size := Vector2(0.7,0.7)
-@onready var label : Label = $Label
+#@onready var label : Label = $Label
 
 var tween : Tween
 

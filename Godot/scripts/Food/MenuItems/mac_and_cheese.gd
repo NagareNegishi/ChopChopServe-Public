@@ -17,7 +17,12 @@ func _init():
 	
 	name_of_meal = "mac_and_cheese"
 	ui_texture = load("res://assets/textures/recipes/MacNCheese.png")
-
+	ui_meal_name = "DO NOT USE"
+	ui_states = {
+		"Pasta":["BOIDED, BAKED"],
+		"Garlic":["CHOPPED","BAKED"]
+	}
+	
 func _ready():
 	cooked_mesh_good = $MacnCheese
 	cooked_mesh_bad = $BadQualityMacNCheese

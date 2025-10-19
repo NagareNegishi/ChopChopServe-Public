@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://cpf68rvd2ht5y"]
+[gd_scene load_steps=10 format=3 uid="uid://cpf68rvd2ht5y"]
 
 [ext_resource type="Texture2D" uid="uid://bvhcg80u526t2" path="res://assets/textures/HUD/TimerBG.png" id="1_7cglj"]
 [ext_resource type="Script" uid="uid://dnpbcprkay5ak" path="res://scripts/UI/ui_game_state.gd" id="1_8nf6r"]
 [ext_resource type="FontFile" uid="uid://dxc6n0umgi0q4" path="res://assets/fonts/Jua-Regular.ttf" id="1_vitvd"]
 [ext_resource type="Texture2D" uid="uid://brxfjwq14cq5e" path="res://assets/textures/HUD/ClockTimer.png" id="3_4r1a5"]
 [ext_resource type="Texture2D" uid="uid://upyttcx2p5e0" path="res://assets/textures/HUD/bg.png" id="3_lto73"]
+[ext_resource type="Texture2D" uid="uid://ciuv6k7wddbva" path="res://assets/textures/misc/1200px-Circle_-_black_simple.svg.png" id="4_ohb3l"]
 [ext_resource type="Script" uid="uid://bts4wpxxod8ne" path="res://UI/day.gd" id="6_iqdsg"]
 [ext_resource type="Script" uid="uid://bxgcajf5issh" path="res://UI/time.gd" id="6_k13aw"]
 [ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/Style/DefaultTheme.tres" id="7_qq8c1"]
@@ -96,6 +97,41 @@ text = "90"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Score" type="HBoxContainer" parent="Team1"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -198.0
+offset_top = 31.0
+offset_right = -151.0
+offset_bottom = 46.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.174533
+theme_override_constants/separation = 1
+alignment = 2
+
+[node name="M1" type="TextureRect" parent="Team1/Score"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+texture = ExtResource("4_ohb3l")
+expand_mode = 2
+
+[node name="M2" type="TextureRect" parent="Team1/Score"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+texture = ExtResource("4_ohb3l")
+expand_mode = 2
+
+[node name="M3" type="TextureRect" parent="Team1/Score"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+texture = ExtResource("4_ohb3l")
+expand_mode = 2
+
 [node name="Team2" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 8
@@ -171,6 +207,41 @@ theme_override_font_sizes/font_size = 25
 text = "20"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Score" type="HBoxContainer" parent="Team2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 621.0
+offset_top = 336.0
+offset_right = 668.0
+offset_bottom = 351.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.174533
+theme_override_constants/separation = 1
+alignment = 2
+
+[node name="M1" type="TextureRect" parent="Team2/Score"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+texture = ExtResource("4_ohb3l")
+expand_mode = 2
+
+[node name="M2" type="TextureRect" parent="Team2/Score"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+texture = ExtResource("4_ohb3l")
+expand_mode = 2
+
+[node name="M3" type="TextureRect" parent="Team2/Score"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+texture = ExtResource("4_ohb3l")
+expand_mode = 2
 
 [node name="Main" type="Control" parent="."]
 layout_mode = 1

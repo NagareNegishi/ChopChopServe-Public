@@ -51,7 +51,7 @@ func _add_ingredients(recipe : MenuItem):
 	
 	for food in states.keys():
 		scene = UIRecipeIngred.create(states[food][0], recipe.ingredients[index])
-		if row1.get_children().size() < 2:
+		if index < 2:
 			row1.add_child(scene)
 			index += 1
 			continue

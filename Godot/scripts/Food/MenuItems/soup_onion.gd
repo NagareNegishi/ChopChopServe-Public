@@ -16,7 +16,12 @@ func _init():
 	
 	name_of_meal = "soup_onion"
 	ui_texture = load("res://assets/textures/recipes/OnionSoup.png")
-
+	ui_meal_name = "Onion Soup"
+	ui_states = {
+		"Onion1":["CHOPPED", "BOILED"],
+		"Onion2":["CHOPPED","BOILED"],
+		"Onion3":["CHOPPED","BOILED"]
+	}
 func _ready():
 	cooked_mesh_good = $SoupOnion
 	cooked_mesh_bad = $BadQualityOnionSoup

@@ -1,5 +1,6 @@
-[gd_scene load_steps=22 format=3 uid="uid://cr6k46e2s2l27"]
+[gd_scene load_steps=23 format=3 uid="uid://cr6k46e2s2l27"]
 
+[ext_resource type="Script" uid="uid://bovslkbm84p1j" path="res://scripts/level_camera.gd" id="1_6k8u3"]
 [ext_resource type="PackedScene" uid="uid://bajtcauh5e5xi" path="res://scenes/Network_Layer/main_menu.tscn" id="1_vm3wy"]
 [ext_resource type="PackedScene" uid="uid://c246c0j12yfci" path="res://assets/CityPacks/gltf/building_G.gltf" id="6_k4ea4"]
 [ext_resource type="PackedScene" uid="uid://cm6x7spp10lmp" path="res://assets/CityPacks/gltf/building_H.gltf" id="7_tr44a"]
@@ -51,7 +52,9 @@ transform = Transform3D(2.99416, 0, 0, 0, 1, 0, 0, 0, 3.1856, 1, 0, 0)
 mesh = SubResource("BoxMesh_w6hnu")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-0.224951, -0.135606, -0.964888, 0, 0.990268, -0.139173, 0.97437, -0.0313071, -0.222762, -21.4142, 11.9738, -9.09366)
+transform = Transform3D(-0.224951, -0.135606, -0.964888, 0, 0.990268, -0.139173, 0.97437, -0.0313071, -0.222762, -22.5465, 11.9738, -10.7759)
+script = ExtResource("1_6k8u3")
+handheld = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

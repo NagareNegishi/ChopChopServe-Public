@@ -7,11 +7,17 @@ signal scene_ready() # Host only
 signal level_ready(level: Scene)
 
 enum Scene {
+	# in game scenes must be here
 	MAIN_MENU,
 	LOBBY,
 	JOHNO,
 	Food_Court,
 	SETTINGS,
+	#--------------
+	TUTORIAL,
+	#--------------
+
+	# Testing Scenes below
 	LOBBY_TEST,
 	TEST,
 	JESS_TEST,
@@ -28,6 +34,10 @@ const SCENE_PATHS = {
 	Scene.LOBBY: "res://LevelDesign/Levelselectworld.tscn", # Will be added later
 	Scene.Food_Court: "res://Milestone3Submission.tscn",
 	Scene.SETTINGS: "", # Will be added later
+
+	#--------------
+	Scene.TUTORIAL: "res://LevelDesign/Tutorial.tscn",
+	#--------------
 
 	# Testing Scenes below
 	Scene.LOBBY_TEST: "res://scenes/Network_Layer/lobby_network.tscn",

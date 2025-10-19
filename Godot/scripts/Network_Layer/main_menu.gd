@@ -10,7 +10,8 @@ var network_layer: ENetNetworkLayer
 @onready var join_button = $Menu/ButtonsContainer/JoinButton
 @onready var ip_input = $Menu/Note/VBox/IP/PublicIPInput
 @onready var exit_button = $Menu/ButtonsContainer/ExitButton
-@onready var  test_button = $Menu/TestButton
+@onready var  test_button = $Menu/ButtonsContainer/TestButton
+@onready var tutorial_button = $Menu/ButtonsContainer/TutorialButton
 @onready var  error_message = $Menu/Error
 @onready var name_input : LineEdit = $Menu/Note/VBox/Name/Name
 
@@ -29,9 +30,9 @@ func _ready():
 	network_layer.connected.connect(_switch_to_lobby)
 	exit_button.pressed.connect(_exit_game)
 	test_button.pressed.connect(_diagnose_network)
+	tutorial_button.pressed.connect(_on_tutorial_pressed)
 	if !froggo_building : return
 	froggo_building.play("ArmatureAction")
-
 
 
 ## Create Lobby
@@ -120,4 +121,9 @@ func _diagnose_network():
 	Debug.net_log(diagnostics.format_results(results))
 	diagnostics.queue_free()
 	test_button.disabled = false
-	test_button.text = "Connection Help"
+	test_button.text = "CONNECTION HELP"
+
+
+## Tutorial Button Pressed
+func _on_tutorial_pressed():
+	SceneManager.change_scene(SceneManager.Scene.TUTORIAL)

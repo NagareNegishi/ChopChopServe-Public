@@ -125,6 +125,8 @@ Once hosted, players wait in the lobby:
 - [Demo Video](https://youtu.be/P1bXwwFyT1g)
 - [Game Design Document](included in repository)
 
+## Credits and asset used
+
 
 
 ### INFO for development team

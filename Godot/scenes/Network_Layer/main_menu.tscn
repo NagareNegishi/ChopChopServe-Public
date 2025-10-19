@@ -121,9 +121,9 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 110.0
-offset_top = -288.0
-offset_right = 375.0
-offset_bottom = -118.0
+offset_top = -293.0
+offset_right = 402.0
+offset_bottom = -48.0
 grow_vertical = 0
 theme_override_constants/separation = 13
 
@@ -137,6 +137,21 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "JOIN GAME
 "
+
+[node name="HSeparator" type="HSeparator" parent="Menu/ButtonsContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="TutorialButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "TUTORIAL"
+
+[node name="TestButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "CONNECTION HELP"
 
 [node name="ExitButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
 layout_mode = 2
@@ -155,11 +170,3 @@ theme_override_colors/font_color = Color(0.945098, 0.356863, 0.298039, 1)
 text = "Game already being hosted"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="TestButton" type="Button" parent="Menu"]
-layout_mode = 0
-offset_left = 946.0
-offset_top = 326.0
-offset_right = 1108.0
-offset_bottom = 431.0
-text = "Test Network"

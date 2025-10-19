@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cr6k46e2s2l27"]
+[gd_scene load_steps=22 format=3 uid="uid://cr6k46e2s2l27"]
 
 [ext_resource type="PackedScene" uid="uid://bajtcauh5e5xi" path="res://scenes/Network_Layer/main_menu.tscn" id="1_vm3wy"]
 [ext_resource type="PackedScene" uid="uid://c246c0j12yfci" path="res://assets/CityPacks/gltf/building_G.gltf" id="6_k4ea4"]
@@ -7,6 +7,11 @@
 [ext_resource type="PackedScene" uid="uid://dkfedsj2qiqrt" path="res://assets/CityPacks/gltf/building_E.gltf" id="8_npabk"]
 [ext_resource type="PackedScene" uid="uid://bailsqnlqlti0" path="res://assets/CityPacks/CityRestaurantAnim2.glb" id="9_vm3wy"]
 [ext_resource type="PackedScene" uid="uid://b8u3t2gtfr6i8" path="res://assets/CityPacks/gltf/road_corner_curved.gltf" id="9_wal6h"]
+[ext_resource type="PackedScene" uid="uid://dpbjfwr1e1ei" path="res://assets/CityPacks/gltf/car_sedan.gltf" id="10_5dcn6"]
+[ext_resource type="PackedScene" uid="uid://ddjw452phsmf0" path="res://assets/CityPacks/gltf/car_stationwagon.gltf" id="11_6k8u3"]
+[ext_resource type="PackedScene" uid="uid://elpcdpbeaoxv" path="res://assets/CityPacks/gltf/building_F.gltf" id="11_npabk"]
+[ext_resource type="PackedScene" uid="uid://c1cxpjboctiju" path="res://assets/CityPacks/gltf/car_hatchback.gltf" id="12_4l5bq"]
+[ext_resource type="PackedScene" uid="uid://bu11kdye0bn1a" path="res://assets/CityPacks/gltf/building_C.gltf" id="12_wal6h"]
 [ext_resource type="PackedScene" uid="uid://bmqt6amoasnv7" path="res://assets/CityPacks/gltf/base.gltf" id="13_i0478"]
 [ext_resource type="PackedScene" uid="uid://2i6yelxqgfre" path="res://assets/CityPacks/gltf/building_B.gltf" id="14_4hwum"]
 [ext_resource type="PackedScene" uid="uid://dleafo37pi7md" path="res://assets/CityPacks/gltf/building_D.gltf" id="15_utqwv"]
@@ -123,16 +128,52 @@ transform = Transform3D(-1, 0, 8.74227e-08, 0, 1, 0, -8.74227e-08, 0, -1, 14, 0,
 transform = Transform3D(-1, 0, 8.74227e-08, 0, 1, 0, -8.74227e-08, 0, -1, 14, 0, -2.38419e-07)
 
 [node name="building_G2" parent="Background" instance=ExtResource("6_k4ea4")]
-transform = Transform3D(1.667, 0, 0, 0, 1.667, 0, 0, 0, 1.667, 4.66667, 0, -6.66667)
+transform = Transform3D(1.667, 0, 0, 0, 1.667, 0, 0, 0, 1.667, 6.66667, 0, -6.66667)
 
 [node name="building_H2" parent="Background" instance=ExtResource("7_tr44a")]
-transform = Transform3D(1.667, 0, 0, 0, 1.667, 0, 0, 0, 1.667, 8, 0, -6.66667)
+transform = Transform3D(1.667, 0, 0, 0, 1.667, 0, 0, 0, 1.667, 10, 0, -6.66667)
 
 [node name="building_E2" parent="Background" instance=ExtResource("8_npabk")]
-transform = Transform3D(1.667, 0, 0, 0, 1.667, 0, 0, 0, 1.667, 11.3333, 0, -6.66667)
+transform = Transform3D(1.667, 0, 0, 0, 1.667, 0, 0, 0, 1.667, 13.3333, 0, -6.66667)
 
 [node name="road_corner_curved2" parent="Background" instance=ExtResource("9_wal6h")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 14, 0, -4)
+
+[node name="car_sedan2" parent="Background" instance=ExtResource("10_5dcn6")]
+transform = Transform3D(0.00239098, 0, 0.999997, 0, 1, 0, -0.999997, 0, 0.00239098, 7.06932, 0.121614, -3.3627)
+
+[node name="car_stationwagon2" parent="Background" instance=ExtResource("11_6k8u3")]
+transform = Transform3D(-0.091693, 0, 0.995787, 0, 1, 0, -0.995787, 0, -0.091693, 8.57666, 0.137965, -3.35754)
+
+[node name="car_hatchback2" parent="Background" instance=ExtResource("12_4l5bq")]
+transform = Transform3D(0.0488146, 0, 0.998808, 0, 1, 0, -0.998808, 0, 0.0488146, 9.89769, 0.150485, -3.29838)
+
+[node name="car_sedan3" parent="Background" instance=ExtResource("10_5dcn6")]
+transform = Transform3D(0.022042, 0, -0.999757, 0, 1, 0, 0.999757, 0, 0.022042, 12.6484, 0.121614, -4.67244)
+
+[node name="car_stationwagon3" parent="Background" instance=ExtResource("11_6k8u3")]
+transform = Transform3D(0.115995, 0, -0.99325, 0, 1, 0, 0.99325, 0, 0.115995, 9.93691, 0.137965, -4.64077)
+
+[node name="car_hatchback3" parent="Background" instance=ExtResource("12_4l5bq")]
+transform = Transform3D(-0.0243969, 0, -0.999702, 0, 1, 0, 0.999702, 0, -0.0243969, 11.2099, 0.150485, -4.66763)
+
+[node name="building_F2" parent="Background" instance=ExtResource("11_npabk")]
+transform = Transform3D(-7.28523e-08, 0, -1.66667, 0, 1.66667, 0, 1.66667, 0, -7.28523e-08, 16.6667, 0, -4.66667)
+
+[node name="building_H3" parent="Background" instance=ExtResource("7_tr44a")]
+transform = Transform3D(-7.28523e-08, 0, -1.66667, 0, 1.66667, 0, 1.66667, 0, -7.28523e-08, 16.6667, 0, -1.33333)
+
+[node name="building_E3" parent="Background" instance=ExtResource("8_npabk")]
+transform = Transform3D(-1.66667, 0, 1.45705e-07, 0, 1.66667, 0, -1.45705e-07, 0, -1.66667, 9.33333, 0, 10.6667)
+
+[node name="building_H4" parent="Background" instance=ExtResource("7_tr44a")]
+transform = Transform3D(-1.66667, 0, -1.45705e-07, 0, 1.66667, 0, 1.45705e-07, 0, -1.66667, 12.6667, 0, 10.6667)
+
+[node name="building_C2" parent="Background" instance=ExtResource("12_wal6h")]
+transform = Transform3D(-7.28523e-08, 0, -1.66667, 0, 1.66667, 0, 1.66667, 0, -7.28523e-08, 16.6667, 0, 2)
+
+[node name="building_B2" parent="Background" instance=ExtResource("14_4hwum")]
+transform = Transform3D(-7.28523e-08, 0, -1.66667, 0, 1.66667, 0, 1.66667, 0, -7.28523e-08, 16.6667, 0, 5.33333)
 
 [node name="CityRestaurantAnim2" parent="." instance=ExtResource("9_vm3wy")]
 transform = Transform3D(-2.18557e-07, 0, -5, 0, 5, 0, 5, 0, -2.18557e-07, -7.30901, -0.397916, -2.03464)
@@ -163,5 +204,14 @@ transform = Transform3D(-112.168, 0, -99.5909, 0, 150, 0, 99.5909, 0, -112.168, 
 
 [node name="Mountain2" parent="." instance=ExtResource("7_u1fo4")]
 transform = Transform3D(-96.9126, 0, -114.49, 0, 150, 0, 114.49, 0, -96.9126, 276.034, -18.8954, -152.573)
+
+[node name="Mountain4" parent="." instance=ExtResource("7_u1fo4")]
+transform = Transform3D(135.672, 0, -63.9782, 0, 150, 0, 63.9782, 0, 135.672, 513.034, -18.8954, -2.573)
+
+[node name="Mountain5" parent="." instance=ExtResource("7_u1fo4")]
+transform = Transform3D(63.9782, 0, 135.672, 0, 150, 0, -135.672, 0, 63.9782, 592.034, 35.1046, 333.427)
+
+[node name="Mountain6" parent="." instance=ExtResource("7_u1fo4")]
+transform = Transform3D(63.9782, 0, 135.672, 0, 150, 0, -135.672, 0, 63.9782, 361.034, 35.1046, 569.427)
 
 [editable path="CityRestaurantAnim2"]

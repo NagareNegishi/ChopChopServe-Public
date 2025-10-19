@@ -50,7 +50,7 @@ const FALLEN_OVER_TIME = 5.0
 														"get_simple_order", 
 														[order_gen_number])
 				overhead_ui_order_instance.set_order(order[0])
-				print("\n\n\nTHIS IS THE ORDER FROM THE CUSTOMER:::::   ", order)
+				#print("\n\n\nTHIS IS THE ORDER FROM THE CUSTOMER:::::   ", order)
 
 @onready var ui_anchor: Marker3D = $OverheadUIAnchor
 @onready var animation_tree: AnimationTree = $AnimationTree
@@ -198,7 +198,6 @@ func _npc_behavior(delta: float):
 			var plate_served = await _game_server.call_service(_table_target.id(), "get_plate", [])
 			if plate_served:
 				var food = plate_served.get_children().back()
-				print(food)
 				if (food is MenuItem and food.get_meal_name() == order[0].get_meal_name()):
 					CurrencySystem.server_add_currency(ENetManager.get_my_team(), 100.0)
 					ReputationSystem.server_add_reputation(ENetManager.get_my_team(), 

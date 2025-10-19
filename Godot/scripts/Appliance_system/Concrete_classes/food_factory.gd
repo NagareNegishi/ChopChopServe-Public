@@ -14,7 +14,6 @@ static var registered: bool = false
 @onready var crate : MeshInstance3D = $Crate
 @onready var decal : Decal = $Crate/Decal
 @export var group : Groups
-
 var food_crate_visual = null
 
 enum Groups{
@@ -267,15 +266,22 @@ func put_from_player(_item: Node) -> bool:
 #-------------------------------------------------------------------------------
 
 func _physics_process(delta: float) -> void:
-	if Input.is_action_just_pressed("LB"):
-		inventory_sprite.inventory.current_slot = inventory_sprite.inventory.move_backward()
-		inventory_sprite.inventory.update_slot_selected(true)
-		_set_food_visual(inventory_sprite.inventory.get_current_slot().inventory_item_name)
-	
-	if Input.is_action_just_pressed("RB"):
-		inventory_sprite.inventory.current_slot = inventory_sprite.inventory.move_forward()
-		inventory_sprite.inventory.update_slot_selected(true)
-		_set_food_visual(inventory_sprite.inventory.get_current_slot().inventory_item_name)
+	if input_check("LB"): set_ui.rpc(false)
+	if input_check("RB"): set_ui.rpc(true)
+
+
+func input_check(action : String):
+	return (Input.is_action_just_pressed(action) and GlobalScript.get_local_player() != null and 
+		GlobalScript.get_local_player()._closest_item != null and
+		GlobalScript.get_local_player()._closest_item.get_parent() == self)
+
+
+@rpc("any_peer", "call_local")
+func set_ui(forward : bool):
+	inventory_sprite.inventory.current_slot = (inventory_sprite.inventory.move_forward() if forward 
+	else inventory_sprite.inventory.move_backward())
+	inventory_sprite.inventory.update_slot_selected(true)
+	_set_food_visual(inventory_sprite.inventory.get_current_slot().inventory_item_name)
 
 func _set_food_visual(food : String):
 	var texture = ResourceLoader.load("res://assets/textures/ingredients/" + food + ".png")

@@ -31,8 +31,14 @@ animation/fps=30
 animation/trimming=false
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
-import_script/path=""
+import_script/path="uid://bka01w8hnjqvw"
 _subresources={
+"materials": {
+"citybits_texture": {
+"use_external/enabled": true,
+"use_external/path": "uid://bx5gryn1dn2i6"
+}
+},
 "nodes": {
 "PATH:base": {
 "generate/physics": true,

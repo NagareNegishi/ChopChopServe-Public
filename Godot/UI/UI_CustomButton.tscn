@@ -18,7 +18,6 @@ theme = ExtResource("1_d13su")
 theme_override_colors/font_hover_pressed_color = Color(0.692965, 0.653417, 0.537388, 1)
 theme_override_colors/font_hover_color = Color(0.894101, 0.87343, 0.812088, 1)
 theme_override_colors/font_color = Color(0.980392, 0.976471, 0.964706, 1)
-theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("2_kw3pp")
 theme_override_font_sizes/font_size = 50
 theme_override_styles/focus = ExtResource("1_n5cah")

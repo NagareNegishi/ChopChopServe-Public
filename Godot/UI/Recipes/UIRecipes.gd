@@ -15,6 +15,7 @@ func _on_visible_change():
 	_set_curr_menu_items()
 	
 func _physics_process(delta: float) -> void:
+	if curr_menu_items.size() <= 1: return
 	if Input.is_action_just_pressed("LB"): backward()
 	if Input.is_action_just_pressed("RB"): forward()
 	
@@ -30,7 +31,7 @@ func backward():
 
 func _set_curr_menu_items():
 	curr_menu_items = GameState._get_available_food_names()
-	var item = all_menu_items[curr_menu_items[0]]
+	var item = all_menu_items[curr_menu_items[index]]
 	for part in arrows:
 		part.visible = curr_menu_items.size() <= 0
 	if !item: return

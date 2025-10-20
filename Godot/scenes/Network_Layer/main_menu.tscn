@@ -145,6 +145,21 @@ theme_override_font_sizes/font_size = 35
 text = "JOIN GAME
 "
 
+[node name="HSeparator" type="HSeparator" parent="Menu/ButtonsContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="TutorialButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "TUTORIAL"
+
+[node name="TestButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "CONNECTION HELP"
+
 [node name="ExitButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
 layout_mode = 2
 theme_override_colors/font_hover_color = Color(0.968627, 0.607843, 0.54902, 1)

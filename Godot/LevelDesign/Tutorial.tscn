@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://dic7gokjpmama"]
+[gd_scene load_steps=51 format=3 uid="uid://dic7gokjpmama"]
 
 [ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_y3a2j"]
 [ext_resource type="PackedScene" uid="uid://hlnawqai2mw4" path="res://NPCs/Customer.tscn" id="2_ndenj"]
@@ -38,7 +38,9 @@
 [ext_resource type="PackedScene" uid="uid://cw5uvt35a87nt" path="res://scenes/Appliance_system/blender.tscn" id="36_yo1rh"]
 [ext_resource type="PackedScene" uid="uid://cuhevmvqjjwji" path="res://assets/newmodels/decorations/Stool.glb" id="37_dso08"]
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="38_uaktl"]
+[ext_resource type="Script" uid="uid://cdywc5jm8sgk5" path="res://scripts/UI/quit_tutorial_button.gd" id="39_i1fu2"]
 [ext_resource type="PackedScene" uid="uid://lfcppt4wh0g4" path="res://scenes/Interaction/UpgradeHammer.tscn" id="39_u4uqc"]
+[ext_resource type="PackedScene" uid="uid://2qlfolqgl2hl" path="res://UI/UI_CustomButton.tscn" id="40_ndenj"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8hr4e"]
 sky_top_color = Color(0.115674, 0.146523, 0.189422, 1)
@@ -577,6 +579,25 @@ spawn_path = NodePath("../===QUEUE==")
 replication_config = SubResource("SceneReplicationConfig_jyufh")
 
 [node name="== HUD ==" type="CanvasLayer" parent="." groups=["Canvas"]]
+
+[node name="Quit container" type="VBoxContainer" parent="== HUD =="]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -131.0
+offset_top = -98.0
+offset_right = -11.0
+offset_bottom = -48.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Quit" parent="== HUD ==/Quit container" instance=ExtResource("40_ndenj")]
+layout_mode = 2
+text = "Quit
+"
+script = ExtResource("39_i1fu2")
 
 [node name="Extinguisher" parent="." instance=ExtResource("38_uaktl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1, 8)

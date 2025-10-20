@@ -132,22 +132,13 @@ func _diagnose_network():
 	test_button.text = "CONNECTION HELP"
 
 
-
-
-
-
-
-
-#---------------------------------------
 ## Tutorial Button Pressed
 func _on_tutorial_pressed():
-	var public_ip = host_public_ip_input.text.strip_edges()
-	network_layer.create_tutorial(public_ip)
+	network_layer.create_tutorial()
 	GlobalScript.player_name = name_input.text
 
 
+## Tutorial Started Signal Handler
 func _on_tutorial_started():
 	Debug.net_log("Tutorial started, Current player list: " + str(ENetManager.get_player_list()))
-	# Add the player (host with ID 1) to team1
-	ENetManager.team1.append(ENetManager.get_my_id())
 	SceneManager.change_scene(SceneManager.Scene.TUTORIAL)

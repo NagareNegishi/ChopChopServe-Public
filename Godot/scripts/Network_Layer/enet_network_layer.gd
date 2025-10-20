@@ -2,6 +2,7 @@ class_name ENetNetworkLayer
 extends NetworkLayer
 
 signal notify(message: String, duration: float)
+signal tutorial_started
 
 enum Reachability { UNKNOWN, PROBABLE, CONFIRMED, FAILED }
 
@@ -559,50 +560,30 @@ func _generate_room_code() -> String:
 	return code
 
 
-
-
-
-
-
-
-
-
-
-
-
-signal tutorial_started
-
-## Create a server with custom public IP
-## @param max_players: Maximum number of players including host
-## @param host_public_ip: The public IP address that clients should connect to
-## @return: True if server was created successfully
-func create_tutorial(host_public_ip: String = "") -> bool:
+## Create a tutorial for single player
+## Due to player spawning logic requirements, tutorial is hosted as a server with 1 player
+## Which mean in local machine, only one instance can run the tutorial or host at a time
+## @return: True if tutorial server was created successfully
+func create_tutorial() -> bool:
 	if state != ConnectionState.DISCONNECTED:
 		Debug.net_log("Already connected or connecting")
 		notify.emit("Already connected or connecting", 3.0)
 		return false
-	if host_public_ip != "":
-		if not validate_ip(host_public_ip):
-			return false
-
-	reachability = Reachability.UNKNOWN
 	peer = ENetMultiplayerPeer.new()
 	if peer.create_server(port, 1) == OK:
 		multiplayer.multiplayer_peer = peer
 		state = ConnectionState.HOST
 		my_id = 1 # Host is always ID 1
 		player_joined.emit(my_id)
+		ENetManager.team1.append(ENetManager.get_my_id())
+		ENetManager.current_state = ENetManager.GameProgress.IN_GAME
 		tutorial_started.emit()
 		Debug.net_log("ENet server created on port %d for tutorial" % port)
 		return true
 	else:
-		Debug.net_log("Failed to create ENet server")
+		Debug.net_log("Failed to create ENet server for tutorial")
 		peer = null
 		return false
-
-
-
-
 
 
 # # Optional features, consider once the base functionality is implemented -------------------------

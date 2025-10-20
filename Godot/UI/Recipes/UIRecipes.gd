@@ -31,6 +31,7 @@ func backward():
 
 func _set_curr_menu_items():
 	curr_menu_items = GameState._get_available_food_names()
+	index = index if index <= curr_menu_items.size() - 1 else 0
 	var item = all_menu_items[curr_menu_items[index]]
 	
 	for part in arrows:

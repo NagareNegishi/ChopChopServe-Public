@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bvyjm5mpgpywa" path="res://scripts/Customer.gd" id="1_kwlw3"]
 [ext_resource type="PackedScene" uid="uid://tloru3qomb8r" path="res://UI/UI_order.tscn" id="2_2xrgg"]
 [ext_resource type="PackedScene" uid="uid://br3jfy6v5habq" path="res://UI/UI_Thinking.tscn" id="3_lhnlw"]
-[ext_resource type="PackedScene" uid="uid://dh5cm04gytte0" path="res://assets/newmodels/animations/customers/Customer2.glb" id="4_kwlw3"]
+[ext_resource type="PackedScene" uid="uid://dh5cm04gytte0" path="res://assets/newmodels/animations/customers/Customer2DontUse.glb" id="4_kwlw3"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_esrsq"]
 

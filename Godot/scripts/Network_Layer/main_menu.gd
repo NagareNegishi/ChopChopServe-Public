@@ -152,4 +152,3 @@ func _on_tutorial_pressed():
 func _on_tutorial_started():
 	Debug.net_log("Tutorial started, Current player list: " + str(ENetManager.get_player_list()))
 	SceneManager.change_scene(SceneManager.Scene.TUTORIAL)
-

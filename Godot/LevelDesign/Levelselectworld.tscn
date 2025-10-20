@@ -1,4 +1,4 @@
-[gd_scene load_steps=87 format=3 uid="uid://brax13qxb8tj2"]
+[gd_scene load_steps=89 format=3 uid="uid://brax13qxb8tj2"]
 
 [ext_resource type="PackedScene" uid="uid://bv68n23xtnfpl" path="res://scenes/Player/PlayerCar.tscn" id="1_2io33"]
 [ext_resource type="Material" uid="uid://dwgftkho746av" path="res://LevelDesign/SwampFog.tres" id="1_d2eau"]
@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://cw3ro4l6ywo8x" path="res://assets/newmodels/Mountain.glb" id="4_gfmxp"]
 [ext_resource type="PackedScene" uid="uid://386cia5dig43" path="res://assets/NaturePack/Willow_4.fbx" id="5_2io33"]
 [ext_resource type="PackedScene" uid="uid://dfpfglb1oru28" path="res://assets/Swampy/RoadSwampCorner.glb" id="5_d2ijq"]
-[ext_resource type="FontFile" uid="uid://dxc6n0umgi0q4" path="res://assets/fonts/Jua-Regular.ttf" id="5_iytpy"]
 [ext_resource type="Material" uid="uid://c6svha1ojqeej" path="res://LevelDesign/Zone.tres" id="5_u8kom"]
 [ext_resource type="PackedScene" uid="uid://x0o0oxbumdxi" path="res://assets/NaturePack/Willow_2.fbx" id="6_38v8k"]
 [ext_resource type="Shader" uid="uid://c46kta255prk4" path="res://shaders/Water/WaterOpenWorld.gdshader" id="6_mpt4u"]
@@ -68,10 +67,19 @@
 [ext_resource type="PackedScene" uid="uid://crx0marg1hk52" path="res://assets/Beachy/FenceBeachPlank.glb" id="66_uthtu"]
 [ext_resource type="Material" uid="uid://c5cgp40o6fxiq" path="res://shaders/Water/WaterSabotage.tres" id="68_334ny"]
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_lyps1"]
+viewport_path = NodePath("Sprite3D/SubViewport")
+
 [sub_resource type="TorusMesh" id="TorusMesh_uthtu"]
 material = ExtResource("5_u8kom")
 inner_radius = 0.991
 ring_segments = 3
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_7dd6r"]
+viewport_path = NodePath("== LEVEL SELECT ==/LevelSelectArea2/Sprite3D/SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_u8kom"]
+viewport_path = NodePath("== LEVEL SELECT ==/LevelSelectArea3/Sprite3D/SubViewport")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w6hnu"]
 size = Vector3(30, 0.03, 30)
@@ -167,6 +175,13 @@ car = NodePath("../../PlayerCar")
 [node name="CollisionShape3D" parent="== LEVEL SELECT ==/LevelSelectArea" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.580652, 0.373383, 0.493759)
 
+[node name="Sprite3D" parent="== LEVEL SELECT ==/LevelSelectArea" index="1"]
+transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, -0.87841, -1.54776, 0)
+texture = SubResource("ViewportTexture_lyps1")
+
+[node name="UiLevelSelect" parent="== LEVEL SELECT ==/LevelSelectArea/Sprite3D/SubViewport" index="0"]
+level_name = "City"
+
 [node name="Zone" type="MeshInstance3D" parent="== LEVEL SELECT ==/LevelSelectArea"]
 transform = Transform3D(11.9103, 0, 0, 0, 469.514, 0, 0, 0, 11.9103, -1.0322, -1.75679, 0.133724)
 mesh = SubResource("TorusMesh_uthtu")
@@ -179,6 +194,13 @@ car = NodePath("../../PlayerCar")
 [node name="CollisionShape3D" parent="== LEVEL SELECT ==/LevelSelectArea2" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.580652, 0.373383, 0.493759)
 
+[node name="Sprite3D" parent="== LEVEL SELECT ==/LevelSelectArea2" index="1"]
+transform = Transform3D(4.5, 0, 0, 0, 4.5, 0, 0, 0, 4.5, -0.12344, -1.61066, 0)
+texture = SubResource("ViewportTexture_7dd6r")
+
+[node name="UiLevelSelect" parent="== LEVEL SELECT ==/LevelSelectArea2/Sprite3D/SubViewport" index="0"]
+level_name = "Beach"
+
 [node name="Zone" type="MeshInstance3D" parent="== LEVEL SELECT ==/LevelSelectArea2"]
 transform = Transform3D(11.9103, 0, 0, 0, 469.514, 0, 0, 0, 11.9103, -1.0322, -1.75679, 0.133724)
 mesh = SubResource("TorusMesh_uthtu")
@@ -190,6 +212,10 @@ car = NodePath("../../PlayerCar")
 
 [node name="CollisionShape3D" parent="== LEVEL SELECT ==/LevelSelectArea3" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.580652, 0.373383, 0.493759)
+
+[node name="Sprite3D" parent="== LEVEL SELECT ==/LevelSelectArea3" index="1"]
+transform = Transform3D(4.5, 0, 0, 0, 4.5, 0, 0, 0, 4.5, 0, -2.30485, 0)
+texture = SubResource("ViewportTexture_u8kom")
 
 [node name="Zone" type="MeshInstance3D" parent="== LEVEL SELECT ==/LevelSelectArea3"]
 transform = Transform3D(10.5312, 0, 0, 0, 415.15, 0, 0, 0, 10.5312, -1.0322, -1.75679, 0.133724)
@@ -236,25 +262,6 @@ shadow_enabled = true
 transform = Transform3D(-4.37114e-08, -0.819152, 0.573576, 0, 0.573576, 0.819152, -1, 3.58063e-08, -2.50718e-08, 23, 23, 0)
 
 [node name="Node3D" type="Node3D" parent="."]
-
-[node name="Label3D" type="Label3D" parent="Node3D"]
-transform = Transform3D(-4.2222e-08, -0.258819, 0.965926, -1.13133e-08, 0.965926, 0.258819, -1, 0, -4.37114e-08, -18, 7, 24)
-pixel_size = 0.1
-text = "SWAMP"
-
-[node name="Label3D2" type="Label3D" parent="Node3D"]
-transform = Transform3D(-4.2222e-08, -0.258819, 0.965926, -1.13133e-08, 0.965926, 0.258819, -1, 0, -4.37114e-08, -15, 9.79186, -26)
-pixel_size = 0.1
-text = "City
-"
-font = ExtResource("5_iytpy")
-font_size = 50
-
-[node name="Label3D3" type="Label3D" parent="Node3D"]
-transform = Transform3D(-4.2222e-08, -0.258819, 0.965926, -1.13133e-08, 0.965926, 0.258819, -1, 0, -4.37114e-08, 31, 7, -1)
-pixel_size = 0.1
-text = "Beach
-"
 
 [node name="Node3D2" type="Node3D" parent="."]
 

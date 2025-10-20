@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://vb2eq4ecxgbh"]
+
+[ext_resource type="PackedScene" uid="uid://cy1s0o2ip2hob" path="res://scenes/Interaction/InteractableComponent.tscn" id="1_2dh28"]
+[ext_resource type="Script" uid="uid://m2t7rpee35la" path="res://scenes/Lobby/tutorial_interact.gd" id="1_vbp5f"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_75o2b"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2dh28"]
+
+[node name="TutorialInteract" type="StaticBody3D" node_paths=PackedStringArray("interact_comp")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+script = ExtResource("1_vbp5f")
+interact_comp = NodePath("InteractableComponent")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_75o2b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_2dh28")
+
+[node name="InteractableComponent" parent="." instance=ExtResource("1_2dh28")]

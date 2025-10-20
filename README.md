@@ -21,7 +21,7 @@ Players run competing restaurants, serving customers while managing reputation, 
 - **Engine**: Godot 4.4
 - **Language**: GDScript
 - **Networking**: Client-Server model using ENet
-- **Target Platform**: ???
+- **Target Platform**: Windows
 
 ## Core Gameplay
 
@@ -30,11 +30,14 @@ Players run competing restaurants, serving customers while managing reputation, 
 | Action | Keyboard | Gamepad |
 |--------|----------|---------|
 | Walk | W/A/S/D | Left Joystick |
-| Interact | E | X |
-| Throw | Left Shift | L2 |
-| Action | Q | R2 |
-| Dash | Space | A |
-
+| Interact | E/SPACE | A |
+| Action | J | X |
+| Dash | K / Left Shift | B |
+| Cycle Left | J | L1 |
+| Cycle Right | L | R1 |
+| Sabotage | 1/2/3/4/5/6 | D-Pad Up
+| Cycle Sabotage Left | N/A | D-Pad Left
+| Cycle Sabotage Right | N/A | D-Pad Right
 
 ### Game Loop
 1. **Prep Phase** (30s): Upgrade restaurant or prepare for service

@@ -398,3 +398,18 @@ func show_notification(message: String, duration: float = 3.0):
 ## Hide the active popup
 func hide_popup():
 	popup_manager.hide_popup()
+
+
+
+## Leave tutorial/game and return to main menu
+func leave_tutorial():
+	# Clean up all state
+	clear_player_list()
+	current_state = GameProgress.LOBBY
+	
+	# Disconnect network
+	if enet_layer.peer:
+		enet_layer.leave_game()
+	
+	# Emit signal for any listeners
+	back_to_main_menu.emit()

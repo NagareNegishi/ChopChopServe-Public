@@ -19,7 +19,7 @@ func _init():
 	ui_texture = load("res://assets/textures/recipes/MacNCheese.png")
 	ui_meal_name = "DO NOT USE"
 	ui_states = {
-		"Pasta":["BOIDED, BAKED"],
+		"Pasta":["BOILED", "BAKED"],
 		"Garlic":["CHOPPED","BAKED"]
 	}
 	

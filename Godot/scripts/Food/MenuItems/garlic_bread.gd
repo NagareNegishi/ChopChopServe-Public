@@ -19,7 +19,7 @@ func _init():
 	ui_texture = load("res://assets/textures/recipes/GarlicBread.png")
 	ui_meal_name = "Garlic Bread"
 	ui_states = {
-		"Dough":["NONE, BAKED"],
+		"Dough":["NONE", "BAKED"],
 		"Garlic":["CHOPPED","BAKED"]
 	}
 

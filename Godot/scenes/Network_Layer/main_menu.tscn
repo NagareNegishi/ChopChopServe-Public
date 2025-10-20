@@ -145,15 +145,6 @@ theme_override_font_sizes/font_size = 35
 text = "JOIN GAME
 "
 
-[node name="Tutorial" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
-layout_mode = 2
-theme_override_colors/font_hover_color = Color(0.92549, 0.929412, 0.933333, 1)
-theme_override_colors/font_outline_color = Color(0.140407, 0.146385, 0.150359, 1)
-theme_override_constants/outline_size = 10
-theme_override_font_sizes/font_size = 35
-text = "TUTORIAL
-"
-
 [node name="ExitButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
 layout_mode = 2
 theme_override_colors/font_hover_color = Color(0.968627, 0.607843, 0.54902, 1)

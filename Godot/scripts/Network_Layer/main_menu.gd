@@ -12,7 +12,6 @@ var network_layer: ENetNetworkLayer
 @onready var exit_button = $Menu/ButtonsContainer/ExitButton
 @onready var test_button = $Menu/TestButton
 @onready var error_message = $Menu/Error
-@onready var tutorial_button = $Menu/ButtonsContainer/Tutorial
 @onready var name_input : LineEdit = $Menu/Note/VBox/Name/Name
 
 @export var froggo_building : AnimationPlayer
@@ -29,7 +28,6 @@ func _ready():
 	join_button.pressed.connect(_on_join_pressed)
 	network_layer.connected.connect(_switch_to_lobby)
 	exit_button.pressed.connect(_exit_game)
-	tutorial_button.pressed.connect(tutorial)
 	test_button.pressed.connect(_diagnose_network)
 	if !froggo_building : return
 	froggo_building.play("ArmatureAction", -1, 0.6)

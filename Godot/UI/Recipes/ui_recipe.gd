@@ -7,7 +7,7 @@ signal done()
 @onready var row1 : HBoxContainer = $Ingredients/Row1
 @onready var row2 : HBoxContainer = $Ingredients/Row2
 @onready var progress_parts = [$Panel3, $Panel4, $ProgressBar, $Ticks] 
-
+@onready var cook_box = $CookBox
 @export var hide : bool
 
 func _ready() -> void:
@@ -30,6 +30,7 @@ func set_info(recipe : MenuItem):
 	recipe_name.text = recipe.ui_meal_name
 	recipe_final.texture = recipe.ui_texture
 	_add_ingredients(recipe)
+	_add_cookware(recipe)
 	
 
 
@@ -66,3 +67,28 @@ func _clear_ingredients():
 
 func start():
 	set_physics_process(true)
+
+
+func _add_cookware(recipe : MenuItem):
+	_clear_cookware()
+	var states : Dictionary = recipe.ui_states
+	var org : Dictionary
+	var scene : UICook
+	
+	for food in states.keys():
+		var type = states[food][states[food].size() - 1] 
+		if type == "NONE": continue
+		if org.has(type): 
+			var list = org.get(type)
+			list.append(food)
+			org[type] = list
+			continue
+		org.set(type, [food])
+
+	for key in org:
+		scene = preload("res://UI/Recipes/UI_Cook.tscn").instantiate()
+		scene.set_info(key, org[key])
+		cook_box.add_child(scene)
+func _clear_cookware():
+	for child in cook_box.get_children():
+		child.queue_free()

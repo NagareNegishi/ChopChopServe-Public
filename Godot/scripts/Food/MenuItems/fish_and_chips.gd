@@ -18,7 +18,7 @@ func _init():
 	ui_texture = load("res://assets/textures/recipes/FishnChips.png")
 	ui_meal_name = "Fish and Chips"
 	ui_states = {
-		"Fish":["NONE, FRIED"],
+		"Fish":["NONE", "FRIED"],
 		"Potato":["NONE","FRIED"]
 	}
 	

@@ -24,7 +24,7 @@ func _init():
 		"Dough": ["NONE", "BAKED"],
 		"Cheese": ["CHOPPED", "NONE"],
 		"Tomato":["CHOPPED","NONE"],
-		"Beef":["NONE","FIRED"]
+		"Beef":["NONE","FRIED"]
 	}
 func _ready():
 	cooked_mesh_good = $BurgerBeef

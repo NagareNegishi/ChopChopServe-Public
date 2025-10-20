@@ -253,5 +253,9 @@
 "TEST": {
 	"1": ["onion_rings", "cheese_bread", "pie_pineapple", "burger_fish"],
 	"2": ["steak_and_chips", "taco_beef", "pie_pumpkin", "fish_and_chips"]
+  },
+"HUB": {
+	"1": ["onion_rings", "cheese_bread", "pie_pineapple", "burger_fish"],
+	"2": ["steak_and_chips", "taco_beef", "pie_pumpkin", "fish_and_chips"]
   }
 }

@@ -1,11 +1,9 @@
-[gd_scene load_steps=89 format=3 uid="uid://brax13qxb8tj2"]
+[gd_scene load_steps=87 format=3 uid="uid://brax13qxb8tj2"]
 
 [ext_resource type="PackedScene" uid="uid://bv68n23xtnfpl" path="res://scenes/Player/PlayerCar.tscn" id="1_2io33"]
-[ext_resource type="PackedScene" uid="uid://c8bjd53t4fgr1" path="res://UI/UI_Pause.tscn" id="1_7dd6r"]
 [ext_resource type="Material" uid="uid://dwgftkho746av" path="res://LevelDesign/SwampFog.tres" id="1_d2eau"]
-[ext_resource type="PackedScene" uid="uid://cy8ahksvgtb76" path="res://UI/UI_LoadingScreen.tscn" id="1_kguer"]
 [ext_resource type="PackedScene" uid="uid://ctuxfj7asiapr" path="res://assets/CityPacks/gltf/building_A.gltf" id="1_xuksc"]
-[ext_resource type="PackedScene" uid="uid://bqtbpncsp1lqe" path="res://UI/UI_LobbyHUD.tscn" id="2_lyps1"]
+[ext_resource type="PackedScene" uid="uid://bqtbpncsp1lqe" path="res://UI/UI_CarHUD.tscn" id="2_lyps1"]
 [ext_resource type="PackedScene" uid="uid://cw3ro4l6ywo8x" path="res://assets/newmodels/Mountain.glb" id="4_gfmxp"]
 [ext_resource type="PackedScene" uid="uid://386cia5dig43" path="res://assets/NaturePack/Willow_4.fbx" id="5_2io33"]
 [ext_resource type="PackedScene" uid="uid://dfpfglb1oru28" path="res://assets/Swampy/RoadSwampCorner.glb" id="5_d2ijq"]
@@ -159,18 +157,12 @@ size = Vector3(1, 1, 5)
 
 [node name="HUD" parent="== HUD ==" instance=ExtResource("2_lyps1")]
 
-[node name="UiPause" parent="== HUD ==" instance=ExtResource("1_7dd6r")]
-visible = false
-
-[node name="UILoadingScreen" parent="== HUD ==" instance=ExtResource("1_kguer")]
-visible = false
-
 [node name="== LEVEL SELECT ==" type="Node" parent="."]
 
 [node name="LevelSelectArea" parent="== LEVEL SELECT ==" node_paths=PackedStringArray("car") instance=ExtResource("64_kguer")]
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -14.9253, 1.86524, -24.7682)
-level = 10
-car = NodePath("")
+level = 12
+car = NodePath("../../PlayerCar")
 
 [node name="CollisionShape3D" parent="== LEVEL SELECT ==/LevelSelectArea" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.580652, 0.373383, 0.493759)
@@ -181,8 +173,8 @@ mesh = SubResource("TorusMesh_uthtu")
 
 [node name="LevelSelectArea2" parent="== LEVEL SELECT ==" node_paths=PackedStringArray("car") instance=ExtResource("64_kguer")]
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 34.2354, 3.87718, -0.704389)
-level = 9
-car = NodePath("")
+level = 11
+car = NodePath("../../PlayerCar")
 
 [node name="CollisionShape3D" parent="== LEVEL SELECT ==/LevelSelectArea2" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.580652, 0.373383, 0.493759)
@@ -193,8 +185,8 @@ mesh = SubResource("TorusMesh_uthtu")
 
 [node name="LevelSelectArea3" parent="== LEVEL SELECT ==" node_paths=PackedStringArray("car") instance=ExtResource("64_kguer")]
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -15.5632, 1.85757, 23.6392)
-level = 11
-car = NodePath("")
+level = 13
+car = NodePath("../../PlayerCar")
 
 [node name="CollisionShape3D" parent="== LEVEL SELECT ==/LevelSelectArea3" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.580652, 0.373383, 0.493759)

@@ -1,8 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://dp5crmjemratm"]
+[gd_scene load_steps=14 format=3 uid="uid://dp5crmjemratm"]
 
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="3_r3lrk"]
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="4_5vscc"]
+[ext_resource type="PackedScene" uid="uid://bxf3hwer4sb7h" path="res://UI/HUD/UI_LobbyHUD.tscn" id="4_texi7"]
+[ext_resource type="Script" uid="uid://bovslkbm84p1j" path="res://scripts/level_camera.gd" id="5_mabdc"]
 [ext_resource type="PackedScene" uid="uid://bk7ovilp788kq" path="res://scripts/Player/spawn_point.tscn" id="5_ubebq"]
+[ext_resource type="PackedScene" uid="uid://buoomw2auyihn" path="res://scenes/Lobby/team_select.tscn" id="6_q538x"]
+[ext_resource type="PackedScene" uid="uid://brjcd3tndnajw" path="res://scenes/Lobby/start_game.tscn" id="7_nk0ks"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rci3a"]
 sky_top_color = Color(0.636864, 0.781479, 0.982896, 1)
@@ -21,10 +25,10 @@ volumetric_fog_anisotropy = 0.7
 volumetric_fog_length = 6.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cfpj7"]
-size = Vector3(30, 0.03, 30)
+size = Vector3(90.2935, 0.03, 89.3839)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d8qn3"]
-albedo_color = Color(1, 0.858824, 0.670588, 1)
+albedo_color = Color(0.409603, 0.409603, 0.409603, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_iv3r3"]
 material = SubResource("StandardMaterial3D_d8qn3")
@@ -44,26 +48,29 @@ spawn_limit = 4
 script = ExtResource("3_r3lrk")
 spawns = [NodePath("../SpawnPoint"), NodePath("../SpawnPoint2"), NodePath("../SpawnPoint3"), NodePath("../SpawnPoint4")]
 network_player = ExtResource("4_5vscc")
+signal_use = true
 
 [node name="SpawnPoint4" parent="== SPAWNS ==" instance=ExtResource("5_ubebq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.79556, 2.37252, -6.94067)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.1892, 0.254815, -6.94067)
 team = 2
 priority = 1
 
 [node name="SpawnPoint3" parent="== SPAWNS ==" instance=ExtResource("5_ubebq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.43216, 0.105512, -6.79754)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.4169, 0.254815, -6.79754)
 team = 2
 
 [node name="SpawnPoint2" parent="== SPAWNS ==" instance=ExtResource("5_ubebq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.32709, 0.0703411, 7.13018)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.3118, 0.254815, 7.13018)
 team = 1
 
 [node name="SpawnPoint" parent="== SPAWNS ==" instance=ExtResource("5_ubebq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.63573, 2.33735, 6.98705)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.349, 0.254815, 6.98705)
 team = 1
 priority = 1
 
 [node name="== HUD ==" type="CanvasLayer" parent="." groups=["Canvas"]]
+
+[node name="UiLobbyHud" parent="== HUD ==" instance=ExtResource("4_texi7")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_ctosr")
@@ -74,19 +81,28 @@ light_energy = 0.8
 shadow_enabled = true
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-4.37114e-08, -0.819152, 0.573576, 0, 0.573576, 0.819152, -1, 3.58063e-08, -2.50718e-08, 11, 10, 0)
+transform = Transform3D(-4.28408e-08, -0.819152, 0.573576, 0, 0.573576, 0.819152, -1, 3.58559e-08, -2.468e-08, 33.8324, 10, 0.126326)
 current = true
+script = ExtResource("5_mabdc")
 
 [node name="Floor" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 9.31323e-10, 0, 1, 0.859948, 0, -1.30385e-08)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+transform = Transform3D(1, 0, -6.33299e-08, 0, 1, 0, 6.33299e-08, 0, 1, 45.7713, 0, -0.139534)
 shape = SubResource("BoxShape3D_cfpj7")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
 transform = Transform3D(3, 0, 0, 0, 1, 0, 0, 0, 3, 45.9771, 0, 0)
 mesh = SubResource("BoxMesh_iv3r3")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Floor"]
-transform = Transform3D(2.99311, -0.0677541, 0, 0.203262, 0.997702, 0, 0, 0, 3, -43.92, -3.05, 0)
-mesh = SubResource("BoxMesh_iv3r3")
+[node name="TeamSelect" parent="Floor" instance=ExtResource("6_q538x")]
+transform = Transform3D(4.99992, 0, -0.0276633, 0, 5, 0, 0.0276633, 0, 4.99992, 25.3154, 0.512721, -11.5592)
+team = 2
+
+[node name="TeamSelect2" parent="Floor" instance=ExtResource("6_q538x")]
+transform = Transform3D(4.99992, 0, -0.0276633, 0, 5, 0, 0.0276633, 0, 4.99992, 25.1835, 0.512721, 12.2872)
+team = 1
+
+[node name="TeamSelect" parent="." instance=ExtResource("7_nk0ks")]
+transform = Transform3D(6.2349, 0, -0.0344962, 0, 6.235, 0, 0.0344962, 0, 6.2349, 34.8301, 0.0149994, 0.0992555)

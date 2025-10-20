@@ -12,7 +12,7 @@ extends Node
 ## All cooking styles supported by Appliance and Food
 enum CookingStyle {
 	NONE,        # Bench - no cooking, just prep/storage
-	HEAT,        # Stove Top - direct heat cooking          ????may be redundant?????
+	HEAT,        # Stove Top - direct heat cooking
 	BAKE,        # Oven
 	DEEP_FRY,    # Deep Fryer
 	PAN_FRY,     # Frying Pan

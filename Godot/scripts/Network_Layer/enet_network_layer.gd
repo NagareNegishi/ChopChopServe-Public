@@ -559,6 +559,52 @@ func _generate_room_code() -> String:
 	return code
 
 
+
+
+
+
+
+
+
+
+
+
+
+signal tutorial_started
+
+## Create a server with custom public IP
+## @param max_players: Maximum number of players including host
+## @param host_public_ip: The public IP address that clients should connect to
+## @return: True if server was created successfully
+func create_tutorial(host_public_ip: String = "") -> bool:
+	if state != ConnectionState.DISCONNECTED:
+		Debug.net_log("Already connected or connecting")
+		notify.emit("Already connected or connecting", 3.0)
+		return false
+	if host_public_ip != "":
+		if not validate_ip(host_public_ip):
+			return false
+
+	reachability = Reachability.UNKNOWN
+	peer = ENetMultiplayerPeer.new()
+	if peer.create_server(port, 1) == OK:
+		multiplayer.multiplayer_peer = peer
+		state = ConnectionState.HOST
+		my_id = 1 # Host is always ID 1
+		player_joined.emit(my_id)
+		tutorial_started.emit()
+		Debug.net_log("ENet server created on port %d for tutorial" % port)
+		return true
+	else:
+		Debug.net_log("Failed to create ENet server")
+		peer = null
+		return false
+
+
+
+
+
+
 # # Optional features, consider once the base functionality is implemented -------------------------
 
 # # Network statistics (for debugging)

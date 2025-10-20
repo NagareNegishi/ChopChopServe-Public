@@ -31,8 +31,16 @@ func _ready():
 	exit_button.pressed.connect(_exit_game)
 	test_button.pressed.connect(_diagnose_network)
 	tutorial_button.pressed.connect(_on_tutorial_pressed)
+
+#-----------------------------
+	network_layer.tutorial_started.connect(_on_tutorial_started)
+#------------------------------
+
 	if !froggo_building : return
 	froggo_building.play("ArmatureAction")
+
+
+
 
 
 ## Create Lobby
@@ -124,6 +132,22 @@ func _diagnose_network():
 	test_button.text = "CONNECTION HELP"
 
 
+
+
+
+
+
+
+#---------------------------------------
 ## Tutorial Button Pressed
 func _on_tutorial_pressed():
+	var public_ip = host_public_ip_input.text.strip_edges()
+	network_layer.create_tutorial(public_ip)
+	GlobalScript.player_name = name_input.text
+
+
+func _on_tutorial_started():
+	Debug.net_log("Tutorial started, Current player list: " + str(ENetManager.get_player_list()))
+	# Add the player (host with ID 1) to team1
+	ENetManager.team1.append(ENetManager.get_my_id())
 	SceneManager.change_scene(SceneManager.Scene.TUTORIAL)

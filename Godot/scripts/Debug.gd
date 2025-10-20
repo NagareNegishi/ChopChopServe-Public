@@ -14,7 +14,7 @@ enum Level {
 # System toggles
 @export var fire: bool = false
 @export var cooking: bool = false
-@export var network: bool = false
+@export var network: bool = true
 @export var upgrade: bool = false
 
 # Main logging functions

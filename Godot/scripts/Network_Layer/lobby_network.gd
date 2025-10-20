@@ -407,8 +407,8 @@ func _start_game() -> void:
 	# Actual scene
 	# SceneManager.change_scene(SceneManager.Scene.LOBBY)
 	# Test scene
+	SceneManager.change_scene(SceneManager.Scene.TEST)
 
-	SceneManager.change_scene(SceneManager.Scene.BeachLighting2)
 
 ## Leave Button Pressed
 func _on_leave_pressed():

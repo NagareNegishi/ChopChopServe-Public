@@ -57,7 +57,7 @@ func _store_original_transform():
 	original_scale = scale
 	
 	
-	print("Original transforms stored for ", get_class())
+	# print("Original transforms stored for ", get_class())
 
 func restore_original_transform():
 	# Restore main object

@@ -59,6 +59,62 @@
 	  "mushroom_taco"
 	]
   },
+"TUTORIAL": {
+	"1": [
+	  "bolognese",
+	  "bread",
+	  "brownie",
+	  "beef_burger",
+	  "chicken_burger",
+	  "fish_burger",
+	  "cheese_bread",
+	  "fish_and_chips",
+	  "garlic_bread",
+	  "mac_and_cheese",
+	  "onion_rings",
+	  "pancakes",
+	  "apple_pie",
+	  "pineapple_pie",
+	  "cheese_pizza",
+	  "hawaiian_pizza",
+	  "meat_pizza",
+	  "mushroom_soup",
+	  "onion_soup",
+	  "pumpkin_soup",
+	  "soup_tomato",
+	  "steak_and_chips",
+	  "beef_taco",
+	  "chicken_taco",
+	  "mushroom_taco"
+	],
+	"2": [
+	  "bolognese",
+	  "bread",
+	  "brownie",
+	  "beef_burger",
+	  "chicken_burger",
+	  "fish_burger",
+	  "cheese_bread",
+	  "fish_and_chips",
+	  "garlic_bread",
+	  "mac_and_cheese",
+	  "onion_rings",
+	  "pancakes",
+	  "apple_pie",
+	  "pineapple_pie",
+	  "cheese_pizza",
+	  "hawaiian_pizza",
+	  "meat_pizza",
+	  "mushroom_soup",
+	  "onion_soup",
+	  "pumpkin_soup",
+	  "soup_tomato",
+	  "steak_and_chips",
+	  "beef_taco",
+	  "chicken_taco",
+	  "mushroom_taco"
+	]
+  },
 "JOSH_TEST": {
 	"1": [
 	
@@ -167,6 +223,10 @@
 	"2": ["steak_and_chips", "taco_beef", "pie_pumpkin", "fish_and_chips"]
   },
 "JOHNO": {
+	"1": ["onion_rings", "cheese_bread", "pie_pineapple", "burger_fish"],
+	"2": ["steak_and_chips", "taco_beef", "pie_pumpkin", "fish_and_chips"]
+  },
+"TEST": {
 	"1": ["onion_rings", "cheese_bread", "pie_pineapple", "burger_fish"],
 	"2": ["steak_and_chips", "taco_beef", "pie_pumpkin", "fish_and_chips"]
   }

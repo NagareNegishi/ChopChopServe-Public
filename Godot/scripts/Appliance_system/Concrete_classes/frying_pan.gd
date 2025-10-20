@@ -6,6 +6,8 @@ func _init():
 	super._init()
 	model_scene = preload("res://assets/newmodels/items/Pan.glb")
 	capacity = 4
+	center_offset = Vector3(0, 0, size.z * 0.15)
+	food_scale = Vector3(0.5, 0.5, 0.5)
 
 ## Setup the fryer properties
 func _ready():

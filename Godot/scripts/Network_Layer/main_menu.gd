@@ -10,9 +10,11 @@ var network_layer: ENetNetworkLayer
 @onready var join_button = $Menu/ButtonsContainer/JoinButton
 @onready var ip_input = $Menu/Note/VBox/IP/PublicIPInput
 @onready var exit_button = $Menu/ButtonsContainer/ExitButton
+
 @onready var  test_button = $Menu/ButtonsContainer/TestButton
 @onready var tutorial_button = $Menu/ButtonsContainer/TutorialButton
 @onready var  error_message = $Menu/Error
+
 @onready var name_input : LineEdit = $Menu/Note/VBox/Name/Name
 
 @export var froggo_building : AnimationPlayer
@@ -37,7 +39,7 @@ func _ready():
 #------------------------------
 
 	if !froggo_building : return
-	froggo_building.play("ArmatureAction")
+	froggo_building.play("ArmatureAction", -1, 0.6)
 
 
 
@@ -129,6 +131,14 @@ func _diagnose_network():
 	Debug.net_log(diagnostics.format_results(results))
 	diagnostics.queue_free()
 	test_button.disabled = false
+	test_button.text = "Connection Help"
+
+func _physics_process(delta: float) -> void:
+	if Input.is_action_just_pressed("ui_accept"):
+		_on_join_pressed()
+
+func tutorial():
+	get_tree().change_scene_to_file("res://LevelDesign/Tutorial.tscn")
 	test_button.text = "CONNECTION HELP"
 
 

@@ -20,7 +20,6 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
 [node name="UiSabotageNode" type="Control"]
-modulate = Color(1, 1, 1, 0.509804)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

@@ -1,5 +1,7 @@
 class_name InteractableComponent extends Area3D
 
+var overlay = preload("res://materials/InteractOverlay.tres")
+
 signal interacted()
 signal hovered(is_hovered : bool)
 signal action_use(is_action : bool)
@@ -35,8 +37,18 @@ func _client_action(in_use : bool):
 ## Emits signal that the player is hovering over this object
 ## @return void
 func hover(hovering : bool) -> void:
-	if can_be_interacted:
-		emit_signal("hovered", hovering)
+	if !can_be_interacted: return
+	
+	for child in get_parent().get_children():
+		if child is MeshInstance3D: child.material_overlay = overlay if hovering else null
+			
+		if !child.scene_file_path.ends_with(".glb"): continue
+		
+		for c in child.get_children(true):
+			if c is MeshInstance3D: c.material_overlay = overlay if hovering else null
+
+	
+	emit_signal("hovered", hovering)
 
 
 ## Allows to turn on & off the collision box for interaction events

@@ -16,6 +16,11 @@ func _init():
 	}
 	name_of_meal = "fish_and_chips"
 	ui_texture = load("res://assets/textures/recipes/FishnChips.png")
+	ui_meal_name = "Fish and Chips"
+	ui_states = {
+		"Fish":["NONE", "FRIED"],
+		"Potato":["NONE","FRIED"]
+	}
 	
 func _ready():
 	cooked_mesh_good = $FishAndChips

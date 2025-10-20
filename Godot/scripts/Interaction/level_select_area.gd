@@ -21,4 +21,3 @@ func _area_entered(area : Area3D):
 @rpc("any_peer", "call_local")
 func _play_load():
 	get_tree().current_scene.get_node("== HUD ==/HUD").visible = false
-	get_tree().current_scene.get_node("== HUD ==/UiPause").visible = false

@@ -86,5 +86,5 @@ func check_food_avalibility(new_list: Array, original_list: Array):
 	new_list.clear()
 	for item in original_list:
 		if name_list.has(item.get_meal_name()):
-			print(item.get_meal_name())
+			#print(item.get_meal_name())
 			new_list.append(item)

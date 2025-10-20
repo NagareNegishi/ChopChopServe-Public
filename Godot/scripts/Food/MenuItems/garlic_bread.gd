@@ -17,6 +17,11 @@ func _init():
 	
 	name_of_meal = "garlic_bread"
 	ui_texture = load("res://assets/textures/recipes/GarlicBread.png")
+	ui_meal_name = "Garlic Bread"
+	ui_states = {
+		"Dough":["NONE", "BAKED"],
+		"Garlic":["CHOPPED","BAKED"]
+	}
 
 func _ready():
 	cooked_mesh_good = $BreadGarlic

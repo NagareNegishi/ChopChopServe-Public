@@ -15,7 +15,12 @@ func _init():
 		"Cheese": ["RAW","CHOPPED","BAKED"],
 		"Tomato": ["RAW","MIXED","BAKED"]
 	}
-	
+	ui_meal_name = "Cheese Pizza"
+	ui_states = {
+		"Dough":["NONE", "BAKED"],
+		"Cheese":["CHOPPED","BAKED"],
+		"Tomato":["MIXED","BAKED"],
+	}
 
 	name_of_meal = "pizza_cheese"
 	ui_texture = load("res://assets/textures/recipes/CheesePizza.png")

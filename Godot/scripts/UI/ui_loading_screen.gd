@@ -6,8 +6,11 @@ var hints : Array[String] = ["No frogs were harmed in development",
 							"Extishugers might be handy for fires",
 							"Might be killer tomatos about",
 							"Can you do the infamous back dash?",
-							"We love Costal Postal",
-							"You can throw with [L]"]
+							"We love Costal Postal <3",
+							"You can view controls inside the pause menu",
+							"Ribbit Ribbit",
+							"Tit for Tat :froghearteyes:",
+							"Recipes can be viewed in-game with [TAB]"]
 
 @onready var hint_timer : Timer = Timer.new()
 @onready var test_timer : Timer = Timer.new()
@@ -54,8 +57,12 @@ func remove() -> void:
 	floor_anim_player.play("ScaleIn", -1, -2, true)
 	fadeout_timer.start()
 	test_timer.stop()
+	await get_tree().create_timer(6).timeout
+	load_anim_player.animation_finished.connect(_animation_finshed)
+	
 
 func play():
+	load_anim_player.seek(0)
 	load_anim_player.play("LoadIn", -1, 4.5)
 	test_timer.start()
 

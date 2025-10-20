@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bajtcauh5e5xi"]
+[gd_scene load_steps=7 format=3 uid="uid://bajtcauh5e5xi"]
 
 [ext_resource type="Script" uid="uid://bv1fic7goj5rs" path="res://scripts/Network_Layer/main_menu.gd" id="1_5gu6x"]
 [ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/Style/DefaultTheme.tres" id="3_0ltv3"]
 [ext_resource type="StyleBox" uid="uid://c0mya6u33ovd4" path="res://UI/Style/Input.tres" id="3_8cx7s"]
 [ext_resource type="PackedScene" uid="uid://2qlfolqgl2hl" path="res://UI/UI_CustomButton.tscn" id="3_36fig"]
 [ext_resource type="Texture2D" uid="uid://6d0vtqnqvqw0" path="res://assets/textures/Menu/Title2.png" id="4_0ltv3"]
+[ext_resource type="AudioStream" uid="uid://fvy8ajurrdff" path="res://Sounds/Main MenuLoop.mp3" id="6_thq5v"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -121,19 +122,25 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 110.0
-offset_top = -293.0
-offset_right = 402.0
-offset_bottom = -48.0
+offset_top = -264.0
+offset_right = 375.0
+offset_bottom = -85.0
 grow_vertical = 0
 theme_override_constants/separation = 13
 
 [node name="HostButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
 layout_mode = 2
+theme_override_colors/font_hover_color = Color(0.92549, 0.929412, 0.933333, 1)
+theme_override_colors/font_outline_color = Color(0.140407, 0.146385, 0.150359, 1)
+theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 35
 text = "HOST GAME"
 
 [node name="JoinButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
 layout_mode = 2
+theme_override_colors/font_hover_color = Color(0.92549, 0.929412, 0.933333, 1)
+theme_override_colors/font_outline_color = Color(0.140407, 0.146385, 0.150359, 1)
+theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 35
 text = "JOIN GAME
 "
@@ -155,6 +162,10 @@ text = "CONNECTION HELP"
 
 [node name="ExitButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
 layout_mode = 2
+theme_override_colors/font_hover_color = Color(0.968627, 0.607843, 0.54902, 1)
+theme_override_colors/font_outline_color = Color(0.694118, 0.262745, 0.211765, 1)
+theme_override_colors/font_color = Color(0.945098, 0.356863, 0.298039, 1)
+theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 35
 text = "EXIT GAME"
 
@@ -170,3 +181,14 @@ theme_override_colors/font_color = Color(0.945098, 0.356863, 0.298039, 1)
 text = "Game already being hosted"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="TestButton" type="Button" parent="Menu"]
+layout_mode = 0
+offset_left = 946.0
+offset_top = 326.0
+offset_right = 1108.0
+offset_bottom = 431.0
+text = "Test Network"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_thq5v")

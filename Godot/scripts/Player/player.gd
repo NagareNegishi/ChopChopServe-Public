@@ -100,8 +100,6 @@ func _server_set_name(id : int, p_name : String):
 ## @param delta the times it takes per frame to render
 ## @return void
 func _physics_process(delta: float) -> void:
-	if ENetManager.is_host():
-		collision_check()
 	
 	if velocity == Vector3.ZERO:
 		anim_tree["parameters/conditions/is_idle"] = true
@@ -188,8 +186,11 @@ func _dash(is_forward : bool) -> void:
 ## @return void
 func _inputs() -> void:
 	if Input.is_action_just_pressed("Pause"):
-		GlobalScript.get_pause_menu().toggle_visible(true)
-		
+		UIManager.pause(true)
+	
+	if Input.is_action_just_pressed("Recipe"):
+		UIManager.show_recipes_tab(!UIManager.recipe_tab.visible)
+	
 	if !is_actoin_disabled:
 		if Input.is_action_just_pressed("Action"):
 			_action(true)

@@ -10,14 +10,13 @@ enum Direction {
 	WEST = 3
 }
 
-## Collision layer constants for now!!!!!!!! we should define and share in some global file
-const FLOORS = 1
-const PLAYERS = 2
-const APPLIANCES = 4
+const EVERYTHING = 1
+const WALL = 2
+
 
 @export_group("Placeable Settings")
 ## Check collisions against these layers to prevent invalid placement
-@export var collide_with: int = FLOORS + PLAYERS + APPLIANCES
+@export var collide_with: int = EVERYTHING + WALL
 ## Visual appearance of the placeable object
 @export var model_scene: PackedScene
 ## Physical dimensions of the placeable object
@@ -100,8 +99,8 @@ func setup_children():
 
 ## Initialize collision shape based on size
 func setup_collision():
-	collision_layer = 1   #APPLIANCES     !!!! use floor until the team sort collision layer!!!!
-	collision_mask = 1  #collide_with
+	collision_layer = EVERYTHING
+	collision_mask = EVERYTHING + WALL
 	# Setup physics collision shape
 	if collision_shape:
 		var shape = BoxShape3D.new()

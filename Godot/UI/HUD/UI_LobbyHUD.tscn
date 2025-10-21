@@ -59,6 +59,7 @@ scale = Vector2(0.2, 0.2)
 texture = ExtResource("3_sd7gu")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
 offset_left = 81.8
 offset_top = 608.8
 offset_right = 114.8

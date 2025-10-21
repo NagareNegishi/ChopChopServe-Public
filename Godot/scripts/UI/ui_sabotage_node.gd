@@ -17,7 +17,7 @@ func _ready() -> void:
 	cost = SabotageSystem.sabotage_costs.get(sabotage_index)
 	cost_label.text = str(cost)
 	if Input.get_connected_joypads().size() <= 0:
-		modulate = Color(255,255,255,180)
+		pass
 	
 	var current_money = CurrencySystem.get_currency(ENetManager.get_my_team())
 	
@@ -39,4 +39,4 @@ func currency_update(teamID : int, new_currency : float):
 
 
 func select(is_selected : bool):
-	modulate = Color(255,255,255,180) if true else Color(255,255,255,130)
+	pass#modulate = Color(255,255,255,180) if true else Color(255,255,255,130)

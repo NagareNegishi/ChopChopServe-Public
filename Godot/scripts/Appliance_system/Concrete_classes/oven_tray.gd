@@ -8,6 +8,7 @@ func _init():
 	model_scene = preload("res://assets/newmodels/items/OvenTray.glb")
 	default_facing = Direction.WEST
 	capacity = 4
+	sound = SoundManager.SFX_COOKING.PAN_FRY # for now use pan fry sound
 
 
 ## Setup the fryer properties

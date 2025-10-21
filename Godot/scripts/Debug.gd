@@ -16,6 +16,7 @@ enum Level {
 @export var cooking: bool = false
 @export var network: bool = false
 @export var upgrade: bool = false
+@export var sound: bool = true
 
 # Main logging functions
 func error(message: String):
@@ -52,6 +53,10 @@ func cook_log(message: String):
 func upgrade_log(message: String):
     if upgrade and level >= Level.ALL:
         print("[UPGRADE] ", message)
+
+func sound_log(message: String):
+    if sound and level >= Level.ALL:
+        print("[SOUND] ", message)
 
 
 

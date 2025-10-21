@@ -6,6 +6,7 @@ func _init():
 	super._init()
 	model_scene = preload("res://assets/newmodels/items/POTNEW.glb") # for test
 	capacity = 4
+	sound = SoundManager.SFX_COOKING.BOIL
 
 ## Setup the fryer properties
 func _ready():

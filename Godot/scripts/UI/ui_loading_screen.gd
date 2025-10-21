@@ -39,7 +39,7 @@ func _ready() -> void:
 	#Sets the wait times for timers
 	hint_timer.wait_time = 0.05
 	fadeout_timer.wait_time = 1.5
-	test_timer.wait_time = 6
+	test_timer.wait_time = 7
 	
 	#Connecting all signals
 	load_anim_player.animation_finished.connect(_animation_finshed)
@@ -57,7 +57,7 @@ func remove() -> void:
 	floor_anim_player.play("ScaleIn", -1, -2, true)
 	fadeout_timer.start()
 	test_timer.stop()
-	await get_tree().create_timer(6).timeout
+	await get_tree().create_timer(5).timeout
 	load_anim_player.animation_finished.connect(_animation_finshed)
 	
 

@@ -73,12 +73,6 @@ func custom_rotate(play : bool):
 
 @rpc("any_peer", "call_local")
 func _server_rotate(play : bool):
-	if !ENetManager.is_host(): return
-	_client_rotate.rpc_id(1, play)
-
-
-@rpc("authority", "call_local")
-func _client_rotate(play : bool):
 	set_physics_process(play)
 	_bobble(play)
 	get_parent().collision_layer = 0 if play else 1

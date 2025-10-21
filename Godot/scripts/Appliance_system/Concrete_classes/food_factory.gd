@@ -166,6 +166,7 @@ func _provide_as_host(player_id: int, food_name: String) -> void:
 		return
 	# host need check to prevent conflicts/ cheating
 	var item = provide_food(food_name)
+	if !item: return
 	get_tree().current_scene.add_child(item)
 	_client_provide.rpc(item.name, food_name)
 	_give_item_to_player.rpc(player_id, item.get_path())
@@ -257,6 +258,11 @@ func take() -> Node:
 	return null
 
 func player_has(_item: Node) -> void:
+	if _item is Food:
+		await GlobalScript.get_local_player().remove_item()
+		_item.queue_free()
+		return
+		
 	inventory_sprite.inventory.select_ingredient()
 	return
 

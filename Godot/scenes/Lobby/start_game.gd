@@ -90,9 +90,14 @@ func peeps_in_area():
 
 
 func can_start():
-	return players.size() == ENetManager.get_player_list().size() and \
-	ENetManager.get_team1().size() >= 1 and \
-	ENetManager.get_team2().size() >= 1
+	var team1_size = ENetManager.get_team1().size()
+	var team2_size = ENetManager.get_team2().size()
+	var player_size = ENetManager.get_player_list().size()
+	
+	return players.size() == player_size and \
+	team1_size >= 1 and \
+	team2_size >= 1 and \
+	team1_size + team2_size == player_size
 
 @rpc("any_peer", "call_local")
 func _start_timer():

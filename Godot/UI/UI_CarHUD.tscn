@@ -121,16 +121,6 @@ offset_top = 568.0
 offset_right = 85.0
 offset_bottom = 608.0
 
-[node name="Hat2" type="TextureRect" parent="Collectables"]
-modulate = Color(0.0705882, 0.0705882, 0.0705882, 1)
-layout_mode = 0
-offset_left = -66.0
-offset_top = -587.0
-offset_right = 105.0
-offset_bottom = -441.0
-texture = ExtResource("7_iuw45")
-expand_mode = 1
-
 [node name="Hat" type="TextureRect" parent="Collectables"]
 layout_mode = 0
 offset_left = -64.0
@@ -142,16 +132,13 @@ expand_mode = 1
 
 [node name="Label" type="Label" parent="Collectables"]
 layout_mode = 0
-offset_left = -8.0
-offset_top = -460.0
-offset_right = 39.0
-offset_bottom = -423.0
+offset_left = -7.0
+offset_top = -457.0
+offset_right = 40.0
+offset_bottom = -420.0
 theme = ExtResource("6_1n73i")
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 4
-theme_override_constants/outline_size = 1
+theme_override_colors/font_outline_color = Color(0.545098, 0.560784, 0.568627, 1)
+theme_override_constants/outline_size = 11
 theme_override_font_sizes/font_size = 36
 text = "1/1"
 horizontal_alignment = 1

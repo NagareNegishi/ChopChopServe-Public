@@ -91,7 +91,6 @@ scale = Vector2(3, 1)
 theme_override_styles/background = SubResource("StyleBoxFlat_omfpb")
 theme_override_styles/fill = SubResource("StyleBoxFlat_1b7j1")
 max_value = 3.0
-value = 1.0
 show_percentage = false
 
 [node name="Label" type="Label" parent="Sprite3D/SubViewport"]
@@ -111,7 +110,7 @@ theme_override_colors/font_color = Color(0.976471, 0.976471, 0.976471, 1)
 theme_override_colors/font_outline_color = Color(0.176419, 0.176419, 0.176419, 1)
 theme_override_constants/outline_size = 100
 theme_override_font_sizes/font_size = 300
-text = "1/2"
+text = "0/1"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00715876, 0, 0.464407)

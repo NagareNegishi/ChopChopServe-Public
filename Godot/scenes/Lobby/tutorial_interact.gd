@@ -11,27 +11,17 @@ func _ready() -> void:
 	interact_comp.interacted.connect(interact)
 	interact_comp.hovered.connect(hover)
 	interact_comp.custom_rotate(true)
-	
+
 
 func interact():
 	start_tutorial(!current_on)
 
 
 func start_tutorial(on : bool):
-	_server_start_tutoria.rpc(on)
-
-
-@rpc("any_peer", "call_local")
-func _server_start_tutoria(on : bool):
-	if !ENetManager.is_host(): return
 	tutorial.emit(on)
-	_client_start_tutoria.rpc_id(1, on)
-
-
-@rpc("authority", "call_local")
-func _client_start_tutoria(on : bool):
 	label.text = "Start Tutorial" if !on else "Stop Tutorial"
 	current_on = on
+
 
 func hover(is_hover : bool):
 	sprite.visible = is_hover if !current_on else true

@@ -24,7 +24,6 @@ enum Groups{
 }
 
 
-
 ## Setup the model instance
 func _init():
 	super._init()
@@ -81,6 +80,7 @@ func _create_food(food_name: String) -> Node:
 	var food = food_scene.instantiate()
 	food.name = prefix + food_name + str(supply_count)
 	supply_count += 1
+	SoundManager.play_sfx_cooking(SoundManager.SFX_COOKING.CRATE)
 	return food
 
 

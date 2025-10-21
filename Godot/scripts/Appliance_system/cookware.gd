@@ -13,6 +13,7 @@ var cookware_ui : UIContents
 var power_receiving: int = 0
 var sizzle_particles: ParticleController
 var smoke_particles: ParticleController
+var sound: SoundManager.SFX_COOKING = SoundManager.SFX_COOKING.CRATE
 # Food positioning
 var food_slots: Array[Vector3] = []
 var center_offset: Vector3 = Vector3.ZERO
@@ -85,6 +86,7 @@ func _put_food(food: Food) -> void:
 		food.start_cooking(int(power_receiving * coefficient), cooking_style)
 		_average_food()
 		_toggle_sizzle(true)
+		SoundManager.play_sfx_cooking(sound)
 	Debug.cook_log("Food placed in cookware: " + food.get_script().get_global_name()
 		+ ", Cookware can cook: " + str(can_cook()) + ", Food cook time: " + str(food.get_cook_time(cooking_style)))
 
@@ -146,6 +148,7 @@ func cook(power: int) -> bool:
 	power_receiving = power
 	for food in contents:
 		food.start_cooking(int(power_receiving * coefficient), cooking_style)
+		SoundManager.play_sfx_cooking(sound)
 	_toggle_sizzle(true)
 	return true
 

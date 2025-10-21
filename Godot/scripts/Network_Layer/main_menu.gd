@@ -35,6 +35,8 @@ func _ready():
 	network_layer.tutorial_started.connect(_on_tutorial_started)
 	if !froggo_building : return
 	froggo_building.play("ArmatureAction", -1, 0.6)
+	SoundManager.play_bgm(SoundManager.BGM.MENU, 2.0)
+	SoundManager.play_sfx_player(SoundManager.SFX_PLAYER.JUMP)
 
 
 ## Create Lobby

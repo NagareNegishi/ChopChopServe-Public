@@ -593,7 +593,7 @@ unique_name = "15"
 current_owner = 2
 
 [node name="Sink2" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("30_lw86l")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.5, 1, -2)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 11.4376, -0.277519, -8.01809)
 using_tscn = true
 unique_name = "22"
 current_owner = 2
@@ -628,7 +628,7 @@ unique_name = "Stov2"
 current_owner = 2
 
 [node name="Cabinet2" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("35_h6owp")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 12.4327, 1, -4.69676)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 11.5542, 0.0373704, -6.61246)
 using_tscn = true
 unique_name = "Plate2"
 current_owner = 2

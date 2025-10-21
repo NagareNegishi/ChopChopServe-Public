@@ -56,17 +56,6 @@ func _ready() -> void:
 	anim_tree["parameters/SM_IDLE/conditions/holding"] = false
 	anim_tree["parameters/SM_ACTION/conditions/chopping"] = false
 	
-	var colour : Color = GlobalScript.player_outline_colours.get(
-			ENetManager.get_player_list().find(name.to_int()))
-	var material : Material = StandardMaterial3D.new()
-	material.albedo_color = colour
-	name_tag.set_color(name.to_int())
-	
-	$Decal.modulate = colour
-	body_mesh.set_surface_override_material(1, material)
-	$Mesh/Armature/Skeleton3D/RightHand.set_surface_override_material(1, material)
-	$Mesh/Armature/Skeleton3D/LeftHand.set_surface_override_material(1, material)
-	
 	if !multiplayer.get_unique_id() == name.to_int():
 		check_interactables.stop()	
 	
@@ -74,9 +63,22 @@ func _ready() -> void:
 		var particle = move_particle.instantiate()
 		MOVE_PARTICLES_POOL.append(particle)
 	add_to_group("Players")
-	if !multiplayer.get_unique_id() == name.to_int() : return
 	
-	await get_tree().create_timer(0.1).timeout
+	await get_tree().create_timer(0.05).timeout
+	
+	var colour : Color = GlobalScript.player_outline_colours.get(
+			ENetManager.get_player_list().find(name.to_int()))
+	var material : Material = StandardMaterial3D.new()
+	material.albedo_color = colour
+	name_tag.set_color(name.to_int())
+
+	$Decal.modulate = colour
+	body_mesh.set_surface_override_material(1, material)
+	$Mesh/Armature/Skeleton3D/RightHand.set_surface_override_material(1, material)
+	$Mesh/Armature/Skeleton3D/LeftHand.set_surface_override_material(1, material)
+	if !multiplayer.get_unique_id() == name.to_int() : return
+	print(str(ENetManager.get_my_id()) + ": " + str(ENetManager.get_player_list()))
+	await get_tree().create_timer(0.05).timeout
 	
 	rpc_id(1, "_server_set_name", name.to_int(), GlobalScript.player_name)
 
@@ -547,7 +549,8 @@ func remove_item() -> Node3D:
 	#return item_in_hand
 	if item_in_hand == null:
 		return null
-		
+	
+	item_in_hand.get_node("InteractableComponent").custom_rotate(false)
 	item_in_hand.get_parent().remove_child(item_in_hand)
 	await get_tree().process_frame
 	
@@ -599,6 +602,7 @@ func _can_app_interact() -> bool:
 		inter is UpgradeHammer)
 
 var sabo_index : int
+
 func _sabotage_left():
 	sabo_index = sabo_index - 1 if sabo_index > 0 else 5
 	print(sabo_index)
@@ -609,3 +613,12 @@ func _sabotage_right():
 
 func _select_sabo():
 	_sabotage(sabo_index)
+
+@rpc("any_peer", "call_local")
+func set_name_color(id : int, t: int):
+	name_tag.set_color_manual(id, t)
+
+@rpc("any_peer", "call_local")
+func name_refresh():
+	if multiplayer.get_unique_id() != name.to_int(): return
+	rpc_id(1, "_server_set_name", name.to_int(), GlobalScript.player_name)

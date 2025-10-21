@@ -1,7 +1,7 @@
 class_name StartGame extends Area3D
 
 var players : Array[Player] = []
-var load_time : float = 2.0
+var load_time : float = 1.5
 var curr_time : float = 0.0
 var increase : bool = false
 
@@ -34,10 +34,8 @@ func _on_body_enter(body : Node3D):
 	if players.has(player): return
 	players.append(player)
 	label.text = "%d/%d" % [players.size(), ENetManager.get_player_list().size()]
-	if !players.size() == ENetManager.player_list.size(): return
-	increase = true
-	timer.autostart = true
-	timer.start()
+	if !can_start(): return
+	_start_timer.rpc()
 
 
 func _on_body_exit(body : Node3D):
@@ -61,13 +59,15 @@ func _on_timeout():
 		timer.stop()
 		return
 	
-	if !ENetManager.is_host() ||  ENetManager.is_host() && curr_time < load_time: return
+	if curr_time < load_time: return
 	
 	timer.stop()
 	
-	for id in ENetManager.get_player_list():
-		GlobalScript.get_local_player_by_id(id).disable_controls(true, true)
-		
+	for player in GlobalScript.get_all_players():
+		player.disable_controls(true, true)
+	
+	if !ENetManager.is_host(): return
+	
 	UIManager.play_load()
 	
 	await get_tree().create_timer(3.5).timeout
@@ -78,7 +78,6 @@ func _on_timeout():
 func _list_update(id : int):
 	label.text = "%d/%d" % [players.size(), ENetManager.get_player_list().size()]
 	increase = peeps_in_area() == ENetManager.get_player_list().size()
-	if !increase: return
 	progress.value = 0
 	curr_time = 0
 
@@ -88,3 +87,15 @@ func peeps_in_area():
 	for b in self.get_overlapping_bodies():
 		amount = amount + 1 if b is Player else 0
 	return amount
+
+
+func can_start():
+	return players.size() == ENetManager.get_player_list().size() and \
+	ENetManager.get_team1().size() >= 1 and \
+	ENetManager.get_team2().size() >= 1
+
+@rpc("any_peer", "call_local")
+func _start_timer():
+	increase = true
+	timer.autostart = true
+	timer.start()

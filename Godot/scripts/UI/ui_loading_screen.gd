@@ -39,7 +39,7 @@ func _ready() -> void:
 	#Sets the wait times for timers
 	hint_timer.wait_time = 0.05
 	fadeout_timer.wait_time = 1.5
-	test_timer.wait_time = 7
+	test_timer.wait_time = 6
 	
 	#Connecting all signals
 	load_anim_player.animation_finished.connect(_animation_finshed)

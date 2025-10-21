@@ -1,14 +1,37 @@
 class_name QuestionMark extends StaticBody3D
 
+signal tutorial(on : bool)
 @export var interact_comp : InteractableComponent
+@export var sprite : Sprite3D
+@export var label : Label
 
+var current_on : bool
 func _ready() -> void:
+	sprite.visible = false
 	interact_comp.interacted.connect(interact)
+	interact_comp.hovered.connect(hover)
 	interact_comp.custom_rotate(true)
+	
 
 func interact():
-	UIManager.play_load()
-	
-	await get_tree().create_timer(3.5).timeout
-	
-	SceneManager.change_scene_all_players(SceneManager.Scene.TUTORIAL)
+	start_tutorial(!current_on)
+
+
+func start_tutorial(on : bool):
+	_server_start_tutoria.rpc(on)
+
+
+@rpc("any_peer", "call_local")
+func _server_start_tutoria(on : bool):
+	if !ENetManager.is_host(): return
+	tutorial.emit(on)
+	_client_start_tutoria.rpc_id(1, on)
+
+
+@rpc("authority", "call_local")
+func _client_start_tutoria(on : bool):
+	label.text = "Start Tutorial" if !on else "Stop Tutorial"
+	current_on = on
+
+func hover(is_hover : bool):
+	sprite.visible = is_hover if !current_on else true

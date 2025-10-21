@@ -1,15 +1,81 @@
-[gd_scene load_steps=3 format=3 uid="uid://buoomw2auyihn"]
+[gd_scene load_steps=7 format=3 uid="uid://buoomw2auyihn"]
 
 [ext_resource type="Script" uid="uid://cspvbxl0qpiqc" path="res://scenes/Lobby/team_select.gd" id="1_5vvey"]
+[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/Style/DefaultTheme.tres" id="2_elfhn"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_5vvey"]
 height = 1.29297
 radius = 2.05566
 
-[node name="TeamSelect" type="Area3D"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_5vvey"]
+viewport_path = NodePath("Sprite3D/SubViewport")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_elfhn"]
+corner_radius_top_left = 900
+corner_radius_top_right = 900
+corner_radius_bottom_right = 900
+corner_radius_bottom_left = 900
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_elfhn"]
+viewport_path = NodePath("Sprite3D2/SubViewport")
+
+[node name="TeamSelect" type="Area3D" node_paths=PackedStringArray("panel", "label")]
 script = ExtResource("1_5vvey")
+panel = NodePath("Sprite3D/SubViewport/Panel")
+label = NodePath("Sprite3D2/SubViewport/Label")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.353516, 0)
 shape = SubResource("CylinderShape3D_5vvey")
 debug_color = Color(0, 0, 0, 1)
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.705, 0, 0, 0, -3.08165e-08, 0.705, 0, -0.705, -3.08165e-08, -0.326333, -0.990773, -0.407578)
+texture = SubResource("ViewportTexture_5vvey")
+
+[node name="SubViewport" type="SubViewport" parent="Sprite3D"]
+transparent_bg = true
+size = Vector2i(1000, 1000)
+size_2d_override = Vector2i(500, 500)
+
+[node name="Panel" type="Panel" parent="Sprite3D/SubViewport"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 600.0
+offset_bottom = 600.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_elfhn")
+
+[node name="Sprite3D2" type="Sprite3D" parent="."]
+transform = Transform3D(0.705, 0, 0, 0, -3.08165e-08, 0.705, 0, -0.705, -3.08165e-08, 0.0117736, 0.639176, -0.00752753)
+billboard = 1
+no_depth_test = true
+texture = SubResource("ViewportTexture_elfhn")
+
+[node name="SubViewport" type="SubViewport" parent="Sprite3D2"]
+transparent_bg = true
+size = Vector2i(770, 275)
+size_2d_override = Vector2i(770, 300)
+
+[node name="Label" type="Label" parent="Sprite3D2/SubViewport"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = -15.0
+offset_right = 96.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_elfhn")
+theme_override_colors/font_color = Color(0.976471, 0.976471, 0.976471, 1)
+theme_override_colors/font_outline_color = Color(0.545098, 0.560784, 0.568627, 1)
+theme_override_constants/outline_size = 70
+theme_override_font_sizes/font_size = 120
+text = "Join Team 1"

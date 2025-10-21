@@ -56,3 +56,7 @@ func hover(hovering : bool) -> void:
 ## @return void
 func turn_on_collision(turn_on: bool) -> void:
 	emit_signal("toggle_collision", turn_on)
+
+
+func custom_rotate(play : bool):
+	pass

@@ -89,7 +89,7 @@ func _is_room_code(input: String) -> bool:
 
 ## Switch to Lobby
 func _switch_to_lobby():
-	SceneManager.change_scene(SceneManager.Scene.LOBBY_TEST)
+	SceneManager.change_scene(SceneManager.Scene.HUB)
 
 
 ## Exit Game

@@ -17,3 +17,4 @@ func _on_body_enter(body : Node3D):
 		"team": team
 	})
 	print(ENetManager.get_my_team())
+	player._server_set_name(player.name.to_int(),  GlobalScript.player_name)

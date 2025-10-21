@@ -106,7 +106,7 @@ func _add_inventory_ui():
 	add_child(inventory_sprite)
 	inventory = inventory_sprite
 	inventory_sprite.no_depth_test = true
-	inventory_sprite.position -= Vector3(0,2,0)
+	inventory_sprite.position -= Vector3(1,1,0)
 
 
 var player 

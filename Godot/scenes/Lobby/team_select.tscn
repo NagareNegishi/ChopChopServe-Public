@@ -2,11 +2,14 @@
 
 [ext_resource type="Script" uid="uid://cspvbxl0qpiqc" path="res://scenes/Lobby/team_select.gd" id="1_5vvey"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_6703e"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_5vvey"]
+height = 1.29297
+radius = 2.05566
 
 [node name="TeamSelect" type="Area3D"]
 script = ExtResource("1_5vvey")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("BoxShape3D_6703e")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.353516, 0)
+shape = SubResource("CylinderShape3D_5vvey")
 debug_color = Color(0, 0, 0, 1)

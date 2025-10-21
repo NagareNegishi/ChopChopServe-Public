@@ -4,7 +4,7 @@ class_name QuestionMark extends StaticBody3D
 
 func _ready() -> void:
 	interact_comp.interacted.connect(interact)
-
+	interact_comp.rotate_drop()
 
 func interact():
 	UIManager.play_load()

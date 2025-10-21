@@ -1,10 +1,11 @@
-[gd_scene load_steps=43 format=3 uid="uid://frijdfjvcu7p"]
+[gd_scene load_steps=46 format=3 uid="uid://frijdfjvcu7p"]
 
-[ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_ygac2"]
+[ext_resource type="Script" uid="uid://c3h1hny6w2xwn" path="res://LevelDesign/free_play.gd" id="1_h3x7p"]
+[ext_resource type="Script" uid="uid://bovslkbm84p1j" path="res://scripts/level_camera.gd" id="5_h3x7p"]
+[ext_resource type="PackedScene" uid="uid://bxf3hwer4sb7h" path="res://UI/HUD/UI_LobbyHUD.tscn" id="5_i7m8l"]
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="6_tb1gy"]
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="7_2ye88"]
 [ext_resource type="PackedScene" uid="uid://bk7ovilp788kq" path="res://scripts/Player/spawn_point.tscn" id="8_ssy0a"]
-[ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="10_pjhwv"]
 [ext_resource type="PackedScene" uid="uid://escxqu04mxtg" path="res://assets/NaturePack/Grass_Short.fbx" id="19_000hf"]
 [ext_resource type="PackedScene" uid="uid://cqlbcyk00caqq" path="res://scenes/Player/truckmove.tscn" id="20_4ai3k"]
 [ext_resource type="PackedScene" uid="uid://7p0tcfmgevn1" path="res://assets/NaturePack/CommonTree_4.fbx" id="21_62apu"]
@@ -21,14 +22,16 @@
 [ext_resource type="PackedScene" uid="uid://pee1rah6hbep" path="res://scenes/Appliance_system/stove_with_pan.tscn" id="29_0n0i5"]
 [ext_resource type="PackedScene" uid="uid://bmqt6amoasnv7" path="res://assets/CityPacks/gltf/base.gltf" id="29_qf1ne"]
 [ext_resource type="PackedScene" uid="uid://krj0gwn31x8u" path="res://scenes/Appliance_system/stove_with_pot.tscn" id="30_20l5p"]
+[ext_resource type="PackedScene" uid="uid://brjcd3tndnajw" path="res://scenes/Lobby/start_game.tscn" id="30_i7m8l"]
+[ext_resource type="PackedScene" uid="uid://buoomw2auyihn" path="res://scenes/Lobby/team_select.tscn" id="30_n7pfy"]
 [ext_resource type="PackedScene" uid="uid://dt4wue57mdx1d" path="res://scenes/Appliance_system/trash_can.tscn" id="31_ur3mv"]
 [ext_resource type="PackedScene" uid="uid://bakeesqt3byva" path="res://scenes/Appliance_system/sink.tscn" id="32_m83a2"]
+[ext_resource type="PackedScene" uid="uid://vb2eq4ecxgbh" path="res://scenes/Lobby/tutorial_interact.tscn" id="32_p1t1e"]
 [ext_resource type="PackedScene" uid="uid://dlk0mbdfg2cmq" path="res://scenes/Appliance_system/oven.tscn" id="33_xwpdh"]
 [ext_resource type="PackedScene" uid="uid://dbeboubu5gkhe" path="res://scenes/Appliance_system/fryer.tscn" id="34_bm3ji"]
 [ext_resource type="PackedScene" uid="uid://b0ougk3d4jnku" path="res://scenes/Appliance_system/food_factory.tscn" id="35_k8iid"]
 [ext_resource type="PackedScene" uid="uid://cw5uvt35a87nt" path="res://scenes/Appliance_system/blender.tscn" id="36_l8yry"]
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="38_s0ivk"]
-[ext_resource type="PackedScene" uid="uid://lfcppt4wh0g4" path="res://scenes/Interaction/UpgradeHammer.tscn" id="39_yk2jx"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8hr4e"]
 energy_multiplier = 4.0
@@ -173,31 +176,6 @@ void fragment() {
 }
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qe1bb"]
-render_priority = 0
-shader = SubResource("Shader_4l3fe")
-shader_parameter/opacity = 2.0
-shader_parameter/ghost_color = Color(0.981345, 0.45495, 3.85046e-07, 1)
-shader_parameter/flicker_speed = 0.0
-shader_parameter/phase_frequency = 0.0
-shader_parameter/fresnel_strength = 0.8
-shader_parameter/fresnel_color = Color(0, 0, 0, 1)
-shader_parameter/wave_amplitude = 0.0
-shader_parameter/wave_frequency = 19.397
-shader_parameter/wave_speed = 0.0
-shader_parameter/chroma_amount = 10.0
-shader_parameter/points_enabled = true
-shader_parameter/point_field_scale = 6.42
-shader_parameter/point_size = 0.008
-shader_parameter/point_intensity = 1.0
-shader_parameter/point_axis_speed = 0.01
-shader_parameter/point_move_mode = 2
-shader_parameter/point_color = Color(1, 1, 1, 1)
-
-[sub_resource type="TorusMesh" id="TorusMesh_ri2vc"]
-material = SubResource("ShaderMaterial_qe1bb")
-inner_radius = 0.991
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qf1ne"]
 render_priority = 0
 shader = SubResource("Shader_4l3fe")
@@ -223,8 +201,33 @@ shader_parameter/point_color = Color(1, 1, 1, 1)
 material = SubResource("ShaderMaterial_qf1ne")
 inner_radius = 0.991
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qe1bb"]
+render_priority = 0
+shader = SubResource("Shader_4l3fe")
+shader_parameter/opacity = 2.0
+shader_parameter/ghost_color = Color(0.981345, 0.45495, 3.85046e-07, 1)
+shader_parameter/flicker_speed = 0.0
+shader_parameter/phase_frequency = 0.0
+shader_parameter/fresnel_strength = 0.8
+shader_parameter/fresnel_color = Color(0, 0, 0, 1)
+shader_parameter/wave_amplitude = 0.0
+shader_parameter/wave_frequency = 19.397
+shader_parameter/wave_speed = 0.0
+shader_parameter/chroma_amount = 10.0
+shader_parameter/points_enabled = true
+shader_parameter/point_field_scale = 6.42
+shader_parameter/point_size = 0.008
+shader_parameter/point_intensity = 1.0
+shader_parameter/point_axis_speed = 0.01
+shader_parameter/point_move_mode = 2
+shader_parameter/point_color = Color(1, 1, 1, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_ri2vc"]
+material = SubResource("ShaderMaterial_qe1bb")
+inner_radius = 0.991
+
 [node name="BradleyTestScene" type="Node3D"]
-script = ExtResource("1_ygac2")
+script = ExtResource("1_h3x7p")
 
 [node name="== PLAYERS ==" type="Node" parent="."]
 
@@ -237,6 +240,7 @@ spawn_limit = 4
 script = ExtResource("6_tb1gy")
 spawns = [NodePath("../SpawnPoint"), NodePath("../SpawnPoint2"), NodePath("../SpawnPoint3"), NodePath("../SpawnPoint4")]
 network_player = ExtResource("7_2ye88")
+signal_use = true
 
 [node name="SpawnPoint" parent="== SPAWNS ==" instance=ExtResource("8_ssy0a")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2, 0.77653, 6)
@@ -269,10 +273,11 @@ shadow_enabled = true
 
 [node name="Camera3D" type="Camera3D" parent="MISC"]
 transform = Transform3D(-4.37114e-08, -0.819152, 0.573576, 0, 0.573576, 0.819152, -1, 3.58063e-08, -2.50718e-08, 10, 10, 0)
+script = ExtResource("5_h3x7p")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="MISC"]
 
-[node name="Control" parent="MISC/CanvasLayer" instance=ExtResource("10_pjhwv")]
+[node name="UiLobbyHud" parent="MISC/CanvasLayer" instance=ExtResource("5_i7m8l")]
 
 [node name="GridMap" type="GridMap" parent="MISC"]
 cell_size = Vector3(1, 0.25, 0.5)
@@ -327,10 +332,7 @@ replication_config = SubResource("SceneReplicationConfig_jyufh")
 [node name="== HUD ==" type="CanvasLayer" parent="." groups=["Canvas"]]
 
 [node name="Extinguisher" parent="." instance=ExtResource("38_s0ivk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1, 8)
-
-[node name="UpgradeHammer" parent="." instance=ExtResource("39_yk2jx")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 3, 1, 8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.495926, 1, -7.85375)
 
 [node name="Platform" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.364, 0)
@@ -473,28 +475,28 @@ unique_name = "16"
 current_owner = 0
 
 [node name="FoodFactory" parent="Kitchen" instance=ExtResource("35_k8iid")]
-transform = Transform3D(1, 0, -5.56363e-08, 0, 1, 0, 5.56363e-08, 0, 1, 5, 0, 1)
+transform = Transform3D(1, 0, -5.56363e-08, 0, 1, 0, 5.56363e-08, 0, 1, 5, -0.282827, 1)
 group = 2
 using_tscn = true
 unique_name = "11"
 current_owner = 0
 
 [node name="FoodFactory2" parent="Kitchen" instance=ExtResource("35_k8iid")]
-transform = Transform3D(1, 0, -5.56363e-08, 0, 1, 0, 5.56363e-08, 0, 1, 2, 0, 1)
+transform = Transform3D(1, 0, -5.56363e-08, 0, 1, 0, 5.56363e-08, 0, 1, 2, -0.282827, 1)
 group = 3
 using_tscn = true
 unique_name = "12"
 current_owner = 0
 
 [node name="FoodFactory3" parent="Kitchen" instance=ExtResource("35_k8iid")]
-transform = Transform3D(1, 0, -5.56363e-08, 0, 1, 0, 5.56363e-08, 0, 1, 2, 0, -1)
+transform = Transform3D(1, 0, -5.56363e-08, 0, 1, 0, 5.56363e-08, 0, 1, 2, -0.282827, -1)
 group = 1
 using_tscn = true
 unique_name = "10"
 current_owner = 0
 
 [node name="FoodFactory4" parent="Kitchen" instance=ExtResource("35_k8iid")]
-transform = Transform3D(1, 0, -5.56363e-08, 0, 1, 0, 5.56363e-08, 0, 1, 5, 0, -1)
+transform = Transform3D(1, 0, -5.56363e-08, 0, 1, 0, 5.56363e-08, 0, 1, 5, -0.282827, -1)
 using_tscn = true
 unique_name = "9"
 current_owner = 0
@@ -503,6 +505,18 @@ current_owner = 0
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 8, 0, 3)
 using_tscn = true
 unique_name = "2"
+current_owner = 0
+
+[node name="Bench5" parent="Kitchen" instance=ExtResource("27_6fmd2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.00587, 0, 8)
+using_tscn = true
+unique_name = "20"
+current_owner = 0
+
+[node name="Bench16" parent="Kitchen" instance=ExtResource("27_6fmd2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.00643, 0, 8)
+using_tscn = true
+unique_name = "20"
 current_owner = 0
 
 [node name="Background" type="Node3D" parent="."]
@@ -681,7 +695,7 @@ transform = Transform3D(-0.816158, 0, 0.577829, 0, 1, 0, -0.577829, 0, -0.816158
 transform = Transform3D(-0.816158, 0, 0.577829, 0, 1, 0, -0.577829, 0, -0.816158, -5.77572, 1.90735e-06, 5.37775)
 
 [node name="TRUCKMOVE" parent="Background" instance=ExtResource("20_4ai3k")]
-transform = Transform3D(0.282843, 0, 0.282843, 0, 0.4, 0, -0.282843, 0, 0.282843, -8, 0.364, 0)
+transform = Transform3D(-1.74846e-08, 0.0279026, -0.399026, 0, 0.399026, 0.0279026, 0.4, 1.21966e-09, -1.7442e-08, -8.69265, 0.364, 0)
 
 [node name="CommonTree_4" parent="Background" instance=ExtResource("21_62apu")]
 transform = Transform3D(2.3, 0, 0, 0, 2.3, 0, 0, 0, 2.3, -9.51724, 0, 15.6328)
@@ -944,14 +958,32 @@ transform = Transform3D(0.988121, 0, -0.153676, 0, 1, 0, 0.153676, 0, 0.988121, 
 [node name="base2" parent="Background" instance=ExtResource("29_qf1ne")]
 transform = Transform3D(17.1784, 0, 0, 0, 1, 0, 0, 0, 1, -2.74127, 0, 11)
 
+[node name="StartGame" parent="Background" instance=ExtResource("30_i7m8l")]
+transform = Transform3D(-5.24537e-08, 0, -1.2, 0, 1.2, 0, 1.2, 0, -5.24537e-08, -6.01317, 0.0433926, -0.0380335)
+
 [node name="base3" parent="Background" instance=ExtResource("29_qf1ne")]
 transform = Transform3D(-12.1421, 0, 0.707391, 0, 1, 0, -12.1519, 0, -0.706823, -18.9206, 0, -19.1358)
 
-[node name="Zone" type="MeshInstance3D" parent="."]
-transform = Transform3D(2.10811, 0, 0, 0, 51.4285, 0, 0, 0, 2.10811, -3, 1, -3.972)
-mesh = SubResource("TorusMesh_ri2vc")
+[node name="TeamSelect" parent="Background" instance=ExtResource("30_n7pfy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.97471, 0.991563, 4.96794)
+team = 1
 
-[node name="Zone2" type="MeshInstance3D" parent="."]
-transform = Transform3D(2.10811, 0, 0, 0, 51.4972, 0, 0, 0, 2.10811, -3, 1, 3.972)
+[node name="Zone2" type="MeshInstance3D" parent="Background/TeamSelect"]
+transform = Transform3D(2.10811, 0, 0, 0, 51.4972, 0, 0, 0, 2.10811, -0.0252938, -0.723079, 0.0202501)
 mesh = SubResource("TorusMesh_n7pfy")
-skeleton = NodePath("../Zone")
+skeleton = NodePath("../../../TeamSelect/Zone")
+
+[node name="TeamSelect" parent="." instance=ExtResource("30_n7pfy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.97471, 0.991563, -5.31846)
+team = 2
+
+[node name="Zone" type="MeshInstance3D" parent="TeamSelect"]
+transform = Transform3D(2.10811, 0, 0, 0, 51.4285, 0, 0, 0, 2.10811, -0.0252938, -0.359079, 0.101663)
+mesh = SubResource("TorusMesh_ri2vc")
+skeleton = NodePath("../..")
+
+[node name="TutorialInteract" parent="." instance=ExtResource("32_p1t1e")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 6.68782, 1.26424, 6.19458)
+
+[node name="Extinguisher2" parent="." instance=ExtResource("38_s0ivk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.495926, 1, 7.35548)

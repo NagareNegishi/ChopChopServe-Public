@@ -12,7 +12,7 @@ extends Node
 ## All cooking styles supported by Appliance and Food
 enum CookingStyle {
 	NONE,        # Bench - no cooking, just prep/storage
-	HEAT,        # Stove Top - direct heat cooking          ????may be redundant?????
+	HEAT,        # Stove Top - direct heat cooking
 	BAKE,        # Oven
 	DEEP_FRY,    # Deep Fryer
 	PAN_FRY,     # Frying Pan
@@ -30,9 +30,8 @@ var book: Dictionary = {}
 ## Setup the factory
 func _ready():
 	_register_appliances()
-	# print_book()
-
-	ApplianceManager.appliance_created.connect(_on_test_appliance_created)
+	# For testing only
+	# ApplianceManager.appliance_created.connect(_on_test_appliance_created)
 
 
 ## Note: only used by ApplianceManager
@@ -93,84 +92,81 @@ func get_options() -> Array[String]:
 	return book.keys()
 
 
+# # For testing only, DO NOT USE in production!-------------------------------------------------------
+
+# ## Print the registered appliances in the factory
+# func print_book():
+# 	print("Registered appliances:")
+# 	for appliance_name in book:
+# 		var info = book[appliance_name]
+# 		print("- %s -> %s (Price: %d)" % [appliance_name, info.script.get_global_name(), info.price])
 
 
+# ## Test appliance spawning with numpad keys
+# const TEST_APPLIANCES = [
+# 	"stove_with_pot",      # Numpad 1
+# 	"oven",    # Numpad 2
+# 	"fryer", # Numpad 3
+# 	"blender",    # Numpad 4
+# 	"chop_table",      # Numpad 5
+# 	"cabinet",       # Numpad 6
+# 	"food_factory",       # Numpad 7
+# 	"sink",      # Numpad 8
+# 	"trash_can",   # Numpad 9
+# 	"stove_with_pan"  # Numpad 0
+# ]
 
 
-
-# for testing --------------------------------------------------------------------------------------
-
-
-## Print the registered appliances in the factory
-func print_book():
-	print("Registered appliances:")
-	for appliance_name in book:
-		var info = book[appliance_name]
-		print("- %s -> %s (Price: %d)" % [appliance_name, info.script.get_global_name(), info.price])
-
-
-const TEST_APPLIANCES = [
-	"stove_with_pot",      # Numpad 1
-	"oven",    # Numpad 2
-	"fryer", # Numpad 3
-	"blender",    # Numpad 4
-	"chop_table",      # Numpad 5
-	"cabinet",       # Numpad 6
-	"food_factory",       # Numpad 7
-	"sink",      # Numpad 8
-	"trash_can",   # Numpad 9
-	"stove_with_pan"  # Numpad 0
-]
-
-
-func _input(event):
-	if event is InputEventKey and event.pressed:
-		var appliance_index = -1
+# ## Bind to input events for testing appliance spawning
+# func _input(event):
+# 	if event is InputEventKey and event.pressed:
+# 		var appliance_index = -1
 	
-		# Check for numpad keys 1-9 + 0
-		match event.keycode:
-			KEY_KP_1:
-				appliance_index = 0
-			KEY_KP_2:
-				appliance_index = 1
-			KEY_KP_3:
-				appliance_index = 2
-			KEY_KP_4:
-				appliance_index = 3
-			KEY_KP_5:
-				appliance_index = 4
-			KEY_KP_6:
-				appliance_index = 5
-			KEY_KP_7:
-				appliance_index = 6
-			KEY_KP_8:
-				appliance_index = 7
-			KEY_KP_9:
-				appliance_index = 8
-			KEY_KP_0:
-				appliance_index = 9
+# 		# Check for numpad keys 1-9 + 0
+# 		match event.keycode:
+# 			KEY_KP_1:
+# 				appliance_index = 0
+# 			KEY_KP_2:
+# 				appliance_index = 1
+# 			KEY_KP_3:
+# 				appliance_index = 2
+# 			KEY_KP_4:
+# 				appliance_index = 3
+# 			KEY_KP_5:
+# 				appliance_index = 4
+# 			KEY_KP_6:
+# 				appliance_index = 5
+# 			KEY_KP_7:
+# 				appliance_index = 6
+# 			KEY_KP_8:
+# 				appliance_index = 7
+# 			KEY_KP_9:
+# 				appliance_index = 8
+# 			KEY_KP_0:
+# 				appliance_index = 9
 
-		# Spawn the corresponding appliance
-		if appliance_index >= 0 and appliance_index < TEST_APPLIANCES.size():
-			ApplianceManager.request_appliance(TEST_APPLIANCES[appliance_index], 0)
-			print("Numpad %d pressed - spawning %s" % [appliance_index + 1, TEST_APPLIANCES[appliance_index]])
+# 		# Spawn the corresponding appliance
+# 		if appliance_index >= 0 and appliance_index < TEST_APPLIANCES.size():
+# 			ApplianceManager.request_appliance(TEST_APPLIANCES[appliance_index], 0)
+# 			print("Numpad %d pressed - spawning %s" % [appliance_index + 1, TEST_APPLIANCES[appliance_index]])
 
 
-func _on_test_appliance_created(appliance: Appliance):
-	var player_id = ENetManager.get_my_id()
-	print("DEBUG: My ID is ", player_id)
+# ## Spawn the appliance in front of the local player for testing
+# func _on_test_appliance_created(appliance: Appliance):
+# 	var player_id = ENetManager.get_my_id()
+# 	print("DEBUG: My ID is ", player_id)
 
-	var player = GlobalScript.get_local_player_by_id(player_id)
-	if player:
-		# Get player's position and forward direction
-		var player_pos = player.global_position
-		var player_forward = -player.global_transform.basis.z
-		# Spawn distance in front of player
-		var spawn_distance = 2.0  # Adjust this value as needed
-		var spawn_position = player_pos + (player_forward * spawn_distance)
-		spawn_position.y = 1.0
-		get_tree().current_scene.add_child(appliance)
-		appliance.global_position = spawn_position
-		# print("DEBUG: Appliance added to scene at: ", appliance.global_position)
-	else:
-		print("DEBUG: No player found!")
+# 	var player = GlobalScript.get_local_player_by_id(player_id)
+# 	if player:
+# 		# Get player's position and forward direction
+# 		var player_pos = player.global_position
+# 		var player_forward = -player.global_transform.basis.z
+# 		# Spawn distance in front of player
+# 		var spawn_distance = 2.0  # Adjust this value as needed
+# 		var spawn_position = player_pos + (player_forward * spawn_distance)
+# 		spawn_position.y = 1.0
+# 		get_tree().current_scene.add_child(appliance)
+# 		appliance.global_position = spawn_position
+# 		# print("DEBUG: Appliance added to scene at: ", appliance.global_position)
+# 	else:
+# 		print("DEBUG: No player found!")

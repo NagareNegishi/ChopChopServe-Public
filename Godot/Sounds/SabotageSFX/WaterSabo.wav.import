@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://wys1j1vpa24m"
-path="res://.godot/imported/WaterSabo.wav-8b23e82448538dba8688347084992ada.sample"
+path="res://.godot/imported/WaterSabo.wav-3aa43f053140956c3da57c83ae862529.sample"
 
 [deps]
 
-source_file="res://Sounds/WaterSabo.wav"
-dest_files=["res://.godot/imported/WaterSabo.wav-8b23e82448538dba8688347084992ada.sample"]
+source_file="res://Sounds/SabotageSFX/WaterSabo.wav"
+dest_files=["res://.godot/imported/WaterSabo.wav-3aa43f053140956c3da57c83ae862529.sample"]
 
 [params]
 

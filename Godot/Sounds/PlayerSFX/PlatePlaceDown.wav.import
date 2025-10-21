@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://dcuh4vr6oat87"
-path="res://.godot/imported/PlatePlaceDown.wav-da7db6b0fe06de2db9b394cf65a28ae1.sample"
+path="res://.godot/imported/PlatePlaceDown.wav-0642da0441300db78457804ab052147e.sample"
 
 [deps]
 
-source_file="res://Sounds/PlatePlaceDown.wav"
-dest_files=["res://.godot/imported/PlatePlaceDown.wav-da7db6b0fe06de2db9b394cf65a28ae1.sample"]
+source_file="res://Sounds/PlayerSFX/PlatePlaceDown.wav"
+dest_files=["res://.godot/imported/PlatePlaceDown.wav-0642da0441300db78457804ab052147e.sample"]
 
 [params]
 

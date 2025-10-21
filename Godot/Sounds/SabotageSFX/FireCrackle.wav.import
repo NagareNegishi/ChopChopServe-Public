@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://jqmvo8m1yetg"
-path="res://.godot/imported/FireCrackle.wav-6379accf048f3aae4d04c02e3819e6ac.sample"
+path="res://.godot/imported/FireCrackle.wav-884d3eb0783e9d6f0ecbd5642ffc6e8c.sample"
 
 [deps]
 
-source_file="res://Sounds/FireCrackle.wav"
-dest_files=["res://.godot/imported/FireCrackle.wav-6379accf048f3aae4d04c02e3819e6ac.sample"]
+source_file="res://Sounds/SabotageSFX/FireCrackle.wav"
+dest_files=["res://.godot/imported/FireCrackle.wav-884d3eb0783e9d6f0ecbd5642ffc6e8c.sample"]
 
 [params]
 

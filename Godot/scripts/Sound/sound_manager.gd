@@ -1,7 +1,10 @@
 # sound_manager.gd
 extends Node
 
-# Enum for sound identification
+# Note: field orders are not following style guide for improved maintainability
+# Enum for sound identification and Map enum to file paths
+
+# Background Music (BGM)
 enum BGM {
 	MENU,
 	BUS,
@@ -9,19 +12,56 @@ enum BGM {
 	# Add more as needed
 }
 
+var bgm_paths := {
+	BGM.MENU: "res://Sounds/BGM/Beach/8bit Bossa.mp3",
+}
+
+# Sound Effects (SFX)
 enum SFX {
 	RAT,
 	# Add more as needed
 }
 
-# Map enum to file paths
-var bgm_paths := {
-	BGM.MENU: "res://Sounds/BGM/Beach/8bit Bossa.mp3",
-}
-
 var sfx_paths := {
 	SFX.RAT: "res://Sounds/AwRats.wav"
 }
+
+# Player-specific SFX
+enum SFX_PLAYER { JUMP}
+
+var sfx_player_paths := {
+	SFX_PLAYER.JUMP: "res://Sounds/SabotageSFX/AwRats.wav"
+}
+
+# Cooking-specific SFX
+enum SFX_COOKING {
+	BLEND,
+	BOIL,
+	CHOP1,
+	CHOP2,
+	CHOP3,
+	DEEP_FRY,
+	PAN_FRY,
+	WASH,
+	BIN,
+	CRATE,
+	PLATE
+	}
+
+var sfx_cooking_paths := {
+	SFX_COOKING.BLEND: "res://Sounds/CookingSFX/Blender.wav",
+	SFX_COOKING.BOIL: "res://Sounds/CookingSFX/WaterBoil.ogg",
+	SFX_COOKING.CHOP1: "res://Sounds/CookingSFX/Chopping Knife.mp3",
+	SFX_COOKING.CHOP2: "res://Sounds/CookingSFX/GoodKnifeChop.wav",
+	SFX_COOKING.CHOP3: "res://Sounds/CookingSFX/KnifeChop.wav",
+	SFX_COOKING.DEEP_FRY: "res://Sounds/CookingSFX/DeepFryer.wav",
+	SFX_COOKING.PAN_FRY: "res://Sounds/CookingSFX/Frying Pan.wav",
+	SFX_COOKING.WASH: "res://Sounds/CookingSFX/Dish Wash Scrub.wav",
+	SFX_COOKING.BIN: "res://Sounds/CookingSFX/ThrowingOutTrash.wav",
+	SFX_COOKING.CRATE: "res://Sounds/CookingSFX/SwitchingCrates.wav",
+	SFX_COOKING.PLATE: "res://Sounds/CookingSFX/Plate Pick Up Good.wav"
+}
+
 
 # Audio players
 var bgm_player: AudioStreamPlayer
@@ -38,6 +78,7 @@ var fade_volume: float = -80.0
 ## initialization
 func _ready() -> void:
 	_setup_audio_players()
+	_validate_audio_files()
 
 
 ## Setup audio players for BGM and SFX
@@ -52,6 +93,29 @@ func _setup_audio_players() -> void:
 		player.bus = "SFX"
 		add_child(player)
 		sfx_players.append(player)
+
+
+## Validate that all audio files can be loaded
+func _validate_audio_files() -> void:
+	Debug.sound_log("=== Validating Audio Files ===")
+	_validate_audio_category("BGM", bgm_paths)
+	_validate_audio_category("SFX", sfx_paths)
+	_validate_audio_category("Player SFX", sfx_player_paths)
+	# _validate_audio_category("Cooking SFX", sfx_cooking_paths)
+
+
+## Validate audio files in a category
+## @param category_name: Name of the category
+## @param paths_dict: Dictionary mapping IDs to file paths
+func _validate_audio_category(category_name: String, paths_dict: Dictionary) -> void:
+	Debug.sound_log("Checking %s files..." % category_name)
+	for sound_id in paths_dict:
+		var path = paths_dict[sound_id]
+		var stream = load(path)
+		if stream:
+			Debug.sound_log("SUCCESS: %s" % path)
+		else:
+			Debug.sound_log("FAILED: %s" % path)
 
 
 ## Play background music with optional fade
@@ -92,9 +156,21 @@ func stop_bgm(fade_duration: float = 0.0) -> void:
 
 
 ## Play sound effect
+## @param sfx_id: SFX_PLAYER enum value
+func play_sfx_player(sfx_id: SFX_PLAYER) -> void:
+	_play_sfx(sfx_id, sfx_player_paths)
+
+
+## Play cooking sound effect
+## @param sfx_id: SFX_COOKING enum value
+func play_sfx_cooking(sfx_id: SFX_COOKING) -> void:
+	_play_sfx(sfx_id, sfx_cooking_paths)
+
+
+## Play sound effect
 ## @param sfx_id: SFX enum value
-func play_sfx(sfx_id: SFX) -> void:
-	if not sfx_paths.has(sfx_id):
+func _play_sfx(sfx_id: int, paths: Dictionary) -> void:
+	if not paths.has(sfx_id):
 		Debug.sound_log("SFX ID %d not found in sfx_paths" % sfx_id)
 		return
 	# Find available player
@@ -107,13 +183,13 @@ func play_sfx(sfx_id: SFX) -> void:
 	if player == null:
 		player = sfx_players[0]
 	# Load and play SFX
-	var stream = load(sfx_paths[sfx_id])
+	var stream = load(paths[sfx_id])
 	if stream:
 		player.stream = stream
 		player.volume_db = sfx_volume
 		player.play()
 	else:
-		Debug.sound_log("Failed to load SFX: %s" % sfx_paths[sfx_id])
+		Debug.sound_log("Failed to load SFX: %s" % paths[sfx_id])
 
 
 ## Fade in BGM over duration

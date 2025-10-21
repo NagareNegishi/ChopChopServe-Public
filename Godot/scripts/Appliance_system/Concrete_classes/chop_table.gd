@@ -90,9 +90,21 @@ func player_has(item: Node) -> void:
 func _on_interactable_component_action_use(_is_action: bool) -> void:
 	if _is_action:
 		chopping_board.cook(1)
-		Debug.all("Player ID: " + str(ENetManager.get_my_id()) + ", chop!!")
+		_play_random_chop_sfx()
+		Debug.cook_log("Player ID: " + str(ENetManager.get_my_id()) + ", chop!!")
 	else:
 		chopping_board.finish_cook()
+
+
+## Play random chopping sound effect
+func _play_random_chop_sfx() -> void:
+	var random_chop = randi_range(1, 3)
+	if random_chop == 1:
+		SoundManager.play_sfx_cooking(SoundManager.SFX_COOKING.CHOP1)
+	elif random_chop == 2:
+		SoundManager.play_sfx_cooking(SoundManager.SFX_COOKING.CHOP2)
+	else:
+		SoundManager.play_sfx_cooking(SoundManager.SFX_COOKING.CHOP3)
 
 
 ## Check if ChopTable can transfer contents to given cookware

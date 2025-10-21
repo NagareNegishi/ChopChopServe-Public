@@ -71,6 +71,7 @@ func start_wash() -> void:
 		return
 	action_timer.start()
 	_toggle_bubble(true)
+	SoundManager.play_sfx_cooking(SoundManager.SFX_COOKING.WASH)
 
 
 ## Stop the washing process

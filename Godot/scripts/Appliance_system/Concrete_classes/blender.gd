@@ -56,6 +56,7 @@ func _put_food(food: Food) -> void:
 	if current_status == Status.COOKING:
 		_average_food()
 		food.start_cooking(power, cooking_style)
+		SoundManager.play_sfx_cooking(SoundManager.SFX_COOKING.BLEND)
 
 
 ## Average cooking time of food in cookware
@@ -119,6 +120,7 @@ func _cook() -> bool:
 	for food in contents:
 		if food is Food:
 			food.startCooking(power, cooking_style)
+			SoundManager.play_sfx_cooking(SoundManager.SFX_COOKING.BLEND)
 	return true
 
 

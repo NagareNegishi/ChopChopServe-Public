@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://byrweeyypf7tv"
-path="res://.godot/imported/KnifeChop.wav-0a82f478d80d557d3d56c98ec36f2d3a.sample"
+path="res://.godot/imported/KnifeChop.wav-38d887d599b71eabfc862e4446d4d151.sample"
 
 [deps]
 
-source_file="res://Sounds/KnifeChop.wav"
-dest_files=["res://.godot/imported/KnifeChop.wav-0a82f478d80d557d3d56c98ec36f2d3a.sample"]
+source_file="res://Sounds/CookingSFX/KnifeChop.wav"
+dest_files=["res://.godot/imported/KnifeChop.wav-38d887d599b71eabfc862e4446d4d151.sample"]
 
 [params]
 

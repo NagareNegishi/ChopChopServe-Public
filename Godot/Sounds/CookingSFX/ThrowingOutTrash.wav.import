@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://b2twb5r4ksiev"
-path="res://.godot/imported/ThrowingOutTrash.wav-935de3eb4fdca419b73e299e6c5fe4be.sample"
+path="res://.godot/imported/ThrowingOutTrash.wav-4cbdf8354be0f69080be03a3e30dc148.sample"
 
 [deps]
 
-source_file="res://Sounds/ThrowingOutTrash.wav"
-dest_files=["res://.godot/imported/ThrowingOutTrash.wav-935de3eb4fdca419b73e299e6c5fe4be.sample"]
+source_file="res://Sounds/CookingSFX/ThrowingOutTrash.wav"
+dest_files=["res://.godot/imported/ThrowingOutTrash.wav-4cbdf8354be0f69080be03a3e30dc148.sample"]
 
 [params]
 

@@ -8,6 +8,7 @@ func _init():
 	capacity = 4
 	center_offset = Vector3(0, 0, size.z * 0.15)
 	food_scale = Vector3(0.5, 0.5, 0.5)
+	sound = SoundManager.SFX_COOKING.PAN_FRY
 
 ## Setup the fryer properties
 func _ready():

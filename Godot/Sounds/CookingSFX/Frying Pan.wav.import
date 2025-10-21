@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://6dg062ysacfh"
-path="res://.godot/imported/Frying Pan.wav-c64c93eeeeddac01aa36a9a79a4b0d6b.sample"
+path="res://.godot/imported/Frying Pan.wav-2ab9c5a60d80889d1dad5c0d9886a832.sample"
 
 [deps]
 
-source_file="res://Sounds/Frying Pan.wav"
-dest_files=["res://.godot/imported/Frying Pan.wav-c64c93eeeeddac01aa36a9a79a4b0d6b.sample"]
+source_file="res://Sounds/CookingSFX/Frying Pan.wav"
+dest_files=["res://.godot/imported/Frying Pan.wav-2ab9c5a60d80889d1dad5c0d9886a832.sample"]
 
 [params]
 

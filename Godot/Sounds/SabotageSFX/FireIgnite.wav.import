@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://ou8nt2v2tktm"
-path="res://.godot/imported/FireIgnite.wav-2f714385fb465e41cac00c8e565b9c4a.sample"
+path="res://.godot/imported/FireIgnite.wav-a00aae93b0886dbccc0d9f87d49f349e.sample"
 
 [deps]
 
-source_file="res://Sounds/FireIgnite.wav"
-dest_files=["res://.godot/imported/FireIgnite.wav-2f714385fb465e41cac00c8e565b9c4a.sample"]
+source_file="res://Sounds/SabotageSFX/FireIgnite.wav"
+dest_files=["res://.godot/imported/FireIgnite.wav-a00aae93b0886dbccc0d9f87d49f349e.sample"]
 
 [params]
 

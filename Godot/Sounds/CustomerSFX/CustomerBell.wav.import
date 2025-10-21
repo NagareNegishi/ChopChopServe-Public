@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://dm860w21a2npa"
-path="res://.godot/imported/CustomerBell.wav-ee5eefc94ad7891b8aa714022f3741aa.sample"
+path="res://.godot/imported/CustomerBell.wav-f012f181272cea6dbab16deef0c74270.sample"
 
 [deps]
 
-source_file="res://Sounds/CustomerBell.wav"
-dest_files=["res://.godot/imported/CustomerBell.wav-ee5eefc94ad7891b8aa714022f3741aa.sample"]
+source_file="res://Sounds/CustomerSFX/CustomerBell.wav"
+dest_files=["res://.godot/imported/CustomerBell.wav-f012f181272cea6dbab16deef0c74270.sample"]
 
 [params]
 

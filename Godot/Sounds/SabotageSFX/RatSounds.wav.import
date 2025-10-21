@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://21o4jvewoakk"
-path="res://.godot/imported/RatSounds.wav-f7fb550b11911952d568ea83f19c27a8.sample"
+path="res://.godot/imported/RatSounds.wav-3ebb705a314ca00d24c1f8452536659e.sample"
 
 [deps]
 
-source_file="res://Sounds/RatSounds.wav"
-dest_files=["res://.godot/imported/RatSounds.wav-f7fb550b11911952d568ea83f19c27a8.sample"]
+source_file="res://Sounds/SabotageSFX/RatSounds.wav"
+dest_files=["res://.godot/imported/RatSounds.wav-3ebb705a314ca00d24c1f8452536659e.sample"]
 
 [params]
 

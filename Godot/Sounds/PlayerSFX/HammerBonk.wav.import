@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://bcwvkbmbqamhi"
-path="res://.godot/imported/HammerBonk.wav-ee843d249448593e8688b62447fb84a3.sample"
+path="res://.godot/imported/HammerBonk.wav-2aae4d05c5d9698319ea58a6e1f5517e.sample"
 
 [deps]
 
-source_file="res://Sounds/HammerBonk.wav"
-dest_files=["res://.godot/imported/HammerBonk.wav-ee843d249448593e8688b62447fb84a3.sample"]
+source_file="res://Sounds/PlayerSFX/HammerBonk.wav"
+dest_files=["res://.godot/imported/HammerBonk.wav-2aae4d05c5d9698319ea58a6e1f5517e.sample"]
 
 [params]
 

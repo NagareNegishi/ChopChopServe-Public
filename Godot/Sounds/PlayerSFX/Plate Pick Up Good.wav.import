@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://c1hjocu0e7tq7"
-path="res://.godot/imported/Plate Pick Up Good.wav-d648a7caa142550b67b26ebe00fed070.sample"
+path="res://.godot/imported/Plate Pick Up Good.wav-8936722115054198828484401585c0ab.sample"
 
 [deps]
 
-source_file="res://Sounds/Plate Pick Up Good.wav"
-dest_files=["res://.godot/imported/Plate Pick Up Good.wav-d648a7caa142550b67b26ebe00fed070.sample"]
+source_file="res://Sounds/PlayerSFX/Plate Pick Up Good.wav"
+dest_files=["res://.godot/imported/Plate Pick Up Good.wav-8936722115054198828484401585c0ab.sample"]
 
 [params]
 

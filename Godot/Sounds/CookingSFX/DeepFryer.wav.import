@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://c0femoj46vk43"
-path="res://.godot/imported/DeepFryer.wav-369d07b16ad72e0c1c1a11ca51a28710.sample"
+path="res://.godot/imported/DeepFryer.wav-1897b4aaa71c0fba6aa801f32e48502a.sample"
 
 [deps]
 
-source_file="res://Sounds/DeepFryer.wav"
-dest_files=["res://.godot/imported/DeepFryer.wav-369d07b16ad72e0c1c1a11ca51a28710.sample"]
+source_file="res://Sounds/CookingSFX/DeepFryer.wav"
+dest_files=["res://.godot/imported/DeepFryer.wav-1897b4aaa71c0fba6aa801f32e48502a.sample"]
 
 [params]
 

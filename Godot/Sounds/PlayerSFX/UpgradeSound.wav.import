@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://5xvvust5r2e2"
-path="res://.godot/imported/UpgradeSound.wav-02c8d04c8710b5686beacbd68a38438c.sample"
+path="res://.godot/imported/UpgradeSound.wav-5e0ec745d39b50a9e50e828092ad74ec.sample"
 
 [deps]
 
-source_file="res://Sounds/UpgradeSound.wav"
-dest_files=["res://.godot/imported/UpgradeSound.wav-02c8d04c8710b5686beacbd68a38438c.sample"]
+source_file="res://Sounds/PlayerSFX/UpgradeSound.wav"
+dest_files=["res://.godot/imported/UpgradeSound.wav-5e0ec745d39b50a9e50e828092ad74ec.sample"]
 
 [params]
 

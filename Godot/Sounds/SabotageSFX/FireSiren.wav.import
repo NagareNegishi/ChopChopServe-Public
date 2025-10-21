@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://bli0rwysel6qw"
-path="res://.godot/imported/FireSiren.wav-67caf2191c6451dd0c534c18679fb2df.sample"
+path="res://.godot/imported/FireSiren.wav-53f244cffb3caf6004948ff9d6e1bd8d.sample"
 
 [deps]
 
-source_file="res://Sounds/FireSiren.wav"
-dest_files=["res://.godot/imported/FireSiren.wav-67caf2191c6451dd0c534c18679fb2df.sample"]
+source_file="res://Sounds/SabotageSFX/FireSiren.wav"
+dest_files=["res://.godot/imported/FireSiren.wav-53f244cffb3caf6004948ff9d6e1bd8d.sample"]
 
 [params]
 

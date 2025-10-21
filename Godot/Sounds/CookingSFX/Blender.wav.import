@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://f5xxwr3w2702"
-path="res://.godot/imported/Blender.wav-d250674d5ba73ee93fd6cf3365e2573d.sample"
+path="res://.godot/imported/Blender.wav-2572d0177def00adb574076db9065812.sample"
 
 [deps]
 
-source_file="res://Sounds/Blender.wav"
-dest_files=["res://.godot/imported/Blender.wav-d250674d5ba73ee93fd6cf3365e2573d.sample"]
+source_file="res://Sounds/CookingSFX/Blender.wav"
+dest_files=["res://.godot/imported/Blender.wav-2572d0177def00adb574076db9065812.sample"]
 
 [params]
 

@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://degaips8g0obv"
-path="res://.godot/imported/Slip.wav-af556e51662dbe004d7a5bb6be0c4efe.sample"
+path="res://.godot/imported/Slip.wav-cd55de08fdb259638274ecdfe00ea5ae.sample"
 
 [deps]
 
-source_file="res://Sounds/Slip.wav"
-dest_files=["res://.godot/imported/Slip.wav-af556e51662dbe004d7a5bb6be0c4efe.sample"]
+source_file="res://Sounds/SabotageSFX/Slip.wav"
+dest_files=["res://.godot/imported/Slip.wav-cd55de08fdb259638274ecdfe00ea5ae.sample"]
 
 [params]
 

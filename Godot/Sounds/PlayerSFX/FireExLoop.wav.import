@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://d1i60cs1g2kif"
-path="res://.godot/imported/FireExLoop.wav-cf918238cb83012b273584816a0431a7.sample"
+path="res://.godot/imported/FireExLoop.wav-1aefb887ca525abad00dbfe31ac81564.sample"
 
 [deps]
 
-source_file="res://Sounds/FireExLoop.wav"
-dest_files=["res://.godot/imported/FireExLoop.wav-cf918238cb83012b273584816a0431a7.sample"]
+source_file="res://Sounds/PlayerSFX/FireExLoop.wav"
+dest_files=["res://.godot/imported/FireExLoop.wav-1aefb887ca525abad00dbfe31ac81564.sample"]
 
 [params]
 

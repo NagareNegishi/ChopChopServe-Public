@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://ci6kble1p4vmg"
-path="res://.godot/imported/CustomerHappy.mp3-001e05854128d92ff0550375c4c4b4a0.mp3str"
+path="res://.godot/imported/CustomerHappy.mp3-1b60bc7d5f2ed1da57af231fb3ef0928.mp3str"
 
 [deps]
 
-source_file="res://Sounds/CustomerHappy.mp3"
-dest_files=["res://.godot/imported/CustomerHappy.mp3-001e05854128d92ff0550375c4c4b4a0.mp3str"]
+source_file="res://Sounds/CustomerSFX/CustomerHappy.mp3"
+dest_files=["res://.godot/imported/CustomerHappy.mp3-1b60bc7d5f2ed1da57af231fb3ef0928.mp3str"]
 
 [params]
 

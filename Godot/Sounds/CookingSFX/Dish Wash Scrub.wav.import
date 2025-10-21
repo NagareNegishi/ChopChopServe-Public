@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://53jw0b0lh70c"
-path="res://.godot/imported/Dish Wash Scrub.wav-ce646b49b4eec5479596c2d67d6e04f4.sample"
+path="res://.godot/imported/Dish Wash Scrub.wav-741b3a75c31d7123c7605dfe2c7bd36e.sample"
 
 [deps]
 
-source_file="res://Sounds/Dish Wash Scrub.wav"
-dest_files=["res://.godot/imported/Dish Wash Scrub.wav-ce646b49b4eec5479596c2d67d6e04f4.sample"]
+source_file="res://Sounds/CookingSFX/Dish Wash Scrub.wav"
+dest_files=["res://.godot/imported/Dish Wash Scrub.wav-741b3a75c31d7123c7605dfe2c7bd36e.sample"]
 
 [params]
 

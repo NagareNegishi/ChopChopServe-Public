@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://dvpnlfn5ujdnd"
-path="res://.godot/imported/CustomerAngry.wav-1ce48fa996284c9c1ae98235660437fb.sample"
+path="res://.godot/imported/CustomerAngry.wav-44d8e4337b9e1720395feaf524f4b08e.sample"
 
 [deps]
 
-source_file="res://Sounds/CustomerAngry.wav"
-dest_files=["res://.godot/imported/CustomerAngry.wav-1ce48fa996284c9c1ae98235660437fb.sample"]
+source_file="res://Sounds/CustomerSFX/CustomerAngry.wav"
+dest_files=["res://.godot/imported/CustomerAngry.wav-44d8e4337b9e1720395feaf524f4b08e.sample"]
 
 [params]
 

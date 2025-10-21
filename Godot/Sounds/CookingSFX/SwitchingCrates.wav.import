@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://d4ntxpj44mtdo"
-path="res://.godot/imported/SwitchingCrates.wav-864b4419477dd8ac4764d8c0781a54a0.sample"
+path="res://.godot/imported/SwitchingCrates.wav-827d20011c24ca7ff799ada2b08b58cc.sample"
 
 [deps]
 
-source_file="res://Sounds/SwitchingCrates.wav"
-dest_files=["res://.godot/imported/SwitchingCrates.wav-864b4419477dd8ac4764d8c0781a54a0.sample"]
+source_file="res://Sounds/CookingSFX/SwitchingCrates.wav"
+dest_files=["res://.godot/imported/SwitchingCrates.wav-827d20011c24ca7ff799ada2b08b58cc.sample"]
 
 [params]
 

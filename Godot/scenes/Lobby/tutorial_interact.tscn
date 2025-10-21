@@ -2,8 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cy1s0o2ip2hob" path="res://scenes/Interaction/InteractableComponent.tscn" id="1_2dh28"]
 [ext_resource type="Script" uid="uid://m2t7rpee35la" path="res://scenes/Lobby/tutorial_interact.gd" id="1_vbp5f"]
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_75o2b"]
+[ext_resource type="PackedScene" uid="uid://b48cpuqmhegj" path="res://assets/newmodels/question.glb" id="2_a5psc"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2dh28"]
 
@@ -12,8 +11,8 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 script = ExtResource("1_vbp5f")
 interact_comp = NodePath("InteractableComponent")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("CylinderMesh_75o2b")
+[node name="question" parent="." instance=ExtResource("2_a5psc")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -0.845174, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_2dh28")

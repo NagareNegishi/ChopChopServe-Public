@@ -14,13 +14,15 @@ const num : float = 0.01
 func _ready() -> void:
 	body_entered.connect(_on_body_enter)
 	body_exited.connect(_on_body_exit)
-	ENetManager.player_list_updated.connect(list_update)
+	multiplayer.peer_connected.connect(_list_update)
 	
 	timer.wait_time = 0.01
 	timer.timeout.connect(_on_timeout)
 	add_child(timer)
 	
-	label.text = "%d/%d" % [players.size(), ENetManager.get_player_list().size()]
+	await get_tree().create_timer(0.2).timeout
+	
+	label.text = "%d/%d" % [peeps_in_area(), ENetManager.get_player_list().size()]
 	progress.value = 0
 	progress.max_value = load_time
 
@@ -73,5 +75,16 @@ func _on_timeout():
 	SceneManager.change_scene_all_players(SceneManager.Scene.LOBBY)
 	
 
-func list_update():
+func _list_update(id : int):
 	label.text = "%d/%d" % [players.size(), ENetManager.get_player_list().size()]
+	increase = peeps_in_area() == ENetManager.get_player_list().size()
+	if !increase: return
+	progress.value = 0
+	curr_time = 0
+
+
+func peeps_in_area():
+	var amount : int = 0
+	for b in self.get_overlapping_bodies():
+		amount = amount + 1 if b is Player else 0
+	return amount

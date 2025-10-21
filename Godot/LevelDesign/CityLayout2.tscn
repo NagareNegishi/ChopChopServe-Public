@@ -42,7 +42,7 @@
 [ext_resource type="PackedScene" uid="uid://cuhevmvqjjwji" path="res://assets/newmodels/decorations/Stool.glb" id="30_p0tnk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5ixo3"]
-size = Vector3(19.6471, 6.69421, 1.16809)
+size = Vector3(22, 6.69421, 1.16809)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ad3b7"]
 sky_top_color = Color(0.540081, 0.0948352, 0.486115, 1)
@@ -158,7 +158,7 @@ collision_layer = 2
 collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Invis Walls/StaticBody3D2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.8767, 2.84711, -0.638739)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.7003, 2.84711, -0.638739)
 shape = SubResource("BoxShape3D_5ixo3")
 
 [node name="StaticBody3D3" type="StaticBody3D" parent="Invis Walls"]

@@ -628,7 +628,7 @@ unique_name = "Stov2"
 current_owner = 2
 
 [node name="Cabinet2" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("35_h6owp")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.5, 1, -4)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 12.4327, 1, -4.69676)
 using_tscn = true
 unique_name = "Plate2"
 current_owner = 2

@@ -2,8 +2,6 @@ class_name AbstractThrowable extends RigidBody3D
 
 @onready var interact : InteractableComponent = $InteractableComponent
 
-
-
 func _init() -> void:
 	
 	_store_original_transform()

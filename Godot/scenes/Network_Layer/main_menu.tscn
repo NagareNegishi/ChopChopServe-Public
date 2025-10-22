@@ -49,9 +49,9 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -353.0
-offset_top = -97.0
+offset_top = -95.0
 offset_right = 101.0
-offset_bottom = 100.0
+offset_bottom = 102.0
 grow_horizontal = 0
 grow_vertical = 0
 rotation = -0.0349066
@@ -71,8 +71,9 @@ theme_override_constants/separation = 25
 [node name="Label" type="Label" parent="Menu/Note/VBox/Name"]
 layout_mode = 2
 theme = ExtResource("3_0ltv3")
-theme_override_colors/font_outline_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
-theme_override_constants/outline_size = 2
+theme_override_colors/font_color = Color(0.94902, 0.952941, 0.960784, 1)
+theme_override_colors/font_outline_color = Color(0.705882, 0.717647, 0.72549, 1)
+theme_override_constants/outline_size = 20
 theme_override_font_sizes/font_size = 26
 text = "NAME"
 
@@ -95,8 +96,9 @@ theme_override_constants/separation = 70
 [node name="Label" type="Label" parent="Menu/Note/VBox/IP"]
 layout_mode = 2
 theme = ExtResource("3_0ltv3")
-theme_override_colors/font_outline_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
-theme_override_constants/outline_size = 2
+theme_override_colors/font_color = Color(0.988235, 0.992157, 0.996078, 1)
+theme_override_colors/font_outline_color = Color(0.705882, 0.717647, 0.72549, 1)
+theme_override_constants/outline_size = 20
 theme_override_font_sizes/font_size = 26
 text = "IP"
 
@@ -121,35 +123,50 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 110.0
-offset_top = -297.0
-offset_right = 402.0
-offset_bottom = -4.0
+offset_left = 148.0
+offset_top = -271.0
+offset_right = 343.0
+offset_bottom = -126.0
 grow_vertical = 0
-theme_override_constants/separation = 13
+theme_override_constants/separation = 20
 
 [node name="HostButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
 layout_mode = 2
-theme_override_colors/font_hover_color = Color(0.92549, 0.929412, 0.933333, 1)
-theme_override_colors/font_outline_color = Color(0.140407, 0.146385, 0.150359, 1)
-theme_override_constants/outline_size = 10
+theme_override_colors/font_hover_pressed_color = Color(0.890196, 0.894118, 0.901961, 1)
+theme_override_colors/font_hover_color = Color(0.891, 0.8955, 0.9, 1)
+theme_override_colors/font_outline_color = Color(0.705882, 0.717647, 0.72549, 1)
+theme_override_colors/font_color = Color(0.988235, 0.992157, 0.996078, 1)
+theme_override_constants/outline_size = 20
 theme_override_font_sizes/font_size = 35
 text = "HOST GAME"
 
 [node name="JoinButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
 layout_mode = 2
-theme_override_colors/font_hover_color = Color(0.92549, 0.929412, 0.933333, 1)
-theme_override_colors/font_outline_color = Color(0.140407, 0.146385, 0.150359, 1)
-theme_override_constants/outline_size = 10
+theme_override_colors/font_hover_pressed_color = Color(0.890196, 0.894118, 0.901961, 1)
+theme_override_colors/font_hover_color = Color(0.891, 0.8955, 0.9, 1)
+theme_override_colors/font_outline_color = Color(0.705882, 0.717647, 0.72549, 1)
+theme_override_colors/font_color = Color(0.988235, 0.992157, 0.996078, 1)
+theme_override_constants/outline_size = 20
 theme_override_font_sizes/font_size = 35
-text = "JOIN GAME
-"
+text = "JOIN GAME"
+
+[node name="ExitButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
+layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(0.85098, 0.321569, 0.270588, 1)
+theme_override_colors/font_hover_color = Color(0.85, 0.320167, 0.272, 1)
+theme_override_colors/font_outline_color = Color(0.968627, 0.607843, 0.54902, 1)
+theme_override_colors/font_color = Color(0.945098, 0.356863, 0.298039, 1)
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 35
+text = "EXIT GAME"
 
 [node name="HSeparator" type="HSeparator" parent="Menu/ButtonsContainer"]
+visible = false
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
 [node name="TutorialButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "TUTORIAL"
@@ -160,18 +177,10 @@ theme_override_font_sizes/font_size = 35
 text = "SEARCH HOST"
 
 [node name="TestButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "CONNECTION HELP"
-
-[node name="ExitButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
-layout_mode = 2
-theme_override_colors/font_hover_color = Color(0.968627, 0.607843, 0.54902, 1)
-theme_override_colors/font_outline_color = Color(0.694118, 0.262745, 0.211765, 1)
-theme_override_colors/font_color = Color(0.945098, 0.356863, 0.298039, 1)
-theme_override_constants/outline_size = 10
-theme_override_font_sizes/font_size = 35
-text = "EXIT GAME"
 
 [node name="Error" type="Label" parent="Menu"]
 visible = false

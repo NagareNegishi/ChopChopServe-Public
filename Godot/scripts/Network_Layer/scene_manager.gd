@@ -38,7 +38,7 @@ const SCENE_PATHS = {
 	#--------------
 	Scene.TUTORIAL: "res://LevelDesign/Tutorial.tscn",
 	#--------------
-	Scene.HUB: "res://JohnoTestLevelLobby.tscn",
+	Scene.HUB: "res://LevelDesign/FreePlay.tscn",
 	# Testing Scenes below
 	Scene.LOBBY_TEST: "res://scenes/Network_Layer/lobby_network.tscn",
 	Scene.TEST: "res://scenes/Appliance_system/Appliance_test.tscn",

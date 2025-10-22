@@ -1,9 +1,9 @@
 class_name CustomButton
 extends Button
 
-@export var normal_size := Vector2(0.6,0.6)
-@export var hover_size := Vector2(0.7,0.7)
-#@onready var label : Label = $Label
+@export var normal_size := Vector2(1,1)
+@export var hover_size := Vector2(1.1, 1.1)
+
 
 var tween : Tween
 
@@ -11,32 +11,21 @@ var tween : Tween
 func _ready() -> void:
 	self.mouse_entered.connect(_hovered)
 	self.mouse_exited.connect(_unhovered)
-	
-	await get_tree().process_frame
-	
-	#self.scale = normal_size
-	#self.pivot_offset = self.size/2
-	#get_tree().root.size_changed.connect(_on_window_resized)
-	
-	
+	pivot_offset = size/2 + Vector2(0, -50)
+
 func _hovered() -> void:
-	#if tween: tween.kill()
-	#tween = create_tween()
-	#tween.tween_property(
-		#self, "scale", hover_size, 0.1
-	#)
+	if tween: tween.kill()
+	tween = create_tween()
+	tween.tween_property(
+		self, "scale", hover_size, 0.1
+	)
 	pass
 
 
 func _unhovered() -> void:
-	#if tween: tween.kill()
-	#tween = create_tween()
-	#tween.tween_property(
-		#self, "scale", normal_size, 0.1
-	#)
+	if tween: tween.kill()
+	tween = create_tween()
+	tween.tween_property(
+		self, "scale", normal_size, 0.1
+	)
 	pass
-
-
-func _on_window_resized():
-	self.scale = normal_size
-	self.pivot_offset = self.size/2

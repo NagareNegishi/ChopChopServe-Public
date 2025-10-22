@@ -10,6 +10,7 @@ viewport_path = NodePath("SubViewport")
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 billboard = 1
 no_depth_test = true
+render_priority = 10
 texture = SubResource("ViewportTexture_bsbmu")
 script = ExtResource("1_bsbmu")
 

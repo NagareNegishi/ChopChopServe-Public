@@ -8,10 +8,19 @@ signal action_use(is_action : bool)
 signal local_action_use(is_action : bool)
 signal toggle_collision(turn_on : bool)
 
+@onready var tween : Tween = get_tree().create_tween()
 @export var is_pickup : bool
 @export var has_action : bool = false
 
 var can_be_interacted : bool = true
+
+@onready var parent = get_parent()
+@onready var start_pos = 1
+@onready var end_pos = start_pos + 0.2
+
+func _ready() -> void:
+	tween.stop()
+	set_physics_process(false)
 
 
 ## Emits signal that this component has been interacted with
@@ -56,3 +65,34 @@ func hover(hovering : bool) -> void:
 ## @return void
 func turn_on_collision(turn_on: bool) -> void:
 	emit_signal("toggle_collision", turn_on)
+
+
+func custom_rotate(play : bool):
+	_server_rotate.rpc(play)
+
+
+@rpc("any_peer", "call_local")
+func _server_rotate(play : bool):
+	set_physics_process(play)
+	_bobble(play)
+	get_parent().collision_layer = 0 if play else 1
+
+
+func _bobble(play : bool):
+	if !play: 
+		tween.stop()
+		return
+	
+	tween.tween_property(get_parent(), "position", 
+		 Vector3(parent.position.x, end_pos, parent.position.z), 1.5) \
+		.set_trans(Tween.TRANS_SINE) \
+		.set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(get_parent(), "position",  
+		 Vector3(parent.position.x, start_pos, parent.position.z), 1.5) \
+		.set_trans(Tween.TRANS_SINE) \
+		.set_ease(Tween.EASE_IN_OUT)
+	tween.set_loops()
+
+
+func _physics_process(delta: float) -> void:
+	parent.rotation.y +=  1.5 * delta

@@ -1,5 +1,7 @@
 extends Node
 
+signal tutorial_step(num : int)
+
 enum UpgradeType{
 	POWER,
 	COEFF,
@@ -44,3 +46,6 @@ func get_local_player_by_id(player_id : int) -> Player:
 		if child.get_multiplayer_authority() == player_id:
 			return child
 	return null
+
+func get_all_players():
+	return get_tree().current_scene.get_node("== PLAYERS ==").get_children()

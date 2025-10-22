@@ -22,6 +22,10 @@ properties/3/spawn = true
 properties/3/replication_mode = 1
 
 [node name="AbstractPickup" type="RigidBody3D"]
+gravity_scale = 0.0
+sleeping = true
+lock_rotation = true
+freeze = true
 script = ExtResource("1_i3ohc")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

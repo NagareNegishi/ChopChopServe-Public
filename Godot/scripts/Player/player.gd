@@ -152,6 +152,7 @@ func _movement(delta : float) -> void:
 	if _direction:
 		velocity.x = move_toward(velocity.x, _direction.x * speed, ACCELERATION * delta)
 		velocity.z = move_toward(velocity.z, _direction.z * speed, ACCELERATION * delta)
+		GlobalScript.tutorial_step.emit(1)
 	else:
 		velocity.x = move_toward(velocity.x, 0, DECELERATION * speed)
 		velocity.z = move_toward(velocity.z, 0, DECELERATION * speed)

@@ -1,5 +1,7 @@
 extends Node
 
+signal tutorial_step(num : int)
+
 enum UpgradeType{
 	POWER,
 	COEFF,

@@ -1,12 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://bxf3hwer4sb7h"]
+[gd_scene load_steps=9 format=3 uid="uid://bxf3hwer4sb7h"]
 
 [ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/Style/DefaultTheme.tres" id="1_c3iu8"]
 [ext_resource type="Script" uid="uid://cwm4lveq148fc" path="res://UI/HUD/ui_lobby_hud.gd" id="1_js7ef"]
+[ext_resource type="Script" uid="uid://c8guh3nm5ht4s" path="res://scenes/Lobby/Steps/tutorial_step.gd" id="2_adflp"]
+[ext_resource type="Resource" uid="uid://85up6v0vdqrq" path="res://scenes/Lobby/Steps/Step1.tres" id="3_0rii0"]
 [ext_resource type="Texture2D" uid="uid://cun73plsv66ti" path="res://assets/textures/HUD/recipe.png" id="3_sd7gu"]
+[ext_resource type="Resource" uid="uid://d0yodttqoq6h0" path="res://scenes/Lobby/Steps/Step2.tres" id="4_0rii0"]
 [ext_resource type="Texture2D" uid="uid://54gpdx0w3aa8" path="res://assets/textures/Controls/keyboard_tab.png" id="4_7k7fu"]
 [ext_resource type="PackedScene" uid="uid://qi5b0x3dt5tn" path="res://UI/HUD/UI_Tutorial.tscn" id="5_7k7fu"]
 
-[node name="UiLobbyHud" type="Control" node_paths=PackedStringArray("code_label", "tutorial_widget")]
+[node name="UiLobbyHud" type="Control" node_paths=PackedStringArray("code_label", "tutorial_widget", "timer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,6 +19,8 @@ grow_vertical = 2
 script = ExtResource("1_js7ef")
 code_label = NodePath("IPLabel")
 tutorial_widget = NodePath("UiTutorial")
+tutorial_steps = Array[ExtResource("2_adflp")]([ExtResource("3_0rii0"), ExtResource("4_0rii0")])
+timer = NodePath("Timer")
 
 [node name="CodeText" type="Label" parent="."]
 layout_mode = 1
@@ -80,3 +85,7 @@ offset_left = 407.0
 offset_top = 524.0
 offset_right = -370.0
 offset_bottom = -6.0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true

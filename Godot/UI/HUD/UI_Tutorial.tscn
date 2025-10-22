@@ -5,27 +5,27 @@
 [ext_resource type="Texture2D" uid="uid://bhie5g0swioxj" path="res://assets/textures/misc/book (1).png" id="2_02tpg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u08yr"]
-bg_color = Color(0.247059, 0.180392, 0.105882, 0.588235)
+bg_color = Color(0.0470588, 0.0470588, 0.0470588, 0.588235)
 corner_radius_top_left = 25
 corner_radius_top_right = 25
 corner_radius_bottom_right = 25
 corner_radius_bottom_left = 25
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7nxqv"]
-bg_color = Color(0.27451, 0.27451, 0.27451, 0.627451)
+bg_color = Color(0.696886, 0.696886, 0.696886, 0.627451)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n12ne"]
-bg_color = Color(0.338983, 0.734933, 1, 1)
+bg_color = Color(3.36915e-07, 0.423111, 0.635764, 1)
 corner_radius_top_left = 7
 corner_radius_top_right = 7
 corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
 
-[node name="UiTutorial" type="Control" node_paths=PackedStringArray("label")]
+[node name="UiTutorial" type="Control" node_paths=PackedStringArray("label", "progress")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -34,6 +34,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_n12ne")
 label = NodePath("Label")
+progress = NodePath("ProgressBar")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -66,8 +67,8 @@ grow_vertical = 2
 theme = ExtResource("1_u08yr")
 theme_override_colors/font_shadow_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
 theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 3
-theme_override_font_sizes/font_size = 25
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 32
 text = "Use WASD to move"
 horizontal_alignment = 1
 vertical_alignment = 1

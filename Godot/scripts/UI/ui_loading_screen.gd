@@ -57,7 +57,7 @@ func remove() -> void:
 	floor_anim_player.play("ScaleIn", -1, -2, true)
 	fadeout_timer.start()
 	test_timer.stop()
-	await get_tree().create_timer(6).timeout
+	await get_tree().create_timer(5).timeout
 	load_anim_player.animation_finished.connect(_animation_finshed)
 	
 

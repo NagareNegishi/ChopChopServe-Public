@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://d1dfku8geu6pa" path="res://FridgeInven/inventory.gd" id="1_egceb"]
 
 [node name="Inventory" type="Control"]
+z_index = 4096
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5

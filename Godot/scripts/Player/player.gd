@@ -56,17 +56,6 @@ func _ready() -> void:
 	anim_tree["parameters/SM_IDLE/conditions/holding"] = false
 	anim_tree["parameters/SM_ACTION/conditions/chopping"] = false
 	
-	var colour : Color = GlobalScript.player_outline_colours.get(
-			ENetManager.get_player_list().find(name.to_int()))
-	var material : Material = StandardMaterial3D.new()
-	material.albedo_color = colour
-	name_tag.set_color(name.to_int())
-	
-	$Decal.modulate = colour
-	body_mesh.set_surface_override_material(1, material)
-	$Mesh/Armature/Skeleton3D/RightHand.set_surface_override_material(1, material)
-	$Mesh/Armature/Skeleton3D/LeftHand.set_surface_override_material(1, material)
-	
 	if !multiplayer.get_unique_id() == name.to_int():
 		check_interactables.stop()	
 	
@@ -74,9 +63,22 @@ func _ready() -> void:
 		var particle = move_particle.instantiate()
 		MOVE_PARTICLES_POOL.append(particle)
 	add_to_group("Players")
-	if !multiplayer.get_unique_id() == name.to_int() : return
 	
-	await get_tree().create_timer(0.1).timeout
+	await get_tree().create_timer(0.05).timeout
+	
+	var colour : Color = GlobalScript.player_outline_colours.get(
+			ENetManager.get_player_list().find(name.to_int()))
+	var material : Material = StandardMaterial3D.new()
+	material.albedo_color = colour
+	name_tag.set_color(name.to_int())
+
+	$Decal.modulate = colour
+	body_mesh.set_surface_override_material(1, material)
+	$Mesh/Armature/Skeleton3D/RightHand.set_surface_override_material(1, material)
+	$Mesh/Armature/Skeleton3D/LeftHand.set_surface_override_material(1, material)
+	if !multiplayer.get_unique_id() == name.to_int() : return
+	print(str(ENetManager.get_my_id()) + ": " + str(ENetManager.get_player_list()))
+	await get_tree().create_timer(0.05).timeout
 	
 	rpc_id(1, "_server_set_name", name.to_int(), GlobalScript.player_name)
 
@@ -150,6 +152,7 @@ func _movement(delta : float) -> void:
 	if _direction:
 		velocity.x = move_toward(velocity.x, _direction.x * speed, ACCELERATION * delta)
 		velocity.z = move_toward(velocity.z, _direction.z * speed, ACCELERATION * delta)
+		GlobalScript.tutorial_step.emit(1)
 	else:
 		velocity.x = move_toward(velocity.x, 0, DECELERATION * speed)
 		velocity.z = move_toward(velocity.z, 0, DECELERATION * speed)
@@ -373,6 +376,8 @@ func _client_pickup(player_path : String, item_path : String) -> bool:
 	
 	if player.item_in_hand:
 		player.drop_item(false)
+		
+	item.get_node("InteractableComponent").custom_rotate(false)
 	
 	item.global_position = Vector3(0,0,0)
 	item.global_rotation = Vector3(0,0,0)
@@ -412,7 +417,7 @@ func server_drop_item(player_path : String, is_throw : bool) -> bool:
 
 @rpc("any_peer", "call_local")
 func _client_drop_item(player_path : String, is_throw : bool) -> bool:
-	var player : Node3D = get_tree().current_scene.get_node(player_path)
+	var player : Player = get_tree().current_scene.get_node(player_path)
 	
 	if player.item_in_hand == null: return false
 	if player.item_in_hand && player.item_in_hand.is_in_group("Food"):
@@ -427,15 +432,10 @@ func _client_drop_item(player_path : String, is_throw : bool) -> bool:
 	get_tree().get_current_scene().add_child(player.item_in_hand)
 	player.call_deferred("_final_drop", player.item_in_hand)
 	
-
+	player.item_in_hand.get_node("InteractableComponent").custom_rotate(true)
 	player._action(false)
 
-	if player.item_in_hand.has_method("turnOnPhysics"):
-		player.item_in_hand.turnOnPhysics(true)
-
-	if is_throw && player.item_in_hand is AbstractThrowable:
-		player.item_in_hand.linear_velocity = $Mesh.global_transform.basis.z * THROW_STRENGTH
-		
+	
 	print("Item dropped ", player.item_in_hand)
 	player.anim_tree["parameters/SM_Walking/conditions/empty"] = true
 	player.anim_tree["parameters/SM_IDLE/conditions/empty"] = true
@@ -467,12 +467,8 @@ func drop_item(is_throw : bool) -> bool:
 
 	_action(false)
 
-	if item_in_hand.has_method("turnOnPhysics"):
-		item_in_hand.turnOnPhysics(true)
 
-	if is_throw && item_in_hand is AbstractThrowable:
-		item_in_hand.linear_velocity = $Mesh.global_transform.basis.z * THROW_STRENGTH
-		
+	item_in_hand.get_node("InteractableComponent").custom_rotate(true)
 	print("Item dropped ", item_in_hand)
 	emit_signal("item_dropped", item_in_hand)
 	item_in_hand = null
@@ -554,7 +550,8 @@ func remove_item() -> Node3D:
 	#return item_in_hand
 	if item_in_hand == null:
 		return null
-		
+	
+	item_in_hand.get_node("InteractableComponent").custom_rotate(false)
 	item_in_hand.get_parent().remove_child(item_in_hand)
 	await get_tree().process_frame
 	
@@ -579,7 +576,7 @@ func _final_pickup(item: Node3D) -> void:
 ## @return void
 func _final_drop(item: Node3D) -> void:
 	var scale = Transform3D().basis.get_scale()
-	item.scale = ($Mesh/ItemPoint.global_transform.basis.get_scale() / scale)
+	item.restore_original_transform()
 	item.global_position = $Mesh/ItemPoint.global_position + $Mesh.global_transform.basis.z * 2.5
 	item.global_rotation = $Mesh/ItemPoint.global_rotation
 
@@ -606,6 +603,7 @@ func _can_app_interact() -> bool:
 		inter is UpgradeHammer)
 
 var sabo_index : int
+
 func _sabotage_left():
 	sabo_index = sabo_index - 1 if sabo_index > 0 else 5
 	print(sabo_index)
@@ -616,3 +614,12 @@ func _sabotage_right():
 
 func _select_sabo():
 	_sabotage(sabo_index)
+
+@rpc("any_peer", "call_local")
+func set_name_color(id : int, t: int):
+	name_tag.set_color_manual(id, t)
+
+@rpc("any_peer", "call_local")
+func name_refresh():
+	if multiplayer.get_unique_id() != name.to_int(): return
+	rpc_id(1, "_server_set_name", name.to_int(), GlobalScript.player_name)

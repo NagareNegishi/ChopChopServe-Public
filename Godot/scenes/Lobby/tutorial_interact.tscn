@@ -1,21 +1,55 @@
-[gd_scene load_steps=5 format=3 uid="uid://vb2eq4ecxgbh"]
+[gd_scene load_steps=7 format=3 uid="uid://vb2eq4ecxgbh"]
 
 [ext_resource type="PackedScene" uid="uid://cy1s0o2ip2hob" path="res://scenes/Interaction/InteractableComponent.tscn" id="1_2dh28"]
 [ext_resource type="Script" uid="uid://m2t7rpee35la" path="res://scenes/Lobby/tutorial_interact.gd" id="1_vbp5f"]
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_75o2b"]
+[ext_resource type="PackedScene" uid="uid://b48cpuqmhegj" path="res://assets/newmodels/question.glb" id="2_a5psc"]
+[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/Style/DefaultTheme.tres" id="4_allx8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2dh28"]
 
-[node name="TutorialInteract" type="StaticBody3D" node_paths=PackedStringArray("interact_comp")]
+[sub_resource type="ViewportTexture" id="ViewportTexture_a5psc"]
+viewport_path = NodePath("Sprite3D/SubViewport")
+
+[node name="TutorialInteract" type="StaticBody3D" node_paths=PackedStringArray("interact_comp", "sprite", "label")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 script = ExtResource("1_vbp5f")
 interact_comp = NodePath("InteractableComponent")
+sprite = NodePath("Sprite3D")
+label = NodePath("Sprite3D/SubViewport/Label")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("CylinderMesh_75o2b")
+[node name="question" parent="." instance=ExtResource("2_a5psc")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 6.7, 0, -0.845174, -0.146609)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_2dh28")
 
 [node name="InteractableComponent" parent="." instance=ExtResource("1_2dh28")]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -0.690893, 0)
+billboard = 1
+no_depth_test = true
+texture = SubResource("ViewportTexture_a5psc")
+
+[node name="SubViewport" type="SubViewport" parent="Sprite3D"]
+transparent_bg = true
+size = Vector2i(287, 92)
+
+[node name="Label" type="Label" parent="Sprite3D/SubViewport"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = -15.0
+offset_right = 96.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_allx8")
+theme_override_colors/font_color = Color(0.976471, 0.976471, 0.976471, 1)
+theme_override_colors/font_outline_color = Color(0.545098, 0.560784, 0.568627, 1)
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 40
+text = "Start Tutorial"

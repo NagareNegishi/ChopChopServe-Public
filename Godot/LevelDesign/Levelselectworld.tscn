@@ -1,8 +1,9 @@
-[gd_scene load_steps=89 format=3 uid="uid://brax13qxb8tj2"]
+[gd_scene load_steps=87 format=3 uid="uid://brax13qxb8tj2"]
 
 [ext_resource type="PackedScene" uid="uid://bv68n23xtnfpl" path="res://scenes/Player/PlayerCar.tscn" id="1_2io33"]
 [ext_resource type="Material" uid="uid://dwgftkho746av" path="res://LevelDesign/SwampFog.tres" id="1_d2eau"]
 [ext_resource type="PackedScene" uid="uid://ctuxfj7asiapr" path="res://assets/CityPacks/gltf/building_A.gltf" id="1_xuksc"]
+[ext_resource type="PackedScene" uid="uid://bljy3g7s5r8g3" path="res://scenes/Collectible.tscn" id="2_7dd6r"]
 [ext_resource type="PackedScene" uid="uid://bqtbpncsp1lqe" path="res://UI/UI_CarHUD.tscn" id="2_lyps1"]
 [ext_resource type="PackedScene" uid="uid://cw3ro4l6ywo8x" path="res://assets/newmodels/Mountain.glb" id="4_gfmxp"]
 [ext_resource type="PackedScene" uid="uid://386cia5dig43" path="res://assets/NaturePack/Willow_4.fbx" id="5_2io33"]
@@ -67,19 +68,10 @@
 [ext_resource type="PackedScene" uid="uid://crx0marg1hk52" path="res://assets/Beachy/FenceBeachPlank.glb" id="66_uthtu"]
 [ext_resource type="Material" uid="uid://c5cgp40o6fxiq" path="res://shaders/Water/WaterSabotage.tres" id="68_334ny"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_lyps1"]
-viewport_path = NodePath("Sprite3D/SubViewport")
-
 [sub_resource type="TorusMesh" id="TorusMesh_uthtu"]
 material = ExtResource("5_u8kom")
 inner_radius = 0.991
 ring_segments = 3
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_7dd6r"]
-viewport_path = NodePath("== LEVEL SELECT ==/LevelSelectArea2/Sprite3D/SubViewport")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_u8kom"]
-viewport_path = NodePath("== LEVEL SELECT ==/LevelSelectArea3/Sprite3D/SubViewport")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w6hnu"]
 size = Vector3(30, 0.03, 30)
@@ -163,42 +155,45 @@ size = Vector3(1, 1, 5)
 
 [node name="== HUD ==" type="CanvasLayer" parent="."]
 
-[node name="HUD" parent="== HUD ==" instance=ExtResource("2_lyps1")]
+[node name="HUD" parent="== HUD ==" node_paths=PackedStringArray("collectibles") instance=ExtResource("2_lyps1")]
+collectibles = [NodePath("../../== COlLECTIBLES ==/Collectible"), NodePath("../../== COlLECTIBLES ==/Collectible2"), NodePath("../../== COlLECTIBLES ==/Collectible3"), NodePath("../../== COlLECTIBLES ==/Collectible4"), NodePath("../../== COlLECTIBLES ==/Collectible5"), NodePath("../../== COlLECTIBLES ==/Collectible6")]
+
+[node name="== COlLECTIBLES ==" type="Node" parent="."]
+
+[node name="Collectible" parent="== COlLECTIBLES ==" instance=ExtResource("2_7dd6r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.1537, 0.591315, -1.12233)
+
+[node name="Collectible2" parent="== COlLECTIBLES ==" instance=ExtResource("2_7dd6r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.3127, 0.591315, -32.3603)
+
+[node name="Collectible3" parent="== COlLECTIBLES ==" instance=ExtResource("2_7dd6r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.0134, 0.591315, -34.4058)
+
+[node name="Collectible4" parent="== COlLECTIBLES ==" instance=ExtResource("2_7dd6r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.601, 0.591315, 29.5127)
+
+[node name="Collectible5" parent="== COlLECTIBLES ==" instance=ExtResource("2_7dd6r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.4005, 0.591315, 16.1225)
+
+[node name="Collectible6" parent="== COlLECTIBLES ==" instance=ExtResource("2_7dd6r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.59598, 0.591315, 36.8734)
 
 [node name="== LEVEL SELECT ==" type="Node" parent="."]
 
 [node name="LevelSelectArea" parent="== LEVEL SELECT ==" node_paths=PackedStringArray("car") instance=ExtResource("64_kguer")]
-transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -14.9253, 1.86524, -24.7682)
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -16.2031, 1.36655, -24.7682)
 level = 12
 car = NodePath("../../PlayerCar")
-
-[node name="CollisionShape3D" parent="== LEVEL SELECT ==/LevelSelectArea" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.580652, 0.373383, 0.493759)
-
-[node name="Sprite3D" parent="== LEVEL SELECT ==/LevelSelectArea" index="1"]
-transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, -0.87841, -1.54776, 0)
-texture = SubResource("ViewportTexture_lyps1")
-
-[node name="UiLevelSelect" parent="== LEVEL SELECT ==/LevelSelectArea/Sprite3D/SubViewport" index="0"]
 level_name = "City"
 
 [node name="Zone" type="MeshInstance3D" parent="== LEVEL SELECT ==/LevelSelectArea"]
-transform = Transform3D(11.9103, 0, 0, 0, 469.514, 0, 0, 0, 11.9103, -1.0322, -1.75679, 0.133724)
+transform = Transform3D(11.9103, 0, 0, 0, 469.514, 0, 0, 0, 11.9103, 0.430765, -0.0793664, -0.407345)
 mesh = SubResource("TorusMesh_uthtu")
 
 [node name="LevelSelectArea2" parent="== LEVEL SELECT ==" node_paths=PackedStringArray("car") instance=ExtResource("64_kguer")]
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 34.2354, 3.87718, -0.704389)
 level = 11
 car = NodePath("../../PlayerCar")
-
-[node name="CollisionShape3D" parent="== LEVEL SELECT ==/LevelSelectArea2" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.580652, 0.373383, 0.493759)
-
-[node name="Sprite3D" parent="== LEVEL SELECT ==/LevelSelectArea2" index="1"]
-transform = Transform3D(4.5, 0, 0, 0, 4.5, 0, 0, 0, 4.5, -0.12344, -1.61066, 0)
-texture = SubResource("ViewportTexture_7dd6r")
-
-[node name="UiLevelSelect" parent="== LEVEL SELECT ==/LevelSelectArea2/Sprite3D/SubViewport" index="0"]
 level_name = "Beach"
 
 [node name="Zone" type="MeshInstance3D" parent="== LEVEL SELECT ==/LevelSelectArea2"]
@@ -209,13 +204,7 @@ mesh = SubResource("TorusMesh_uthtu")
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -15.5632, 1.85757, 23.6392)
 level = 13
 car = NodePath("../../PlayerCar")
-
-[node name="CollisionShape3D" parent="== LEVEL SELECT ==/LevelSelectArea3" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.580652, 0.373383, 0.493759)
-
-[node name="Sprite3D" parent="== LEVEL SELECT ==/LevelSelectArea3" index="1"]
-transform = Transform3D(4.5, 0, 0, 0, 4.5, 0, 0, 0, 4.5, 0, -2.30485, 0)
-texture = SubResource("ViewportTexture_u8kom")
+level_name = "Swamp"
 
 [node name="Zone" type="MeshInstance3D" parent="== LEVEL SELECT ==/LevelSelectArea3"]
 transform = Transform3D(10.5312, 0, 0, 0, 415.15, 0, 0, 0, 10.5312, -1.0322, -1.75679, 0.133724)
@@ -1450,20 +1439,8 @@ transform = Transform3D(-8.74228e-08, 0, 2, 0, 2, 0, -2, 0, -8.74228e-08, -14, 0
 [node name="Armature" parent="CityRestaurantAnim2" index="5"]
 transform = Transform3D(-0.266545, 0, -0.194274, 0, 0.329831, 0, 0.194274, 0, -0.266545, 0, 0, 0)
 
-[node name="Skeleton3D" parent="CityRestaurantAnim2/Armature" index="0"]
-bones/0/position = Vector3(-0.196043, 5.1541, 0.00389749)
-bones/1/rotation = Quaternion(-0.0478266, -0.210529, -0.0999599, 0.971287)
-bones/2/rotation = Quaternion(0.0429814, -0.0689655, -0.0794179, 0.993524)
-bones/4/position = Vector3(-3.44506, 2.50027, -0.101948)
-bones/4/rotation = Quaternion(-0.193448, 0.554174, 0.194261, 0.785959)
-bones/7/position = Vector3(3.56459, 2.49238, -0.304276)
-bones/7/rotation = Quaternion(-0.236342, 0.167206, 0.955503, 0.0565506)
-bones/8/rotation = Quaternion(0.0311378, -0.017554, -0.183534, 0.982363)
-bones/9/rotation = Quaternion(0.0611088, 0.0139302, -0.067709, 0.995735)
-bones/10/rotation = Quaternion(-0.707102, -0.0026188, 0.707102, -0.0026188)
-
 [node name="Hat" parent="CityRestaurantAnim2/Armature/Skeleton3D" index="0"]
-transform = Transform3D(-0.762018, 0.248143, 0.0528217, 0.249048, 0.765408, -0.00142305, -0.0719968, 0.0213091, -0.56399, 2.42889e-06, 2.86102e-06, 3.72529e-07)
+transform = Transform3D(-0.714191, -0.0329629, -0.260223, -0.00612643, 0.802667, -0.0420295, 0.371178, -0.0501763, -0.501393, 2.72229, 0.43698, -0.484426)
 
 [node name="Invisible Walls" type="Node3D" parent="."]
 
@@ -1516,7 +1493,4 @@ shape = SubResource("BoxShape3D_8gic2")
 [node name="PlayerCar" parent="." instance=ExtResource("1_2io33")]
 transform = Transform3D(-1.09278e-07, 0, 2.5, 0, 2.5, 0, -2.5, 0, -1.09278e-07, 4.91597, 0.764972, -1.07874)
 
-[editable path="== LEVEL SELECT ==/LevelSelectArea"]
-[editable path="== LEVEL SELECT ==/LevelSelectArea2"]
-[editable path="== LEVEL SELECT ==/LevelSelectArea3"]
 [editable path="CityRestaurantAnim2"]

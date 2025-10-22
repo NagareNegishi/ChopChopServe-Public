@@ -2,8 +2,9 @@ extends Control
 
 @onready var list : Array[Control] = [$PlayerList/P1, $PlayerList/P2, $PlayerList/P3, $PlayerList/P4]
 @onready var collect_text : Label = $Collectables/Label
+
 var total : int 
-var collectibles : Array[Node]
+@export var collectibles : Array[Node]
 var _collect_count : int = -1
 
 func _ready() -> void:
@@ -11,12 +12,11 @@ func _ready() -> void:
 	
 	await get_tree().create_timer(0.1).timeout
 	_load_players()
-	collectibles = get_tree().get_nodes_in_group("Collectible")
 	for c in collectibles:
 		if c is Collectible:
 			c.collected.connect(set_collect_text)
 
-	total = collectibles.size() - 1
+	total = collectibles.size()
 	set_collect_text(null)
 	
 

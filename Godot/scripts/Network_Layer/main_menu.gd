@@ -3,6 +3,7 @@ extends Control
 
 
 var network_layer: ENetNetworkLayer
+var room_list_popup: RoomListPopup
 # Menu UI elements
 @onready var menu = $Menu
 @onready var create_button = $Menu/ButtonsContainer/HostButton
@@ -27,6 +28,7 @@ enum ErrorType{
 ## Initialization
 func _ready():
 	network_layer = ENetManager.enet_layer
+	_setup_room_list_popup()
 	create_button.pressed.connect(_on_create_pressed)
 	join_button.pressed.connect(_on_join_pressed)
 	network_layer.connected.connect(_switch_to_lobby)
@@ -41,6 +43,14 @@ func _ready():
 	froggo_building.play("ArmatureAction", -1, 0.6)
 	SoundManager.play_bgm(SoundManager.BGM.MENU, 2.0)
 	SoundManager.play_sfx_player(SoundManager.SFX_PLAYER.JUMP)
+
+
+## Setup Room List Popup
+func _setup_room_list_popup():
+	var room_list_popup_scene = preload("res://scenes/Network_Layer/room_list_popup.tscn")
+	room_list_popup = room_list_popup_scene.instantiate() as RoomListPopup
+	add_child(room_list_popup)
+	room_list_popup.room_selected.connect(_on_room_selected)
 
 
 ## Create Lobby
@@ -144,44 +154,34 @@ func _on_tutorial_started():
 	SceneManager.change_scene(SceneManager.Scene.TUTORIAL)
 
 
+## Ask the network layer to search for active rooms
 func _on_search_pressed():
 	search_button.disabled = true
 	search_button.text = "Searching host..."
 	network_layer.get_active_rooms()
 
 
+## Handle HTTP request failure
 func _on_http_request_failed():
 	search_button.disabled = false
 	search_button.text = "SEARCH HOST"
 
 
+## Show received rooms in popup
+## @param rooms: Array of room info dictionaries
 func _on_rooms_list_received(rooms: Array):
 	search_button.disabled = false
 	search_button.text = "SEARCH HOST"
 	if rooms.is_empty():
 		ENetManager.show_notification("No active rooms found.", 2.0)
-		return
-	var room_info = ""
-	for room in rooms:
-		var time_str = format_time_remaining(room["expires_in"])
-		room_info += "%s (%ds left)" % [room["room_code"], time_str] + "\n"
-	ENetManager.show_notification("Active Rooms:\n" + room_info, 5.0)
-
-
-## Format time remaining into readable string
-## @param seconds: Time remaining in seconds
-## @return: Formatted time string
-func format_time_remaining(seconds: int) -> String:
-	var hours = int(float(seconds) / 3600.0)
-	var minutes = int(float(seconds % 3600) / 60.0)
-	var secs = seconds % 60
-	if hours > 0:
-		return "%dh %dm" % [hours, minutes]
-	elif minutes > 0:
-		return "%dm %ds" % [minutes, secs]
 	else:
-		return "%ds" % secs
+		room_list_popup.show_rooms(rooms)
 
+
+## Fill in IP input when a room is selected
+## @param room_code: The selected room code
+func _on_room_selected(room_code: String):
+	ip_input.text = room_code
 
 
 

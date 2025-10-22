@@ -43,6 +43,7 @@ func get_order():
 
 
 func get_simple_order(starter_index: int):
+	print("Creating Order")
 	var new_order = []
 	check_food_avalibility(s, MI.starters)
 	check_food_avalibility(m, MI.mains)

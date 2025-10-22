@@ -43,6 +43,7 @@ func get_order():
 
 
 func get_simple_order(starter_index: int):
+	print("Creating Order")
 	var new_order = []
 	check_food_avalibility(s, MI.starters)
 	check_food_avalibility(m, MI.mains)
@@ -55,7 +56,8 @@ func get_simple_order(starter_index: int):
 	# Put the order together
 	
 	if !current_meals.is_empty():
-		new_order.append(food_generator(current_meals.pick_random(), starter_index))
+		new_order.append(food_generator(current_meals[
+							starter_index % current_meals.size()], starter_index))
 	
 	return new_order
 

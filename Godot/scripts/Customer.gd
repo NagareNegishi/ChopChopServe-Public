@@ -32,6 +32,8 @@ const FALLEN_OVER_TIME = 5.0
 @export var customer_state: CustomerState = CustomerState.IDLE:
 	# Runs on all clients when the state changes.
 	set(new_state):
+		if customer_state == new_state:
+			return
 		customer_state = new_state
 		if (not is_instance_valid(overhead_ui_order_instance) ||
 		not is_instance_valid(overhead_ui_thinking_instance)):

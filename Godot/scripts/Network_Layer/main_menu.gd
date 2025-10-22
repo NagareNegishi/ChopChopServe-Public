@@ -12,6 +12,7 @@ var network_layer: ENetNetworkLayer
 @onready var exit_button = $Menu/ButtonsContainer/ExitButton
 @onready var  test_button = $Menu/ButtonsContainer/TestButton
 @onready var tutorial_button = $Menu/ButtonsContainer/TutorialButton
+@onready var  search_button = $Menu/ButtonsContainer/SearchButton
 @onready var  error_message = $Menu/Error
 
 @onready var name_input : LineEdit = $Menu/Note/VBox/Name/Name
@@ -32,7 +33,10 @@ func _ready():
 	exit_button.pressed.connect(_exit_game)
 	test_button.pressed.connect(_diagnose_network)
 	tutorial_button.pressed.connect(_on_tutorial_pressed)
+	search_button.pressed.connect(_on_search_pressed)
 	network_layer.tutorial_started.connect(_on_tutorial_started)
+	network_layer.rooms_list_received.connect(_on_rooms_list_received)
+	network_layer.http_request_failed.connect(_on_http_request_failed)
 	if !froggo_building : return
 	froggo_building.play("ArmatureAction", -1, 0.6)
 	SoundManager.play_bgm(SoundManager.BGM.MENU, 2.0)
@@ -138,6 +142,52 @@ func _on_tutorial_pressed():
 func _on_tutorial_started():
 	Debug.net_log("Tutorial started, Current player list: " + str(ENetManager.get_player_list()))
 	SceneManager.change_scene(SceneManager.Scene.TUTORIAL)
+
+
+func _on_search_pressed():
+	search_button.disabled = true
+	search_button.text = "Searching host..."
+	network_layer.get_active_rooms()
+
+
+func _on_http_request_failed():
+	search_button.disabled = false
+	search_button.text = "SEARCH HOST"
+
+
+func _on_rooms_list_received(rooms: Array):
+	search_button.disabled = false
+	search_button.text = "SEARCH HOST"
+	if rooms.is_empty():
+		ENetManager.show_notification("No active rooms found.", 2.0)
+		return
+	var room_info = ""
+	for room in rooms:
+		var time_str = format_time_remaining(room["expires_in"])
+		room_info += "%s (%ds left)" % [room["room_code"], time_str] + "\n"
+	ENetManager.show_notification("Active Rooms:\n" + room_info, 5.0)
+
+
+## Format time remaining into readable string
+## @param seconds: Time remaining in seconds
+## @return: Formatted time string
+func format_time_remaining(seconds: int) -> String:
+	var hours = int(float(seconds) / 3600.0)
+	var minutes = int(float(seconds % 3600) / 60.0)
+	var secs = seconds % 60
+	if hours > 0:
+		return "%dh %dm" % [hours, minutes]
+	elif minutes > 0:
+		return "%dm %ds" % [minutes, secs]
+	else:
+		return "%ds" % secs
+
+
+
+
+
+
+
 
 
 

@@ -122,9 +122,9 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 110.0
-offset_top = -282.0
+offset_top = -297.0
 offset_right = 402.0
-offset_bottom = -37.0
+offset_bottom = -4.0
 grow_vertical = 0
 theme_override_constants/separation = 13
 
@@ -147,13 +147,17 @@ text = "JOIN GAME
 
 [node name="HSeparator" type="HSeparator" parent="Menu/ButtonsContainer"]
 modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
 
 [node name="TutorialButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "TUTORIAL"
+
+[node name="SearchButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "SEARCH HOST"
 
 [node name="TestButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
 layout_mode = 2

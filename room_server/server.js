@@ -43,6 +43,28 @@ app.get('/lookup/:code', (req, res) => {
     res.json({ ip: entry.ip });
 });
 
+// Get all active room codes
+app.get('/rooms', (req, res) => {
+    const now = Date.now();
+    const activeRooms = [];
+    
+    // Clean up expired rooms while building the list
+    for (const [code, entry] of rooms) {
+        if (now > entry.expires) {
+            rooms.delete(code);
+            console.log(`Expired: ${code}`);
+        } else {
+            activeRooms.push({
+                room_code: code,
+                ip: entry.ip,
+                expires_in: Math.floor((entry.expires - now) / 1000) // seconds remaining
+            });
+        }
+    }
+    
+    res.json({ rooms: activeRooms, count: activeRooms.length });
+});
+
 // Periodically clean up expired room codes
 // https://developer.mozilla.org/en-US/docs/Web/API/Window/setInterval
 setInterval(() => {

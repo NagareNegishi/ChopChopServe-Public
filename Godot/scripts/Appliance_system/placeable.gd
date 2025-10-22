@@ -153,7 +153,31 @@ func _add_sync_properties(config: SceneReplicationConfig):
 
 
 ## Align the size of the Placeable to the model
+## Bottom aligned version
 func align_to_model():
+	if not model_instance:
+		return
+	# Store the current bottom position
+	var old_bottom = global_position.y - (size.y / 2.0)
+	for child in model_instance.get_children():
+		if child is MeshInstance3D:
+			var aabb = child.get_aabb()
+			Debug.info("  Found MeshInstance3D: " + child.name)
+			if aabb.size != Vector3.ZERO:
+				# Account for model's transform
+				var model_aabb = child.transform * aabb
+				model_instance.position = -model_aabb.get_center()
+				set_size(model_aabb.size) # this will call resize_model()
+				# Adjust world position to keep bottom at same level
+				var new_center = old_bottom + (size.y / 2.0)
+				global_position.y = new_center
+				return
+	push_error("No valid AABB found")
+
+
+## Align the size of the Placeable to the model
+## Center aligned version
+func align_to_model_center():
 	if not model_instance:
 		return
 	for child in model_instance.get_children():

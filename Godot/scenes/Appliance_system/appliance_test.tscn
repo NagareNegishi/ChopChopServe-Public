@@ -555,7 +555,7 @@ skeleton = NodePath("../MeshInstance3D13")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.728, 0)
 
 [node name="Oven2" parent="NavigationRegion3D/Right Kitchen" instance=ExtResource("26_8ape8")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 9, 0, -9)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 9, 0.159807, -9)
 unique_name = "18"
 current_owner = 2
 
@@ -689,7 +689,7 @@ unique_name = "Food2"
 current_owner = 0
 
 [node name="FoodFactory3" parent="NavigationRegion3D/Left Kitchen" instance=ExtResource("32_cgsns")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.58084, 0, -7.67269)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.91881, 0, -7.67269)
 group = 2
 using_tscn = true
 unique_name = "Food3"

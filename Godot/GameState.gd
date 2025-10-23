@@ -46,8 +46,10 @@ func _init():
 	timer.timeout.connect(_on_timer_timeout)
 
 func _ready():
-	SceneManager.connect("level_ready", Callable(self, "_on_level_started"))
 	food_data = _read_json_file("res://scripts/Food/menu_items_data.json")
+	return
+	SceneManager.connect("level_ready", Callable(self, "_on_level_started"))
+	
 
 
 func check_who_wins():

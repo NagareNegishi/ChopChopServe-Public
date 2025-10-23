@@ -16,6 +16,7 @@ func _ready() -> void:
 	
 	load_screen = setup_ui(preload("res://UI/UI_LoadingScreen.tscn"))
 	recipe_screen = setup_ui(preload("res://UI/Recipes/UI_Recipe.tscn"))
+	recipe_screen._progress_hide(false)
 	pause_menu = setup_ui(preload("res://UI/UI_Pause.tscn"))
 	recipe_tab = setup_ui(preload("res://UI/Recipes/UI_RecipesInGame.tscn"))
 	
@@ -57,7 +58,7 @@ func show_recipe(recipe: MenuItem):
 
 @rpc("any_peer", "call_local")
 func _server_show_recipe(recipe: MenuItem):
-	if ENetManager.is_host(): return
+	if !ENetManager.is_host(): return
 	recipe_ui_visible.emit(true)
 	_client_show_recipe.rpc_id(1, recipe)
 
@@ -66,6 +67,7 @@ func _server_show_recipe(recipe: MenuItem):
 func _client_show_recipe(recipe: MenuItem):
 	recipe_screen.visible = true
 	canvas_layer.visible = true
+	get_tree().paused = true
 	recipe_screen.set_info(recipe)
 	recipe_screen.reset()
 	recipe_screen.start()
@@ -75,6 +77,7 @@ func _done():
 	recipe_screen.visible = false
 	canvas_layer.visible = false
 	recipe_screen.reset()
+	get_tree().paused = false
 	recipe_ui_visible.emit(false)
 
 

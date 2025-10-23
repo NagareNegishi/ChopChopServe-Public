@@ -8,7 +8,7 @@ signal done()
 @onready var row2 : HBoxContainer = $Ingredients/Row2
 @onready var progress_parts = [$Panel3, $Panel4, $ProgressBar, $Ticks] 
 @onready var cook_box = $CookBox
-@export var hide : bool
+@export var hide : bool = false
 
 func _ready() -> void:
 	_progress.value = 0
@@ -20,7 +20,7 @@ func _ready() -> void:
 		part.visible = false
 	
 func _physics_process(delta: float) -> void:
-	_progress.value += delta * 0.25
+	_progress.value += delta * 5
 	if !ENetManager.is_host(): return
 	if _progress.value >= _progress.max_value: hide_self()
 
@@ -92,3 +92,8 @@ func _add_cookware(recipe : MenuItem):
 func _clear_cookware():
 	for child in cook_box.get_children():
 		child.queue_free()
+
+func _progress_hide(is_hide : bool):
+	if !is_hide: reset()
+	for part in progress_parts:
+		part.visible = !is_hide

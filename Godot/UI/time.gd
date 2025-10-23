@@ -4,6 +4,7 @@ var start_time_hour = 9
 var start_time_min = 30
 @onready var type = $TimeType
 func _ready():
+	return
 	GameState.connect("time_tick", Callable(self, "_on_time_tick"))
 
 func _on_time_tick(current_time):

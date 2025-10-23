@@ -1,9 +1,7 @@
-[gd_scene load_steps=45 format=3 uid="uid://bkdgdjjlsc7rx"]
+[gd_scene load_steps=44 format=3 uid="uid://bkdgdjjlsc7rx"]
 
-[ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_cktef"]
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_cmmn0"]
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="1_om5gj"]
-[ext_resource type="PackedScene" uid="uid://hlnawqai2mw4" path="res://NPCs/Customer.tscn" id="2_cfpj7"]
 [ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="2_m6tjv"]
 [ext_resource type="PackedScene" uid="uid://bk7ovilp788kq" path="res://scripts/Player/spawn_point.tscn" id="3_jnlua"]
 [ext_resource type="PackedScene" uid="uid://bkjryoge78wu0" path="res://assets/newmodels/decorations/Table.glb" id="3_mhwt6"]
@@ -34,6 +32,7 @@
 [ext_resource type="PackedScene" uid="uid://b0ougk3d4jnku" path="res://scenes/Appliance_system/food_factory.tscn" id="32_vda8q"]
 [ext_resource type="PackedScene" uid="uid://pee1rah6hbep" path="res://scenes/Appliance_system/stove_with_pan.tscn" id="33_t7ckm"]
 [ext_resource type="AudioStream" uid="uid://b6uhbfu32127a" path="res://Sounds/CaribbeanBeach.mp3" id="34_hte61"]
+[ext_resource type="Script" uid="uid://pp4fhscl6uqk" path="res://GameStateTest.gd" id="35_cktef"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rci3a"]
 sky_top_color = Color(0.636864, 0.781479, 0.982896, 1)
@@ -88,14 +87,8 @@ size = Vector3(30, 0.05, 30)
 height = 0.506226
 radius = 0.655273
 
-[node name="JohnoTestLevel4" type="Node3D" node_paths=PackedStringArray("tables", "queue_spots", "customer_spawn_point", "customer_exit_point") groups=["GameState"]]
+[node name="JohnoTestLevel4" type="Node3D" groups=["GameState"]]
 transform = Transform3D(0.999985, 0, 0.00553267, 0, 1, 0, -0.00553267, 0, 0.999985, 0, 0, 0)
-script = ExtResource("1_cktef")
-customer_scenes = Array[PackedScene]([ExtResource("2_cfpj7")])
-tables = [NodePath("NavigationRegion3D/Tables/table12/TableBody"), NodePath("NavigationRegion3D/Tables/table8/TableBody")]
-queue_spots = [NodePath("===QUEUE==/QueueSpot-1"), NodePath("===QUEUE==/QueueSpot-2"), NodePath("===QUEUE==/QueueSpot-3"), NodePath("===QUEUE==/QueueSpot-4"), NodePath("===QUEUE==/QueueSpot-5")]
-customer_spawn_point = NodePath("CustomerSpawnPoint")
-customer_exit_point = NodePath("CustomerExitPoint")
 
 [node name="== PLAYERS ==" type="Node" parent="."]
 
@@ -152,7 +145,7 @@ script = ExtResource("5_83y2r")
 [node name="== HUD ==" type="CanvasLayer" parent="." groups=["Canvas"]]
 
 [node name="HUD" parent="== HUD ==" node_paths=PackedStringArray("game_state") instance=ExtResource("2_m6tjv")]
-game_state = NodePath("../..")
+game_state = NodePath("../../GameState")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_ctosr")
@@ -522,3 +515,7 @@ transform = Transform3D(0.999984, 0, -0.00553267, 0, 1, 0, 0.00553267, 0, 0.9999
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("34_hte61")
 autoplay = true
+
+[node name="GameState" type="Node" parent="." node_paths=PackedStringArray("food_court")]
+script = ExtResource("35_cktef")
+food_court = NodePath("..")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cpf68rvd2ht5y"]
+[gd_scene load_steps=9 format=3 uid="uid://cpf68rvd2ht5y"]
 
 [ext_resource type="Texture2D" uid="uid://bvhcg80u526t2" path="res://assets/textures/HUD/TimerBG.png" id="1_7cglj"]
 [ext_resource type="Script" uid="uid://dnpbcprkay5ak" path="res://scripts/UI/ui_game_state.gd" id="1_8nf6r"]
@@ -8,15 +8,16 @@
 [ext_resource type="Texture2D" uid="uid://ciuv6k7wddbva" path="res://assets/textures/misc/1200px-Circle_-_black_simple.svg.png" id="4_ohb3l"]
 [ext_resource type="Script" uid="uid://bts4wpxxod8ne" path="res://UI/day.gd" id="6_iqdsg"]
 [ext_resource type="Script" uid="uid://bxgcajf5issh" path="res://UI/time.gd" id="6_k13aw"]
-[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/Style/DefaultTheme.tres" id="7_qq8c1"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -2.0
-offset_right = -2.0
+offset_left = -21.0
+offset_top = 2.0
+offset_right = -21.0
+offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_8nf6r")
@@ -283,10 +284,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 489.0
-offset_top = 271.0
-offset_right = 575.0
-offset_bottom = 302.0
+offset_left = 511.0
+offset_top = 273.0
+offset_right = 597.0
+offset_bottom = 304.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -297,22 +298,8 @@ theme_override_constants/shadow_outline_size = 2
 theme_override_fonts/font = ExtResource("1_vitvd")
 theme_override_font_sizes/font_size = 24
 text = "9:30"
-horizontal_alignment = 2
+horizontal_alignment = 1
 script = ExtResource("6_k13aw")
-
-[node name="TimeType" type="Label" parent="Main/Time"]
-layout_mode = 0
-offset_left = 87.0
-offset_top = 8.0
-offset_right = 127.0
-offset_bottom = 31.0
-theme = ExtResource("7_qq8c1")
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 16
-text = "AM"
 
 [node name="Day" type="Label" parent="Main"]
 layout_mode = 1
@@ -321,10 +308,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 537.0
-offset_top = 295.0
-offset_right = 575.0
-offset_bottom = 307.0
+offset_left = 529.5
+offset_top = 357.0
+offset_right = 578.5
+offset_bottom = 377.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -333,7 +320,7 @@ theme_override_constants/shadow_offset_x = 0
 theme_override_constants/outline_size = 2
 theme_override_constants/shadow_outline_size = 1
 theme_override_fonts/font = ExtResource("1_vitvd")
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 15
 text = "Day 1"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -346,10 +333,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 521.0
-offset_top = 308.0
-offset_right = 582.0
-offset_bottom = 329.0
+offset_left = 523.0
+offset_top = 300.0
+offset_right = 584.0
+offset_bottom = 323.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.706146, 0.959332, 0.641323, 1)
@@ -359,7 +346,54 @@ theme_override_constants/shadow_offset_x = 0
 theme_override_constants/outline_size = 2
 theme_override_constants/shadow_outline_size = 1
 theme_override_fonts/font = ExtResource("1_vitvd")
-theme_override_font_sizes/font_size = 15
+theme_override_font_sizes/font_size = 20
 text = "$200"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Phase" type="Label" parent="Main"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 359.0
+offset_top = 554.5
+offset_right = 756.0
+offset_bottom = 624.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.976471, 0.976471, 1, 1)
+theme_override_colors/font_outline_color = Color(0.458405, 0.458405, 0.458405, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("1_vitvd")
+theme_override_font_sizes/font_size = 100
+text = "PREP!"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("6_iqdsg")
+
+[node name="DayInfo" type="Label" parent="Main/Phase"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -199.5
+offset_top = 37.5
+offset_right = 197.5
+offset_bottom = 107.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.976471, 0.976471, 1, 1)
+theme_override_colors/font_outline_color = Color(0.458405, 0.458405, 0.458405, 1)
+theme_override_constants/outline_size = 15
+theme_override_fonts/font = ExtResource("1_vitvd")
+theme_override_font_sizes/font_size = 50
+text = "Day 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("6_iqdsg")

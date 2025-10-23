@@ -191,9 +191,6 @@ func _inputs() -> void:
 	if Input.is_action_just_pressed("Pause"):
 		UIManager.pause(true)
 	
-	if Input.is_action_just_pressed("Recipe"):
-		UIManager.show_recipes_tab(!UIManager.recipe_tab.visible)
-	
 	if !is_actoin_disabled:
 		if Input.is_action_just_pressed("Action"):
 			_action(true)
@@ -202,6 +199,9 @@ func _inputs() -> void:
 			_action(false)
 		
 	if is_controls_disabled: return
+	
+	if Input.is_action_just_pressed("Recipe"):
+		UIManager.show_recipes_tab(!UIManager.recipe_tab.visible)
 	
 	if Input.is_action_just_pressed("Dash") && can_dash:
 		_dash(true)

@@ -17,6 +17,7 @@ func _ready() -> void:
 		control.visible = false
 	
 	game_state_ui.game_state = game_state
+	
 	SabotageSystem.sabotage_start.connect(sabotage_start)
 	
 func _process(delta: float) -> void:

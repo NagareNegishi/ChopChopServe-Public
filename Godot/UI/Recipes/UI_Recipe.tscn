@@ -1,11 +1,17 @@
-[gd_scene load_steps=12 format=3 uid="uid://75yh0t2jmnhg"]
+[gd_scene load_steps=14 format=3 uid="uid://75yh0t2jmnhg"]
 
 [ext_resource type="Script" uid="uid://uiljehkqv2ts" path="res://UI/Recipes/ui_recipe.gd" id="1_4c6sh"]
+[ext_resource type="Shader" uid="uid://bdsj6gf6j8784" path="res://shaders/blur.gdshader" id="2_gl8rs"]
 [ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/Style/DefaultTheme.tres" id="2_tms7n"]
 [ext_resource type="PackedScene" uid="uid://vd3bdhppuimf" path="res://UI/Recipes/UI_Cook.tscn" id="3_a0ewq"]
 [ext_resource type="Texture2D" uid="uid://chbbc8dxqfr1y" path="res://assets/textures/recipes/TomatoSoup.png" id="4_obou8"]
 [ext_resource type="Texture2D" uid="uid://hlkfqb0l0we1" path="res://assets/textures/misc/check.png" id="5_gtklq"]
 [ext_resource type="Texture2D" uid="uid://datsc15wk03gp" path="res://assets/textures/misc/right-arrow (2).png" id="6_a0ewq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0svds"]
+shader = ExtResource("2_gl8rs")
+shader_parameter/blur_radius = 1.0
+shader_parameter/blur_samples = 4
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tms7n"]
 bg_color = Color(0.0705882, 0.0705882, 0.0705882, 1)
@@ -43,6 +49,7 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
 [node name="UiRecipe" type="Control"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -50,6 +57,30 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_4c6sh")
+
+[node name="Blur" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_0svds")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -587.0
+offset_top = -335.5
+offset_right = 587.0
+offset_bottom = 335.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Colour" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0705882, 0.0705882, 0.0705882, 0.392157)
 
 [node name="BG" type="Panel" parent="."]
 layout_mode = 1

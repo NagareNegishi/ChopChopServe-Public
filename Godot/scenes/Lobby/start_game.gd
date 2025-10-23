@@ -72,7 +72,7 @@ func _on_timeout():
 	
 	await get_tree().create_timer(3.5).timeout
 	
-	SceneManager.change_scene_all_players(SceneManager.Scene.LOBBY)
+	SceneManager.change_scene_all_players(SceneManager.Scene.JOHNO)
 	
 
 func _list_update(id : int):
@@ -94,7 +94,8 @@ func can_start():
 	var team2_size = ENetManager.get_team2().size()
 	var player_size = ENetManager.get_player_list().size()
 	
-	return players.size() == player_size and \
+	return true
+	players.size() == player_size and \
 	team1_size >= 1 and \
 	team2_size >= 1 and \
 	team1_size + team2_size == player_size

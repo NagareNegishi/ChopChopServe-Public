@@ -36,7 +36,7 @@ enum Phases{
 
 func _init():
 	amount_of_days = 5
-	current_day = 1
+	current_day = 0
 	prep_length = 30 #sec
 	day_length = 35 #sec
 	end_length = 15
@@ -47,7 +47,7 @@ func _init():
 
 func _ready():
 	food_data = _read_json_file("res://scripts/Food/menu_items_data.json")
-	return
+	reset_recipes()
 	SceneManager.connect("level_ready", Callable(self, "_on_level_started"))
 	
 
@@ -140,9 +140,7 @@ func get_current_phase():
 func _on_level_started(level: SceneManager.Scene):
 	if not _is_gameplay_scene(level):
 		return
-	
-	_start_gameplay_timer()
-	
+
 	# Reset when chnaging scenes
 	if available:
 		for item in available:
@@ -244,3 +242,16 @@ func set_HUD_visibility(changeTo : bool) -> void:
 			found_layer.show()
 		else:
 			found_layer.hide()
+
+
+func reset_recipes():
+	if available:
+		for item in available:
+			item.is_available = false
+	
+	available.clear()
+	# ----------------------------
+	
+	var available_food_names = _get_available_food_names()
+	
+	_make_food_items_available(available_food_names)

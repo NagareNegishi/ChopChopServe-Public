@@ -20,12 +20,14 @@ func _ready() -> void:
 		part.visible = false
 	
 func _physics_process(delta: float) -> void:
-	_progress.value += delta * 5
+	_progress.value += delta * 2
 	if !ENetManager.is_host(): return
-	if _progress.value >= _progress.max_value: hide_self()
+	if _progress.value >= _progress.max_value: hide_self.rpc()
 
 
-func set_info(recipe : MenuItem):
+func set_info(recipe_script : String):
+	var script = "res://scripts/Food/MenuItems/" + recipe_script +".gd"
+	var recipe = load(script).new()
 	assert(recipe)
 	recipe_name.text = recipe.ui_meal_name
 	recipe_final.texture = recipe.ui_texture
@@ -33,7 +35,7 @@ func set_info(recipe : MenuItem):
 	_add_cookware(recipe)
 	
 
-
+@rpc("any_peer", "call_local")
 func hide_self():
 	set_physics_process(false)
 	visible = false

@@ -17,7 +17,7 @@ func _init():
 	ui_texture = load("res://assets/textures/recipes/Bread.png")
 	ui_meal_name = "Bread"
 	ui_states = {
-		"Dough": ["NONE"]
+		"Dough": ["NONE", "BAKED"]
 	}
 
 func _ready():

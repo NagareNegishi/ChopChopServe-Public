@@ -52,19 +52,19 @@ func _client_play_load():
 #================== RECIPE SCREEN ======================
 
 
-func show_recipe(recipe: MenuItem):
+func show_recipe(recipe: String):
 	_server_show_recipe.rpc(recipe)
 
 
 @rpc("any_peer", "call_local")
-func _server_show_recipe(recipe: MenuItem):
+func _server_show_recipe(recipe: String):
 	if !ENetManager.is_host(): return
 	recipe_ui_visible.emit(true)
-	_client_show_recipe.rpc_id(1, recipe)
+	_client_show_recipe.rpc(recipe)
 
 
-@rpc("authority", "call_local")
-func _client_show_recipe(recipe: MenuItem):
+@rpc("any_peer", "call_local")
+func _client_show_recipe(recipe: String):
 	recipe_screen.visible = true
 	canvas_layer.visible = true
 	get_tree().paused = true

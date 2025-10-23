@@ -66,15 +66,17 @@ func seconds2hhmmss(total_seconds: float) -> String:
 
 
 func _set_phase(phase : GameStateTest.Phases):
-	if phase == GameStateTest.Phases.END_ROUND: return
+	if phase == GameStateTest.Phases.END_GAME: return
 	$Main/Phase.visible = true
 	$Main/Phase.text = GameStateTest.Phases.keys()[phase]
+	$Main/Phase2.text = GameStateTest.Phases.keys()[phase] + "  Phase"
 	await get_tree().create_timer(4).timeout
 	$Main/Phase.visible = false
+	
 
 func _set_time(time : float):
 	$Main/Time.text = seconds2hhmmss(time)
 
 func _set_day(day : int):
-	$Main/Day.text = "Day %d/5" % [day]
-	$Main/Phase/DayInfo.text = "Day %d" % [day]
+	$Main/Day.text = "Day " + str(day)
+	$Main/Phase/DayInfo.text = "Day "+ str(day)

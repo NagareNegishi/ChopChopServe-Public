@@ -10,7 +10,7 @@ const MAXIMUM_ORDER_THINK_TIME: float = 1.0
 # Time in seconds the agent must be stuck before recalculating its path.
 const STUCK_RECALCULATE_TIME: float = 1.0 
 # Time in seconds the customer will stay seated till they get fed up not being served
-const MAXIMUM_SEATING_TIME: float = 250
+const MAXIMUM_SEATING_TIME: float = 30
 # Time in seconds the customer will stop moving for after falling
 const FALLEN_OVER_TIME = 5.0
 
@@ -83,6 +83,7 @@ func _on_tree_exiting():
 func _ready():
 	hide()
 	super._ready()
+	add_to_group("Customer")
 	var ui_layer = get_tree().get_first_node_in_group("Canvas")
 	# Create and add UI elements to scene 
 	if ui_layer:

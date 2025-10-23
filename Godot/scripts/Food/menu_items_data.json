@@ -226,7 +226,8 @@
 	"1":["bread"],
 	"2": ["bread", "pie_pumpkin"],
 	"3": ["bread", "pie_pumpkin", "burger_fish"],
-	"4": ["bread", "pie_pumpkin", "burger_fish", "cheese_bread"]
+	"4": ["bread", "pie_pumpkin", "burger_fish", "cheese_bread"],
+	"5": ["bread", "pie_pumpkin", "burger_fish", "cheese_bread"]
 },
 "TEST": {
 	"1": ["onion_rings", "cheese_bread", "pie_pineapple", "burger_fish"],

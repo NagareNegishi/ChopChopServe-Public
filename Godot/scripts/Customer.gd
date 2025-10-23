@@ -25,7 +25,8 @@ const FALLEN_OVER_TIME = 5.0
 @export var overhead_ui_order: PackedScene # Shows meal customer wants
 @export var overhead_ui_thinking: PackedScene # Shows frog thinking
 # Allows for orders to be randomly selected
-@export var order_gen_number = randi()
+@export var order_gen_meal_number = randi()
+@export var order_gen_type_number = randi()
 @export var _time_till_leaving: float = MAXIMUM_SEATING_TIME
 @export var is_tweening_to_seat = false # true when customer first arrives to table
 
@@ -50,7 +51,8 @@ const FALLEN_OVER_TIME = 5.0
 				overhead_ui_order_instance.show()
 				order = await _game_server.call_service("OrderGenerator", 
 														"get_simple_order", 
-														[order_gen_number])
+														[order_gen_meal_number, 
+														order_gen_type_number])
 				overhead_ui_order_instance.set_order(order[0])
 				#print("\n\n\nTHIS IS THE ORDER FROM THE CUSTOMER:::::   ", order)
 

@@ -1,11 +1,21 @@
-[gd_scene load_steps=48 format=3 uid="uid://frijdfjvcu7p"]
+[gd_scene load_steps=58 format=3 uid="uid://frijdfjvcu7p"]
 
 [ext_resource type="Script" uid="uid://c3h1hny6w2xwn" path="res://LevelDesign/free_play.gd" id="1_h3x7p"]
 [ext_resource type="Script" uid="uid://bovslkbm84p1j" path="res://scripts/level_camera.gd" id="5_h3x7p"]
 [ext_resource type="PackedScene" uid="uid://bxf3hwer4sb7h" path="res://UI/HUD/UI_LobbyHUD.tscn" id="5_i7m8l"]
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="6_tb1gy"]
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="7_2ye88"]
+[ext_resource type="Script" uid="uid://c8guh3nm5ht4s" path="res://scenes/Lobby/Steps/tutorial_step.gd" id="7_ygac2"]
 [ext_resource type="PackedScene" uid="uid://bk7ovilp788kq" path="res://scripts/Player/spawn_point.tscn" id="8_ssy0a"]
+[ext_resource type="Resource" uid="uid://85up6v0vdqrq" path="res://scenes/Lobby/Steps/Step1.tres" id="8_wcqh3"]
+[ext_resource type="Resource" uid="uid://d0yodttqoq6h0" path="res://scenes/Lobby/Steps/Step2.tres" id="9_0861o"]
+[ext_resource type="Resource" uid="uid://dd8f0x6py50f6" path="res://scenes/Lobby/Steps/Step3.tres" id="10_btupj"]
+[ext_resource type="Resource" uid="uid://dam3xqu8dbd5b" path="res://scenes/Lobby/Steps/Step4.tres" id="11_5wjbk"]
+[ext_resource type="Resource" uid="uid://cm58t1vlyojah" path="res://scenes/Lobby/Steps/Step5.tres" id="12_wcqh3"]
+[ext_resource type="Resource" uid="uid://l2qwkkhgvs84" path="res://scenes/Lobby/Steps/Step6.tres" id="13_5wjbk"]
+[ext_resource type="Resource" uid="uid://dpqo0r3b8yl0t" path="res://scenes/Lobby/Steps/Step8.tres" id="14_tb1gy"]
+[ext_resource type="Resource" uid="uid://dgrkfiel5n4jw" path="res://scenes/Lobby/Steps/Step7.tres" id="15_2ye88"]
+[ext_resource type="Resource" uid="uid://bhyyxdaeet5td" path="res://scenes/Lobby/Steps/Step9.tres" id="16_tb1gy"]
 [ext_resource type="PackedScene" uid="uid://escxqu04mxtg" path="res://assets/NaturePack/Grass_Short.fbx" id="19_000hf"]
 [ext_resource type="PackedScene" uid="uid://cqlbcyk00caqq" path="res://scenes/Player/truckmove.tscn" id="20_4ai3k"]
 [ext_resource type="PackedScene" uid="uid://7p0tcfmgevn1" path="res://assets/NaturePack/CommonTree_4.fbx" id="21_62apu"]
@@ -329,6 +339,7 @@ shape = SubResource("BoxShape3D_u0btf")
 [node name="== HUD ==" type="CanvasLayer" parent="." groups=["Canvas"]]
 
 [node name="UiLobbyHud" parent="== HUD ==" instance=ExtResource("5_i7m8l")]
+tutorial_steps = Array[ExtResource("7_ygac2")]([ExtResource("8_wcqh3"), ExtResource("9_0861o"), ExtResource("10_btupj"), ExtResource("11_5wjbk"), ExtResource("12_wcqh3"), ExtResource("13_5wjbk"), ExtResource("15_2ye88"), ExtResource("14_tb1gy"), ExtResource("16_tb1gy")])
 
 [node name="Extinguisher" parent="." instance=ExtResource("38_s0ivk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.495926, 1, -7.85375)

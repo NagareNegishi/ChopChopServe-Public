@@ -171,7 +171,7 @@ func _dash(is_forward : bool) -> void:
 	if !velocity || !is_on_floor():
 		return
 	var dash_tween = create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
-	
+	GlobalScript.tutorial_step.emit(2)
 	# If player moving it will launch in direction of movement 
 	# otherwise will do where players looking
 	var _dash_direction = ($Mesh.transform.basis.z if is_forward
@@ -192,6 +192,7 @@ func _inputs() -> void:
 		UIManager.pause(true)
 		
 	if Input.is_action_just_pressed("Recipe"):
+		if !UIManager.recipe_tab.visible == true: GlobalScript.tutorial_step.emit(4)
 		UIManager.show_recipes_tab(!UIManager.recipe_tab.visible)
 	
 	if !is_actoin_disabled:

@@ -193,9 +193,9 @@
 	  "beef_burger",
 	  "chicken_burger",
 	  "fish_burger",
-	  "cheese_bread",
+	  "bread_cheese",
 	  "fish_and_chips",
-	  "garlic_bread",
+	  "breed_garlic",
 	  "mac_and_cheese",
 	  "onion_rings",
 	  "pancakes",
@@ -234,7 +234,33 @@
 	"2": ["steak_and_chips", "taco_beef", "pie_pumpkin", "fish_and_chips"]
   },
 "HUB": {
-	"1": ["onion_rings", "cheese_bread", "pie_pineapple", "burger_fish",  "cheese_pizza", "hawaiian_pizza", "pizza_meat"],
+	"1": [
+	  "bolognese",
+	  "bread",
+	  "brownie",
+	  "burger_beef",
+	  "burger_chicken",
+	  "pizza_cheese",
+	  "bread_cheese",
+	  "fish_and_chips",
+	  "breed_garlic",
+	  "mac_and_cheese",
+	  "onion_rings",
+	  "pancakes",
+	  "apple_pie",
+	  "pineapple_pie",
+	  "cheese_pizza",
+	  "hawaiian_pizza",
+	  "meat_pizza",
+	  "mushroom_soup",
+	  "onion_soup",
+	  "pumpkin_soup",
+	  "soup_tomato",
+	  "steak_and_chips",
+	  "beef_taco",
+	  "chicken_taco",
+	  "mushroom_taco"
+	],
 	"2": ["steak_and_chips", "taco_beef", "pie_pumpkin", "fish_and_chips"]
   }
 }

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="TutorialNode" load_steps=2 format=3 uid="uid://dgrkfiel5n4jw"]
+
+[ext_resource type="Script" uid="uid://c8guh3nm5ht4s" path="res://scenes/Lobby/Steps/tutorial_step.gd" id="1_fyfm4"]
+
+[resource]
+script = ExtResource("1_fyfm4")
+text = "You can cycle bewteen ingreidnts with [J and [L]]"
+type = 1
+num = 7
+time = 0.1
+world_interaction = -1

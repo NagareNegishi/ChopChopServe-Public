@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="TutorialNode" load_steps=2 format=3 uid="uid://cm58t1vlyojah"]
+
+[ext_resource type="Script" uid="uid://c8guh3nm5ht4s" path="res://scenes/Lobby/Steps/tutorial_step.gd" id="1_eapmh"]
+
+[resource]
+script = ExtResource("1_eapmh")
+text = "Food crates are split into  four catergories: Fridge, Veg, Fruit and Dairy"
+type = 0
+num = 0
+time = 6.0
+world_interaction = -1

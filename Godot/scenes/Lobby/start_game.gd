@@ -72,7 +72,7 @@ func _on_timeout():
 	
 	await get_tree().create_timer(3.5).timeout
 	
-	ENetManager.start_game
+	ENetManager.start_game()
 	SceneManager.change_scene_all_players(SceneManager.Scene.JOHNO)
 	
 

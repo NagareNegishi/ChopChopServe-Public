@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_pe8w4")
-text = "You can also Dash with [K]"
-type = 1
-num = 2
-time = 0.0
+text = "Now that you can move, it's time to explore your cullinary potienal"
+type = 0
+num = 0
+time = 4.0

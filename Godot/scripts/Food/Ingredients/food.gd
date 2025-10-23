@@ -353,8 +353,9 @@ func on_state_change():
 
 # ----------------------- CHANGING VISIBILITY/COLLISIONS -----------------------
 func visibility_of_mesh(meshName: MeshInstance3D, changeTo: bool):
-	if meshName != null:
+	if meshName == null:
 		push_error("No mesh passed to current_visibility() in food.gd")
+		return
 	
 	if changeTo:
 		meshName.show()

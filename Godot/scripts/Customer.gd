@@ -206,7 +206,7 @@ func _npc_behavior(delta: float):
 				if (food is MenuItem and food.get_meal_name() == order[0].get_meal_name()):
 					CurrencySystem.server_add_currency(ENetManager.get_my_team(), 100.0)
 					ReputationSystem.server_add_reputation(ENetManager.get_my_team(), 
-															10.0 * food.get_quality())
+															3 * food.get_quality())
 					_table_target.rpc("remove_plate")
 					_table_target.remove_plate()
 					_time_till_leaving = 2

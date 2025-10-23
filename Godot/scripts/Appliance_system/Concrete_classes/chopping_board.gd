@@ -45,6 +45,7 @@ func set_food_rotation(angle: Vector3) -> void:
 func put(item: Node) -> bool:
 	if not _can_accept(item):
 		return false
+	if item is Tomato: GlobalScript.tutorial_step.emit(9)
 	contents.append(item)
 	add_child(item)
 	item.position = Vector3(0.0, size.y * 0.5, 0.0)

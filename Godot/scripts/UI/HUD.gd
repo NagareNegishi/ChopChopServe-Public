@@ -12,7 +12,6 @@ $Sabotages/UiSabotageNode5, $Sabotages/UiSabotageNode6]
 
 func _ready() -> void:
 	$Server.text = "Client" if !multiplayer.is_server() else "Server"
-	$Label.text = str(ENetManager.get_my_team())
 	for control in debug_hud:
 		control.visible = false
 	

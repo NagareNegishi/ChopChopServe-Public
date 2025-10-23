@@ -201,9 +201,9 @@ sabotage_index = 5
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 551.0
+offset_left = 530.0
 offset_top = 4.0
-offset_right = 997.0
+offset_right = 976.0
 offset_bottom = 57.0
 grow_horizontal = 1
 grow_vertical = 1
@@ -233,9 +233,9 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_bottom = 0.0
-offset_left = -558.0
+offset_left = -533.0
 offset_top = 3.0
-offset_right = -112.0
+offset_right = -87.0002
 offset_bottom = 56.0
 grow_horizontal = 0
 grow_vertical = 1
@@ -300,12 +300,5 @@ modulate = Color(0.0705882, 0.0705882, 0.0705882, 1)
 position = Vector2(97.8, 619.8)
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("9_mms7u")
-
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_left = 26.0
-offset_top = 75.0
-offset_right = 66.0
-offset_bottom = 98.0
 
 [editable path="Team2Rep"]

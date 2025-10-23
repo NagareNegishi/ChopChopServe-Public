@@ -21,6 +21,22 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_8nf6r")
 
+[node name="TextureRect3" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -78.5
+offset_top = -37.5
+offset_right = 74.5
+offset_bottom = 57.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_lto73")
+expand_mode = 2
+
 [node name="Team1" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 8
@@ -36,17 +52,17 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Team1_Outline" type="TextureRect" parent="Team1"]
-modulate = Color(0.584314, 0.172549, 0.196078, 1)
+modulate = Color(1, 0.435294, 0.439216, 1)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -216.0
+offset_left = -228.0
 offset_top = -27.0
 offset_right = -151.0
-offset_bottom = 11.0
+offset_bottom = 18.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_7cglj")
@@ -61,10 +77,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -211.0
+offset_left = -223.0
 offset_top = -23.0
 offset_right = -153.0
-offset_bottom = 8.0
+offset_bottom = 13.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_7cglj")
@@ -78,38 +94,21 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -205.5
-offset_top = -21.0
-offset_right = -164.5
-offset_bottom = 9.0
+offset_left = -208.5
+offset_top = -18.0
+offset_right = -167.5
+offset_bottom = 12.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(19, 15)
-theme_override_colors/font_color = Color(0.920881, 0.431312, 0.432649, 1)
-theme_override_colors/font_outline_color = Color(0.584816, 0.173939, 0.195548, 1)
+theme_override_colors/font_color = Color(0.968627, 0.607843, 0.54902, 1)
+theme_override_colors/font_outline_color = Color(1, 0.435294, 0.439216, 1)
 theme_override_constants/outline_size = 12
 theme_override_fonts/font = ExtResource("1_vitvd")
 theme_override_font_sizes/font_size = 25
-text = "90"
+text = "100"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="Score" type="HBoxContainer" parent="Team1"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -198.0
-offset_top = 31.0
-offset_right = -151.0
-offset_bottom = 46.0
-grow_horizontal = 2
-grow_vertical = 2
-rotation = 0.174533
-theme_override_constants/separation = 1
-alignment = 2
 
 [node name="Team2" type="Control" parent="."]
 layout_mode = 1
@@ -126,7 +125,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Team1_BG2" type="TextureRect" parent="Team2"]
-modulate = Color(0.54902, 0.513726, 0, 1)
+modulate = Color(0.905882, 0.831373, 0.227451, 1)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -135,8 +134,8 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = 612.0
 offset_top = 272.0
-offset_right = 677.0
-offset_bottom = 310.0
+offset_right = 691.0
+offset_bottom = 314.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_7cglj")
@@ -153,8 +152,8 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = 614.0
 offset_top = 276.0
-offset_right = 672.0
-offset_bottom = 306.0
+offset_right = 685.0
+offset_bottom = 310.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_7cglj")
@@ -168,38 +167,21 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 626.5
-offset_top = 278.0
-offset_right = 667.5
-offset_bottom = 308.0
+offset_left = 631.5
+offset_top = 280.0
+offset_right = 672.5
+offset_bottom = 310.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(19, 15)
-theme_override_colors/font_color = Color(0.995182, 0.894444, 0.177856, 1)
-theme_override_colors/font_outline_color = Color(0.549951, 0.514218, 0, 1)
+theme_override_colors/font_color = Color(1, 0.960784, 0.647059, 1)
+theme_override_colors/font_outline_color = Color(0.905882, 0.831373, 0.227451, 1)
 theme_override_constants/outline_size = 12
 theme_override_fonts/font = ExtResource("1_vitvd")
 theme_override_font_sizes/font_size = 25
-text = "20"
+text = "100"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="Score" type="HBoxContainer" parent="Team2"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 621.0
-offset_top = 336.0
-offset_right = 668.0
-offset_bottom = 351.0
-grow_horizontal = 2
-grow_vertical = 2
-rotation = -0.174533
-theme_override_constants/separation = 1
-alignment = 2
 
 [node name="Main" type="Control" parent="."]
 layout_mode = 1
@@ -253,6 +235,7 @@ theme_override_fonts/font = ExtResource("1_vitvd")
 theme_override_font_sizes/font_size = 30
 text = "9:30"
 horizontal_alignment = 1
+vertical_alignment = 1
 script = ExtResource("6_k13aw")
 
 [node name="Day" type="Label" parent="Main"]

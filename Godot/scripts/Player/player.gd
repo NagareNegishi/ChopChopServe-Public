@@ -77,7 +77,7 @@ func _ready() -> void:
 	$Mesh/Armature/Skeleton3D/RightHand.set_surface_override_material(1, material)
 	$Mesh/Armature/Skeleton3D/LeftHand.set_surface_override_material(1, material)
 	if !multiplayer.get_unique_id() == name.to_int() : return
-	print(str(ENetManager.get_my_id()) + ": " + str(ENetManager.get_player_list()))
+	#wprint(str(ENetManager.get_my_id()) + ": " + str(ENetManager.get_team1()))
 	await get_tree().create_timer(0.05).timeout
 	
 	rpc_id(1, "_server_set_name", name.to_int(), GlobalScript.player_name)
@@ -410,7 +410,6 @@ func _client_pickup(player_path : String, item_path : String) -> bool:
 @rpc("authority", "call_local")
 func server_drop_item(player_path : String, is_throw : bool) -> bool:
 	var player : Node3D = get_tree().current_scene.get_node(player_path)
-	print("print")
 	if(player.item_in_hand == null):
 		return false
 	rpc("_client_drop_item", player_path, is_throw)
@@ -438,7 +437,7 @@ func _client_drop_item(player_path : String, is_throw : bool) -> bool:
 	player._action(false)
 
 	
-	print("Item dropped ", player.item_in_hand)
+	#print("Item dropped ", player.item_in_hand)
 	player.anim_tree["parameters/SM_Walking/conditions/empty"] = true
 	player.anim_tree["parameters/SM_IDLE/conditions/empty"] = true
 	player.anim_tree["parameters/SM_Walking/conditions/holding"] = false
@@ -471,7 +470,7 @@ func drop_item(is_throw : bool) -> bool:
 
 
 	item_in_hand.get_node("InteractableComponent").custom_rotate(true)
-	print("Item dropped ", item_in_hand)
+	#print("Item dropped ", item_in_hand)
 	emit_signal("item_dropped", item_in_hand)
 	item_in_hand = null
 	return true
@@ -563,7 +562,7 @@ func remove_item() -> Node3D:
 	anim_tree["parameters/SM_Walking/conditions/holding"] = false
 	anim_tree["parameters/SM_IDLE/conditions/holding"] = false
 	item_in_hand = null
-	print("Item removed")
+	#print("Item removed")
 	return res
 
 
@@ -608,11 +607,9 @@ var sabo_index : int
 
 func _sabotage_left():
 	sabo_index = sabo_index - 1 if sabo_index > 0 else 5
-	print(sabo_index)
-	
+
 func _sabotage_right():
 	sabo_index = sabo_index + 1 if sabo_index <= 4 else 0
-	print(sabo_index)
 
 func _select_sabo():
 	_sabotage(sabo_index)

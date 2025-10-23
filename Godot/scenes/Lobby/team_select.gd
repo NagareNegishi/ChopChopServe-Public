@@ -13,8 +13,8 @@ func _ready() -> void:
 	panel.add_theme_stylebox_override("panel", temp_style_box)
 	label.text = "Join Team %d" % team
 	color.a = 1
-	label.add_theme_color_override("font_color", color)
-	label.add_theme_color_override("font_outline_color", outline)
+	label.add_theme_color_override("font_color", outline)
+	label.add_theme_color_override("font_outline_color", color)
 
 
 func _on_body_enter(body : Node3D):
@@ -24,10 +24,8 @@ func _on_body_enter(body : Node3D):
 	var player_id = body.name.to_int()
 	
 	if player_id == -1: return
-	if team == 0: 
-		ENetManager.shuffle_players()
-		return
-	ENetManager.enet_layer.send_to_multiple(ENetManager.get_player_list(), {  # 1 is always the host
+	
+	ENetManager.enet_layer.send_to(1, {  # 1 is always the host
 		"type": "request_team_join",
 		"player_id": player_id,
 		"team": team

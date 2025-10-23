@@ -967,6 +967,7 @@ transform = Transform3D(-12.1421, 0, 0.707391, 0, 1, 0, -12.1519, 0, -0.706823, 
 
 [node name="TeamSelect" parent="Background" instance=ExtResource("30_n7pfy")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -4.86229, 0.540345, 5.2853)
+team = 1
 color = Color(0.905882, 0.831373, 0.227451, 0.431373)
 outline = Color(0.999999, 0.959951, 0.648501, 1)
 
@@ -996,6 +997,7 @@ shape = SubResource("CylinderShape3D_1tr7b")
 
 [node name="TeamSelect" parent="." instance=ExtResource("30_n7pfy")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -5.23002, 0.91495, -5.47602)
+team = 2
 color = Color(0.999957, 0.435369, 0.438875, 0.431373)
 outline = Color(0.968627, 0.607843, 0.54902, 1)
 

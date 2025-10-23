@@ -3,14 +3,15 @@ extends Control
 
 var hints : Array[String] = ["No frogs were harmed in development",
 							"Watch out for wild rats!",
-							"Extishugers might be handy for fires",
+							"Extinguisher might be handy for fires",
 							"Might be killer tomatos about",
 							"Can you do the infamous back dash?",
 							"We love Costal Postal <3",
 							"You can view controls inside the pause menu",
-							"Ribbit Ribbit",
+							"'Ribbit Ribbit!'",
 							"Tit for Tat :froghearteyes:",
-							"Recipes can be viewed in-game with [TAB]"]
+							"Recipes can be viewed in-game with [TAB]",
+							"Developed by a team of seven students!"]
 
 @onready var hint_timer : Timer = Timer.new()
 @onready var test_timer : Timer = Timer.new()

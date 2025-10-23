@@ -14,14 +14,14 @@ shader_parameter/blur_radius = 1.0
 shader_parameter/blur_samples = 4
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tms7n"]
-bg_color = Color(0.805342, 0.665402, 0.488874, 1)
+bg_color = Color(0.226707, 0.226707, 0.226707, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_okijf"]
-bg_color = Color(0.928007, 0.852731, 0.758411, 1)
+bg_color = Color(0.299547, 0.299547, 0.299547, 1)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
@@ -300,3 +300,23 @@ offset_right = 1182.0
 offset_bottom = 765.0
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("6_a0ewq")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -253.0
+offset_top = -247.0
+offset_right = 253.0
+offset_bottom = -185.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_tms7n")
+theme_override_colors/font_color = Color(0.976471, 0.976471, 0.415686, 1)
+theme_override_colors/font_outline_color = Color(0.785977, 0.628856, 0.178248, 1)
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 46
+text = "NEW RECIPE UNLOCKED!"

@@ -6,7 +6,7 @@ signal done()
 @onready var recipe_final : TextureRect = $MenuItem
 @onready var row1 : HBoxContainer = $Ingredients/Row1
 @onready var row2 : HBoxContainer = $Ingredients/Row2
-@onready var progress_parts = [$Panel3, $Panel4, $ProgressBar, $Ticks] 
+@onready var progress_parts = [$Panel3, $Panel4, $ProgressBar, $Ticks, $Label] 
 @onready var cook_box = $CookBox
 @export var hide : bool = false
 

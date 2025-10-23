@@ -11,12 +11,12 @@ func set_color_manual(player_id : int, t : int):
 	var color : Color
 	var outline : Color
 	match t:
-		2: color = Color("ff6f70")
-		1: color = Color("e7d43a")
+		2: color = Color("f79b8c")
+		1: color = Color("fff5a5")
 		_: color = Color8(249,249,249,255)
 	match t:
-		2: outline = Color("f79b8c")
-		1: outline = Color("fff5a5")
+		2: outline = Color("ff6f70")
+		1: outline = Color("e7d43a")
 		_: outline = Color("8f8f8f")
 	print(t)
 	tag.set("theme_override_colors/font_color", color)

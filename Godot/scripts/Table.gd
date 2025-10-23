@@ -17,9 +17,7 @@ func _on_detection_area_area_entered(area: Node3D):
 	if not is_multiplayer_authority():
 		return
 	var area_parent = area.get_parent()
-	print(area_parent is Plate, "WWW")
 	if area_parent is Plate and not (area_parent in plates):
-		print("IM A PLATE")
 		plates.append(area_parent)
 
 func _process(delta):
@@ -27,9 +25,9 @@ func _process(delta):
 		return
 	for plate in plates:
 		if not (plate.get_parent() is Player):
-			print("IM A PLATE")
 			place_plate_rpc.rpc(plate.get_path())
 			current_plate = plate
+			
 func _on_detection_area_area_exited(area: Node3D):
 	var area_parent = area.get_parent()
 	if area_parent is Plate and area_parent in plates:
@@ -47,8 +45,8 @@ func place_plate_rpc(plate_path: NodePath):
 
 @rpc ("any_peer", "reliable")
 func remove_plate():
-	print(is_multiplayer_authority(), current_plate, "SHEEP")
 	if current_plate:
 		var food = current_plate.get_children().back()
 		if food:
 			food.queue_free()
+		current_plate = null

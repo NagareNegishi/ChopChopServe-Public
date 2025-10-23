@@ -12,6 +12,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 2.0
+offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_5gu6x")
@@ -124,9 +126,9 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 148.0
-offset_top = -271.0
-offset_right = 343.0
-offset_bottom = -126.0
+offset_top = -286.0
+offset_right = 373.0
+offset_bottom = -86.0
 grow_vertical = 0
 theme_override_constants/separation = 20
 
@@ -163,7 +165,6 @@ text = "EXIT GAME"
 [node name="HSeparator" type="HSeparator" parent="Menu/ButtonsContainer"]
 visible = false
 modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
 
 [node name="TutorialButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
@@ -171,6 +172,11 @@ visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "TUTORIAL"
+
+[node name="SearchButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "SEARCH HOST"
 
 [node name="TestButton" parent="Menu/ButtonsContainer" instance=ExtResource("3_36fig")]
 visible = false

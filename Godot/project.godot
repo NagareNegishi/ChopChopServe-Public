@@ -31,10 +31,10 @@ MI="*res://scripts/Food/MenuItems/menuItem.gd"
 ENetManager="*res://scripts/Network_Layer/enet_manager.gd"
 SceneManager="*res://scripts/Network_Layer/scene_manager.gd"
 RatAttack="*res://scripts/Sabotage/ratAttack.gd"
-Debug="*res://scripts/Debug.gd"
 RatManager="*res://scripts/Sabotage/rat_manager.gd"
 UIManager="*res://UI/UIManager.gd"
-SoundManager="*res://scripts/Sound/sound_manager.gd"
+Debug="*res://scripts/Sound_and_Utility/Debug.gd"
+SoundManager="*res://scripts/Sound_and_Utility/sound_manager.gd"
 
 [display]
 

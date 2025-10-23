@@ -3,6 +3,7 @@ extends Control
 
 
 var network_layer: ENetNetworkLayer
+var room_list_popup: RoomListPopup
 # Menu UI elements
 @onready var menu = $Menu
 @onready var create_button = $Menu/ButtonsContainer/HostButton
@@ -12,6 +13,7 @@ var network_layer: ENetNetworkLayer
 @onready var exit_button = $Menu/ButtonsContainer/ExitButton
 @onready var  test_button = $Menu/ButtonsContainer/TestButton
 @onready var tutorial_button = $Menu/ButtonsContainer/TutorialButton
+@onready var  search_button = $Menu/ButtonsContainer/SearchButton
 @onready var  error_message = $Menu/Error
 
 @onready var name_input : LineEdit = $Menu/Note/VBox/Name/Name
@@ -26,17 +28,29 @@ enum ErrorType{
 ## Initialization
 func _ready():
 	network_layer = ENetManager.enet_layer
+	_setup_room_list_popup()
 	create_button.pressed.connect(_on_create_pressed)
 	join_button.pressed.connect(_on_join_pressed)
 	network_layer.connected.connect(_switch_to_lobby)
 	exit_button.pressed.connect(_exit_game)
 	test_button.pressed.connect(_diagnose_network)
 	tutorial_button.pressed.connect(_on_tutorial_pressed)
+	search_button.pressed.connect(_on_search_pressed)
 	network_layer.tutorial_started.connect(_on_tutorial_started)
+	network_layer.rooms_list_received.connect(_on_rooms_list_received)
+	network_layer.http_request_failed.connect(_on_http_request_failed)
 	if !froggo_building : return
 	froggo_building.play("ArmatureAction", -1, 0.6)
 	SoundManager.play_bgm(SoundManager.BGM.MENU, 2.0)
 	SoundManager.play_sfx_player(SoundManager.SFX_PLAYER.JUMP)
+
+
+## Setup Room List Popup
+func _setup_room_list_popup():
+	var room_list_popup_scene = preload("res://scenes/Network_Layer/room_list_popup.tscn")
+	room_list_popup = room_list_popup_scene.instantiate() as RoomListPopup
+	add_child(room_list_popup)
+	room_list_popup.room_selected.connect(_on_room_selected)
 
 
 ## Create Lobby
@@ -92,6 +106,7 @@ func _is_room_code(input: String) -> bool:
 ## Switch to Lobby
 func _switch_to_lobby():
 	SceneManager.change_scene(SceneManager.Scene.HUB)
+	# SceneManager.change_scene(SceneManager.Scene.LOBBY_TEST)
 
 
 ## Exit Game
@@ -138,6 +153,42 @@ func _on_tutorial_pressed():
 func _on_tutorial_started():
 	Debug.net_log("Tutorial started, Current player list: " + str(ENetManager.get_player_list()))
 	SceneManager.change_scene(SceneManager.Scene.TUTORIAL)
+
+
+## Ask the network layer to search for active rooms
+func _on_search_pressed():
+	search_button.disabled = true
+	search_button.text = "Searching host..."
+	network_layer.get_active_rooms()
+
+
+## Handle HTTP request failure
+func _on_http_request_failed():
+	search_button.disabled = false
+	search_button.text = "SEARCH HOST"
+
+
+## Show received rooms in popup
+## @param rooms: Array of room info dictionaries
+func _on_rooms_list_received(rooms: Array):
+	search_button.disabled = false
+	search_button.text = "SEARCH HOST"
+	if rooms.is_empty():
+		ENetManager.show_notification("No active rooms found.", 2.0)
+	else:
+		room_list_popup.show_rooms(rooms)
+
+
+## Fill in IP input when a room is selected
+## @param room_code: The selected room code
+func _on_room_selected(room_code: String):
+	ip_input.text = room_code
+
+
+
+
+
+
 
 
 

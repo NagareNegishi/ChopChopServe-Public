@@ -94,8 +94,7 @@ func can_start():
 	var team2_size = ENetManager.get_team2().size()
 	var player_size = ENetManager.get_player_list().size()
 	
-	return true
-	players.size() == player_size and \
+	return players.size() == player_size and \
 	team1_size >= 1 and \
 	team2_size >= 1 and \
 	team1_size + team2_size == player_size

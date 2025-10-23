@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="TutorialNode" load_steps=2 format=3 uid="uid://xvaremp7vibc"]
+
+[ext_resource type="Script" uid="uid://c8guh3nm5ht4s" path="res://scenes/Lobby/Steps/tutorial_step.gd" id="1_j74j1"]
+
+[resource]
+script = ExtResource("1_j74j1")
+text = "Place chopped tomatos into the pot"
+type = 1
+num = 12
+time = 0.2
+world_interaction = -1

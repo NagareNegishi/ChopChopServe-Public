@@ -15,12 +15,16 @@ func _ready() -> void:
 	reset()
 	set_physics_process(false)
 	#set_info(bolognese.new())
-
+	var index = 0
+	for c :  TextureRect in $Ticks.get_children():
+		c.modulate = GlobalScript.player_outline_colours[0]
+		c.visible = index < ENetManager.get_player_list().size()
+	
 	for part in progress_parts:
 		part.visible = false
 	
 func _physics_process(delta: float) -> void:
-	_progress.value += delta * 2
+	_progress.value += delta * 0.2
 	if !ENetManager.is_host(): return
 	if _progress.value >= _progress.max_value: hide_self.rpc()
 

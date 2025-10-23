@@ -23,10 +23,22 @@ static var starters = []
 static var mains = []
 static var deserts = []
 
+static func _ensure_initialized():
+	if subclasses == null:
+		subclasses = []
+	if starters == null:
+		starters = []
+	if mains == null:
+		mains = []
+	if deserts == null:
+		deserts = []
+
 static func register(subclass_class):
+	_ensure_initialized()
 	subclasses.append(subclass_class)
 
 static func register_type(list_name: Array, food_item):
+	_ensure_initialized()
 	list_name.append(food_item)
 
 static func get_subclasses() -> Array:
@@ -46,6 +58,7 @@ func match_menu_items(input_ingredients: Array):
 		print("INSTANCE INGREDIENTS    ",instance.ingredients)
 		if check_items(input_ingredients, instance.ingredients, instance):
 			#print("in check items if")
+			if instance is soup_tomato: GlobalScript.tutorial_step.emit(13)
 			return instance 
 	#print("there is no menu item that contains these ingredients")
 	return null

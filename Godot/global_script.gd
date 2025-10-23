@@ -8,6 +8,7 @@ enum UpgradeType{
 	CAP
 }
 
+static var tutorial_counter_tomato = 0
 var player : Player
 var player_colours = PackedColorArray([Color("ff94fc",1), Color("57ceff",1), Color("ff734f",1), Color("76ff61",1)]) # Colours: Pink, Blue, Red, Green
 var player_outline_colours = PackedColorArray([Color("ed58d1",1), Color("4f77f0",1), Color("e32f00",1), Color("53ba43",1)]) # Colours: Pink, Blue, Red, Green
@@ -49,3 +50,10 @@ func get_local_player_by_id(player_id : int) -> Player:
 
 func get_all_players():
 	return get_tree().current_scene.get_node("== PLAYERS ==").get_children()
+
+
+func array_check_tomato(contents : Array) -> bool:
+	for f in contents:
+		if f is Tomato: continue
+		return false 
+	return true

@@ -8,8 +8,7 @@ func _ready() -> void:
 	multiplayer.peer_connected.connect(_name_fresh)
 	hud.set_tutorial_vis(false)
 	GameState.current_day = 1
-	var available_food_names = GameState._get_available_food_names()
-	GameState._make_food_items_available(available_food_names)
+	GameState.reset_recipes()
 
 
 func _start_tutorial(started : bool):

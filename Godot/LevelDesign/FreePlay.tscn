@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://frijdfjvcu7p"]
+[gd_scene load_steps=62 format=3 uid="uid://frijdfjvcu7p"]
 
 [ext_resource type="Script" uid="uid://c3h1hny6w2xwn" path="res://LevelDesign/free_play.gd" id="1_h3x7p"]
 [ext_resource type="Script" uid="uid://bovslkbm84p1j" path="res://scripts/level_camera.gd" id="5_h3x7p"]
@@ -16,8 +16,12 @@
 [ext_resource type="Resource" uid="uid://dpqo0r3b8yl0t" path="res://scenes/Lobby/Steps/Step8.tres" id="14_tb1gy"]
 [ext_resource type="Resource" uid="uid://dgrkfiel5n4jw" path="res://scenes/Lobby/Steps/Step7.tres" id="15_2ye88"]
 [ext_resource type="Resource" uid="uid://bhyyxdaeet5td" path="res://scenes/Lobby/Steps/Step9.tres" id="16_tb1gy"]
+[ext_resource type="Resource" uid="uid://q1nfegofggcw" path="res://scenes/Lobby/Steps/Step10.tres" id="17_2ye88"]
+[ext_resource type="Resource" uid="uid://cog2o6c08j717" path="res://scenes/Lobby/Steps/Step11.tres" id="18_pjhwv"]
 [ext_resource type="PackedScene" uid="uid://escxqu04mxtg" path="res://assets/NaturePack/Grass_Short.fbx" id="19_000hf"]
+[ext_resource type="Resource" uid="uid://xvaremp7vibc" path="res://scenes/Lobby/Steps/Step12.tres" id="19_tigh6"]
 [ext_resource type="PackedScene" uid="uid://cqlbcyk00caqq" path="res://scenes/Player/truckmove.tscn" id="20_4ai3k"]
+[ext_resource type="Resource" uid="uid://bw851sxksnlhj" path="res://scenes/Lobby/Steps/Step13.tres" id="20_q31he"]
 [ext_resource type="PackedScene" uid="uid://7p0tcfmgevn1" path="res://assets/NaturePack/CommonTree_4.fbx" id="21_62apu"]
 [ext_resource type="PackedScene" uid="uid://cm8fk0nsxtsm2" path="res://assets/NaturePack/CommonTree_3.fbx" id="22_jgp2i"]
 [ext_resource type="PackedScene" uid="uid://cbv5dm1vh4ibj" path="res://assets/NaturePack/CommonTree_2.fbx" id="23_qe1bb"]
@@ -339,7 +343,7 @@ shape = SubResource("BoxShape3D_u0btf")
 [node name="== HUD ==" type="CanvasLayer" parent="." groups=["Canvas"]]
 
 [node name="UiLobbyHud" parent="== HUD ==" instance=ExtResource("5_i7m8l")]
-tutorial_steps = Array[ExtResource("7_ygac2")]([ExtResource("8_wcqh3"), ExtResource("9_0861o"), ExtResource("10_btupj"), ExtResource("11_5wjbk"), ExtResource("12_wcqh3"), ExtResource("13_5wjbk"), ExtResource("15_2ye88"), ExtResource("14_tb1gy"), ExtResource("16_tb1gy")])
+tutorial_steps = Array[ExtResource("7_ygac2")]([ExtResource("8_wcqh3"), ExtResource("9_0861o"), ExtResource("10_btupj"), ExtResource("11_5wjbk"), ExtResource("12_wcqh3"), ExtResource("13_5wjbk"), ExtResource("15_2ye88"), ExtResource("14_tb1gy"), ExtResource("16_tb1gy"), ExtResource("17_2ye88"), ExtResource("18_pjhwv"), ExtResource("19_tigh6"), ExtResource("20_q31he")])
 
 [node name="Extinguisher" parent="." instance=ExtResource("38_s0ivk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.495926, 1, -7.85375)

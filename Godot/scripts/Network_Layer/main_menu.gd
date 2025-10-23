@@ -42,10 +42,13 @@ func _ready():
 	if !froggo_building : return
 	froggo_building.play("ArmatureAction", -1, 0.6)
 	SoundManager.play_bgm(SoundManager.BGM.MENU, 2.0)
-	SoundManager.play_sfx_player(SoundManager.SFX_PLAYER.JUMP)
+	Input.joy_connection_changed.connect(_controller)
 
 
-## Setup Room List Popup
+func _controller(device : int, connected : bool):
+	create_button.grab_focus()
+
+	## Setup Room List Popup
 func _setup_room_list_popup():
 	var room_list_popup_scene = preload("res://scenes/Network_Layer/room_list_popup.tscn")
 	room_list_popup = room_list_popup_scene.instantiate() as RoomListPopup

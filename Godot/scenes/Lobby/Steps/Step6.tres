@@ -7,5 +7,5 @@ script = ExtResource("1_qqc53")
 text = "Lets go and get a tomato"
 type = 1
 num = 6
-time = 0.1
+time = 0.2
 world_interaction = -1

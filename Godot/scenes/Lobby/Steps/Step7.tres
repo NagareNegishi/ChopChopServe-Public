@@ -7,5 +7,5 @@ script = ExtResource("1_fyfm4")
 text = "You can cycle bewteen ingreidnts with [J and [L]]"
 type = 1
 num = 7
-time = 0.1
+time = 0.25
 world_interaction = -1

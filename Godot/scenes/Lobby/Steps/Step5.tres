@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_eapmh")
-text = "Food crates are split into  four catergories: Fridge, Veg, Fruit and Dairy"
+text = "Food crates are split into four catergories: Fridge, Veg, Fruit and Dairy"
 type = 0
 num = 0
 time = 6.0

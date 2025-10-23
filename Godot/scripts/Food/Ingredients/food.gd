@@ -336,6 +336,11 @@ func on_state_change():
 			current_mesh = spoiled_mesh
 			
 		foodState.CHOPPED:
+			if self is Tomato: 
+				GlobalScript.tutorial_counter_tomato += 1
+				GlobalScript.tutorial_step.emit(10)
+			if GlobalScript.tutorial_counter_tomato == 3:
+				GlobalScript.tutorial_step.emit(11)
 			current_mesh = chopped_mesh
 			
 		foodState.BURNT:

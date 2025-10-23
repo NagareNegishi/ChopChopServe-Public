@@ -2,13 +2,13 @@
 
 Milestone 3 is your working game.
 
-This will have a markdown file milestone3.md which documents that group submission.  
+This will have a markdown file milestone3.md which documents that group submission.
 There will also be a file per CGRA359 student (username.md) describing their contribution
 
 The milestone3.md file will at minimum cover:
 
 Team Summary:
-* A list of the first and last names of the students (and others) in the team. Give the role with the name: Simon McCallum (CGRA 390, programming) 
+* A list of the first and last names of the students (and others) in the team. Give the role with the name: Simon McCallum (CGRA 390, programming)
 * A list of links to any other repos connected to the game, that may be needed to assess the game
 * Optionally a **video** of the **gameplay** showing off the important parts of the game
 * Group discussion on the **development process**
@@ -18,7 +18,7 @@ Team Summary:
    * Discussion of best parts of the game/development process as a group
 
 In the username.md file each of you will document your contribution to the project.  When describing the contribution
-the parts of the game (this could be general systems or individual files, but do not be too detailed) you can claim 
+the parts of the game (this could be general systems or individual files, but do not be too detailed) you can claim
 
 * All - you developed all the in this area - no one else can claim more than touching the code/system
 * Most - you did the majority of the development, other developers can claim "some" or "touched"
@@ -42,4 +42,4 @@ If you claim “Half” then others cannot claim “All” or “Most”, but on
 | Touched | N || 1 | 1 | 2 | N | N |
 
 * Add a commentary section which includes things that indicate the quality of the work you have done, this could be research, great ideas, pubic engagement, subtle implementation details, group coordination, great planning, ...
-* 
+*

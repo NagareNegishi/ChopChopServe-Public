@@ -152,7 +152,7 @@ properties/0/path = NodePath(".:customer_seed")
 properties/0/spawn = true
 properties/0/replication_mode = 1
 
-[node name="BradleyTestScene" type="Node3D" node_paths=PackedStringArray("tables", "queue_spots", "customer_spawn_point", "customer_exit_point")]
+[node name="BradleyTestScene2" type="Node3D" node_paths=PackedStringArray("tables", "queue_spots", "customer_spawn_point", "customer_exit_point")]
 script = ExtResource("1_ndyhk")
 customer_scenes = Array[PackedScene]([ExtResource("2_k8rnb"), ExtResource("3_g2bww"), ExtResource("4_et00d"), ExtResource("2_e41aj")])
 tables = [NodePath("NavigationRegion3D/Tables/TableBody22"), NodePath("NavigationRegion3D/Tables/TableBody27"), NodePath("NavigationRegion3D/Tables/TableBody25"), NodePath("NavigationRegion3D/Tables/TableBody26"), NodePath("NavigationRegion3D/Tables/TableBody24"), NodePath("NavigationRegion3D/Tables/TableBody23")]

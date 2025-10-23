@@ -24,7 +24,7 @@ func _ready() -> void:
 		part.visible = false
 	
 func _physics_process(delta: float) -> void:
-	_progress.value += delta * 0.2
+	_progress.value += delta * 0.75
 	if !ENetManager.is_host(): return
 	if _progress.value >= _progress.max_value: hide_self.rpc()
 

@@ -12,6 +12,7 @@ var progress : int = 0
 func _ready() -> void:
 	code_label.text = ENetManager.enet_layer.get_connection_info().replace(":7000","")
 	tutorial_widget.set_progress_max(tutorial_steps.size())
+	
 
 
 func set_tutorial_vis(vis : bool):

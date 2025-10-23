@@ -47,7 +47,7 @@ func _init():
 
 func _ready():
 	food_data = _read_json_file("res://scripts/Food/menu_items_data.json")
-	reset_recipes()
+	#reset_recipes()
 	SceneManager.connect("level_ready", Callable(self, "_on_level_started"))
 	
 

@@ -3,7 +3,7 @@ extends Node
 
 @export var SERVE_TIMES : Array[int] = [120,120,135,135,150]
 @export var PREP_TIME : int = 35
-@export var amount_of_days: int = 10  # Amount of days is the amount of rounds on one level
+@onready var amount_of_days: int = max(1, SERVE_TIMES.size())  # Amount of days is the amount of rounds on one level
 
 var current_time : float = PREP_TIME
 var current_day : int = 0
@@ -64,11 +64,11 @@ func change_phase():
 	timer.stop()
 	match current_phase:
 		Phases.PREP: #GOTO SERVE PHASE
+			can_spawn_customers = true
 			current_phase = Phases.SERVE
 			current_time = SERVE_TIMES[current_day - 1]
 			rpc("_client_time_change", max(0,current_time))
 			timer.start()
-			customer_spawner()
 
 		Phases.SERVE: #GOTO PREP PHASE
 			if check_if_game_finshed(): return
@@ -85,6 +85,7 @@ func change_phase():
 			return
 
 		Phases.END_GAME: #GOTO PREP
+			can_spawn_customers = false
 			print("END GAME")
 			return
 
@@ -99,6 +100,7 @@ func _on_timer_timeout():
 		return
 	elif current_time <= 0 && Phases.SERVE == current_phase:
 		customer_check.one_shot = false
+		can_spawn_customers = false
 		customer_check.start()
 		timer.stop()
 		return
@@ -133,6 +135,7 @@ func _start_prep():
 	current_time = PREP_TIME
 	rpc("_client_time_change", max(0,current_time))
 	timer.start()
+	can_spawn_customers = false
 	disable_controls.rpc(false)
 
 
@@ -154,11 +157,6 @@ func _on_check_customers():
 	if !get_tree().get_nodes_in_group("Customer").is_empty(): return
 	customer_check.stop()
 	change_phase()
-
-func customer_spawner():
-	#await spawn_customer()
-	#await spawn_customer()
-	pass
 
 
 @rpc("any_peer", "call_local")

@@ -24,8 +24,10 @@ func _on_body_enter(body : Node3D):
 	var player_id = body.name.to_int()
 	
 	if player_id == -1: return
-	
-	ENetManager.enet_layer.send_to(1, {  # 1 is always the host
+	if team == 0: 
+		ENetManager.shuffle_players()
+		return
+	ENetManager.enet_layer.send_to_multiple(ENetManager.get_player_list(), {  # 1 is always the host
 		"type": "request_team_join",
 		"player_id": player_id,
 		"team": team

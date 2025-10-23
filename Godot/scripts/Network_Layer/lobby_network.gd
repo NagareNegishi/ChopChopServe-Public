@@ -407,7 +407,7 @@ func _start_game() -> void:
 	# Actual scene
 	# SceneManager.change_scene(SceneManager.Scene.LOBBY)
 	# Test scene
-	SceneManager.change_scene(SceneManager.Scene.CityLayout2)
+	SceneManager.change_scene(SceneManager.Scene.JOHNO)
 
 
 ## Leave Button Pressed

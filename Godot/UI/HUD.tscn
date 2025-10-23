@@ -301,4 +301,11 @@ position = Vector2(97.8, 619.8)
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("9_mms7u")
 
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 75.0
+offset_right = 66.0
+offset_bottom = 98.0
+
 [editable path="Team2Rep"]

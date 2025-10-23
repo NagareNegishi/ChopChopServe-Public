@@ -20,7 +20,7 @@ var current_day : int # Also as levels to know when to let new or more food come
 var current_phase
 var team_1_score : int
 var team_2_score : int
-var can_send_customers : bool = true
+var can_send_customers : bool = false
 var customer_amount : int
 var timer : Timer = Timer.new()
 

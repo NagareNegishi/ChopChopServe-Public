@@ -14,7 +14,7 @@ var _time_since_queue_check: float = 0.0
 @export var customer_spawn_point: Node3D
 @export var customer_exit_point: Node3D
 @export var customer_seed = 0 # For making synced random changes
-
+@export var game_state : GameStateTest
 var _next_customer_id_num: int = 0
 var number_of_restaurants = 2
 
@@ -46,7 +46,7 @@ func _process(delta: float):
 				shift_queue(i)
 				
 	_time_since_last_customer -= delta
-	if _time_since_last_customer < 0 and (GameState.get_customer_check() 
+	if _time_since_last_customer < 0 and (game_state.can_spawn_customers
 									and await get_free_queue_spot()
 									and customer_seed != 0):
 		_time_since_last_customer = NEW_CUSTOMER_DELAY

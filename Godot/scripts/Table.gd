@@ -40,13 +40,14 @@ func place_plate_rpc(plate_path: NodePath):
 		# if it's a valid plate and the table is empty, place it.
 		current_plate = plate_node
 		plate_node.reparent(self)
-		plate_node.global_position = self.global_position + Vector3(0, 0.5, 0)
+		plate_node.global_position = self.global_position + Vector3(0, 0.75, 0)
 		plate_node.freeze = true
 
 @rpc ("any_peer", "reliable")
 func remove_plate():
 	if current_plate:
 		var food = current_plate.get_children().back()
+		current_plate.set_dirty(true)
 		if food:
 			food.queue_free()
 		current_plate = null

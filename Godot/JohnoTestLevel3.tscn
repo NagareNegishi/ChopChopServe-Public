@@ -98,8 +98,8 @@ game_state = NodePath("GameState")
 
 [node name="GameState" type="Node" parent="." node_paths=PackedStringArray("food_court")]
 script = ExtResource("35_cktef")
-SERVE_TIMES = Array[int]([75, 120, 135, 135, 150])
-PREP_TIME = 30
+SERVE_TIMES = Array[int]([75, 75, 90, 90, 120])
+PREP_TIME = 25
 food_court = NodePath("..")
 
 [node name="== PLAYERS ==" type="Node" parent="."]

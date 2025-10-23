@@ -37,7 +37,7 @@ func _extingush() -> void:
 
 	var component : Inflammable = appliance.inflammable_component
 	
-	if component	.fire_level <= 0: return
+	if component.fire_level <= 0: return
 	
 	component.extinguish(1)
 
@@ -47,6 +47,5 @@ func _extingush() -> void:
 ## @param is_action if the player is using the action input
 ## @return void
 func _on_interactable_component_action_use(is_action: bool) -> void:
-	if GlobalScript.get_local_player().item_in_hand != self: return
 	$ExtinguishRange/GPUParticles3D.emitting = is_action
 	$ExtinguishRange.enabled = true if is_action else false

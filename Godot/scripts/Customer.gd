@@ -10,7 +10,7 @@ const MAXIMUM_ORDER_THINK_TIME: float = 1.0
 # Time in seconds the agent must be stuck before recalculating its path.
 const STUCK_RECALCULATE_TIME: float = 1.0 
 # Time in seconds the customer will stay seated till they get fed up not being served
-const MAXIMUM_SEATING_TIME: float = 30
+const MAXIMUM_SEATING_TIME: float = 50
 # Time in seconds the customer will stop moving for after falling
 const FALLEN_OVER_TIME = 5.0
 

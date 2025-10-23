@@ -9,6 +9,8 @@ var current_time : float = PREP_TIME
 var current_day : int = 0
 var current_phase : Phases = Phases.SERVE
 var can_spawn_customers : bool = false
+var end_ui_scene = preload("res://UI/UI_end_game.tscn")
+var end_ui = end_ui_scene.instantiate()
 
 @onready var timer : Timer = Timer.new()
 @onready var customer_check : Timer = Timer.new()
@@ -42,8 +44,8 @@ func _ready_host():
 	customer_check.timeout.connect(_on_check_customers)
 	add_child(customer_check)
 	
-	CurrencySystem.minus_currency(1, 9800)
-	CurrencySystem.minus_currency(2, 9800)
+	CurrencySystem.minus_currency(1, 9000)
+	CurrencySystem.minus_currency(2, 9000)
 	UIManager.recipe_screen.done.connect(_start_prep)
 	GameState.food_data = GameState._read_json_file("res://scripts/Food/menu_items_data.json")
 	GameState.current_day = 0
@@ -86,7 +88,7 @@ func change_phase():
 
 		Phases.END_GAME: #GOTO PREP
 			can_spawn_customers = false
-			print("END GAME")
+			end_game()
 			return
 
 	rpc("_client_phase_change", current_phase)
@@ -164,3 +166,8 @@ func load_recipes():
 	await GameState.reset_recipes()
 	var available_food_names = GameState._get_available_food_names()
 	GameState._make_food_items_available(available_food_names)
+
+func end_game():
+	add_child(end_ui)
+	end_ui.set_to_visible()
+	remove_child(timer)

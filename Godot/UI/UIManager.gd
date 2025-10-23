@@ -12,7 +12,7 @@ var recipe_tab : UIRecipes
 func _ready() -> void:
 	add_child(canvas_layer)
 	canvas_layer.visible = false
-	canvas_layer.layer = 1000
+	canvas_layer.layer = 9000
 	
 	load_screen = setup_ui(preload("res://UI/UI_LoadingScreen.tscn"))
 	recipe_screen = setup_ui(preload("res://UI/Recipes/UI_Recipe.tscn"))

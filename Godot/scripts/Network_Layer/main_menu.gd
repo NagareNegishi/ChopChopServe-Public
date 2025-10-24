@@ -193,11 +193,13 @@ func _on_room_selected(room_code: String):
 
 
 
-## Unknown functions, are using them somewhere else?----------------------------------------
-func _physics_process(delta: float) -> void:
-	if Input.is_action_just_pressed("ui_accept"):
-		_on_join_pressed()
+## Unknown functions, are those used by something?----------------------------------------
+# comment out for now, will be deleted later if not used
 
-func tutorial():
-	get_tree().change_scene_to_file("res://LevelDesign/Tutorial.tscn")
-	test_button.text = "CONNECTION HELP"
+# func _physics_process(delta: float) -> void:
+# 	if Input.is_action_just_pressed("ui_accept"):
+# 		_on_join_pressed()
+
+# func tutorial():
+# 	get_tree().change_scene_to_file("res://LevelDesign/Tutorial.tscn")
+# 	test_button.text = "CONNECTION HELP"

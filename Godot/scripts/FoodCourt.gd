@@ -12,7 +12,9 @@ var current_max_delay = MAX_CUSTOMER_DELAY
 var current_min_delay = MIN_CUSTOMER_DELAY
 
 @onready var _game_server = get_node("/root/GameServer")
+@onready var sabotage_system = get_node("/root/SabotageSystem")
 @export var customer_scenes: Array[PackedScene] = []
+@export var critic_scenes: Array[PackedScene] = []
 @export var tables: Array[Table] = []
 @export var queue_spots: Array[QueueSpot] = []
 @export var customer_spawn_point: Node3D
@@ -27,7 +29,11 @@ func _ready():
 	# Add to a group to be easily found by ENetManager
 	add_to_group("FoodCourt")
 	_game_server.register_service(name, self)
+
+	sabotage_system.connect("spawn_critic", spawn_food_critic)
+
 	if ENetManager.is_host(): game_state.phase_changed.connect(_state_change)
+
 	# Initialize tables and queue spots so they can be found by the game server
 	var _next_id = 0
 	for occupiable in tables + queue_spots:
@@ -73,15 +79,28 @@ func _process(delta: float):
 		var food_court_id = self.name
 		# Call the RPC to spawn the customer on all clients (and the server)
 		spawn_customer.rpc(customer_id, spawn_position, food_court_id)
-		
+
+func spawn_food_critic(teamID: int):
+	print("I AM CONNECTED", teamID)
+	var customer_id = "customer_%d" % _next_customer_id_num
+	var spawn_position = customer_spawn_point.global_position
+	var food_court_id = self.name
+	_next_customer_id_num += 1
+	spawn_customer.rpc(customer_id, spawn_position, food_court_id, true, teamID)
+	
 @rpc("any_peer", "call_local", "reliable")
-func spawn_customer(id: String, pos: Vector3, fc_id: String):
+func spawn_customer(id: String, pos: Vector3, fc_id: String, is_critic=false, crit_id=-1):
 	# prevent duplicate customers from being spawned
 	if get_node_or_null(id):
 		return
 	var new_customer
-	customer_scenes[customer_seed % customer_scenes.size()].instantiate()
-	new_customer = customer_scenes[customer_seed % customer_scenes.size()].instantiate()
+	if not is_critic:
+		
+		new_customer = customer_scenes[customer_seed % customer_scenes.size()].instantiate()
+	else:
+		new_customer = critic_scenes[customer_seed % critic_scenes.size()].instantiate()
+		new_customer.is_critic = true
+		new_customer.critic_victim_team = crit_id
 	new_customer.name = id
 	new_customer._id = id
 	new_customer._food_court_id = fc_id

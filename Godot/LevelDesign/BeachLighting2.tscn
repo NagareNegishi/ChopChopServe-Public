@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://g5y4cnxk5856"]
+[gd_scene load_steps=57 format=3 uid="uid://g5y4cnxk5856"]
 
 [ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_1hj32"]
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="1_jd0au"]
@@ -7,9 +7,14 @@
 [ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="2_ldg50"]
 [ext_resource type="PackedScene" uid="uid://hlnawqai2mw4" path="res://NPCs/Customer.tscn" id="2_ne1yq"]
 [ext_resource type="PackedScene" uid="uid://bkjryoge78wu0" path="res://assets/newmodels/decorations/Table.glb" id="3_6wlo3"]
+[ext_resource type="PackedScene" uid="uid://v5pk5pxknub3" path="res://NPCs/Customer5.tscn" id="3_iuno0"]
 [ext_resource type="PackedScene" uid="uid://bk7ovilp788kq" path="res://scripts/Player/spawn_point.tscn" id="3_lg5jw"]
+[ext_resource type="PackedScene" uid="uid://cp6ray6kawoqa" path="res://NPCs/Critic.tscn" id="3_xxntf"]
+[ext_resource type="PackedScene" uid="uid://b815oucen2rgk" path="res://NPCs/Customer6.tscn" id="4_17spu"]
 [ext_resource type="PackedScene" uid="uid://dlk0mbdfg2cmq" path="res://scenes/Appliance_system/oven.tscn" id="5_6wlo3"]
+[ext_resource type="PackedScene" uid="uid://buyic46mebka7" path="res://NPCs/Customer7.tscn" id="5_qqnp0"]
 [ext_resource type="Script" uid="uid://dv1g0obwvkkkt" path="res://scripts/QueueSpot.gd" id="6_iy0ij"]
+[ext_resource type="PackedScene" uid="uid://b00ul4sr6vuab" path="res://NPCs/Customer8.tscn" id="6_wk581"]
 [ext_resource type="PackedScene" uid="uid://df6cemvjo3grw" path="res://scenes/Appliance_system/chop_table.tscn" id="7_b26ie"]
 [ext_resource type="Script" uid="uid://bovslkbm84p1j" path="res://scripts/level_camera.gd" id="8_i40ex"]
 [ext_resource type="PackedScene" uid="uid://b5nb1nxo1r1kb" path="res://scenes/Appliance_system/bench.tscn" id="9_v5sy6"]
@@ -101,7 +106,8 @@ properties/0/replication_mode = 1
 
 [node name="BradleyTestScene2" type="Node3D" node_paths=PackedStringArray("tables", "queue_spots", "customer_spawn_point", "customer_exit_point")]
 script = ExtResource("1_1hj32")
-customer_scenes = Array[PackedScene]([ExtResource("2_ne1yq"), ExtResource("2_ne1yq"), ExtResource("2_ne1yq"), ExtResource("2_ne1yq")])
+customer_scenes = Array[PackedScene]([ExtResource("2_ne1yq"), ExtResource("2_ne1yq"), ExtResource("2_ne1yq"), ExtResource("2_ne1yq"), ExtResource("3_iuno0"), ExtResource("4_17spu"), ExtResource("5_qqnp0"), ExtResource("6_wk581")])
+critic_scenes = Array[PackedScene]([ExtResource("3_xxntf")])
 tables = [NodePath("NavigationRegion3D/Tables/TableBody10"), NodePath("NavigationRegion3D/Tables/TableBody11"), NodePath("NavigationRegion3D/Tables/TableBody12"), NodePath("NavigationRegion3D/Tables/TableBody13"), NodePath("NavigationRegion3D/Tables/TableBody14"), NodePath("NavigationRegion3D/Tables/TableBody15"), NodePath("NavigationRegion3D/Tables/TableBody16"), NodePath("NavigationRegion3D/Tables/TableBody17")]
 queue_spots = [NodePath("===QUEUE==/QueueSpot-1"), NodePath("===QUEUE==/QueueSpot-2"), NodePath("===QUEUE==/QueueSpot-3"), NodePath("===QUEUE==/QueueSpot-4"), NodePath("===QUEUE==/QueueSpot-5")]
 customer_spawn_point = NodePath("NavigationRegion3D/CustomerSpawn")

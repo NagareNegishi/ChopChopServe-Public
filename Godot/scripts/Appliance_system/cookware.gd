@@ -12,6 +12,8 @@ extends Equipment
 var cookware_ui : UIContents
 var power_receiving: int = 0
 var sizzle_particles: ParticleController
+var smoke_particles: ParticleController
+var sound: SoundManager.SFX_COOKING = SoundManager.SFX_COOKING.CRATE
 # Food positioning
 var food_slots: Array[Vector3] = []
 var center_offset: Vector3 = Vector3.ZERO
@@ -35,6 +37,10 @@ func _setup_visual_effects():
 	sizzle_particles.position.y = size.y * 0.8
 	add_child(sizzle_particles)
 	sizzle_particles.set_scale_multiplier(2.0)
+	smoke_particles = ParticleController.create_with_effect(ParticleController.EffectType.SMOKE)
+	smoke_particles.position.y = size.y * 0.8
+	add_child(smoke_particles)
+	smoke_particles.set_scale_multiplier(2.0)
 
 
 ## Place an item onto this appliance
@@ -73,12 +79,14 @@ func _put_food(food: Food) -> void:
 	food.change_collisions(true)
 	cookware_ui.add_food(food)
 	food.restore_original_transform()
+	food.entered_danger_zone.connect(_on_food_started_burning)
 	_position_food(food)
 	emit_signal("food_placed", self, contents)
 	if can_cook():
 		food.start_cooking(int(power_receiving * coefficient), cooking_style)
 		_average_food()
 		_toggle_sizzle(true)
+		SoundManager.play_sfx_cooking(sound)
 	Debug.cook_log("Food placed in cookware: " + food.get_script().get_global_name()
 		+ ", Cookware can cook: " + str(can_cook()) + ", Food cook time: " + str(food.get_cook_time(cooking_style)))
 
@@ -106,6 +114,8 @@ func take_all() -> Array[Node]:
 	finish_cook()
 	var all_items = contents
 	for item in all_items:
+		if item is Food:
+			item.entered_danger_zone.disconnect(_on_food_started_burning)
 		remove_child(item)
 	contents = []
 	contents_names = []
@@ -138,6 +148,7 @@ func cook(power: int) -> bool:
 	power_receiving = power
 	for food in contents:
 		food.start_cooking(int(power_receiving * coefficient), cooking_style)
+		SoundManager.play_sfx_cooking(sound)
 	_toggle_sizzle(true)
 	return true
 
@@ -148,7 +159,13 @@ func finish_cook() -> bool:
 	var success = super.finish_cook()
 	if success:
 		_toggle_sizzle(false)
+		_toggle_smoke(false)
 	return success
+
+
+## Handle food started burning signal
+func _on_food_started_burning() -> void:
+	_toggle_smoke(true)
 
 
 ## Toggle sizzle particles effect
@@ -157,6 +174,14 @@ func _toggle_sizzle(sizzle: bool) -> void:
 		sizzle_particles.play()
 	else:
 		sizzle_particles.stop()
+
+
+## Toggle smoke particles effect
+func _toggle_smoke(smoke: bool) -> void:
+	if smoke:
+		smoke_particles.play()
+	else:
+		smoke_particles.stop()
 
 
 ## Toggle visibility of food in cookware

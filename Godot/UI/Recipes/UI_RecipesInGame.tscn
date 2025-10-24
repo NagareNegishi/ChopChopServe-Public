@@ -1,0 +1,81 @@
+[gd_scene load_steps=8 format=3 uid="uid://dxvyryn6potkf"]
+
+[ext_resource type="Script" uid="uid://beco606kiollg" path="res://UI/Recipes/UIRecipes.gd" id="1_pipdd"]
+[ext_resource type="Shader" uid="uid://bdsj6gf6j8784" path="res://shaders/blur.gdshader" id="1_v1nc6"]
+[ext_resource type="PackedScene" uid="uid://75yh0t2jmnhg" path="res://UI/Recipes/UI_Recipe.tscn" id="3_8gc3i"]
+[ext_resource type="Texture2D" uid="uid://datsc15wk03gp" path="res://assets/textures/misc/right-arrow (2).png" id="4_mmnnv"]
+[ext_resource type="Texture2D" uid="uid://bdej1mwrdda3h" path="res://assets/textures/Controls/keyboard_l.png" id="5_v1w35"]
+[ext_resource type="Texture2D" uid="uid://ch6v2rhv6xhkx" path="res://assets/textures/Controls/keyboard_j.png" id="6_3kmnx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pipdd"]
+shader = ExtResource("1_v1nc6")
+shader_parameter/blur_radius = 1.0
+shader_parameter/blur_samples = 4
+
+[node name="UiRecipesInGame" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pipdd")
+
+[node name="Blur" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_pipdd")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -587.0
+offset_top = -335.5
+offset_right = 587.0
+offset_bottom = 335.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Colour" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0705882, 0.0705882, 0.0705882, 0.392157)
+
+[node name="UiRecipe" parent="." instance=ExtResource("3_8gc3i")]
+layout_mode = 1
+offset_left = -9.0
+offset_top = -15.0
+offset_right = -9.0
+offset_bottom = -15.0
+hide = true
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 934.0
+offset_top = 268.0
+offset_right = 1446.0
+offset_bottom = 780.0
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("4_mmnnv")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 111.0
+offset_top = 251.0
+offset_right = 623.0
+offset_bottom = 763.0
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("4_mmnnv")
+flip_h = true
+
+[node name="KeyboardL" type="Sprite2D" parent="."]
+position = Vector2(941, 369)
+texture = ExtResource("5_v1w35")
+
+[node name="KeyboardJ" type="Sprite2D" parent="."]
+position = Vector2(196, 351)
+texture = ExtResource("6_3kmnx")

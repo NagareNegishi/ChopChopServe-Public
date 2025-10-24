@@ -14,7 +14,6 @@ static var registered: bool = false
 @onready var crate : MeshInstance3D = $Crate
 @onready var decal : Decal = $Crate/Decal
 @export var group : Groups
-
 var food_crate_visual = null
 
 enum Groups{
@@ -23,7 +22,6 @@ enum Groups{
 	THREE,
 	FOUR
 }
-
 
 
 ## Setup the model instance
@@ -82,6 +80,7 @@ func _create_food(food_name: String) -> Node:
 	var food = food_scene.instantiate()
 	food.name = prefix + food_name + str(supply_count)
 	supply_count += 1
+	SoundManager.play_sfx_cooking(SoundManager.SFX_COOKING.CRATE)
 	return food
 
 
@@ -107,7 +106,7 @@ func _add_inventory_ui():
 	add_child(inventory_sprite)
 	inventory = inventory_sprite
 	inventory_sprite.no_depth_test = true
-	inventory_sprite.position -= Vector3(0,2,0)
+	inventory_sprite.position -= Vector3(1,1,0)
 
 
 var player 
@@ -167,6 +166,7 @@ func _provide_as_host(player_id: int, food_name: String) -> void:
 		return
 	# host need check to prevent conflicts/ cheating
 	var item = provide_food(food_name)
+	if !item: return
 	get_tree().current_scene.add_child(item)
 	_client_provide.rpc(item.name, food_name)
 	_give_item_to_player.rpc(player_id, item.get_path())
@@ -247,12 +247,6 @@ func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	else:
 		highlight_component.show_feedback(true)
 
-func _on_interactable_component_action_use(_is_action: bool) -> void:
-	if !_is_action: return
-	inventory_sprite.inventory.current_slot = inventory_sprite.inventory.move_forward()
-	inventory_sprite.inventory.update_slot_selected(true)
-	_set_food_visual(inventory_sprite.inventory.get_current_slot().inventory_item_name)
-
 
 ## Override unsupported methods to prevent misuse ------------------------------
 func put(_item: Node) -> bool:
@@ -264,6 +258,11 @@ func take() -> Node:
 	return null
 
 func player_has(_item: Node) -> void:
+	if _item is Food:
+		await GlobalScript.get_local_player().remove_item()
+		_item.queue_free()
+		return
+		
 	inventory_sprite.inventory.select_ingredient()
 	return
 
@@ -273,12 +272,22 @@ func put_from_player(_item: Node) -> bool:
 #-------------------------------------------------------------------------------
 
 func _physics_process(delta: float) -> void:
-	if Input.is_action_just_pressed("LB"):
-		inventory_sprite.inventory.current_slot = inventory_sprite.inventory.move_backward()
-		inventory_sprite.inventory.update_slot_selected(true)
-	if Input.is_action_just_pressed("RB"):
-		inventory_sprite.inventory.current_slot = inventory_sprite.inventory.move_forward()
-		inventory_sprite.inventory.update_slot_selected(true)
+	if input_check("LB"): set_ui.rpc(false)
+	if input_check("RB"): set_ui.rpc(true)
+
+
+func input_check(action : String):
+	return (Input.is_action_just_pressed(action) and GlobalScript.get_local_player() != null and 
+		GlobalScript.get_local_player()._closest_item != null and
+		GlobalScript.get_local_player()._closest_item.get_parent() == self)
+
+
+@rpc("any_peer", "call_local")
+func set_ui(forward : bool):
+	inventory_sprite.inventory.current_slot = (inventory_sprite.inventory.move_forward() if forward 
+	else inventory_sprite.inventory.move_backward())
+	inventory_sprite.inventory.update_slot_selected(true)
+	_set_food_visual(inventory_sprite.inventory.get_current_slot().inventory_item_name)
 
 func _set_food_visual(food : String):
 	var texture = ResourceLoader.load("res://assets/textures/ingredients/" + food + ".png")

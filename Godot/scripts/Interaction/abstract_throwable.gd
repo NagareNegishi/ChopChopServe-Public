@@ -1,9 +1,6 @@
 class_name AbstractThrowable extends RigidBody3D
 
-var overlay = preload("res://materials/InteractOverlay.tres")
 @onready var interact : InteractableComponent = $InteractableComponent
-
-
 
 func _init() -> void:
 	
@@ -20,14 +17,6 @@ func _on_interactable_component_interacted():
 	
 	print("Pickup: Interacted")
 
-
-## Connected to signal: Called when pickup is being hovered or unhovered
-## @param is_hovered boolean that dicates if pickup is on or off
-## @return void
-func _on_interactable_component_hovered(is_hovered: bool) -> void:
-	for child in self.get_children():
-		if child is MeshInstance3D:
-			child.material_overlay = overlay if is_hovered else null
 
 ## Connected to signal: Called when player does action with this item in hand
 ## @param has_action if the player is using the action input
@@ -57,7 +46,7 @@ func _store_original_transform():
 	original_scale = scale
 	
 	
-	print("Original transforms stored for ", get_class())
+	# print("Original transforms stored for ", get_class())
 
 func restore_original_transform():
 	# Restore main object

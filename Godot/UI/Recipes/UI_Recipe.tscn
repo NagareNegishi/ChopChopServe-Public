@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://75yh0t2jmnhg"]
+[gd_scene load_steps=12 format=3 uid="uid://75yh0t2jmnhg"]
 
 [ext_resource type="Script" uid="uid://uiljehkqv2ts" path="res://UI/Recipes/ui_recipe.gd" id="1_4c6sh"]
 [ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/Style/DefaultTheme.tres" id="2_tms7n"]
+[ext_resource type="PackedScene" uid="uid://vd3bdhppuimf" path="res://UI/Recipes/UI_Cook.tscn" id="3_a0ewq"]
 [ext_resource type="Texture2D" uid="uid://chbbc8dxqfr1y" path="res://assets/textures/recipes/TomatoSoup.png" id="4_obou8"]
 [ext_resource type="Texture2D" uid="uid://hlkfqb0l0we1" path="res://assets/textures/misc/check.png" id="5_gtklq"]
 [ext_resource type="Texture2D" uid="uid://datsc15wk03gp" path="res://assets/textures/misc/right-arrow (2).png" id="6_a0ewq"]
@@ -116,6 +117,7 @@ theme_override_constants/separation = 90
 alignment = 1
 
 [node name="Cook" type="Label" parent="."]
+layout_mode = 0
 offset_left = 529.0
 offset_top = 258.0
 offset_right = 627.0
@@ -130,6 +132,20 @@ theme_override_font_sizes/font_size = 35
 text = "COOK"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="CookBox" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 513.0
+offset_top = 339.0
+offset_right = 642.0
+offset_bottom = 472.0
+theme_override_constants/separation = 80
+
+[node name="UiCook" parent="CookBox" instance=ExtResource("3_a0ewq")]
+layout_mode = 2
+
+[node name="UiCook2" parent="CookBox" instance=ExtResource("3_a0ewq")]
+layout_mode = 2
 
 [node name="Serve" type="Label" parent="."]
 layout_mode = 2
@@ -258,6 +274,7 @@ scale = Vector2(0.1, 0.1)
 texture = ExtResource("6_a0ewq")
 
 [node name="TextureRect2" type="TextureRect" parent="."]
+layout_mode = 0
 offset_left = 670.0
 offset_top = 253.0
 offset_right = 1182.0

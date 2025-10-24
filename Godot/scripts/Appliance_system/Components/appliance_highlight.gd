@@ -35,16 +35,15 @@ func _ready():
 		return
 	
 	# Create glowing material
-	material = StandardMaterial3D.new()
-	material.albedo_color = COLORS[HighlightState.HIDDEN]
-	material.emission_enabled = true
-	material.emission = COLORS[HighlightState.HIDDEN]
-	material.emission_energy = 2.0
-	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	material.no_depth_test = false  # Respect depth - hide corners behind appliance
-	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	
-	_create_corners()
+	material = preload("res://materials/InteractOverlay.tres")
+	#material.albedo_color = COLORS[HighlightState.HIDDEN]
+	#material.emission_enabled = true
+	#material.emission = COLORS[HighlightState.HIDDEN]
+	#material.emission_energy = 2.0
+	#material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	#material.no_depth_test = false  # Respect depth - hide corners behind appliance
+	#material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	#_create_corners()
 	set_state(HighlightState.HIDDEN)
 
 func _create_corners():
@@ -106,11 +105,11 @@ func _create_corner_mesh() -> MeshInstance3D:
 
 func set_state(state: HighlightState):
 	current_state = state
-	var color = COLORS[state]
+	#var color = COLORS[state]
 	
-	if material:
-		material.albedo_color = color
-		material.emission = color
+	#if material:
+		#material.albedo_color = color
+		#material.emission = color
 	visible = (state != HighlightState.HIDDEN)
 
 func show_feedback(can_accept: bool):

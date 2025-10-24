@@ -2,12 +2,17 @@ extends AbstractThrowable
 class_name Food
 
 
-@warning_ignore("unused_signal")
+
 signal cooked
 @warning_ignore("unused_signal")
 signal changed_food_state
 
 signal cooking()
+
+#--------------------------
+signal entered_danger_zone()
+var in_danger_zone: bool = false
+#--------------------------
 
 #Meshes
 var raw_mesh: MeshInstance3D = null
@@ -160,7 +165,15 @@ func check_processed(current_state: foodState, time_a:int, time_b:int, stop:bool
 			previous_states.append(convert_enum_to_string(state))
 		
 		is_cooked = true
-		
+
+		# emit signals -----------------------------
+		if time_a == 0:
+			cooked.emit()
+		elif time_a < 0 && !in_danger_zone:
+			in_danger_zone = true
+			entered_danger_zone.emit()
+		# ------------------------------------------
+
 		if stop == true:
 			stop_cooking()
 		
@@ -202,6 +215,7 @@ func stop_cooking():
 	cook_timer.stop()
 	set_quality(current_cooking_style)
 	current_appliance = null
+	in_danger_zone = false
 
 
 func get_cooking_style(style: ApplianceFactory.CookingStyle):

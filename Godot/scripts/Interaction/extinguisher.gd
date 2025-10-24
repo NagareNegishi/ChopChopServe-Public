@@ -1,10 +1,13 @@
 class_name Extinguisher extends AbstractThrowable
+@onready var tween : Tween = get_tree().create_tween()
 
 ## Called when the node enters the scene tree for the first time.
 ## @return void
 func _ready() -> void:
+	interact.custom_rotate(true)
 	$ExtinguishRange.enabled = false
 	$ExtinguishRange/GPUParticles3D.emitting = false
+
 	#if !multiplayer.is_server():
 		#set_physics_process(false)
 
@@ -14,7 +17,6 @@ func _ready() -> void:
 ## @param delta elapsed time since the previous frame
 ## @return void
 func _physics_process(_delta: float) -> void:
-	
 	if  !_can_extingush():
 		return
 	

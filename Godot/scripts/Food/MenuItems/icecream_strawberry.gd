@@ -17,7 +17,7 @@ func _init():
 	
 	name_of_meal = "icecream_strawberry"
 	ui_texture = load("res://assets/textures/recipes/StrawberryIcecream.png")
-
+	ui_meal_name = "Strawberry Icecream"
 
 func _ready():
 	cooked_mesh_good = $IceCreamStrawberry

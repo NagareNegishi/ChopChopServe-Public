@@ -16,7 +16,10 @@ func _init():
 	
 	name_of_meal = "soup_pumpkin"
 	ui_texture = load("res://assets/textures/recipes/PumpkinSoup.png")
-	
+	ui_meal_name = "Pumpkin Soup"
+	ui_states = {
+		"Pumpkin":["CHOPPED", "BOILED"],
+	}
 func _ready():
 	cooked_mesh_good = $SoupPumpkin
 	cooked_mesh_bad = $BadQualityPumpkinSoup

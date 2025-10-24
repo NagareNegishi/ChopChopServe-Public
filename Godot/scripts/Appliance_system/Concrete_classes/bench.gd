@@ -313,3 +313,26 @@ func _client_served_on_plate(player_id: int) -> void:
 	var plate = contents.back()
 	if plate and plate is Plate and plate.is_ready():
 		plate.add_list_items(cookware.take_all())
+
+
+
+## Give visual feedback when hovered
+## @param is_hovered: Whether the item is hovered or not
+func _on_interactable_component_hovered(is_hovered: bool) -> void:
+	return
+	# if not is_hovered:
+	# 	highlight_component.hide_feedback()
+	# 	return
+	# var player = GlobalScript.get_local_player()
+	# var item
+	# if player:
+	# 	item = player.item_in_hand
+	
+	# if item:
+	# 	Debug.all("Player ID: " + str(ENetManager.get_my_id())
+	# 		+ " has : " + item.get_script().get_global_name() + ", hovered: " + get_script().get_global_name())
+	# if not item:
+	# 	highlight_component.set_state(ApplianceHighlight.HighlightState.HOVER)
+	# 	return
+	# var can_accept = _can_accept(item)
+	# highlight_component.show_feedback(can_accept)

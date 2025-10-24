@@ -1,5 +1,7 @@
 extends Node
 
+signal tutorial_step(num : int)
+
 enum UpgradeType{
 	POWER,
 	COEFF,
@@ -45,8 +47,5 @@ func get_local_player_by_id(player_id : int) -> Player:
 			return child
 	return null
 
-func get_pause_menu() -> Pause:
-	return get_tree().current_scene.get_node("== HUD ==/UiPause")
-
-
-#================== Player State ===============================
+func get_all_players():
+	return get_tree().current_scene.get_node("== PLAYERS ==").get_children()

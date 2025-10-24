@@ -1,0 +1,112 @@
+[gd_scene load_steps=15 format=3 uid="uid://dp5crmjemratm"]
+
+[ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="3_r3lrk"]
+[ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="4_5vscc"]
+[ext_resource type="PackedScene" uid="uid://bxf3hwer4sb7h" path="res://UI/HUD/UI_LobbyHUD.tscn" id="4_texi7"]
+[ext_resource type="Script" uid="uid://bovslkbm84p1j" path="res://scripts/level_camera.gd" id="5_mabdc"]
+[ext_resource type="PackedScene" uid="uid://bk7ovilp788kq" path="res://scripts/Player/spawn_point.tscn" id="5_ubebq"]
+[ext_resource type="PackedScene" uid="uid://buoomw2auyihn" path="res://scenes/Lobby/team_select.tscn" id="6_q538x"]
+[ext_resource type="PackedScene" uid="uid://brjcd3tndnajw" path="res://scenes/Lobby/start_game.tscn" id="7_nk0ks"]
+[ext_resource type="PackedScene" uid="uid://vb2eq4ecxgbh" path="res://scenes/Lobby/tutorial_interact.tscn" id="8_4oeuh"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rci3a"]
+sky_top_color = Color(0.636864, 0.781479, 0.982896, 1)
+sky_horizon_color = Color(0.882614, 0.802632, 0.91172, 1)
+sky_energy_multiplier = 0.8
+
+[sub_resource type="Sky" id="Sky_82t1l"]
+sky_material = SubResource("ProceduralSkyMaterial_rci3a")
+
+[sub_resource type="Environment" id="Environment_ctosr"]
+background_mode = 2
+sky = SubResource("Sky_82t1l")
+volumetric_fog_density = 0.1
+volumetric_fog_albedo = Color(0.995162, 0.801059, 0.69608, 1)
+volumetric_fog_anisotropy = 0.7
+volumetric_fog_length = 6.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cfpj7"]
+size = Vector3(90.2935, 0.03, 89.3839)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d8qn3"]
+albedo_color = Color(0.409603, 0.409603, 0.409603, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_iv3r3"]
+material = SubResource("StandardMaterial3D_d8qn3")
+size = Vector3(30, 0.05, 30)
+
+[node name="JohnoTestLevel4" type="Node3D" groups=["GameState"]]
+transform = Transform3D(0.999985, 0, 0.00553267, 0, 1, 0, -0.00553267, 0, 0.999985, 0, 0, 0)
+
+[node name="== PLAYERS ==" type="Node" parent="."]
+
+[node name="== SPAWNS ==" type="Node" parent="."]
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="== SPAWNS ==" node_paths=PackedStringArray("spawns")]
+_spawnable_scenes = PackedStringArray("uid://ckxyscw51v3du")
+spawn_path = NodePath("../../== PLAYERS ==")
+spawn_limit = 4
+script = ExtResource("3_r3lrk")
+spawns = [NodePath("../SpawnPoint"), NodePath("../SpawnPoint2"), NodePath("../SpawnPoint3"), NodePath("../SpawnPoint4")]
+network_player = ExtResource("4_5vscc")
+signal_use = true
+
+[node name="SpawnPoint4" parent="== SPAWNS ==" instance=ExtResource("5_ubebq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.8752, 0.254816, -0.919012)
+team = 2
+priority = 1
+
+[node name="SpawnPoint3" parent="== SPAWNS ==" instance=ExtResource("5_ubebq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.6329, 0.254815, 1.03829)
+team = 2
+
+[node name="SpawnPoint2" parent="== SPAWNS ==" instance=ExtResource("5_ubebq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.4799, 0.254816, -3.66885)
+team = 1
+
+[node name="SpawnPoint" parent="== SPAWNS ==" instance=ExtResource("5_ubebq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.761, 0.254815, 2.95888)
+team = 1
+priority = 1
+
+[node name="== HUD ==" type="CanvasLayer" parent="." groups=["Canvas"]]
+
+[node name="UiLobbyHud" parent="== HUD ==" instance=ExtResource("4_texi7")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ctosr")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.889358, 0.442617, 0.114595, -0.154407, 0.0548494, 0.986484, 0.430349, -0.895032, 0.117124, 0.660056, 2.18773, -1.5714)
+light_energy = 0.8
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-4.28408e-08, -0.819152, 0.573576, 0, 0.573576, 0.819152, -1, 3.58559e-08, -2.468e-08, 33.8324, 10, 0.126326)
+current = true
+script = ExtResource("5_mabdc")
+
+[node name="Floor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 9.31323e-10, 0, 1, 0.859948, 0, -1.30385e-08)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+transform = Transform3D(1, 0, -6.33299e-08, 0, 1, 0, 6.33299e-08, 0, 1, 45.7713, 0, -0.139534)
+shape = SubResource("BoxShape3D_cfpj7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(3, 0, 0, 0, 1, 0, 0, 0, 3, 45.9771, 0, 0)
+mesh = SubResource("BoxMesh_iv3r3")
+
+[node name="TeamSelect" parent="Floor" instance=ExtResource("6_q538x")]
+transform = Transform3D(4.99992, 0, -0.0276633, 0, 5, 0, 0.0276633, 0, 4.99992, 25.3154, 0.512721, -11.5592)
+team = 2
+
+[node name="TeamSelect2" parent="Floor" instance=ExtResource("6_q538x")]
+transform = Transform3D(4.99992, 0, -0.0276633, 0, 5, 0, 0.0276633, 0, 4.99992, 25.1835, 0.512721, 12.2872)
+team = 1
+
+[node name="TutorialInteract" parent="." instance=ExtResource("8_4oeuh")]
+transform = Transform3D(0.5, 0, -9.31323e-10, 0, 0.5, 0, 9.31323e-10, 0, 0.5, 28.2826, 0.835691, 4.60861)
+
+[node name="StartGame" parent="." instance=ExtResource("7_nk0ks")]
+transform = Transform3D(-4.42378e-08, 0, -1, 0, 1, 0, 1, 0, -4.42378e-08, 28.4118, 0.0466161, 0.406114)

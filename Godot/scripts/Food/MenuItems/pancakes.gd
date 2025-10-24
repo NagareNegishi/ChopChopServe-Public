@@ -14,7 +14,11 @@ func _init():
 		"Flour":["RAW","MIXED","FRIED"],
 		"Milk":["RAW","MIXED","FRIED"]
 	}
-	
+	ui_meal_name = "Pancakes"
+	ui_states = {
+		"Flour":["MIXED", "FRIED"],
+		"MILK":["MIXED","FRIED"],
+	}
 	name_of_meal = "pancakes"
 	ui_texture = load("res://assets/textures/recipes/Pancakes.png")
 

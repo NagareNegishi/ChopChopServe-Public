@@ -7,6 +7,7 @@ func _init():
 	model_scene = preload("res://assets/newmodels/items/FryerBasket.glb")
 	default_facing = Direction.WEST
 	capacity = 4
+	sound = SoundManager.SFX_COOKING.DEEP_FRY
 
 
 ## Setup the fryer properties

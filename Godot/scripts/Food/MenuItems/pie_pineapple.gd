@@ -14,7 +14,11 @@ func _init():
 		"Pineapple": ["RAW","CHOPPED", "BAKED"],
 		"Dough": ["RAW", "BAKED"]
 	}
-	
+	ui_meal_name = "Pineapple Pie"
+	ui_states = {
+		"Dough":["NONE", "BAKED"],
+		"Pineapple":["CHOPPED","BAKED"],
+	}
 	name_of_meal = "pie_pineapple"
 	ui_texture = load("res://assets/textures/recipes/PineapplePie.png")
 

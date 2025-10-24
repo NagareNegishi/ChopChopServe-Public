@@ -2,6 +2,9 @@ class_name ENetNetworkLayer
 extends NetworkLayer
 
 signal notify(message: String, duration: float)
+signal rooms_list_received(rooms: Array)
+signal tutorial_started
+signal http_request_failed()
 
 enum Reachability { UNKNOWN, PROBABLE, CONFIRMED, FAILED }
 
@@ -512,6 +515,14 @@ func lookup_room_code(code: String):
 		Debug.net_log("An error occurred in the HTTP request.")
 
 
+## Request list of all active room codes from lookup server
+func get_active_rooms():
+	var error = http_request.request(LOOKUP_SERVER + "/rooms")
+	if error != OK:
+		Debug.net_log("An error occurred in the HTTP request for active rooms.")
+		notify.emit("Failed to retrieve room list.", 2.0)
+
+
 ## Handle HTTP request completion
 ## @param result: The result of the HTTP request
 ## @param response_code: The HTTP response code
@@ -525,7 +536,9 @@ func _on_http_request_completed(result: int, response_code: int, _headers: Packe
 		return
 	if response_code != 200:
 		Debug.net_log("HTTP request returned non-200 status code: %d" % response_code)
-		notify.emit("Invalid Room Code.", 3.0)
+		Debug.net_log("Response body: %s" % body.get_string_from_utf8())
+		http_request_failed.emit()
+		notify.emit("Request failed (Code: %d)" % response_code, 3.0)
 		return
 
 	# Parse JSON response
@@ -547,7 +560,10 @@ func _on_http_request_completed(result: int, response_code: int, _headers: Packe
 		Debug.net_log("Room code lookup successful: " + response["ip"])
 		join_game(response["ip"])
 		return
-
+	if response.has("rooms"):
+		Debug.net_log("Retrieved %d active rooms" % response["count"])
+		rooms_list_received.emit(response["rooms"])
+		return
 
 ## Generate a random 6-character room code
 ## @return: A random room code string
@@ -557,6 +573,33 @@ func _generate_room_code() -> String:
 	for i in range(6):
 		code += chars[randi() % chars.length()]
 	return code
+
+
+## Create a tutorial for single player -----------------------------------------
+
+## Due to player spawning logic requirements, tutorial is hosted as a server with 1 player
+## Which mean in local machine, only one instance can run the tutorial or host at a time
+## @return: True if tutorial server was created successfully
+func create_tutorial() -> bool:
+	if state != ConnectionState.DISCONNECTED:
+		Debug.net_log("Already connected or connecting")
+		notify.emit("Already connected or connecting", 3.0)
+		return false
+	peer = ENetMultiplayerPeer.new()
+	if peer.create_server(port, 1) == OK:
+		multiplayer.multiplayer_peer = peer
+		state = ConnectionState.HOST
+		my_id = 1 # Host is always ID 1
+		player_joined.emit(my_id)
+		ENetManager.team1.append(ENetManager.get_my_id())
+		ENetManager.current_state = ENetManager.GameProgress.IN_GAME
+		tutorial_started.emit()
+		Debug.net_log("ENet server created on port %d for tutorial" % port)
+		return true
+	else:
+		Debug.net_log("Failed to create ENet server for tutorial")
+		peer = null
+		return false
 
 
 # # Optional features, consider once the base functionality is implemented -------------------------

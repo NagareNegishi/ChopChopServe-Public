@@ -1,0 +1,276 @@
+[gd_scene load_steps=15 format=3 uid="uid://c8bjd53t4fgr1"]
+
+[ext_resource type="Shader" uid="uid://bdsj6gf6j8784" path="res://shaders/blur.gdshader" id="1_br1db"]
+[ext_resource type="Script" uid="uid://d3m2flqd5tk7n" path="res://scripts/UI/Pause.gd" id="1_gv73n"]
+[ext_resource type="PackedScene" uid="uid://2qlfolqgl2hl" path="res://UI/UI_CustomButton.tscn" id="2_kfr1u"]
+[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/Style/DefaultTheme.tres" id="4_484kg"]
+[ext_resource type="Texture2D" uid="uid://bjt562i3fmp15" path="res://assets/textures/Controls/keyboard_w.png" id="5_n586x"]
+[ext_resource type="Texture2D" uid="uid://b7p20fg37d6jk" path="res://assets/textures/Controls/keyboard_s.png" id="6_rr41r"]
+[ext_resource type="Texture2D" uid="uid://dhj88ureo7l26" path="res://assets/textures/Controls/keyboard_a.png" id="7_mnjsb"]
+[ext_resource type="Texture2D" uid="uid://dv03e3ubki56c" path="res://assets/textures/Controls/keyboard_d.png" id="8_1jnew"]
+[ext_resource type="Texture2D" uid="uid://bcrbuspt7k6np" path="res://assets/textures/Controls/keyboard_e.png" id="9_ffoak"]
+[ext_resource type="Texture2D" uid="uid://5xkcw1880lhj" path="res://assets/textures/Controls/keyboard_space.png" id="10_kojqr"]
+[ext_resource type="Texture2D" uid="uid://ch6v2rhv6xhkx" path="res://assets/textures/Controls/keyboard_j.png" id="11_6cd8g"]
+[ext_resource type="Texture2D" uid="uid://be3lxyn7qm8ok" path="res://assets/textures/Controls/keyboard_k.png" id="13_au8tl"]
+[ext_resource type="Texture2D" uid="uid://bl75wt1hx7ahj" path="res://assets/textures/Controls/keyboard_shift.png" id="14_j547u"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kfr1u"]
+shader = ExtResource("1_br1db")
+shader_parameter/blur_radius = 3.0
+shader_parameter/blur_samples = 4
+
+[node name="UiPause" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gv73n")
+
+[node name="Blur" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_kfr1u")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -587.0
+offset_top = -335.5
+offset_right = 587.0
+offset_bottom = 335.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Colour" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0705882, 0.0705882, 0.0705882, 0.784314)
+
+[node name="NormalPause" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="NormalPause"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 423.5
+offset_top = 219.0
+offset_right = 688.5
+offset_bottom = 389.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 13
+
+[node name="ResumeButton" parent="NormalPause/ButtonsContainer" instance=ExtResource("2_kfr1u")]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "RESUME"
+
+[node name="Quit" parent="NormalPause/ButtonsContainer" instance=ExtResource("2_kfr1u")]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "QUIT"
+
+[node name="HostPause" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="HostPause"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_484kg")
+text = "HOST HAS PAUSED"
+
+[node name="Controls" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 370.0
+offset_top = -65.0
+offset_right = 410.0
+offset_bottom = -25.0
+
+[node name="Move" type="Control" parent="Controls"]
+anchors_preset = 0
+offset_left = -15.0
+offset_top = 167.0
+offset_right = 25.0
+offset_bottom = 207.0
+
+[node name="Label" type="Label" parent="Controls/Move"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 441.0
+offset_right = 109.0
+offset_bottom = 471.0
+theme = ExtResource("4_484kg")
+theme_override_font_sizes/font_size = 25
+text = "Walk"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="W" type="TextureRect" parent="Controls/Move"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 469.0
+offset_right = 124.0
+offset_bottom = 533.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_n586x")
+
+[node name="S" type="TextureRect" parent="Controls/Move"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 495.0
+offset_right = 124.0
+offset_bottom = 559.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_rr41r")
+
+[node name="A" type="TextureRect" parent="Controls/Move"]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 495.0
+offset_right = 98.0
+offset_bottom = 559.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_mnjsb")
+
+[node name="D" type="TextureRect" parent="Controls/Move"]
+layout_mode = 0
+offset_left = 86.0
+offset_top = 495.0
+offset_right = 150.0
+offset_bottom = 559.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("8_1jnew")
+
+[node name="Interact" type="Control" parent="Controls"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -51.0
+offset_top = 215.0
+offset_right = -11.0
+offset_bottom = 255.0
+
+[node name="E" type="TextureRect" parent="Controls/Interact"]
+layout_mode = 0
+offset_left = 177.0
+offset_top = 432.0
+offset_right = 241.0
+offset_bottom = 496.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("9_ffoak")
+
+[node name="Space" type="TextureRect" parent="Controls/Interact"]
+layout_mode = 0
+offset_left = 202.0
+offset_top = 429.0
+offset_right = 266.0
+offset_bottom = 493.0
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("10_kojqr")
+
+[node name="Interact" type="Label" parent="Controls/Interact"]
+layout_mode = 0
+offset_left = 173.0
+offset_top = 392.0
+offset_right = 264.0
+offset_bottom = 422.0
+theme = ExtResource("4_484kg")
+theme_override_font_sizes/font_size = 25
+text = "Interact"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Action" type="Control" parent="Controls"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -370.0
+offset_top = -25.0
+offset_right = -330.0
+offset_bottom = 15.0
+
+[node name="J" type="TextureRect" parent="Controls/Action"]
+layout_mode = 0
+offset_left = 629.0
+offset_top = 672.0
+offset_right = 693.0
+offset_bottom = 736.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("11_6cd8g")
+
+[node name="Action" type="Label" parent="Controls/Action"]
+layout_mode = 0
+offset_left = 598.0
+offset_top = 633.0
+offset_right = 689.0
+offset_bottom = 663.0
+theme = ExtResource("4_484kg")
+theme_override_font_sizes/font_size = 25
+text = "Action"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Dash" type="Control" parent="Controls"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -554.0
+offset_top = 14.0
+offset_right = -514.0
+offset_bottom = 54.0
+
+[node name="Dash" type="Label" parent="Controls/Dash"]
+layout_mode = 0
+offset_left = 893.0
+offset_top = 596.0
+offset_right = 984.0
+offset_bottom = 626.0
+theme = ExtResource("4_484kg")
+theme_override_font_sizes/font_size = 25
+text = "Dash"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="K" type="TextureRect" parent="Controls/Dash"]
+layout_mode = 0
+offset_left = 895.0
+offset_top = 625.0
+offset_right = 959.0
+offset_bottom = 689.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("13_au8tl")
+
+[node name="Shift" type="TextureRect" parent="Controls/Dash"]
+layout_mode = 0
+offset_left = 919.0
+offset_top = 627.0
+offset_right = 983.0
+offset_bottom = 691.0
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("14_j547u")

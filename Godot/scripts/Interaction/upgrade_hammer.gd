@@ -19,6 +19,7 @@ func _ready() -> void:
 	interact_comp.local_action_use.connect(_can_upgrade)
 	_particle_effect.emitting = false
 	_upgrade_sprite.visible = false
+	interact_comp.custom_rotate(true)
 	
 	if _particle_effect.get_parent():
 		remove_child(_particle_effect)

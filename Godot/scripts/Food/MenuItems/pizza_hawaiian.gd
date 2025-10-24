@@ -16,7 +16,13 @@ func _init():
 		"Tomato": ["RAW","BLENDED","BAKED"],
 		"Pineapple":["RAW", "CHOPPED","BAKED"]
 	}
-	
+	ui_meal_name = "Hawaiian Pizza"
+	ui_states = {
+		"Dough":["NONE", "BAKED"],
+		"Cheese":["CHOPPED","BAKED"],
+		"Tomato":["MIXED","BAKED"],
+		"Pineapple":["CHOPPED","BAKED"],
+	}
 	name_of_meal = "pizza_hawaiian"
 	ui_texture = load("res://assets/textures/recipes/HawaiianPizza.png")
 	

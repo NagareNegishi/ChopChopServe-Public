@@ -225,7 +225,7 @@ func _client_transfer(player_id: int, item_name: String, food_name: String) -> v
 ## @param is_hovered: Whether the item is hovered or not
 func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	if is_hovered && inventory: 
-		if group == Groups.THREE: GlobalScript.tutorial_step.emit(6)
+		if group == Groups.FOUR: GlobalScript.tutorial_step.emit(6)
 		inventory.get_node("SubViewport").get_node("Inventory").open()
 	elif !is_hovered && inventory: 
 		inventory.get_node("SubViewport").get_node("Inventory").close()

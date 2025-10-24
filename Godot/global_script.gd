@@ -56,6 +56,6 @@ func array_check_tomato(contents : Array) -> bool:
 	if contents == null or contents.is_empty(): return false
 	for f in contents:
 		if f == null: return false
-		if f is Tomato: continue
+		if f is Mushroom: continue
 		return false 
 	return true

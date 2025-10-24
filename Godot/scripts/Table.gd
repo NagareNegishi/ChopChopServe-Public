@@ -32,21 +32,22 @@ func _on_detection_area_area_exited(area: Node3D):
 	var area_parent = area.get_parent()
 	if area_parent is Plate and area_parent in plates:
 		plates.erase(area_parent)
+
 @rpc("any_peer", "call_local", "reliable")
 func place_plate_rpc(plate_path: NodePath):
 	var plate_node = get_node_or_null(plate_path)
-
 	if is_instance_valid(plate_node):
 		# if it's a valid plate and the table is empty, place it.
 		current_plate = plate_node
 		plate_node.reparent(self)
-		plate_node.global_position = self.global_position + Vector3(0, 0.5, 0)
+		plate_node.global_position = self.global_position + Vector3(0, 0.75, 0)
 		plate_node.freeze = true
 
-@rpc ("any_peer", "reliable")
+@rpc ("any_peer", "call_local", "reliable")
 func remove_plate():
 	if current_plate:
 		var food = current_plate.get_children().back()
+		current_plate.queue_free()
 		if food:
 			food.queue_free()
 		current_plate = null

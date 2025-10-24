@@ -13,8 +13,8 @@ func _ready() -> void:
 	panel.add_theme_stylebox_override("panel", temp_style_box)
 	label.text = "Join Team %d" % team
 	color.a = 1
-	label.add_theme_color_override("font_color", color)
-	label.add_theme_color_override("font_outline_color", outline)
+	label.add_theme_color_override("font_color", outline)
+	label.add_theme_color_override("font_outline_color", color)
 
 
 func _on_body_enter(body : Node3D):

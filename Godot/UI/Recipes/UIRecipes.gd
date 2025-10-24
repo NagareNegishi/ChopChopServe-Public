@@ -1,6 +1,5 @@
 class_name UIRecipes extends Control
 
-var all_menu_items = {}
 var curr_menu_items = []
 var index : int = 0
 
@@ -23,16 +22,16 @@ func _physics_process(delta: float) -> void:
 
 func forward():
 	index = index + 1 if index + 1 <= curr_menu_items.size() - 1 else 0
-	recipe.set_info(all_menu_items[curr_menu_items[index]])
+	recipe.set_info(curr_menu_items[index])
 
 func backward():
 	index = index - 1 if index - 1 >= 0 else curr_menu_items.size() - 1
-	recipe.set_info(all_menu_items[curr_menu_items[index]])
+	recipe.set_info(curr_menu_items[index])
 
 func _set_curr_menu_items():
 	curr_menu_items = GameState._get_available_food_names()
 	index = 0
-	var item = all_menu_items[curr_menu_items[index]]
+	var item : String = curr_menu_items[index]
 	
 	for part in arrows:
 		part.visible = curr_menu_items.size() > 1
@@ -52,6 +51,5 @@ func _load_items():
 			var script = load(script_path)
 			if script:
 				var key = file_name.get_basename()
-				all_menu_items[key] = script.new()
 		file_name = dir.get_next()
 	dir.list_dir_end()

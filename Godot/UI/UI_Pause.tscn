@@ -1,13 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://c8bjd53t4fgr1"]
+[gd_scene load_steps=11 format=3 uid="uid://c8bjd53t4fgr1"]
 
 [ext_resource type="Shader" uid="uid://bdsj6gf6j8784" path="res://shaders/blur.gdshader" id="1_br1db"]
 [ext_resource type="Script" uid="uid://d3m2flqd5tk7n" path="res://scripts/UI/Pause.gd" id="1_gv73n"]
 [ext_resource type="PackedScene" uid="uid://2qlfolqgl2hl" path="res://UI/UI_CustomButton.tscn" id="2_kfr1u"]
 [ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/Style/DefaultTheme.tres" id="4_484kg"]
-[ext_resource type="Texture2D" uid="uid://bjt562i3fmp15" path="res://assets/textures/Controls/keyboard_w.png" id="5_n586x"]
-[ext_resource type="Texture2D" uid="uid://b7p20fg37d6jk" path="res://assets/textures/Controls/keyboard_s.png" id="6_rr41r"]
-[ext_resource type="Texture2D" uid="uid://dhj88ureo7l26" path="res://assets/textures/Controls/keyboard_a.png" id="7_mnjsb"]
-[ext_resource type="Texture2D" uid="uid://dv03e3ubki56c" path="res://assets/textures/Controls/keyboard_d.png" id="8_1jnew"]
 [ext_resource type="Texture2D" uid="uid://bcrbuspt7k6np" path="res://assets/textures/Controls/keyboard_e.png" id="9_ffoak"]
 [ext_resource type="Texture2D" uid="uid://5xkcw1880lhj" path="res://assets/textures/Controls/keyboard_space.png" id="10_kojqr"]
 [ext_resource type="Texture2D" uid="uid://ch6v2rhv6xhkx" path="res://assets/textures/Controls/keyboard_j.png" id="11_6cd8g"]
@@ -66,25 +62,31 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = 423.5
-offset_top = 219.0
+offset_top = 218.0
 offset_right = 688.5
-offset_bottom = 389.0
+offset_bottom = 388.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 13
+theme_override_constants/separation = 20
 
 [node name="ResumeButton" parent="NormalPause/ButtonsContainer" instance=ExtResource("2_kfr1u")]
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.458824, 0.458824, 0.458824, 1)
+theme_override_constants/outline_size = 20
 theme_override_font_sizes/font_size = 40
 text = "RESUME"
 
 [node name="Multiplayer" parent="NormalPause/ButtonsContainer" instance=ExtResource("2_kfr1u")]
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.458824, 0.458824, 0.458824, 1)
+theme_override_constants/outline_size = 20
 theme_override_font_sizes/font_size = 40
 text = "Multiplayer"
 
 [node name="Quit" parent="NormalPause/ButtonsContainer" instance=ExtResource("2_kfr1u")]
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.458824, 0.458824, 0.458824, 1)
+theme_override_constants/outline_size = 20
 theme_override_font_sizes/font_size = 40
 text = "QUIT"
 
@@ -103,22 +105,25 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
+offset_left = -127.0
+offset_top = -15.0
+offset_right = 129.0
+offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("4_484kg")
+theme_override_colors/font_outline_color = Color(0.458824, 0.458824, 0.458824, 1)
+theme_override_constants/outline_size = 15
+theme_override_font_sizes/font_size = 40
 text = "HOST HAS PAUSED"
 
 [node name="Controls" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 360.0
-offset_top = -53.0
-offset_right = 400.0
-offset_bottom = -13.0
+offset_left = 815.0
+offset_top = -15.0
+offset_right = 855.0
+offset_bottom = 25.0
 
 [node name="Move" type="Control" parent="Controls"]
 anchors_preset = 0
@@ -126,54 +131,6 @@ offset_left = -290.0
 offset_top = -63.0
 offset_right = -250.0
 offset_bottom = -23.0
-
-[node name="Label" type="Label" parent="Controls/Move"]
-layout_mode = 0
-offset_left = -39.0
-offset_top = 486.0
-offset_right = 28.0
-offset_bottom = 516.0
-theme = ExtResource("4_484kg")
-theme_override_font_sizes/font_size = 25
-text = "Walk"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="W" type="TextureRect" parent="Controls/Move"]
-layout_mode = 0
-offset_left = 100.0
-offset_top = 460.0
-offset_right = 164.0
-offset_bottom = 524.0
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("5_n586x")
-
-[node name="S" type="TextureRect" parent="Controls/Move"]
-layout_mode = 0
-offset_left = 100.0
-offset_top = 486.0
-offset_right = 164.0
-offset_bottom = 550.0
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("6_rr41r")
-
-[node name="A" type="TextureRect" parent="Controls/Move"]
-layout_mode = 0
-offset_left = 74.0
-offset_top = 486.0
-offset_right = 138.0
-offset_bottom = 550.0
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("7_mnjsb")
-
-[node name="D" type="TextureRect" parent="Controls/Move"]
-layout_mode = 0
-offset_left = 126.0
-offset_top = 486.0
-offset_right = 190.0
-offset_bottom = 550.0
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("8_1jnew")
 
 [node name="Interact" type="Control" parent="Controls"]
 layout_mode = 3
@@ -185,32 +142,35 @@ offset_bottom = 85.0
 
 [node name="E" type="TextureRect" parent="Controls/Interact"]
 layout_mode = 0
-offset_left = 176.0
-offset_top = 434.0
-offset_right = 240.0
-offset_bottom = 498.0
+offset_left = 181.0
+offset_top = 438.0
+offset_right = 265.0
+offset_bottom = 522.0
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("9_ffoak")
+expand_mode = 2
 
 [node name="Space" type="TextureRect" parent="Controls/Interact"]
 layout_mode = 0
-offset_left = 201.0
-offset_top = 431.0
-offset_right = 265.0
+offset_left = 215.0
+offset_top = 423.0
+offset_right = 287.0
 offset_bottom = 495.0
-scale = Vector2(0.9, 0.9)
 texture = ExtResource("10_kojqr")
+expand_mode = 2
 
 [node name="Interact" type="Label" parent="Controls/Interact"]
 layout_mode = 0
-offset_left = 73.0
-offset_top = 444.0
-offset_right = 164.0
-offset_bottom = 474.0
+offset_left = 38.0
+offset_top = 441.0
+offset_right = 166.0
+offset_bottom = 476.0
 theme = ExtResource("4_484kg")
-theme_override_font_sizes/font_size = 25
+theme_override_colors/font_outline_color = Color(0.458824, 0.458824, 0.458824, 1)
+theme_override_constants/outline_size = 15
+theme_override_font_sizes/font_size = 35
 text = "Interact"
-horizontal_alignment = 1
+horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="Action" type="Control" parent="Controls"]
@@ -223,23 +183,25 @@ offset_bottom = -65.0
 
 [node name="J" type="TextureRect" parent="Controls/Action"]
 layout_mode = 0
-offset_left = 496.0
-offset_top = 654.0
-offset_right = 560.0
-offset_bottom = 718.0
+offset_left = 497.0
+offset_top = 632.0
+offset_right = 581.0
+offset_bottom = 714.0
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("11_6cd8g")
 
 [node name="Action" type="Label" parent="Controls/Action"]
 layout_mode = 0
-offset_left = 380.0
-offset_top = 653.0
-offset_right = 471.0
-offset_bottom = 683.0
+offset_left = 378.0
+offset_top = 635.0
+offset_right = 480.0
+offset_bottom = 670.0
 theme = ExtResource("4_484kg")
-theme_override_font_sizes/font_size = 25
+theme_override_colors/font_outline_color = Color(0.458824, 0.458824, 0.458824, 1)
+theme_override_constants/outline_size = 15
+theme_override_font_sizes/font_size = 35
 text = "Action"
-horizontal_alignment = 1
+horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="Dash" type="Control" parent="Controls"]
@@ -252,30 +214,32 @@ offset_bottom = 53.0
 
 [node name="Dash" type="Label" parent="Controls/Dash"]
 layout_mode = 0
-offset_left = 893.0
-offset_top = 596.0
-offset_right = 984.0
-offset_bottom = 626.0
+offset_left = 911.0
+offset_top = 561.0
+offset_right = 1002.0
+offset_bottom = 596.0
 theme = ExtResource("4_484kg")
-theme_override_font_sizes/font_size = 25
+theme_override_colors/font_outline_color = Color(0.458824, 0.458824, 0.458824, 1)
+theme_override_constants/outline_size = 15
+theme_override_font_sizes/font_size = 35
 text = "Dash"
-horizontal_alignment = 1
+horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="K" type="TextureRect" parent="Controls/Dash"]
 layout_mode = 0
-offset_left = 1012.0
-offset_top = 585.0
-offset_right = 1076.0
-offset_bottom = 649.0
+offset_left = 1019.0
+offset_top = 557.0
+offset_right = 1103.0
+offset_bottom = 639.0
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("13_au8tl")
 
 [node name="Shift" type="TextureRect" parent="Controls/Dash"]
 layout_mode = 0
-offset_left = 1036.0
-offset_top = 587.0
-offset_right = 1100.0
-offset_bottom = 651.0
-scale = Vector2(0.9, 0.9)
+offset_left = 1054.0
+offset_top = 547.0
+offset_right = 1116.0
+offset_bottom = 609.0
 texture = ExtResource("14_j547u")
+expand_mode = 2

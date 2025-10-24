@@ -6,26 +6,32 @@ signal done()
 @onready var recipe_final : TextureRect = $MenuItem
 @onready var row1 : HBoxContainer = $Ingredients/Row1
 @onready var row2 : HBoxContainer = $Ingredients/Row2
-@onready var progress_parts = [$Panel3, $Panel4, $ProgressBar, $Ticks] 
+@onready var progress_parts = [$Panel3, $Panel4, $ProgressBar, $Ticks, $Label] 
 @onready var cook_box = $CookBox
-@export var hide : bool
+@export var hide : bool = false
 
 func _ready() -> void:
 	_progress.value = 0
 	reset()
 	set_physics_process(false)
 	#set_info(bolognese.new())
-
+	var index = 0
+	for c :  TextureRect in $Ticks.get_children():
+		c.modulate = GlobalScript.player_outline_colours[0]
+		c.visible = index < ENetManager.get_player_list().size()
+	
 	for part in progress_parts:
 		part.visible = false
 	
 func _physics_process(delta: float) -> void:
-	_progress.value += delta * 0.25
+	_progress.value += delta * 0.75
 	if !ENetManager.is_host(): return
-	if _progress.value >= _progress.max_value: hide_self()
+	if _progress.value >= _progress.max_value: hide_self.rpc()
 
 
-func set_info(recipe : MenuItem):
+func set_info(recipe_script : String):
+	var script = "res://scripts/Food/MenuItems/" + recipe_script +".gd"
+	var recipe = load(script).new()
 	assert(recipe)
 	recipe_name.text = recipe.ui_meal_name
 	recipe_final.texture = recipe.ui_texture
@@ -33,7 +39,7 @@ func set_info(recipe : MenuItem):
 	_add_cookware(recipe)
 	
 
-
+@rpc("any_peer", "call_local")
 func hide_self():
 	set_physics_process(false)
 	visible = false
@@ -92,3 +98,8 @@ func _add_cookware(recipe : MenuItem):
 func _clear_cookware():
 	for child in cook_box.get_children():
 		child.queue_free()
+
+func _progress_hide(is_hide : bool):
+	if !is_hide: reset()
+	for part in progress_parts:
+		part.visible = !is_hide

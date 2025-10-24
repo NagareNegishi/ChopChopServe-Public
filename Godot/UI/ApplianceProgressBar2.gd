@@ -6,7 +6,7 @@ var applianceInstance
 var cw 
 
 @export var type : ProgressType
-@onready var progress_bar = $ProgressBar
+@onready var progress_bar : ProgressBar = $ProgressBar
 
 enum ProgressType {
 	COOK,
@@ -22,8 +22,10 @@ var TEXTURE = {
 	ProgressType.WASH : ResourceLoader.load("res://assets/textures/misc/sink.png")
 }
 
+
 func _process(_delta):
 	change_visibility(is_open)
+
 
 func _ready() -> void:
 	_set_texture(type)
@@ -83,9 +85,11 @@ func _on_food_added(cookware, contents):
 	if not food_item.is_connected("cooking", Callable(self, "_on_food_cooking")):
 		food_item.connect("cooking", Callable(self, "_on_food_cooking"))
 
-
+var _contents
 func _on_food_taken(cookware, contents):
+	_contents = contents
 	if contents is Array and contents.size() >= 1:
+		
 		for item in contents:
 			if !item.is_cooked:
 				item.set_cook_time(get_max_value(get_cooking_style()), get_cooking_style())
@@ -129,7 +133,8 @@ func _on_cookware_taken(cookware, appliance):
 
 func _on_food_cooking():
 	progress_bar.value += 1
-
+	if progress_bar.value == 15 and get_cooking_style() == ApplianceFactory.CookingStyle.BOIL and \
+	_contents != null and GlobalScript.array_check_tomato(_contents): pass
 
 # Returns the cooking style of the cookware + blender
 func get_cooking_style():

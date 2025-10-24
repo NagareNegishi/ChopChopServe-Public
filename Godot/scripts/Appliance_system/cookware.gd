@@ -78,6 +78,9 @@ func _put_food(food: Food) -> void:
 	#food.current_visibility(false)
 	food.change_collisions(true)
 	cookware_ui.add_food(food)
+	print(self is Pot, GlobalScript.array_check_tomato(contents), contents.size() == 3)
+	if self is Pot and GlobalScript.array_check_tomato(contents) and contents.size() == 3:
+		GlobalScript.tutorial_step.emit(12)
 	food.restore_original_transform()
 	food.entered_danger_zone.connect(_on_food_started_burning)
 	_position_food(food)
@@ -352,6 +355,7 @@ func _sync_contents(update: Array[String]) -> void:
 func _setup_cookware_ui():
 	cookware_ui = cookware_ui_scene.instantiate()
 	viewport.transparent_bg = true
+	cookware_ui.set_amount(capacity)
 	sprite_ref.texture = viewport.get_texture()
 	sprite_ref.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	self.add_child(sprite_ref)

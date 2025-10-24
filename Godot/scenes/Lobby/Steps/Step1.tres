@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_fa4sa")
-text = "Welcome to the tutorial"
-type = 0
-condition = ""
-time = 3.0
+text = "Lets start with the essentials, move aorund with WASD"
+type = 1
+num = 1
+time = 5.0

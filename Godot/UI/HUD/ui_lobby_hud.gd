@@ -12,6 +12,7 @@ var progress : int = 0
 func _ready() -> void:
 	code_label.text = ENetManager.enet_layer.get_connection_info().replace(":7000","")
 	tutorial_widget.set_progress_max(tutorial_steps.size())
+	
 
 
 func set_tutorial_vis(vis : bool):
@@ -27,7 +28,9 @@ func set_tutorial_text(text : String):
 
 
 func _update_progress():
+	timer.stop()
 	progress += 1
+	
 	if progress >= tutorial_steps.size(): 
 		tutorial_complete.emit()
 		reset()
@@ -56,15 +59,14 @@ func _setup_node(node : TutorialNode):
 			_update_progress()
 
 		TutorialNode.TYPE.SIGNAL:
-			timer.start()
+			timer.wait_time = node.time
 			GlobalScript.tutorial_step.connect(_signal_out)
 
 
 func _signal_out(num : int):
 	if num != current.num: return
-
-	if !timer.is_stopped():
-		await timer.timeout
-
+	
 	GlobalScript.tutorial_step.disconnect(_signal_out)
-	_update_progress()
+	
+	timer.start()
+	timer.timeout.connect(_update_progress)

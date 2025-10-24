@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="TutorialNode" load_steps=2 format=3 uid="uid://dd8f0x6py50f6"]
+
+[ext_resource type="Script" uid="uid://c8guh3nm5ht4s" path="res://scenes/Lobby/Steps/tutorial_step.gd" id="1_pe8w4"]
+
+[resource]
+script = ExtResource("1_pe8w4")
+text = "Now that you can move, it's time to explore your cullinary potienal"
+type = 0
+num = 0
+time = 4.0

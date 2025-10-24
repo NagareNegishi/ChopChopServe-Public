@@ -7,6 +7,8 @@ func _ready() -> void:
 	tut_mark.tutorial.connect(_start_tutorial)
 	multiplayer.peer_connected.connect(_name_fresh)
 	hud.set_tutorial_vis(false)
+	GameState.current_day = 1
+	GameState.reset_recipes()
 
 
 func _start_tutorial(started : bool):

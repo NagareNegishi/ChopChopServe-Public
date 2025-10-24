@@ -8,3 +8,4 @@ enum TYPE{
 @export var type : TYPE
 @export var num : int
 @export var time : float
+@export var world_interaction : int = -1

@@ -12,11 +12,11 @@ $Sabotages/UiSabotageNode5, $Sabotages/UiSabotageNode6]
 
 func _ready() -> void:
 	$Server.text = "Client" if !multiplayer.is_server() else "Server"
-
 	for control in debug_hud:
 		control.visible = false
 	
 	game_state_ui.game_state = game_state
+	
 	SabotageSystem.sabotage_start.connect(sabotage_start)
 	
 func _process(delta: float) -> void:

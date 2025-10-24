@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="TutorialNode" load_steps=2 format=3 uid="uid://cog2o6c08j717"]
+
+[ext_resource type="Script" uid="uid://c8guh3nm5ht4s" path="res://scenes/Lobby/Steps/tutorial_step.gd" id="1_gpgsr"]
+
+[resource]
+script = ExtResource("1_gpgsr")
+text = "Chop two more mushrooms"
+type = 1
+num = 11
+time = 0.2
+world_interaction = -1

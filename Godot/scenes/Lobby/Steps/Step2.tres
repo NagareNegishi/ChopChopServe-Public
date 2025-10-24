@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_k1sib")
-text = "You can move with WASD"
+text = "Feeling a bit slow? GIve your a boost with Dashing with [K] or [SHIFT]"
 type = 1
-num = 1
-time = 0.0
+num = 2
+time = 5.0

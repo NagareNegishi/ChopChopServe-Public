@@ -17,7 +17,11 @@ func set_info(cookware : String, info : Array):
 	for key : String in info:
 		var texture_rect = TextureRect.new()
 		texture_rect.expand_mode = TextureRect.EXPAND_FIT_WIDTH
-		texture_rect.texture = ResourceLoader.load("res://assets/textures/ingredients/" + key.to_lower() + ".png")
+		var txt_name : String = key
+		var regex = RegEx.new()
+		regex.compile("\\d")
+		if regex.search(txt_name): txt_name = txt_name.left(txt_name.length() - 1)
+		texture_rect.texture = ResourceLoader.load("res://assets/textures/ingredients/" + txt_name + ".png")
 		ingbar.add_child(texture_rect)
 
 

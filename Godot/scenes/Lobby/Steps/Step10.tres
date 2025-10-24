@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="TutorialNode" load_steps=2 format=3 uid="uid://q1nfegofggcw"]
+
+[ext_resource type="Script" uid="uid://c8guh3nm5ht4s" path="res://scenes/Lobby/Steps/tutorial_step.gd" id="1_g1hil"]
+
+[resource]
+script = ExtResource("1_g1hil")
+text = "Hold [J] to chop Mushroom"
+type = 1
+num = 10
+time = 0.25
+world_interaction = -1

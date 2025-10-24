@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_g1hil")
-text = "Hold [J] to chop food"
+text = "Hold [J] to chop Mushroom"
 type = 1
 num = 10
 time = 0.25

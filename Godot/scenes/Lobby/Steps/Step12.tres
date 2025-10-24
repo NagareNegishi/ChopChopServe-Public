@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_j74j1")
-text = "Place chopped tomatos into the pot"
+text = "Place chopped mushrooms into the pot"
 type = 1
 num = 12
 time = 0.2

@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_gpgsr")
-text = "Chop two more tomatos"
+text = "Chop two more mushrooms"
 type = 1
 num = 11
 time = 0.2

@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_y6bfh")
-text = "Interact to grab the Tomato with [E] or [SPACE]"
+text = "Interact to grab the Mushroom with [E] or [SPACE]"
 type = 1
 num = 8
 time = 0.25

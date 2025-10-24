@@ -1,9 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://cp6ray6kawoqa"]
+[gd_scene load_steps=18 format=3 uid="uid://v5pk5pxknub3"]
 
-[ext_resource type="Script" uid="uid://bvyjm5mpgpywa" path="res://scripts/Customer.gd" id="1_d0omh"]
-[ext_resource type="PackedScene" uid="uid://tloru3qomb8r" path="res://UI/UI_order.tscn" id="2_wuew5"]
-[ext_resource type="PackedScene" uid="uid://br3jfy6v5habq" path="res://UI/UI_Thinking.tscn" id="3_60pox"]
-[ext_resource type="PackedScene" uid="uid://b0kklf8ydpu0u" path="res://NPCs/Customercritic.glb" id="4_d0omh"]
+[ext_resource type="Script" uid="uid://bvyjm5mpgpywa" path="res://scripts/Customer.gd" id="1_t5jow"]
+[ext_resource type="PackedScene" uid="uid://tloru3qomb8r" path="res://UI/UI_order.tscn" id="2_yn1l2"]
+[ext_resource type="PackedScene" uid="uid://br3jfy6v5habq" path="res://UI/UI_Thinking.tscn" id="3_ebqmf"]
+[ext_resource type="PackedScene" uid="uid://bt87egs3gggu2" path="res://assets/newmodels/animations/customers/CustomerBeach.glb" id="4_t5jow"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_esrsq"]
 
@@ -90,9 +90,9 @@ properties/9/replication_mode = 1
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
-script = ExtResource("1_d0omh")
-overhead_ui_order = ExtResource("2_wuew5")
-overhead_ui_thinking = ExtResource("3_60pox")
+script = ExtResource("1_t5jow")
+overhead_ui_order = ExtResource("2_yn1l2")
+overhead_ui_thinking = ExtResource("3_ebqmf")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_esrsq")
@@ -115,9 +115,9 @@ radius = 0.7
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1624, 0)
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-root_node = NodePath("../Customercritic")
+root_node = NodePath("../CustomerBeach")
 tree_root = SubResource("AnimationNodeStateMachine_ppgne")
-anim_player = NodePath("../Customercritic/AnimationPlayer")
+anim_player = NodePath("../CustomerBeach/AnimationPlayer")
 parameters/conditions/is_moving = false
 parameters/conditions/is_sitting = false
 parameters/conditions/is_tweening_to_seat = false
@@ -126,32 +126,23 @@ parameters/conditions/not_moving = false
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_gijdy")
 
-[node name="Customercritic" parent="." instance=ExtResource("4_d0omh")]
+[node name="CustomerBeach" parent="." instance=ExtResource("4_t5jow")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, -1, 0)
 
-[node name="Skeleton3D" parent="Customercritic/Armature" index="0"]
-bones/1/position = Vector3(-0.0285939, 0.951829, -0.0113688)
-bones/2/rotation = Quaternion(0.00554178, 1.19207e-07, 5.90814e-09, 0.999985)
-bones/6/position = Vector3(-3.85431, 2.40737, -1.95621e-09)
-bones/6/rotation = Quaternion(-3.89966e-08, 2.25142e-09, 0.998338, 0.0576379)
-bones/7/rotation = Quaternion(-1.13927e-09, 8.31912e-08, 0.00706236, 0.999975)
-bones/8/rotation = Quaternion(-3.2693e-11, -3.49708e-07, -0.00031076, 1)
-bones/9/position = Vector3(3.85431, 2.40112, -2.17962e-09)
-bones/9/rotation = Quaternion(3.89966e-08, 2.25142e-09, 0.998338, -0.0576379)
-bones/10/rotation = Quaternion(1.35973e-09, 2.70658e-07, -0.00706199, 0.999975)
-bones/11/rotation = Quaternion(-1.42488e-10, -4.14868e-09, 0.000310395, 1)
-bones/12/position = Vector3(-0.745343, 0.897026, -0.0113688)
-bones/12/rotation = Quaternion(-0.707104, -0.0031089, 0.7071, -0.0021288)
-bones/13/position = Vector3(0.688155, 0.894183, -0.0113688)
-bones/13/rotation = Quaternion(0.707102, -0.00261885, 0.707102, 0.00261885)
+[node name="Skeleton3D" parent="CustomerBeach/Armature" index="0"]
+bones/1/position = Vector3(-0.0285939, 0.830243, -0.0113688)
+bones/2/rotation = Quaternion(0.022607, 1.19179e-07, 3.87377e-09, 0.999745)
+bones/3/position = Vector3(-3.85431, 2.23866, -4.39427e-10)
+bones/3/rotation = Quaternion(-3.89966e-08, 2.25142e-09, 0.998338, 0.0576379)
+bones/4/rotation = Quaternion(-1.13927e-09, 8.31912e-08, 0.00706236, 0.999975)
+bones/5/rotation = Quaternion(-3.2693e-11, -3.49708e-07, -0.00031076, 1)
+bones/6/position = Vector3(3.85431, 2.21314, -4.89634e-10)
+bones/6/rotation = Quaternion(3.89966e-08, 2.25142e-09, 0.998338, -0.0576379)
+bones/7/rotation = Quaternion(1.35973e-09, 2.70658e-07, -0.00706199, 0.999975)
+bones/8/rotation = Quaternion(-1.42488e-10, -4.14868e-09, 0.000310395, 1)
+bones/9/position = Vector3(-0.745343, 0.851922, -0.0113688)
+bones/9/rotation = Quaternion(-0.707104, -0.0031089, 0.7071, -0.0021288)
+bones/10/position = Vector3(0.688155, 0.840322, -0.0113688)
+bones/10/rotation = Quaternion(0.707102, -0.00261885, 0.707102, 0.00261885)
 
-[node name="Cylinder" parent="Customercritic/Armature/Skeleton3D" index="0"]
-transform = Transform3D(1.34577, -2.94109e-09, 7.81881e-11, 1.41237e-08, 0.280223, -0.0149157, 7.83587e-11, 0.00310602, 1.34569, 3.58151e-08, -2.37185, -0.0378236)
-
-[node name="Cylinder_001" parent="Customercritic/Armature/Skeleton3D" index="1"]
-transform = Transform3D(0.337607, -5.43325e-11, 3.50501e-09, 3.54314e-09, 0.00498285, -0.334237, 1.96536e-11, 0.0350034, 0.0475797, -1.81817, 3.04851, 1.06255)
-
-[node name="NurbsPath" parent="Customercritic/Armature/Skeleton3D" index="2"]
-transform = Transform3D(1, -1.04949e-08, 5.81082e-11, 1.04949e-08, 0.999939, -0.0110834, 5.82077e-11, 0.0110834, 0.999939, 3.58151e-08, -2.37185, -0.0378236)
-
-[editable path="Customercritic"]
+[editable path="CustomerBeach"]

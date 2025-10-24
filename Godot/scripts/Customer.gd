@@ -10,7 +10,7 @@ const MAXIMUM_ORDER_THINK_TIME: float = 1.0
 # Time in seconds the agent must be stuck before recalculating its path.
 const STUCK_RECALCULATE_TIME: float = 1.0 
 # Time in seconds the customer will stay seated till they get fed up not being served
-const MAXIMUM_SEATING_TIME: float = 250
+const MAXIMUM_SEATING_TIME: float = 60
 # Time in seconds the customer will stop moving for after falling
 const FALLEN_OVER_TIME = 5.0
 
@@ -72,8 +72,9 @@ var _stuck_timer: float = 0.0
 var _id
 var overhead_ui_order_instance: UIOrder
 var overhead_ui_thinking_instance: UIThinking
-
-
+var is_critic: bool = false
+var critic_rep_amount : float = 50
+var critic_victim_team : int = -1
 # Registers to server on hosts end 
 func _initialize():
 	_game_server.register_service(_id, self)
@@ -192,7 +193,9 @@ func _npc_behavior(delta: float):
 			if !_time_till_leaving:
 				# Timer is up, customer leaves.
 				_game_server.call_service(_table_target.id(), "set_occupied", [false])
-				
+				if is_critic: # not serving critic giving will lose rep
+					ReputationSystem.minus_reputation(critic_victim_team, 
+															critic_rep_amount)
 				var exit_point = await _game_server.call_service(_food_court_id, "get_exit_point", [])
 				_current_target = exit_point	
 				_table_target = null	

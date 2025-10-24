@@ -10,6 +10,7 @@ var _time_since_queue_check: float = 0.0
 @onready var _game_server = get_node("/root/GameServer")
 @onready var sabotage_system = get_node("/root/SabotageSystem")
 @export var customer_scenes: Array[PackedScene] = []
+@export var critic_scenes: Array[PackedScene] = []
 @export var tables: Array[Table] = []
 @export var queue_spots: Array[QueueSpot] = []
 @export var customer_spawn_point: Node3D
@@ -69,18 +70,21 @@ func spawn_food_critic(teamID: int):
 	var spawn_position = customer_spawn_point.global_position
 	var food_court_id = self.name
 	_next_customer_id_num += 1
-	spawn_customer.rpc(customer_id, spawn_position, food_court_id, true, teamID % 2 + 1)
+	spawn_customer.rpc(customer_id, spawn_position, food_court_id, true, teamID)
+	
 @rpc("any_peer", "call_local", "reliable")
 func spawn_customer(id: String, pos: Vector3, fc_id: String, is_critic=false, crit_id=-1):
 	# prevent duplicate customers from being spawned
 	if get_node_or_null(id):
 		return
 	var new_customer
-	if is_critic:
-		customer_scenes[customer_seed % customer_scenes.size()].instantiate()
+	if not is_critic:
+		
 		new_customer = customer_scenes[customer_seed % customer_scenes.size()].instantiate()
 	else:
-		pass
+		new_customer = critic_scenes[customer_seed % critic_scenes.size()].instantiate()
+		new_customer.is_critic = true
+		new_customer.critic_victim_team = crit_id
 	new_customer.name = id
 	new_customer._id = id
 	new_customer._food_court_id = fc_id

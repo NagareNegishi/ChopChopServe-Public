@@ -38,7 +38,7 @@ The Network Layer supports multiplayer functionality. At the beginning of the pr
 
 **Scope:**  
 - All files in `scripts/Network_Layer` were implemented by me
-- All files in `scenes/Network_Layer` were initially my work; however, some team members later modified visual aspects of the scenes. In the final submission, we are likely switching the lobby scene itself.
+- All files in `scenes/Network_Layer` were initially my work. However, some team members later modified visual aspects of the scenes. In the final submission, we are likely switching the lobby scene itself.
 - All files in the `room_server` folder.
 
 ### High-Level System Overview
@@ -96,9 +96,16 @@ Added and connected signals to indicate when food begins burning, enabling prope
 **Research:**  
 To implement the Network Layer and room code lookup server, I conducted extensive research on networking protocols, multiplayer architecture, and server deployment. Some of this research is documented in docs/Network.
 
+**Group Coordination and Planning:**  
+While my lecture schedule prevented me from attending all meetings on time, I attended all in-person and online meetings and stayed active on Discord communications.
+With a group of 7, I recognized early that planning and coordination would be critical to success. I organized a few in-person meetings and a code review session for programmers when I identified areas requiring coordination. Throughout development, I attempted to establish high-level design and implementation standards multiple times:
 
+1. **Project Setup:** Encouraged each team member to create high-level implementation documentation for their modules
+2. **Global Standards:** Suggested establishing collision layers and globally-used variable conventions early in development
+3. **Documentation by Example:** Created simplified UML diagrams of my implementations to demonstrate documentation practices and shared implementation details
+4. **Game Flow Coordination:** As each module's implementation and overall game flow remained unclear even at prototyping stages, I attempted to coordinate game flow design through an online whiteboard (Figma). Unfortunately, I did not receive input from other members, so the game flow remained unclear
+5. **Code Review Sessions:** Organized formal code review sessions, using these opportunities to finally communicate high-level designs and ensure team understanding
+6. **Code Documentation:** I maintained continuous code documentation throughout development, including inline comments explaining complex logic, clear variable naming to help team members understand system architecture. For functions meant to be used by other members, I added detailed usage instructions in the comments and communicated directly with them through Discord and GitHub comments to ensure proper integration.
 
-
-Group coordination
-Planning
-Great ideas
+**Subtle Implementation Details:**  
+Throughout my implementations, I emphasized abstraction and inheritance to improve maintainability. The Appliance System's class hierarchy allows new appliances to be added with minimal code by inheriting from base classes, while the NetworkLayer interface pattern enables protocol switching without modifying game logic. Similarly, the component-based approach for Fire and Upgrade systems allows functionality to be attached to any node, avoiding tight coupling.

@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://g5y4cnxk5856"]
+[gd_scene load_steps=58 format=3 uid="uid://g5y4cnxk5856"]
 
 [ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_1hj32"]
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="1_jd0au"]
@@ -44,6 +44,7 @@
 [ext_resource type="PackedScene" uid="uid://b0jm70hdwp4ae" path="res://scenes/Interaction/Extinguisher.tscn" id="33_q1cwv"]
 [ext_resource type="PackedScene" uid="uid://lfcppt4wh0g4" path="res://scenes/Interaction/UpgradeHammer.tscn" id="34_i40ex"]
 [ext_resource type="PackedScene" uid="uid://cuhevmvqjjwji" path="res://assets/newmodels/decorations/Stool.glb" id="36_mlfds"]
+[ext_resource type="Script" uid="uid://pp4fhscl6uqk" path="res://GameStateTest.gd" id="45_ettds"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kdffh"]
 size = Vector3(20.5843, 6.69421, 0.448242)
@@ -104,7 +105,7 @@ properties/0/path = NodePath(".:customer_seed")
 properties/0/spawn = true
 properties/0/replication_mode = 1
 
-[node name="BradleyTestScene2" type="Node3D" node_paths=PackedStringArray("tables", "queue_spots", "customer_spawn_point", "customer_exit_point")]
+[node name="BradleyTestScene2" type="Node3D" node_paths=PackedStringArray("tables", "queue_spots", "customer_spawn_point", "customer_exit_point", "game_state")]
 script = ExtResource("1_1hj32")
 customer_scenes = Array[PackedScene]([ExtResource("2_ne1yq"), ExtResource("2_ne1yq"), ExtResource("2_ne1yq"), ExtResource("2_ne1yq"), ExtResource("3_iuno0"), ExtResource("4_17spu"), ExtResource("5_qqnp0"), ExtResource("6_wk581")])
 critic_scenes = Array[PackedScene]([ExtResource("3_xxntf")])
@@ -112,6 +113,7 @@ tables = [NodePath("NavigationRegion3D/Tables/TableBody10"), NodePath("Navigatio
 queue_spots = [NodePath("===QUEUE==/QueueSpot-1"), NodePath("===QUEUE==/QueueSpot-2"), NodePath("===QUEUE==/QueueSpot-3"), NodePath("===QUEUE==/QueueSpot-4"), NodePath("===QUEUE==/QueueSpot-5")]
 customer_spawn_point = NodePath("NavigationRegion3D/CustomerSpawn")
 customer_exit_point = NodePath("NavigationRegion3D/CustomerLeave")
+game_state = NodePath("Node")
 
 [node name="== PLAYERS ==" type="Node" parent="."]
 
@@ -211,7 +213,8 @@ shadow_enabled = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="MISC"]
 
-[node name="Control" parent="MISC/CanvasLayer" instance=ExtResource("2_ldg50")]
+[node name="Control" parent="MISC/CanvasLayer" node_paths=PackedStringArray("game_state") instance=ExtResource("2_ldg50")]
+game_state = NodePath("../../../Node")
 metadata/_edit_use_anchors_ = true
 
 [node name="GridMap" type="GridMap" parent="MISC"]
@@ -892,3 +895,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.4, -1)
 replication_config = SubResource("SceneReplicationConfig_mlfds")
 
 [node name="== HUD ==" type="CanvasLayer" parent="." groups=["Canvas"]]
+
+[node name="Node" type="Node" parent="." node_paths=PackedStringArray("food_court")]
+script = ExtResource("45_ettds")
+SERVE_TIMES = Array[int]([1, 1, 1, 1, 1, 1])
+INITAL_PREP_TIME = 1
+PREP_TIME = 1
+food_court = NodePath("..")

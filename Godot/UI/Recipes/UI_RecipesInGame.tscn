@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dxvyryn6potkf"]
+[gd_scene load_steps=9 format=3 uid="uid://dxvyryn6potkf"]
 
 [ext_resource type="Script" uid="uid://beco606kiollg" path="res://UI/Recipes/UIRecipes.gd" id="1_pipdd"]
 [ext_resource type="Shader" uid="uid://bdsj6gf6j8784" path="res://shaders/blur.gdshader" id="1_v1nc6"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://datsc15wk03gp" path="res://assets/textures/misc/right-arrow (2).png" id="4_mmnnv"]
 [ext_resource type="Texture2D" uid="uid://bdej1mwrdda3h" path="res://assets/textures/Controls/keyboard_l.png" id="5_v1w35"]
 [ext_resource type="Texture2D" uid="uid://ch6v2rhv6xhkx" path="res://assets/textures/Controls/keyboard_j.png" id="6_3kmnx"]
+[ext_resource type="Texture2D" uid="uid://54gpdx0w3aa8" path="res://assets/textures/Controls/keyboard_tab.png" id="7_3kmnx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pipdd"]
 shader = ExtResource("1_v1nc6")
@@ -76,9 +77,20 @@ texture = ExtResource("4_mmnnv")
 flip_h = true
 
 [node name="KeyboardL" type="Sprite2D" parent="."]
-position = Vector2(941, 369)
+position = Vector2(944, 363)
+scale = Vector2(0.7, 0.7)
 texture = ExtResource("5_v1w35")
 
 [node name="KeyboardJ" type="Sprite2D" parent="."]
 position = Vector2(196, 351)
+scale = Vector2(0.8, 0.8)
 texture = ExtResource("6_3kmnx")
+
+[node name="TextureRect3" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 1045.0
+offset_top = 539.0
+offset_right = 1557.0
+offset_bottom = 1051.0
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("7_3kmnx")

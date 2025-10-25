@@ -21,22 +21,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_8nf6r")
 
-[node name="TextureRect3" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -78.5
-offset_top = -37.5
-offset_right = 74.5
-offset_bottom = 57.5
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("3_lto73")
-expand_mode = 2
-
 [node name="Team1" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 8
@@ -101,7 +85,7 @@ offset_bottom = 12.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(19, 15)
-theme_override_colors/font_color = Color(0.968627, 0.607843, 0.54902, 1)
+theme_override_colors/font_color = Color(0.977966, 0.706807, 0.660226, 1)
 theme_override_colors/font_outline_color = Color(1, 0.435294, 0.439216, 1)
 theme_override_constants/outline_size = 12
 theme_override_fonts/font = ExtResource("1_vitvd")
@@ -175,7 +159,7 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(19, 15)
 theme_override_colors/font_color = Color(1, 0.960784, 0.647059, 1)
-theme_override_colors/font_outline_color = Color(0.905882, 0.831373, 0.227451, 1)
+theme_override_colors/font_outline_color = Color(0.852649, 0.727623, 0.08977, 1)
 theme_override_constants/outline_size = 12
 theme_override_fonts/font = ExtResource("1_vitvd")
 theme_override_font_sizes/font_size = 25

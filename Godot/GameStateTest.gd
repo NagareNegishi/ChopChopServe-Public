@@ -6,7 +6,7 @@ extends Node
 @export var PREP_TIME : int = 45
 @onready var amount_of_days: int = max(1, SERVE_TIMES.size())  # Amount of days is the amount of rounds on one level
 
-var current_time : float = PREP_TIME
+var current_time : float = INITAL_PREP_TIME
 var current_day : int = 0
 var current_phase : Phases = Phases.SERVE
 var can_spawn_customers : bool = false
@@ -82,14 +82,17 @@ func change_phase():
 			_client_day_change.rpc(current_day)
 			rpc("_client_phase_change", current_phase)
 			await get_tree().create_timer(3).timeout
-			load_recipes.rpc()
+			load_recipes.rpc(current_day)
 			var recipes = GameState._get_available_food_names()
-			if current_day % 2 == 1: UIManager.show_recipe(recipes.get(recipes.size() - 1))
+			if current_day % 2 == 1: 
+				UIManager.show_recipe(recipes.get(recipes.size() - 1))
+				return
+			_start_prep()
 			return
 
 		Phases.END_GAME: #GOTO PREP
 			can_spawn_customers = false
-			end_game()
+			end_game.rpc()
 			return
 
 	rpc("_client_phase_change", current_phase)
@@ -99,7 +102,8 @@ func change_phase():
 func _on_timer_timeout():
 	if current_time <= 0 && check_if_game_finshed(): 
 		current_phase = Phases.END_GAME
-		change_phase()
+		customer_check.start()
+		timer.stop()
 		return
 	elif current_time <= 0 && Phases.SERVE == current_phase:
 		customer_check.one_shot = false
@@ -164,12 +168,16 @@ func _on_check_customers():
 
 
 @rpc("any_peer", "call_local")
-func load_recipes():
-	await GameState.reset_recipes()
+func load_recipes(day : int):
+	current_day = day
+	GameState.current_day = day
+	GameState.reset_recipes()
 	var available_food_names = GameState._get_available_food_names()
 	GameState._make_food_items_available(available_food_names)
 
+@rpc("any_peer", "call_local")
 func end_game():
+	disable_controls(true)
 	add_child(end_ui)
 	end_ui.set_to_visible()
 	remove_child(timer)

@@ -73,7 +73,7 @@ func _on_timeout():
 	await get_tree().create_timer(3.5).timeout
 	
 	ENetManager.start_game()
-	SceneManager.change_scene_all_players(SceneManager.Scene.SwampLighting)
+	SceneManager.change_scene_all_players(SceneManager.Scene.LOBBY)
 	
 
 func _list_update(id : int):

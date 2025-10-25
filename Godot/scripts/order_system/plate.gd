@@ -145,7 +145,6 @@ func remove_all():
 	is_full = false
 	quality_on_plate.clear()
 	floor_time_count = 0
-	set_dirty(true)
 
 
 

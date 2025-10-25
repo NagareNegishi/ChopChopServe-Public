@@ -42,7 +42,7 @@ func _ready():
 	if !froggo_building : return
 	froggo_building.play("ArmatureAction", -1, 0.6)
 	SoundManager.play_bgm(SoundManager.BGM.MENU, 2.0)
-	SoundManager.play_sfx_player(SoundManager.SFX_PLAYER.JUMP)
+	# SoundManager.play_sfx_player(SoundManager.SFX_PLAYER.JUMP) # test with oh rat
 
 
 ## Setup Room List Popup

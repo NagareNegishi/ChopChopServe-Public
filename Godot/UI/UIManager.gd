@@ -17,7 +17,7 @@ func _ready() -> void:
 	load_screen = setup_ui(preload("res://UI/UI_LoadingScreen.tscn"))
 	recipe_screen = setup_ui(preload("res://UI/Recipes/UI_Recipe.tscn"))
 	recipe_screen._progress_hide(false)
-	pause_menu = setup_ui(preload("res://UI/UI_Pause.tscn"))
+	pause_menu = setup_ui(preload("res://UI/HUD/UI_Pause.tscn"))
 	recipe_tab = setup_ui(preload("res://UI/Recipes/UI_RecipesInGame.tscn"))
 	
 	recipe_screen.done.connect(_done)

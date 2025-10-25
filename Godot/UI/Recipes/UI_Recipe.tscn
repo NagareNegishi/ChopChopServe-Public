@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://75yh0t2jmnhg"]
+[gd_scene load_steps=18 format=3 uid="uid://75yh0t2jmnhg"]
 
 [ext_resource type="Script" uid="uid://uiljehkqv2ts" path="res://UI/Recipes/ui_recipe.gd" id="1_4c6sh"]
 [ext_resource type="Shader" uid="uid://bdsj6gf6j8784" path="res://shaders/blur.gdshader" id="2_gl8rs"]
@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://hlkfqb0l0we1" path="res://assets/textures/misc/check.png" id="5_gtklq"]
 [ext_resource type="Texture2D" uid="uid://datsc15wk03gp" path="res://assets/textures/misc/right-arrow (2).png" id="6_a0ewq"]
 [ext_resource type="Texture2D" uid="uid://5xkcw1880lhj" path="res://assets/textures/Controls/keyboard_space.png" id="8_0svds"]
+[ext_resource type="PackedScene" uid="uid://cet520guwr8lx" path="res://UI/HUD/UI_Input.tscn" id="8_rpjyo"]
+[ext_resource type="Texture2D" uid="uid://bbhcfgti20ghb" path="res://assets/textures/Controls/xbox_button_color_a.png" id="10_impov"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0svds"]
 shader = ExtResource("2_gl8rs")
@@ -64,15 +66,13 @@ script = ExtResource("1_4c6sh")
 [node name="Blur" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_0svds")
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -587.0
-offset_top = -335.5
-offset_right = 587.0
-offset_bottom = 335.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -386.0
+offset_top = -206.0
+offset_right = 461.0
+offset_bottom = 248.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -81,10 +81,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 5.0
-offset_top = -6.0
-offset_right = 5.0
-offset_bottom = -6.0
+offset_left = -417.0
+offset_top = -180.0
+offset_right = 573.0
+offset_bottom = 331.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.0705882, 0.0705882, 0.0705882, 0.705882)
@@ -252,11 +252,11 @@ show_percentage = false
 
 [node name="Ticks" type="HBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 527.0
-offset_top = 519.0
-offset_right = 3025.0
-offset_bottom = 1031.0
-scale = Vector2(0.04, 0.04)
+offset_left = 519.0
+offset_top = 517.0
+offset_right = 3017.0
+offset_bottom = 1029.0
+scale = Vector2(0.05, 0.05)
 theme_override_constants/separation = 150
 alignment = 1
 
@@ -332,14 +332,11 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = SubResource("GDScript_0svds")
 
-[node name="KeyboardSpace" type="Sprite2D" parent="."]
-self_modulate = Color(0.0646965, 0.0646965, 0.0646965, 1)
-position = Vector2(797, 550)
-texture = ExtResource("8_0svds")
-
-[node name="ColorRect" type="ColorRect" parent="KeyboardSpace"]
-show_behind_parent = true
-offset_left = -20.0
-offset_top = -10.0
-offset_right = 20.0
-offset_bottom = 9.0
+[node name="UiInput" parent="." instance=ExtResource("8_rpjyo")]
+layout_mode = 1
+offset_left = 194.0
+offset_top = 187.0
+offset_right = 258.0
+offset_bottom = 251.0
+keyboard_texture = ExtResource("8_0svds")
+controller_texture = ExtResource("10_impov")

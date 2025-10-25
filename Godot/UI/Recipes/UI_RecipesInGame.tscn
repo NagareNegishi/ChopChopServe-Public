@@ -1,12 +1,17 @@
-[gd_scene load_steps=9 format=3 uid="uid://dxvyryn6potkf"]
+[gd_scene load_steps=14 format=3 uid="uid://dxvyryn6potkf"]
 
 [ext_resource type="Script" uid="uid://beco606kiollg" path="res://UI/Recipes/UIRecipes.gd" id="1_pipdd"]
 [ext_resource type="Shader" uid="uid://bdsj6gf6j8784" path="res://shaders/blur.gdshader" id="1_v1nc6"]
 [ext_resource type="PackedScene" uid="uid://75yh0t2jmnhg" path="res://UI/Recipes/UI_Recipe.tscn" id="3_8gc3i"]
 [ext_resource type="Texture2D" uid="uid://datsc15wk03gp" path="res://assets/textures/misc/right-arrow (2).png" id="4_mmnnv"]
 [ext_resource type="Texture2D" uid="uid://bdej1mwrdda3h" path="res://assets/textures/Controls/keyboard_l.png" id="5_v1w35"]
+[ext_resource type="PackedScene" uid="uid://cet520guwr8lx" path="res://UI/HUD/UI_Input.tscn" id="5_wfp6l"]
 [ext_resource type="Texture2D" uid="uid://ch6v2rhv6xhkx" path="res://assets/textures/Controls/keyboard_j.png" id="6_3kmnx"]
+[ext_resource type="Texture2D" uid="uid://dpb2dtf13x71c" path="res://assets/textures/Controls/xbox_lb.png" id="6_bukgt"]
 [ext_resource type="Texture2D" uid="uid://54gpdx0w3aa8" path="res://assets/textures/Controls/keyboard_tab.png" id="7_3kmnx"]
+[ext_resource type="Texture2D" uid="uid://4yvivkfroyfk" path="res://assets/textures/Controls/xbox_rb.png" id="8_7tvv8"]
+[ext_resource type="Texture2D" uid="uid://bo520aoqjx804" path="res://assets/textures/Controls/xbox_button_color_y.png" id="11_7ah0a"]
+[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/Style/DefaultTheme.tres" id="12_77vdc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pipdd"]
 shader = ExtResource("1_v1nc6")
@@ -24,27 +29,29 @@ grow_vertical = 2
 script = ExtResource("1_pipdd")
 
 [node name="Blur" type="ColorRect" parent="."]
+visible = false
 material = SubResource("ShaderMaterial_pipdd")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -53.0
-offset_top = -52.0
-offset_right = 24.0
-offset_bottom = 42.0
+offset_left = -361.0
+offset_top = -302.0
+offset_right = 331.0
+offset_bottom = 366.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Colour" type="ColorRect" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -40.0
-offset_top = -32.0
-offset_right = 39.0
-offset_bottom = 27.0
+offset_left = -473.0
+offset_top = -267.0
+offset_right = 458.0
+offset_bottom = 550.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.0705882, 0.0705882, 0.0705882, 0.392157)
@@ -76,21 +83,82 @@ scale = Vector2(0.2, 0.2)
 texture = ExtResource("4_mmnnv")
 flip_h = true
 
-[node name="KeyboardL" type="Sprite2D" parent="."]
-position = Vector2(944, 363)
-scale = Vector2(0.7, 0.7)
-texture = ExtResource("5_v1w35")
+[node name="J" parent="." instance=ExtResource("5_wfp6l")]
+layout_mode = 1
+offset_left = -412.0
+offset_top = 1.0
+offset_right = -348.0
+offset_bottom = 65.0
+keyboard_texture = ExtResource("6_3kmnx")
+controller_texture = null
 
-[node name="KeyboardJ" type="Sprite2D" parent="."]
-position = Vector2(196, 351)
-scale = Vector2(0.8, 0.8)
-texture = ExtResource("6_3kmnx")
+[node name="L" parent="." instance=ExtResource("5_wfp6l")]
+layout_mode = 1
+offset_left = 335.0
+offset_top = 14.0
+offset_right = 399.0
+offset_bottom = 78.0
+keyboard_texture = ExtResource("5_v1w35")
+controller_texture = null
 
-[node name="TextureRect3" type="TextureRect" parent="."]
+[node name="Interact" type="Label" parent="."]
 layout_mode = 0
-offset_left = 1045.0
-offset_top = 539.0
-offset_right = 1557.0
-offset_bottom = 1051.0
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("7_3kmnx")
+offset_left = 945.0
+offset_top = 593.2
+offset_right = 1073.0
+offset_bottom = 628.2
+theme = ExtResource("12_77vdc")
+theme_override_colors/font_outline_color = Color(0.458824, 0.458824, 0.458824, 1)
+theme_override_constants/outline_size = 15
+theme_override_font_sizes/font_size = 25
+text = "Close"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Close" parent="." instance=ExtResource("5_wfp6l")]
+layout_mode = 1
+offset_left = 499.0
+offset_top = 255.2
+offset_right = 563.0
+offset_bottom = 319.2
+keyboard_texture = ExtResource("7_3kmnx")
+controller_texture = ExtResource("11_7ah0a")
+
+[node name="LB" parent="." instance=ExtResource("5_wfp6l")]
+self_modulate = Color(0.236334, 0.236334, 0.236334, 1)
+layout_mode = 1
+offset_left = -429.0
+offset_top = -26.0
+offset_right = -301.0
+offset_bottom = 102.0
+texture = ExtResource("6_bukgt")
+controller_texture = ExtResource("6_bukgt")
+use_scale = false
+use_modulate = false
+
+[node name="ColorRect" parent="LB" index="0"]
+offset_left = 32.0
+offset_top = 42.0
+offset_right = 98.0
+offset_bottom = 87.0
+
+[node name="R2" parent="." instance=ExtResource("5_wfp6l")]
+self_modulate = Color(0.236334, 0.236334, 0.236334, 1)
+layout_mode = 1
+offset_left = 321.0
+offset_top = -10.0
+offset_right = 449.0
+offset_bottom = 118.0
+texture = ExtResource("6_bukgt")
+controller_texture = ExtResource("8_7tvv8")
+use_scale = false
+use_modulate = false
+
+[node name="ColorRect" parent="R2" index="0"]
+offset_left = 32.0
+offset_top = 42.0
+offset_right = 98.0
+offset_bottom = 87.0
+
+[editable path="LB"]
+[editable path="R2"]

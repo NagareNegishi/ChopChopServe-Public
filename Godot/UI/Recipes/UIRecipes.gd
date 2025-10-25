@@ -4,7 +4,7 @@ var curr_menu_items = []
 var index : int = 0
 
 @onready var recipe : UIRecipe = $UiRecipe
-@onready var arrows := [$TextureRect, $TextureRect2, $KeyboardL, $KeyboardJ]
+@onready var arrows := [$TextureRect, $TextureRect2, $J, $L, $LB, $R2]
 func _ready() -> void:
 	visibility_changed.connect(_on_visible_change)
 	_load_items()

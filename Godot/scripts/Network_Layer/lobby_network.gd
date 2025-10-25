@@ -307,12 +307,6 @@ func _on_player_list_updated(players: Array[int] = []):
 ## @param team: The team number assigned (1 or 2)
 ## @param number: The slot number within the team (1 or 2)
 func _on_player_assigned(player_id: int, team: int, number: int, animate: bool = true) -> void:
-	#----------------------------------------------------------------------------------
-	if is_host:
-		print("================================")
-		print("Player %d assigned to team %d slot %d" % [player_id, team, number])
-		print("Current teams: Team 1: %s, Team 2: %s" % [str(ENetManager.get_team1()), str(ENetManager.get_team2())])
-	#----------------------------------------------------------------------------------
 	if player_id not in player_slots:
 		push_warning("Player %d not found in slots!" % player_id)
 		return
@@ -409,16 +403,11 @@ func _activate_start_game(activate: bool) -> void:
 ## Start Game
 func _start_game() -> void:
 	buttons_container.hide()
-##----------------------------------------------------------------------------------
-	print("================================")
-	print("game started!, I am host: " + str(is_host))
-	print("Current teams: Team 1: %s, Team 2: %s" % [str(ENetManager.get_team1()), str(ENetManager.get_team2())])
-	print("I am in team: " + str(ENetManager.get_my_team()))
-	print("I am in team: " + str(ENetManager.get_team(ENetManager.get_my_id())))
 	# Actual scene
-	# SceneManager.change_scene(SceneManager.Scene.LOBBY)
+	SceneManager.change_scene(SceneManager.Scene.LOBBY)
+
 	# Test scene
-	SceneManager.change_scene(SceneManager.Scene.JOHNO)
+	# SceneManager.change_scene(SceneManager.Scene.TEST)
 
 
 ## Leave Button Pressed

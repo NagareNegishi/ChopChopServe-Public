@@ -10,13 +10,13 @@ enum Level {
 }
 
 # Current debug level
-@export var level: Level = Level.ALL
+@export var level: Level = Level.OFF
 # System toggles
 @export var fire: bool = false
 @export var cooking: bool = false
 @export var network: bool = false
 @export var upgrade: bool = false
-@export var sound: bool = true
+@export var sound: bool = false
 
 # Main logging functions
 func error(message: String):

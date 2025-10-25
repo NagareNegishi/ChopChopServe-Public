@@ -30,7 +30,6 @@ func backward():
 
 func _set_curr_menu_items():
 	curr_menu_items = GameState._get_available_food_names()
-	index = 0
 	var item : String = curr_menu_items[index]
 	
 	for part in arrows:

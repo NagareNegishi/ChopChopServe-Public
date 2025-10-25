@@ -59,7 +59,7 @@ func _put_food(food: Food) -> void:
 	food.restore_original_transform()
 	food.rotate_abstract_throwable(food_rotation)
 	emit_signal("food_placed", self, contents)
-	if food is Mushroom: GlobalScript.tutorial_step.emit(9)
+	if food is Tomato: GlobalScript.tutorial_step.emit(9)
 	Debug.cook_log("Food placed in cookware: " + food.get_script().get_global_name()
 		+ ", Cookware can cook: " + str(can_cook()) + ", Food cook time: " + str(food.get_cook_time(cooking_style)))
 

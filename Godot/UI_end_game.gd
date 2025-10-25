@@ -1,4 +1,4 @@
-extends Control
+class_name EndScreen extends Control
 
 @onready var button = $Button
 @onready var label = $Label

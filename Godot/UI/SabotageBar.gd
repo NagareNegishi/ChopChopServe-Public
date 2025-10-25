@@ -10,6 +10,7 @@ func _ready() -> void:
 
 
 func sabotage_start(teamID: int, sab_name: String, sab_time: int):
-	if teamID == team_id: return
-	var child = SabotageProgress.create(sab_time)
+	if teamID == team_id or sab_name == "Rat Swarm" or \
+	sab_name == "Fire Spread" or sab_name == "Power Outage": return
+	var child = SabotageProgress.create(sab_time, sab_name)
 	add_child(child)

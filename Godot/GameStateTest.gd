@@ -1,8 +1,9 @@
 class_name GameStateTest
 extends Node
 
-@export var SERVE_TIMES : Array[int] = [120,120,135,135,150]
-@export var PREP_TIME : int = 35
+@export var SERVE_TIMES : Array[int] = [120, 140, 160, 170, 180, 210]
+@export var INITAL_PREP_TIME : int = 60
+@export var PREP_TIME : int = 45
 @onready var amount_of_days: int = max(1, SERVE_TIMES.size())  # Amount of days is the amount of rounds on one level
 
 var current_time : float = PREP_TIME
@@ -53,7 +54,7 @@ func _ready_host():
 
 	GlobalScript.get_local_player().disable_controls(true, true)
 	
-	await get_tree().create_timer(2).timeout
+	await get_tree().create_timer(4.5).timeout
 	change_phase()
 
 func _ready() -> void:
@@ -83,7 +84,7 @@ func change_phase():
 			await get_tree().create_timer(3).timeout
 			load_recipes.rpc()
 			var recipes = GameState._get_available_food_names()
-			UIManager.show_recipe(recipes.get(recipes.size() - 1))
+			if current_day % 2 == 1: UIManager.show_recipe(recipes.get(recipes.size() - 1))
 			return
 
 		Phases.END_GAME: #GOTO PREP
@@ -134,7 +135,7 @@ func _client_day_change(day : int):
 	emit_signal("day_changed", day)
 
 func _start_prep():
-	current_time = PREP_TIME
+	current_time = PREP_TIME if current_day != 1 else INITAL_PREP_TIME
 	rpc("_client_time_change", max(0,current_time))
 	timer.start()
 	can_spawn_customers = false
@@ -147,7 +148,8 @@ func disable_controls(disbale : bool):
 
 
 func check_if_game_finshed() -> bool:
-	return current_day >= amount_of_days && current_phase == Phases.SERVE
+	return (current_day >= amount_of_days && current_phase == Phases.SERVE) or \
+	ReputationSystem.get_reputation(1) <= 0 or ReputationSystem.get_reputation(2) <= 0
 
 
 func spawn_customer():

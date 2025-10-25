@@ -57,8 +57,6 @@ func match_menu_items(input_ingredients: Array):
 		print("INPUTTTTT INGREDIENTS   ",input_ingredients)
 		print("INSTANCE INGREDIENTS    ",instance.ingredients)
 		if check_items(input_ingredients, instance.ingredients, instance):
-			#print("in check items if")
-			if instance is soup_mushroom: GlobalScript.tutorial_step.emit(13)
 			return instance 
 	#print("there is no menu item that contains these ingredients")
 	return null

@@ -275,7 +275,7 @@ func _action(is_active : bool) -> void:
 	elif _closest_item == null || item_in_hand != null:
 		return
 	
-	
+	if _closest_item != null and _closest_item.get_parent() is Extinguisher: return
 	
 	if !_closest_item.has_action || (is_active && _closest_item.get_parent() is ChopTable && 
 	_closest_item.get_parent().chopping_board.contents.is_empty()) || (is_active 

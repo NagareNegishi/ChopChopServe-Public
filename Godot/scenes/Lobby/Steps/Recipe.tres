@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TutorialNode" load_steps=2 format=3 uid="uid://m84dgng2o2io"]
+
+[ext_resource type="Script" uid="uid://c8guh3nm5ht4s" path="res://scenes/Lobby/Steps/tutorial_step.gd" id="1_aea0l"]
+
+[resource]
+script = ExtResource("1_aea0l")
+text_keyboard = "That was a lot to take in, huh? Don't worry, you can always check recipes anytime with [TAB]"
+text_controller = "That was a lot to take in, huh? Don't worry, you can always check recipes anytime with [TAB]"
+type = 0
+num = 0
+time = 6.0
+world_interaction = -1
+metadata/_custom_type_script = "uid://c8guh3nm5ht4s"

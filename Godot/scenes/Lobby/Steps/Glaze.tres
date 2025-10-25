@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TutorialNode" load_steps=2 format=3 uid="uid://4hvmj0h01o6q"]
+
+[ext_resource type="Script" uid="uid://c8guh3nm5ht4s" path="res://scenes/Lobby/Steps/tutorial_step.gd" id="1_h6brs"]
+
+[resource]
+script = ExtResource("1_h6brs")
+text_keyboard = "Now that you can move, it's time to explore your culinary potential"
+text_controller = "Now that you can move, it's time to explore your culinary potential"
+type = 0
+num = 0
+time = 5.0
+world_interaction = -1
+metadata/_custom_type_script = "uid://c8guh3nm5ht4s"

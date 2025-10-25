@@ -225,7 +225,7 @@ func _client_transfer(player_id: int, item_name: String, food_name: String) -> v
 ## @param is_hovered: Whether the item is hovered or not
 func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	if is_hovered && inventory: 
-		if group == Groups.FOUR: GlobalScript.tutorial_step.emit(6)
+		if group == Groups.THREE: GlobalScript.tutorial_step.emit(6)
 		inventory.get_node("SubViewport").get_node("Inventory").open()
 	elif !is_hovered && inventory: 
 		inventory.get_node("SubViewport").get_node("Inventory").close()
@@ -263,7 +263,7 @@ func player_has(_item: Node) -> void:
 		await GlobalScript.get_local_player().remove_item()
 		_item.queue_free()
 		return
-	if inventory_sprite.inventory.get_current_slot().inventory_item_name == "mushroom": GlobalScript.tutorial_step.emit(8)
+	if inventory_sprite.inventory.get_current_slot().inventory_item_name == "tomato": GlobalScript.tutorial_step.emit(8)
 	inventory_sprite.inventory.select_ingredient()
 	return
 
@@ -275,10 +275,10 @@ func put_from_player(_item: Node) -> bool:
 func _physics_process(delta: float) -> void:
 	if input_check("LB"): 
 		set_ui.rpc(false)
-		if inventory_sprite.inventory.get_current_slot().inventory_item_name == "mushroom": GlobalScript.tutorial_step.emit(7)
+		if inventory_sprite.inventory.get_current_slot().inventory_item_name == "tomato": GlobalScript.tutorial_step.emit(7)
 	if input_check("RB"): 
 		set_ui.rpc(true)
-		if inventory_sprite.inventory.get_current_slot().inventory_item_name == "mushroom": GlobalScript.tutorial_step.emit(7)
+		if inventory_sprite.inventory.get_current_slot().inventory_item_name == "tomato": GlobalScript.tutorial_step.emit(7)
 
 
 func input_check(action : String):

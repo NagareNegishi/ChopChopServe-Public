@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TutorialNode" load_steps=2 format=3 uid="uid://dn0yjyo7angqg"]
+
+[ext_resource type="Script" uid="uid://c8guh3nm5ht4s" path="res://scenes/Lobby/Steps/tutorial_step.gd" id="1_7lsba"]
+
+[resource]
+script = ExtResource("1_7lsba")
+text_keyboard = "Cycle between ingredients with [J] and [L] then pick up with [E] or [SPACE]"
+text_controller = "Cycle between ingredients with [L1] and [R2] then pick up with [A]"
+type = 1
+num = 8
+time = 0.01
+world_interaction = -1
+metadata/_custom_type_script = "uid://c8guh3nm5ht4s"

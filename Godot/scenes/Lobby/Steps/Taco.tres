@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TutorialNode" load_steps=2 format=3 uid="uid://bhoa216mc816w"]
+
+[ext_resource type="Script" uid="uid://c8guh3nm5ht4s" path="res://scenes/Lobby/Steps/tutorial_step.gd" id="1_0ul2g"]
+
+[resource]
+script = ExtResource("1_0ul2g")
+text_keyboard = "Now, show me your new skills by making me a Mushroom Taco!"
+text_controller = "Now, show me your new skills by making me a Mushroom Taco!"
+type = 1
+num = 14
+time = 0.0
+world_interaction = -1
+metadata/_custom_type_script = "uid://c8guh3nm5ht4s"

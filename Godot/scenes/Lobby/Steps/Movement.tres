@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TutorialNode" load_steps=2 format=3 uid="uid://mborrwl6fhdx"]
+
+[ext_resource type="Script" uid="uid://c8guh3nm5ht4s" path="res://scenes/Lobby/Steps/tutorial_step.gd" id="1_fa4sa"]
+
+[resource]
+script = ExtResource("1_fa4sa")
+text_keyboard = "Lets start with the essentials, move around with [WASD]"
+text_controller = "Lets start with the essentials, move around with [LEFT JOYSTICK]"
+type = 1
+num = 1
+time = 5.0
+world_interaction = -1
+metadata/_custom_type_script = "uid://c8guh3nm5ht4s"

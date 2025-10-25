@@ -10,6 +10,9 @@ signal done()
 @onready var cook_box = $CookBox
 @export var hide : bool = false
 
+var map_recipe = {
+	"tomato_soup" : "soup_tomato"
+}
 func _ready() -> void:
 	_progress.value = 0
 	reset()
@@ -30,6 +33,7 @@ func _physics_process(delta: float) -> void:
 
 
 func set_info(recipe_script : String):
+	if map_recipe.has(recipe_script): recipe_script = map_recipe[recipe_script]
 	var script = "res://scripts/Food/MenuItems/" + recipe_script +".gd"
 	var recipe = load(script).new()
 	assert(recipe)

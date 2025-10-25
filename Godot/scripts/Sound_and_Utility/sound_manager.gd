@@ -13,7 +13,7 @@ enum BGM {
 }
 
 var bgm_paths := {
-	BGM.MENU: "res://Sounds/BGM/Beach/8bit Bossa.mp3",
+	BGM.MENU: "res://Sounds/Main MenuLoop.mp3",
 }
 
 # Sound Effects (SFX)

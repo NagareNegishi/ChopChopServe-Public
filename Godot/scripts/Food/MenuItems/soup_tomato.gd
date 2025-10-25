@@ -27,3 +27,4 @@ func _ready():
 	cooked_mesh_good = $TomatoSoup
 	cooked_mesh_bad = $BadQualityTomatoSoup
 	cooked_mesh_burnt = $BurntTomatoSoup
+	GlobalScript.tutorial_step.emit(13)

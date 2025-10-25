@@ -29,8 +29,12 @@ func _process(_delta):
 
 func _ready() -> void:
 	_set_texture(type)
+	progress_bar.value_changed.connect(value_update)
 
-
+func value_update(value : float):
+	progress_bar.modulate = Color("faf9f6") if \
+	progress_bar.value < progress_bar.max_value else \
+	Color(Color.LIGHT_GREEN)
 func _on_add_cookware(cookware, appliance): # Need to do something else for the sink
 	if cookware == null:
 		print("Warning: cookware is null!")

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TutorialNode" load_steps=2 format=3 uid="uid://dq2k5wt6nbpcf"]
+
+[ext_resource type="Script" uid="uid://c8guh3nm5ht4s" path="res://scenes/Lobby/Steps/tutorial_step.gd" id="1_u0mij"]
+
+[resource]
+script = ExtResource("1_u0mij")
+text_keyboard = "Fantastic work! You're on your way to becoming a true chef"
+text_controller = "Fantastic work! You're on your way to becoming a true chef"
+type = 0
+num = 0
+time = 6.0
+world_interaction = -1
+metadata/_custom_type_script = "uid://c8guh3nm5ht4s"

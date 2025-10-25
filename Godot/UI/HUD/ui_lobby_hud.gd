@@ -45,11 +45,14 @@ func reset():
 	progress = 0
 	current = tutorial_steps[0]
 	tutorial_widget.set_progress(0)
+	GlobalScript.tutorial_counter_tomato = 0
 
 
 func _setup_node(node : TutorialNode):
 	assert(node)
-	tutorial_widget.set_text(node.text)
+	var text = node.text_keyboard if Input.get_connected_joypads().size() <= 0 \
+	else node.text_controller
+	tutorial_widget.set_text(text)
 
 	match node.type:
 		TutorialNode.TYPE.WAIT:

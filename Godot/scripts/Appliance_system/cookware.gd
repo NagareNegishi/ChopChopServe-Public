@@ -78,7 +78,6 @@ func _put_food(food: Food) -> void:
 	#food.current_visibility(false)
 	food.change_collisions(true)
 	cookware_ui.add_food(food)
-	print(self is Pot, GlobalScript.array_check_tomato(contents), contents.size() == 3)
 	if self is Pot and GlobalScript.array_check_tomato(contents) and contents.size() == 3:
 		GlobalScript.tutorial_step.emit(12)
 	food.restore_original_transform()

@@ -3,9 +3,9 @@
 [ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/Style/DefaultTheme.tres" id="1_c3iu8"]
 [ext_resource type="Script" uid="uid://cwm4lveq148fc" path="res://UI/HUD/ui_lobby_hud.gd" id="1_js7ef"]
 [ext_resource type="Script" uid="uid://c8guh3nm5ht4s" path="res://scenes/Lobby/Steps/tutorial_step.gd" id="2_adflp"]
-[ext_resource type="Resource" uid="uid://85up6v0vdqrq" path="res://scenes/Lobby/Steps/Step1.tres" id="3_0rii0"]
+[ext_resource type="Resource" uid="uid://85up6v0vdqrq" path="res://scenes/Lobby/Steps/Movement.tres" id="3_0rii0"]
 [ext_resource type="Texture2D" uid="uid://cun73plsv66ti" path="res://assets/textures/HUD/recipe.png" id="3_sd7gu"]
-[ext_resource type="Resource" uid="uid://d0yodttqoq6h0" path="res://scenes/Lobby/Steps/Step2.tres" id="4_0rii0"]
+[ext_resource type="Resource" uid="uid://d0yodttqoq6h0" path="res://scenes/Lobby/Steps/Dash.tres" id="4_0rii0"]
 [ext_resource type="Texture2D" uid="uid://54gpdx0w3aa8" path="res://assets/textures/Controls/keyboard_tab.png" id="4_7k7fu"]
 [ext_resource type="PackedScene" uid="uid://qi5b0x3dt5tn" path="res://UI/HUD/UI_Tutorial.tscn" id="5_7k7fu"]
 

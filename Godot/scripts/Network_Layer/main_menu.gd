@@ -42,7 +42,7 @@ func _ready():
 	if !froggo_building : return
 	froggo_building.play("ArmatureAction", -1, 0.6)
 	SoundManager.play_bgm(SoundManager.BGM.MENU, 2.0)
-	Input.joy_connection_changed.connect(_controller)
+	# SoundManager.play_sfx_player(SoundManager.SFX_PLAYER.JUMP) # test with oh rat
 
 
 func _controller(device : int, connected : bool):
@@ -108,8 +108,11 @@ func _is_room_code(input: String) -> bool:
 
 ## Switch to Lobby
 func _switch_to_lobby():
+	# Final Lobby Scene
 	SceneManager.change_scene(SceneManager.Scene.HUB)
-	#SceneManager.change_scene(SceneManager.Scene.LOBBY_TEST)
+	# Prototype Lobby Scene
+	# SceneManager.change_scene(SceneManager.Scene.LOBBY_TEST)
+
 
 
 ## Exit Game
@@ -196,11 +199,13 @@ func _on_room_selected(room_code: String):
 
 
 
-## Unknown functions, are using them somewhere else?----------------------------------------
-func _physics_process(delta: float) -> void:
-	if Input.is_action_just_pressed("ui_accept"):
-		_on_join_pressed()
+## Unknown functions, are those used by something?----------------------------------------
+# comment out for now, will be deleted later if not used
 
-func tutorial():
-	get_tree().change_scene_to_file("res://LevelDesign/Tutorial.tscn")
-	test_button.text = "CONNECTION HELP"
+# func _physics_process(delta: float) -> void:
+# 	if Input.is_action_just_pressed("ui_accept"):
+# 		_on_join_pressed()
+
+# func tutorial():
+# 	get_tree().change_scene_to_file("res://LevelDesign/Tutorial.tscn")
+# 	test_button.text = "CONNECTION HELP"

@@ -6,6 +6,13 @@ A competitive multiplayer cooking game where two restaurants battle to be the la
 
 Players run competing restaurants, serving customers while managing reputation, currency, and strategic decisions. Cook meals, upgrade your kitchen, and sabotage opponents to emerge victorious.
 
+## Download Game
+
+**Latest stable version:** [Releases](add link to releases page)
+
+temporary link: https://github.com/ringwoodem/ChopChopServe/releases/tag/v0.1-test
+
+
 ## Development Team
 
 - **Johno 🐻**: Player Controller, UI System
@@ -61,7 +68,7 @@ Players run competing restaurants, serving customers while managing reputation, 
 
 ### Requirements
 - **Each player needs the game executable** - the game is not browser-based
-- Players connect via IP address or join code
+- Players connect via IP address or room code
 - Host shares connection details with clients (via Discord, etc.)
 
 ### Hosting a Game
@@ -69,9 +76,9 @@ Players run competing restaurants, serving customers while managing reputation, 
 1. **Input your name** (optional - sets in-game character name)
 2. **Choose hosting method**:
    - **No IP input**: Game attempts UPnP configuration
-     - If supported: Provides public IP and join code for clients
+     - If supported: Provides public IP and the room code for the host to share
      - If not supported: Hosts on LAN only
-   - **Input public IP**: Game generates join code (does not guarantee connectivity)
+   - **Input public IP**: Game generates the room code (does not guarantee connectivity)
 3. **Start hosting**: Select **Host**
 
 **Host Options**:
@@ -80,12 +87,14 @@ Players run competing restaurants, serving customers while managing reputation, 
 3. Play on LAN if UPnP unavailable
 4. Manually configure port forwarding and input public IP
 
-**Network Test**: Use the **Network Test** button in main menu to check available options for your setup.
+~~**Network Test**: Use the **Network Test** button in main menu to check available options for your setup.~~
+This function exists but is currently disabled for aesthetic reasons.
 
 ### Joining a Game
 
 1. **Input your name** (optional - sets in-game character name)
 2. **Choose connection method**:
+   - **Search Host**: Ask the room code from the host, or "SEARCH HOST" button will find active hosts
    - **Input IP or code**: Join specific host
    - **Leave blank**: Automatically searches for LAN hosts
 3. **Join game**: Select **Join**
@@ -93,6 +102,7 @@ Players run competing restaurants, serving customers while managing reputation, 
 ### Troubleshooting
 - Host must share IP/code with clients externally (Discord, etc.)
 - Valid IP format doesn't guarantee successful connection
+- Active room codes does not guarantee connectivity
 - Check firewall and router settings if connection fails
 
 
@@ -109,6 +119,9 @@ Once hosted, players wait in the lobby:
   - Shuffle teams (forces even split if enough players)
   - Kick clients
   - Start game (only with balanced teams)
+
+While all those functions exist, the lobby scene is currently undergoing a redesign.  
+The version you see in the game may not reflect the above functionality.
 
 
 ### Example Recipe??

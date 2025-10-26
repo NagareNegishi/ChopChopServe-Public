@@ -19,7 +19,13 @@ func _init():
 	
 	name_of_meal = "pizza_meat"
 	ui_texture = load("res://assets/textures/recipes/PepperoniPizza.png")
-
+	ui_meal_name = "Meat Pizza"
+	ui_states = {
+		"Dough":["NONE", "BAKED"],
+		"Cheese":["CHOPPED","BAKED"],
+		"Tomato":["MIXED","BAKED"],
+		"Beef":["NONE","BAKED"],
+	}
 
 func _ready():
 	cooked_mesh_good = $PizzaPep

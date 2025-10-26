@@ -11,7 +11,7 @@ var s = [] # starters
 var m = [] # mains
 var d = [] # deserts
 
-var available_recipes
+var available_recipes: Array
 # Creates an order of food that is available for the npcs to order depending on the day
 # the server deals with the chnaging of the availablity at the moment
 # @return an order of 2 starters, 2 mains and a desert in a list
@@ -42,13 +42,21 @@ func get_order():
 	return order
 
 
-func get_simple_order(starter_index: int):
+func get_simple_order(meal_index: int, type_index: int):
 	var new_order = []
 	check_food_avalibility(s, MI.starters)
+	check_food_avalibility(m, MI.mains)
+	check_food_avalibility(d, MI.deserts)
+	
+	var current_meals = []
+	for meals in [s,m,d]:
+		if meals.size() > 0:
+			current_meals.append(meals)
 	# Put the order together
 	
-	if !s.is_empty():
-		new_order.append(food_generator(s, starter_index))
+	if !current_meals.is_empty():
+		new_order.append(food_generator(current_meals[
+							type_index % current_meals.size()], meal_index))
 	
 	return new_order
 
@@ -72,7 +80,12 @@ func food_generator(food_type: Array, index : int)-> MenuItem:
 # @param new_list which is the list the available food goes into
 # @param original_list is the static list from the menuitem class
 func check_food_avalibility(new_list: Array, original_list: Array):
+	available_recipes = GameState.get_available_recipes()
+	var name_list = []
+	for recipe in available_recipes:
+		name_list.append(recipe.get_meal_name())
 	new_list.clear()
 	for item in original_list:
-		if available_recipes.has(item):
+		if name_list.has(item.get_meal_name()):
+			#print(item.get_meal_name())
 			new_list.append(item)

@@ -2,12 +2,17 @@ extends AbstractThrowable
 class_name Food
 
 
-@warning_ignore("unused_signal")
+
 signal cooked
 @warning_ignore("unused_signal")
 signal changed_food_state
 
 signal cooking()
+
+#--------------------------
+signal entered_danger_zone()
+var in_danger_zone: bool = false
+#--------------------------
 
 #Meshes
 var raw_mesh: MeshInstance3D = null
@@ -160,7 +165,15 @@ func check_processed(current_state: foodState, time_a:int, time_b:int, stop:bool
 			previous_states.append(convert_enum_to_string(state))
 		
 		is_cooked = true
-		
+
+		# emit signals -----------------------------
+		if time_a == 0:
+			cooked.emit()
+		elif time_a < 0 && !in_danger_zone:
+			in_danger_zone = true
+			entered_danger_zone.emit()
+		# ------------------------------------------
+
 		if stop == true:
 			stop_cooking()
 		
@@ -202,6 +215,7 @@ func stop_cooking():
 	cook_timer.stop()
 	set_quality(current_cooking_style)
 	current_appliance = null
+	in_danger_zone = false
 
 
 func get_cooking_style(style: ApplianceFactory.CookingStyle):
@@ -306,8 +320,10 @@ func on_state_change():
 	visibility_of_mesh(spoiled_mesh, false)
 	visibility_of_mesh(cooked_mesh, false)
 	visibility_of_mesh(burnt_mesh, false)
-	visibility_of_mesh(chopped_mesh, false)
-	visibility_of_mesh(mixed_mesh, false)
+	if chopped_mesh:
+		visibility_of_mesh(chopped_mesh, false)
+	if mixed_mesh:
+		visibility_of_mesh(mixed_mesh, false)
 	
 	
 	match(state):
@@ -320,6 +336,11 @@ func on_state_change():
 			current_mesh = spoiled_mesh
 			
 		foodState.CHOPPED:
+			if self is Tomato: 
+				GlobalScript.tutorial_counter_tomato += 1
+				GlobalScript.tutorial_step.emit(10)
+			if GlobalScript.tutorial_counter_tomato == 3:
+				GlobalScript.tutorial_step.emit(11)
 			current_mesh = chopped_mesh
 			
 		foodState.BURNT:
@@ -337,13 +358,19 @@ func on_state_change():
 
 # ----------------------- CHANGING VISIBILITY/COLLISIONS -----------------------
 func visibility_of_mesh(meshName: MeshInstance3D, changeTo: bool):
-	if meshName != null:
-		meshName.visible = changeTo
+	if meshName == null:
+		push_error("No mesh passed to current_visibility() in food.gd")
+		return
+	
+	if changeTo:
+		meshName.show()
+	else:
+		meshName.hide()
 
 func current_visibility(changeTo: bool):
 	if !current_mesh:
 		push_error("No mesh passed to current_visibility() in food.gd")
-	current_mesh.visible = changeTo
+	visibility_of_mesh(current_mesh, changeTo)
 
 var  want : bool = false # this is so it doesnt happen everytime the player drops an item because there 
 # is no point turing the collisions back on it they are already on (and also it throws an error if you do that)
@@ -357,6 +384,7 @@ func change_collisions(turn_off:bool):
 	elif want && !turn_off:
 		self.collision_layer = l
 		self.collision_mask = m
+		want = false
 
 func _on_interactable_component_body_entered(body):
 	if body.is_in_group("Floor"):

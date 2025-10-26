@@ -1,11 +1,14 @@
 extends Node
 
+signal tutorial_step(num : int)
+
 enum UpgradeType{
 	POWER,
 	COEFF,
 	CAP
 }
 
+static var tutorial_counter_tomato = 0
 var player : Player
 var player_colours = PackedColorArray([Color("ff94fc",1), Color("57ceff",1), Color("ff734f",1), Color("76ff61",1)]) # Colours: Pink, Blue, Red, Green
 var player_outline_colours = PackedColorArray([Color("ed58d1",1), Color("4f77f0",1), Color("e32f00",1), Color("53ba43",1)]) # Colours: Pink, Blue, Red, Green
@@ -45,8 +48,14 @@ func get_local_player_by_id(player_id : int) -> Player:
 			return child
 	return null
 
-func get_pause_menu() -> Pause:
-	return get_tree().current_scene.get_node("== HUD ==/UiPause")
+func get_all_players():
+	return get_tree().current_scene.get_node("== PLAYERS ==").get_children()
 
 
-#================== Player State ===============================
+func array_check_tomato(contents : Array) -> bool:
+	if contents == null or contents.is_empty(): return false
+	for f in contents:
+		if f == null: return false
+		if f is Tomato: continue
+		return false 
+	return true

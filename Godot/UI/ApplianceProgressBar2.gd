@@ -6,7 +6,7 @@ var applianceInstance
 var cw 
 
 @export var type : ProgressType
-@onready var progress_bar = $ProgressBar
+@onready var progress_bar : ProgressBar = $ProgressBar
 
 enum ProgressType {
 	COOK,
@@ -22,13 +22,19 @@ var TEXTURE = {
 	ProgressType.WASH : ResourceLoader.load("res://assets/textures/misc/sink.png")
 }
 
+
 func _process(_delta):
 	change_visibility(is_open)
 
+
 func _ready() -> void:
 	_set_texture(type)
+	progress_bar.value_changed.connect(value_update)
 
-
+func value_update(value : float):
+	progress_bar.modulate = Color("faf9f6") if \
+	progress_bar.value < progress_bar.max_value else \
+	Color(Color.LIGHT_GREEN)
 func _on_add_cookware(cookware, appliance): # Need to do something else for the sink
 	if cookware == null:
 		print("Warning: cookware is null!")
@@ -46,7 +52,6 @@ func _on_add_cookware(cookware, appliance): # Need to do something else for the 
 	else:
 		progress_bar.max_value = 3
 	
-	#print("progress bar max value: ", progress_bar.max_value)
 	
 	if cookware.contents.size() >= 1:
 		food_item = cookware.contents[0]
@@ -56,8 +61,6 @@ func _on_add_cookware(cookware, appliance): # Need to do something else for the 
 	
 	if appliance != null:
 		appliance.connect("cookware_taken", Callable(self, "_on_cookware_taken"))
-	else:
-		push_error("The applience and the cookware on the appliance shouldnt be null")
 	
 	cw = cookware
 	applianceInstance = appliance
@@ -86,10 +89,11 @@ func _on_food_added(cookware, contents):
 	if not food_item.is_connected("cooking", Callable(self, "_on_food_cooking")):
 		food_item.connect("cooking", Callable(self, "_on_food_cooking"))
 
-
+var _contents
 func _on_food_taken(cookware, contents):
-	#print("FOOD IS TAKEN")
+	_contents = contents
 	if contents is Array and contents.size() >= 1:
+		
 		for item in contents:
 			if !item.is_cooked:
 				item.set_cook_time(get_max_value(get_cooking_style()), get_cooking_style())
@@ -133,7 +137,8 @@ func _on_cookware_taken(cookware, appliance):
 
 func _on_food_cooking():
 	progress_bar.value += 1
-
+	if progress_bar.value == 15 and get_cooking_style() == ApplianceFactory.CookingStyle.BOIL and \
+	_contents != null and GlobalScript.array_check_tomato(_contents): pass
 
 # Returns the cooking style of the cookware + blender
 func get_cooking_style():
@@ -147,7 +152,7 @@ func change_visibility(turn_on: bool):
 	
 	if applianceInstance:
 		owner_team = applianceInstance.get_appliance_owner()
-	elif applianceInstance == null and (cw is Blender || cw is Sink):
+	elif applianceInstance == null and (cw is Blender || cw is Sink || cw is ChoppingBoard):
 		owner_team = cw.get_appliance_owner()
 	else:
 		owner_team = 0

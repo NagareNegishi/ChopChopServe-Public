@@ -23,7 +23,7 @@ func add_currency(teamID: int, more_currency : float) -> void:
 func server_add_currency(teamID: int, more_currency : float):
 	if !ENetManager.is_host(): return;
 	
-	if !check_currency(teamID, more_currency):
+	if !check_currency(teamID, -more_currency):
 		push_error("Not enough currency to add: %d" % more_currency)
 		return
 	
@@ -59,7 +59,7 @@ func check_currency(teamID: int, currency: float) -> bool:
 		push_error("Invalid TeamID")
 		return false
 	
-	return (team1_currency if teamID == 1 else team2_currency) - currency >= 0
+	return (team1_currency if teamID == 1 else team2_currency) + currency >= 0
 
 @rpc("any_peer", "call_local")
 func _client_add_currency(teamID : int, currency : int):

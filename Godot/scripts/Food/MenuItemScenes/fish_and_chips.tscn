@@ -49,19 +49,20 @@ transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 script = ExtResource("1_yv2nc")
 
 [node name="FishAndChips" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.0515187, 0, -0.00470038, 0, 0.0034921, 0, 0.0573873, 0, -0.0042197, 0, 0, 0)
+transform = Transform3D(-0.120246, 0, -0.0104178, 0, 0.008, 0, 0.133944, 0, -0.00935247, 0, 0, 0)
 mesh = SubResource("ArrayMesh_m4nkw")
 skeleton = NodePath("")
 
 [node name="BadQualityFishNChips" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.0515187, 0, -0.00470038, 0, 0.0034921, 0, 0.0573873, 0, -0.0042197, 0, 0, 0)
+transform = Transform3D(-0.120246, 0, -0.0104178, 0, 0.008, 0, 0.133944, 0, -0.00935247, 0, 0, 0)
 visible = false
 mesh = SubResource("ArrayMesh_m4nkw")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_ia3ka")
 
 [node name="BurntFishNChips" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.0515187, 0, -0.00470038, 0, 0.0034921, 0, 0.0573873, 0, -0.0042197, 0, 0, 0)
+transform = Transform3D(-0.120246, 0, -0.0104178, 0, 0.008, 0, 0.133944, 0, -0.00935247, 0, 0, 0)
+visible = false
 mesh = SubResource("ArrayMesh_m4nkw")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_ja5s8")

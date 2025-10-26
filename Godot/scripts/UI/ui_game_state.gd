@@ -4,6 +4,8 @@ extends Control
 var game_state : GameStateTest :
 	set(value):
 		_connect_time_signal(value)
+		_connect_phase_signal(value)
+		_connect_day_signal(value)
 
 func _ready() -> void:
 	set_reputation(1, ReputationSystem.total_rep_team.get(1))
@@ -37,13 +39,21 @@ func set_money(team : int, amount : int) -> bool:
 	$Main/Money.text = "$" + str(amount)
 	return true
 
-func _set_time(time : float):
-	$Main/Time.text = seconds2hhmmss(time)
 
-func _connect_time_signal(value):
+
+func _connect_time_signal(value : GameStateTest):
 	if !value: return
 	_set_time(value.current_time)
 	value.time_changed.connect(_set_time)
+
+func _connect_phase_signal(value : GameStateTest):
+	if !value: return
+	value.phase_changed.connect(_set_phase)
+
+func _connect_day_signal(value : GameStateTest):
+	if !value: return
+	_set_day(value.current_day)
+	value.day_changed.connect(_set_day)
 
 
 func seconds2hhmmss(total_seconds: float) -> String:
@@ -52,3 +62,21 @@ func seconds2hhmmss(total_seconds: float) -> String:
 	var minutes:int   =  int(total_seconds / 60.0) % 60
 	var hhmmss_string:String = "%01d:%02d" % [minutes, seconds]
 	return hhmmss_string
+
+
+
+func _set_phase(phase : GameStateTest.Phases):
+	if phase == GameStateTest.Phases.END_GAME: return
+	$Main/Phase.visible = true
+	$Main/Phase.text = GameStateTest.Phases.keys()[phase]
+	$Main/Phase2.text = GameStateTest.Phases.keys()[phase] + "  Phase"
+	await get_tree().create_timer(4).timeout
+	$Main/Phase.visible = false
+	
+
+func _set_time(time : float):
+	$Main/Time.text = seconds2hhmmss(time)
+
+func _set_day(day : int):
+	$Main/Day.text = "Day " + str(day)
+	$Main/Phase/DayInfo.text = "Day "+ str(day)

@@ -5,9 +5,22 @@ class_name NameTag extends Control
 
 func set_color(player_id : int):
 	var team : int = ENetManager.get_team(player_id)
-	var color : Color = Color("fff6ae") if team == 2 else Color("f6a19e")
-	tag.set("theme_override_colors/font_color", color)
+	set_color_manual(player_id, team)
 
+func set_color_manual(player_id : int, t : int):
+	var color : Color
+	var outline : Color
+	match t:
+		1: color = Color("f79b8c")
+		2: color = Color("fff5a5")
+		_: color = Color8(249,249,249,255)
+	match t:
+		1: outline = Color("ff6f70")
+		2: outline = Color("e7d43a")
+		_: outline = Color("8f8f8f")
+	print(t)
+	tag.set("theme_override_colors/font_color", color)
+	tag.add_theme_color_override("font_outline_color", outline)
 
 func set_tag(new_name : String):
 	new_name = new_name if new_name.length() > 0 else "DEFAULT_NAME"

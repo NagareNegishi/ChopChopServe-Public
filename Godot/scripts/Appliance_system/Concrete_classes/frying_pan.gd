@@ -5,12 +5,16 @@ extends Cookware
 func _init():
 	super._init()
 	model_scene = preload("res://assets/newmodels/items/Pan.glb")
+	capacity = 4
+	center_offset = Vector3(0, 0, size.z * 0.15)
+	food_scale = Vector3(0.5, 0.5, 0.5)
+	sound = SoundManager.SFX_COOKING.PAN_FRY
 
 ## Setup the fryer properties
 func _ready():
 	super._ready()
 	cooking_style = ApplianceFactory.CookingStyle.PAN_FRY
-	valid_food = ["Fish", "Tomato", "Beef", "Chicken", "Milk", "Water", "Mushroom","Egg", "Flour"]
-	capacity = 4
+	valid_food = ["Fish", "Tomato", "Beef", "Chicken", "Milk", "Water", "Mushroom", 
+	"Egg", "Flour", "Potato", "Onion"]
 	coefficient = 1.0
 	add_to_group("Appliance")

@@ -112,7 +112,6 @@ func _on_join_team1_pressed():
 		"player_id": player_id,
 		"team": 1
 	})
-	# _hide_team_buttons()
 
 
 ## Join Team 2 button pressed handler
@@ -125,7 +124,6 @@ func _on_join_team2_pressed():
 		"player_id": player_id,
 		"team": 2
 	})
-	# _hide_team_buttons()
 
 
 ## Set the current team and update UI
@@ -137,13 +135,13 @@ func set_team(team: int) -> void:
 		1:
 			current_team = Team.TEAM1
 			if local:
-				team1_button.hide()
-				team2_button.show()
+				#TODO: low priority, could add leave team button and show it here
+				_hide_team_buttons()
+
 		2:
 			current_team = Team.TEAM2
 			if local:
-				team2_button.hide()
-				team1_button.show()
+				_hide_team_buttons()
 		_:
 			current_team = Team.UNASSIGNED
 			if local:

@@ -141,10 +141,17 @@ func player_has(item: Node) -> void:
 		if can_serve != -1:
 			serve_request(item, can_serve)
 			return
-	# If player has cookware: try to transfer contents
-	if _can_transfer(item):
-		transfer_request(item)
-		return
+	# If player has cookware:
+	if item is Cookware:
+		# try to transfer contents from bench to cookware
+		if _can_transfer(item):
+			transfer_request(item)
+			return
+		# If bench has plate: try to serve food to plate
+		var plate = contents.back()
+		if plate and plate is Plate and plate.is_ready():
+			served_on_plate_request(plate, item)
+			return
 	# If item_in_hand exists: depend on if appliance can accept it
 	put_request(item)
 
@@ -263,3 +270,69 @@ func _client_transfer(player_id: int) -> void:
 	if not _can_transfer(player_cookware):
 		return
 	player_cookware.put(take())
+
+
+## Serve food from Cookware to Plate
+## @param plate: The Plate to serve food to
+## @param cookware: The Cookware holding the food
+func served_on_plate_request(plate: Plate, cookware: Cookware) -> void:
+	if cookware.is_empty():
+		Debug.info("Cookware is empty, cannot serve")
+		return
+	if ENetManager.is_host():
+		plate.add_list_items(cookware.take_all())
+		_client_served_on_plate.rpc(ENetManager.get_my_id())
+		return
+	_served_on_plate_as_host.rpc_id(1, ENetManager.get_my_id())
+
+
+## Host-side method to handle serve requests from clients
+## @param player_id: The id of the player who is serving the food
+@rpc("any_peer", "call_remote", "reliable")
+func _served_on_plate_as_host(player_id: int) -> void:
+	if not ENetManager.is_host():
+		return
+	var cookware = GlobalScript.get_local_player_by_id(player_id).item_in_hand
+	if not cookware or not (cookware is Cookware) or cookware.is_empty():
+		Debug.info("Player is not holding a cookware with food")
+		return
+	var plate = contents.back()
+	if plate and plate is Plate and plate.is_ready():
+		plate.add_list_items(cookware.take_all())
+		_client_served_on_plate.rpc(player_id)
+
+
+## Client-side method to serve food to plate, called by host
+## @param player_id: The id of the player who is serving the food
+@rpc("authority", "call_remote", "reliable")
+func _client_served_on_plate(player_id: int) -> void:
+	var cookware = GlobalScript.get_local_player_by_id(player_id).item_in_hand
+	if not cookware or not (cookware is Cookware) or cookware.is_empty():
+		Debug.info("Player is not holding a cookware with food")
+		return
+	var plate = contents.back()
+	if plate and plate is Plate and plate.is_ready():
+		plate.add_list_items(cookware.take_all())
+
+
+
+## Give visual feedback when hovered
+## @param is_hovered: Whether the item is hovered or not
+func _on_interactable_component_hovered(is_hovered: bool) -> void:
+	return
+	# if not is_hovered:
+	# 	highlight_component.hide_feedback()
+	# 	return
+	# var player = GlobalScript.get_local_player()
+	# var item
+	# if player:
+	# 	item = player.item_in_hand
+	
+	# if item:
+	# 	Debug.all("Player ID: " + str(ENetManager.get_my_id())
+	# 		+ " has : " + item.get_script().get_global_name() + ", hovered: " + get_script().get_global_name())
+	# if not item:
+	# 	highlight_component.set_state(ApplianceHighlight.HighlightState.HOVER)
+	# 	return
+	# var can_accept = _can_accept(item)
+	# highlight_component.show_feedback(can_accept)

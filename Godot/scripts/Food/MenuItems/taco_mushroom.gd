@@ -19,8 +19,14 @@ func _init():
 	
 	name_of_meal = "taco_mushroom"
 	ui_texture = load("res://assets/textures/recipes/MushroomTaco.png")
-	
+	ui_meal_name = "Mushroom Taco"
+	ui_states = {
+		"Dough":["NONE","BAKED"],
+		"Mushroom":["CHOPPED", "FRIED"],
+		"Tomato":["CHOPPED","NONE"]
+	}
 func _ready():
 	cooked_mesh_good = $TacoMushroom
 	cooked_mesh_bad = $BadQualityMushTaco
 	cooked_mesh_burnt = $BurntMushTaco
+	GlobalScript.tutorial_step.emit(14)

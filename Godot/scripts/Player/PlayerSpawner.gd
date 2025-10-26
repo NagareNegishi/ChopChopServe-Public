@@ -5,17 +5,21 @@ const RUN : bool = true
 
 @export var spawns : Array[SpawnPoint]
 @export var network_player : PackedScene
-
+@export var signal_use : bool = false 
 
 ## Called when the node enters the scene tree for the first time.
 ## @return void
 func _ready() -> void:
 	if !RUN: return
 	
-	#multiplayer.peer_connected.connect(_spawn_player)
+	
 	if !ENetManager.is_host():
 		return
 	
+	if signal_use: 
+		multiplayer.peer_connected.connect(_spawn_player)
+		_spawn_player(ENetManager.get_my_id())
+		return
 	for player_id : int in ENetManager.get_player_list():
 		_spawn_player(player_id)
 
@@ -61,14 +65,17 @@ func _apply_position(player_id : int, spawn_point : Vector3):
 ## @return void
 func _get_spawn_point(player_id : int) -> SpawnPoint:
 	#Filters all active spawn points
+	var team = ENetManager.get_team(player_id)
+	if  team != 1 and team != 2: return spawns.pick_random()
 	var valid_spawns = spawns.filter(
 		func(_spawn : SpawnPoint) : return _spawn.is_active()).filter(
-		func(_spawn : SpawnPoint) : return _spawn.team == ENetManager.get_team(player_id))
+		func(_spawn : SpawnPoint) : return _spawn.team == team)
 	
 	valid_spawns.sort_custom(func(a : SpawnPoint, b : SpawnPoint) : return a.priority < b.priority)
 	
 	if valid_spawns.size() <= 0:
 		return null
-		
+
+
 	valid_spawns.get(0).use()
 	return valid_spawns.get(0)

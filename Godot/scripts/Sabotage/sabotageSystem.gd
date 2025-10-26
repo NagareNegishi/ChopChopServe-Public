@@ -38,7 +38,7 @@ signal sabotage_success(sabotage_type: int)
 signal sabotage_sending_team(teamID: int)
 signal sabotage_start(teamID: int, sab_name: String, sab_time: int)
 signal sabotage_ending(teamID: int, sab_name: String)
-
+signal spawn_critic(teamID: int)
 # Define Sabotage Types
 enum SabotageType {
 	WATER_SPILL,
@@ -169,8 +169,8 @@ func _do_sabotage(teamID: int, sabotage_type: int, chosen_path: NodePath, positi
 		# Handle foodCritic sabotage
 		SabotageType.FOOD_CRITIC:
 			print("critic stuff")
-			spawn_food_critic()
-		# Handle switchControls sabotage
+			spawn_food_critic(teamID)
+		# Handle food critic sabotage
 		SabotageType.SWITCH_CONTROLS:
 			print("switch stuff")
 			spawn_switch_controls(teamID)
@@ -321,13 +321,9 @@ func _pick_flammable_appliance_path(teamID: int) -> NodePath:
 
 # ------- Food Critic Stuff ------- #
 # UNUSED CURRENTLY
-func spawn_food_critic() -> void:
+func spawn_food_critic(teamID: int) -> void:
 	print("make a customer a critic")
-	# Either:
-		# send out a signal to make the next npc a critic
-		# then deal with it in the npc script
-	# Or:
-		# create a function in the npc and call it here
+	emit_signal("spawn_critic", teamID)
 
 # ------- Switch Controls ------- #	
 # Switch the Direction of the other teams controls

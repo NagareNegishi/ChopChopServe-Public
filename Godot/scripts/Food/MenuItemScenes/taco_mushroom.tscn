@@ -48,18 +48,20 @@ albedo_color = Color(0.154876, 0.154876, 0.154876, 1)
 script = ExtResource("1_vkkmp")
 
 [node name="TacoMushroom" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.0328765, 0, 0, 0, 0.082074, 0, 0, 0, 0.082074, 0, 0, 0)
+transform = Transform3D(0.1, 0, 0, 0, 0.19, 0, 0, 0, 0.19, 0, 0, 0)
 mesh = SubResource("ArrayMesh_pluwu")
 skeleton = NodePath("")
 
 [node name="BadQualityMushTaco" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.0328765, 0, 0, 0, 0.082074, 0, 0, 0, 0.082074, 0, 0, 0)
+transform = Transform3D(0.1, 0, 0, 0, 0.19, 0, 0, 0, 0.19, 0, 0, 0)
+visible = false
 mesh = SubResource("ArrayMesh_pluwu")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_efw3k")
 
 [node name="BurntMushTaco" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.0328765, 0, 0, 0, 0.082074, 0, 0, 0, 0.082074, 0, 0, 0)
+transform = Transform3D(0.1, 0, 0, 0, 0.19, 0, 0, 0, 0.19, 0, 0, 0)
+visible = false
 mesh = SubResource("ArrayMesh_pluwu")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_8qkm8")

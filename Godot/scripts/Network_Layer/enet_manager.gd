@@ -69,6 +69,12 @@ func _on_player_joined(player_id: int):
 			"type": "player_list_update",
 			"players": player_list
 		})
+		# Send current team assignments to the new player
+		enet_layer.send_to(player_id, {
+			"type": "team_assignment",
+			"team1": team1,
+			"team2": team2
+		})
 		player_list_updated.emit(player_list)
 
 
@@ -194,6 +200,9 @@ func _on_data_received(_from_id: int, data: Dictionary):
 			team_assigned.emit(team1, team2)
 
 		"game_starting":
+			if data.has("team1") and data.has("team2"):
+				team1 = data.team1
+				team2 = data.team2
 			current_state = GameProgress.IN_GAME
 			game_started.emit()
 			show_notification("Game Started!", 1.0)
@@ -357,8 +366,11 @@ func start_game() -> void:
 		push_warning("Cannot start game - teams not ready!")
 		return
 	current_state = GameProgress.IN_GAME
+	# Ensure all clients have the correct team assignment
 	enet_layer.broadcast_except(enet_layer.get_my_id(), {
-		"type": "game_starting"
+		"type": "game_starting",
+		"team1": team1.duplicate(),
+		"team2": team2.duplicate()
 	})
 	game_started.emit()
 
@@ -392,3 +404,14 @@ func show_notification(message: String, duration: float = 3.0):
 ## Hide the active popup
 func hide_popup():
 	popup_manager.hide_popup()
+
+
+## Leave tutorial and return to main menu
+func leave_tutorial():
+	# Clean up all state
+	clear_player_list()
+	current_state = GameProgress.LOBBY
+	# Disconnect network and back to main menu
+	if enet_layer.peer:
+		enet_layer.leave_game()
+	back_to_main_menu.emit()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://c8fjtoivn36pt"]
+[gd_scene load_steps=38 format=3 uid="uid://c8fjtoivn36pt"]
 
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="1_y7x5b"]
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="2_2rsp4"]
@@ -27,6 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://cw5uvt35a87nt" path="res://scenes/Appliance_system/blender.tscn" id="26_2rsp4"]
 [ext_resource type="PackedScene" uid="uid://b0ougk3d4jnku" path="res://scenes/Appliance_system/food_factory.tscn" id="26_y7x5b"]
 [ext_resource type="PackedScene" uid="uid://br76j8t76ne2x" path="res://scripts/order_system/Plate.tscn" id="27_2rsp4"]
+[ext_resource type="PackedScene" uid="uid://dt4wue57mdx1d" path="res://scenes/Appliance_system/trash_can.tscn" id="28_g7q6q"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rci3a"]
 sky_top_color = Color(0.636864, 0.781479, 0.982896, 1)
@@ -411,6 +412,18 @@ group = 2
 transform = Transform3D(1, 0, -2.32831e-09, 0, 1, 0, 2.32831e-09, 0, 1, 6.99294, 0, 0.03869)
 group = 1
 
+[node name="FoodFactory5" parent="NavigationRegion3D" instance=ExtResource("26_y7x5b")]
+transform = Transform3D(1, 0, -4.19095e-09, 0, 1, 0, 4.19095e-09, 0, 1, 9.83327, 0, 0.0544047)
+group = 3
+
+[node name="FoodFactory6" parent="NavigationRegion3D" instance=ExtResource("26_y7x5b")]
+transform = Transform3D(1, 0, -3.25963e-09, 0, 1, 0, 3.25963e-09, 0, 1, 8.44538, 0, 0.0467259)
+group = 2
+
+[node name="FoodFactory7" parent="NavigationRegion3D" instance=ExtResource("26_y7x5b")]
+transform = Transform3D(1, 0, -2.32831e-09, 0, 1, 0, 2.32831e-09, 0, 1, 6.99294, 0, 0.03869)
+group = 1
+
 [node name="FoodFactory" parent="NavigationRegion3D" instance=ExtResource("26_y7x5b")]
 transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 0, 9.31323e-10, 0, 1, 5.63437, 0, 0.0311735)
 
@@ -422,3 +435,6 @@ transform = Transform3D(0.042015, 0, -0.999116, 0, 1, 0, 0.999116, 0, 0.042015, 
 [node name="Plate" parent="." instance=ExtResource("27_2rsp4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.53708, 0, 3.38441)
 is_dirty = true
+
+[node name="TrashCan" parent="." instance=ExtResource("28_g7q6q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.11519, 0, 1.69284)

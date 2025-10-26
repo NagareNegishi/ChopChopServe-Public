@@ -102,6 +102,7 @@ func _everyone_throw(player_id: int) -> void:
 	await GlobalScript.get_local_player_by_id(player_id).remove_item()
 	Debug.all("Item removed: " + item.get_script().get_global_name() + ", at: " + str(ENetManager.get_my_id()))
 	item.queue_free()
+	SoundManager.play_sfx_cooking(SoundManager.SFX_COOKING.BIN)
 
 
 ## NOTE: Throw away item does not require server validation, let clients handle it directly
@@ -128,8 +129,10 @@ func _everyone_throw_all(player_id: int, item_name: String) -> void:
 	var items
 	if from is Plate:
 		from.remove_all()
+		SoundManager.play_sfx_cooking(SoundManager.SFX_COOKING.BIN)
 	elif from is Cookware:
 		items = from.take_all()
+		SoundManager.play_sfx_cooking(SoundManager.SFX_COOKING.BIN)
 		for item in items:
 			item.queue_free()
 

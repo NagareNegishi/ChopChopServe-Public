@@ -10,7 +10,7 @@ const MAXIMUM_ORDER_THINK_TIME: float = 1.0
 # Time in seconds the agent must be stuck before recalculating its path.
 const STUCK_RECALCULATE_TIME: float = 1.0 
 # Time in seconds the customer will stay seated till they get fed up not being served
-const MAXIMUM_SEATING_TIME: float = 250
+const MAXIMUM_SEATING_TIME: float = 60
 # Time in seconds the customer will stop moving for after falling
 const FALLEN_OVER_TIME = 5.0
 
@@ -25,13 +25,16 @@ const FALLEN_OVER_TIME = 5.0
 @export var overhead_ui_order: PackedScene # Shows meal customer wants
 @export var overhead_ui_thinking: PackedScene # Shows frog thinking
 # Allows for orders to be randomly selected
-@export var order_gen_number = randi()
+@export var order_gen_meal_number = randi()
+@export var order_gen_type_number = randi()
 @export var _time_till_leaving: float = MAXIMUM_SEATING_TIME
 @export var is_tweening_to_seat = false # true when customer first arrives to table
 
 @export var customer_state: CustomerState = CustomerState.IDLE:
 	# Runs on all clients when the state changes.
 	set(new_state):
+		if customer_state == new_state:
+			return
 		customer_state = new_state
 		if (not is_instance_valid(overhead_ui_order_instance) ||
 		not is_instance_valid(overhead_ui_thinking_instance)):
@@ -48,8 +51,10 @@ const FALLEN_OVER_TIME = 5.0
 				overhead_ui_order_instance.show()
 				order = await _game_server.call_service("OrderGenerator", 
 														"get_simple_order", 
-														[order_gen_number])
+														[order_gen_meal_number, 
+														order_gen_type_number])
 				overhead_ui_order_instance.set_order(order[0])
+				#print("\n\n\nTHIS IS THE ORDER FROM THE CUSTOMER:::::   ", order)
 
 @onready var ui_anchor: Marker3D = $OverheadUIAnchor
 @onready var animation_tree: AnimationTree = $AnimationTree
@@ -67,8 +72,9 @@ var _stuck_timer: float = 0.0
 var _id
 var overhead_ui_order_instance: UIOrder
 var overhead_ui_thinking_instance: UIThinking
-
-
+var is_critic: bool = false
+var critic_rep_amount : float = 50
+var critic_victim_team : int = -1
 # Registers to server on hosts end 
 func _initialize():
 	_game_server.register_service(_id, self)
@@ -80,6 +86,7 @@ func _on_tree_exiting():
 func _ready():
 	hide()
 	super._ready()
+	add_to_group("Customer")
 	var ui_layer = get_tree().get_first_node_in_group("Canvas")
 	# Create and add UI elements to scene 
 	if ui_layer:
@@ -150,6 +157,7 @@ func _physics_process(delta: float):
 			move_and_slide()
 			_rotate_npc(delta)
 		synced_position = position
+		
 ## Customers will either:
 ## - search or move to targets (queue spot or table)
 ## - shift their position in queue
@@ -186,7 +194,9 @@ func _npc_behavior(delta: float):
 			if !_time_till_leaving:
 				# Timer is up, customer leaves.
 				_game_server.call_service(_table_target.id(), "set_occupied", [false])
-				
+				if is_critic: # not serving critic giving will lose rep
+					ReputationSystem.minus_reputation(critic_victim_team, 
+															critic_rep_amount)
 				var exit_point = await _game_server.call_service(_food_court_id, "get_exit_point", [])
 				_current_target = exit_point	
 				_table_target = null	
@@ -196,12 +206,12 @@ func _npc_behavior(delta: float):
 			var plate_served = await _game_server.call_service(_table_target.id(), "get_plate", [])
 			if plate_served:
 				var food = plate_served.get_children().back()
-				print(food)
 				if (food is MenuItem and food.get_meal_name() == order[0].get_meal_name()):
 					CurrencySystem.server_add_currency(ENetManager.get_my_team(), 100.0)
 					ReputationSystem.server_add_reputation(ENetManager.get_my_team(), 
-															10.0 * food.get_quality())
+															3 * food.get_quality())
 					_table_target.rpc("remove_plate")
+					_table_target.remove_plate()
 					_time_till_leaving = 2
 					
 	# Customers who reach the front of the queue should begin looking for tables
@@ -332,7 +342,7 @@ func despawn():
 	if is_instance_valid(overhead_ui_order_instance):
 		overhead_ui_order_instance.queue_free()
 
-# This function is for waterspill sabotage
+## For waterspill sabotage
 func fall_down():
 	if is_multiplayer_authority():
 		fallen_over = true

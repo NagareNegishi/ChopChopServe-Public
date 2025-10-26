@@ -1,0 +1,132 @@
+[gd_scene load_steps=18 format=3 uid="uid://b00ul4sr6vuab"]
+
+[ext_resource type="Script" uid="uid://bvyjm5mpgpywa" path="res://scripts/Customer.gd" id="1_jtjbu"]
+[ext_resource type="PackedScene" uid="uid://tloru3qomb8r" path="res://UI/UI_order.tscn" id="2_4tl03"]
+[ext_resource type="PackedScene" uid="uid://br3jfy6v5habq" path="res://UI/UI_Thinking.tscn" id="3_ayrce"]
+[ext_resource type="PackedScene" uid="uid://cmqf1ixnv725x" path="res://assets/newmodels/animations/customers/CustomerThird.glb" id="4_jtjbu"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_esrsq"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gijdy"]
+animation = &"IdleAnimation"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ppgne"]
+animation = &"Sitting"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_baoxa"]
+animation = &"SittingIdle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_c4u2r"]
+animation = &"Walking"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_c4u2r"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ppgne"]
+reset = false
+advance_mode = 2
+advance_condition = &"is_moving"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2m75d"]
+advance_mode = 2
+advance_condition = &"is_tweening_to_seat"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_m804o"]
+advance_mode = 2
+advance_condition = &"is_sitting"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_imbnr"]
+advance_mode = 2
+advance_condition = &"is_moving"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gijdy"]
+advance_mode = 2
+advance_condition = &"not_moving"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_ppgne"]
+states/End/position = Vector2(1034, 113)
+states/IdleAnimation/node = SubResource("AnimationNodeAnimation_gijdy")
+states/IdleAnimation/position = Vector2(528, 100)
+states/Sitting/node = SubResource("AnimationNodeAnimation_ppgne")
+states/Sitting/position = Vector2(806, 53)
+states/SittingIdle/node = SubResource("AnimationNodeAnimation_baoxa")
+states/SittingIdle/position = Vector2(946, 53)
+states/Walking/node = SubResource("AnimationNodeAnimation_c4u2r")
+states/Walking/position = Vector2(695, 106)
+transitions = ["Start", "IdleAnimation", SubResource("AnimationNodeStateMachineTransition_c4u2r"), "IdleAnimation", "Walking", SubResource("AnimationNodeStateMachineTransition_ppgne"), "Walking", "Sitting", SubResource("AnimationNodeStateMachineTransition_2m75d"), "Sitting", "SittingIdle", SubResource("AnimationNodeStateMachineTransition_m804o"), "SittingIdle", "Walking", SubResource("AnimationNodeStateMachineTransition_imbnr"), "Walking", "IdleAnimation", SubResource("AnimationNodeStateMachineTransition_gijdy")]
+graph_offset = Vector2(123.598, 0)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gijdy"]
+properties/0/path = NodePath(".:synced_position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:customer_state")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:_time_till_leaving")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath(".:_seated")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath(".:is_tweening_to_seat")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath(".:synced_velocity")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath(".:fallen_over")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath(".:order_gen_meal_number")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+properties/9/path = NodePath(".:order_gen_type_number")
+properties/9/spawn = true
+properties/9/replication_mode = 1
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+script = ExtResource("1_jtjbu")
+overhead_ui_order = ExtResource("2_4tl03")
+overhead_ui_thinking = ExtResource("3_ayrce")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_esrsq")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+avoidance_enabled = true
+neighbor_distance = 10.0
+time_horizon_agents = 0.1
+time_horizon_obstacles = 0.1
+max_speed = 4.0
+avoidance_priority = 0.0
+debug_use_custom = true
+debug_path_custom_color = Color(0, 0, 0, 0.156863)
+debug_path_custom_point_size = 5.0
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="."]
+radius = 0.7
+
+[node name="OverheadUIAnchor" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1624, 0)
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+root_node = NodePath("../CustomerThird")
+tree_root = SubResource("AnimationNodeStateMachine_ppgne")
+anim_player = NodePath("../CustomerThird/AnimationPlayer")
+parameters/conditions/is_moving = false
+parameters/conditions/is_sitting = false
+parameters/conditions/is_tweening_to_seat = false
+parameters/conditions/not_moving = false
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_gijdy")
+
+[node name="CustomerThird" parent="." instance=ExtResource("4_jtjbu")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, -1, 0)
+
+[editable path="CustomerThird"]

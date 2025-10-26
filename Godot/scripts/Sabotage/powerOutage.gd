@@ -1,11 +1,5 @@
 extends Node3D
 
-################################################################################
-# TODO:
-	# - Check that this is actually working
-	# - Make sure this networking !!
-################################################################################
-
 # Check this time is good !!
 var secs = 5.0
 var things

@@ -1,10 +1,13 @@
 ## Development Team from CGRA359
 
-- **Johno 🐻**
-- **Emma 🐺**
-- **Nagare 🐶**
-- **Josh 🐰**
-- **Jessica 🦉**
+- Johno (CGRA 359, programming)
+- Emma (CGRA 359, programming)
+- Nagare Negishi (CGRA 359, programming)
+- Josh (CGRA 359, programming)
+- Jessica (CGRA 359, programming)
+
+- Mitchell
+- Bradley
 
 ### Related Repositories:
 https://github.com/ringwoodem/ChopChopServe

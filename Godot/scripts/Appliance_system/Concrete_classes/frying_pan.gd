@@ -14,6 +14,7 @@ func _init():
 func _ready():
 	super._ready()
 	cooking_style = ApplianceFactory.CookingStyle.PAN_FRY
-	valid_food = ["Fish", "Tomato", "Beef", "Chicken", "Milk", "Water", "Mushroom","Egg", "Flour"]
+	valid_food = ["Fish", "Tomato", "Beef", "Chicken", "Milk", "Water", "Mushroom", 
+	"Egg", "Flour", "Potato", "Onion"]
 	coefficient = 1.0
 	add_to_group("Appliance")

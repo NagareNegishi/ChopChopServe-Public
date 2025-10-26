@@ -366,17 +366,12 @@ func start_game() -> void:
 		push_warning("Cannot start game - teams not ready!")
 		return
 	current_state = GameProgress.IN_GAME
-	# enet_layer.broadcast_except(enet_layer.get_my_id(), {
-	# 	"type": "game_starting"
-	# })
 	# Ensure all clients have the correct team assignment
-	for player_id in player_list:
-		if player_id != get_my_id():
-			enet_layer.send_to(player_id, {
-				"type": "game_starting",
-				"team1": team1.duplicate(),
-				"team2": team2.duplicate()
-			})
+	enet_layer.broadcast_except(enet_layer.get_my_id(), {
+		"type": "game_starting",
+		"team1": team1.duplicate(),
+		"team2": team2.duplicate()
+	})
 	game_started.emit()
 
 

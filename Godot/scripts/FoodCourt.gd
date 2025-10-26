@@ -1,11 +1,15 @@
 class_name FoodCourt extends Node
 
 
-const NEW_CUSTOMER_DELAY: float = 1.5
+const MAX_CUSTOMER_DELAY: float = 22
+const MIN_CUSTOMER_DELAY: float = 17
 const QUEUE_CHECK_DELAY: float = 0.5
+const SPAWN_ACCELERATION: float = 0.02
+
 var _time_since_last_customer: float = 0.5
 var _time_since_queue_check: float = 0.0
-
+var current_max_delay = MAX_CUSTOMER_DELAY
+var current_min_delay = MIN_CUSTOMER_DELAY
 
 @onready var _game_server = get_node("/root/GameServer")
 @onready var sabotage_system = get_node("/root/SabotageSystem")
@@ -16,7 +20,7 @@ var _time_since_queue_check: float = 0.0
 @export var customer_spawn_point: Node3D
 @export var customer_exit_point: Node3D
 @export var customer_seed = 0 # For making synced random changes
-
+@export var game_state : GameStateTest
 var _next_customer_id_num: int = 0
 var number_of_restaurants = 2
 
@@ -25,14 +29,22 @@ func _ready():
 	# Add to a group to be easily found by ENetManager
 	add_to_group("FoodCourt")
 	_game_server.register_service(name, self)
+
 	sabotage_system.connect("spawn_critic", spawn_food_critic)
+
+	if ENetManager.is_host(): game_state.phase_changed.connect(_state_change)
+
 	# Initialize tables and queue spots so they can be found by the game server
 	var _next_id = 0
 	for occupiable in tables + queue_spots:
 		occupiable.initialize(str("FoodCourt", "occupiable_", _next_id))
 		_game_server.register_service(str("FoodCourt", "occupiable_", _next_id), occupiable)
 		_next_id += 1
-	
+
+func _state_change(phase :GameState.Phases):
+	current_max_delay = MAX_CUSTOMER_DELAY
+	current_min_delay = MIN_CUSTOMER_DELAY
+
 func _process(delta: float):
 	if not is_multiplayer_authority():
 		return
@@ -48,10 +60,14 @@ func _process(delta: float):
 				shift_queue(i)
 				
 	_time_since_last_customer -= delta
-	if _time_since_last_customer < 0 and (GameState.get_customer_check() 
+	if game_state.current_phase == GameStateTest.Phases.SERVE:
+		current_max_delay = max(15, current_max_delay - delta * SPAWN_ACCELERATION)
+		current_min_delay = max(10, current_min_delay -  delta * SPAWN_ACCELERATION)
+
+	if _time_since_last_customer < 0 and (game_state.can_spawn_customers
 									and await get_free_queue_spot()
 									and customer_seed != 0):
-		_time_since_last_customer = NEW_CUSTOMER_DELAY
+		_time_since_last_customer = randf() * current_max_delay + current_min_delay
 		var customer_id = "customer_%d" % _next_customer_id_num
 		_next_customer_id_num += 1
 		
@@ -65,7 +81,6 @@ func _process(delta: float):
 		spawn_customer.rpc(customer_id, spawn_position, food_court_id)
 
 func spawn_food_critic(teamID: int):
-	print("I AM CONNECTED", teamID)
 	var customer_id = "customer_%d" % _next_customer_id_num
 	var spawn_position = customer_spawn_point.global_position
 	var food_court_id = self.name

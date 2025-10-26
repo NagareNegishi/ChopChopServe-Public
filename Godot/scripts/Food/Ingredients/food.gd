@@ -336,6 +336,11 @@ func on_state_change():
 			current_mesh = spoiled_mesh
 			
 		foodState.CHOPPED:
+			if self is Tomato: 
+				GlobalScript.tutorial_counter_tomato += 1
+				GlobalScript.tutorial_step.emit(10)
+			if GlobalScript.tutorial_counter_tomato == 3:
+				GlobalScript.tutorial_step.emit(11)
 			current_mesh = chopped_mesh
 			
 		foodState.BURNT:
@@ -353,8 +358,9 @@ func on_state_change():
 
 # ----------------------- CHANGING VISIBILITY/COLLISIONS -----------------------
 func visibility_of_mesh(meshName: MeshInstance3D, changeTo: bool):
-	if meshName != null:
+	if meshName == null:
 		push_error("No mesh passed to current_visibility() in food.gd")
+		return
 	
 	if changeTo:
 		meshName.show()

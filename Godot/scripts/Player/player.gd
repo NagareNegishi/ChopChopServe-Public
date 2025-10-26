@@ -3,6 +3,7 @@ extends CharacterBody3D
 
 signal comp_hovered(cop : InteractableComponent, is_hover : bool)
 signal item_dropped(item : Node3D)
+signal controls_disbaled(a : bool, b : bool)
 
 const ACCELERATION : float = 100
 const DECELERATION : float = 60
@@ -77,7 +78,7 @@ func _ready() -> void:
 	$Mesh/Armature/Skeleton3D/RightHand.set_surface_override_material(1, material)
 	$Mesh/Armature/Skeleton3D/LeftHand.set_surface_override_material(1, material)
 	if !multiplayer.get_unique_id() == name.to_int() : return
-	print(str(ENetManager.get_my_id()) + ": " + str(ENetManager.get_player_list()))
+	#wprint(str(ENetManager.get_my_id()) + ": " + str(ENetManager.get_team1()))
 	await get_tree().create_timer(0.05).timeout
 	
 	rpc_id(1, "_server_set_name", name.to_int(), GlobalScript.player_name)
@@ -171,7 +172,7 @@ func _dash(is_forward : bool) -> void:
 	if !velocity || !is_on_floor():
 		return
 	var dash_tween = create_tween().set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
-	
+	GlobalScript.tutorial_step.emit(2)
 	# If player moving it will launch in direction of movement 
 	# otherwise will do where players looking
 	var _dash_direction = ($Mesh.transform.basis.z if is_forward
@@ -190,8 +191,9 @@ func _dash(is_forward : bool) -> void:
 func _inputs() -> void:
 	if Input.is_action_just_pressed("Pause"):
 		UIManager.pause(true)
-	
+		
 	if Input.is_action_just_pressed("Recipe"):
+		if !UIManager.recipe_tab.visible == true: GlobalScript.tutorial_step.emit(4)
 		UIManager.show_recipes_tab(!UIManager.recipe_tab.visible)
 	
 	if !is_actoin_disabled:
@@ -202,6 +204,8 @@ func _inputs() -> void:
 			_action(false)
 		
 	if is_controls_disabled: return
+	
+
 	
 	if Input.is_action_just_pressed("Dash") && can_dash:
 		_dash(true)
@@ -272,7 +276,7 @@ func _action(is_active : bool) -> void:
 	elif _closest_item == null || item_in_hand != null:
 		return
 	
-	
+	if _closest_item != null and _closest_item.get_parent() is Extinguisher: return
 	
 	if !_closest_item.has_action || (is_active && _closest_item.get_parent() is ChopTable && 
 	_closest_item.get_parent().chopping_board.contents.is_empty()) || (is_active 
@@ -281,7 +285,7 @@ func _action(is_active : bool) -> void:
 	if _closest_item != null && (_closest_item.get_parent() is ChopTable or _closest_item.get_parent() is Sink):
 		disable_controls(is_active, false)
 	
-	if _closest_item.get_parent() is not FoodFactory:
+	if _closest_item.get_parent() is not FoodFactory && _closest_item.get_parent() is not Extinguisher:
 		rpc("_client_action_anim",ENetManager.get_my_id(), is_active,
 	is_active && _closest_item.get_parent() is ChopTable,
 	is_active && _closest_item.get_parent() is Sink)
@@ -408,7 +412,6 @@ func _client_pickup(player_path : String, item_path : String) -> bool:
 @rpc("authority", "call_local")
 func server_drop_item(player_path : String, is_throw : bool) -> bool:
 	var player : Node3D = get_tree().current_scene.get_node(player_path)
-	print("print")
 	if(player.item_in_hand == null):
 		return false
 	rpc("_client_drop_item", player_path, is_throw)
@@ -429,6 +432,11 @@ func _client_drop_item(player_path : String, is_throw : bool) -> bool:
 	if player.item_in_hand.has_node("InteractableComponent"):
 		player.item_in_hand.get_node("InteractableComponent").turn_on_collision(true)
 	
+	if player.item_in_hand.has_method("append_team") and( 
+	ENetManager.get_player_list().find(player.name.to_int()) == 
+	ENetManager.get_player_list().find(name.to_int())):
+		player.item_in_hand.append_team(ENetManager.get_player_list().find(player.name.to_int()) + 1)
+	
 	get_tree().get_current_scene().add_child(player.item_in_hand)
 	player.call_deferred("_final_drop", player.item_in_hand)
 	
@@ -436,7 +444,7 @@ func _client_drop_item(player_path : String, is_throw : bool) -> bool:
 	player._action(false)
 
 	
-	print("Item dropped ", player.item_in_hand)
+	#print("Item dropped ", player.item_in_hand)
 	player.anim_tree["parameters/SM_Walking/conditions/empty"] = true
 	player.anim_tree["parameters/SM_IDLE/conditions/empty"] = true
 	player.anim_tree["parameters/SM_Walking/conditions/holding"] = false
@@ -469,7 +477,7 @@ func drop_item(is_throw : bool) -> bool:
 
 
 	item_in_hand.get_node("InteractableComponent").custom_rotate(true)
-	print("Item dropped ", item_in_hand)
+	#print("Item dropped ", item_in_hand)
 	emit_signal("item_dropped", item_in_hand)
 	item_in_hand = null
 	return true
@@ -561,7 +569,7 @@ func remove_item() -> Node3D:
 	anim_tree["parameters/SM_Walking/conditions/holding"] = false
 	anim_tree["parameters/SM_IDLE/conditions/holding"] = false
 	item_in_hand = null
-	print("Item removed")
+	#print("Item removed")
 	return res
 
 
@@ -588,6 +596,7 @@ func invert_controls(_invert : bool):
 func disable_controls(_disable : bool, _action : bool):
 	is_controls_disabled = _disable
 	is_actoin_disabled = _action
+	controls_disbaled.emit(_disable, _action)
 
 func _can_app_interact() -> bool:
 	if !_closest_item: return false
@@ -606,11 +615,12 @@ var sabo_index : int
 
 func _sabotage_left():
 	sabo_index = sabo_index - 1 if sabo_index > 0 else 5
-	print(sabo_index)
-	
+	sabo_move.emit(sabo_index)
 func _sabotage_right():
 	sabo_index = sabo_index + 1 if sabo_index <= 4 else 0
-	print(sabo_index)
+	sabo_move.emit(sabo_index)
+
+signal sabo_move(index : int)
 
 func _select_sabo():
 	_sabotage(sabo_index)

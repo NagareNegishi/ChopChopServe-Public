@@ -47,19 +47,19 @@ albedo_color = Color(0.18359, 0.18359, 0.18359, 1)
 script = ExtResource("1_hirbf")
 
 [node name="BurgerChicken" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.142333, 0.0040561, -0.0187828, -0.0446303, 0.0133486, -0.007289, 0.0157971, 0.00116713, 0.148641, 0, 0, 0)
+transform = Transform3D(0.113866, 0.00318693, -0.0150262, -0.0357042, 0.0104882, -0.00583123, 0.0126377, 0.000917031, 0.118913, 0, 0, 0)
 mesh = SubResource("ArrayMesh_vrgvt")
 skeleton = NodePath("")
 
 [node name="BadQualityChickenBurger" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.142333, 0.0040561, -0.0187828, -0.0446303, 0.0133486, -0.007289, 0.0157971, 0.00116713, 0.148641, 0, 0, 0)
+transform = Transform3D(0.113866, 0.00318693, -0.0150262, -0.0357042, 0.0104882, -0.00583123, 0.0126377, 0.000917031, 0.118913, 0, 0, 0)
 visible = false
 mesh = SubResource("ArrayMesh_vrgvt")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_l5p2g")
 
 [node name="BurntChickenBurger" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.142333, 0.0040561, -0.0187828, -0.0446303, 0.0133486, -0.007289, 0.0157971, 0.00116713, 0.148641, 0, 0, 0)
+transform = Transform3D(0.113866, 0.00318693, -0.0150262, -0.0357042, 0.0104882, -0.00583123, 0.0126377, 0.000917031, 0.118913, 0, 0, 0)
 visible = false
 mesh = SubResource("ArrayMesh_vrgvt")
 skeleton = NodePath("")

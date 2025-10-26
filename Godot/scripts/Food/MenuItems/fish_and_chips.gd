@@ -19,7 +19,7 @@ func _init():
 	ui_meal_name = "Fish and Chips"
 	ui_states = {
 		"Fish":["NONE", "FRIED"],
-		"Potato":["NONE","FRIED"]
+		"Potato":["CHOPPED","FRIED"]
 	}
 	
 func _ready():

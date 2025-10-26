@@ -23,6 +23,30 @@ enum Groups{
 	FOUR
 }
 
+# Food types available in the game
+const FOOD_TYPES = [
+	"apple",
+	"beef",
+	"cheese",
+	"chicken",
+	"cocoa",
+	"dough",
+	"egg",
+	"fish",
+	"flour",
+	"garlic",
+	"ham",
+	"milk",
+	"mushroom",
+	"onion",
+	"pasta",
+	"pineapple",
+	"potato",
+	"pumpkin",
+	"tomato",
+	"water",
+]
+
 
 ## Setup the model instance
 func _init():
@@ -45,8 +69,26 @@ func _ready():
 	_set_colour()
 
 
-## Register all foods from the directory
+## Register all foods defined in FOOD_TYPES
 static func _register_foods() -> void:
+	for food_name in FOOD_TYPES:
+		# Skip if already registered
+		if food_book.has(food_name):
+			continue
+		var scene_path = FOOD_DIRECTORY + food_name + ".tscn"
+		var food_scene = load(scene_path) as PackedScene
+		if food_scene and food_scene.can_instantiate():
+			food_book[food_name] = food_scene
+			var sample = food_scene.instantiate()
+			food_instances[food_name] = sample
+		else:
+			push_warning("Failed to load food scene: " + scene_path)
+
+
+## Register all foods from the directory
+## Note: Not used currently, more dynamic implementation
+## but packed games do not have same file structure
+static func _register_foods_from_folder() -> void:
 	var dir = DirAccess.open(FOOD_DIRECTORY)
 	if not dir:
 		push_error("Cannot open food directory: " + FOOD_DIRECTORY)
@@ -225,6 +267,7 @@ func _client_transfer(player_id: int, item_name: String, food_name: String) -> v
 ## @param is_hovered: Whether the item is hovered or not
 func _on_interactable_component_hovered(is_hovered: bool) -> void:
 	if is_hovered && inventory: 
+		if group == Groups.THREE: GlobalScript.tutorial_step.emit(6)
 		inventory.get_node("SubViewport").get_node("Inventory").open()
 	elif !is_hovered && inventory: 
 		inventory.get_node("SubViewport").get_node("Inventory").close()
@@ -262,7 +305,7 @@ func player_has(_item: Node) -> void:
 		await GlobalScript.get_local_player().remove_item()
 		_item.queue_free()
 		return
-		
+	if inventory_sprite.inventory.get_current_slot().inventory_item_name == "tomato": GlobalScript.tutorial_step.emit(8)
 	inventory_sprite.inventory.select_ingredient()
 	return
 
@@ -272,8 +315,12 @@ func put_from_player(_item: Node) -> bool:
 #-------------------------------------------------------------------------------
 
 func _physics_process(delta: float) -> void:
-	if input_check("LB"): set_ui.rpc(false)
-	if input_check("RB"): set_ui.rpc(true)
+	if input_check("LB"): 
+		set_ui.rpc(false)
+		if inventory_sprite.inventory.get_current_slot().inventory_item_name == "tomato": GlobalScript.tutorial_step.emit(7)
+	if input_check("RB"): 
+		set_ui.rpc(true)
+		if inventory_sprite.inventory.get_current_slot().inventory_item_name == "tomato": GlobalScript.tutorial_step.emit(7)
 
 
 func input_check(action : String):
@@ -288,6 +335,7 @@ func set_ui(forward : bool):
 	else inventory_sprite.inventory.move_backward())
 	inventory_sprite.inventory.update_slot_selected(true)
 	_set_food_visual(inventory_sprite.inventory.get_current_slot().inventory_item_name)
+
 
 func _set_food_visual(food : String):
 	var texture = ResourceLoader.load("res://assets/textures/ingredients/" + food + ".png")

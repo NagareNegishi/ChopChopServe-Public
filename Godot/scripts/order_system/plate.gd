@@ -21,8 +21,13 @@ var is_full : bool = false
 var number: int = 0
 
 var clean_level = 0
-
+var recipe_on_plate = null
+var current_mesh : MeshInstance3D
+@onready var clean_mesh: MeshInstance3D = $PlateMesh
+@onready var dirty_mesh: MeshInstance3D = $platedirt
+var last_held_by_team : int = -1
 func _ready():
+	set_plate_mesh()
 	menu_instance = preload_menuItems.new()
 	#print(menu_instance)
 	# Makes a grid on the plate in which ingredients can be placed in 
@@ -112,18 +117,36 @@ func get_items():
 # This is so that if they make a mistake they have to bin the whole thing
 # We can change this later if you want them to be able to take off the top item
 func remove_all():
-	if food_items is Array:
+	if recipe_on_plate != null and is_instance_valid(recipe_on_plate):
+		if recipe_on_plate.get_parent() == self:
+			remove_child(recipe_on_plate)
+		recipe_on_plate.queue_free()
+		recipe_on_plate = null
+	
+	if food_items is Array and not food_items.is_empty():
 		for item in food_items:
-			item.current_visibility(false)
+			if is_instance_valid(item):
+				if item.get_parent() == self:
+					remove_child(item)
+				item.queue_free()
+		food_items.clear()
+	
 	for i in range(GRID_SIZE):
 		for j in range(GRID_SIZE):
 			if grid[i][j] != null:
 				var item = grid[i][j]
-				if item.get_parent() == self:
-					remove_child(item)
-					item.queue_free() 
+				if is_instance_valid(item):
+					if item.get_parent() == self:
+						remove_child(item)
+					item.queue_free()
 			grid[i][j] = null
-	food_items.clear()
+	
+	has_menu_item = false
+	is_full = false
+	quality_on_plate.clear()
+	floor_time_count = 0
+
+
 
 
 func give_all()->Array:
@@ -135,11 +158,7 @@ func give_all()->Array:
 # replaces the list of ingredients with only the found meal
 @rpc("any_peer","call_local","reliable")
 func check_plate():
-	#print(grid)
-	#for item in food_items:
-		#print("this food items ", item, " previoous states ", item.previous_states)
 	if food_items.is_empty():
-		#print("food items is emptyw")
 		return
 	
 	var menuitem = menu_instance.match_menu_items(food_items.duplicate())
@@ -147,14 +166,24 @@ func check_plate():
 	if menuitem != null:
 		has_menu_item = true
 		_set_quality(quality_on_plate)
-		#print("\n\n This is the quality of the menu item : ", quality,"\n\n")
 		display_menu_item(menuitem)
 		menuitem.set_quality(quality)
 		is_full = true
-		remove_all()
-		grid[1][1] = menuitem # Makes the meal we created the only thing on the plate
-	print("MENU ITEM ISSSSS:    ",menuitem)
-	return
+		
+		for item in food_items:
+			if is_instance_valid(item):
+				if item.get_parent() == self:
+					remove_child(item)
+				item.queue_free()
+		food_items.clear()
+	
+		for i in range(GRID_SIZE):
+			for j in range(GRID_SIZE):
+				grid[i][j] = null
+		grid[1][1] = recipe_on_plate
+
+	print("MENU ITEM ISSSSS: ", menuitem, " therefore recipe on plate ", recipe_on_plate)
+
 
 func _set_quality(list: Array):
 	if list.size()<=0:
@@ -179,9 +208,7 @@ func get_quality():
 	return quality
 
 func display_menu_item(menuitem: MenuItem):
-	# Load the actual scene file
 	var scene_path = "res://scripts/Food/MenuItemScenes/" + menuitem.get_script().get_global_name() + ".tscn"
-	#print("Scene path:        ", scene_path)
 	var menu_scene = load(scene_path)
 	if menu_scene:
 		var menu_node = menu_scene.instantiate()
@@ -189,9 +216,10 @@ func display_menu_item(menuitem: MenuItem):
 		set_mesh(menu_node)
 		menu_node.transform.origin = Vector3(0, 0.05, 0)
 		menu_node.scale = Vector3(0.7, 0.7, 0.7)
+		
+		recipe_on_plate = menu_node
 	else:
 		push_error("Could not load scene for: ", menuitem.get_script().get_global_name())
-
 
 # Makes it so when the player picks up the ingredient its collisions
 # dont stop it from moving correctly which is what the function above is supposed to do
@@ -238,8 +266,7 @@ func _on_interactable_component_action_interact(is_action: bool) -> void:
 			break
 			
 		# Bin interaction
-		if body.is_in_group("Bin"):
-			remove_all()
+
 			
 		if body is StaticBody3D:
 			var food_node = body.get_parent()
@@ -270,6 +297,16 @@ func set_mesh(food):
 		food.mesh_visibility(food.cooked_mesh_burnt, true)
 
 
+func set_plate_mesh():
+	dirty_mesh.visible = false
+	clean_mesh.visible = false
+	if is_dirty:
+		current_mesh = dirty_mesh
+	else:
+		current_mesh = clean_mesh
+	
+	current_mesh.visible = true
+
 ## Functions for cleaning the plate --------------------------------------------
 
 var dirtiness = 0
@@ -279,12 +316,14 @@ const MAX_DIRTINESS = 3
 ## @param state: True if dirty, false if clean
 func set_dirty(state: bool):
 	is_dirty = state
+	set_plate_mesh()
 	if state:
 		dirtiness = MAX_DIRTINESS
 		clean_level = 0
 	else:
 		dirtiness = 0
 		Debug.cook_log("Plate " + name + " is now clean")
+
 
 
 ## Clean the plate by reducing its dirtiness level
@@ -298,3 +337,6 @@ func clean():
 ## @return: True if empty, false otherwise
 func is_empty() -> bool:
 	return !is_full and food_items.is_empty()
+
+func append_team(team_id: int):
+	last_held_by_team = team_id

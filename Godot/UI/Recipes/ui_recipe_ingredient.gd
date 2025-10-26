@@ -28,5 +28,5 @@ func _ready() -> void:
 		_:
 			type_tex.texture = null
 
-	var food_tex = ResourceLoader.load("res://assets/textures/ingredients/" + _food +".png")
+	var food_tex = ResourceLoader.load("res://assets/textures/ingredients/" + _food.to_lower() +".png")
 	food.texture = food_tex

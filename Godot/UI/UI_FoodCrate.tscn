@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c8b2kiudgb4nt"]
 
-[ext_resource type="Texture2D" uid="uid://3mip3g8soevs" path="res://assets/textures/ingredients/Tomato.png" id="1_ghp81"]
+[ext_resource type="Texture2D" uid="uid://3mip3g8soevs" path="res://assets/textures/ingredients/tomato.png" id="1_ghp81"]
 [ext_resource type="Script" uid="uid://chpitiwgbv61q" path="res://UI/ui_food_crate.gd" id="1_lfkre"]
 
 [node name="UiFoodCrate" type="Control"]

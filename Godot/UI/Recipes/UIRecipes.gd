@@ -7,7 +7,6 @@ var index : int = 0
 @onready var arrows := [$TextureRect, $TextureRect2, $J, $L, $LB, $R2]
 func _ready() -> void:
 	visibility_changed.connect(_on_visible_change)
-	_load_items()
 	
 func _on_visible_change():
 	set_physics_process(visible)
@@ -36,19 +35,3 @@ func _set_curr_menu_items():
 		part.visible = curr_menu_items.size() > 1
 	if !item: return
 	recipe.set_info(item)
-
-
-func _load_items():
-	var dir := DirAccess.open("res://scripts/Food/MenuItems/")
-	if not dir: return
-
-	dir.list_dir_begin()
-	var file_name = dir.get_next()
-	while file_name != "":
-		if not dir.current_is_dir() and file_name.ends_with(".gd"):
-			var script_path = "res://scripts/Food/MenuItems/" + file_name
-			var script = load(script_path)
-			if script:
-				var key = file_name.get_basename()
-		file_name = dir.get_next()
-	dir.list_dir_end()

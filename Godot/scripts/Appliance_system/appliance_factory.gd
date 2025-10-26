@@ -26,6 +26,30 @@ const PATH = "res://scripts/Appliance_system/Concrete_classes/"
 var base_scene: PackedScene = preload("res://scenes/Appliance_system/placeable.tscn")
 var book: Dictionary = {}
 
+# List of all appliance types to register
+const APPLIANCE_TYPES = [
+	# Power appliances
+	"blender",
+	"oven",
+	"fryer",
+	"stove",
+	"stove_with_pot",
+	"stove_with_pan",
+	# Utility appliances
+	"bench",
+	"chop_table",
+	"cabinet",
+	"sink",
+	"trash_can",
+	"food_factory",
+	# Cookware
+	"pot",
+	"frying_pan",
+	"oven_tray",
+	"fryer_basket",
+	"chopping_board",
+]
+
 
 ## Setup the factory
 func _ready():
@@ -39,6 +63,9 @@ func _ready():
 ## @param type: Name of the appliance type to create
 ## @return: Instance of the appliance or null if not found
 func _create_appliance(type: String) -> Appliance:
+	if not book.has(type):
+		push_error("Appliance type '%s' not registered: %s" % [type, str(book.keys())])
+		return null
 	var instance = base_scene.instantiate()
 	instance.set_script(book[type].script)
 	return instance
@@ -66,8 +93,21 @@ func _register_appliance(type: String, script: Script):
 		push_error("Registered type '%s' is not an Appliance!" % type)
 
 
-## Register all appliances in the defined directory
+## Register all appliances defined in APPLIANCE_TYPES
 func _register_appliances():
+	for script_name in APPLIANCE_TYPES:
+		var script_path = PATH + script_name + ".gd"
+		var script: Script = load(script_path)
+		if script:
+			_register_appliance(script_name, script)
+		else:
+			push_warning("Failed to load script: " + script_name)
+
+
+## Register all appliances in the defined directory
+## Note: Not used currently, more dynamic implementation
+## but packed games do not have same file structure
+func _register_appliances_from_folder():
 	var dir: DirAccess = DirAccess.open(PATH)
 	if not dir:
 		push_error("Cannot open directory: " + PATH)

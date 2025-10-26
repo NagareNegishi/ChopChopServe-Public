@@ -1,12 +1,6 @@
 extends Node3D
 class_name FireStart
 
-################################################################################
-# TODO:
-	# - Check if I need to do anything with food in the appliances
-	# - Do something if all of the appliances are on fire or if it goes on to long
-################################################################################
-
 var path
 var teamID
 var secs = 15.0 # Change this if we need to
@@ -32,17 +26,6 @@ func start_fire(team_ID: int, chosen_path: NodePath) -> void:
 	else:
 		push_warning("Chosen appliance has no inflammable component")
 		return
-	
-### --------- Think Inflammable has this code in it already --------- ###
-	# Burn the food inside the appliances
-	##for item in appliance.contents:
-		# Get the cookware of appliance
-		##if item is Cookware:
-			# Get its items
-			##for food in item.contents:
-				##item.contents.erase(food)
-				##remove_child(food)
-				##food.queue_free()
 
 # Timer for the fire spreading
 func start_timer() -> void:

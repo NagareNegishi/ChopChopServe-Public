@@ -30,12 +30,11 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_hvwph")
 theme_override_colors/font_outline_color = Color(0.545098, 0.560784, 0.568627, 1)
-theme_override_constants/outline_size = 70
+theme_override_constants/outline_size = 50
 theme_override_font_sizes/font_size = 200
 text = "Test Test"
 
 [node name="Arrow" type="TextureRect" parent="."]
-modulate = Color(0.545098, 0.560784, 0.568627, 1)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

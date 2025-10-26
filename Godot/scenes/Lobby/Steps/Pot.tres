@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TutorialNode" load_steps=2 format=3 uid="uid://dkqk1nllgmqjl"]
+
+[ext_resource type="Script" uid="uid://c8guh3nm5ht4s" path="res://scenes/Lobby/Steps/tutorial_step.gd" id="1_p2frx"]
+
+[resource]
+script = ExtResource("1_p2frx")
+text_keyboard = "Once chopped, toss them into the pot and let it cook"
+text_controller = "Once chopped, toss them into the pot and let it cook"
+type = 1
+num = 12
+time = 0.01
+world_interaction = -1
+metadata/_custom_type_script = "uid://c8guh3nm5ht4s"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dg3km4t6mbwwg"]
+[gd_scene load_steps=20 format=3 uid="uid://dg3km4t6mbwwg"]
 
 [ext_resource type="Script" uid="uid://djull4qell3bf" path="res://scripts/UI/HUD.gd" id="1_f2wx0"]
 [ext_resource type="PackedScene" uid="uid://b6huce6rberg3" path="res://UI/UI_Reputation.tscn" id="2_ijstf"]
@@ -9,11 +9,16 @@
 [ext_resource type="Texture2D" uid="uid://bw4uq8pmr1ia6" path="res://assets/textures/Controls/keyboard_2.png" id="8_mms7u"]
 [ext_resource type="Texture2D" uid="uid://dwqngqcqkgkn7" path="res://assets/textures/Controls/keyboard_3.png" id="9_281ki"]
 [ext_resource type="Texture2D" uid="uid://54gpdx0w3aa8" path="res://assets/textures/Controls/keyboard_tab.png" id="9_mms7u"]
+[ext_resource type="Texture2D" uid="uid://biey5fnva1muj" path="res://assets/textures/Controls/keyboard_6.png" id="9_w37wn"]
 [ext_resource type="Script" uid="uid://nm3g8omleeay" path="res://UI/SabotageBar.gd" id="10_ixkb2"]
 [ext_resource type="Texture2D" uid="uid://dlnedfofn7vuv" path="res://assets/textures/Controls/keyboard_4.png" id="10_w37wn"]
 [ext_resource type="Texture2D" uid="uid://b4qjni3x30ew" path="res://assets/textures/HUD/YBottle.png" id="11_ixkb2"]
 [ext_resource type="Texture2D" uid="uid://bgmq0j2s80owe" path="res://assets/textures/Controls/keyboard_5.png" id="11_kg6a8"]
 [ext_resource type="Texture2D" uid="uid://cun73plsv66ti" path="res://assets/textures/HUD/recipe.png" id="13_281ki"]
+[ext_resource type="PackedScene" uid="uid://cet520guwr8lx" path="res://UI/HUD/UI_Input.tscn" id="16_kg6a8"]
+[ext_resource type="Texture2D" uid="uid://bo520aoqjx804" path="res://assets/textures/Controls/xbox_button_color_y.png" id="17_8ip7y"]
+[ext_resource type="Texture2D" uid="uid://ba01tnt5m53lg" path="res://assets/textures/Controls/xbox_dpad_left.png" id="18_pgems"]
+[ext_resource type="Texture2D" uid="uid://hjni834b7x5y" path="res://assets/textures/Controls/xbox_dpad_right.png" id="19_rsrlt"]
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -90,10 +95,10 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -105.0
-offset_top = 7.0
-offset_right = -6.0
-offset_bottom = 37.0
+offset_left = -107.0
+offset_top = 558.0
+offset_right = -8.0
+offset_bottom = 588.0
 grow_horizontal = 0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 0
@@ -108,10 +113,10 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -68.0
-offset_top = 19.0
-offset_right = -15.0
-offset_bottom = 42.0
+offset_left = -63.0
+offset_top = 618.0
+offset_right = -10.0
+offset_bottom = 641.0
 grow_horizontal = 0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -151,14 +156,14 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -200.06
-offset_top = -52.0
-offset_right = 299.94
-offset_bottom = -2.0
+offset_left = -206.06
+offset_top = -48.0
+offset_right = 343.94
+offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 0
-scale = Vector2(0.8, 0.8)
-theme_override_constants/separation = 40
+scale = Vector2(0.75, 0.75)
+theme_override_constants/separation = 50
 
 [node name="UiSabotageNode" parent="Sabotages" instance=ExtResource("6_gppie")]
 custom_minimum_size = Vector2(50, 50)
@@ -192,7 +197,7 @@ sabotage_index = 4
 [node name="UiSabotageNode6" parent="Sabotages" instance=ExtResource("6_gppie")]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-key_texture = ExtResource("11_kg6a8")
+key_texture = ExtResource("9_w37wn")
 sabotage_index = 5
 
 [node name="== TEAM1 ==" type="Node" parent="."]
@@ -201,13 +206,13 @@ sabotage_index = 5
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 551.0
+offset_left = 538.0
 offset_top = 4.0
-offset_right = 997.0
+offset_right = 984.0
 offset_bottom = 57.0
 grow_horizontal = 1
 grow_vertical = 1
-scale = Vector2(-1, 1)
+scale = Vector2(-0.9, 0.9)
 teamID = 1
 
 [node name="Team1Sab" type="HBoxContainer" parent="."]
@@ -216,10 +221,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -379.0
-offset_top = 42.0
-offset_right = -173.0
-offset_bottom = 77.0
+offset_left = -393.0
+offset_top = 51.0
+offset_right = -187.0
+offset_bottom = 86.0
 grow_horizontal = 2
 theme_override_constants/separation = 40
 alignment = 2
@@ -233,13 +238,14 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_bottom = 0.0
-offset_left = -558.0
-offset_top = 3.0
-offset_right = -112.0
-offset_bottom = 56.0
+offset_left = -536.0
+offset_top = 7.0
+offset_right = -90.0002
+offset_bottom = 60.0
 grow_horizontal = 0
 grow_vertical = 1
 rotation = 0.00872665
+scale = Vector2(0.9, 0.9)
 teamID = 2
 
 [node name="Sauce" parent="Team2Rep" index="0"]
@@ -261,10 +267,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 175.0
-offset_top = 42.0
-offset_right = 381.0
-offset_bottom = 77.0
+offset_left = 183.0
+offset_top = 51.0
+offset_right = 389.0
+offset_bottom = 86.0
 grow_horizontal = 2
 theme_override_constants/separation = 40
 script = ExtResource("10_ixkb2")
@@ -276,28 +282,63 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.0
-offset_left = -58.52
-offset_right = 58.48
+offset_left = -519.0
+offset_top = 0.0
+offset_right = 633.0
 offset_bottom = 75.0
 grow_vertical = 1
+scale = Vector2(0.9, 0.9)
 
 [node name="Recipe" type="Sprite2D" parent="."]
-position = Vector2(63.2, 585.2)
+position = Vector2(64.2, 584.2)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("13_281ki")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-layout_mode = 0
-offset_left = 81.8
-offset_top = 608.8
-offset_right = 114.8
-offset_bottom = 631.8
-color = Color(0.976471, 0.976471, 0.976471, 1)
+[node name="UiInput" parent="." instance=ExtResource("16_kg6a8")]
+process_mode = 3
+layout_mode = 1
+offset_left = -510.0
+offset_top = 267.0
+offset_right = -446.0
+offset_bottom = 331.0
+keyboard_texture = ExtResource("9_mms7u")
+controller_texture = ExtResource("17_8ip7y")
 
-[node name="KeyboardTab" type="Sprite2D" parent="."]
-modulate = Color(0.0705882, 0.0705882, 0.0705882, 1)
-position = Vector2(97.8, 619.8)
-scale = Vector2(0.8, 0.8)
-texture = ExtResource("9_mms7u")
+[node name="UiInput2" parent="." instance=ExtResource("16_kg6a8")]
+layout_mode = 1
+anchors_preset = 7
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -276.0
+offset_top = -55.0
+offset_right = -212.0
+offset_bottom = 9.0
+grow_vertical = 0
+texture = ExtResource("18_pgems")
+controller_texture = ExtResource("18_pgems")
+
+[node name="ColorRect" parent="UiInput2" index="0"]
+offset_top = 27.0
+offset_bottom = 39.0
+
+[node name="UiInput3" parent="." instance=ExtResource("16_kg6a8")]
+layout_mode = 1
+anchors_preset = 7
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 215.0
+offset_top = -54.0
+offset_right = 279.0
+offset_bottom = 10.0
+grow_vertical = 0
+texture = ExtResource("19_rsrlt")
+controller_texture = ExtResource("19_rsrlt")
+use_scale = false
+
+[node name="ColorRect" parent="UiInput3" index="0"]
+offset_top = 29.0
+offset_bottom = 37.0
 
 [editable path="Team2Rep"]
+[editable path="UiInput2"]
+[editable path="UiInput3"]

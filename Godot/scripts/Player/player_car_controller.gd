@@ -3,17 +3,19 @@ extends MultiplayerSynchronizer
 
 @onready var move_input : int
 @onready var turn_input : int
+@onready var controller : Vector2
 @onready var input_dir : Vector2 
 
 var last_move : int = 0
 var last_turn : int = 0
+var last_cont : Vector2 = Vector2.ZERO
 var time : int = 0
 
 func _process(delta: float) -> void:
 	
 	move_input = 0
 	turn_input = 0
-
+	controller = Input.get_vector("Left", "Right", "Up", "Down")
 	if Input.is_action_pressed("Up"):
 		move_input = clampi(move_input + 1, -1, 1)
 
@@ -32,16 +34,19 @@ func _process(delta: float) -> void:
 		last_move = move_input
 		last_turn = turn_input
 		time = Time.get_ticks_msec()
+		last_cont = controller
+		
 	
 	_send_input()
 	
 	
 func _send_input():
 	var estimated_server_time = time + get_parent().client_offset
-	rpc("_receive_input", ENetManager.get_my_id(), move_input, turn_input, estimated_server_time)
+	rpc("_receive_input", ENetManager.get_my_id(), move_input, turn_input, \
+	 estimated_server_time, controller)
 
 
 @rpc("any_peer", "call_local", "unreliable")
-func _receive_input(sender_id : int, move : int, turn : int, ttime : int):
+func _receive_input(sender_id : int, move : int, turn : int, ttime : int, cont : Vector2):
 	if !ENetManager.is_host(): return
-	get_parent()._on_received_input(sender_id, move, turn, ttime)
+	get_parent()._on_received_input(sender_id, move, turn, ttime, cont)

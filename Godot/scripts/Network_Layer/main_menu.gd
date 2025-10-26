@@ -9,7 +9,7 @@ var room_list_popup: RoomListPopup
 @onready var create_button = $Menu/ButtonsContainer/HostButton
 @onready var host_public_ip_input = $Menu/Note/VBox/IP/PublicIPInput
 @onready var join_button = $Menu/ButtonsContainer/JoinButton
-@onready var ip_input = $Menu/Note/VBox/IP/PublicIPInput
+@onready var ip_input : LineEdit = $Menu/Note/VBox/IP/PublicIPInput
 @onready var exit_button = $Menu/ButtonsContainer/ExitButton
 @onready var  test_button = $Menu/ButtonsContainer/TestButton
 @onready var tutorial_button = $Menu/ButtonsContainer/TutorialButton
@@ -29,23 +29,44 @@ enum ErrorType{
 func _ready():
 	network_layer = ENetManager.enet_layer
 	_setup_room_list_popup()
-	create_button.pressed.connect(_on_create_pressed)
-	join_button.pressed.connect(_on_join_pressed)
-	network_layer.connected.connect(_switch_to_lobby)
-	exit_button.pressed.connect(_exit_game)
-	test_button.pressed.connect(_diagnose_network)
-	tutorial_button.pressed.connect(_on_tutorial_pressed)
+	_setup_buttons()
 	search_button.pressed.connect(_on_search_pressed)
 	network_layer.tutorial_started.connect(_on_tutorial_started)
 	network_layer.rooms_list_received.connect(_on_rooms_list_received)
 	network_layer.http_request_failed.connect(_on_http_request_failed)
+	Input.joy_connection_changed.connect(_controller)
+	_controller(0, Input.get_connected_joypads().size() >= 1)
 	if !froggo_building : return
 	froggo_building.play("ArmatureAction", -1, 0.6)
 	SoundManager.play_bgm(SoundManager.BGM.MENU, 2.0)
 	# SoundManager.play_sfx_player(SoundManager.SFX_PLAYER.JUMP) # test with oh rat
 
+func _setup_buttons():
+	create_button.pressed.connect(_on_create_pressed)
+	join_button.pressed.connect(_on_join_pressed)
+	network_layer.connected.connect(_switch_to_lobby)
+	create_button.custom_focus.connect(_focus_changed)
+	exit_button.custom_focus.connect(_focus_changed)
+	join_button.custom_focus.connect(_focus_changed)
+	exit_button.pressed.connect(_exit_game)
+	test_button.pressed.connect(_diagnose_network)
+	tutorial_button.pressed.connect(_on_tutorial_pressed)
 
-## Setup Room List Popup
+
+var current_focus : Button
+
+func _controller(device : int, connected : bool):
+	if !connected  && current_focus != null: 
+		current_focus.release_focus()
+		current_focus = null
+	create_button.grab_focus()
+	current_focus = create_button
+
+
+func _focus_changed(button : CustomButton):
+	current_focus = button
+
+	## Setup Room List Popup
 func _setup_room_list_popup():
 	var room_list_popup_scene = preload("res://scenes/Network_Layer/room_list_popup.tscn")
 	room_list_popup = room_list_popup_scene.instantiate() as RoomListPopup
@@ -107,9 +128,9 @@ func _is_room_code(input: String) -> bool:
 func _switch_to_lobby():
 	# Final Lobby Scene
 	SceneManager.change_scene(SceneManager.Scene.HUB)
-	
 	# Prototype Lobby Scene
 	# SceneManager.change_scene(SceneManager.Scene.LOBBY_TEST)
+
 
 
 ## Exit Game
@@ -188,6 +209,11 @@ func _on_room_selected(room_code: String):
 	ip_input.text = room_code
 
 
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("ui_accept") and !ip_input.text.is_empty(): 
+		_on_join_pressed()
+	if Input.is_action_just_pressed("Interact") and Input.get_connected_joypads().size() >= 1 and current_focus != null && visible:
+		current_focus.pressed.emit() 
 
 
 
@@ -199,9 +225,7 @@ func _on_room_selected(room_code: String):
 ## Unknown functions, are those used by something?----------------------------------------
 # comment out for now, will be deleted later if not used
 
-# func _physics_process(delta: float) -> void:
-# 	if Input.is_action_just_pressed("ui_accept"):
-# 		_on_join_pressed()
+
 
 # func tutorial():
 # 	get_tree().change_scene_to_file("res://LevelDesign/Tutorial.tscn")

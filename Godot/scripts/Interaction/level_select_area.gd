@@ -8,13 +8,14 @@ extends Area3D
 @export var level_widget : LevelName
 
 var curr_time : float
-var max_time :float = 2.5
+var max_time :float = 1.5
 var increase : bool = true
 
 func _ready() -> void:
 	_progress.max_value = max_time
 	level_widget._set_text(level_name)
 	area_entered.connect(_area_entered)
+	area_exited.connect(_area_exited)
 	timer.timeout.connect(_timeout)
 	timer.stop()
 

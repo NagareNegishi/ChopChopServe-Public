@@ -13,7 +13,7 @@ func _init():
 	ingredient_states = {
 		"Dough": ["RAW", "BAKED"],
 		"Cheese": ["RAW","CHOPPED","BAKED"],
-		"Tomato": ["RAW","BLENDED","BAKED"],
+		"Tomato": ["RAW","MIXED","BAKED"],
 		"Pineapple":["RAW", "CHOPPED","BAKED"]
 	}
 	ui_meal_name = "Hawaiian Pizza"

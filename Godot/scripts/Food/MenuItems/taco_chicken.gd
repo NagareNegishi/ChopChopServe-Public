@@ -20,7 +20,7 @@ func _init():
 	ui_texture = load("res://assets/textures/recipes/ChickenTaco.png")
 	ui_meal_name = "Chicken Taco"
 	ui_states = {
-		"Beef":["NONE", "FRIED"],
+		"Chicken":["NONE", "FRIED"],
 		"Dough":["NONE","BAKED"],
 		"Tomato":["CHOPPED","NONE"]
 	}

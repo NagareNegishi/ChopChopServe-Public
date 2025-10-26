@@ -29,3 +29,4 @@ func _ready():
 	cooked_mesh_good = $TacoMushroom
 	cooked_mesh_bad = $BadQualityMushTaco
 	cooked_mesh_burnt = $BurntMushTaco
+	GlobalScript.tutorial_step.emit(14)

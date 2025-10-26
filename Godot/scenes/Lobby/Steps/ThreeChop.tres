@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TutorialNode" load_steps=2 format=3 uid="uid://3q4na7crtend"]
+
+[ext_resource type="Script" uid="uid://c8guh3nm5ht4s" path="res://scenes/Lobby/Steps/tutorial_step.gd" id="1_xnfbh"]
+
+[resource]
+script = ExtResource("1_xnfbh")
+text_keyboard = "You'll need three chopped tomatos so keep slicing"
+text_controller = "You'll need three chopped tomatos so keep slicing"
+type = 1
+num = 11
+time = 0.01
+world_interaction = -1
+metadata/_custom_type_script = "uid://c8guh3nm5ht4s"

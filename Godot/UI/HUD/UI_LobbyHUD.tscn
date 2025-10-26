@@ -1,13 +1,15 @@
-[gd_scene load_steps=9 format=3 uid="uid://bxf3hwer4sb7h"]
+[gd_scene load_steps=11 format=3 uid="uid://bxf3hwer4sb7h"]
 
 [ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/Style/DefaultTheme.tres" id="1_c3iu8"]
 [ext_resource type="Script" uid="uid://cwm4lveq148fc" path="res://UI/HUD/ui_lobby_hud.gd" id="1_js7ef"]
 [ext_resource type="Script" uid="uid://c8guh3nm5ht4s" path="res://scenes/Lobby/Steps/tutorial_step.gd" id="2_adflp"]
-[ext_resource type="Resource" uid="uid://85up6v0vdqrq" path="res://scenes/Lobby/Steps/Step1.tres" id="3_0rii0"]
+[ext_resource type="Resource" uid="uid://mborrwl6fhdx" path="res://scenes/Lobby/Steps/Movement.tres" id="3_0rii0"]
 [ext_resource type="Texture2D" uid="uid://cun73plsv66ti" path="res://assets/textures/HUD/recipe.png" id="3_sd7gu"]
-[ext_resource type="Resource" uid="uid://d0yodttqoq6h0" path="res://scenes/Lobby/Steps/Step2.tres" id="4_0rii0"]
+[ext_resource type="Resource" uid="uid://ffhh5c36gr2j" path="res://scenes/Lobby/Steps/Dash.tres" id="4_0rii0"]
 [ext_resource type="Texture2D" uid="uid://54gpdx0w3aa8" path="res://assets/textures/Controls/keyboard_tab.png" id="4_7k7fu"]
 [ext_resource type="PackedScene" uid="uid://qi5b0x3dt5tn" path="res://UI/HUD/UI_Tutorial.tscn" id="5_7k7fu"]
+[ext_resource type="PackedScene" uid="uid://cet520guwr8lx" path="res://UI/HUD/UI_Input.tscn" id="8_0rii0"]
+[ext_resource type="Texture2D" uid="uid://bo520aoqjx804" path="res://assets/textures/Controls/xbox_button_color_y.png" id="10_agvge"]
 
 [node name="UiLobbyHud" type="Control" node_paths=PackedStringArray("code_label", "tutorial_widget", "timer")]
 layout_mode = 3
@@ -65,20 +67,6 @@ position = Vector2(63.2, 585.2)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("3_sd7gu")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-layout_mode = 0
-offset_left = 81.8
-offset_top = 608.8
-offset_right = 114.8
-offset_bottom = 631.8
-color = Color(0.976471, 0.976471, 0.976471, 1)
-
-[node name="KeyboardTab" type="Sprite2D" parent="."]
-modulate = Color(0.0705882, 0.0705882, 0.0705882, 1)
-position = Vector2(97.8, 619.8)
-scale = Vector2(0.8, 0.8)
-texture = ExtResource("4_7k7fu")
-
 [node name="UiTutorial" parent="." instance=ExtResource("5_7k7fu")]
 layout_mode = 1
 offset_left = 407.0
@@ -89,3 +77,12 @@ offset_bottom = -6.0
 [node name="Timer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
+
+[node name="UiInput" parent="." instance=ExtResource("8_0rii0")]
+layout_mode = 1
+offset_left = -510.0
+offset_top = 264.0
+offset_right = -446.0
+offset_bottom = 328.0
+keyboard_texture = ExtResource("4_7k7fu")
+controller_texture = ExtResource("10_agvge")

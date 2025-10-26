@@ -48,19 +48,19 @@ albedo_color = Color(0.158472, 0.158472, 0.158472, 1)
 script = ExtResource("1_uow2q")
 
 [node name="TacoChicken" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.1, 0, 0, 0, 0.248, 0, 0, 0, 0.248, 0, 0, 0)
+transform = Transform3D(0.1, 0, 0, 0, 0.19, 0, 0, 0, 0.19, 0, 0, 0)
 mesh = SubResource("ArrayMesh_s5js2")
 skeleton = NodePath("")
 
 [node name="BadQualityChickentaco" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.1, 0, 0, 0, 0.248, 0, 0, 0, 0.248, 0, 0, 0)
+transform = Transform3D(0.1, 0, 0, 0, 0.19, 0, 0, 0, 0.19, 0, 0, 0)
 visible = false
 mesh = SubResource("ArrayMesh_s5js2")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_6j2hl")
 
 [node name="BurntChickenTaco" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.1, 0, 0, 0, 0.248, 0, 0, 0, 0.248, 0, 0, 0)
+transform = Transform3D(0.1, 0, 0, 0, 0.19, 0, 0, 0, 0.19, 0, 0, 0)
 visible = false
 mesh = SubResource("ArrayMesh_s5js2")
 skeleton = NodePath("")

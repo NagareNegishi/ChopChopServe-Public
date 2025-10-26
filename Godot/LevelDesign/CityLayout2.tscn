@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://cdkyf70jhtj1n"]
+[gd_scene load_steps=57 format=3 uid="uid://cdkyf70jhtj1n"]
 
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="1_qfo0q"]
 [ext_resource type="Script" uid="uid://dmdsmtetoiasp" path="res://scripts/FoodCourt.gd" id="1_rdyjb"]
@@ -13,7 +13,11 @@
 [ext_resource type="PackedScene" uid="uid://bkjryoge78wu0" path="res://assets/newmodels/decorations/Table.glb" id="5_u1byf"]
 [ext_resource type="Script" uid="uid://dv1g0obwvkkkt" path="res://scripts/QueueSpot.gd" id="6_0wnb8"]
 [ext_resource type="PackedScene" uid="uid://b5nb1nxo1r1kb" path="res://scenes/Appliance_system/bench.tscn" id="6_08y48"]
+[ext_resource type="PackedScene" uid="uid://b815oucen2rgk" path="res://NPCs/Customer6.tscn" id="6_18m2i"]
+[ext_resource type="PackedScene" uid="uid://cp6ray6kawoqa" path="res://NPCs/Critic.tscn" id="6_kbf12"]
 [ext_resource type="PackedScene" uid="uid://df6cemvjo3grw" path="res://scenes/Appliance_system/chop_table.tscn" id="7_0ioum"]
+[ext_resource type="PackedScene" uid="uid://buyic46mebka7" path="res://NPCs/Customer7.tscn" id="7_4m77d"]
+[ext_resource type="PackedScene" uid="uid://b00ul4sr6vuab" path="res://NPCs/Customer8.tscn" id="8_3g6ct"]
 [ext_resource type="PackedScene" uid="uid://dbeboubu5gkhe" path="res://scenes/Appliance_system/fryer.tscn" id="8_p0tnk"]
 [ext_resource type="PackedScene" uid="uid://dlk0mbdfg2cmq" path="res://scenes/Appliance_system/oven.tscn" id="9_tok01"]
 [ext_resource type="Script" uid="uid://bovslkbm84p1j" path="res://scripts/level_camera.gd" id="10_bknib"]
@@ -42,6 +46,7 @@
 [ext_resource type="PackedScene" uid="uid://d0tyaq7uqr2iy" path="res://assets/CityPacks/gltf/car_police.gltf" id="29_sxif5"]
 [ext_resource type="PackedScene" uid="uid://cuhevmvqjjwji" path="res://assets/newmodels/decorations/Stool.glb" id="30_p0tnk"]
 [ext_resource type="PackedScene" uid="uid://dkfedsj2qiqrt" path="res://assets/CityPacks/gltf/building_E.gltf" id="36_ca74o"]
+[ext_resource type="Script" uid="uid://pp4fhscl6uqk" path="res://GameStateTest.gd" id="47_d5rv5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5ixo3"]
 size = Vector3(22, 6.69421, 1.16809)
@@ -82,13 +87,15 @@ properties/0/path = NodePath(".:customer_seed")
 properties/0/spawn = true
 properties/0/replication_mode = 1
 
-[node name="BradleyTestScene2" type="Node3D" node_paths=PackedStringArray("tables", "queue_spots", "customer_spawn_point", "customer_exit_point")]
+[node name="BradleyTestScene2" type="Node3D" node_paths=PackedStringArray("tables", "queue_spots", "customer_spawn_point", "customer_exit_point", "game_state")]
 script = ExtResource("1_rdyjb")
-customer_scenes = Array[PackedScene]([ExtResource("2_4al2s"), ExtResource("3_epo3g"), ExtResource("4_hiedm"), ExtResource("2_nq5uu")])
+customer_scenes = Array[PackedScene]([ExtResource("2_4al2s"), ExtResource("3_epo3g"), ExtResource("4_hiedm"), ExtResource("2_nq5uu"), ExtResource("6_18m2i"), ExtResource("7_4m77d"), ExtResource("8_3g6ct")])
+critic_scenes = Array[PackedScene]([ExtResource("6_kbf12")])
 tables = [NodePath("NavigationRegion3D/Tables/TableBody16"), NodePath("NavigationRegion3D/Tables/TableBody17"), NodePath("NavigationRegion3D/Tables/TableBody18"), NodePath("NavigationRegion3D/Tables/TableBody19"), NodePath("NavigationRegion3D/Tables/TableBody20"), NodePath("NavigationRegion3D/Tables/TableBody21"), NodePath("NavigationRegion3D/Tables/TableBody22"), NodePath("NavigationRegion3D/Tables/TableBody23")]
 queue_spots = [NodePath("===QUEUE==/QueueSpot-1"), NodePath("===QUEUE==/QueueSpot-2"), NodePath("===QUEUE==/QueueSpot-3"), NodePath("===QUEUE==/QueueSpot-4"), NodePath("===QUEUE==/QueueSpot-5")]
 customer_spawn_point = NodePath("NavigationRegion3D/CustomerSpawn")
 customer_exit_point = NodePath("NavigationRegion3D/CustomerLeave")
+game_state = NodePath("Node")
 
 [node name="== PLAYERS ==" type="Node" parent="."]
 
@@ -199,7 +206,8 @@ script = ExtResource("10_bknib")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="MISC"]
 
-[node name="Control" parent="MISC/CanvasLayer" instance=ExtResource("4_f85dq")]
+[node name="Control" parent="MISC/CanvasLayer" node_paths=PackedStringArray("game_state") instance=ExtResource("4_f85dq")]
+game_state = NodePath("../../../Node")
 metadata/_edit_use_anchors_ = true
 
 [node name="GridMap" type="GridMap" parent="MISC"]
@@ -983,3 +991,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, -1)
 replication_config = SubResource("SceneReplicationConfig_rh21u")
 
 [node name="== HUD ==" type="CanvasLayer" parent="." groups=["Canvas"]]
+
+[node name="Node" type="Node" parent="." node_paths=PackedStringArray("food_court")]
+script = ExtResource("47_d5rv5")
+food_court = NodePath("..")

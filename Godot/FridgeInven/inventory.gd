@@ -23,7 +23,7 @@ enum groups {
 var g = {
 	"groupOne" : ["chicken", "beef", "fish", "milk"],
 	"groupTwo" : ["cheese", "flour", "dough", "pasta", "cocoa"],
-	"groupThree" : ["pineapple", "apple", "tomato", "pumpkin", "strawberry"],
+	"groupThree" : ["pineapple", "apple", "tomato", "pumpkin"],
 	"groupFour" : ["garlic", "mushroom", "onion", "potato"]
 }
 

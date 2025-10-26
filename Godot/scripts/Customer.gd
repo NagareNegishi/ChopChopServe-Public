@@ -10,7 +10,7 @@ const MAXIMUM_ORDER_THINK_TIME: float = 1.0
 # Time in seconds the agent must be stuck before recalculating its path.
 const STUCK_RECALCULATE_TIME: float = 1.0 
 # Time in seconds the customer will stay seated till they get fed up not being served
-const MAXIMUM_SEATING_TIME: float = 250
+const MAXIMUM_SEATING_TIME: float = 60
 # Time in seconds the customer will stop moving for after falling
 const FALLEN_OVER_TIME = 5.0
 
@@ -72,8 +72,9 @@ var _stuck_timer: float = 0.0
 var _id
 var overhead_ui_order_instance: UIOrder
 var overhead_ui_thinking_instance: UIThinking
-
-
+var is_critic: bool = false
+var critic_rep_amount : float = 50
+var critic_victim_team : int = -1
 # Registers to server on hosts end 
 func _initialize():
 	_game_server.register_service(_id, self)
@@ -85,6 +86,7 @@ func _on_tree_exiting():
 func _ready():
 	hide()
 	super._ready()
+	add_to_group("Customer")
 	var ui_layer = get_tree().get_first_node_in_group("Canvas")
 	# Create and add UI elements to scene 
 	if ui_layer:
@@ -192,7 +194,9 @@ func _npc_behavior(delta: float):
 			if !_time_till_leaving:
 				# Timer is up, customer leaves.
 				_game_server.call_service(_table_target.id(), "set_occupied", [false])
-				
+				if is_critic: # not serving critic giving will lose rep
+					ReputationSystem.minus_reputation(critic_victim_team, 
+															critic_rep_amount)
 				var exit_point = await _game_server.call_service(_food_court_id, "get_exit_point", [])
 				_current_target = exit_point	
 				_table_target = null	
@@ -205,7 +209,7 @@ func _npc_behavior(delta: float):
 				if (food is MenuItem and food.get_meal_name() == order[0].get_meal_name()):
 					CurrencySystem.server_add_currency(ENetManager.get_my_team(), 100.0)
 					ReputationSystem.server_add_reputation(ENetManager.get_my_team(), 
-															10.0 * food.get_quality())
+															3 * food.get_quality())
 					_table_target.rpc("remove_plate")
 					_table_target.remove_plate()
 					_time_till_leaving = 2

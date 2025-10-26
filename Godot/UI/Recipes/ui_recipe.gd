@@ -27,7 +27,7 @@ func _ready() -> void:
 		part.visible = false
 
 func _physics_process(delta: float) -> void:
-	if Input.is_action_just_pressed("Interact"): 
+	if Input.is_action_just_pressed("Interact") && visible: 
 		is_skip = !is_skip
 		_skip.rpc(ENetManager.get_my_id(), is_skip)
 	_progress.value += delta * 0.6 * multi

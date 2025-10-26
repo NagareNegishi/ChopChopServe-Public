@@ -127,7 +127,7 @@ func _is_room_code(input: String) -> bool:
 ## Switch to Lobby
 func _switch_to_lobby():
 	# Final Lobby Scene
-	SceneManager.change_scene(SceneManager.Scene.HUB)
+	SceneManager.change_scene(SceneManager.Scene.LOBBY_TEST)
 	# Prototype Lobby Scene
 	# SceneManager.change_scene(SceneManager.Scene.LOBBY_TEST)
 
@@ -212,8 +212,8 @@ func _on_room_selected(room_code: String):
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_accept") and !ip_input.text.is_empty(): 
 		_on_join_pressed()
-	if Input.is_action_just_pressed("Interact") and Input.get_connected_joypads().size() >= 1 and current_focus != null:
-		current_focus.pressed.emit()
+	if Input.is_action_just_pressed("Interact") and Input.get_connected_joypads().size() >= 1 and current_focus != null && visible:
+		current_focus.pressed.emit() 
 
 
 

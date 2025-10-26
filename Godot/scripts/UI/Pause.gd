@@ -75,6 +75,6 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("Pause") && resume_button.visible and can_unpause_controller: 
 		can_unpause_controller = false
 		_resume()
-	if Input.is_action_just_pressed("Interact") and current_focus != null:
+	if Input.is_action_just_pressed("Interact") and Input.get_connected_joypads().size() >= 1 && current_focus != null && visible:
 		current_focus.pressed.emit()
 		can_unpause_controller = false

@@ -13,12 +13,13 @@ var red_colour : Color = "b6b6b6c8"
 var green_colour : Color = "b4f5a4"
 const path : String = "res://assets/textures/Sabotage/"
 func _ready() -> void:
+	$Panel3.visible = false
 	input.texture = key_texture
 	CurrencySystem.currency_changed.connect(currency_update)
 	cost = SabotageSystem.sabotage_costs.get(sabotage_index)
 	cost_label.text = str(cost)
-	if Input.get_connected_joypads().size() <= 0:
-		pass
+	focus_entered.connect(_hovered)
+	focus_exited.connect(_unhovered)
 	
 	var current_money = CurrencySystem.get_currency(ENetManager.get_my_team())
 	
@@ -39,5 +40,10 @@ func currency_update(teamID : int, new_currency : float):
 	input_bg.color = input_bg_color
 
 
-func select(is_selected : bool):
-	pass#modulate = Color(255,255,255,180) if true else Color(255,255,255,130)
+
+func _hovered() -> void:
+	$Panel3.visible = true
+
+func _unhovered() -> void:
+	$Panel3.visible = false
+	

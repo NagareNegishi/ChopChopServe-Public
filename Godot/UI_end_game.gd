@@ -13,7 +13,7 @@ func _on_button_pressed():
 	set_invisible()
 
 func _input(event):
-	if is_visible and event.is_action_pressed("Interact"):
+	if is_visible and event.is_action_pressed("Interact") && visible:
 		_on_button_pressed()
 
 func set_to_visible():

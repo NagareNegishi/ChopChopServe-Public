@@ -3,6 +3,7 @@ extends CharacterBody3D
 
 signal comp_hovered(cop : InteractableComponent, is_hover : bool)
 signal item_dropped(item : Node3D)
+signal controls_disbaled(a : bool, b : bool)
 
 const ACCELERATION : float = 100
 const DECELERATION : float = 60
@@ -590,6 +591,7 @@ func invert_controls(_invert : bool):
 func disable_controls(_disable : bool, _action : bool):
 	is_controls_disabled = _disable
 	is_actoin_disabled = _action
+	controls_disbaled.emit(_disable, _action)
 
 func _can_app_interact() -> bool:
 	if !_closest_item: return false
@@ -608,9 +610,12 @@ var sabo_index : int
 
 func _sabotage_left():
 	sabo_index = sabo_index - 1 if sabo_index > 0 else 5
-
+	sabo_move.emit(sabo_index)
 func _sabotage_right():
 	sabo_index = sabo_index + 1 if sabo_index <= 4 else 0
+	sabo_move.emit(sabo_index)
+
+signal sabo_move(index : int)
 
 func _select_sabo():
 	_sabotage(sabo_index)

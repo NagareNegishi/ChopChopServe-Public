@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c1d6a1k8o783d" path="res://scripts/Interaction/level_select_area.gd" id="1_wv8v3"]
 [ext_resource type="PackedScene" uid="uid://gu4ahqngwqip" path="res://UI/UI_LevelSelect.tscn" id="2_cgvde"]
-[ext_resource type="Texture2D" uid="uid://ciuv6k7wddbva" path="res://assets/textures/misc/1200px-Circle_-_black_simple.svg.png" id="2_cmdv3"]
+[ext_resource type="Texture2D" uid="uid://dvlybuum6ne7w" path="res://assets/textures/misc/generic_button_circle.png" id="2_cmdv3"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_hb6k5"]
 height = 4.14655
@@ -26,23 +26,32 @@ shape = SubResource("CylinderShape3D_hb6k5")
 debug_color = Color(1, 0.137292, 0.14594, 1)
 
 [node name="Progress" type="Sprite3D" parent="."]
-transform = Transform3D(2.4, 0, 0, 0, -1.04907e-07, -2.4, 0, 2.4, -1.04907e-07, 0, -1.70826, 0)
+transform = Transform3D(25.5, 0, 0, 0, -1.11464e-06, -25.5, 0, 25.5, -1.11464e-06, 0, -1.70826, 0.0333424)
 texture = SubResource("ViewportTexture_72nnn")
 
 [node name="SubViewport" type="SubViewport" parent="Progress"]
 transparent_bg = true
-size = Vector2i(1172, 1172)
+size = Vector2i(130, 130)
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="Progress/SubViewport"]
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
 max_value = 2.0
 step = 0.01
 fill_mode = 4
 texture_under = ExtResource("2_cmdv3")
 texture_progress = ExtResource("2_cmdv3")
 tint_under = Color(1, 1, 1, 0.0941176)
-tint_progress = Color(0.989932, 1, 0.604602, 0.784314)
+tint_progress = Color(0.988235, 1, 0.603922, 0.509804)
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 6.35919, 0)

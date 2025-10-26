@@ -197,7 +197,7 @@ car = NodePath("../../PlayerCar")
 level_name = "Beach"
 
 [node name="Zone" type="MeshInstance3D" parent="== LEVEL SELECT ==/LevelSelectArea2"]
-transform = Transform3D(11.9103, 0, 0, 0, 469.514, 0, 0, 0, 11.9103, -1.0322, -1.75679, 0.133724)
+transform = Transform3D(11.9103, 0, 0, 0, 469.514, 0, 0, 0, 11.9103, 0.244312, -1.75679, 0.237281)
 mesh = SubResource("TorusMesh_uthtu")
 
 [node name="LevelSelectArea3" parent="== LEVEL SELECT ==" node_paths=PackedStringArray("car") instance=ExtResource("64_kguer")]
@@ -207,7 +207,7 @@ car = NodePath("../../PlayerCar")
 level_name = "Swamp"
 
 [node name="Zone" type="MeshInstance3D" parent="== LEVEL SELECT ==/LevelSelectArea3"]
-transform = Transform3D(10.5312, 0, 0, 0, 415.15, 0, 0, 0, 10.5312, -1.0322, -1.75679, 0.133724)
+transform = Transform3D(12.33, 0, 0, 0, 486.075, 0, 0, 0, 12.33, -0.130507, -1.75679, 0.0523643)
 mesh = SubResource("TorusMesh_uthtu")
 
 [node name="Platform" type="StaticBody3D" parent="."]

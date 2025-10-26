@@ -127,7 +127,7 @@ func _is_room_code(input: String) -> bool:
 ## Switch to Lobby
 func _switch_to_lobby():
 	# Final Lobby Scene
-	SceneManager.change_scene(SceneManager.Scene.LOBBY_TEST)
+	SceneManager.change_scene(SceneManager.Scene.HUB)
 	# Prototype Lobby Scene
 	# SceneManager.change_scene(SceneManager.Scene.LOBBY_TEST)
 

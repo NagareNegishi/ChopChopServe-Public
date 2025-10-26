@@ -898,6 +898,4 @@ replication_config = SubResource("SceneReplicationConfig_mlfds")
 
 [node name="Node" type="Node" parent="." node_paths=PackedStringArray("food_court")]
 script = ExtResource("45_ettds")
-INITAL_PREP_TIME = 1
-PREP_TIME = 1
 food_court = NodePath("..")

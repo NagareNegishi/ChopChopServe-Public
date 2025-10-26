@@ -1,12 +1,12 @@
 class_name EndScreen extends Control
 
-@onready var button = $Button
-@onready var label = $Label
+@export var button : CustomButton
+@export var team_1_score : Label
+@export var team_2_score : Label
+@export var team_name : Label
 
 var is_visible = false
 
-func set_winner(team: int):
-	label.text = str(team)
 
 func _on_button_pressed():
 	SceneManager.change_scene(SceneManager.Scene.LOBBY)
@@ -23,3 +23,12 @@ func set_to_visible():
 func set_invisible():
 	is_visible = false
 	hide()
+
+
+func _ready() -> void:
+	team_1_score.text = str(ReputationSystem.get_reputation(1))
+	team_2_score.text = str(ReputationSystem.get_reputation(2))
+	team_name.text = "Team %s Won" % ("Mustard" if get_winner() == 2 else "Tomato")
+
+func get_winner() -> int:
+	return 1 if ReputationSystem.get_reputation(1) > ReputationSystem.get_reputation(2) else 2

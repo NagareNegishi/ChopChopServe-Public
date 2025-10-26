@@ -19,7 +19,7 @@ var grid: Array = []
 @export var is_dirty : bool = false
 var is_full : bool = false
 var number: int = 0
-
+var plate_owner : int = 1
 var clean_level = 0
 var recipe_on_plate = null
 var current_mesh : MeshInstance3D
@@ -38,6 +38,15 @@ func _ready():
 		for j in range(GRID_SIZE):
 			grid[i][j]=null # Makes sure they all start out null
 	freeze = true
+
+func _set_owner(id : int):
+	await get_tree().create_timer(0.1).timeout
+	_server_set_owner.rpc(1 if ENetManager.get_team1().has(id) else 2)
+
+@rpc("any_peer", "call_local")
+func _server_set_owner(team : int):
+	plate_owner = team
+	print(plate_owner)
 
 
 func get_clean_level():

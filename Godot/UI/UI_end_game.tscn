@@ -1,8 +1,30 @@
-[gd_scene load_steps=2 format=3 uid="uid://dl5p2r85xi50n"]
+[gd_scene load_steps=9 format=3 uid="uid://dl5p2r85xi50n"]
 
 [ext_resource type="Script" uid="uid://lj0urg7wrr05" path="res://UI_end_game.gd" id="1_fc8sh"]
+[ext_resource type="Shader" uid="uid://bdsj6gf6j8784" path="res://shaders/blur.gdshader" id="2_dqoic"]
+[ext_resource type="Texture2D" uid="uid://yd83nqp2ubr0" path="res://assets/textures/HUD/RedSauce.png" id="3_xxgnr"]
+[ext_resource type="Texture2D" uid="uid://b4qjni3x30ew" path="res://assets/textures/HUD/YBottle.png" id="3_yeiwa"]
+[ext_resource type="PackedScene" uid="uid://2qlfolqgl2hl" path="res://UI/UI_CustomButton.tscn" id="4_yeiwa"]
+[ext_resource type="Theme" uid="uid://c5rng5ws2pkyh" path="res://UI/Style/DefaultTheme.tres" id="6_yeiwa"]
 
-[node name="Control" type="Control"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l3t3q"]
+shader = ExtResource("2_dqoic")
+shader_parameter/blur_radius = 3.0
+shader_parameter/blur_samples = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l3t3q"]
+bg_color = Color(0.915189, 0.915189, 0.915189, 1)
+border_width_left = 9
+border_width_top = 9
+border_width_right = 9
+border_width_bottom = 9
+border_color = Color(0.542318, 0.542318, 0.542318, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="Control" type="Control" node_paths=PackedStringArray("button", "team_1_score", "team_2_score", "team_name")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,34 +33,115 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_fc8sh")
+button = NodePath("Level")
+team_1_score = NodePath("Team1Score")
+team_2_score = NodePath("Team2Score")
+team_name = NodePath("TeamName")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-self_modulate = Color(1, 1, 1, 0.572549)
+[node name="Blur" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_l3t3q")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Colour" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0705882, 0.0705882, 0.0705882, 0.784314)
+
+[node name="Panel" type="Panel" parent="."]
 layout_mode = 0
-offset_left = 284.0
-offset_top = 113.0
-offset_right = 866.0
-offset_bottom = 475.0
-mouse_filter = 2
+offset_left = 226.0
+offset_top = 182.0
+offset_right = 909.0
+offset_bottom = 504.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_l3t3q")
 
-[node name="Button" type="Button" parent="."]
-z_as_relative = false
+[node name="YellowBottl" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 449.0
-offset_top = 400.0
-offset_right = 717.0
-offset_bottom = 447.0
-mouse_force_pass_scroll_events = false
-action_mode = 0
-text = "CONTINUE"
+offset_left = 885.0
+offset_top = 518.0
+offset_right = 1106.0
+offset_bottom = 608.0
+rotation = -1.49226
+scale = Vector2(1.6, 1.6)
+texture = ExtResource("3_yeiwa")
 
-[node name="Label" type="Label" parent="."]
+[node name="RedBottle" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 431.0
-offset_top = 214.0
-offset_right = 710.0
-offset_bottom = 336.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 50
+offset_left = 233.0
+offset_top = 158.0
+offset_right = 454.0
+offset_bottom = 247.0
+rotation = 1.50971
+scale = Vector2(1.6, 1.6)
+texture = ExtResource("3_xxgnr")
 
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[node name="Level" parent="." instance=ExtResource("4_yeiwa")]
+layout_mode = 1
+offset_left = 429.0
+offset_top = 527.0
+offset_right = -444.0
+offset_bottom = -81.0
+theme_override_font_sizes/font_size = 25
+text = "BACK TO LEVEL SELECT"
+
+[node name="Lobby" parent="." instance=ExtResource("4_yeiwa")]
+layout_mode = 1
+offset_left = 470.0
+offset_top = 575.0
+offset_right = -473.0
+offset_bottom = -32.0
+theme_override_font_sizes/font_size = 25
+text = "BACK TO LOBBY"
+
+[node name="Team1Score" type="Label" parent="."]
+layout_mode = 0
+offset_left = 286.0
+offset_top = 311.0
+offset_right = 459.0
+offset_bottom = 481.0
+theme = ExtResource("6_yeiwa")
+theme_override_font_sizes/font_size = 170
+text = "71"
+
+[node name="Team2Score" type="Label" parent="."]
+layout_mode = 0
+offset_left = 692.0
+offset_top = 311.0
+offset_right = 865.0
+offset_bottom = 481.0
+theme = ExtResource("6_yeiwa")
+theme_override_font_sizes/font_size = 170
+text = "71"
+
+[node name="Vs" type="Label" parent="."]
+layout_mode = 0
+offset_left = 499.0
+offset_top = 312.0
+offset_right = 651.0
+offset_bottom = 462.0
+theme = ExtResource("6_yeiwa")
+theme_override_font_sizes/font_size = 95
+text = "vs"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TeamName" type="Label" parent="."]
+layout_mode = 0
+offset_left = 232.0
+offset_top = 207.0
+offset_right = 899.0
+offset_bottom = 295.0
+theme = ExtResource("6_yeiwa")
+theme_override_font_sizes/font_size = 70
+text = "Team Mustard Wins"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -346,7 +346,7 @@ func pickup_item(item : Node3D) -> bool:
 	anim_tree["parameters/SM_IDLE/conditions/empty"] = false
 	anim_tree["parameters/SM_Walking/conditions/holding"] = true
 	anim_tree["parameters/SM_IDLE/conditions/holding"] = true
-	
+	if item is Plate: item._set_owner(item.get_parent().name.to_int())
 	item_in_hand = item
 	
 	return true
@@ -403,9 +403,8 @@ func _client_pickup(player_path : String, item_path : String) -> bool:
 	player.item_point.add_child(item)
 	player.call_deferred("_final_pickup", item)
 
-	
 	item_in_hand = item
-	
+	if item is Plate: item._set_owner(player.name.to_int())
 	return true
 
 

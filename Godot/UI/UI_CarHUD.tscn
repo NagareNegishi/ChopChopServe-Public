@@ -145,6 +145,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="PlayerList" type="HBoxContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5

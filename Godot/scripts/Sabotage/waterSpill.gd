@@ -91,7 +91,7 @@ func _on_area_3d_body_entered(body:Node3D) -> void:
 		# Player effects happen locally on each client
 		body.drop_item(false)
 		var water_team_id = get_team_id(body)
-		reputation_system.minus_reputation(water_team_id, 5)
+		reputation_system.minus_reputation(water_team_id, 2)
 		players_in_spill.append(body)
 		body.set_speed(1.5)
 		emit_signal("in_water_spill")

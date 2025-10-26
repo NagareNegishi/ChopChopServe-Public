@@ -1,27 +1,6 @@
 class_name Sabotage_System
 extends Node
 
-################################################################################
-# TODO:
-	# - Clean code up
-	# - Make sure everything is connected
-	# - Make sure it's networking properly (fire)
-	# - Change the get_random_position() function
-	# - Do something with the signals
-	# - Do I really need teamID?
-
-	# - Should I remove teamID and make it that is the sabotaged team?
-# Questions:
-	# - How many of Each thing do we want?
-		# - Water Spill
-		# - Rats
-	# - How long should each thing last?
-	# - Do we want to be able to stack sabotages?
-	# - Do we want to be able to have multiple sabotages of the same type at once?
-################################################################################
-
-# Add a general reputation loss function in here cause atm i don't see rep going down much
-
 # Don't currently actually use both of these !!
 var current_sabotage
 var sab_team_id
@@ -39,6 +18,7 @@ signal sabotage_sending_team(teamID: int)
 signal sabotage_start(teamID: int, sab_name: String, sab_time: int)
 signal sabotage_ending(teamID: int, sab_name: String)
 signal spawn_critic(teamID: int)
+
 # Define Sabotage Types
 enum SabotageType {
 	WATER_SPILL,
@@ -98,7 +78,7 @@ func request_sabotage(teamID: int, sabotage_type: int) -> void:
 	currency_system.minus_currency(teamID, cost)
 	# Minus Reputation for the other team
 	# Using modulo to get opposing side instead
-	reputation_system.minus_reputation(teamID % 2 + 1, 10)
+	reputation_system.minus_reputation(teamID % 2 + 1, 5)
 	 
 	# If FIRE, Get a flammable appliance path
 	if sabotage_type == SabotageType.FIRE:
@@ -122,7 +102,7 @@ func request_sabotage(teamID: int, sabotage_type: int) -> void:
 	elif sabotage_type == SabotageType.RAT_SWARM:
 		var position = get_random_position(teamID)
 		# Start the rat timer here so theres only on
-		rat_manager.testing_rat_timer()
+		rat_manager.rat_timer()
 		rat_manager.set_team_id(teamID)
 		# Create upto five rats 
 		for i in range(5):
@@ -264,7 +244,7 @@ func _on_fire_spread(teamID: int, prev_path: NodePath) -> void:
 		return
 	# Using modulo to get opposing side
 	# Making the team lose rep it the fire spreads
-	reputation_system.minus_reputation(teamID % 2 + 1, 2)
+	reputation_system.minus_reputation(teamID % 2 + 1, 1)
 
 	var new_path = _pick_flammable_appliance_path(teamID)
 	if new_path != prev_path and new_path != NodePath(""):
@@ -371,7 +351,7 @@ func find_object_path(teamID: int) -> NodePath:
 func get_random_position(teamID: int) -> Vector3:
 
 	var target_pos
-	# Spawn on different sides of the kitchen depending on what team 
+	# Spawn on different sides of the kitchen corners depending on what team 
 	if teamID == 1:
 		target_pos = Vector3(-5.7, -0.3, -8.6)
 	elif teamID == 2:

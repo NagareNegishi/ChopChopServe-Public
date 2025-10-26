@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://b6hpkkaslgwtq"]
+
+[ext_resource type="PackedScene" uid="uid://dag0cxskm754x" path="res://assets/newmodels/animations/ratboy.glb" id="1_mch37"]
+[ext_resource type="Script" uid="uid://dod4eu0pe4vud" path="res://scripts/Sabotage/ratboy.gd" id="2_24m0w"]
+
+[node name="ratboy" instance=ExtResource("1_mch37")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0.208732, 0)
+script = ExtResource("2_24m0w")
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+bones/0/rotation = Quaternion(0.0862887, 2.05402e-09, -0.00464502, 0.996259)
+bones/1/rotation = Quaternion(-0.0219441, 0.000169071, 0.00788662, 0.999728)
+bones/2/rotation = Quaternion(-0.101695, 0.000530758, -0.00321035, 0.99481)
+bones/4/rotation = Quaternion(-0.242668, 0.11526, -0.362545, 0.892406)
+bones/6/rotation = Quaternion(0.117969, 9.1063e-08, 0.203714, 0.971897)
+bones/7/rotation = Quaternion(-0.574446, 0.125036, 0.170501, 0.790764)
+bones/8/rotation = Quaternion(-0.0755668, -0.00127001, -0.30588, 0.949066)
+bones/10/rotation = Quaternion(-0.558589, -0.00412718, -0.227617, 0.797591)
+bones/11/rotation = Quaternion(-0.128183, 0.00315, 0.307631, 0.942827)
+bones/13/rotation = Quaternion(0.991247, 0.00512405, 0.000608912, -0.131923)
+bones/15/rotation = Quaternion(-0.026136, 7.75335e-11, 6.04955e-09, 0.999658)
+bones/17/rotation = Quaternion(0.358643, 0.0110985, 0.234609, 0.903444)
+bones/18/rotation = Quaternion(0.492132, -0.0526451, -0.00165357, 0.868926)
+bones/19/rotation = Quaternion(-0.769555, 0.237295, 0.174692, 0.566532)
+bones/20/rotation = Quaternion(0.330887, -4.55829e-08, -0.24666, 0.910864)

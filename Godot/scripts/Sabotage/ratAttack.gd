@@ -2,7 +2,8 @@ extends Node
 
 @onready var mischief := []
 
-@export var rat_scene : PackedScene = preload("res://scripts/Sabotage/rat.tscn")
+#@export var rat_scene : PackedScene = preload("res://scripts/Sabotage/rat.tscn")
+@export var rat_scene : PackedScene = preload("res://scripts/Sabotage/ratboy.tscn")
 
 var speed := 3.0
 
@@ -54,7 +55,7 @@ func run(delta: float):
 			# calculate movement direction
 			var dir = (new_pos - old_pos).normalized()
 			if dir.length() > 0.01:
-				r.look_at(new_pos - dir, Vector3.UP)
+				r.look_at(new_pos + dir, Vector3.UP)
 			
 			if r.global_position.distance_to(target_pos) < 0.1:
 				target_node.take_food()
@@ -82,7 +83,7 @@ func run(delta: float):
 			r.global_position = new_pos
 			var dir = (new_pos - old_pos).normalized()
 			if dir.length() > 0.01:
-				r.look_at(new_pos - dir, Vector3.UP)
+				r.look_at(new_pos + dir, Vector3.UP)
 			if r.global_position.distance_to(start_pos) < 0.1:
 				print("rat returned home, removing")
 				r.queue_free()

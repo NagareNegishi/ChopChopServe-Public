@@ -41,10 +41,11 @@ func sabotage_start(teamID: int, sab_name: String, sab_time: int):
 	if teamID == ENetManager.get_my_team(): return
 	
 func _cont(d : int, c : bool):
+	for n in sabotage_nodes: n.hide_(0, c)
 	if !c: 
 		move(-1)
 		GlobalScript.get_local_player().sabo_move.disconnect(move)
-		move(-1)
+	
 		return
 	GlobalScript.get_local_player().sabo_move.connect(move)
 	curr_idx = GlobalScript.get_local_player().sabo_index

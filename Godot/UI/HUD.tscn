@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dg3km4t6mbwwg"]
+[gd_scene load_steps=20 format=3 uid="uid://dg3km4t6mbwwg"]
 
 [ext_resource type="Script" uid="uid://djull4qell3bf" path="res://scripts/UI/HUD.gd" id="1_f2wx0"]
 [ext_resource type="PackedScene" uid="uid://b6huce6rberg3" path="res://UI/UI_Reputation.tscn" id="2_ijstf"]
@@ -17,6 +17,8 @@
 [ext_resource type="Texture2D" uid="uid://cun73plsv66ti" path="res://assets/textures/HUD/recipe.png" id="13_281ki"]
 [ext_resource type="PackedScene" uid="uid://cet520guwr8lx" path="res://UI/HUD/UI_Input.tscn" id="16_kg6a8"]
 [ext_resource type="Texture2D" uid="uid://bo520aoqjx804" path="res://assets/textures/Controls/xbox_button_color_y.png" id="17_8ip7y"]
+[ext_resource type="Texture2D" uid="uid://ba01tnt5m53lg" path="res://assets/textures/Controls/xbox_dpad_left.png" id="18_pgems"]
+[ext_resource type="Texture2D" uid="uid://hjni834b7x5y" path="res://assets/textures/Controls/xbox_dpad_right.png" id="19_rsrlt"]
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -302,4 +304,41 @@ offset_bottom = 331.0
 keyboard_texture = ExtResource("9_mms7u")
 controller_texture = ExtResource("17_8ip7y")
 
+[node name="UiInput2" parent="." instance=ExtResource("16_kg6a8")]
+layout_mode = 1
+anchors_preset = 7
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -276.0
+offset_top = -55.0
+offset_right = -212.0
+offset_bottom = 9.0
+grow_vertical = 0
+texture = ExtResource("18_pgems")
+controller_texture = ExtResource("18_pgems")
+
+[node name="ColorRect" parent="UiInput2" index="0"]
+offset_top = 27.0
+offset_bottom = 39.0
+
+[node name="UiInput3" parent="." instance=ExtResource("16_kg6a8")]
+layout_mode = 1
+anchors_preset = 7
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 215.0
+offset_top = -54.0
+offset_right = 279.0
+offset_bottom = 10.0
+grow_vertical = 0
+texture = ExtResource("19_rsrlt")
+controller_texture = ExtResource("19_rsrlt")
+use_scale = false
+
+[node name="ColorRect" parent="UiInput3" index="0"]
+offset_top = 29.0
+offset_bottom = 37.0
+
 [editable path="Team2Rep"]
+[editable path="UiInput2"]
+[editable path="UiInput3"]

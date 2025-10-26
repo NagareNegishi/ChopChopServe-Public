@@ -20,7 +20,8 @@ func _ready() -> void:
 	cost_label.text = str(cost)
 	focus_entered.connect(_hovered)
 	focus_exited.connect(_unhovered)
-	
+	Input.joy_connection_changed.connect(hide_)
+	hide_(0, Input.get_connected_joypads().size() >= 1)
 	var current_money = CurrencySystem.get_currency(ENetManager.get_my_team())
 	
 	var font_color : Color = Color(green_colour) if current_money >= cost else Color(red_colour)
@@ -39,11 +40,17 @@ func currency_update(teamID : int, new_currency : float):
 	cost_label.add_theme_color_override("font_color", font_color)
 	input_bg.color = input_bg_color
 
-
+func hide_(d : int, c : bool):
+	$InputBG.visible = !c
+	$Input.visible = false
 
 func _hovered() -> void:
 	$Panel3.visible = true
+	$Input.visible = false
+	$Input.visible = true
 
 func _unhovered() -> void:
 	$Panel3.visible = false
+	$Input.visible = false
+	$Input.visible = false
 	

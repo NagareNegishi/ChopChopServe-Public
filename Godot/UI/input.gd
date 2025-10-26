@@ -18,6 +18,7 @@ func _update(device : int, connected : bool):
 	texture = keyboard_texture if !connected else controller_texture
 	if use_modulate: self_modulate = Color("2f2f2f") if !connected else Color("ffffff")
 	visible = texture != null && get_parent().get_parent() is not UIRecipes
+	$ColorRect.visible = texture != null && get_parent().get_parent() is not UIRecipes
 	if use_scale: 
 		$ColorRect.size = Vector2(35,23) if connected else Vector2(41, 23)
 		pivot_offset = size/2

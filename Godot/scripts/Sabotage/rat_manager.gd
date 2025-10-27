@@ -5,7 +5,6 @@ var teamID
 
 # Timer for a mischeif of rats
 func rat_timer() -> void:
-	print("jess: RAT MANAGER TIMER")
 	var timer = Timer.new()
 	timer.wait_time = secs
 	timer.one_shot = true
@@ -18,7 +17,6 @@ func rat_timer() -> void:
 # The timer is finished
 func _on_timer_timeout() -> void:
 	RatAttack.change_state()
-	print("jess: RAT MANAGER TIMER has ended")
 	#queue_free()
 	SabotageSystem.assigned_benches.clear()
 	SabotageSystem.sabotage_ending.emit(teamID, "Rat Swarm")

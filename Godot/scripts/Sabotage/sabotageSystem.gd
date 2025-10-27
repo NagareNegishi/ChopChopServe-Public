@@ -302,13 +302,13 @@ func _pick_flammable_appliance_path(teamID: int) -> NodePath:
 # ------- Food Critic Stuff ------- #
 # UNUSED CURRENTLY
 func spawn_food_critic(teamID: int) -> void:
-	print("make a customer a critic")
+	#print("make a customer a critic")
 	emit_signal("spawn_critic", teamID)
 
 # ------- Switch Controls ------- #	
 # Switch the Direction of the other teams controls
 func spawn_switch_controls(teamID: int) -> void:
-	print("switching controls")
+	#print("switching controls")
 	
 	var controls = preload("res://scripts/Sabotage/switchControls.tscn").instantiate()
 	get_tree().get_current_scene().add_child(controls)
@@ -316,7 +316,7 @@ func spawn_switch_controls(teamID: int) -> void:
 
 # ------- Rat Swarm Stuff ------- #
 func spawn_rat_swarm(teamID: int, position: Vector3, path: NodePath) -> void:
-	print("spawning rat sparm")
+	#print("spawning rat sparm")
 	rat_attack.spawn_rat_mischief(teamID, position, path)
 
 # Find the path of a bench within the scene
@@ -324,7 +324,7 @@ func find_object_path(teamID: int) -> NodePath:
 	var appliances = get_tree().get_nodes_in_group("flammable")
 	# Check its not empty
 	if appliances.size() == 0:
-		print("no flammable appliances found")
+		#print("no flammable appliances found")
 		return NodePath("")
 
 	var available_benches := []
@@ -339,7 +339,7 @@ func find_object_path(teamID: int) -> NodePath:
 					available_benches.append(item)
 	
 	if available_benches.size() == 0:
-		print("no available benches")
+		#print("no available benches")
 		return NodePath("")
 
 	var b = available_benches[randi() % available_benches.size()]

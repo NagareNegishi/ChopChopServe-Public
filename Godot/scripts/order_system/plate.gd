@@ -25,7 +25,7 @@ var recipe_on_plate = null
 var current_mesh : MeshInstance3D
 @onready var clean_mesh: MeshInstance3D = $PlateMesh
 @onready var dirty_mesh: MeshInstance3D = $platedirt
-
+var last_held_by_team : int = -1
 func _ready():
 	set_plate_mesh()
 	menu_instance = preload_menuItems.new()
@@ -346,3 +346,6 @@ func clean():
 ## @return: True if empty, false otherwise
 func is_empty() -> bool:
 	return !is_full and food_items.is_empty()
+
+func append_team(team_id: int):
+	last_held_by_team = team_id

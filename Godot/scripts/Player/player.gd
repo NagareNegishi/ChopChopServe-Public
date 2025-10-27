@@ -431,6 +431,11 @@ func _client_drop_item(player_path : String, is_throw : bool) -> bool:
 	if player.item_in_hand.has_node("InteractableComponent"):
 		player.item_in_hand.get_node("InteractableComponent").turn_on_collision(true)
 	
+	if player.item_in_hand.has_method("append_team") and( 
+	ENetManager.get_player_list().find(player.name.to_int()) == 
+	ENetManager.get_player_list().find(name.to_int())):
+		player.item_in_hand.append_team(ENetManager.get_player_list().find(player.name.to_int()) + 1)
+	
 	get_tree().get_current_scene().add_child(player.item_in_hand)
 	player.call_deferred("_final_drop", player.item_in_hand)
 	

@@ -81,7 +81,6 @@ func _process(delta: float):
 		spawn_customer.rpc(customer_id, spawn_position, food_court_id)
 
 func spawn_food_critic(teamID: int):
-	print("I AM CONNECTED", teamID)
 	var customer_id = "customer_%d" % _next_customer_id_num
 	var spawn_position = customer_spawn_point.global_position
 	var food_court_id = self.name

@@ -207,8 +207,8 @@ func _npc_behavior(delta: float):
 			if plate_served:
 				var food = plate_served.get_children().back()
 				if (food is MenuItem and food.get_meal_name() == order[0].get_meal_name()):
-					CurrencySystem.server_add_currency(plate_served.plate_owner, 100.0)
-					ReputationSystem.server_add_reputation(plate_served.plate_owner, 
+					CurrencySystem.server_add_currency(plate_served.last_held_by_team, 100.0)
+					ReputationSystem.server_add_reputation(plate_served.last_held_by_team, 
 															3 * food.get_quality())
 					_table_target.rpc("remove_plate")
 					_table_target.remove_plate()

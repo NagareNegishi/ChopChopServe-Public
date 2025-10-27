@@ -7,19 +7,19 @@ var teamID
 # Switching the players controls 
 func switch_controls(team_id: int) -> void:
 	teamID = team_id
-
+	# Get the players team
 	if teamID == 1:
 		player_ids = ENetManager.get_team2()
 	else:
 		player_ids = ENetManager.get_team1()
-
+	# Get the players in that team
 	for id in player_ids:
 		var player = GlobalScript.get_local_player_by_id(id)
+		# And invert their controls
 		player.invert_controls(true)
-
 	start_timer(secs)
 
-# Time for the switch
+# Timer for the switch
 func start_timer(seconds: float) -> void:
 	var timer = Timer.new()
 	timer.wait_time = seconds
@@ -31,9 +31,11 @@ func start_timer(seconds: float) -> void:
 
 # End the Switch 
 func _on_timer_timeout() -> void:
+	# Go through the players
 	for id in player_ids:
 		var player = GlobalScript.get_local_player_by_id(id)
 		if player:
+			# And uninvert their controls
 			player.invert_controls(false)
 			# Clean up the list
 			player_ids.erase(id)

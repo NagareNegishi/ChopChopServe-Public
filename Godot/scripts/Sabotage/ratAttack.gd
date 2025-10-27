@@ -1,25 +1,11 @@
 extends Node
-#class_name Rat
-
-################################################################################
-# TODO:
-	# - Make them avoid objects
-	# - increase timer duration
-	# - Do something about their spawn points
-	# - Make the targets the other teams stuff
-	# - Make then look for, and pick up the food items instead
-	# - Make them animated
-	# - Change the going home logic so that it is smoother (return home, not just disapear)
-	# - Fix code up
-################################################################################
-
-
 
 @onready var mischief := []
 
-@export var rat_scene : PackedScene = preload("res://scripts/Sabotage/rat.tscn")
+#@export var rat_scene : PackedScene = preload("res://scripts/Sabotage/rat.tscn")
+@export var rat_scene : PackedScene = preload("res://scripts/Sabotage/ratboy.tscn")
 
-var speed := 3.0 # Units per second
+var speed := 3.0
 
 var count = 0
 var secs = 2
@@ -31,31 +17,9 @@ var teamID
 var starting_pos := {}
 var rat_states := {} # {rat: "going" or "returning"}
 
-# Is there a way to initshate the rat assest?
-# how do I do that ??
-
-# Here I need to code the Rats movement
-# its position
-# inistating it within the scene
-# a searching algorithim to find the objects on the bench
-# path finding stuff
-# update its image
-# be able to be effected by rat spray? (is this still happening)
-# 
-
-# spawn every 2 seconds from grates in the kitchen
-# roam to the closest bench that has an item
-# no two rats can target the same item
-# once they grab an item they will run back to their grate
-# and disopare with their item in hand
-# they can be attacked by rat spray (maybe make it the fire eughnisuisah)
-# the spray will kill them, dropping the item in their hand
-# lasts 20s before the rats stop spawning
-
 func _ready() -> void:
 	pass
 
-# Should I move this stuff into the Rat script??
 func _process(delta: float) -> void:
 	run(delta)
 
@@ -70,12 +34,17 @@ func run(delta: float):
 			if not rat_targets.has(r):
 				continue
 
+			if rat_targets[r] == NodePath(""):
+				print("Rat has empty target path, returning home")
+				rat_states[r] = "returning"
+				continue
+				
 			var target_node = get_node(rat_targets[r]) 
 			# if the target node is null, just continue
 			# maybe make them run back to their spawn point instead
 			if target_node == null:
 				continue 
-			#find_object() #Vector3(10, 0, 10) # example target
+				
 			var target_pos = target_node.global_position
 			var old_pos = r.global_position
 			var new_pos = r.global_position.move_toward(target_pos, speed * delta)
@@ -86,15 +55,15 @@ func run(delta: float):
 			# calculate movement direction
 			var dir = (new_pos - old_pos).normalized()
 			if dir.length() > 0.01:
-				r.look_at(new_pos - dir, Vector3.UP)
+				r.look_at(new_pos + dir, Vector3.UP)
 			
 			if r.global_position.distance_to(target_pos) < 0.1:
-				print("bran: found my target, time to go home")
-
 				target_node.take_food()
 				var food = null
 				if "contents" in target_node and target_node.contents.size() > 0:
 					food = target_node.contents[0]
+					ReputationSystem.minus_reputation(teamID % 2 + 1, 2)
+					print("jess: rat got your food and now you lose some rep !")
 
 				if food and is_instance_valid(food):
 					var parent = food.get_parent()
@@ -114,7 +83,7 @@ func run(delta: float):
 			r.global_position = new_pos
 			var dir = (new_pos - old_pos).normalized()
 			if dir.length() > 0.01:
-				r.look_at(new_pos - dir, Vector3.UP)
+				r.look_at(new_pos + dir, Vector3.UP)
 			if r.global_position.distance_to(start_pos) < 0.1:
 				print("rat returned home, removing")
 				r.queue_free()
@@ -136,13 +105,6 @@ func spawn_rat_mischief(team_id: int, position : Vector3, path : NodePath) -> vo
 	rat_targets[new_rat] = path
 	starting_pos[new_rat] = position
 	rat_states[new_rat] = "going"
-	#start_timer(secs)
-	#new_rat.rat_timer()
-	#new_rat.set_team_id(team_id)
-	#var start = get_tree().get_current_scene()
-	#var bs : Array = find_benches(start)
-	#print("benches in the scene ======= ", bs)
-	#teamID = team_id
 
 # Change the state of the rat to go back home when their time runs out
 func change_state() -> void:

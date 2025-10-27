@@ -1,19 +1,20 @@
 ## Development Team from CGRA359
 
-- Johno (CGRA 359, programming)
+- Johno Devine (CGRA 359, programming)
 - Emma Ringwood (CGRA 359, programming)
 - Nagare Negishi (CGRA 359, programming)
-- Josh (CGRA 359, programming)
-- Jessica (CGRA 359, programming)
+- Joshua Neylan (CGRA 359, programming)
+- Jessica Morrison (CGRA 359, programming)
 
-- Mitchell
-- Bradley
+From GAME 390:
+- Mitchell (GAME 390)
+- Bradley (GAME 390)
 
 ### Related Repositories:
 **Main repository:**  
 https://github.com/ringwoodem/ChopChopServe
 
-**Latest stable version as zip:**  
+**Latest packed version as zip:**  
 https://drive.google.com/file/d/1mOFt2NeyoWTUyd4bOEgeRfFFDiboNG6m/view
 
 **Prototype release:**  
@@ -21,8 +22,7 @@ https://github.com/ringwoodem/ChopChopServe/releases/tag/v0.1-test
 
 ### Gameplay Video:
 
-
-
+might add later
 
 ## Strengths and weaknesses of the game you have developed
 

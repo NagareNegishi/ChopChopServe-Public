@@ -11,8 +11,6 @@ Players run competing restaurants, serving customers while managing reputation, 
 **Latest stable version as zip:** [Releases](https://drive.google.com/file/d/1mOFt2NeyoWTUyd4bOEgeRfFFDiboNG6m/view)
 
 
-
-
 ## Development Team
 
 - **Johno 🐻**: Player Controller, UI System

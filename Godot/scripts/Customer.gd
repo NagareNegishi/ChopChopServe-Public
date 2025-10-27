@@ -207,9 +207,11 @@ func _npc_behavior(delta: float):
 			if plate_served:
 				var food = plate_served.get_children().back()
 				if (food is MenuItem and food.get_meal_name() == order[0].get_meal_name()):
-					CurrencySystem.server_add_currency(plate_served.last_held_by_team, 100.0)
+					CurrencySystem.server_add_currency(plate_served.last_held_by_team, food.cost)
 					ReputationSystem.server_add_reputation(plate_served.last_held_by_team, 
-															3 * food.get_quality())
+															1.75 * GameState.current_day * food.diffuculty)
+					ReputationSystem.server_add_reputation(1 if plate_served.last_held_by_team == 2 else 2, 
+															1.5 * GameState.current_day * food.diffuculty)
 					_table_target.rpc("remove_plate")
 					_table_target.remove_plate()
 					_time_till_leaving = 2

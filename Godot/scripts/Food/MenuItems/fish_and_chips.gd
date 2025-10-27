@@ -9,7 +9,8 @@ static var _type_register = MenuItem.register_type(MenuItem.mains, fish_and_chip
 
 func _init():
 	ingredients = ["Fish", "Potato"]
-	
+	cost = 160
+	diffuculty = 1
 	ingredient_states = {
 		"Fish": ["RAW","FRIED"],
 		"Potato": ["RAW","CHOPPED","FRIED"]

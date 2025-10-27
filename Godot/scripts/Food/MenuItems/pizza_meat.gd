@@ -9,7 +9,8 @@ static var _type_register = MenuItem.register_type(MenuItem.mains, pizza_meat.ne
 
 func _init():
 	ingredients = ["Dough", "Cheese", "Tomato", "Beef"]
-	
+	diffuculty = 3
+	cost = 250
 	ingredient_states = {
 		"Dough": ["RAW", "BAKED"],
 		"Cheese": ["RAW","BLENDED","BAKED"],

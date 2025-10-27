@@ -9,7 +9,8 @@ static var _type_register = MenuItem.register_type(MenuItem.starters, garlic_bre
 
 func _init():
 	ingredients = ["Dough", "Garlic"]
-	
+	cost = 140
+	diffuculty = 1
 	ingredient_states = {
 		"Dough": ["RAW", "BAKED"],
 		"Garlic": ["RAW","CHOPPED", "BAKED"]

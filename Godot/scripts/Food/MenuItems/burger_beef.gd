@@ -9,7 +9,8 @@ static var _type_register = MenuItem.register_type(MenuItem.mains, burger_beef.n
 
 func _init():
 	ingredients = ["Dough", "Cheese", "Tomato","Beef"]
-	
+	cost = 285
+	diffuculty = 3
 	ingredient_states = {
 		"Dough": ["RAW", "BAKED"],
 		"Cheese": ["RAW","CHOPPED"],

@@ -211,7 +211,7 @@ func _npc_behavior(delta: float):
 					ReputationSystem.server_add_reputation(plate_served.last_held_by_team, 
 															1.75 * GameState.current_day * food.diffuculty)
 					ReputationSystem.server_add_reputation(1 if plate_served.last_held_by_team == 2 else 2, 
-															1.5 * GameState.current_day * food.diffuculty)
+															-1.5 * GameState.current_day * food.diffuculty)
 					_table_target.rpc("remove_plate")
 					_table_target.remove_plate()
 					_time_till_leaving = 2

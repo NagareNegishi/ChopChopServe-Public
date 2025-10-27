@@ -9,7 +9,8 @@ static var _type_register = MenuItem.register_type(MenuItem.starters, pancakes.n
 
 func _init():
 	ingredients = ["Flour", "Milk"]
-	
+	cost = 150
+	diffuculty = 1
 	ingredient_states = {
 		"Flour":["RAW","MIXED","FRIED"],
 		"Milk":["RAW","MIXED","FRIED"]

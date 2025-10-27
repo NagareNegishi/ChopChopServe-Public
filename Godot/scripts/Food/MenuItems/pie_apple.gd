@@ -9,7 +9,8 @@ static var _type_register = MenuItem.register_type(MenuItem.deserts, pie_apple.n
 
 func _init():
 	ingredients = ["Dough","Apple"]
-	
+	diffuculty = 1
+	cost = 150
 	ingredient_states = {
 		"Apple": ["RAW","CHOPPED", "BAKED"],
 		"Dough": ["RAW", "BAKED"]

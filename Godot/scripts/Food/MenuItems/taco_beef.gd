@@ -9,7 +9,8 @@ static var _type_register = MenuItem.register_type(MenuItem.mains, taco_beef.new
 
 func _init():
 	ingredients = ["Dough", "Beef", "Tomato"]
-	
+	diffuculty = 2
+	cost = 190
 	ingredient_states = {
 		"Beef": ["RAW","FRIED"],
 		"Dough": ["RAW", "BAKED"],

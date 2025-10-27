@@ -8,7 +8,7 @@ Players run competing restaurants, serving customers while managing reputation, 
 
 ## Download Game
 
-**Latest stable version as zip:** [Releases](https://drive.google.com/file/d/148ruWg77muIg4BqDb3vpAPk3MI3sgxV_/view)
+**Latest stable version as zip:** [Releases](https://drive.google.com/file/d/1mOFt2NeyoWTUyd4bOEgeRfFFDiboNG6m/view)
 
 
 

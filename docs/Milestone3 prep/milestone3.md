@@ -14,7 +14,7 @@
 https://github.com/ringwoodem/ChopChopServe
 
 **Latest stable version as zip:**  
-https://drive.google.com/file/d/148ruWg77muIg4BqDb3vpAPk3MI3sgxV_/view
+https://drive.google.com/file/d/1mOFt2NeyoWTUyd4bOEgeRfFFDiboNG6m/view
 
 **Prototype release:**  
 https://github.com/ringwoodem/ChopChopServe/releases/tag/v0.1-test

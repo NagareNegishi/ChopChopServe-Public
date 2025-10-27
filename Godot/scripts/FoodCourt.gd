@@ -1,8 +1,8 @@
 class_name FoodCourt extends Node
 
 
-const MAX_CUSTOMER_DELAY: float = 22
-const MIN_CUSTOMER_DELAY: float = 17
+const MAX_CUSTOMER_DELAY: float = 15
+const MIN_CUSTOMER_DELAY: float = 11
 const QUEUE_CHECK_DELAY: float = 0.5
 const SPAWN_ACCELERATION: float = 0.02
 
@@ -61,8 +61,8 @@ func _process(delta: float):
 				
 	_time_since_last_customer -= delta
 	if game_state.current_phase == GameStateTest.Phases.SERVE:
-		current_max_delay = max(15, current_max_delay - delta * SPAWN_ACCELERATION)
-		current_min_delay = max(10, current_min_delay -  delta * SPAWN_ACCELERATION)
+		current_max_delay = max(11, current_max_delay - delta * SPAWN_ACCELERATION)
+		current_min_delay = max(8, current_min_delay -  delta * SPAWN_ACCELERATION)
 
 	if _time_since_last_customer < 0 and (game_state.can_spawn_customers
 									and await get_free_queue_spot()

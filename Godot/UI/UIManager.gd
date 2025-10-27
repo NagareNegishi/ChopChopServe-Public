@@ -96,3 +96,10 @@ func pause(pause : bool):
 		
 	pause_menu.toggle_visible(true)
 	
+
+func hide_all():
+	canvas_layer.visible = false
+	load_screen.visible = false
+	recipe_screen.visible = false
+	pause_menu.visible = false
+	recipe_tab.visible = false

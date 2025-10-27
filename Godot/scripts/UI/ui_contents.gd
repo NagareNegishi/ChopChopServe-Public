@@ -24,7 +24,7 @@ func add_food(food : Food) -> bool:
 		return false
 	
 	$HBox.get_child(current_amount).texture = (
-		preload("res://assets/textures/ingredients/Tomato.png") 
+		preload("res://assets/textures/ingredients/tomato.png") 
 		if food == null || food.texture == null else food.texture)
 	
 	current_amount += 1

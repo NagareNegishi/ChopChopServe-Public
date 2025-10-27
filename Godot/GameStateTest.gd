@@ -5,7 +5,7 @@ extends Node
 @export var INITAL_PREP_TIME : int = 60
 @export var PREP_TIME : int = 45
 @onready var amount_of_days: int = max(1, SERVE_TIMES.size())  # Amount of days is the amount of rounds on one level
-
+@export var canvas : Array[CanvasLayer]
 var current_time : float = INITAL_PREP_TIME
 var current_day : int = 0
 var current_phase : Phases = Phases.SERVE
@@ -45,8 +45,11 @@ func _ready_host():
 	customer_check.timeout.connect(_on_check_customers)
 	add_child(customer_check)
 	
-	CurrencySystem.minus_currency(1, 9000)
-	CurrencySystem.minus_currency(2, 9000)
+	CurrencySystem.set_currency.rpc(1, 200)
+	CurrencySystem.set_currency.rpc(2, 200)
+	ReputationSystem.set_rep.rpc(1, 50)
+	ReputationSystem.set_rep.rpc(2, 50)
+	ReputationSystem.reputation_changed.connect(check_repuation)
 	UIManager.recipe_screen.done.connect(_start_prep)
 	GameState.food_data = GameState._read_json_file("res://scripts/Food/menu_items_data.json")
 	GameState.current_day = 0
@@ -63,6 +66,12 @@ func _ready() -> void:
 	GlobalScript.get_local_player().disable_controls(true, true)
 	
 
+func check_repuation(team : int, reputation : int):
+	if ReputationSystem.get_reputation(1) > 0 && ReputationSystem.get_reputation(2) > 0: return
+	timer.stop()
+	current_phase = Phases.END_GAME
+	change_phase()
+	
 func change_phase():
 	timer.stop()
 	match current_phase:
@@ -178,6 +187,9 @@ func load_recipes(day : int):
 @rpc("any_peer", "call_local")
 func end_game():
 	disable_controls(true)
+	UIManager.hide_all()
+	for c in canvas: 
+		c.visible = false
 	add_child(end_ui)
 	end_ui.set_to_visible()
 	remove_child(timer)

@@ -896,6 +896,7 @@ replication_config = SubResource("SceneReplicationConfig_mlfds")
 
 [node name="== HUD ==" type="CanvasLayer" parent="." groups=["Canvas"]]
 
-[node name="Node" type="Node" parent="." node_paths=PackedStringArray("food_court")]
+[node name="Node" type="Node" parent="." node_paths=PackedStringArray("canvas", "food_court")]
 script = ExtResource("45_ettds")
+canvas = [NodePath("../MISC/CanvasLayer"), NodePath("../== HUD ==")]
 food_court = NodePath("..")

@@ -33,3 +33,8 @@ func server_add_reputation(teamID: int, amount: float) -> void:
 	# Clamp the total_reputation between 0 and 100
 	 
 	rpc("_client_add_reputation", teamID, clamp(total_rep_team[teamID] + amount, 0, 100))
+
+@rpc("any_peer", "call_local")
+func set_rep(team : int, rep : int):
+	total_rep_team[team] = rep
+	reputation_changed.emit(team, rep)

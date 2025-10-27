@@ -27,10 +27,14 @@ var sfx_paths := {
 }
 
 # Player-specific SFX
-enum SFX_PLAYER { JUMP}
+enum SFX_PLAYER {
+	JUMP,
+	UPGRADE
+	}
 
 var sfx_player_paths := {
-	SFX_PLAYER.JUMP: "res://Sounds/SabotageSFX/AwRats.wav"
+	SFX_PLAYER.JUMP: "res://Sounds/SabotageSFX/AwRats.wav",
+	SFX_PLAYER.UPGRADE: "res://Sounds/PlayerSFX/UpgradeSound.wav"
 }
 
 # Cooking-specific SFX
@@ -60,6 +64,19 @@ var sfx_cooking_paths := {
 	SFX_COOKING.BIN: "res://Sounds/CookingSFX/ThrowingOutTrash.wav",
 	SFX_COOKING.CRATE: "res://Sounds/CookingSFX/SwitchingCrates.wav",
 	SFX_COOKING.PLATE: "res://Sounds/CookingSFX/Plate Pick Up Good.wav"
+}
+
+# sabotage-specific SFX
+enum SFX_SABOTAGE {
+	IGNITE,
+	FIRE1,
+	FIRE2
+}
+
+var sfx_sabotage_paths := {
+	SFX_SABOTAGE.IGNITE: "res://Sounds/SabotageSFX/FireIgnite.wav",
+	SFX_SABOTAGE.FIRE1: "res://Sounds/SabotageSFX/FireCrackle.wav",
+	SFX_SABOTAGE.FIRE2: "res://Sounds/SabotageSFX/FireCrackle2.wav"
 }
 
 
@@ -165,6 +182,12 @@ func play_sfx_player(sfx_id: SFX_PLAYER) -> void:
 ## @param sfx_id: SFX_COOKING enum value
 func play_sfx_cooking(sfx_id: SFX_COOKING) -> void:
 	_play_sfx(sfx_id, sfx_cooking_paths)
+
+
+## Play sabotage sound effect
+## @param sfx_id: SFX_SABOTAGE enum value
+func play_sfx_sabotage(sfx_id: SFX_SABOTAGE) -> void:
+	_play_sfx(sfx_id, sfx_sabotage_paths)
 
 
 ## Play sound effect

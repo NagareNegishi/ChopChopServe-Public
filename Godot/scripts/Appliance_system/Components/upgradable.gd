@@ -130,6 +130,7 @@ func _upgrade() -> void:
 			return
 	current_level += 1
 	upgrade_completed.emit(upgradable_property)
+	SoundManager.play_sfx_player(SoundManager.SFX_PLAYER.UPGRADE)
 	Debug.upgrade_log("Upgraded: " + upgradable_property + " to level " + str(current_level)
 		+ " on " + target.name)
 
@@ -144,6 +145,7 @@ func _handle_special_upgrade(new_value) -> bool:
 			inflammable.immune_to_fire = new_value
 			current_level += 1
 			upgrade_completed.emit(upgradable_property)
+			SoundManager.play_sfx_player(SoundManager.SFX_PLAYER.UPGRADE)
 			Debug.upgrade_log(target.name + " is now immune to fire!")
 			return true
 		Debug.error("Tried to upgrade fire immunity but no Inflammable component found")

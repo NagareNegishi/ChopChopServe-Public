@@ -92,6 +92,7 @@ func ignite() -> bool:
 
 	fire_level = 1
 	_start_fire_effects()
+	SoundManager.play_sfx_sabotage(SoundManager.SFX_SABOTAGE.IGNITE)
 	fire_timer.start()
 	fire_started.emit(target)
 	Debug.fire_log("Fire started on " + target.name)

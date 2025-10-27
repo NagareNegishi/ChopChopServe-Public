@@ -30,6 +30,7 @@ radial_segments = 10
 rings = 3
 
 [node name="WaterSprout" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.364, 0)
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
 amount = 50

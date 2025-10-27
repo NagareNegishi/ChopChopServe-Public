@@ -8,9 +8,9 @@ Players run competing restaurants, serving customers while managing reputation, 
 
 ## Download Game
 
-**Latest stable version:** [Releases](add link to releases page)
+**Latest stable version as zip:** [Releases](https://drive.google.com/file/d/148ruWg77muIg4BqDb3vpAPk3MI3sgxV_/view)
 
-temporary link: https://github.com/ringwoodem/ChopChopServe/releases/tag/v0.1-test
+
 
 
 ## Development Team

@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bk7ovilp788kq" path="res://scripts/Player/spawn_point.tscn" id="3_f8vbx"]
 [ext_resource type="Script" uid="uid://dv1g0obwvkkkt" path="res://scripts/QueueSpot.gd" id="4_vm3m1"]
 [ext_resource type="PackedScene" uid="uid://dg3km4t6mbwwg" path="res://UI/HUD.tscn" id="5_1t4lp"]
-[ext_resource type="PackedScene" uid="uid://c8bjd53t4fgr1" path="res://UI/UI_Pause.tscn" id="6_5e2t6"]
+[ext_resource type="PackedScene" uid="uid://c8bjd53t4fgr1" path="res://UI/HUD/UI_Pause.tscn" id="6_5e2t6"]
 [ext_resource type="PackedScene" uid="uid://dlk0mbdfg2cmq" path="res://scenes/Appliance_system/oven.tscn" id="7_iny5u"]
 [ext_resource type="PackedScene" uid="uid://df6cemvjo3grw" path="res://scenes/Appliance_system/chop_table.tscn" id="8_she3y"]
 [ext_resource type="PackedScene" uid="uid://dj8n6gpyee7v0" path="res://assets/newmodels/items/Choppingboard.glb" id="9_42yff"]

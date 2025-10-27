@@ -10,7 +10,8 @@ static var _type_register = MenuItem.register_type(MenuItem.mains, taco_mushroom
 
 func _init():
 	ingredients = ["Dough", "Mushroom", "Tomato"]
-	
+	diffuculty = 2
+	cost = 190
 	ingredient_states = {
 		"Mushroom": ["RAW","CHOPPED","FRIED"],
 		"Dough": ["RAW", "BAKED"],

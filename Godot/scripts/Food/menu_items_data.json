@@ -89,36 +89,36 @@
 	]
   },
 "SwampLighting": {
-	"1": ["bread"],
-	"2": ["bread"],
-	"3": ["bread", "soup_onion"],
-	"4": ["bread", "soup_onion"],
-	"5": ["bread", "soup_onion", "taco_mushroom"],
-	"6": ["bread", "soup_onion", "taco_mushroom"]
+	"1": ["taco_mushroom"],
+	"2": ["taco_mushroom"],
+	"3": ["taco_mushroom", "soup_onion"],
+	"4": ["taco_mushroom", "soup_onion"],
+	"5": ["taco_mushroom", "soup_onion", "fish_and_chips"],
+	"6": ["taco_mushroom", "soup_onion", "fish_and_chips"]
   },
 "CityLayout2": {
 	"1": ["bread"],
 	"2": ["bread"],
-	"3": ["bread", "soup_onion"],
-	"4": ["bread", "soup_onion"],
-	"5": ["bread", "soup_onion", "taco_mushroom"],
-	"6": ["bread", "soup_onion", "taco_mushroom"]
+	"3": ["bread", "soup_mushroom"],
+	"4": ["bread", "soup_mushroom"],
+	"5": ["bread", "soup_mushroom", "pancakes"],
+	"6": ["bread", "soup_mushroom", "pancakes"]
   },
 "BeachLighting2" : {
-	"1": ["bread"],
-	"2": ["bread"],
-	"3": ["bread", "soup_onion"],
-	"4": ["bread", "soup_onion"],
-	"5": ["bread", "soup_onion", "taco_mushroom"],
-	"6": ["bread", "soup_onion", "taco_mushroom"]
+	"1": ["cheese_bread"],
+	"2": ["cheese_bread"],
+	"3": ["cheese_bread", "pie_apple"],
+	"4": ["cheese_bread", "pie_apple"],
+	"5": ["cheese_bread", "pie_apple", "pizza_cheese"],
+	"6": ["cheese_bread", "pie_apple", "pizza_cheese"]
   },
 "JOHNO": {
 	"1": ["bread"],
 	"2": ["bread"],
-	"3": ["bread", "soup_onion"],
-	"4": ["bread", "soup_onion"],
-	"5": ["bread", "soup_onion", "taco_mushroom"],
-	"6": ["bread", "soup_onion", "taco_mushroom"]
+	"3": ["bread", "pie_apple"],
+	"4": ["bread", "pie_apple"],
+	"5": ["bread", "pie_apple", "brownie"],
+	"6": ["bread", "pie_apple", "brownie"]
   },
 "TEST": {
 	"1": ["onion_rings", "cheese_bread", "pie_pineapple", "burger_fish"],

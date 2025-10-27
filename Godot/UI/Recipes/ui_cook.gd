@@ -21,7 +21,7 @@ func set_info(cookware : String, info : Array):
 		var regex = RegEx.new()
 		regex.compile("\\d")
 		if regex.search(txt_name): txt_name = txt_name.left(txt_name.length() - 1)
-		texture_rect.texture = ResourceLoader.load("res://assets/textures/ingredients/" + txt_name + ".png")
+		texture_rect.texture = ResourceLoader.load("res://assets/textures/ingredients/" + txt_name.to_lower() + ".png")
 		ingbar.add_child(texture_rect)
 
 

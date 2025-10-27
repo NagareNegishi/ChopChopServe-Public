@@ -138,11 +138,18 @@ texture = ExtResource("6_nmshj")
 expand_mode = 1
 
 [node name="sAB" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 552.0
-offset_top = 298.0
-offset_right = 599.0
-offset_bottom = 345.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.5
+offset_top = -23.5
+offset_right = 23.5
+offset_bottom = 23.5
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_icd6t")
 expand_mode = 2
 

@@ -73,3 +73,9 @@ func _client_add_currency(teamID : int, currency : int):
 # Check if team can afford a cost
 func can_afford(teamID: int, cost: float) -> bool:
 	return check_currency(teamID, -cost)
+
+@rpc("any_peer", "call_local")
+func set_currency(team : int, money : int):
+	if team == 1: team1_currency = money
+	if team == 2: team2_currency = money
+	currency_changed.emit(team, money)

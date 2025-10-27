@@ -16,7 +16,7 @@ func _init():
 ## Setup the Cabinet
 func _ready():
 	super._ready()
-	capacity = 8
+	capacity = 300
 	_set_affixes()
 	capacity_upgradable.upgrade_completed.connect(_on_capacity_upgraded)
 	# _setup_item_slots()

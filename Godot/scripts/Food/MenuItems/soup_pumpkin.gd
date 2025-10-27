@@ -9,7 +9,8 @@ static var _type_register = MenuItem.register_type(MenuItem.starters, soup_pumpk
 
 func _init():
 	ingredients = ["Pumpkin", "Pumpkin", "Pumpkin"]
-	
+	diffuculty = 2
+	cost = 150
 	ingredient_states = {
 		"Pumpkin": ["RAW","CHOPPED", "BOILED"],
 	}

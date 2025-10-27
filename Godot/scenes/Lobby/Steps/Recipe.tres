@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_aea0l")
 text_keyboard = "That was a lot to take in, huh? Don't worry, you can always check recipes anytime with [TAB]"
-text_controller = "That was a lot to take in, huh? Don't worry, you can always check recipes anytime with [TAB]"
+text_controller = "That was a lot to take in, huh? Don't worry, you can always check recipes anytime with [Y]"
 type = 0
 num = 0
 time = 6.0

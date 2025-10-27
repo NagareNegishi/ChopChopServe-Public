@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://ds3ppj8ngo1nj"]
 
 [ext_resource type="Script" uid="uid://cqabglto74lp1" path="res://UI/Recipes/ui_recipe_ingredient.gd" id="1_1p8dw"]
-[ext_resource type="Texture2D" uid="uid://3mip3g8soevs" path="res://assets/textures/ingredients/Tomato.png" id="1_vyley"]
+[ext_resource type="Texture2D" uid="uid://3mip3g8soevs" path="res://assets/textures/ingredients/tomato.png" id="1_vyley"]
 [ext_resource type="Texture2D" uid="uid://ceuhlihge21yr" path="res://assets/textures/misc/meat-cleaver (3).png" id="2_w6xpk"]
 
 [node name="UiRecipeIngredient" type="Control"]

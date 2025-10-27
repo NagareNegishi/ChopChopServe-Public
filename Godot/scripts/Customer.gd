@@ -193,10 +193,14 @@ func _npc_behavior(delta: float):
 			_time_till_leaving = max(0, _time_till_leaving - delta)
 			if !_time_till_leaving:
 				# Timer is up, customer leaves.
+				
 				_game_server.call_service(_table_target.id(), "set_occupied", [false])
 				if is_critic: # not serving critic giving will lose rep
 					ReputationSystem.minus_reputation(critic_victim_team, 
 															critic_rep_amount)
+				else:
+					ReputationSystem.minus_reputation(1, 5)
+					ReputationSystem.minus_reputation(2, 5)
 				var exit_point = await _game_server.call_service(_food_court_id, "get_exit_point", [])
 				_current_target = exit_point	
 				_table_target = null	
@@ -207,9 +211,11 @@ func _npc_behavior(delta: float):
 			if plate_served:
 				var food = plate_served.get_children().back()
 				if (food is MenuItem and food.get_meal_name() == order[0].get_meal_name()):
-					CurrencySystem.server_add_currency(plate_served.last_held_by_team, 100.0)
+					CurrencySystem.server_add_currency(plate_served.last_held_by_team, food.cost)
+					ReputationSystem.server_add_reputation(1 if plate_served.last_held_by_team == 2 else 2,
+															1.75 * max(5, GameState.current_day))
 					ReputationSystem.server_add_reputation(plate_served.last_held_by_team, 
-															3 * food.get_quality())
+															-2.2 * GameState.current_day)
 					_table_target.rpc("remove_plate")
 					_table_target.remove_plate()
 					_time_till_leaving = 2
@@ -337,6 +343,7 @@ func _update_pathfinding(delta: float) -> void:
 @rpc("any_peer", "call_local")
 func despawn():
 	queue_free()
+
 	if is_instance_valid(overhead_ui_thinking_instance):
 		overhead_ui_order_instance.queue_free()
 	if is_instance_valid(overhead_ui_order_instance):

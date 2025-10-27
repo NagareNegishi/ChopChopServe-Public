@@ -10,6 +10,8 @@ var ingredients = []
 var ingredient_states = {}
 var name_of_meal : String
 var ui_meal_name : String
+var cost : int = 100
+var diffuculty : int = 1
 var ui_states : Dictionary = {}
 var is_available = false
 var quality = 1

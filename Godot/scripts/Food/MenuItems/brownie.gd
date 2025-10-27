@@ -9,7 +9,8 @@ static var _type_register = MenuItem.register_type(MenuItem.deserts, brownie.new
 
 func _init():
 	ingredients = ["Flour", "Cocoa", "Milk"]
-	
+	cost = 220
+	diffuculty = 2
 	ingredient_states = {
 		"Flour": ["RAW","MIXED","BAKED"],
 		"Cocoa": ["RAW","MIXED","BAKED"],

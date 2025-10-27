@@ -1,9 +1,10 @@
-[gd_scene load_steps=62 format=3 uid="uid://frijdfjvcu7p"]
+[gd_scene load_steps=63 format=3 uid="uid://frijdfjvcu7p"]
 
 [ext_resource type="Script" uid="uid://c3h1hny6w2xwn" path="res://LevelDesign/free_play.gd" id="1_h3x7p"]
 [ext_resource type="Script" uid="uid://bovslkbm84p1j" path="res://scripts/level_camera.gd" id="5_h3x7p"]
 [ext_resource type="PackedScene" uid="uid://bxf3hwer4sb7h" path="res://UI/HUD/UI_LobbyHUD.tscn" id="5_i7m8l"]
 [ext_resource type="Script" uid="uid://df757qx8gvkss" path="res://scripts/Player/PlayerSpawner.gd" id="6_tb1gy"]
+[ext_resource type="PackedScene" uid="uid://bhij60dxhiycs" path="res://assets/newmodels/animations/customers/Customer1.glb" id="6_tigh6"]
 [ext_resource type="PackedScene" uid="uid://ckxyscw51v3du" path="res://scenes/Player/Player.tscn" id="7_2ye88"]
 [ext_resource type="Script" uid="uid://c8guh3nm5ht4s" path="res://scenes/Lobby/Steps/tutorial_step.gd" id="7_ygac2"]
 [ext_resource type="PackedScene" uid="uid://bk7ovilp788kq" path="res://scripts/Player/spawn_point.tscn" id="8_ssy0a"]
@@ -241,10 +242,11 @@ shader_parameter/point_color = Color(1, 1, 1, 1)
 material = SubResource("ShaderMaterial_qe1bb")
 inner_radius = 0.991
 
-[node name="BradleyTestScene" type="Node3D" node_paths=PackedStringArray("tut_mark", "hud")]
+[node name="BradleyTestScene" type="Node3D" node_paths=PackedStringArray("tut_mark", "hud", "anim")]
 script = ExtResource("1_h3x7p")
 tut_mark = NodePath("TutorialInteract")
 hud = NodePath("== HUD ==/UiLobbyHud")
+anim = NodePath("MISC/Customer1/AnimationPlayer")
 
 [node name="== PLAYERS ==" type="Node" parent="."]
 
@@ -296,6 +298,9 @@ script = ExtResource("5_h3x7p")
 [node name="GridMap" type="GridMap" parent="MISC"]
 cell_size = Vector3(1, 0.25, 0.5)
 metadata/_editor_floor_ = Vector3(0, 0, 0)
+
+[node name="Customer1" parent="MISC" instance=ExtResource("6_tigh6")]
+transform = Transform3D(0.129244, 0, -0.0761308, 0, 0.15, 0, 0.0761308, 0, 0.129244, 7.79971, 0.406338, -6.57794)
 
 [node name="Invis Walls" type="Node3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1, 0.364, 7)
@@ -767,7 +772,7 @@ transform = Transform3D(-6.11959e-08, 0, 1.4, 0, 1.4, 0, -1.4, 0, -6.11959e-08, 
 transform = Transform3D(-0.952628, 0, 0.55, 0, 1.1, 0, -0.55, 0, -0.952628, 10.5, 0, -2)
 
 [node name="CommonTree_23" parent="Background" instance=ExtResource("24_ri2vc")]
-transform = Transform3D(0.55, 0, 0.952628, 0, 1.1, 0, -0.952628, 0, 0.55, 9.5, 0, -5)
+transform = Transform3D(0.55, 0, 0.952628, 0, 1.1, 0, -0.952628, 0, 0.55, 10.4195, -4.76837e-07, -4.73765)
 
 [node name="CommonTree_12" parent="Background" instance=ExtResource("24_ri2vc")]
 transform = Transform3D(-0.398581, 0, -1.48753, 0, 1.54, 0, 1.48753, 0, -0.398581, -6, 0, 8)
@@ -915,10 +920,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.483693, 0.0966809, 8.8384)
 transform = Transform3D(0.225478, 0, 0.974248, 0, 1, 0, -0.974248, 0, 0.225478, -1.76985, 0.0512646, 8.84885)
 
 [node name="Bush_11" parent="Background" instance=ExtResource("27_ri2vc")]
-transform = Transform3D(-0.620997, 0, 0.783813, 0, 1, 0, -0.783813, 0, -0.620997, 8.66531, 0.0512637, 7.39306)
+transform = Transform3D(-0.620997, 0, 0.783813, 0, 1, 0, -0.783813, 0, -0.620997, 8.74538, 0.0512637, -3.77992)
 
 [node name="Bush_12" parent="Background" instance=ExtResource("28_qf1ne")]
-transform = Transform3D(0.736333, 0, 0.676619, 0, 1, 0, -0.676619, 0, 0.736333, 7.55277, 0.09668, 7.88054)
+transform = Transform3D(0.736333, 0, 0.676619, 0, 1, 0, -0.676619, 0, 0.736333, 7.20791, 0.09668, 7.50671)
 
 [node name="Bush_13" parent="Background" instance=ExtResource("27_ri2vc")]
 transform = Transform3D(-0.493168, 0, 0.869934, 0, 1, 0, -0.869934, 0, -0.493168, 6.27239, 0.0512637, 8.25983)
@@ -927,13 +932,13 @@ transform = Transform3D(-0.493168, 0, 0.869934, 0, 1, 0, -0.869934, 0, -0.493168
 transform = Transform3D(0.045764, 0, 0.998952, 0, 1, 0, -0.998952, 0, 0.045764, 8.77313, 0.09668, 3.96324)
 
 [node name="Bush_15" parent="Background" instance=ExtResource("27_ri2vc")]
-transform = Transform3D(-0.962909, 0, 0.269827, 0, 1, 0, -0.269827, 0, -0.962909, 9.47844, 0.0512637, 5.06277)
+transform = Transform3D(-0.962909, 0, 0.269827, 0, 1, 0, -0.269827, 0, -0.962909, 8.65204, 0.0512637, 5.09905)
 
 [node name="Bush_21" parent="Background" instance=ExtResource("28_qf1ne")]
 transform = Transform3D(0.045764, 0, 0.998952, 0, 1, 0, -0.998952, 0, 0.045764, 8.77313, 0.09668, 3.96324)
 
 [node name="Bush_22" parent="Background" instance=ExtResource("27_ri2vc")]
-transform = Transform3D(-0.962909, 0, 0.269827, 0, 1, 0, -0.269827, 0, -0.962909, 9.35643, 0.0512637, 6.39507)
+transform = Transform3D(-0.962909, 0, 0.269827, 0, 1, 0, -0.269827, 0, -0.962909, 8.00822, 0.0512637, 6.30115)
 
 [node name="Bush_16" parent="Background" instance=ExtResource("27_ri2vc")]
 transform = Transform3D(-0.980632, 0, -0.195861, 0, 1, 0, 0.195861, 0, -0.980632, 8.65349, 0.0512637, -7.3419)
@@ -992,7 +997,7 @@ mesh = SubResource("TorusMesh_n7pfy")
 skeleton = NodePath("../../../TeamSelect/Zone")
 
 [node name="table8" parent="Background" instance=ExtResource("32_40nhg")]
-transform = Transform3D(1, 0, -4.65661e-10, 0, 1, 0, 4.65661e-10, 0, 1, 7.38004, 0, -5.76345)
+transform = Transform3D(1, 0, -4.65661e-10, 0, 1, 0, 4.65661e-10, 0, 1, 7.28611, 0, -5.76677)
 
 [node name="TableBody" type="StaticBody3D" parent="Background/table8" node_paths=PackedStringArray("detection_area")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.507046, 0, -0.0885038)
@@ -1022,9 +1027,11 @@ mesh = SubResource("TorusMesh_ri2vc")
 skeleton = NodePath("../..")
 
 [node name="TutorialInteract" parent="." node_paths=PackedStringArray("hud") instance=ExtResource("32_p1t1e")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 6.90265, 1.26424, 5.59444)
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.6854, 1.26424, 0.12762)
 hud = NodePath("../== HUD ==/UiLobbyHud")
 
 [node name="Extinguisher2" parent="." instance=ExtResource("38_s0ivk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.495926, 1, 7.35548)
 gravity_scale = 1.0
+
+[editable path="MISC/Customer1"]

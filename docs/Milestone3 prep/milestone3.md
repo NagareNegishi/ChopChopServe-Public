@@ -1,7 +1,7 @@
 ## Development Team from CGRA359
 
 - Johno (CGRA 359, programming)
-- Emma (CGRA 359, programming)
+- Emma Ringwood (CGRA 359, programming)
 - Nagare Negishi (CGRA 359, programming)
 - Josh (CGRA 359, programming)
 - Jessica (CGRA 359, programming)

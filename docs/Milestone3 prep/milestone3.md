@@ -22,7 +22,7 @@ https://github.com/ringwoodem/ChopChopServe/releases/tag/v1.0.0-beta
 
 ### Gameplay Video:
 
-might add later
+[Gameplay Video 480p or 720p](https://drive.google.com/drive/folders/1EhMbnfnV3FOfkzANZhnrQCnGl2lvUeJ7)
 
 ## Strengths and weaknesses of the game you have developed
 

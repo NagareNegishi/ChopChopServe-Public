@@ -15,10 +15,10 @@ From GAME 390:
 https://github.com/ringwoodem/ChopChopServe
 
 **Latest packed version as zip:**  
-https://drive.google.com/file/d/1mOFt2NeyoWTUyd4bOEgeRfFFDiboNG6m/view
+https://drive.google.com/file/d/1qFo67JbDxIZJGFl3xJr9CHLaLxIKrBTO/view
 
 **Prototype release:**  
-https://github.com/ringwoodem/ChopChopServe/releases/tag/v0.1-test
+https://github.com/ringwoodem/ChopChopServe/releases/tag/v1.0.0-beta
 
 ### Gameplay Video:
 

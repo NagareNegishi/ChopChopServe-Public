@@ -8,8 +8,9 @@ Players run competing restaurants, serving customers while managing reputation, 
 
 ## Download Game
 
-**Latest stable version as zip:** [Releases](https://drive.google.com/file/d/1mOFt2NeyoWTUyd4bOEgeRfFFDiboNG6m/view)
+**Latest stable version as zip:** [Releases](https://drive.google.com/file/d/1qFo67JbDxIZJGFl3xJr9CHLaLxIKrBTO/view)
 
+**Prototype release:**  [beta version 1.0.0](https://github.com/ringwoodem/ChopChopServe/releases/tag/v1.0.0-beta)
 
 ## Development Team
 
@@ -57,9 +58,38 @@ Players run competing restaurants, serving customers while managing reputation, 
 - **Sabotage**: Send challenges to opponents (power cuts, water spills, fires, rats, etc.)
 - **Upgrades**: Improve appliances or purchase new equipment
 
+## How to Play
+
+**Carryable Items**: Players can pick up and carry hammer, fire extinguisher, plate, food, and cookware.
+
+**Prep Phase**:
+- Use hammer to upgrade appliances (costs money)
+- Prepare your kitchen for the serving phase
+
+**Serving Customers**:
+1. Customers sit at tables and place orders
+2. Check recipes with **Tab** button
+3. Take food from the food crate
+4. Place food in appropriate appliance to start cooking
+5. Transfer cooked food to a plate
+6. Combine ingredients on the plate to create dishes
+7. Serve completed dishes to customers → earn reputation + money
+
+**Sabotage**:
+- Spend money to sabotage your rival's kitchen
+- Example: Start fires in opponent's kitchen
+- Use fire extinguisher to put out fires in your own kitchen
+
+**Win/Lose**:
+
+You lose the day when your reputation reaches zero.
 
 ## Quick Start
 
+1. Download the game from [Releases](https://drive.google.com/file/d/1qFo67JbDxIZJGFl3xJr9CHLaLxIKrBTO/view)
+2. Extract the ZIP file to your preferred location
+3. Run the `.exe` file
+4. Follow the Networking Setup instructions to host or join a game
 
 
 ## Networking Setup
@@ -85,8 +115,8 @@ Players run competing restaurants, serving customers while managing reputation, 
 3. Play on LAN if UPnP unavailable
 4. Manually configure port forwarding and input public IP
 
-~~**Network Test**: Use the **Network Test** button in main menu to check available options for your setup.~~
-This function exists but is currently disabled for aesthetic reasons.
+~~**Network Test**: Use the **Network Test** button in main menu to check available options for your setup.~~  
+Some networking functionalities are currently disabled for aesthetic reasons.
 
 ### Joining a Game
 
@@ -111,18 +141,20 @@ Once hosted, players wait in the lobby:
 - **Player Requirements**: 2 or 4 players total
 - **Team Selection**: Players choose Team 1 or Team 2 (if not full)
 - **Starting the Game**:
-  - Host can start when teams are balanced (equal players per team)
   - Cannot start with odd number of players
-- **Host Controls**:
-  - Shuffle teams (forces even split if enough players)
-  - Kick clients
-  - Start game (only with balanced teams)
+  - ~~Host can~~ Game start when teams are balanced (equal players per team)
+- ~~**Host Controls**:~~
+  - ~~Shuffle teams (forces even split if enough players)~~
+  - ~~Kick clients~~
+  - ~~Start game (only with balanced teams)~~
 
-While all those functions exist, the lobby scene is currently undergoing a redesign.  
-The version you see in the game may not reflect the above functionality.
+~~While all those functions exist, the lobby scene is currently undergoing a redesign.~~  
+~~The version you see in the game may not reflect the above functionality.~~
 
 
-### Example Recipe??
+### Example Recipe
+
+[Table of example recipes available in-game](https://github.com/ringwoodem/ChopChopServe/blob/main/docs/Menu/MenuItems%20-%20Sheet1.pdf)
 
 
 ## Development Timeline
@@ -130,19 +162,19 @@ The version you see in the game may not reflect the above functionality.
 - **Duration**: 3 months (July 23 - October 25, 2025)
 - **Current Phase**: MVP → Final Polish
 
-## Installation & Running
-
-[Instructions to be added]
-
 ## Links
 
 - [Demo Video](https://youtu.be/P1bXwwFyT1g)
-- [Game Design Document](included in repository)
+- [Original Game Design Document]()
 
 ## Credits and asset used
 
+- https://quaternius.com/packs/ultimatenature.html
+- https://kaylousberg.itch.io/city-builder-bits
 
 
+---
+---
 ### INFO for development team
 Before you try to merge from your branch to the main of this repo you need to make sure youve first pulled any updates,
 this means that if there are going to be conflicts within the main you can fix them before you send the merge request.

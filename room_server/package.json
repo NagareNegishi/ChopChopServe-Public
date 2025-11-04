@@ -3,9 +3,16 @@
 	"version": "1.0.0",
 	"main": "server.js",
 	"scripts": {
-		"start": "node server.js"
+		"start": "node server.js",
+		"lint": "eslint ."
 	},
 	"dependencies": {
-	"express": "^4.21.2"
+		"express": "^4.21.2"
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.39.1",
+		"eslint": "^9.39.1",
+		"eslint-plugin-jsdoc": "^61.1.12",
+		"globals": "^16.5.0"
 	}
 }

@@ -8,7 +8,7 @@ Players run competing restaurants, serving customers while managing reputation, 
 
 ## Download Game
 
-**Prototype release:**  [beta version 1.0.0](https://github.com/ringwoodem/ChopChopServe/releases/tag/v1.0.0-beta)
+**Prototype release:**  [beta version 1.0.0](https://github.com/NagareNegishi/ChopChopServe-Public/releases/tag/v1.0.0-beta)
 
 ## Technology
 
@@ -74,7 +74,7 @@ You lose the day when your reputation reaches zero.
 
 ## Quick Start
 
-1. Download the game from [beta version 1.0.0](https://github.com/ringwoodem/ChopChopServe/releases/tag/v1.0.0-beta)
+1. Download the game from [beta version 1.0.0](https://github.com/NagareNegishi/ChopChopServe-Public/releases/tag/v1.0.0-beta)
 2. Run the `.exe` file
 3. Follow the Networking Setup instructions to host or join a game
 

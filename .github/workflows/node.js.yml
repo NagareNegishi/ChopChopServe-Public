@@ -1,0 +1,35 @@
+# This workflow will lint Node.js code in room_server folder
+name: Lint Code
+
+on:
+  # All branches with room_server folder changes only
+  push:
+    branches: [ "**" ]
+    paths:
+      - 'room_server/**'
+  pull_request:
+    branches: [ "**" ]
+    paths:
+      - 'room_server/**'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+        cache-dependency-path: './room_server/package-lock.json'
+    
+    - name: Install dependencies
+      working-directory: ./room_server
+      run: npm ci
+    
+    - name: Run ESLint
+      working-directory: ./room_server
+      run: npm run lint

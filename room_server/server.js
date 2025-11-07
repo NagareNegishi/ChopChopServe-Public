@@ -6,7 +6,7 @@ const rooms = new Map() // room_code -> ip + expiry time
 const app = express()
 // https://expressjs.com/en/guide/using-middleware.html
 app.use(express.json()) // Run this function on every request before my route handlers
-const port = 3000
+const port = process.env.PORT || 3000 // environment variable PORT or default 3000
 
 // Simple test endpoint
 app.get('/test', (req, res) => {

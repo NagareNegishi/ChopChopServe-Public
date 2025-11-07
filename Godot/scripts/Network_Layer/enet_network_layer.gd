@@ -20,7 +20,7 @@ var upnp: UPNP = null
 var upnp_enabled: bool = false
 var upnp_thread = null
 var http_request: HTTPRequest
-const LOOKUP_SERVER = "https://chopchopserve-production.up.railway.app"
+const LOOKUP_SERVER = "https://room-code-server.onrender.com"
 var room_code: String = ""
 var reachability: Reachability = Reachability.UNKNOWN
 
